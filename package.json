@@ -160,7 +160,7 @@
     "@types/xml2js": "^0.4.0",
     "electron": "22.0.3",
     "electron-builder": "^22.9.1",
-    "electron-packager": "^15.2.0",
+    "electron-packager": "^15.5.1",
     "eslint-plugin-github": "^4.3.7",
     "jest-esm-transformer": "^1.0.0",
     "markdownlint-cli": "^0.32.2",
