@@ -100,6 +100,14 @@ const editors: ILinuxExternalEditor[] = [
     name: 'Notepadqq',
     paths: ['/usr/bin/notepadqq'],
   },
+  {
+    name: 'Geany',
+    paths: ['/usr/bin/geany'],
+  },
+  {
+    name: 'Mousepad',
+    paths: ['/usr/bin/mousepad'],
+  },
 ]
 
 async function getAvailablePath(paths: string[]): Promise<string | null> {
