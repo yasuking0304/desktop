@@ -143,17 +143,21 @@ export function getReleaseSHA() {
   return pieces[2]
 }
 
-export function getDistArchitecture(): 'arm64' | 'x64' {
+export function getDistArchitecture(): 'arm64' | 'x64' | 'armv7l' {
   // If a specific npm_config_arch is set, we use that one instead of the OS arch (to support cross compilation)
   if (
     process.env.npm_config_arch === 'arm64' ||
-    process.env.npm_config_arch === 'x64'
+    process.env.npm_config_arch === 'x64' ||
+    process.env.npm_config_arch === 'armv7l'
   ) {
     return process.env.npm_config_arch
   }
 
   if (process.arch === 'arm64') {
     return 'arm64'
+  }
+  if (process.arch === 'armv7l') {
+    return 'armv7l'
   }
 
   // TODO: Check if it's x64 running on an arm64 Windows with IsWow64Process2
