@@ -148,6 +148,10 @@ const editors: ILinuxExternalEditor[] = [
     name: 'Mousepad',
     paths: ['/usr/bin/mousepad'],
   },
+  {
+    name: 'IntelliJ PhpStorm',
+    paths: ['/snap/bin/phpstorm'],
+  },
 ]
 
 async function getAvailablePath(paths: string[]): Promise<string | null> {
