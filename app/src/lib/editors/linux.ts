@@ -25,6 +25,18 @@ const editors: ILinuxExternalEditor[] = [
     paths: ['/usr/bin/nvim'],
   },
   {
+    name: 'Neovim-Qt',
+    paths: ['/usr/bin/nvim-qt'],
+  },
+  {
+    name: 'Neovide',
+    paths: ['/usr/bin/neovide'],
+  },
+  {
+    name: 'gVim',
+    paths: ['/usr/bin/gvim'],
+  },
+  {
     name: 'Visual Studio Code',
     paths: [
       '/usr/share/code/bin/code',
