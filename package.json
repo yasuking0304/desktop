@@ -38,7 +38,8 @@
     "draft-release": "ts-node -P script/tsconfig.json script/draft-release/index.ts",
     "draft-release:format": "prettier --check --write changelog.json app/package.json && yarn validate-changelog",
     "draft-release:pr": "ts-node -P script/tsconfig.json script/draft-release/draft-pull-request.ts",
-    "validate-changelog": "ts-node -P script/tsconfig.json script/validate-changelog.ts"
+    "validate-changelog": "ts-node -P script/tsconfig.json script/validate-changelog.ts",
+    "i18next-extract": "i18next 'app/src/**/*.{tsx,ts}'"
   },
   "author": {
     "name": "GitHub, Inc.",
@@ -80,6 +81,8 @@
     "fs-extra": "^9.0.1",
     "glob": "^7.1.2",
     "html-webpack-plugin": "^5.5.0",
+    "i18next": "^21.9.1",
+    "i18next-parser": "^6.5.0",
     "jest": "^26.6.3",
     "jest-diff": "^25.0.0",
     "jest-extended": "^0.11.2",

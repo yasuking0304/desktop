@@ -5,6 +5,7 @@ import { TextBox } from './text-box'
 import { Octicon } from '../octicons'
 import * as OcticonSymbol from '../octicons/octicons.generated'
 import { Ref } from './ref'
+import { t } from 'i18next'
 
 interface IRefNameProps {
   /**
@@ -44,6 +45,11 @@ interface IRefNameProps {
    * A sanitized value for the ref name is passed.
    */
   readonly onBlur?: (sanitizedValue: string) => void
+
+  /**
+   * The placeholder of the text box.
+   */
+  readonly placeholder?: string
 }
 
 interface IRefNameState {
@@ -82,6 +88,7 @@ export class RefNameTextBox extends React.Component<
       <div className="ref-name-text-box">
         <TextBox
           label={this.props.label}
+          placeholder={this.props.placeholder}
           value={this.state.proposedValue}
           ref={this.textBoxRef}
           onValueChanged={this.onValueChange}
@@ -159,14 +166,17 @@ export class RefNameTextBox extends React.Component<
     if (sanitizedValue.length === 0) {
       return (
         <>
-          <Ref>{proposedValue}</Ref> is not a valid name.
+          <Ref>{proposedValue}</Ref>
+          {t('ref-name-text-box.is-not-a-valid-name', ' is not a valid name.')}
         </>
       )
     }
 
     return (
       <>
-        Will be created as <Ref>{sanitizedValue}</Ref>.
+        {t('ref-name-text-box.will-be-created-as-1', 'Will be created as ')}
+        <Ref>{sanitizedValue}</Ref>
+        {t('ref-name-text-box.will-be-created-as-2', '.')}
       </>
     )
   }

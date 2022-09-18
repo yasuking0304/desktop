@@ -1,3 +1,4 @@
+import '../locales/i18n'
 import '../lib/logging/main/install'
 
 import {

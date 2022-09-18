@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { DialogContent } from '../dialog'
 import { Checkbox, CheckboxValue } from '../lib/checkbox'
+import { t } from 'i18next'
 
 interface IPromptsPreferencesProps {
   readonly confirmRepositoryRemoval: boolean
@@ -88,9 +89,14 @@ export class Prompts extends React.Component<
   public render() {
     return (
       <DialogContent>
-        <h2>Show a confirmation dialog before...</h2>
+        <h2>
+          {t(
+            'prompts.show-a-confirmation',
+            'Show a confirmation dialog before...'
+          )}
+        </h2>
         <Checkbox
-          label="Removing repositories"
+          label={t('prompts.removing-repositories', 'Removing repositories')}
           value={
             this.state.confirmRepositoryRemoval
               ? CheckboxValue.On
@@ -99,7 +105,7 @@ export class Prompts extends React.Component<
           onChange={this.onConfirmRepositoryRemovalChanged}
         />
         <Checkbox
-          label="Discarding changes"
+          label={t('prompts.discarding-changes', 'Discarding changes')}
           value={
             this.state.confirmDiscardChanges
               ? CheckboxValue.On
@@ -108,7 +114,10 @@ export class Prompts extends React.Component<
           onChange={this.onConfirmDiscardChangesChanged}
         />
         <Checkbox
-          label="Discarding changes permanently"
+          label={t(
+            'prompts.discarding-changes-permanently',
+            'Discarding changes permanently'
+          )}
           value={
             this.state.confirmDiscardChangesPermanently
               ? CheckboxValue.On
@@ -117,7 +126,7 @@ export class Prompts extends React.Component<
           onChange={this.onConfirmDiscardChangesPermanentlyChanged}
         />
         <Checkbox
-          label="Force pushing"
+          label={t('prompts.force-pushing', 'Force pushing')}
           value={
             this.state.confirmForcePush ? CheckboxValue.On : CheckboxValue.Off
           }

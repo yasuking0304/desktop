@@ -7,6 +7,7 @@ import { WorkingDirectoryFileChange } from '../../models/status'
 import { PathText } from '../lib/path-text'
 import { DefaultCommitMessage } from '../../models/commit-message'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
+import { t } from 'i18next'
 
 interface ICommitConflictsWarningProps {
   readonly dispatcher: Dispatcher
@@ -63,22 +64,41 @@ export class CommitConflictsWarning extends React.Component<
         id="commit-conflict-markers-warning"
         onDismissed={this.onCancel}
         onSubmit={this.onSubmit}
-        title={'Confirm committing conflicted files'}
+        title={t(
+          'commit-conflicts-warning.confirm-committing-conflicted',
+          'Confirm committing conflicted files'
+        )}
         type={'warning'}
       >
         <DialogContent>
           <p>
-            If you choose to commit, you’ll be committing the following
-            conflicted files into your repository:
+            {t(
+              'commit-conflicts-warning.if-you-choose-to-commit',
+              `If you choose to commit, you’ll be committing the following
+            conflicted files into your repository:`
+            )}
           </p>
           {this.renderFiles(this.props.files)}
-          <p>Are you sure you want to commit these conflicted files?</p>
+          <p>
+            {t(
+              'commit-conflicts-warning.are-you-sure-you-want-to-commit',
+              'Are you sure you want to commit these conflicted files?'
+            )}
+          </p>
         </DialogContent>
         <DialogFooter>
           <OkCancelButtonGroup
             destructive={true}
             okButtonText={
-              __DARWIN__ ? 'Yes, Commit Files' : 'Yes, commit files'
+              __DARWIN__
+                ? t(
+                    'commit-conflicts-warning.yes-commit-files-darwin',
+                    'Yes, Commit Files'
+                  )
+                : t(
+                    'commit-conflicts-warning.yes-commit-files',
+                    'Yes, commit files'
+                  )
             }
           />
         </DialogFooter>

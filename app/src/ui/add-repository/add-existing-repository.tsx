@@ -15,6 +15,7 @@ import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
 import untildify from 'untildify'
 import { showOpenDialog } from '../main-process-proxy'
 import { Ref } from '../lib/ref'
+import { t } from 'i18next'
 
 interface IAddExistingRepositoryProps {
   readonly dispatcher: Dispatcher
@@ -139,8 +140,11 @@ export class AddExistingRepository extends React.Component<
         <Row className="warning-helper-text">
           <Octicon symbol={OcticonSymbol.alert} />
           <p>
-            This directory appears to be a bare repository. Bare repositories
-            are not currently supported.
+            {t(
+              'add-existing-repository.warning-helper-bare-repository',
+              `This directory appears to be a bare repository. Bare repositories
+               are not currently supported.`
+            )}
           </p>
         </Row>
       )
@@ -159,23 +163,38 @@ export class AddExistingRepository extends React.Component<
           <Octicon symbol={OcticonSymbol.alert} />
           <div>
             <p>
-              The Git repository
+              {t(
+                'add-existing-repository.warning-helper-text1-1',
+                'The Git repository'
+              )}
               {repositoryUnsafePath !== convertedPath && (
                 <>
-                  {' at '}
+                  {t('add-existing-repository.warning-helper-text1-2', ' at ')}
                   <Ref>{repositoryUnsafePath}</Ref>
                 </>
-              )}{' '}
-              appears to be owned by another user on your machine. Adding
-              untrusted repositories may automatically execute files in the
-              repository.
+              )}
+              {t(
+                'add-existing-repository.warning-helper-text1-3',
+                ` appears to be owned by another user on your machine. Adding
+                  untrusted repositories may automatically execute files in the
+                  repository.`
+              )}
             </p>
             <p>
-              If you trust the owner of the directory you can
+              {t(
+                'add-existing-repository.warning-helper-text2-1',
+                'If you trust the owner of the directory you can'
+              )}
               <LinkButton onClick={this.onTrustDirectory}>
-                add an exception for this directory
-              </LinkButton>{' '}
-              in order to continue.
+                {t(
+                  'add-existing-repository.warning-helper-text2-2',
+                  'add an exception for this directory'
+                )}
+              </LinkButton>
+              {t(
+                'add-existing-repository.warning-helper-text2-3',
+                ' in order to continue.'
+              )}
             </p>
           </div>
         </Row>
@@ -186,13 +205,25 @@ export class AddExistingRepository extends React.Component<
       <Row className="warning-helper-text">
         <Octicon symbol={OcticonSymbol.alert} />
         <p>
-          This directory does not appear to be a Git repository.
+          {t(
+            'add-existing-repository.warning-helper-text3-1',
+            'This directory does not appear to be a Git repository.'
+          )}
           <br />
-          Would you like to{' '}
+          {t(
+            'add-existing-repository.warning-helper-text3-2',
+            'Would you like to '
+          )}
           <LinkButton onClick={this.onCreateRepositoryClicked}>
-            create a repository
-          </LinkButton>{' '}
-          here instead?
+            {t(
+              'add-existing-repository.create-a-repository',
+              'create a repository'
+            )}
+          </LinkButton>
+          {t(
+            'add-existing-repository.warning-helper-text3-3',
+            ' here instead?'
+          )}
         </p>
       </Row>
     )
@@ -207,7 +238,17 @@ export class AddExistingRepository extends React.Component<
     return (
       <Dialog
         id="add-existing-repository"
-        title={__DARWIN__ ? 'Add Local Repository' : 'Add local repository'}
+        title={
+          __DARWIN__
+            ? t(
+                'add-existing-repository.add-local-repository-darwin',
+                'Add Local Repository'
+              )
+            : t(
+                'add-existing-repository.add-local-repository',
+                'Add local repository'
+              )
+        }
         onSubmit={this.addRepository}
         onDismissed={this.props.onDismissed}
         loading={this.state.isTrustingRepository}
@@ -216,18 +257,31 @@ export class AddExistingRepository extends React.Component<
           <Row>
             <TextBox
               value={this.state.path}
-              label={__DARWIN__ ? 'Local Path' : 'Local path'}
-              placeholder="repository path"
+              label={
+                __DARWIN__
+                  ? t('common.local-path-darwin', 'Local Path')
+                  : t('common.local-path', 'Local path')
+              }
+              placeholder={t('common.repository-path', 'repository path')}
               onValueChanged={this.onPathChanged}
             />
-            <Button onClick={this.showFilePicker}>Choose…</Button>
+            <Button onClick={this.showFilePicker}>
+              {t('common.choose', 'Choose…')}
+            </Button>
           </Row>
           {this.renderWarning()}
         </DialogContent>
 
         <DialogFooter>
           <OkCancelButtonGroup
-            okButtonText={__DARWIN__ ? 'Add Repository' : 'Add repository'}
+            okButtonText={
+              __DARWIN__
+                ? t(
+                    'add-existing-repository.add-repository-darwin',
+                    'Add Repository'
+                  )
+                : t('add-existing-repository.add-repository', 'Add repository')
+            }
             okButtonDisabled={disabled}
           />
         </DialogFooter>

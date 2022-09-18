@@ -16,6 +16,7 @@ import { RetryActionType, RetryAction } from '../models/retry-actions'
 import { Ref } from './lib/ref'
 import memoizeOne from 'memoize-one'
 import { parseCarriageReturn } from '../lib/parse-carriage-return'
+import { t } from 'i18next'
 
 interface IAppErrorProps {
   /** The list of queued, app-wide, errors  */
@@ -122,10 +123,10 @@ export class AppError extends React.Component<IAppErrorProps, IAppErrorState> {
 
   private getTitle(error: Error) {
     if (isCloneError(error)) {
-      return 'Clone failed'
+      return t('app-error.clone-failed', 'Clone failed')
     }
 
-    return 'Error'
+    return t('common.error', 'Error')
   }
 
   private renderDialog() {
@@ -231,7 +232,11 @@ export class AppError extends React.Component<IAppErrorProps, IAppErrorState> {
     return (
       <DialogFooter>
         <OkCancelButtonGroup
-          okButtonText={__DARWIN__ ? 'Retry Clone' : 'Retry clone'}
+          okButtonText={
+            __DARWIN__
+              ? t('app-error.retry-clone-darwin', 'Retry Clone')
+              : t('app-error.retry-clone', 'Retry clone')
+          }
           onOkButtonClick={this.onRetryAction}
           onCancelButtonClick={this.onCloseButtonClick}
         />
@@ -243,9 +248,13 @@ export class AppError extends React.Component<IAppErrorProps, IAppErrorState> {
     return (
       <DialogFooter>
         <OkCancelButtonGroup
-          okButtonText="Close"
+          okButtonText={t('common.close', 'Close')}
           onOkButtonClick={this.onCloseButtonClick}
-          cancelButtonText={__DARWIN__ ? 'Open Preferences' : 'Open options'}
+          cancelButtonText={
+            __DARWIN__
+              ? t('app-error.open-options-darwin', 'Open Preferences')
+              : t('app-error.open-options', 'Open options')
+          }
           onCancelButtonClick={this.showPreferencesDialog}
         />
       </DialogFooter>

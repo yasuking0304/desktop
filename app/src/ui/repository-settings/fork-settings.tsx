@@ -4,6 +4,7 @@ import { ForkContributionTarget } from '../../models/workflow-preferences'
 import { RepositoryWithForkedGitHubRepository } from '../../models/repository'
 import { ForkSettingsDescription } from './fork-contribution-target-description'
 import { RadioButton } from '../lib/radio-button'
+import { t } from 'i18next'
 
 interface IForkSettingsProps {
   readonly forkContributionTarget: ForkContributionTarget
@@ -18,14 +19,22 @@ export class ForkSettings extends React.Component<IForkSettingsProps, {}> {
   public render() {
     return (
       <DialogContent>
-        <h2>I'll be using this fork…</h2>
+        <h2>
+          {t(
+            'fork-settings.will-be-using-this-fork',
+            `I'll be using this fork…`
+          )}
+        </h2>
 
         <RadioButton
           value={ForkContributionTarget.Parent}
           checked={
             this.props.forkContributionTarget === ForkContributionTarget.Parent
           }
-          label="To contribute to the parent repository"
+          label={t(
+            'fork-settings.contribute-to-the-parent-repository',
+            'To contribute to the parent repository'
+          )}
           onSelected={this.onForkContributionTargetChanged}
         />
 
@@ -34,7 +43,7 @@ export class ForkSettings extends React.Component<IForkSettingsProps, {}> {
           checked={
             this.props.forkContributionTarget === ForkContributionTarget.Self
           }
-          label="For my own purposes"
+          label={t('fork-settings.for-my-own-purposes', 'For my own purposes')}
           onSelected={this.onForkContributionTargetChanged}
         />
 

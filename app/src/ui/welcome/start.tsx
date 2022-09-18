@@ -8,6 +8,7 @@ import { Button } from '../lib/button'
 import { Loading } from '../lib/loading'
 import { BrowserRedirectMessage } from '../lib/authentication-form'
 import { SamplesURL } from '../../lib/stats'
+import { t } from 'i18next'
 
 /**
  * The URL to the sign-up page on GitHub.com. Used in conjunction
@@ -27,21 +28,28 @@ export class Start extends React.Component<IStartProps, {}> {
   public render() {
     return (
       <div id="start">
-        <h1 className="welcome-title">Welcome to GitHub&nbsp;Desktop</h1>
+        <h1 className="welcome-title">
+          {t('start.welcome-to-1', 'Welcome to ')}
+          GitHub&nbsp;Desktop
+          {t('start.welcome-to-2', '')}
+        </h1>
         {!this.props.loadingBrowserAuth ? (
           <>
             <p className="welcome-text">
-              GitHub Desktop is a seamless way to contribute to projects on
+              {t(
+                'start.welcome-text',
+                `GitHub Desktop is a seamless way to contribute to projects on
               GitHub and GitHub Enterprise. Sign in below to get started with
-              your existing projects.
+              your existing projects.`
+              )}
             </p>
             <p className="welcome-text">
-              New to GitHub?{' '}
+              {t('start.new-to-github', 'New to GitHub? ')}
               <LinkButton
                 uri={CreateAccountURL}
                 className="create-account-link"
               >
-                Create your free account.
+                {t('start.create-free-account', 'Create your free account.')}
               </LinkButton>
             </p>
           </>
@@ -57,36 +65,52 @@ export class Start extends React.Component<IStartProps, {}> {
             onClick={this.signInWithBrowser}
           >
             {this.props.loadingBrowserAuth && <Loading />}
-            Sign in to GitHub.com
+            {t('start.sign-in-github-com', 'Sign in to GitHub.com')}
             <Octicon symbol={OcticonSymbol.linkExternal} />
           </Button>
           {this.props.loadingBrowserAuth ? (
-            <Button onClick={this.cancelBrowserAuth}>Cancel</Button>
+            <Button onClick={this.cancelBrowserAuth}>
+              {t('common.cancel', 'Cancel')}
+            </Button>
           ) : (
             <Button onClick={this.signInToEnterprise}>
-              Sign in to GitHub Enterprise
+              {t(
+                'start.sign-in-github-enterprise',
+                'Sign in to GitHub Enterprise'
+              )}
             </Button>
           )}
         </div>
         <div className="skip-action-container">
           <LinkButton className="skip-button" onClick={this.skip}>
-            Skip this step
+            {t('start.skip-this-step', 'Skip this step')}
           </LinkButton>
         </div>
         <div className="welcome-start-disclaimer-container">
-          By creating an account, you agree to the{' '}
+          {t(
+            'start.by-creating-an-account',
+            'By creating an account, you agree to the '
+          )}
           <LinkButton uri={'https://github.com/site/terms'}>
-            Terms of Service
+            {t('start.terms-of-service', 'Terms of Service')}
           </LinkButton>
-          . For more information about GitHub's privacy practices, see the{' '}
+          {t(
+            'start.privacy-practices',
+            `. For more information about GitHub's privacy practices, see the `
+          )}
           <LinkButton uri={'https://github.com/site/privacy'}>
-            GitHub Privacy Statement
+            {t('start.github-privacy-statement', 'GitHub Privacy Statement')}
           </LinkButton>
           .<br />
           <br />
-          GitHub Desktop sends usage metrics to improve the product and inform
+          {t(
+            'start.welcome-sends-usage-1',
+            `GitHub Desktop sends usage metrics to improve the product and inform
           feature decisions. Read more about what metrics are sent and how we
-          use them <LinkButton uri={SamplesURL}>here</LinkButton>.
+          use them `
+          )}
+          <LinkButton uri={SamplesURL}>{t('start.here', 'here')}</LinkButton>
+          {t('start.welcome-sends-usage-2', '.')}
         </div>
       </div>
     )

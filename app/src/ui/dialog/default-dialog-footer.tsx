@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { OkCancelButtonGroup } from './ok-cancel-button-group'
 import { DialogFooter } from './footer'
+import { t } from 'i18next'
 
 interface IDefaultDialogFooterProps {
   /** An optional text/label for the submit button, defaults to "Close" */
@@ -36,7 +37,7 @@ export class DefaultDialogFooter extends React.Component<
     return (
       <DialogFooter>
         <OkCancelButtonGroup
-          okButtonText={this.props.buttonText || 'Close'}
+          okButtonText={this.props.buttonText || t('common.close', 'Close')}
           okButtonTitle={this.props.buttonTitle}
           onOkButtonClick={this.props.onButtonClick}
           okButtonDisabled={this.props.disabled}

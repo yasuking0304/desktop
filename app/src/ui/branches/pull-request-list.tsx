@@ -21,6 +21,7 @@ import { startTimer } from '../lib/timing'
 import { DragType } from '../../models/drag-drop'
 import { dragAndDropManager } from '../../lib/drag-and-drop-manager'
 import { formatRelative } from '../../lib/format-relative'
+import { t } from 'i18next'
 
 interface IPullRequestListItem extends IFilterListItem {
   readonly id: string
@@ -279,7 +280,9 @@ export class PullRequestList extends React.Component<
   private renderListHeader = () => {
     return (
       <div className="filter-list-group-header">
-        Pull requests in {this.getRepositoryName()}
+        {t('pull-request-list.pull-requests-in', 'Pull requests in {{0}}', {
+          0: this.getRepositoryName(),
+        })}
       </div>
     )
   }
@@ -293,7 +296,10 @@ export class PullRequestList extends React.Component<
       <Button
         disabled={this.props.isLoadingPullRequests}
         onClick={this.onRefreshPullRequests}
-        tooltip="Refresh the list of pull requests"
+        tooltip={t(
+          'pull-request-list.refresh-the-list-of-pull-request',
+          'Refresh the list of pull requests'
+        )}
       >
         <Octicon
           symbol={syncClockwise}

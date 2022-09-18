@@ -3,6 +3,7 @@ import { Account } from '../../models/account'
 import { LinkButton } from './link-button'
 import { getDotComAPIEndpoint } from '../../lib/api'
 import { isAttributableEmailFor } from '../../lib/email'
+import { t } from 'i18next'
 
 interface IGitEmailNotFoundWarningProps {
   /** The account the commit should be attributed to. */
@@ -29,11 +30,21 @@ export class GitEmailNotFoundWarning extends React.Component<IGitEmailNotFoundWa
 
     return (
       <div className="git-email-not-found-warning">
-        <span className="warning-icon">⚠️</span> This email address doesn't
-        match {this.getAccountTypeDescription()}, so your commits will be
-        wrongly attributed.{' '}
-        <LinkButton uri="https://docs.github.com/en/github/committing-changes-to-your-project/why-are-my-commits-linked-to-the-wrong-user">
-          Learn more.
+        <span className="warning-icon">⚠️</span>
+        {t(
+          'git-email-not-found-warning.email-address-does-not-match',
+          `This email address doesn't
+              match {{0}}, so your commits will be
+              wrongly attributed.`,
+          { 0: this.getAccountTypeDescription() }
+        )}
+        <LinkButton
+          uri={t(
+            'url.git-email-not-found-warning-learn-more',
+            'https://docs.github.com/en/github/committing-changes-to-your-project/why-are-my-commits-linked-to-the-wrong-user'
+          )}
+        >
+          {t('git-email-not-found-warning.learn-more', 'Learn more.')}
         </LinkButton>
       </div>
     )
@@ -46,9 +57,16 @@ export class GitEmailNotFoundWarning extends React.Component<IGitEmailNotFoundWa
           ? 'GitHub'
           : 'GitHub Enterprise'
 
-      return `your ${accountType} account`
+      return t(
+        'git-email-not-found-warning.your-account',
+        'your {{0}} account',
+        { 0: accountType }
+      )
     }
 
-    return 'either of your GitHub.com nor GitHub Enterprise accounts'
+    return t(
+      'git-email-not-found-warning.edither-your-account',
+      'either of your GitHub.com nor GitHub Enterprise accounts'
+    )
   }
 }

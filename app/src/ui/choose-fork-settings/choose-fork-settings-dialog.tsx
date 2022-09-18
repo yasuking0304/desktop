@@ -12,6 +12,7 @@ import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
 import { ForkContributionTarget } from '../../models/workflow-preferences'
 import { VerticalSegmentedControl } from '../lib/vertical-segmented-control'
 import { ForkSettingsDescription } from '../repository-settings/fork-contribution-target-description'
+import { t } from 'i18next'
 
 interface IChooseForkSettingsProps {
   readonly dispatcher: Dispatcher
@@ -48,25 +49,43 @@ export class ChooseForkSettings extends React.Component<
   public render() {
     const items = [
       {
-        title: 'To contribute to the parent project',
+        title: t(
+          'choose-fork-settings-dialog.contribute-to-parent-project',
+          'To contribute to the parent project'
+        ),
         description: (
           <>
-            We will help you contribute to the{' '}
+            {t(
+              'choose-fork-settings-dialog.we-will-help-you-contribute-1',
+              'We will help you contribute to the '
+            )}
             <strong>
               {this.props.repository.gitHubRepository.parent.fullName}
-            </strong>{' '}
-            repository
+            </strong>
+            {t(
+              'choose-fork-settings-dialog.we-will-help-you-contribute-2',
+              ' repository'
+            )}
           </>
         ),
         key: ForkContributionTarget.Parent,
       },
       {
-        title: 'For my own purposes',
+        title: t(
+          'choose-fork-settings-dialog.for-my-own-purposes',
+          'For my own purposes'
+        ),
         description: (
           <>
-            We will help you contribute to the{' '}
-            <strong>{this.props.repository.gitHubRepository.fullName}</strong>{' '}
-            repository
+            {t(
+              'choose-fork-settings-dialog.we-will-for-my-own-purposes-1',
+              'We will help you contribute to the '
+            )}
+            <strong>{this.props.repository.gitHubRepository.fullName}</strong>
+            {t(
+              'choose-fork-settings-dialog.we-will-for-my-own-purposes-2',
+              ' repository'
+            )}
           </>
         ),
         key: ForkContributionTarget.Self,
@@ -76,14 +95,20 @@ export class ChooseForkSettings extends React.Component<
     return (
       <Dialog
         id="fork-settings"
-        title="How are you planning to use this fork?"
+        title={t(
+          'choose-fork-settings-dialog.you-planning-to-use-this-fork',
+          'How are you planning to use this fork?'
+        )}
         onSubmit={this.onSubmit}
         onDismissed={this.props.onDismissed}
       >
         <DialogContent>
           <Row>
             <VerticalSegmentedControl
-              label="You have changes on this branch. What would you like to do with them?"
+              label={t(
+                'choose-fork-settings-dialog.you-have-changes-on-this-branch',
+                'You have changes on this branch. What would you like to do with them?'
+              )}
               items={items}
               selectedKey={this.state.forkContributionTarget}
               onSelectionChanged={this.onSelectionChanged}
@@ -98,7 +123,9 @@ export class ChooseForkSettings extends React.Component<
         </DialogContent>
 
         <DialogFooter>
-          <OkCancelButtonGroup okButtonText="Continue" />
+          <OkCancelButtonGroup
+            okButtonText={t('common.continue', 'Continue')}
+          />
         </DialogFooter>
       </Dialog>
     )

@@ -28,6 +28,7 @@ import { CommitOneLine } from '../../models/commit'
 import { PopupType } from '../../models/popup'
 import { RepositorySettingsTab } from '../repository-settings/repository-settings'
 import { isRepositoryWithForkedGitHubRepository } from '../../models/repository'
+import { t } from 'i18next'
 
 interface ICreateBranchProps {
   readonly repository: Repository
@@ -148,24 +149,35 @@ export class CreateBranch extends React.Component<
     if (targetCommit !== undefined) {
       return (
         <p>
-          Your new branch will be based on the commit '{targetCommit.summary}' (
-          {targetCommit.sha.substring(0, 7)}) from your repository.
+          {t(
+            'create-branch-dialog.branch-will-be-based-on-the-commit',
+            `Your new branch will be based on the commit {{0}} (
+          {{1}}) from your repository.`,
+            { 0: targetCommit.summary, 1: targetCommit.sha.substring(0, 7) }
+          )}
         </p>
       )
     } else if (tip.kind === TipState.Detached) {
       return (
         <p>
-          You do not currently have any branch checked out (your HEAD reference
+          {t(
+            'create-branch-dialog.do-not-have-any-branch-checked-out',
+            `You do not currently have any branch checked out (your HEAD reference
           is detached). As such your new branch will be based on your currently
-          checked out commit ({tip.currentSha.substring(0, 7)}
-          ).
+          checked out commit ({{0}}
+          ).`,
+            { 0: tip.currentSha.substring(0, 7) }
+          )}
         </p>
       )
     } else if (tip.kind === TipState.Unborn) {
       return (
         <p>
-          Your current branch is unborn (does not contain any commits). Creating
-          a new branch will rename the current branch.
+          {t(
+            'create-branch-dialog.current-branch-is-unborn',
+            `Your current branch is unborn (does not contain any commits). Creating
+          a new branch will rename the current branch.`
+          )}
         </p>
       )
     } else if (tip.kind === TipState.Valid) {
@@ -186,7 +198,14 @@ export class CreateBranch extends React.Component<
 
       return this.renderRegularBranchSelection(tip.branch.name, defaultBranch)
     } else {
-      return assertNever(tip, `Unknown tip kind ${tipKind}`)
+      return assertNever(
+        tip,
+        t(
+          'create-branch-dialog.error.unknown-tip-kind',
+          `Unknown tip kind {{0}}`,
+          { 0: tipKind }
+        )
+      )
     }
   }
 
@@ -216,7 +235,12 @@ export class CreateBranch extends React.Component<
 
         <DialogContent>
           <RefNameTextBox
-            label="Name"
+            label={t('common.name', 'Name')}
+            placeholder={
+              __DARWIN__
+                ? t('common.branch-name-darwin', 'Branch Name')
+                : t('common.branch-name', 'Branch name')
+            }
             initialValue={this.props.initialName}
             onValueChange={this.onBranchNameChange}
           />
@@ -244,7 +268,9 @@ export class CreateBranch extends React.Component<
       return this.props.headerText
     }
 
-    return __DARWIN__ ? 'Create a Branch' : 'Create a branch'
+    return __DARWIN__
+      ? t('create-branch-dialog.create-a-branch-darwin', 'Create a Branch')
+      : t('create-branch-dialog.create-a-branch', 'Create a branch')
   }
 
   private getOkButtonText = (): string => {
@@ -252,7 +278,9 @@ export class CreateBranch extends React.Component<
       return this.props.okButtonText
     }
 
-    return __DARWIN__ ? 'Create Branch' : 'Create branch'
+    return __DARWIN__
+      ? t('create-branch-dialog.create-branch-darwin', 'Create Branch')
+      : t('create-branch-dialog.create-branch', 'Create branch')
   }
 
   private onBranchNameChange = (name: string) => {
@@ -352,24 +380,42 @@ export class CreateBranch extends React.Component<
     if (defaultBranch === null || defaultBranch.name === currentBranchName) {
       return (
         <div>
-          Your new branch will be based on your currently checked out branch (
-          <Ref>{currentBranchName}</Ref>){this.renderForkLinkSuffix()}.{' '}
-          <Ref>{currentBranchName}</Ref> is the {defaultBranchLink} for your
-          repository.
+          {t(
+            'create-branch-dialog.new-branch-will-be-checked-out-branch-1',
+            `Your new branch will be based on your currently checked out
+            branch (`
+          )}
+          <Ref>{currentBranchName}</Ref>){this.renderForkLinkSuffix()}
+          {t(
+            'create-branch-dialog.new-branch-will-be-checked-out-branch-2',
+            '. '
+          )}
+          <Ref>{currentBranchName}</Ref>
+          {t(
+            'create-branch-dialog.new-branch-will-be-checked-out-branch-3',
+            'is the {{0}} for your repository.',
+            { 0: defaultBranchLink }
+          )}
         </div>
       )
     } else {
       const items = [
         {
           title: defaultBranch.name,
-          description:
-            "The default branch in your repository. Pick this to start on something new that's not dependent on your current branch.",
+          description: t(
+            'create-branch-dialog.default-branch-in-your-repository',
+            `The default branch in your repository. Pick this to start on
+             something new that's not dependent on your current branch.`
+          ),
           key: StartPoint.DefaultBranch,
         },
         {
           title: currentBranchName,
-          description:
-            'The currently checked out branch. Pick this if you need to build on work done on this branch.',
+          description: t(
+            'create-branch-dialog.currently-checked-out-branch',
+            `The currently checked out branch. Pick this if you need to
+             build on work done on this branch.`
+          ),
           key: StartPoint.CurrentBranch,
         },
       ]
@@ -404,25 +450,39 @@ export class CreateBranch extends React.Component<
     if (currentBranchName === upstreamDefaultBranch.nameWithoutRemote) {
       return (
         <div>
-          Your new branch will be based on{' '}
+          {t(
+            'create-branch-dialog.new-branch-will-be-based-on-1',
+            'Your new branch will be based on '
+          )}
           <strong>{upstreamRepositoryFullName}</strong>
-          's {defaultBranchLink} (
-          <Ref>{upstreamDefaultBranch.nameWithoutRemote}</Ref>)
-          {this.renderForkLinkSuffix()}.
+          {t('create-branch-dialog.new-branch-will-be-based-on-2', `'s `)}
+          {defaultBranchLink}
+          {t('create-branch-dialog.new-branch-will-be-based-on-3', ' (')}
+          <Ref>{upstreamDefaultBranch.nameWithoutRemote}</Ref>
+          {t('create-branch-dialog.new-branch-will-be-based-on-4', '){{0}}.', {
+            0: this.renderForkLinkSuffix(),
+          })}
         </div>
       )
     } else {
       const items = [
         {
           title: upstreamDefaultBranch.name,
-          description:
-            "The default branch of the upstream repository. Pick this to start on something new that's not dependent on your current branch.",
+          description: t(
+            'create-branch-dialog.default-branch-of-the-upstream-repository',
+            `The default branch of the upstream repository. Pick this to
+               start on something new that's not dependent on your
+               current branch.`
+          ),
           key: StartPoint.UpstreamDefaultBranch,
         },
         {
           title: currentBranchName,
-          description:
-            'The currently checked out branch. Pick this if you need to build on work done on this branch.',
+          description: t(
+            'create-branch-dialog.currently-checked-out-branch',
+            `The currently checked out branch. Pick this if you need to
+             build on work done on this branch.`
+          ),
           key: StartPoint.CurrentBranch,
         },
       ]
@@ -444,11 +504,17 @@ export class CreateBranch extends React.Component<
     if (isRepositoryWithForkedGitHubRepository(this.props.repository)) {
       return (
         <div className="secondary-text">
-          Your default branch source is determined by your{' '}
+          {t(
+            'create-branch-dialog.default-branch-source-is-determined-1',
+            'Your default branch source is determined by your '
+          )}
           <LinkButton onClick={this.onForkSettingsClick}>
-            fork behavior settings
+            {t(
+              'create-branch-dialog.default-branch-source-is-determined-2',
+              'fork behavior settings'
+            )}
           </LinkButton>
-          .
+          {t('create-branch-dialog.default-branch-source-is-determined-3', '.')}
         </div>
       )
     } else {
@@ -460,10 +526,18 @@ export class CreateBranch extends React.Component<
     if (isRepositoryWithForkedGitHubRepository(this.props.repository)) {
       return (
         <span>
-          &nbsp;as determined by your{' '}
+          &nbsp;
+          {t(
+            'create-branch-dialog.as-determined-by-your-1',
+            'as determined by your '
+          )}
           <LinkButton onClick={this.onForkSettingsClick}>
-            fork behavior settings
+            {t(
+              'create-branch-dialog.fork-behavior-settings',
+              'fork behavior settings'
+            )}
           </LinkButton>
+          {t('create-branch-dialog.as-determined-by-your-2', ' ')}
         </span>
       )
     } else {
@@ -478,7 +552,10 @@ export class CreateBranch extends React.Component<
   ) => (
     <Row>
       <VerticalSegmentedControl
-        label="Create branch based on…"
+        label={t(
+          'create-branch-dialog.confirm-create-branch-based-on',
+          'Create branch based on…'
+        )}
         items={items}
         selectedKey={selectedValue}
         onSelectionChanged={this.onBaseBranchChanged}
@@ -498,7 +575,7 @@ export class CreateBranch extends React.Component<
 /** Reusable snippet */
 const defaultBranchLink = (
   <LinkButton uri="https://help.github.com/articles/setting-the-default-branch/">
-    default branch
+    {t('create-branch-dialog.default-branch', 'default branch')}
   </LinkButton>
 )
 

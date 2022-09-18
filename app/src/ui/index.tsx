@@ -1,3 +1,4 @@
+import '../locales/i18n'
 import '../lib/logging/renderer/install'
 
 import * as React from 'react'

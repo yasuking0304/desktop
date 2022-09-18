@@ -6,6 +6,7 @@ import { PopupType } from '../../models/popup'
 import { Octicon } from '../octicons'
 import * as OcticonSymbol from '../octicons/octicons.generated'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
+import { t } from 'i18next'
 
 interface IStashDiffHeaderProps {
   readonly stashEntry: IStashEntry
@@ -40,13 +41,13 @@ export class StashDiffHeader extends React.Component<
 
     return (
       <div className="header">
-        <h3>Stashed changes</h3>
+        <h3>{t('stash-diff-header.stashed-changes', 'Stashed changes')}</h3>
         <div className="row">
           <OkCancelButtonGroup
-            okButtonText="Restore"
+            okButtonText={t('stash-diff-header.restore', 'Restore')}
             okButtonDisabled={isRestoring || !isWorkingTreeClean}
             onOkButtonClick={this.onRestoreClick}
-            cancelButtonText="Discard"
+            cancelButtonText={t('stash-diff-header.discard', 'Discard')}
             cancelButtonDisabled={isRestoring}
             onCancelButtonClick={this.onDiscardClick}
           />
@@ -63,8 +64,11 @@ export class StashDiffHeader extends React.Component<
       return (
         <div className="explanatory-text">
           <span className="text">
-            <strong>Restore</strong> will move your stashed files to the Changes
-            list.
+            <strong>{t('stash-diff-header.restore', 'Restore')}</strong>
+            {t(
+              'stash-diff-header.will-move-your-stashed-files',
+              ` will move your stashed files to the Changes list.`
+            )}
           </span>
         </div>
       )
@@ -74,7 +78,10 @@ export class StashDiffHeader extends React.Component<
       <div className="explanatory-text">
         <Octicon symbol={OcticonSymbol.alert} />
         <span className="text">
-          Unable to restore stash when changes are present on your branch.
+          {t(
+            'stash-diff-header.unable-to-restore-stash',
+            'Unable to restore stash when changes are present on your branch.'
+          )}
         </span>
       </div>
     )

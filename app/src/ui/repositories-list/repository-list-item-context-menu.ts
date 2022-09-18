@@ -6,6 +6,7 @@ import {
   RevealInFileManagerLabel,
   DefaultEditorLabel,
 } from '../lib/context-menu'
+import { t } from 'i18next'
 
 interface IRepositoryListItemContextMenuConfig {
   repository: Repositoryish
@@ -29,27 +30,49 @@ export const generateRepositoryListContextMenu = (
   const github =
     repository instanceof Repository && repository.gitHubRepository != null
   const openInExternalEditor = config.externalEditorLabel
-    ? `Open in ${config.externalEditorLabel}`
+    ? t('repository-list-item-context-menu.open-in-editor', `Open in {{0}}`, {
+        0: config.externalEditorLabel,
+      })
     : DefaultEditorLabel
 
   const items: ReadonlyArray<IMenuItem> = [
     ...buildAliasMenuItems(config),
     {
-      label: __DARWIN__ ? 'Copy Repo Name' : 'Copy repo name',
+      label: __DARWIN__
+        ? t(
+            'repository-list-item-context-menu.copy-repo-name-darwin',
+            'Copy Repo Name'
+          )
+        : t(
+            'repository-list-item-context-menu.copy-repo-name',
+            'Copy repo name'
+          ),
       action: () => clipboard.writeText(repository.name),
     },
     {
-      label: __DARWIN__ ? 'Copy Repo Path' : 'Copy repo path',
+      label: __DARWIN__
+        ? t(
+            'repository-list-item-context-menu.copy-repo-path-darwin',
+            'Copy Repo Path'
+          )
+        : t(
+            'repository-list-item-context-menu.copy-repo-path',
+            'Copy repo path'
+          ),
       action: () => clipboard.writeText(repository.path),
     },
     { type: 'separator' },
     {
-      label: 'View on GitHub',
+      label: t('common.view-on-github', 'View on GitHub'),
       action: () => config.onViewOnGitHub(repository),
       enabled: github,
     },
     {
-      label: `Open in ${config.shellLabel}`,
+      label: t(
+        'repository-list-item-context-menu.open-in-shell',
+        `Open in {{0}}`,
+        { 0: config.shellLabel }
+      ),
       action: () => config.onOpenInShell(repository),
       enabled: !missing,
     },
@@ -65,7 +88,9 @@ export const generateRepositoryListContextMenu = (
     },
     { type: 'separator' },
     {
-      label: config.askForConfirmationOnRemoveRepository ? 'Remove…' : 'Remove',
+      label: config.askForConfirmationOnRemoveRepository
+        ? t('menu.confirm-remove-darwin', 'Remove…')
+        : t('common.remove', 'Remove'),
       action: () => config.onRemoveRepository(repository),
     },
   ]
@@ -82,17 +107,24 @@ const buildAliasMenuItems = (
     return []
   }
 
-  const verb = repository.alias == null ? 'Create' : 'Change'
+  const verb =
+    repository.alias == null
+      ? t('common.create', 'Create')
+      : t('common.change', 'Change')
   const items: Array<IMenuItem> = [
     {
-      label: __DARWIN__ ? `${verb} Alias` : `${verb} alias`,
+      label: __DARWIN__
+        ? t('common.opetarion-alias-darwin', `{{0}} Alias`, { 0: verb })
+        : t('common.opetarion-alias', `{{0}} alias`, { 0: verb }),
       action: () => config.onChangeRepositoryAlias(repository),
     },
   ]
 
   if (repository.alias !== null) {
     items.push({
-      label: __DARWIN__ ? 'Remove Alias' : 'Remove alias',
+      label: __DARWIN__
+        ? t('common.remove-alias-darwin', 'Remove Alias')
+        : t('common.remove-alias', 'Remove alias'),
       action: () => config.onRemoveRepositoryAlias(repository),
     })
   }

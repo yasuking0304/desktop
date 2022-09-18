@@ -5,6 +5,7 @@ import * as OcticonSymbol from '../octicons/octicons.generated'
 import { RadioButton } from '../lib/radio-button'
 import { Popover, PopoverCaretPosition } from '../lib/popover'
 import { RepositorySectionTab } from '../../lib/app-state'
+import { t } from 'i18next'
 
 interface IDiffOptionsProps {
   readonly sourceTab: RepositorySectionTab
@@ -108,11 +109,11 @@ export class DiffOptions extends React.Component<
   private renderShowSideBySide() {
     return (
       <section>
-        <h3>Diff display</h3>
+        <h3>{t('diff-options.diff-display', 'Diff display')}</h3>
         <RadioButton
           value="Unified"
           checked={!this.props.showSideBySideDiff}
-          label="Unified"
+          label={t('diff-options.unified', 'Unified')}
           onSelected={this.onUnifiedSelected}
         />
         <RadioButton
@@ -120,7 +121,7 @@ export class DiffOptions extends React.Component<
           checked={this.props.showSideBySideDiff}
           label={
             <>
-              <div>Split</div>
+              <div>{t('diff-options.split', 'Split')}</div>
             </>
           }
           onSelected={this.onSideBySideSelected}
@@ -132,7 +133,7 @@ export class DiffOptions extends React.Component<
   private renderHideWhitespaceChanges() {
     return (
       <section>
-        <h3>Whitespace</h3>
+        <h3>{t('diff-options.whitespace', 'Whitespace')}</h3>
         <Checkbox
           value={
             this.props.hideWhitespaceChanges
@@ -141,13 +142,24 @@ export class DiffOptions extends React.Component<
           }
           onChange={this.onHideWhitespaceChangesChanged}
           label={
-            __DARWIN__ ? 'Hide Whitespace Changes' : 'Hide whitespace changes'
+            __DARWIN__
+              ? t(
+                  'diff-options.hide-whitespace-changes-darwin',
+                  'Hide Whitespace Changes'
+                )
+              : t(
+                  'diff-options.hide-whitespace-changes',
+                  'Hide whitespace changes'
+                )
           }
         />
         {this.props.sourceTab === RepositorySectionTab.Changes && (
           <p className="secondary-text">
-            Interacting with individual lines or hunks will be disabled while
-            hiding whitespace.
+            {t(
+              'diff-options.interacting-with-individual-lines',
+              `Interacting with individual lines or hunks will be disabled while
+            hiding whitespace.`
+            )}
           </p>
         )}
       </section>

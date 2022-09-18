@@ -21,6 +21,7 @@ import { RadioButton } from './radio-button'
 import { Select } from './select'
 import { GitEmailNotFoundWarning } from './git-email-not-found-warning'
 import { getDotComAPIEndpoint } from '../../lib/api'
+import { t } from 'i18next'
 
 interface IConfigureGitUserProps {
   /** The logged-in accounts. */
@@ -242,8 +243,9 @@ export class ConfigureGitUser extends React.Component<
 
     return (
       <div id="commit-list" className="commit-list-example">
-        <div className="header">Example commit</div>
-
+        <div className="header">
+          {t('configure-git-user.example-commit', 'Example commit')}
+        </div>
         <CommitListItem
           commit={dummyCommit}
           emoji={emoji}
@@ -272,13 +274,20 @@ export class ConfigureGitUser extends React.Component<
     return (
       <div>
         <RadioButton
-          label={`Use my GitHub${accountTypeSuffix} account name and email address`}
+          label={t(
+            'configure-git-user.use-github-account',
+            'Use my GitHub{{0}} account name and email address',
+            { 0: accountTypeSuffix }
+          )}
           checked={this.state.useGitHubAuthorInfo}
           onSelected={this.onUseGitHubInfoSelected}
           value="github-account"
         />
         <RadioButton
-          label="Configure manually"
+          label={t(
+            'configure-git-user.configure-manually',
+            'Configure manually'
+          )}
           checked={!this.state.useGitHubAuthorInfo}
           onSelected={this.onUseGitConfigInfoSelected}
           value="git-config"
@@ -295,14 +304,14 @@ export class ConfigureGitUser extends React.Component<
     return (
       <Form className="sign-in-form" onSubmit={this.save}>
         <TextBox
-          label="Name"
-          placeholder="Your Name"
+          label={t('common.name', 'Name')}
+          placeholder={t('common.your-name', 'Your Name')}
           value={this.state.gitHubName}
           disabled={true}
         />
 
         <Select
-          label="Email"
+          label={t('common.email', 'Email')}
           value={this.state.gitHubEmail}
           onChange={this.onSelectedGitHubEmailChange}
         >
@@ -314,7 +323,9 @@ export class ConfigureGitUser extends React.Component<
         </Select>
 
         <Row>
-          <Button type="submit">{this.props.saveLabel || 'Save'}</Button>
+          <Button type="submit">
+            {this.props.saveLabel || t('common.save', 'Save')}
+          </Button>
           {this.props.children}
         </Row>
       </Form>
@@ -325,16 +336,16 @@ export class ConfigureGitUser extends React.Component<
     return (
       <Form className="sign-in-form" onSubmit={this.save}>
         <TextBox
-          label="Name"
-          placeholder="Your Name"
+          label={t('common.name', 'Name')}
+          placeholder={t('common.your-name', 'Your Name')}
           value={this.state.manualName}
           onValueChanged={this.onNameChange}
         />
 
         <TextBox
           type="email"
-          label="Email"
-          placeholder="your-email@example.com"
+          label={t('common.email', 'Email')}
+          placeholder={t('common.your-email', 'common.your-email@example.com')}
           value={this.state.manualEmail}
           onValueChanged={this.onEmailChange}
         />
@@ -347,7 +358,9 @@ export class ConfigureGitUser extends React.Component<
         )}
 
         <Row>
-          <Button type="submit">{this.props.saveLabel || 'Save'}</Button>
+          <Button type="submit">
+            {this.props.saveLabel || t('common.save', 'Save')}
+          </Button>
           {this.props.children}
         </Row>
       </Form>

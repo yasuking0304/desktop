@@ -4,6 +4,7 @@ import { Button } from '../lib/button'
 import { SignIn } from '../lib/sign-in'
 import { Dispatcher } from '../dispatcher'
 import { SignInState } from '../../lib/stores'
+import { t } from 'i18next'
 
 interface ISignInEnterpriseProps {
   readonly dispatcher: Dispatcher
@@ -25,7 +26,9 @@ export class SignInEnterprise extends React.Component<
 
     return (
       <div id="sign-in-enterprise">
-        <h1 className="welcome-title">Sign in to your GitHub Enterprise</h1>
+        <h1 className="welcome-title">
+          {t('sign-in-enterprise.sign-in', 'Sign in to your GitHub Enterprise')}
+        </h1>
 
         <SignIn signInState={state} dispatcher={this.props.dispatcher}>
           <Button onClick={this.cancel}>Cancel</Button>
