@@ -31,8 +31,8 @@ import { openFile } from './lib/open-file'
 import { AheadBehindStore } from '../lib/stores/ahead-behind-store'
 import { dragAndDropManager } from '../lib/drag-and-drop-manager'
 import { DragType } from '../models/drag-drop'
-import { MultiCommitOperationKind } from '../models/multi-commit-operation'
 import { clamp } from '../lib/clamp'
+import { PullRequestSuggestedNextAction } from '../models/pull-request'
 
 interface IRepositoryViewProps {
   readonly repository: Repository
@@ -93,6 +93,9 @@ interface IRepositoryViewProps {
     repository: Repository,
     commits: ReadonlyArray<CommitOneLine>
   ) => void
+
+  /** The user's preference of pull request suggested next action to use **/
+  readonly pullRequestSuggestedNextAction?: PullRequestSuggestedNextAction
 }
 
 interface IRepositoryViewState {
@@ -250,10 +253,6 @@ export class RepositoryView extends React.Component<
     } = state
     const { tip } = branchesState
     const currentBranch = tip.kind === TipState.Valid ? tip.branch : null
-    const isCherryPickInProgress =
-      mcos !== null &&
-      mcos.operationDetail.kind === MultiCommitOperationKind.CherryPick
-
     const scrollTop =
       this.forceCompareListScrollTop ||
       this.previousSection === RepositorySectionTab.Changes
@@ -283,7 +282,7 @@ export class RepositoryView extends React.Component<
         compareListScrollTop={scrollTop}
         tagsToPush={tagsToPush}
         aheadBehindStore={aheadBehindStore}
-        isCherryPickInProgress={isCherryPickInProgress}
+        isMultiCommitOperationInProgress={mcos !== null}
       />
     )
   }
@@ -470,6 +469,9 @@ export class RepositoryView extends React.Component<
               this.props.externalEditorLabel !== undefined
             }
             dispatcher={this.props.dispatcher}
+            pullRequestSuggestedNextAction={
+              this.props.pullRequestSuggestedNextAction
+            }
           />
         )
       }

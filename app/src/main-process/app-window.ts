@@ -26,6 +26,7 @@ import {
   terminateDesktopNotifications,
 } from './notifications'
 import { addTrustedIPCSender } from './trusted-ipc-sender'
+import { enablePreventClosingWhileUpdating } from '../lib/feature-flag'
 
 export class AppWindow {
   private window: Electron.BrowserWindow
@@ -33,6 +34,7 @@ export class AppWindow {
 
   private _loadTime: number | null = null
   private _rendererReadyTime: number | null = null
+  private isDownloadingUpdate: boolean = false
 
   private minWidth = 960
   private minHeight = 660
@@ -92,6 +94,7 @@ export class AppWindow {
     this.shouldMaximizeOnShow = savedWindowState.isMaximized
 
     let quitting = false
+    let quittingEvenIfUpdating = false
     app.on('before-quit', () => {
       quitting = true
     })
@@ -101,7 +104,40 @@ export class AppWindow {
       event.returnValue = true
     })
 
+    ipcMain.on('will-quit-even-if-updating', event => {
+      quitting = true
+      quittingEvenIfUpdating = true
+      event.returnValue = true
+    })
+
+    ipcMain.on('cancel-quitting', event => {
+      quitting = false
+      quittingEvenIfUpdating = false
+      event.returnValue = true
+    })
+
     this.window.on('close', e => {
+      // On macOS, closing the window doesn't mean the app is quitting. If the
+      // app is updating, we will prevent the window from closing only when the
+      // app is also quitting.
+      if (
+        enablePreventClosingWhileUpdating() &&
+        (!__DARWIN__ || quitting) &&
+        !quittingEvenIfUpdating &&
+        this.isDownloadingUpdate
+      ) {
+        e.preventDefault()
+        ipcWebContents.send(this.window.webContents, 'show-installing-update')
+
+        // Make sure the window is visible, so the user can see why we're
+        // preventing the app from quitting. This is important on macOS, where
+        // the window could be hidden/closed when the user tries to quit.
+        // It could also happen on Windows if the user quits the app from the
+        // task bar while it's in the background.
+        this.show()
+        return
+      }
+
       // on macOS, when the user closes the window we really just hide it. This
       // lets us activate quickly and keep all our interesting logic in the
       // renderer.
@@ -219,7 +255,7 @@ export class AppWindow {
     return !!this.loadTime && !!this.rendererReadyTime
   }
 
-  public onClose(fn: () => void) {
+  public onClosed(fn: () => void) {
     this.window.on('closed', fn)
   }
 
@@ -350,10 +386,12 @@ export class AppWindow {
 
   public setupAutoUpdater() {
     autoUpdater.on('error', (error: Error) => {
+      this.isDownloadingUpdate = false
       ipcWebContents.send(this.window.webContents, 'auto-updater-error', error)
     })
 
     autoUpdater.on('checking-for-update', () => {
+      this.isDownloadingUpdate = false
       ipcWebContents.send(
         this.window.webContents,
         'auto-updater-checking-for-update'
@@ -361,6 +399,7 @@ export class AppWindow {
     })
 
     autoUpdater.on('update-available', () => {
+      this.isDownloadingUpdate = true
       ipcWebContents.send(
         this.window.webContents,
         'auto-updater-update-available'
@@ -368,6 +407,7 @@ export class AppWindow {
     })
 
     autoUpdater.on('update-not-available', () => {
+      this.isDownloadingUpdate = false
       ipcWebContents.send(
         this.window.webContents,
         'auto-updater-update-not-available'
@@ -375,6 +415,7 @@ export class AppWindow {
     })
 
     autoUpdater.on('update-downloaded', () => {
+      this.isDownloadingUpdate = false
       ipcWebContents.send(
         this.window.webContents,
         'auto-updater-update-downloaded'

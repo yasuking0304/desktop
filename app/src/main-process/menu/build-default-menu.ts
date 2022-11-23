@@ -286,6 +286,12 @@ export function buildDefaultMenu({
         click: emit('pull'),
       },
       {
+        id: 'fetch',
+        label: __DARWIN__ ? 'Fetch' : '&Fetch',
+        accelerator: 'CmdOrCtrl+Shift+T',
+        click: emit('fetch'),
+      },
+      {
         label: removeRepoLabel,
         id: 'remove-repository',
         accelerator: 'CmdOrCtrl+Backspace',
@@ -428,12 +434,12 @@ export function buildDefaultMenu({
     },
   ]
 
-  if (!hasCurrentPullRequest && enableStartingPullRequests()) {
+  if (enableStartingPullRequests()) {
     branchSubmenu.push({
-      label: __DARWIN__ ? 'Start Pull Request' : 'Start pull request',
-      id: 'start-pull-request',
+      label: __DARWIN__ ? 'Preview Pull Request' : 'Preview pull request',
+      id: 'preview-pull-request',
       accelerator: 'CmdOrCtrl+Alt+P',
-      click: emit('start-pull-request'),
+      click: emit('preview-pull-request'),
     })
   }
 
@@ -538,6 +544,10 @@ export function buildDefaultMenu({
           {
             label: 'Pull Request Check Run Failed',
             click: emit('pull-request-check-run-failed'),
+          },
+          {
+            label: 'Show App Error',
+            click: emit('show-app-error'),
           },
         ],
       },

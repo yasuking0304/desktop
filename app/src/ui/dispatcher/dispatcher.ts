@@ -68,7 +68,10 @@ import { FetchType } from '../../models/fetch'
 import { GitHubRepository } from '../../models/github-repository'
 import { ManualConflictResolution } from '../../models/manual-conflict-resolution'
 import { Popup, PopupType } from '../../models/popup'
-import { PullRequest } from '../../models/pull-request'
+import {
+  PullRequest,
+  PullRequestSuggestedNextAction,
+} from '../../models/pull-request'
 import {
   Repository,
   RepositoryWithGitHubRepository,
@@ -382,6 +385,13 @@ export class Dispatcher {
    */
   public closePopup(popupType?: PopupType) {
     return this.appStore._closePopup(popupType)
+  }
+
+  /**
+   * Close the popup with given id.
+   */
+  public closePopupById(popupId: string) {
+    return this.appStore._closePopupById(popupId)
   }
 
   /** Show the foldout. This will close any current popup. */
@@ -763,11 +773,6 @@ export class Dispatcher {
    */
   public presentError(error: Error): Promise<void> {
     return this.appStore._pushError(error)
-  }
-
-  /** Clear the given error. */
-  public clearError(error: Error): Promise<void> {
-    return this.appStore._clearError(error)
   }
 
   /**
@@ -4008,5 +4013,35 @@ export class Dispatcher {
 
   public updatePullRequestBaseBranch(repository: Repository, branch: Branch) {
     this.appStore._updatePullRequestBaseBranch(repository, branch)
+  }
+
+  /**
+   * Attempts to quit the app if it's not updating, unless requested to quit
+   * even if it is updating.
+   *
+   * @param evenIfUpdating Whether to quit even if the app is updating.
+   */
+  public quitApp(evenIfUpdating: boolean) {
+    this.appStore._quitApp(evenIfUpdating)
+  }
+
+  /**
+   * Cancels quitting the app. This could be needed if, on macOS, the user tries
+   * to quit the app while an update is in progress, but then after being
+   * informed about the issues that could cause they decided to not close the
+   * app yet.
+   */
+  public cancelQuittingApp() {
+    this.appStore._cancelQuittingApp()
+  }
+
+  /**
+   * Sets the user's preference for which pull request suggested next action to
+   * use
+   */
+  public setPullRequestSuggestedNextAction(
+    value: PullRequestSuggestedNextAction
+  ) {
+    return this.appStore._setPullRequestSuggestedNextAction(value)
   }
 }
