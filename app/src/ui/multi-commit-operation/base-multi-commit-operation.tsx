@@ -93,8 +93,6 @@ export abstract class BaseMultiCommitOperation extends React.Component<IMultiCom
         {targetBranch !== null ? <strong>{targetBranch.name}</strong> : null}
       </>
     )
-
-    this.props.dispatcher.closePopup(PopupType.MultiCommitOperation)
     return dispatcher.onConflictsFoundBanner(
       repository,
       operationDescription,

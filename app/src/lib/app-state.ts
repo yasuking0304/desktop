@@ -11,10 +11,7 @@ import { IMenu } from '../models/app-menu'
 import { IRemote } from '../models/remote'
 import { CloneRepositoryTab } from '../models/clone-repository-tab'
 import { BranchesTab } from '../models/branches-tab'
-import {
-  PullRequest,
-  PullRequestSuggestedNextAction,
-} from '../models/pull-request'
+import { PullRequest } from '../models/pull-request'
 import { IAuthor } from '../models/author'
 import { MergeTreeResult } from '../models/merge'
 import { ICommitMessage } from '../models/commit-message'
@@ -25,6 +22,7 @@ import {
   ICloneProgress,
   IMultiCommitOperationProgress,
 } from '../models/progress'
+import { Popup } from '../models/popup'
 
 import { SignInState } from './stores/sign-in-store'
 
@@ -49,7 +47,6 @@ import {
   MultiCommitOperationStep,
 } from '../models/multi-commit-operation'
 import { IChangesetData } from './git'
-import { Popup } from '../models/popup'
 
 export enum SelectionType {
   Repository,
@@ -148,7 +145,7 @@ export interface IAppState {
    */
   readonly appMenuState: ReadonlyArray<IMenu>
 
-  readonly errorCount: number
+  readonly errors: ReadonlyArray<Error>
 
   /** Map from the emoji shortcut (e.g., :+1:) to the image's local path. */
   readonly emoji: Map<string, string>
@@ -314,11 +311,6 @@ export interface IAppState {
    * Whether or not the user enabled high-signal notifications.
    */
   readonly notificationsEnabled: boolean
-
-  /** The users last chosen pull request suggested next action. */
-  readonly pullRequestSuggestedNextAction:
-    | PullRequestSuggestedNextAction
-    | undefined
 }
 
 export enum FoldoutType {

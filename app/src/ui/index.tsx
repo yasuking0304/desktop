@@ -168,8 +168,8 @@ const sendErrorWithContext = (
           extra.windowZoomFactor = `${currentState.windowZoomFactor}`
         }
 
-        if (currentState.errorCount > 0) {
-          extra.activeAppErrors = `${currentState.errorCount}`
+        if (currentState.errors.length > 0) {
+          extra.activeAppErrors = `${currentState.errors.length}`
         }
 
         extra.repositoryCount = `${currentState.repositories.length}`

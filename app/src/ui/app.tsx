@@ -13,7 +13,6 @@ import { assertNever } from '../lib/fatal-error'
 import { shell } from '../lib/app-shell'
 import { updateStore, UpdateStatus } from './lib/update-store'
 import { RetryAction } from '../models/retry-actions'
-import { FetchType } from '../models/fetch'
 import { shouldRenderApplicationMenu } from './lib/features'
 import { matchExistingRepository } from '../lib/repository-matching'
 import { getDotComAPIEndpoint } from '../lib/api'
@@ -93,10 +92,7 @@ import { RepositoryStateCache } from '../lib/stores/repository-state-cache'
 import { PopupType, Popup } from '../models/popup'
 import { OversizedFiles } from './changes/oversized-files-warning'
 import { PushNeedsPullWarning } from './push-needs-pull'
-import {
-  ForcePushBranchState,
-  getCurrentBranchForcePushState,
-} from '../lib/rebase'
+import { isCurrentBranchForcePush } from '../lib/rebase'
 import { Banner, BannerType } from '../models/banner'
 import { StashAndSwitchBranch } from './stash-changes/stash-and-switch-branch-dialog'
 import { OverwriteStash } from './stash-changes/overwrite-stashed-changes-dialog'
@@ -163,8 +159,6 @@ import { UnreachableCommitsDialog } from './history/unreachable-commits-dialog'
 import { OpenPullRequestDialog } from './open-pull-request/open-pull-request-dialog'
 import { sendNonFatalException } from '../lib/helpers/non-fatal-exception'
 import { createCommitURL } from '../lib/commit-url'
-import { uuid } from '../lib/uuid'
-import { InstallingUpdate } from './installing-update/installing-update'
 
 const MinuteInMilliseconds = 1000 * 60
 const HourInMilliseconds = MinuteInMilliseconds * 60
@@ -221,7 +215,7 @@ export class App extends React.Component<IAppProps, IAppState> {
    * modal dialog such as the preferences, or an error dialog.
    */
   private get isShowingModal() {
-    return this.state.currentPopup !== null
+    return this.state.currentPopup !== null || this.state.errors.length > 0
   }
 
   /**
@@ -229,8 +223,8 @@ export class App extends React.Component<IAppProps, IAppState> {
    * passed popupType, so it can be used in render() without creating
    * multiple instances when the component gets re-rendered.
    */
-  private getOnPopupDismissedFn = memoizeOne((popupId: string) => {
-    return () => this.onPopupDismissed(popupId)
+  private getOnPopupDismissedFn = memoizeOne((popupType: PopupType) => {
+    return () => this.onPopupDismissed(popupType)
   })
 
   public constructor(props: IAppProps) {
@@ -285,14 +279,7 @@ export class App extends React.Component<IAppProps, IAppState> {
     updateStore.onError(error => {
       log.error(`Error checking for updates`, error)
 
-      // It is possible to obtain an error with no message. This was found to be
-      // the case on a windows instance where there was not space on the hard
-      // drive to download the installer. In this case, we want to override the
-      // error message so the user is not given a blank dialog.
-      const hasErrorMsg = error.message.trim().length > 0
-      this.props.dispatcher.postError(
-        hasErrorMsg ? error : new Error('Checking for updates failed.')
-      )
+      this.props.dispatcher.postError(error)
     })
 
     ipcRenderer.on('launch-timing-stats', (_, stats) => {
@@ -360,7 +347,7 @@ export class App extends React.Component<IAppProps, IAppState> {
 
   private onMenuEvent(name: MenuEvent): any {
     // Don't react to menu events when an error dialog is shown.
-    if (name !== 'show-app-error' && this.state.errorCount > 1) {
+    if (this.state.errors.length) {
       return
     }
 
@@ -371,8 +358,6 @@ export class App extends React.Component<IAppProps, IAppState> {
         return this.push({ forceWithLease: true })
       case 'pull':
         return this.pull()
-      case 'fetch':
-        return this.fetch()
       case 'show-changes':
         return this.showChanges()
       case 'show-history':
@@ -437,7 +422,7 @@ export class App extends React.Component<IAppProps, IAppState> {
         return this.goToCommitMessage()
       case 'open-pull-request':
         return this.openPullRequest()
-      case 'preview-pull-request':
+      case 'start-pull-request':
         return this.startPullRequest()
       case 'install-cli':
         return this.props.dispatcher.installCLI()
@@ -459,10 +444,6 @@ export class App extends React.Component<IAppProps, IAppState> {
         return this.findText()
       case 'pull-request-check-run-failed':
         return this.testPullRequestCheckRunFailed()
-      case 'show-app-error':
-        return this.props.dispatcher.postError(
-          new Error('Test Error - to use default error handler' + uuid())
-        )
       default:
         return assertNever(name, `Unknown menu event name: ${name}`)
     }
@@ -968,15 +949,6 @@ export class App extends React.Component<IAppProps, IAppState> {
     this.props.dispatcher.pull(state.repository)
   }
 
-  private async fetch() {
-    const state = this.state.selectedState
-    if (state == null || state.type !== SelectionType.Repository) {
-      return
-    }
-
-    this.props.dispatcher.fetch(state.repository, FetchType.UserInitiatedTask)
-  }
-
   private showStashedChanges() {
     const state = this.state.selectedState
     if (state == null || state.type !== SelectionType.Repository) {
@@ -1387,8 +1359,8 @@ export class App extends React.Component<IAppProps, IAppState> {
     )
   }
 
-  private onPopupDismissed = (popupId: string) => {
-    return this.props.dispatcher.closePopupById(popupId)
+  private onPopupDismissed = (popupType: PopupType) => {
+    return this.props.dispatcher.closePopup(popupType)
   }
 
   private onContinueWithUntrustedCertificate = (
@@ -1404,24 +1376,18 @@ export class App extends React.Component<IAppProps, IAppState> {
     this.props.dispatcher.setUpdateBannerVisibility(false)
 
   private currentPopupContent(): JSX.Element | null {
+    // Hide any dialogs while we're displaying an error
+    if (this.state.errors.length) {
+      return null
+    }
+
     const popup = this.state.currentPopup
 
     if (!popup) {
       return null
     }
 
-    if (popup.id === undefined) {
-      // Should not be possible... but if it does we want to know about it.
-      sendNonFatalException(
-        'PopupNoId',
-        new Error(
-          `Attempted to open a popup of type '${popup.type}' without an Id`
-        )
-      )
-      return null
-    }
-
-    const onPopupDismissedFn = this.getOnPopupDismissedFn(popup.id)
+    const onPopupDismissedFn = this.getOnPopupDismissedFn(popup.type)
 
     switch (popup.type) {
       case PopupType.RenameBranch:
@@ -2338,25 +2304,6 @@ export class App extends React.Component<IAppProps, IAppState> {
           />
         )
       }
-      case PopupType.Error: {
-        return (
-          <AppError
-            error={popup.error}
-            onDismissed={onPopupDismissedFn}
-            onShowPopup={this.showPopup}
-            onRetryAction={this.onRetryAction}
-          />
-        )
-      }
-      case PopupType.InstallingUpdate: {
-        return (
-          <InstallingUpdate
-            key="installing-update"
-            dispatcher={this.props.dispatcher}
-            onDismissed={onPopupDismissedFn}
-          />
-        )
-      }
       default:
         return assertNever(popup, `Unknown popup type: ${popup}`)
     }
@@ -2522,12 +2469,25 @@ export class App extends React.Component<IAppProps, IAppState> {
     return <FullScreenInfo windowState={this.state.windowState} />
   }
 
+  private clearError = (error: Error) => this.props.dispatcher.clearError(error)
+
   private onConfirmDiscardChangesChanged = (value: boolean) => {
     this.props.dispatcher.setConfirmDiscardChangesSetting(value)
   }
 
   private onConfirmDiscardChangesPermanentlyChanged = (value: boolean) => {
     this.props.dispatcher.setConfirmDiscardChangesPermanentlySetting(value)
+  }
+
+  private renderAppError() {
+    return (
+      <AppError
+        errors={this.state.errors}
+        onClearError={this.clearError}
+        onShowPopup={this.showPopup}
+        onRetryAction={this.onRetryAction}
+      />
+    )
   }
 
   private onRetryAction = (retryAction: RetryAction) => {
@@ -2557,6 +2517,7 @@ export class App extends React.Component<IAppProps, IAppState> {
         {this.renderBanner()}
         {this.renderRepository()}
         {this.renderPopup()}
+        {this.renderAppError()}
         {this.renderDragElement()}
       </div>
     )
@@ -2780,9 +2741,7 @@ export class App extends React.Component<IAppProps, IAppState> {
       remoteName = tip.branch.upstreamRemoteName
     }
 
-    const isForcePush =
-      getCurrentBranchForcePushState(branchesState, aheadBehind) ===
-      ForcePushBranchState.Recommended
+    const isForcePush = isCurrentBranchForcePush(branchesState, aheadBehind)
 
     return (
       <PushPullButton
@@ -3050,7 +3009,6 @@ export class App extends React.Component<IAppProps, IAppState> {
           aheadBehindStore={this.props.aheadBehindStore}
           commitSpellcheckEnabled={this.state.commitSpellcheckEnabled}
           onCherryPick={this.startCherryPickWithoutBranch}
-          pullRequestSuggestedNextAction={state.pullRequestSuggestedNextAction}
         />
       )
     } else if (selectedState.type === SelectionType.CloningRepository) {

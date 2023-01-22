@@ -119,9 +119,8 @@ interface ICommitListProps {
   /** Whether or not commits in this list can be reordered. */
   readonly reorderingEnabled?: boolean
 
-  /** Whether a multi commit operation is in progress (in particular the
-   * conflicts resolution step allows interaction with history) */
-  readonly isMultiCommitOperationInProgress?: boolean
+  /** Whether a cherry pick is progress */
+  readonly isCherryPickInProgress?: boolean
 
   /** Callback to render commit drag element */
   readonly onRenderCommitDragElement?: (
@@ -214,12 +213,10 @@ export class CommitList extends React.Component<ICommitListProps, {}> {
         onAmendCommit={this.props.onAmendCommit}
         onViewCommitOnGitHub={this.props.onViewCommitOnGitHub}
         selectedCommits={this.lookupCommits(this.props.selectedSHAs)}
+        isCherryPickInProgress={this.props.isCherryPickInProgress}
         onRenderCommitDragElement={this.onRenderCommitDragElement}
         onRemoveDragElement={this.props.onRemoveCommitDragElement}
         disableSquashing={this.props.disableSquashing}
-        isMultiCommitOperationInProgress={
-          this.props.isMultiCommitOperationInProgress
-        }
       />
     )
   }
@@ -275,9 +272,15 @@ export class CommitList extends React.Component<ICommitListProps, {}> {
   }
 
   private onSelectionChanged = (rows: ReadonlyArray<number>) => {
-    const selectedShas = rows.map(r => this.props.commitSHAs[r])
+    // Multi select can give something like 1, 5, 3 depending on order that user
+    // selects. We want to ensure they are in chronological order for best
+    // cherry-picking results. If user wants to use cherry-picking for
+    // reordering, they will need to do multiple cherry-picks.
+    // Goal: first commit in history -> first on array
+    const sorted = [...rows].sort((a, b) => b - a)
+    const selectedShas = sorted.map(r => this.props.commitSHAs[r])
     const selectedCommits = this.lookupCommits(selectedShas)
-    this.props.onCommitsSelected?.(selectedCommits, this.isContiguous(rows))
+    this.props.onCommitsSelected?.(selectedCommits, this.isContiguous(sorted))
   }
 
   /**
@@ -291,15 +294,13 @@ export class CommitList extends React.Component<ICommitListProps, {}> {
       return true
     }
 
-    const sorted = [...indexes].sort((a, b) => b - a)
-
-    for (let i = 0; i < sorted.length; i++) {
-      const current = sorted[i]
-      if (i + 1 === sorted.length) {
+    for (let i = 0; i < indexes.length; i++) {
+      const current = indexes[i]
+      if (i + 1 === indexes.length) {
         continue
       }
 
-      if (current - 1 !== sorted[i + 1]) {
+      if (current - 1 !== indexes[i + 1]) {
         return false
       }
     }
@@ -373,14 +374,8 @@ export class CommitList extends React.Component<ICommitListProps, {}> {
   }
 
   public render() {
-    const {
-      commitSHAs,
-      selectedSHAs,
-      shasToHighlight,
-      emptyListMessage,
-      reorderingEnabled,
-      isMultiCommitOperationInProgress,
-    } = this.props
+    const { commitSHAs, selectedSHAs, shasToHighlight, emptyListMessage } =
+      this.props
     if (commitSHAs.length === 0) {
       return (
         <div className="panel blankslate">
@@ -407,10 +402,7 @@ export class CommitList extends React.Component<ICommitListProps, {}> {
           selectionMode="multi"
           onScroll={this.onScroll}
           insertionDragType={
-            reorderingEnabled === true &&
-            isMultiCommitOperationInProgress === false
-              ? DragType.Commit
-              : undefined
+            this.props.reorderingEnabled === true ? DragType.Commit : undefined
           }
           invalidationProps={{
             commits: this.props.commitSHAs,

@@ -51,8 +51,8 @@ interface ICommitProps {
   readonly showUnpushedIndicator: boolean
   readonly unpushedIndicatorTitle?: string
   readonly unpushedTags?: ReadonlyArray<string>
+  readonly isCherryPickInProgress?: boolean
   readonly disableSquashing?: boolean
-  readonly isMultiCommitOperationInProgress?: boolean
 }
 
 interface ICommitListItemState {
@@ -126,7 +126,7 @@ export class CommitListItem extends React.PureComponent<
       author: { date },
     } = commit
 
-    const isDraggable = this.isDraggable()
+    const isDraggable = this.canCherryPick()
     const hasEmptySummary = commit.summary.length === 0
     const commitSummary = hasEmptySummary
       ? 'Empty commit message'
@@ -379,34 +379,17 @@ export class CommitListItem extends React.PureComponent<
           ? `Squash ${count} Commits…`
           : `Squash ${count} commits…`,
         action: this.onSquash,
-        enabled: this.canSquash(),
       },
     ]
   }
 
-  private isDraggable(): boolean {
-    const { onCherryPick, onSquash, isMultiCommitOperationInProgress } =
-      this.props
-    return (
-      (onCherryPick !== undefined || onSquash !== undefined) &&
-      isMultiCommitOperationInProgress === false
-    )
-  }
-
   private canCherryPick(): boolean {
-    const { onCherryPick, isMultiCommitOperationInProgress } = this.props
+    const { onCherryPick, isCherryPickInProgress } = this.props
     return (
-      onCherryPick !== undefined && isMultiCommitOperationInProgress === false
-    )
-  }
-
-  private canSquash(): boolean {
-    const { onSquash, disableSquashing, isMultiCommitOperationInProgress } =
-      this.props
-    return (
-      onSquash !== undefined &&
-      disableSquashing === false &&
-      isMultiCommitOperationInProgress === false
+      onCherryPick !== undefined &&
+      this.onSquash !== undefined &&
+      isCherryPickInProgress === false
+      // TODO: isSquashInProgress === false
     )
   }
 

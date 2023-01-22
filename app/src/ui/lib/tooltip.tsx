@@ -299,13 +299,7 @@ export class Tooltip<T extends TooltipTarget> extends React.Component<
     }
   }
 
-  private updateMouseRect = (event: MouseEvent) => {
-    this.mouseRect = new DOMRect(event.clientX - 10, event.clientY - 10, 20, 20)
-  }
-
   private onTargetMouseEnter = (event: MouseEvent) => {
-    this.updateMouseRect(event)
-
     this.mouseOverTarget = true
     this.cancelHideTooltip()
     if (!this.state.show) {
@@ -314,7 +308,7 @@ export class Tooltip<T extends TooltipTarget> extends React.Component<
   }
 
   private onTargetMouseMove = (event: MouseEvent) => {
-    this.updateMouseRect(event)
+    this.mouseRect = new DOMRect(event.clientX - 10, event.clientY - 10, 20, 20)
   }
 
   private onTargetMouseDown = (event: MouseEvent) => {

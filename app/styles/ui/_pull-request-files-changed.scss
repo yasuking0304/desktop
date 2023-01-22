@@ -1,9 +1,4 @@
 .pull-request-files-changed {
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-  flex-grow: 1;
-
   border: var(--base-border);
   border-radius: var(--border-radius);
 
@@ -18,9 +13,8 @@
   }
 
   .files-diff-viewer {
+    height: 500px;
     display: flex;
-    min-height: 0;
-    flex-grow: 1;
   }
 
   .file-list {

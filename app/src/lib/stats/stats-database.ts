@@ -467,18 +467,6 @@ export interface IDailyMeasures {
   /** The number of "checks failed" notifications the user received */
   readonly checksFailedNotificationCount: number
 
-  /**
-   * The number of "checks failed" notifications the user received for a recent
-   * repository other than the selected one.
-   */
-  readonly checksFailedNotificationFromRecentRepoCount: number
-
-  /**
-   * The number of "checks failed" notifications the user received for a
-   * non-recent repository other than the selected one.
-   */
-  readonly checksFailedNotificationFromNonRecentRepoCount: number
-
   /** The number of "checks failed" notifications the user clicked */
   readonly checksFailedNotificationClicked: number
 
@@ -496,18 +484,6 @@ export interface IDailyMeasures {
    * failed" dialog.
    */
   readonly checksFailedDialogRerunChecksCount: number
-
-  /**
-   * The number of PR review notifications the user received for a recent
-   * repository other than the selected one.
-   */
-  readonly pullRequestReviewNotificationFromRecentRepoCount: number
-
-  /**
-   * The number of PR review notifications the user received for a non-recent
-   * repository other than the selected one.
-   */
-  readonly pullRequestReviewNotificationFromNonRecentRepoCount: number
 
   /** The number of "approved PR" notifications the user received */
   readonly pullRequestReviewApprovedNotificationCount: number
