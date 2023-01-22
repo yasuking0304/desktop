@@ -257,7 +257,7 @@ export interface IAPIMentionableUser {
  * Error thrown by `fetchUpdatedPullRequests` when receiving more results than
  * what the `maxResults` parameter allows for.
  */
-export class MaxResultsError extends Error {}
+export class MaxResultsError extends Error { }
 
 /**
  * `null` can be returned by the API for legacy reasons. A non-null value is
@@ -501,11 +501,11 @@ export interface IAPIPullRequestReview {
   readonly html_url: string
   readonly submitted_at: string
   readonly state:
-    | 'APPROVED'
-    | 'DISMISSED'
-    | 'PENDING'
-    | 'COMMENTED'
-    | 'CHANGES_REQUESTED'
+  | 'APPROVED'
+  | 'DISMISSED'
+  | 'PENDING'
+  | 'COMMENTED'
+  | 'CHANGES_REQUESTED'
 }
 
 /** The metadata about a GitHub server. */
@@ -1531,9 +1531,9 @@ export type AuthorizationResponse =
   | { kind: AuthorizationResponseKind.Authorized; token: string }
   | { kind: AuthorizationResponseKind.Failed; response: Response }
   | {
-      kind: AuthorizationResponseKind.TwoFactorAuthenticationRequired
-      type: AuthenticationMode
-    }
+    kind: AuthorizationResponseKind.TwoFactorAuthenticationRequired
+    type: AuthenticationMode
+  }
   | { kind: AuthorizationResponseKind.Error; response: Response }
   | { kind: AuthorizationResponseKind.UserRequiresVerification }
   | { kind: AuthorizationResponseKind.PersonalAccessTokenBlocked }
@@ -1550,7 +1550,9 @@ export async function createAuthorization(
   password: string,
   oneTimePassword: string | null
 ): Promise<AuthorizationResponse> {
-  const creds = Buffer.from(`${login}:${password}`, 'utf8').toString('base64')
+  const creds = __LINUX__ && login === ''
+    ? Buffer.from(`$${password}`, 'utf8').toString('base64')
+    : Buffer.from(`${login}:${password}`, 'utf8').toString('base64')
   const authorization = `Basic ${creds}`
   const optHeader = oneTimePassword ? { 'X-GitHub-OTP': oneTimePassword } : {}
 
@@ -1617,7 +1619,7 @@ export async function createAuthorization(
       if (
         response.status === 403 &&
         apiError.message ===
-          'This API can only be accessed with username and password Basic Auth'
+        'This API can only be accessed with username and password Basic Auth'
       ) {
         // Authorization API does not support providing personal access tokens
         return { kind: AuthorizationResponseKind.PersonalAccessTokenBlocked }
