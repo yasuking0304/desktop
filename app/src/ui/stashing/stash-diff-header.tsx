@@ -12,11 +12,13 @@ interface IStashDiffHeaderProps {
   readonly stashEntry: IStashEntry
   readonly repository: Repository
   readonly dispatcher: Dispatcher
+  readonly askForConfirmationOnDiscardStash: boolean
   readonly isWorkingTreeClean: boolean
 }
 
 interface IStashDiffHeaderState {
   readonly isRestoring: boolean
+  readonly isDiscarding: boolean
 }
 
 /**
@@ -32,23 +34,29 @@ export class StashDiffHeader extends React.Component<
 
     this.state = {
       isRestoring: false,
+      isDiscarding: false,
     }
   }
 
   public render() {
     const { isWorkingTreeClean } = this.props
-    const { isRestoring } = this.state
+    const { isRestoring, isDiscarding } = this.state
 
     return (
       <div className="header">
         <h3>{t('stash-diff-header.stashed-changes', 'Stashed changes')}</h3>
         <div className="row">
           <OkCancelButtonGroup
+
+
+  
             okButtonText={t('stash-diff-header.restore', 'Restore')}
-            okButtonDisabled={isRestoring || !isWorkingTreeClean}
+            okButtonDisabled={
+              isRestoring || !isWorkingTreeClean || isDiscarding
+            }
             onOkButtonClick={this.onRestoreClick}
             cancelButtonText={t('stash-diff-header.discard', 'Discard')}
-            cancelButtonDisabled={isRestoring}
+            cancelButtonDisabled={isRestoring || isDiscarding}
             onCancelButtonClick={this.onDiscardClick}
           />
           {this.renderExplanatoryText()}
@@ -87,13 +95,33 @@ export class StashDiffHeader extends React.Component<
     )
   }
 
-  private onDiscardClick = () => {
-    const { dispatcher, repository, stashEntry } = this.props
-    dispatcher.showPopup({
-      type: PopupType.ConfirmDiscardStash,
-      stash: stashEntry,
+  private onDiscardClick = async () => {
+    const {
+      dispatcher,
       repository,
-    })
+      stashEntry,
+      askForConfirmationOnDiscardStash,
+    } = this.props
+
+    if (!askForConfirmationOnDiscardStash) {
+      this.setState({
+        isDiscarding: true,
+      })
+
+      try {
+        await dispatcher.dropStash(repository, stashEntry)
+      } finally {
+        this.setState({
+          isDiscarding: false,
+        })
+      }
+    } else {
+      dispatcher.showPopup({
+        type: PopupType.ConfirmDiscardStash,
+        stash: stashEntry,
+        repository,
+      })
+    }
   }
 
   private onRestoreClick = async () => {

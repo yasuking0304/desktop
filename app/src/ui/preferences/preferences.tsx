@@ -55,6 +55,7 @@ interface IPreferencesProps {
   readonly confirmRepositoryRemoval: boolean
   readonly confirmDiscardChanges: boolean
   readonly confirmDiscardChangesPermanently: boolean
+  readonly confirmDiscardStash: boolean
   readonly confirmForcePush: boolean
   readonly confirmUndoCommit: boolean
   readonly uncommittedChangesStrategy: UncommittedChangesStrategy
@@ -80,6 +81,7 @@ interface IPreferencesState {
   readonly confirmRepositoryRemoval: boolean
   readonly confirmDiscardChanges: boolean
   readonly confirmDiscardChangesPermanently: boolean
+  readonly confirmDiscardStash: boolean
   readonly confirmForcePush: boolean
   readonly confirmUndoCommit: boolean
   readonly uncommittedChangesStrategy: UncommittedChangesStrategy
@@ -122,6 +124,7 @@ export class Preferences extends React.Component<
       confirmRepositoryRemoval: false,
       confirmDiscardChanges: false,
       confirmDiscardChangesPermanently: false,
+      confirmDiscardStash: false,
       confirmForcePush: false,
       confirmUndoCommit: false,
       uncommittedChangesStrategy: defaultUncommittedChangesStrategy,
@@ -179,6 +182,7 @@ export class Preferences extends React.Component<
       confirmDiscardChanges: this.props.confirmDiscardChanges,
       confirmDiscardChangesPermanently:
         this.props.confirmDiscardChangesPermanently,
+      confirmDiscardStash: this.props.confirmDiscardStash,
       confirmForcePush: this.props.confirmForcePush,
       confirmUndoCommit: this.props.confirmUndoCommit,
       uncommittedChangesStrategy: this.props.uncommittedChangesStrategy,
@@ -338,12 +342,14 @@ export class Preferences extends React.Component<
             confirmDiscardChangesPermanently={
               this.state.confirmDiscardChangesPermanently
             }
+            confirmDiscardStash={this.state.confirmDiscardStash}
             confirmForcePush={this.state.confirmForcePush}
             confirmUndoCommit={this.state.confirmUndoCommit}
             onConfirmRepositoryRemovalChanged={
               this.onConfirmRepositoryRemovalChanged
             }
             onConfirmDiscardChangesChanged={this.onConfirmDiscardChangesChanged}
+            onConfirmDiscardStashChanged={this.onConfirmDiscardStashChanged}
             onConfirmForcePushChanged={this.onConfirmForcePushChanged}
             onConfirmDiscardChangesPermanentlyChanged={
               this.onConfirmDiscardChangesPermanentlyChanged
@@ -413,6 +419,10 @@ export class Preferences extends React.Component<
 
   private onConfirmDiscardChangesChanged = (value: boolean) => {
     this.setState({ confirmDiscardChanges: value })
+  }
+
+  private onConfirmDiscardStashChanged = (value: boolean) => {
+    this.setState({ confirmDiscardStash: value })
   }
 
   private onConfirmDiscardChangesPermanentlyChanged = (value: boolean) => {
@@ -565,6 +575,10 @@ export class Preferences extends React.Component<
 
     await this.props.dispatcher.setConfirmForcePushSetting(
       this.state.confirmForcePush
+    )
+
+    await this.props.dispatcher.setConfirmDiscardStashSetting(
+      this.state.confirmDiscardStash
     )
 
     await this.props.dispatcher.setConfirmUndoCommitSetting(

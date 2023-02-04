@@ -46,7 +46,7 @@ export function enableWSLDetection(): boolean {
  * Should we use the new diff viewer for unified diffs?
  */
 export function enableExperimentalDiffViewer(): boolean {
-  return false
+  return enableBetaFeatures()
 }
 
 /**
@@ -100,10 +100,30 @@ export function enablePullRequestQuickView(): boolean {
 
 /** Should we enable displaying multi commit diffs. This also switches diff logic from one commit */
 export function enableMultiCommitDiffs(): boolean {
-  return enableBetaFeatures()
+  return true
 }
 
 /** Should we enable the new interstitial for submodule diffs? */
 export function enableSubmoduleDiff(): boolean {
+  return true
+}
+
+/** Should we enable starting pull requests? */
+export function enableStartingPullRequests(): boolean {
+  return enableBetaFeatures()
+}
+
+/** Should we enable starting pull requests? */
+export function enableStackedPopups(): boolean {
+  return enableBetaFeatures()
+}
+
+/** Should we enable mechanism to prevent closing while the app is updating? */
+export function enablePreventClosingWhileUpdating(): boolean {
+  return true
+}
+
+/** Should we enable the new push-pull-fetch dropdown? */
+export function enablePushPullFetchDropdown(): boolean {
   return enableBetaFeatures()
 }

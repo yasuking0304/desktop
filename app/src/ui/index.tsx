@@ -169,8 +169,8 @@ const sendErrorWithContext = (
           extra.windowZoomFactor = `${currentState.windowZoomFactor}`
         }
 
-        if (currentState.errors.length > 0) {
-          extra.activeAppErrors = `${currentState.errors.length}`
+        if (currentState.errorCount > 0) {
+          extra.activeAppErrors = `${currentState.errorCount}`
         }
 
         extra.repositoryCount = `${currentState.repositories.length}`
@@ -252,7 +252,7 @@ const pullRequestCoordinator = new PullRequestCoordinator(
   repositoriesStore
 )
 
-const repositoryStateManager = new RepositoryStateCache()
+const repositoryStateManager = new RepositoryStateCache(statsStore)
 
 const apiRepositoriesStore = new ApiRepositoriesStore(accountsStore)
 

@@ -11,6 +11,7 @@ body > .tooltip,
   max-width: 300px;
 
   word-wrap: break-word;
+  word-break: break-word;
   overflow-wrap: break-word;
 
   background-color: var(--tooltip-background-color);
@@ -190,6 +191,10 @@ body > .tooltip,
 
       .files-deleted-icon {
         color: var(--color-deleted);
+      }
+
+      .files-renamed-icon {
+        color: var(--color-renamed);
       }
 
       .octicon {

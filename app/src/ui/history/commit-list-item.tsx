@@ -52,8 +52,8 @@ interface ICommitProps {
   readonly showUnpushedIndicator: boolean
   readonly unpushedIndicatorTitle?: string
   readonly unpushedTags?: ReadonlyArray<string>
-  readonly isCherryPickInProgress?: boolean
   readonly disableSquashing?: boolean
+  readonly isMultiCommitOperationInProgress?: boolean
 }
 
 interface ICommitListItemState {
@@ -127,7 +127,7 @@ export class CommitListItem extends React.PureComponent<
       author: { date },
     } = commit
 
-    const isDraggable = this.canCherryPick()
+    const isDraggable = this.isDraggable()
     const hasEmptySummary = commit.summary.length === 0
     const commitSummary = hasEmptySummary
       ? t('commit-list-item.empty-commit-message', 'Empty commit message')
@@ -218,6 +218,10 @@ export class CommitListItem extends React.PureComponent<
 
   private onCopySHA = () => {
     clipboard.writeText(this.props.commit.sha)
+  }
+
+  private onCopyTags = () => {
+    clipboard.writeText(this.props.commit.tags.join(' '))
   }
 
   private onViewOnGitHub = () => {
@@ -366,7 +370,10 @@ export class CommitListItem extends React.PureComponent<
         deleteTagsMenuItem
       )
     }
-
+    const darwinTagsLabel =
+      this.props.commit.tags.length > 1 ? 'Copy Tags' : 'Copy Tag'
+    const windowTagsLabel =
+      this.props.commit.tags.length > 1 ? 'Copy tags' : 'Copy tag'
     items.push(
       {
         label: __DARWIN__
@@ -382,6 +389,11 @@ export class CommitListItem extends React.PureComponent<
       {
         label: t('commit-list-item.copy-sha', 'Copy SHA'),
         action: this.onCopySHA,
+      },
+      {
+        label: __DARWIN__ ? darwinTagsLabel : windowTagsLabel,
+        action: this.onCopyTags,
+        enabled: this.props.commit.tags.length > 0,
       },
       {
         label: viewOnGitHubLabel,
@@ -423,17 +435,34 @@ export class CommitListItem extends React.PureComponent<
               0: count,
             }),
         action: this.onSquash,
+        enabled: this.canSquash(),
       },
     ]
   }
 
-  private canCherryPick(): boolean {
-    const { onCherryPick, isCherryPickInProgress } = this.props
+  private isDraggable(): boolean {
+    const { onCherryPick, onSquash, isMultiCommitOperationInProgress } =
+      this.props
     return (
-      onCherryPick !== undefined &&
-      this.onSquash !== undefined &&
-      isCherryPickInProgress === false
-      // TODO: isSquashInProgress === false
+      (onCherryPick !== undefined || onSquash !== undefined) &&
+      isMultiCommitOperationInProgress === false
+    )
+  }
+
+  private canCherryPick(): boolean {
+    const { onCherryPick, isMultiCommitOperationInProgress } = this.props
+    return (
+      onCherryPick !== undefined && isMultiCommitOperationInProgress === false
+    )
+  }
+
+  private canSquash(): boolean {
+    const { onSquash, disableSquashing, isMultiCommitOperationInProgress } =
+      this.props
+    return (
+      onSquash !== undefined &&
+      disableSquashing === false &&
+      isMultiCommitOperationInProgress === false
     )
   }
 

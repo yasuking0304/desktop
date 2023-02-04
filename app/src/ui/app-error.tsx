@@ -9,7 +9,6 @@ import {
 import { dialogTransitionTimeout } from './app'
 import { GitError, isAuthFailureError } from '../lib/git/core'
 import { Popup, PopupType } from '../models/popup'
-import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import { OkCancelButtonGroup } from './dialog/ok-cancel-button-group'
 import { ErrorWithMetadata } from '../lib/error-with-metadata'
 import { RetryActionType, RetryAction } from '../models/retry-actions'
@@ -19,14 +18,11 @@ import { parseCarriageReturn } from '../lib/parse-carriage-return'
 import { t } from 'i18next'
 
 interface IAppErrorProps {
-  /** The list of queued, app-wide, errors  */
-  readonly errors: ReadonlyArray<Error>
+  /** The error to be displayed  */
+  readonly error: Error
 
-  /**
-   * A callback which is used whenever a particular error
-   * has been shown to, and been dismissed by, the user.
-   */
-  readonly onClearError: (error: Error) => void
+  /** Called to dismiss the dialog */
+  readonly onDismissed: () => void
   readonly onShowPopup: (popupType: Popup) => void | undefined
   readonly onRetryAction: (retryAction: RetryAction) => void
 }
@@ -54,13 +50,13 @@ export class AppError extends React.Component<IAppErrorProps, IAppErrorState> {
   public constructor(props: IAppErrorProps) {
     super(props)
     this.state = {
-      error: props.errors[0] || null,
+      error: props.error,
       disabled: false,
     }
   }
 
   public componentWillReceiveProps(nextProps: IAppErrorProps) {
-    const error = nextProps.errors[0] || null
+    const error = nextProps.error
 
     // We keep the currently shown error until it has disappeared
     // from the first spot in the application error queue.
@@ -69,23 +65,8 @@ export class AppError extends React.Component<IAppErrorProps, IAppErrorState> {
     }
   }
 
-  private onDismissed = () => {
-    const currentError = this.state.error
-
-    if (currentError !== null) {
-      this.setState({ error: null, disabled: true })
-
-      // Give some time for the dialog to nicely transition
-      // out before we clear the error and, potentially, deal
-      // with the next error in the queue.
-      window.setTimeout(() => {
-        this.props.onClearError(currentError)
-      }, dialogTransitionTimeout.exit)
-    }
-  }
-
   private showPreferencesDialog = () => {
-    this.onDismissed()
+    this.props.onDismissed()
 
     //This is a hacky solution to resolve multiple dialog windows
     //being open at the same time.
@@ -96,7 +77,7 @@ export class AppError extends React.Component<IAppErrorProps, IAppErrorState> {
 
   private onRetryAction = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
-    this.onDismissed()
+    this.props.onDismissed()
 
     const { error } = this.state
 
@@ -127,36 +108,6 @@ export class AppError extends React.Component<IAppErrorProps, IAppErrorState> {
     }
 
     return t('common.error', 'Error')
-  }
-
-  private renderDialog() {
-    const error = this.state.error
-
-    if (!error) {
-      return null
-    }
-
-    return (
-      <Dialog
-        id="app-error"
-        type="error"
-        key="error"
-        title={this.getTitle(error)}
-        dismissable={false}
-        onSubmit={this.onDismissed}
-        onDismissed={this.onDismissed}
-        disabled={this.state.disabled}
-        className={
-          isRawGitError(this.state.error) ? 'raw-git-error' : undefined
-        }
-      >
-        <DialogContent onRef={this.onDialogContentRef}>
-          {this.renderErrorMessage(error)}
-          {this.renderContentAfterErrorMessage(error)}
-        </DialogContent>
-        {this.renderFooter(error)}
-      </Dialog>
-    )
   }
 
   private renderContentAfterErrorMessage(error: Error) {
@@ -208,7 +159,7 @@ export class AppError extends React.Component<IAppErrorProps, IAppErrorState> {
 
   private onCloseButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    this.onDismissed()
+    this.props.onDismissed()
   }
 
   private renderFooter(error: Error) {
@@ -266,16 +217,32 @@ export class AppError extends React.Component<IAppErrorProps, IAppErrorState> {
   }
 
   public render() {
-    const dialogContent = this.renderDialog()
+    const error = this.state.error
+
+    if (!error) {
+      return null
+    }
 
     return (
-      <TransitionGroup>
-        {dialogContent && (
-          <CSSTransition classNames="modal" timeout={dialogTransitionTimeout}>
-            {dialogContent}
-          </CSSTransition>
-        )}
-      </TransitionGroup>
+      <Dialog
+        id="app-error"
+        type="error"
+        key="error"
+        title={this.getTitle(error)}
+        dismissable={false}
+        onSubmit={this.props.onDismissed}
+        onDismissed={this.props.onDismissed}
+        disabled={this.state.disabled}
+        className={
+          isRawGitError(this.state.error) ? 'raw-git-error' : undefined
+        }
+      >
+        <DialogContent onRef={this.onDialogContentRef}>
+          {this.renderErrorMessage(error)}
+          {this.renderContentAfterErrorMessage(error)}
+        </DialogContent>
+        {this.renderFooter(error)}
+      </Dialog>
     )
   }
 }

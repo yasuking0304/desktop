@@ -111,6 +111,9 @@ interface IBranchListProps {
 
   /** Called to render content before/above the branches filter and list. */
   readonly renderPreList?: () => JSX.Element | null
+
+  /** Optional: No branches message */
+  readonly noBranchesMessage?: string | JSX.Element
 }
 
 interface IBranchListState {
@@ -256,6 +259,7 @@ export class BranchList extends React.Component<
       <NoBranches
         onCreateNewBranch={this.onCreateNewBranch}
         canCreateNewBranch={this.props.canCreateNewBranch}
+        noBranchesMessage={this.props.noBranchesMessage}
       />
     )
   }

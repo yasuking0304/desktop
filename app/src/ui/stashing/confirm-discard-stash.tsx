@@ -5,17 +5,20 @@ import { Dispatcher } from '../dispatcher'
 import { Row } from '../lib/row'
 import { IStashEntry } from '../../models/stash-entry'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
+import { Checkbox, CheckboxValue } from '../lib/checkbox'
 import { t } from 'i18next'
 
 interface IConfirmDiscardStashProps {
   readonly dispatcher: Dispatcher
   readonly repository: Repository
   readonly stash: IStashEntry
+  readonly askForConfirmationOnDiscardStash: boolean
   readonly onDismissed: () => void
 }
 
 interface IConfirmDiscardStashState {
   readonly isDiscarding: boolean
+  readonly confirmDiscardStash: boolean
 }
 /**
  * Dialog to confirm dropping a stash
@@ -29,6 +32,7 @@ export class ConfirmDiscardStashDialog extends React.Component<
 
     this.state = {
       isDiscarding: false,
+      confirmDiscardStash: props.askForConfirmationOnDiscardStash,
     }
   }
 
@@ -54,6 +58,17 @@ export class ConfirmDiscardStashDialog extends React.Component<
               'Are you sure you want to discard these stashed changes?'
             )}
           </Row>
+          <Row>
+            <Checkbox
+              label="Do not show this message again"
+              value={
+                this.state.confirmDiscardStash
+                  ? CheckboxValue.Off
+                  : CheckboxValue.On
+              }
+              onChange={this.onAskForConfirmationOnDiscardStashChanged}
+            />
+          </Row>
         </DialogContent>
         <DialogFooter>
           <OkCancelButtonGroup
@@ -65,6 +80,14 @@ export class ConfirmDiscardStashDialog extends React.Component<
     )
   }
 
+  private onAskForConfirmationOnDiscardStashChanged = (
+    event: React.FormEvent<HTMLInputElement>
+  ) => {
+    const value = !event.currentTarget.checked
+
+    this.setState({ confirmDiscardStash: value })
+  }
+
   private onSubmit = async () => {
     const { dispatcher, repository, stash, onDismissed } = this.props
 
@@ -73,6 +96,7 @@ export class ConfirmDiscardStashDialog extends React.Component<
     })
 
     try {
+      dispatcher.setConfirmDiscardStashSetting(this.state.confirmDiscardStash)
       await dispatcher.dropStash(repository, stash)
     } finally {
       this.setState({
