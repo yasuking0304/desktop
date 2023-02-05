@@ -60,9 +60,7 @@ export class NoBranches extends React.Component<INoBranchesProps> {
     }
 
     return (
-      <div className="no-branches">
-        {this.props.noBranchesMessage ?? "Sorry, I can't find that branch"}
-      </div>
+      <div className="no-branches">Sorry, I can't find that branch"</div>
     )
   }
 

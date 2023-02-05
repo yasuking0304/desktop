@@ -370,11 +370,11 @@ export function buildDefaultMenu({
       {
         label: __DARWIN__
           ? t('menu.open-in-shell-darwin', 'Open in {{0}}', {
-              0: selectedShell ?? platformDefaultShell,
-            })
+            0: selectedShell ?? platformDefaultShell,
+          })
           : t('menu.open-in-shell', 'O&pen in {{0}}', {
-              0: selectedShell ?? platformDefaultShell,
-            }),
+            0: selectedShell ?? platformDefaultShell,
+          }),
         id: 'open-in-shell',
         accelerator: 'Ctrl+`',
         click: emit('open-in-shell'),
@@ -383,8 +383,8 @@ export function buildDefaultMenu({
         label: __DARWIN__
           ? t('menu.open-working-directory-darwin', 'Show in Finder')
           : __WIN32__
-          ? t('menu.open-working-directory', 'Show in E&xplorer')
-          : t('menu.open-working-directory-linux', 'Show in your File Manager'),
+            ? t('menu.open-working-directory', 'Show in E&xplorer')
+            : t('menu.open-working-directory-linux', 'Show in your File Manager'),
         id: 'open-working-directory',
         accelerator: 'CmdOrCtrl+Shift+F',
         click: emit('open-working-directory'),
@@ -392,11 +392,11 @@ export function buildDefaultMenu({
       {
         label: __DARWIN__
           ? t('menu.open-in-external-editor-darwin', `Open in {{0}}`, {
-              0: selectedExternalEditor ?? 'External Editor',
-            })
+            0: selectedExternalEditor ?? 'External Editor',
+          })
           : t('menu.open-in-external-editor', `&Open in {{0}}`, {
-              0: selectedExternalEditor ?? 'external editor',
-            }),
+            0: selectedExternalEditor ?? 'external editor',
+          }),
         id: 'open-external-editor',
         accelerator: 'CmdOrCtrl+Shift+A',
         click: emit('open-external-editor'),
@@ -467,11 +467,11 @@ export function buildDefaultMenu({
     {
       label: __DARWIN__
         ? t('menu.update-branch-from-darwin', `Update from {{0}}`, {
-            0: contributionTargetDefaultBranch,
-          })
+          0: contributionTargetDefaultBranch,
+        })
         : t('menu.update-branch-from', `&Update from {{0}}`, {
-            0: contributionTargetDefaultBranch,
-          }),
+          0: contributionTargetDefaultBranch,
+        }),
       id: 'update-branch-with-contribution-target-branch',
       accelerator: 'CmdOrCtrl+Shift+U',
       click: emit('update-branch-with-contribution-target-branch'),
@@ -495,13 +495,13 @@ export function buildDefaultMenu({
     {
       label: __DARWIN__
         ? t(
-            'menu.squash-and-merge-into-branch-darwin',
-            'Squash and Merge into Current Branch…'
-          )
+          'menu.squash-and-merge-into-branch-darwin',
+          'Squash and Merge into Current Branch…'
+        )
         : t(
-            'menu.squash-and-merge-into-branch',
-            'Squas&h and merge into current branch…'
-          ),
+          'menu.squash-and-merge-into-branch',
+          'Squas&h and merge into current branch…'
+        ),
       id: 'squash-and-merge-branch',
       accelerator: 'CmdOrCtrl+Shift+H',
       click: emit('squash-and-merge-branch'),
@@ -581,19 +581,6 @@ export function buildDefaultMenu({
     },
   }
 
-  const contactSupportItem: Electron.MenuItemConstructorOptions = {
-    label: __DARWIN__
-      ? t('menu.contact-github-support-darwin', 'Contact GitHub Support…')
-      : t('menu.contact-github-support', '&Contact GitHub support…'),
-    click() {
-      shell
-        .openExternal(
-          `https://github.com/contact?from_desktop_app=1&app_version=${app.getVersion()}`
-        )
-        .catch(err => log.error('Failed opening contact support page', err))
-    },
-  }
-
   const showUserGuides: Electron.MenuItemConstructorOptions = {
     label: t('menu.show-user-guides', 'Show User Guides'),
     click() {
@@ -624,8 +611,8 @@ export function buildDefaultMenu({
   const showLogsLabel = __DARWIN__
     ? t('menu.show-logs-in-finder-darwin', 'Show Logs in Finder')
     : __WIN32__
-    ? t('menu.show-logs-in-finder', 'S&how logs in Explorer')
-    : t('menu.show-logs-in-finder-linux', 'S&how logs in your File Manager')
+      ? t('menu.show-logs-in-finder', 'S&how logs in Explorer')
+      : t('menu.show-logs-in-finder-linux', 'S&how logs in your File Manager')
 
   const showLogsItem: Electron.MenuItemConstructorOptions = {
     label: showLogsLabel,
@@ -639,7 +626,6 @@ export function buildDefaultMenu({
 
   const helpItems = [
     submitIssueItem,
-    contactSupportItem,
     showUserGuides,
     showKeyboardShortcuts,
     showLogsItem,

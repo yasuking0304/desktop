@@ -660,8 +660,8 @@ export class NoChanges extends React.Component<
         aheadBehind.ahead === 1
           ? t('no-changes.one-local-commit', '1 local commit')
           : t('no-changes.number-local-commits', `{{0}} local commits`, {
-              0: aheadBehind.ahead,
-            })
+            0: aheadBehind.ahead,
+          })
       )
     }
 
@@ -750,62 +750,6 @@ export class NoChanges extends React.Component<
       'no-changes.create-pull-request',
       `Create Pull Request`
     )
-
-    if (!enableStartingPullRequests()) {
-      return (
-        <MenuBackedSuggestedAction
-          key="create-pr-action"
-          title={title}
-          menuItemId={'create-pull-request'}
-          description={description}
-          buttonText={buttonText}
-          discoverabilityContent={this.renderDiscoverabilityElements(
-            createMenuItem
-          )}
-          type="primary"
-          disabled={!createMenuItem.enabled}
-          onClick={this.onCreatePullRequestClicked}
-        />
-      )
-    }
-
-    const previewPullMenuItem = this.getMenuItemInfo('preview-pull-request')
-
-    if (previewPullMenuItem === undefined) {
-      log.error(`Could not find matching menu item for 'preview-pull-request'`)
-      return null
-    }
-
-    const createPullRequestAction: IDropdownSuggestedActionOption<PullRequestSuggestedNextAction> =
-      {
-        title,
-        label: buttonText,
-        description,
-        value: PullRequestSuggestedNextAction.CreatePullRequest,
-        menuItemId: 'create-pull-request',
-        discoverabilityContent:
-          this.renderDiscoverabilityElements(createMenuItem),
-        disabled: !createMenuItem.enabled,
-        onClick: this.onCreatePullRequestClicked,
-      }
-
-    const previewPullRequestAction: IDropdownSuggestedActionOption<PullRequestSuggestedNextAction> =
-      {
-        title: `Preview the Pull Request from your current branch`,
-        label: 'Preview Pull Request',
-        description: (
-          <>
-            The current branch (<Ref>{tip.branch.name}</Ref>) is already
-            published to GitHub. Preview the changes this pull request will have
-            before proposing your changes.
-          </>
-        ),
-        value: PullRequestSuggestedNextAction.PreviewPullRequest,
-        menuItemId: 'preview-pull-request',
-        discoverabilityContent:
-          this.renderDiscoverabilityElements(previewPullMenuItem),
-        disabled: !previewPullMenuItem.enabled,
-      }
 
     return (
       <MenuBackedSuggestedAction
