@@ -319,6 +319,9 @@ export class SelectedCommits extends React.Component<
       __dirname,
       'static/empty-no-commit.svg'
     )
+    const nonConsecutiveCommit = enableMultiCommitDiffs()
+      ? t('selected-commits.non-consecutive-commits', 'non-consecutive commits')
+      : t('selected-commits.commits', 'commits')
 
     return (
       <div id="multiple-commits-selected" className="blankslate">
