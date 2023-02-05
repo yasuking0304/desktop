@@ -20,6 +20,7 @@ import {
 } from './group-branches'
 import { NoBranches } from './no-branches'
 import { SelectionDirection, ClickSource } from '../lib/list'
+import { t } from 'i18next'
 
 const RowHeight = 30
 
@@ -234,11 +235,17 @@ export class BranchList extends React.Component<
 
   private getGroupLabel(identifier: BranchGroupIdentifier) {
     if (identifier === 'default') {
-      return __DARWIN__ ? 'Default Branch' : 'Default branch'
+      return __DARWIN__
+        ? t('branch-list.default-branch-darwin', 'Default Branch')
+        : t('branch-list.default-branch', 'Default branch')
     } else if (identifier === 'recent') {
-      return __DARWIN__ ? 'Recent Branches' : 'Recent branches'
+      return __DARWIN__
+        ? t('branch-list.recent-branch-darwin', 'Recent Branches')
+        : t('branch-list.recent-branch', 'Recent branches')
     } else if (identifier === 'other') {
-      return __DARWIN__ ? 'Other Branches' : 'Other branches'
+      return __DARWIN__
+        ? t('branch-list.other-branch-darwin', 'Other Branches')
+        : t('branch-list.other-branch', 'Other branches')
     } else {
       return assertNever(identifier, `Unknown identifier: ${identifier}`)
     }
@@ -256,7 +263,9 @@ export class BranchList extends React.Component<
   private onRenderNewButton = () => {
     return this.props.canCreateNewBranch ? (
       <Button className="new-branch-button" onClick={this.onCreateNewBranch}>
-        {__DARWIN__ ? 'New Branch' : 'New branch'}
+        {__DARWIN__
+          ? t('branch-list.new-branch-darwin', 'New Branch')
+          : t('branch-list.new-branch', 'New branch')}
       </Button>
     ) : null
   }

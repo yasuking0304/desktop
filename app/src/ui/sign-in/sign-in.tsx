@@ -20,6 +20,7 @@ import { getWelcomeMessage } from '../../lib/2fa'
 import { getDotComAPIEndpoint } from '../../lib/api'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
 import { Button } from '../lib/button'
+import { t } from 'i18next'
 
 interface ISignInProps {
   readonly dispatcher: Dispatcher
@@ -35,10 +36,10 @@ interface ISignInState {
 }
 
 const SignInWithBrowserTitle = __DARWIN__
-  ? 'Sign in Using Your Browser'
-  : 'Sign in using your browser'
+  ? t('sign-in.sign-in-browser-darwin', 'Sign in Using Your Browser')
+  : t('sign-in.sign-in-browser', 'Sign in using your browser')
 
-const DefaultTitle = 'Sign in'
+const DefaultTitle = t('common.sign-in', 'Sign in')
 
 export class SignIn extends React.Component<ISignInProps, ISignInState> {
   public constructor(props: ISignInProps) {
@@ -132,24 +133,24 @@ export class SignIn extends React.Component<ISignInProps, ISignInState> {
     switch (state.kind) {
       case SignInStep.EndpointEntry:
         disableSubmit = this.state.endpoint.length === 0
-        primaryButtonText = 'Continue'
+        primaryButtonText = t('common.continue', 'Continue')
         break
       case SignInStep.TwoFactorAuthentication:
         // ensure user has entered non-whitespace characters
         const codeProvided = /\S+/.test(this.state.otpToken)
         disableSubmit = !codeProvided
-        primaryButtonText = 'Sign in'
+        primaryButtonText = t('common.sign-in', 'Sign in')
         break
       case SignInStep.Authentication:
         if (!state.supportsBasicAuth) {
           primaryButtonText = __DARWIN__
-            ? 'Continue With Browser'
-            : 'Continue with browser'
+            ? t('sign-in.continue-with-browser-darwin', 'Continue With Browser')
+            : t('sign-in.continue-with-browser', 'Continue with browser')
         } else {
           const validUserName = this.state.username.length > 0
           const validPassword = this.state.password.length > 0
           disableSubmit = !validUserName || !validPassword
-          primaryButtonText = 'Sign in'
+          primaryButtonText = t('common.sign-in', 'Sign in')
         }
         break
       default:
@@ -171,7 +172,7 @@ export class SignIn extends React.Component<ISignInProps, ISignInState> {
       <DialogContent>
         <Row>
           <TextBox
-            label="Enterprise address"
+            label={t('common.enterprise-address', 'Enterprise address')}
             value={this.state.endpoint}
             onValueChanged={this.onEndpointChanged}
             placeholder="https://github.example.com"
@@ -187,13 +188,19 @@ export class SignIn extends React.Component<ISignInProps, ISignInState> {
         return (
           <DialogContent>
             <p>
-              To improve the security of your account, GitHub now requires you
-              to sign in through your browser.
+              {t(
+                'sign-in.to-improve-the-security-of-your-account',
+                `To improve the security of your account, GitHub now requires you
+              to sign in through your browser.`
+              )}
             </p>
             <p>
-              Your browser will redirect you back to GitHub Desktop once you've
-              signed in. If your browser asks for your permission to launch
-              GitHub Desktop please allow it to.
+              {t(
+                'sign-in.your-browser-will-redirect-you-back',
+                `Your browser will redirect you back to GitHub Desktop once
+              you've signed in. If your browser asks for your permission to
+              launch GitHub Desktop please allow it to.`
+              )}
             </p>
           </DialogContent>
         )
@@ -201,8 +208,11 @@ export class SignIn extends React.Component<ISignInProps, ISignInState> {
         return (
           <DialogContent>
             <p>
-              Your GitHub Enterprise instance requires you to sign in with your
-              browser.
+              {t(
+                'sign-in.your-gitHub-enterprise-instance-requires',
+                `Your GitHub Enterprise instance requires you to sign in with
+                your browser.`
+              )}
             </p>
           </DialogContent>
         )
@@ -219,7 +229,7 @@ export class SignIn extends React.Component<ISignInProps, ISignInState> {
             onClick={this.onSignInWithBrowser}
             disabled={disableSubmit}
           >
-            Sign in using your browser
+            {t('sign-in.sign-in-browser', 'Sign in using your browser')}
             <Octicon symbol={OcticonSymbol.linkExternal} />
           </Button>
         </Row>
@@ -230,14 +240,14 @@ export class SignIn extends React.Component<ISignInProps, ISignInState> {
 
         <Row>
           <TextBox
-            label="Username or email address"
+            label={t('common.username-or-email', 'Username or email address')}
             value={this.state.username}
             onValueChanged={this.onUsernameChanged}
           />
         </Row>
         <Row>
           <TextBox
-            label="Password"
+            label={t('common.password', 'Password')}
             value={this.state.password}
             type="password"
             onValueChanged={this.onPasswordChanged}
@@ -248,7 +258,7 @@ export class SignIn extends React.Component<ISignInProps, ISignInState> {
             className="forgot-password-link-sign-in"
             uri={state.forgotPasswordUrl}
           >
-            Forgot password?
+            {t('common.forgot-password', 'Forgot password?')}
           </LinkButton>
         </Row>
       </DialogContent>
@@ -263,7 +273,7 @@ export class SignIn extends React.Component<ISignInProps, ISignInState> {
         <p>{getWelcomeMessage(state.type)}</p>
         <Row>
           <TextBox
-            label="Authentication code"
+            label={t('common.authentication-code', 'Authentication code')}
             value={this.state.otpToken}
             onValueChanged={this.onOTPTokenChanged}
             autoFocus={true}

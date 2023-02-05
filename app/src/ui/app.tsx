@@ -159,6 +159,7 @@ import { UnreachableCommitsDialog } from './history/unreachable-commits-dialog'
 import { OpenPullRequestDialog } from './open-pull-request/open-pull-request-dialog'
 import { sendNonFatalException } from '../lib/helpers/non-fatal-exception'
 import { createCommitURL } from '../lib/commit-url'
+import { t } from 'i18next'
 
 const MinuteInMilliseconds = 1000 * 60
 const HourInMilliseconds = MinuteInMilliseconds * 60
@@ -549,7 +550,7 @@ export class App extends React.Component<IAppProps, IAppState> {
       pullRequest,
       repository,
       shouldChangeRepository: true,
-      commitMessage: 'Adding this feature',
+      commitMessage: t('app.adding-this-feature', 'Adding this feature'),
       commitSha: pullRequest.head.sha,
       checks,
     }
@@ -2637,10 +2638,14 @@ export class App extends React.Component<IAppProps, IAppState> {
       title = alias ?? repository.name
     } else if (this.state.repositories.length > 0) {
       icon = OcticonSymbol.repo
-      title = __DARWIN__ ? 'Select a Repository' : 'Select a repository'
+      title = __DARWIN__
+        ? t('app.select-a-repository-darwin', 'Select a Repository')
+        : t('app.select-a-repository', 'Select a repository')
     } else {
       icon = OcticonSymbol.repo
-      title = __DARWIN__ ? 'No Repositories' : 'No repositories'
+      title = __DARWIN__
+        ? t('app.no-repositories-darwin', 'No Repositories')
+        : t('app.no-repositories', 'No repositories')
     }
 
     const isOpen =
@@ -2666,7 +2671,11 @@ export class App extends React.Component<IAppProps, IAppState> {
       <ToolbarDropdown
         icon={icon}
         title={title}
-        description={__DARWIN__ ? 'Current Repository' : 'Current repository'}
+        description={
+          __DARWIN__
+            ? t('app.current-repository-darwin', 'Current Repository')
+            : t('app.current-repository', 'Current repository')
+        }
         tooltip={tooltip}
         foldoutStyle={foldoutStyle}
         onContextMenu={this.onRepositoryToolbarButtonContextMenu}

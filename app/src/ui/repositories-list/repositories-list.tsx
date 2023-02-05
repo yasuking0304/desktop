@@ -22,6 +22,7 @@ import { PopupType } from '../../models/popup'
 import { encodePathAsUrl } from '../../lib/path'
 import { TooltippedContent } from '../lib/tooltipped-content'
 import memoizeOne from 'memoize-one'
+import { t } from 'i18next'
 
 const BlankSlateImage = encodePathAsUrl(__dirname, 'static/empty-no-repo.svg')
 
@@ -159,7 +160,7 @@ export class RepositoriesList extends React.Component<
     if (identifier === KnownRepositoryGroup.Enterprise) {
       return 'Enterprise'
     } else if (identifier === KnownRepositoryGroup.NonGitHub) {
-      return 'Other'
+      return t('common.other', 'Other')
     } else {
       return identifier
     }
@@ -243,7 +244,7 @@ export class RepositoriesList extends React.Component<
         className="new-repository-button"
         onClick={this.onNewRepositoryButtonClick}
       >
-        Add
+        {t('repositories-list.add', 'Add')}
         <Octicon symbol={OcticonSymbol.triangleDown} />
       </Button>
     )
@@ -253,12 +254,25 @@ export class RepositoriesList extends React.Component<
     return (
       <div className="no-items no-results-found">
         <img src={BlankSlateImage} className="blankslate-image" alt="" />
-        <div className="title">Sorry, I can't find that repository</div>
+        <div className="title">
+          {t(
+            'repositories-list.sorry-i-can-not-find-that-repository',
+            `Sorry, I can't find that repository`
+          )}
+        </div>
 
         <div className="protip">
-          ProTip! Press {this.renderAddLocalShortcut()} to quickly add a local
-          repository, and {this.renderCloneRepositoryShortcut()} to clone from
-          anywhere within the app
+          {t('repositories-list.pro-tip-1', 'ProTip! Press ')}
+          {this.renderAddLocalShortcut()}
+          {t(
+            'repositories-list.pro-tip-2',
+            ' to quickly add a local repository, and '
+          )}
+          {this.renderCloneRepositoryShortcut()}
+          {t(
+            'repositories-list.pro-tip-3',
+            ' to clone from anywhere within the app'
+          )}
         </div>
       </div>
     )
@@ -302,17 +316,33 @@ export class RepositoriesList extends React.Component<
   private onNewRepositoryButtonClick = () => {
     const items: IMenuItem[] = [
       {
-        label: __DARWIN__ ? 'Clone Repository…' : 'Clone repository…',
+        label: __DARWIN__
+          ? t('repositories-list.clone-repository-darwin', 'Clone Repository…')
+          : t('repositories-list.clone-repository', 'Clone repository…'),
         action: this.onCloneRepository,
       },
       {
-        label: __DARWIN__ ? 'Create New Repository…' : 'Create new repository…',
+        label: __DARWIN__
+          ? t(
+              'repositories-list.create-new-repository-darwin',
+              'Create New Repository…'
+            )
+          : t(
+              'repositories-list.create-new-repository',
+              'Create new repository…'
+            ),
         action: this.onCreateNewRepository,
       },
       {
         label: __DARWIN__
-          ? 'Add Existing Repository…'
-          : 'Add existing repository…',
+          ? t(
+              'repositories-list.add-existing-repository-darwin',
+              'Add Existing Repository…'
+            )
+          : t(
+              'repositories-list.add-existing-repository',
+              'Add existing repository…'
+            ),
         action: this.onAddExistingRepository,
       },
     ]

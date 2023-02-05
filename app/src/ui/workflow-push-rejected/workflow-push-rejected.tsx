@@ -5,8 +5,14 @@ import { Ref } from '../lib/ref'
 import { RepositoryWithGitHubRepository } from '../../models/repository'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
 import { getDotComAPIEndpoint } from '../../lib/api'
+import { t } from 'i18next'
 
-const okButtonText = __DARWIN__ ? 'Continue in Browser' : 'Continue in browser'
+const okButtonText = __DARWIN__
+  ? t(
+      'workflow-push-rejected.continue-in-browser-darwin',
+      'Continue in Browser'
+    )
+  : t('workflow-push-rejected.continue-in-browser', 'Continue in browser')
 
 interface IWorkflowPushRejectedDialogProps {
   readonly rejectedPath: string
@@ -34,7 +40,11 @@ export class WorkflowPushRejectedDialog extends React.Component<
     return (
       <Dialog
         id="workflow-push-rejected"
-        title={__DARWIN__ ? 'Push Rejected' : 'Push rejected'}
+        title={
+          __DARWIN__
+            ? t('workflow-push-rejected.push-rejected-darwin', 'Push Rejected')
+            : t('workflow-push-rejected.push-rejected', 'Push rejected')
+        }
         loading={this.state.loading}
         onDismissed={this.props.onDismissed}
         onSubmit={this.onSignIn}
@@ -42,14 +52,24 @@ export class WorkflowPushRejectedDialog extends React.Component<
       >
         <DialogContent>
           <p>
-            The push was rejected by the server for containing a modification to
-            the workflow file <Ref>{this.props.rejectedPath}</Ref>. In order to
-            be able to push to workflow files GitHub Desktop needs to request
-            additional permissions.
+            {t(
+              'workflow-push-rejected.the-push-was-rejected-by-the-server-1',
+              `The push was rejected by the server for containing a modification
+               to the workflow file `
+            )}
+            <Ref>{this.props.rejectedPath}</Ref>
+            {t(
+              'workflow-push-rejected.the-push-was-rejected-by-the-server-2',
+              `. In order to be able to push to workflow files GitHub Desktop
+               needs to request additional permissions.`
+            )}
           </p>
           <p>
-            Would you like to open a browser to grant GitHub Desktop permission
-            to update workflow files?
+            {t(
+              'workflow-push-rejected.would-you-like-to-open-a-browser',
+              `Would you like to open a browser to grant GitHub Desktop
+               permission to update workflow files?`
+            )}
           </p>
         </DialogContent>
         <DialogFooter>

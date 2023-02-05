@@ -36,6 +36,7 @@ import { clamp } from '../../lib/clamp'
 import { pathExists } from '../lib/path-exists'
 import { enableMultiCommitDiffs } from '../../lib/feature-flag'
 import { UnreachableCommitsTab } from './unreachable-commits-dialog'
+import { t } from 'i18next'
 
 interface ISelectedCommitsProps {
   readonly repository: Repository
@@ -143,7 +144,9 @@ export class SelectedCommits extends React.Component<
     if (file == null) {
       // don't show both 'empty' messages
       const message =
-        this.props.changesetData.files.length === 0 ? '' : 'No file selected'
+        this.props.changesetData.files.length === 0
+          ? ''
+          : t('selected-commits.no-file-selected', 'No file selected')
 
       return (
         <div className="panel blankslate" id="diff">
@@ -323,22 +326,40 @@ export class SelectedCommits extends React.Component<
           <img src={BlankSlateImage} className="blankslate-image" alt="" />
           <div>
             <p>
-              Unable to display diff when multiple{' '}
-              {enableMultiCommitDiffs() ? 'non-consecutive ' : ' '}commits are
-              selected.
+              {t(
+                'selected-commits.unable-to-display-diff',
+                `Unable to display diff when multiple
+                {{0}} are selected.`,
+                { 0: nonConsecutiveCommit }
+              )}
             </p>
-            <div>You can:</div>
+            <div>{t('selected-commits.you-can', 'You can:')}</div>
             <ul>
               <li>
-                Select a single commit{' '}
-                {enableMultiCommitDiffs()
-                  ? 'or a range of consecutive commits '
-                  : ' '}
-                to view a diff.
+                {t(
+                  'selected-commits.select-a-single-commit',
+                  `Select a single commit {{0}}to view a diff.`,
+                  { 0: rangeOfConsecutiveCommit }
+                )}
               </li>
-              <li>Drag the commits to the branch menu to cherry-pick them.</li>
-              <li>Drag the commits to squash or reorder them.</li>
-              <li>Right click on multiple commits to see options.</li>
+              <li>
+                {t(
+                  'selected-commits.branch-menu-to-cherry-pick-them',
+                  'Drag the commits to the branch menu to cherry-pick them.'
+                )}
+              </li>
+              <li>
+                {t(
+                  'selected-commits.commits-to-squash-or-reorder-them',
+                  'Drag the commits to squash or reorder them.'
+                )}
+              </li>
+              <li>
+                {t(
+                  'selected-commits.right-click-on-multiple-commits',
+                  'Right click on multiple commits to see options.'
+                )}
+              </li>
             </ul>
           </div>
         </div>
@@ -366,8 +387,14 @@ export class SelectedCommits extends React.Component<
       showContextualMenu([
         {
           label: __DARWIN__
-            ? 'File Does Not Exist on Disk'
-            : 'File does not exist on disk',
+            ? t(
+                'selected-commits.file-does-not-exist-darwin',
+                'File Does Not Exist on Disk'
+              )
+            : t(
+                'selected-commits.file-does-not-exist',
+                'File does not exist on disk'
+              ),
           enabled: false,
         },
       ])
@@ -378,7 +405,9 @@ export class SelectedCommits extends React.Component<
 
     const isSafeExtension = isSafeFileExtension(extension)
     const openInExternalEditor = externalEditorLabel
-      ? `Open in ${externalEditorLabel}`
+      ? t('selected-commits.open-in', `Open in {{0}}`, {
+          0: externalEditorLabel,
+        })
       : DefaultEditorLabel
 
     const items: IMenuItem[] = [
@@ -409,14 +438,20 @@ export class SelectedCommits extends React.Component<
       { type: 'separator' },
     ]
 
-    let viewOnGitHubLabel = 'View on GitHub'
+    let viewOnGitHubLabel = t(
+      'selected-commits.view-on-github',
+      'View on GitHub'
+    )
     const gitHubRepository = repository.gitHubRepository
 
     if (
       gitHubRepository &&
       gitHubRepository.endpoint !== getDotComAPIEndpoint()
     ) {
-      viewOnGitHubLabel = 'View on GitHub Enterprise'
+      viewOnGitHubLabel = t(
+        'selected-commits.view-on-github-enteprise',
+        'View on GitHub Enterprise'
+      )
     }
 
     items.push({
@@ -446,7 +481,7 @@ function NoCommitSelected() {
   return (
     <div className="panel blankslate">
       <img src={BlankSlateImage} className="blankslate-image" alt="" />
-      No commit selected
+      {t('selected-commits.no-commit-selected', 'No commit selected')}
     </div>
   )
 }

@@ -1,3 +1,4 @@
+import '../locales/i18n'
 import mri, {
   DictionaryObject,
   Options as MriOptions,

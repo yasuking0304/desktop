@@ -13,6 +13,7 @@ import {
 } from '../lib/vertical-segmented-control'
 import { CustomThemeSelector } from './custom-theme-selector'
 import { enableHighContrastTheme } from '../../lib/feature-flag'
+import { t } from 'i18next'
 
 interface IAppearanceProps {
   readonly selectedTheme: ApplicationTheme
@@ -26,27 +27,39 @@ interface IAppearanceState {
 }
 
 const systemTheme: ISegmentedItem<ApplicationTheme> = {
-  title: 'System',
-  description: 'Automatically switch theme to match system theme',
+  title: t('appearance.system', 'System'),
+  description: t(
+    'appearance.message-of-system',
+    'Automatically switch theme to match system theme'
+  ),
   key: ApplicationTheme.System,
 }
 
 const themes: ReadonlyArray<ISegmentedItem<ApplicationTheme>> = [
   {
-    title: 'Light',
-    description: 'The default theme of GitHub Desktop',
+    title: t('appearance.light', 'Light'),
+    description: t(
+      'appearance.message-of-light',
+      'The default theme of GitHub Desktop'
+    ),
     key: ApplicationTheme.Light,
   },
   {
-    title: 'Dark',
-    description: 'GitHub Desktop is for you too, creatures of the night',
+    title: t('appearance.dark', 'Dark'),
+    description: t(
+      'appearance.message-of-dark',
+      'GitHub Desktop is for you too, creatures of the night'
+    ),
     key: ApplicationTheme.Dark,
   },
   ...(enableHighContrastTheme()
     ? [
         {
-          title: 'High Contrast',
-          description: 'Customizable High Contrast Theme',
+          title: t('appearance.high-contrast', 'High Contrast'),
+          description: t(
+            'appearance.message-of-high-contrast',
+            'Customizable High Contrast Theme'
+          ),
           key: ApplicationTheme.HighContrast,
         },
       ]
@@ -107,7 +120,9 @@ export class Appearance extends React.Component<
     if (selectedTheme == null) {
       return (
         <DialogContent>
-          <Row>Loading system theme</Row>
+          <Row>
+            {t('appearance.loading-system-theme', 'Loading system theme')}
+          </Row>
         </DialogContent>
       )
     }
