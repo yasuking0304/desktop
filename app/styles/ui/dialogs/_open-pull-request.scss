@@ -23,7 +23,7 @@
     padding: var(--spacing);
   }
 
-  .open-pull-request-no-changes {
+  .open-pull-request-message {
     height: 100%;
     display: flex;
     align-items: center;
@@ -34,6 +34,12 @@
 
   .dialog-footer {
     flex-direction: row;
+
+    .button-group {
+      .octicon {
+        margin-right: var(--spacing-half);
+      }
+    }
   }
 
   .pull-request-merge-status {

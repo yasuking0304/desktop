@@ -314,6 +314,8 @@
   }
 
   &.unified-diff {
+    --line-gutter-right-border-width: 4px;
+
     .row {
       .before,
       .after {
@@ -323,7 +325,8 @@
       }
 
       .hunk-handle {
-        left: 100px;
+        // `left` depends on the line number length at runtime
+        transform: translateX(calc(-50% + var(--line-gutter-right-border-width) / 2));
       }
 
       &.hunk-info .line-number {
@@ -349,8 +352,13 @@
       }
     }
 
-    &.editable .row .line-number {
-      border-right-width: 4px;
+    &.editable .row {
+      .line-number {
+        border-right-width: var(--line-gutter-right-border-width);
+      }
+      .hunk-expansion-handle {
+        border-right-width: var(--line-gutter-right-border-width);
+      }
     }
   }
 

@@ -291,6 +291,13 @@ function getRepositoryMenuBuilder(state: IAppState): MenuStateBuilder {
       'create-pull-request',
       isHostedOnGitHub && !branchIsUnborn && !onDetachedHead
     )
+    if (enableStartingPullRequests()) {
+      menuStateBuilder.setEnabled(
+        'preview-pull-request',
+        !branchIsUnborn && !onDetachedHead && isHostedOnGitHub
+      )
+    }
+
     menuStateBuilder.setEnabled(
       'push',
       !branchIsUnborn && !onDetachedHead && !networkActionInProgress

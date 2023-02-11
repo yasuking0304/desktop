@@ -13,6 +13,8 @@ interface INoBranchesProps {
   readonly onCreateNewBranch: () => void
   /** True to display the UI elements for creating a new branch, false to hide them */
   readonly canCreateNewBranch: boolean
+  /** Optional: No branches message */
+  readonly noBranchesMessage?: string | JSX.Element
 }
 
 export class NoBranches extends React.Component<INoBranchesProps> {
@@ -60,7 +62,9 @@ export class NoBranches extends React.Component<INoBranchesProps> {
     }
 
     return (
-      <div className="no-branches">Sorry, I can't find that branch"</div>
+      <div className="no-branches">
+        {this.props.noBranchesMessage ?? "Sorry, I can't find that branch"}
+      </div>
     )
   }
 

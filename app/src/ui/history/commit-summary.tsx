@@ -440,7 +440,10 @@ export class CommitSummary extends React.Component<
         aria-label="SHA"
       >
         <Octicon symbol={OcticonSymbol.gitCommit} />
-        <TooltippedCommitSHA className="sha" commit={selectedCommits[0]} />
+        <TooltippedCommitSHA
+          className="selectable"
+          commit={selectedCommits[0]}
+        />
       </li>
     )
   }
@@ -555,6 +558,7 @@ export class CommitSummary extends React.Component<
     let filesAdded = 0
     let filesModified = 0
     let filesRemoved = 0
+    let filesRenamed = 0
     for (const file of this.props.changesetData.files) {
       switch (file.status.kind) {
         case AppFileStatusKind.New:
@@ -566,8 +570,13 @@ export class CommitSummary extends React.Component<
         case AppFileStatusKind.Deleted:
           filesRemoved += 1
           break
+        case AppFileStatusKind.Renamed:
+          filesRenamed += 1
       }
     }
+
+    const hasFileDescription =
+      filesAdded + filesModified + filesRemoved + filesRenamed > 0
 
     const filesLongDescription = (
       <>
@@ -607,6 +616,15 @@ export class CommitSummary extends React.Component<
             })}
           </span>
         ) : null}
+        {filesRenamed > 0 ? (
+          <span>
+            <Octicon
+              className="files-renamed-icon"
+              symbol={OcticonSymbol.diffRenamed}
+            />
+            {filesRenamed} renamed
+          </span>
+        ) : null}
       </>
     )
 
@@ -614,7 +632,9 @@ export class CommitSummary extends React.Component<
       <TooltippedContent
         className="commit-summary-meta-item without-truncation"
         tooltipClassName="changed-files-description-tooltip"
-        tooltip={fileCount > 0 ? filesLongDescription : undefined}
+        tooltip={
+          fileCount > 0 && hasFileDescription ? filesLongDescription : undefined
+        }
       >
         <Octicon symbol={OcticonSymbol.diff} />
         {filesShortDescription}
@@ -686,7 +706,7 @@ export class CommitSummary extends React.Component<
           <Octicon symbol={OcticonSymbol.tag} />
         </span>
 
-        <span className="tags">{tags.join(', ')}</span>
+        <span className="tags selectable">{tags.join(', ')}</span>
       </li>
     )
   }
