@@ -1273,8 +1273,8 @@
     "number-onflicts": "{{0}}個の競合",
     "one-onflict": "1つの競合",
     "open-in": "{{0}} で開く",
-    "restore": "復元",
-    "stashed-changes": "非表示の変更",
+    "restore": "復元する",
+    "stashed-changes": "一時退避された変更",
     "unable-to-restore-stash": "ブランチに変更が存在する場合、隠しファイルを復元できません。",
     "undo": "元に戻す",
     "will-move-your-stashed-files": " は、隠しファイルを変更リストに移動します。"
