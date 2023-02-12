@@ -8,7 +8,9 @@ import { Repository } from '../../models/repository'
 import { IDropdownSelectButtonOption } from '../dropdown-select-button'
 import { t } from 'i18next'
 
-export function getMergeOptions(): ReadonlyArray<IDropdownSelectButtonOption> {
+export function getMergeOptions(): ReadonlyArray<
+  IDropdownSelectButtonOption<MultiCommitOperationKind>
+> {
   return [
     {
       label: t('update-branch.create-a-merge-commit', 'Create a merge commit'),

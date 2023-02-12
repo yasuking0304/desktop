@@ -169,18 +169,17 @@ const sendErrorWithContext = (
           extra.windowZoomFactor = `${currentState.windowZoomFactor}`
         }
 
-        if (currentState.errors.length > 0) {
-          extra.activeAppErrors = `${currentState.errors.length}`
+        if (currentState.errorCount > 0) {
+          extra.activeAppErrors = `${currentState.errorCount}`
         }
 
         extra.repositoryCount = `${currentState.repositories.length}`
         extra.windowState = currentState.windowState ?? 'Unknown'
         extra.accounts = `${currentState.accounts.length}`
 
-        extra.automaticallySwitchTheme = `${
-          currentState.selectedTheme === ApplicationTheme.System &&
+        extra.automaticallySwitchTheme = `${currentState.selectedTheme === ApplicationTheme.System &&
           supportsSystemThemeChanges()
-        }`
+          }`
       }
     } catch (err) {
       /* ignore */

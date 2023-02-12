@@ -11,6 +11,7 @@ import { updateMenuState as ipcUpdateMenuState } from '../ui/main-process-proxy'
 import { AppMenu, MenuItem } from '../models/app-menu'
 import { hasConflictedFiles } from './status'
 import { findContributionTargetDefaultBranch } from './branch'
+import { enableStartingPullRequests } from './feature-flag'
 
 export interface IMenuItemState {
   readonly enabled?: boolean
@@ -256,8 +257,8 @@ function getRepositoryMenuBuilder(state: IAppState): MenuStateBuilder {
     menuStateBuilder.setEnabled(
       'rename-branch',
       (onNonDefaultBranch || !hasPublishedBranch) &&
-        !branchIsUnborn &&
-        !onDetachedHead
+      !branchIsUnborn &&
+      !onDetachedHead
     )
     menuStateBuilder.setEnabled(
       'delete-branch',
@@ -266,8 +267,8 @@ function getRepositoryMenuBuilder(state: IAppState): MenuStateBuilder {
     menuStateBuilder.setEnabled(
       'update-branch-with-contribution-target-branch',
       onBranch &&
-        hasContributionTargetDefaultBranch &&
-        !onContributionTargetDefaultBranch
+      hasContributionTargetDefaultBranch &&
+      !onContributionTargetDefaultBranch
     )
     menuStateBuilder.setEnabled('merge-branch', onBranch)
     menuStateBuilder.setEnabled('squash-and-merge-branch', onBranch)

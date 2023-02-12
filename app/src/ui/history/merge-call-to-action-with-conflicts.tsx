@@ -96,25 +96,24 @@ export class MergeCallToActionWithConflicts extends React.Component<
     })
   }
 
-  private onOperationChange = (option: IDropdownSelectButtonOption) => {
-    const value = option.value as MultiCommitOperationKind
-    this.setState({ selectedOperation: value })
-    if (value === MultiCommitOperationKind.Rebase) {
+  private onOperationChange = (
+    option: IDropdownSelectButtonOption<MultiCommitOperationKind>
+  ) => {
+    this.setState({ selectedOperation: option.value })
+    if (option.value === MultiCommitOperationKind.Rebase) {
       this.updateRebasePreview(this.props.comparisonBranch)
     }
   }
 
   private onOperationInvoked = async (
     event: React.MouseEvent<HTMLButtonElement>,
-    selectedOption: IDropdownSelectButtonOption
+    selectedOption: IDropdownSelectButtonOption<MultiCommitOperationKind>
   ) => {
     event.preventDefault()
 
     const { dispatcher, repository } = this.props
 
-    await this.dispatchOperation(
-      selectedOption.value as MultiCommitOperationKind
-    )
+    await this.dispatchOperation(selectedOption.value)
 
     dispatcher.executeCompare(repository, {
       kind: HistoryTabMode.History,
@@ -140,7 +139,7 @@ export class MergeCallToActionWithConflicts extends React.Component<
     if (operation === MultiCommitOperationKind.Rebase) {
       const commits =
         this.state.rebasePreview !== null &&
-        this.state.rebasePreview.kind === ComputedAction.Clean
+          this.state.rebasePreview.kind === ComputedAction.Clean
           ? this.state.rebasePreview.commits
           : []
       return dispatcher.startRebase(

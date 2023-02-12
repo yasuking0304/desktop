@@ -13,12 +13,21 @@ import { TipState, IValidBranch } from '../../models/tip'
 import { Ref } from '../lib/ref'
 import { IAheadBehind } from '../../models/branch'
 import { IRemote } from '../../models/remote'
-import { isCurrentBranchForcePush } from '../../lib/rebase'
+import {
+  ForcePushBranchState,
+  getCurrentBranchForcePushState,
+} from '../../lib/rebase'
 import { StashedChangesLoadStates } from '../../models/stash-entry'
 import { Dispatcher } from '../dispatcher'
 import { SuggestedActionGroup } from '../suggested-actions'
 import { PreferencesTab } from '../../models/preferences'
 import { PopupType } from '../../models/popup'
+import {
+  DropdownSuggestedAction,
+  IDropdownSuggestedActionOption,
+} from '../suggested-actions/dropdown-suggested-action'
+import { PullRequestSuggestedNextAction } from '../../models/pull-request'
+import { enableStartingPullRequests } from '../../lib/feature-flag'
 import { t } from 'i18next'
 
 function formatMenuItemLabel(text: string) {
@@ -69,6 +78,10 @@ interface INoChangesProps {
    * opening the repository in an external editor.
    */
   readonly isExternalEditorAvailable: boolean
+
+  /** The user's preference of pull request suggested next action to use **/
+  readonly pullRequestSuggestedNextAction?: PullRequestSuggestedNextAction
+
 }
 
 /**
@@ -354,7 +367,9 @@ export class NoChanges extends React.Component<
       return this.renderPublishBranchAction(tip)
     }
 
-    const isForcePush = isCurrentBranchForcePush(branchesState, aheadBehind)
+    const isForcePush =
+      getCurrentBranchForcePushState(branchesState, aheadBehind) ===
+      ForcePushBranchState.Recommended
     if (isForcePush) {
       // do not render an action currently after the rebase has completed, as
       // the default behaviour is currently to pull in changes from the tracking
@@ -717,12 +732,16 @@ export class NoChanges extends React.Component<
     )
   }
 
-  private renderCreatePullRequestAction(tip: IValidBranch) {
-    const itemId: MenuIDs = 'create-pull-request'
-    const menuItem = this.getMenuItemInfo(itemId)
+  private onPullRequestSuggestedActionChanged = (
+    action: PullRequestSuggestedNextAction
+  ) => {
+    this.props.dispatcher.setPullRequestSuggestedNextAction(action)
+  }
 
-    if (menuItem === undefined) {
-      log.error(`Could not find matching menu item for ${itemId}`)
+  private renderCreatePullRequestAction(tip: IValidBranch) {
+    const createMenuItem = this.getMenuItemInfo('create-pull-request')
+    if (createMenuItem === undefined) {
+      log.error(`Could not find matching menu item for 'create-pull-request'`)
       return null
     }
 
@@ -777,47 +796,43 @@ export class NoChanges extends React.Component<
     }
 
     const createPullRequestAction: IDropdownSuggestedActionOption<PullRequestSuggestedNextAction> =
-      {
-        title,
-        label: buttonText,
-        description,
-        value: PullRequestSuggestedNextAction.CreatePullRequest,
-        menuItemId: 'create-pull-request',
-        discoverabilityContent:
-          this.renderDiscoverabilityElements(createMenuItem),
-        disabled: !createMenuItem.enabled,
-        onClick: this.onCreatePullRequestClicked,
-      }
+    {
+      title,
+      label: buttonText,
+      description,
+      value: PullRequestSuggestedNextAction.CreatePullRequest,
+      menuItemId: 'create-pull-request',
+      discoverabilityContent:
+        this.renderDiscoverabilityElements(createMenuItem),
+      disabled: !createMenuItem.enabled,
+      onClick: this.onCreatePullRequestClicked,
+    }
 
     const previewPullRequestAction: IDropdownSuggestedActionOption<PullRequestSuggestedNextAction> =
-      {
-        title: `Preview the Pull Request from your current branch`,
-        label: 'Preview Pull Request',
-        description: (
-          <>
-            The current branch (<Ref>{tip.branch.name}</Ref>) is already
-            published to GitHub. Preview the changes this pull request will have
-            before proposing your changes.
-          </>
-        ),
-        value: PullRequestSuggestedNextAction.PreviewPullRequest,
-        menuItemId: 'preview-pull-request',
-        discoverabilityContent:
-          this.renderDiscoverabilityElements(previewPullMenuItem),
-        disabled: !previewPullMenuItem.enabled,
-      }
+    {
+      title: `Preview the Pull Request from your current branch`,
+      label: 'Preview Pull Request',
+      description: (
+        <>
+          The current branch (<Ref>{tip.branch.name}</Ref>) is already
+          published to GitHub. Preview the changes this pull request will have
+          before proposing your changes.
+        </>
+      ),
+      value: PullRequestSuggestedNextAction.PreviewPullRequest,
+      menuItemId: 'preview-pull-request',
+      discoverabilityContent:
+        this.renderDiscoverabilityElements(previewPullMenuItem),
+      disabled: !previewPullMenuItem.enabled,
+    }
 
     return (
-      <MenuBackedSuggestedAction
-        key="create-pr-action"
-        title={title}
-        menuItemId={itemId}
-        description={description}
-        buttonText={buttonText}
-        discoverabilityContent={this.renderDiscoverabilityElements(menuItem)}
-        type="primary"
-        disabled={!menuItem.enabled}
-        onClick={this.onCreatePullRequestClicked}
+      <DropdownSuggestedAction
+        key="pull-request-action"
+        className="pull-request-action"
+        suggestedActions={[previewPullRequestAction, createPullRequestAction]}
+        selectedActionValue={this.props.pullRequestSuggestedNextAction}
+        onSuggestedActionChanged={this.onPullRequestSuggestedActionChanged}
       />
     )
   }

@@ -363,6 +363,16 @@ export class SideBySideDiffRow extends React.Component<
     throw new Error(`Unexpected expansion type ${expansionType}`)
   }
 
+  /**
+   * This method returns the width of a line gutter in pixels. For unified diffs
+   * the gutter contains the line number of both before and after sides, whereas
+   * for side-by-side diffs the gutter contains the line number of only one side.
+   */
+  private get lineGutterWidth() {
+    const { showSideBySideDiff, lineNumberWidth } = this.props
+    return showSideBySideDiff ? lineNumberWidth : lineNumberWidth * 2
+  }
+
   private renderHunkExpansionHandle(
     hunkIndex: number,
     expansionType: DiffHunkExpansionType
