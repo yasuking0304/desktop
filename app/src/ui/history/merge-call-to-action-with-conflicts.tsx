@@ -139,7 +139,7 @@ export class MergeCallToActionWithConflicts extends React.Component<
     if (operation === MultiCommitOperationKind.Rebase) {
       const commits =
         this.state.rebasePreview !== null &&
-          this.state.rebasePreview.kind === ComputedAction.Clean
+        this.state.rebasePreview.kind === ComputedAction.Clean
           ? this.state.rebasePreview.commits
           : []
       return dispatcher.startRebase(

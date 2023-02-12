@@ -1,4 +1,4 @@
-# [GitHub Desktop](https://desktop.github.com) - The Linux Fork
+# [GitHub Desktop](https://desktop.github.com) - The Linux Fork (Multilingal Platform)
 
 [![CI](https://github.com/shiftkey/desktop/actions/workflows/ci.yml/badge.svg)](https://github.com/shiftkey/desktop/actions/workflows/ci.yml)
 
@@ -6,14 +6,15 @@
 GitHub app. It is written in [TypeScript](https://www.typescriptlang.org) and
 uses [React](https://reactjs.org/).
 
+[Click here for details (Japanese only)](https://github.com/yasuking0304/desktop/wiki)
 <picture>
   <source
-    srcset="https://user-images.githubusercontent.com/634063/202742848-63fa1488-6254-49b5-af7c-96a6b50ea8af.png"
+    srcset="https://user-images.githubusercontent.com/111163564/218298392-b719e5dc-74c3-4f03-acf2-72c975cf126f.png"
     media="(prefers-color-scheme: dark)"
   />
   <img
     width="1072"
-    src="https://user-images.githubusercontent.com/634063/202742985-bb3b3b94-8aca-404a-8d8a-fd6a6f030672.png"
+    src="https://user-images.githubusercontent.com/111163564/218299136-b5dda126-a4c8-4052-bcd6-5f586d4f4bf1.png"
     alt="A screenshot of the GitHub Desktop application showing changes being viewed and committed with two attributed co-authors"
   />
 </picture>

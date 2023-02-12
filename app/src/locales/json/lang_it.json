@@ -779,8 +779,6 @@
     "confirm-rename": "Rename…",
     "confirm-stash-all-changes": "&Stash all changes…",
     "confirm-stash-all-changes-darwin": "Stash All Changes…",
-    "contact-github-support": "&Contact GitHub support…",
-    "contact-github-support-darwin": "Contact GitHub Support…",
     "context-open-in-external-editor": "Open in external editor",
     "context-open-in-external-editor-darwin": "Open in External Editor",
     "copy": "&Copy",
@@ -1074,9 +1072,11 @@
   "prompts": {
     "discarding-changes": "Discarding changes",
     "discarding-changes-permanently": "Discarding changes permanently",
+    "discarding-stash": "Discarding stash",
     "force-pushing": "Force pushing",
     "removing-repositories": "Removing repositories",
-    "show-a-confirmation": "Show a confirmation dialog before..."
+    "show-a-confirmation": "Show a confirmation dialog before...",
+    "undo-commit": "Undo commit"
   },
   "publish-repository": {
     "keep-this-code-private": "Keep this code private",
@@ -1173,6 +1173,12 @@
   "revert-progress": {
     "hang-on": "Hang on…",
     "reverting": "Reverting…"
+  },
+  "saml-reauth-required": {
+    "continue-in-browser": "Continue in browser",
+    "continue-in-browser-darwin": "Continue in Browser",
+    "re-authorization-required": "Re-authorization required",
+    "re-authorization-required-darwin": "Re-authorization Required"
   },
   "selected-commits": {
     "branch-menu-to-cherry-pick-them": "Drag the commits to the branch menu to cherry-pick them.",
@@ -1387,6 +1393,7 @@
     "require-force-push-darwin": "{{0}} Will Require Force Push"
   },
   "warn-local-changes-before-undo": {
+    "changes-in-progress-undo-commit": "You have changes in progress. Undoing the commit might result in\n            some of these changes being lost. Do you want to continue anyway?",
     "changes-in-progress-undo-merge": "You have changes in progress. Undoing the merge commit might\n            result in some of these changes being lost.",
     "do-you-want-to-continue-anyway": "Do you want to continue anyway?",
     "undo-commit": "Undo commit",
