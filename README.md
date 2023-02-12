@@ -14,7 +14,7 @@ uses [React](https://reactjs.org/).
   />
   <img
     width="1072"
-    src="https://user-images.githubusercontent.com/111163564/218298394-45c174b4-7329-4afa-87b0-9ed2c8eefed2.png"
+    src="https://user-images.githubusercontent.com/111163564/218299136-b5dda126-a4c8-4052-bcd6-5f586d4f4bf1.png"
     alt="A screenshot of the GitHub Desktop application showing changes being viewed and committed with two attributed co-authors"
   />
 </picture>
