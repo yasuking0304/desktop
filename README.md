@@ -4,6 +4,8 @@
 GitHub app. It is written in [TypeScript](https://www.typescriptlang.org) and
 uses [React](https://reactjs.org/).
 
+[linux version is here](https://github.com/yasuking0304/desktop/tree/linux)
+
 [Click here for details (Japanese only)](https://github.com/yasuking0304/desktop/wiki)
 <picture>
   <source
