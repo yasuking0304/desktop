@@ -1059,9 +1059,9 @@
     "we-recommend-you-avoid-committing-2": " to store large files on GitHub."
   },
   "overwrite-stashed-changes-dialog": {
-    "are-you-sure-you-want-to-proceed": "続行してもよろしいですか?これにより、既存の隠しファイル内容が現在の変更で上書きされます。",
-    "overwrite-stash": "隠しファイルを上書きしますか?",
-    "overwrite-stash-darwin": "隠しファイルを上書きしますか?"
+    "are-you-sure-you-want-to-proceed": "続行してもよろしいですか?これにより、既存の退避ファイル内容が現在の変更で上書きされます。",
+    "overwrite-stash": "退避ファイルを上書きしますか?",
+    "overwrite-stash-darwin": "退避ファイルを上書きしますか?"
   },
   "preferences": {
     "accounts": "アカウント",
@@ -1275,9 +1275,9 @@
     "open-in": "{{0}} で開く",
     "restore": "復元する",
     "stashed-changes": "一時退避された変更",
-    "unable-to-restore-stash": "ブランチに変更が存在する場合、隠しファイルを復元できません。",
+    "unable-to-restore-stash": "ブランチに変更が存在する場合、退避ファイルを復元できません。",
     "undo": "元に戻す",
-    "will-move-your-stashed-files": " は、隠しファイルを変更リストに移動します。"
+    "will-move-your-stashed-files": " は、退避ファイルを変更リストに移動します。"
   },
   "terms-and-conditions": {
     "additional-services": "追加サービス",
