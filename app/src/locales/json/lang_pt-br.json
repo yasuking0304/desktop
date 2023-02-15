@@ -1203,6 +1203,10 @@
     "unable-to-open-shell": "Unable to open shell",
     "unable-to-open-shell-darwin": "Unable to Open Shell"
   },
+  "show-uncaught-exception": {
+    "unrecoverable-error": "Unrecoverable error",
+    "unrecoverable-error-darwin": "Unrecoverable Error"
+  },
   "side-by-side-diff": {
     "added": "added",
     "added-darwin": "Added",

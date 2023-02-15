@@ -47,9 +47,6 @@ export class StashDiffHeader extends React.Component<
         <h3>{t('stash-diff-header.stashed-changes', 'Stashed changes')}</h3>
         <div className="row">
           <OkCancelButtonGroup
-
-
-  
             okButtonText={t('stash-diff-header.restore', 'Restore')}
             okButtonDisabled={
               isRestoring || !isWorkingTreeClean || isDiscarding

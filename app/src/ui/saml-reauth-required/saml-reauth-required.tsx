@@ -4,8 +4,11 @@ import { Dispatcher } from '../dispatcher'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
 import { getDotComAPIEndpoint } from '../../lib/api'
 import { RetryAction } from '../../models/retry-actions'
+import { t } from 'i18next'
 
-const okButtonText = __DARWIN__ ? 'Continue in Browser' : 'Continue in browser'
+const okButtonText = __DARWIN__
+  ? t('saml-reauth-required.continue-in-browser-darwin', 'Continue in Browser')
+  : t('saml-reauth-required.continue-in-browser', 'Continue in browser')
 
 interface ISAMLReauthRequiredDialogProps {
   readonly dispatcher: Dispatcher
@@ -38,7 +41,15 @@ export class SAMLReauthRequiredDialog extends React.Component<
     return (
       <Dialog
         title={
-          __DARWIN__ ? 'Re-authorization Required' : 'Re-authorization required'
+          __DARWIN__
+            ? t(
+                'saml-reauth-required.re-authorization-required-darwin',
+                'Re-authorization Required'
+              )
+            : t(
+                'saml-reauth-required.re-authorization-required',
+                'Re-authorization required'
+              )
         }
         loading={this.state.loading}
         onDismissed={this.props.onDismissed}
