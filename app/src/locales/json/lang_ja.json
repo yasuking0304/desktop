@@ -746,12 +746,12 @@
     }
   },
   "local-changes-overwritten-dialog": {
-    "Stash-Changes": "変更を隠して続行する",
-    "Stash-Changes-darwin": "変更を隠して続行する",
+    "Stash-Changes": "変更を退避して続行する",
+    "Stash-Changes-darwin": "変更を退避して続行する",
     "the-following-files-would-be-overwritten": "次のファイルは上書きされます:",
-    "this-will-create-a-stash": "これにより、現在の変更を含む隠し場所が作成されます。後で隠し場所を復元することで、それらを回復できます。",
+    "this-will-create-a-stash": "これにより、現在の変更を含む退避場所が作成されます。後で退避場所を復元することで、それらを回復できます。",
     "unable-to-action": "ブランチに変更が存在する場合、{{0}} できません。{{1}}",
-    "you-can-stash-your-changes": "ここで変更を隠し、後で回復できます。"
+    "you-can-stash-your-changes": "ここで変更を退避し、後で回復できます。"
   },
   "lookup": {
     "error": {
