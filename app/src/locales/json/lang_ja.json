@@ -172,7 +172,7 @@
     "open-in-external-editor": "{{0}} で開く",
     "stash-all-changes": "すべての変更を隠す",
     "stash-all-changes-darwin": "すべての変更を隠す",
-    "stashed-changes": "隠した変更",
+    "stashed-changes": "一時退避した変更",
     "summary-required": "概要 (必須入力)",
     "update-filename": "更新 {{0}}"
   },
@@ -735,10 +735,10 @@
   },
   "label": {
     "about-github-desktop": "GitHub Desktop について(&A)",
-    "hide-stashed-changes": "隠した変更の非表示(&H)",
-    "hide-stashed-changes-darwin": "隠した変更の非表示",
-    "show-stashed-changes": "隠した変更の表示(&W)",
-    "show-stashed-changes-darwin": "隠した変更の表示"
+    "hide-stashed-changes": "一時退避した変更の非表示(&H)",
+    "hide-stashed-changes-darwin": "一時退避した変更の非表示",
+    "show-stashed-changes": "一時退避した変更の表示(&W)",
+    "show-stashed-changes-darwin": "一時退避した変更の表示"
   },
   "launch": {
     "error": {
@@ -1009,10 +1009,10 @@
     "there-are-no-uncommitted-changes": "このリポジトリにはコミットされていない変更はありません。次に何をすべきかについてのいくつかの良い提案があります。",
     "this-repository-is-currently-only": "このリポジトリは現在、ローカル マシンでのみ利用できます。 GitHub に公開することで、共有したり、他のユーザーと共同作業したりできます。",
     "to-github": "to GitHub",
-    "view-stash": "隠したファイルを参照",
+    "view-stash": "一時退避したファイルを参照",
     "view-the-files-of-your-repository": "{{0}} でリポジトリのファイルを表示する",
-    "view-your-stashed-changes": "隠した変更を表示する",
-    "when-a-stash-exists-access-it-at-the-bottom": "隠した変更が存在します。左側の [隠した変更] タブの下部からアクセスできます。",
+    "view-your-stashed-changes": "一時退避した変更を表示する",
+    "when-a-stash-exists-access-it-at-the-bottom": "一時退避した変更が存在します。左側の [一時退避した変更] タブの下部からアクセスできます。",
     "you-have-number-change-in-progress": "まだコミットしていない進行中の{{1}}が {{0}}つあります。",
     "you-have-operation": "You have {{0}} waiting to be pushed to {{0}}."
   },
