@@ -746,12 +746,12 @@
     }
   },
   "local-changes-overwritten-dialog": {
-    "Stash-Changes": "変更を隠して続行する",
-    "Stash-Changes-darwin": "変更を隠して続行する",
+    "Stash-Changes": "変更を退避して続行する",
+    "Stash-Changes-darwin": "変更を退避して続行する",
     "the-following-files-would-be-overwritten": "次のファイルは上書きされます:",
-    "this-will-create-a-stash": "これにより、現在の変更を含む隠し場所が作成されます。後で隠し場所を復元することで、それらを回復できます。",
+    "this-will-create-a-stash": "これにより、現在の変更を含む退避場所が作成されます。後で退避場所を復元することで、それらを回復できます。",
     "unable-to-action": "ブランチに変更が存在する場合、{{0}} できません。{{1}}",
-    "you-can-stash-your-changes": "ここで変更を隠し、後で回復できます。"
+    "you-can-stash-your-changes": "ここで変更を退避し、後で回復できます。"
   },
   "lookup": {
     "error": {
@@ -1059,9 +1059,9 @@
     "we-recommend-you-avoid-committing-2": " to store large files on GitHub."
   },
   "overwrite-stashed-changes-dialog": {
-    "are-you-sure-you-want-to-proceed": "続行してもよろしいですか?これにより、既存の隠しファイル内容が現在の変更で上書きされます。",
-    "overwrite-stash": "隠しファイルを上書きしますか?",
-    "overwrite-stash-darwin": "隠しファイルを上書きしますか?"
+    "are-you-sure-you-want-to-proceed": "続行してもよろしいですか?これにより、既存の退避ファイル内容が現在の変更で上書きされます。",
+    "overwrite-stash": "退避ファイルを上書きしますか?",
+    "overwrite-stash-darwin": "退避ファイルを上書きしますか?"
   },
   "preferences": {
     "accounts": "アカウント",
@@ -1275,9 +1275,9 @@
     "open-in": "{{0}} で開く",
     "restore": "復元する",
     "stashed-changes": "一時退避された変更",
-    "unable-to-restore-stash": "ブランチに変更が存在する場合、隠しファイルを復元できません。",
+    "unable-to-restore-stash": "ブランチに変更が存在する場合、退避ファイルを復元できません。",
     "undo": "元に戻す",
-    "will-move-your-stashed-files": " は、隠しファイルを変更リストに移動します。"
+    "will-move-your-stashed-files": " は、退避ファイルを変更リストに移動します。"
   },
   "terms-and-conditions": {
     "additional-services": "追加サービス",
