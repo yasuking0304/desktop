@@ -457,9 +457,9 @@
     "use-github-account": "既存の GitHub{{0}} アカウント名、メールアドレスを使用します"
   },
   "confirm-discard-stash": {
-    "are-you-sure-you-want-to-discard": "これらの隠された変更を破棄してもよろしいですか?",
-    "discard": "隠された変更を破棄しますか?",
-    "discard-darwin": "隠された変更を破棄しますか?"
+    "are-you-sure-you-want-to-discard": "これらの退避された変更を破棄してもよろしいですか?",
+    "discard": "退避された変更を破棄しますか?",
+    "discard-darwin": "退避された変更を破棄しますか?"
   },
   "confirm-exit-tutorial": {
     "are-you-sure-you-want-to-leave": "チュートリアルを終了してもよろしいですか? これにより、ホーム画面に戻ります。",
