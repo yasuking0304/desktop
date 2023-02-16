@@ -23,6 +23,7 @@ import { FoldoutType } from '../../lib/app-state'
 import { ForcePushBranchState } from '../../lib/rebase'
 import { PushPullButtonDropDown } from './push-pull-button-dropdown'
 import { enablePushPullFetchDropdown } from '../../lib/feature-flag'
+import { t } from 'i18next'
 
 export const DropdownItemClassName = 'push-pull-dropdown-item'
 
@@ -134,11 +135,12 @@ function renderLastFetched(lastFetched: Date | null): JSX.Element | string {
   if (lastFetched) {
     return (
       <span>
-        Last fetched <RelativeTime date={lastFetched} />
+        {t('push-pull-button.last-fetched', 'Last fetched')}
+        <RelativeTime date={lastFetched} />
       </span>
     )
   } else {
-    return 'Never fetched'
+    return t('push-pull-button.never-fetched', 'Never fetched')
   }
 }
 

@@ -312,28 +312,35 @@ export class Advanced extends React.Component<
         <>
           <br />
           <br />
-          <span className="warning-icon">⚠️</span> GitHub Desktop has no
-          permission to display notifications. Please, enable them in the{' '}
+          <span className="warning-icon">⚠️</span>
+          {t(
+            'advanced.has-no-permission-to-display-notifications-1',
+            ` GitHub Desktop has no permission to display
+              notifications. Please, enable them in the `
+          )}
           <LinkButton uri={notificationSettingsURL}>
-            Notifications Settings
+            {t('advanced.notifications-settings', 'Notifications Settings')}
           </LinkButton>
-          .
+          {t('advanced.has-no-permission-to-display-notifications-2', '.')}
         </>
       )
     }
 
     const verb = suggestConfigureNotifications
-      ? 'properly configured'
-      : 'enabled'
+      ? t('advanced.properly-configured', 'properly configured')
+      : t('advanced.enabled', 'enabled')
 
     return (
       <>
-        {' '}
-        Make sure notifications are {verb} for GitHub Desktop in the{' '}
+        {t(
+          'advanced.make-sure-notifications-1',
+          ' Make sure notifications are {{0}} for GitHub Desktop in the ',
+          { 0: verb }
+        )}
         <LinkButton uri={notificationSettingsURL}>
-          Notifications Settings
+          {t('advanced.notifications-settings', 'Notifications Settings')}
         </LinkButton>
-        .
+        {t('advanced.make-sure-notifications-2', '.', { 0: verb })}
       </>
     )
   }
