@@ -779,8 +779,6 @@
     "confirm-rename": "ブランチ名の変更…",
     "confirm-stash-all-changes": "すべての変更を隠す(&S)…",
     "confirm-stash-all-changes-darwin": "すべての変更を隠す…",
-    "contact-github-support": "GitHub サポートに連絡(&C)…",
-    "contact-github-support-darwin": "GitHub サポートに連絡…",
     "context-open-in-external-editor": "外部エディタを開く",
     "context-open-in-external-editor-darwin": "外部エディタを開く",
     "copy": "コピー(&C)",
@@ -1074,9 +1072,11 @@
   "prompts": {
     "discarding-changes": "変更の破棄",
     "discarding-changes-permanently": "変更を完全に破棄する",
+    "discarding-stash": "一時退避場所の破棄",
     "force-pushing": "強制Push",
     "removing-repositories": "リポジトリを削除する",
-    "show-a-confirmation": "事前に確認ダイアログを表示…"
+    "show-a-confirmation": "事前に確認ダイアログを表示…",
+    "undo-commit": "コミットの取り消し"
   },
   "publish-repository": {
     "keep-this-code-private": "このコードを非公開にする",
@@ -1173,6 +1173,12 @@
   "revert-progress": {
     "hang-on": "待つ…",
     "reverting": "戻す…"
+  },
+  "saml-reauth-required": {
+    "continue-in-browser": "ブラウザで続行",
+    "continue-in-browser-darwin": "ブラウザで続行",
+    "re-authorization-required": "再認証が必要",
+    "re-authorization-required-darwin": "再認証が必要"
   },
   "selected-commits": {
     "branch-menu-to-cherry-pick-them": "コミットをブランチメニューにドラッグしてcherry-pickします。",
@@ -1387,7 +1393,8 @@
     "require-force-push-darwin": "{{0}} は強制Push が必要です"
   },
   "warn-local-changes-before-undo": {
-    "changes-in-progress-undo-merge": "変更が進行中です。マージコミットを元に戻すと、これらの変更の一部が失われる可能性があります。",
+    "changes-in-progress-undo-commit": "進行中の変更があります。コミットを元に戻すと、これらの変更の一部が失われる可能性があります。続行しますか?",
+    "changes-in-progress-undo-merge": "進行中の変更があります。マージコミットを元に戻すと、これらの変更の一部が失われる可能性があります。",
     "do-you-want-to-continue-anyway": "続行しますか?",
     "undo-commit": "コミットの取り消し",
     "undo-commit-darwin": "コミットの取り消し",
@@ -1396,7 +1403,7 @@
   "warning-before-reset": {
     "reset-to-commit": "コミットのリセット",
     "reset-to-commit-darwin": "コミットのリセット",
-    "you-have-changes-in-progress": "変更が進行中です。前のコミットにリセットすると、これらの変更の一部が失われる可能性があります。続行しますか?"
+    "you-have-changes-in-progress": "進行中の変更があります。前のコミットにリセットすると、これらの変更の一部が失われる可能性があります。続行しますか?"
   },
   "welcome": {
     "definitions-git": " はバージョン管理システムです。",

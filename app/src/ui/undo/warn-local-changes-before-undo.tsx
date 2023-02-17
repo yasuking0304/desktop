@@ -71,8 +71,11 @@ export class WarnLocalChangesBeforeUndo extends React.Component<
     return (
       <DialogContent>
         <Row>
-          You have changes in progress. Undoing the commit might result in some
-          of these changes being lost. Do you want to continue anyway?
+          {t(
+            'warn-local-changes-before-undo.changes-in-progress-undo-commit',
+            `You have changes in progress. Undoing the commit might result in
+            some of these changes being lost. Do you want to continue anyway?`
+          )}
         </Row>
         <Row>
           <Checkbox
