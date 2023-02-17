@@ -174,8 +174,9 @@ export class NotificationsStore {
 
     const reviewVerb = getVerbForPullRequestReview(review)
     const title = `@${review.user.login} ${reviewVerb} your pull request`
-    const body = `${pullRequest.title} #${pullRequest.pullRequestNumber
-      }\n${truncateWithEllipsis(review.body, 50)}`
+    const body = `${pullRequest.title} #${
+      pullRequest.pullRequestNumber
+    }\n${truncateWithEllipsis(review.body, 50)}`
     const onClick = () => {
       this.statsStore.recordPullRequestReviewNotificationClicked(review.state)
 

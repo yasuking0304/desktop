@@ -179,9 +179,10 @@ const sendErrorWithContext = (
         extra.windowState = currentState.windowState ?? 'Unknown'
         extra.accounts = `${currentState.accounts.length}`
 
-        extra.automaticallySwitchTheme = `${currentState.selectedTheme === ApplicationTheme.System &&
+        extra.automaticallySwitchTheme = `${
+          currentState.selectedTheme === ApplicationTheme.System &&
           supportsSystemThemeChanges()
-          }`
+        }`
       }
     } catch (err) {
       /* ignore */

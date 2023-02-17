@@ -81,7 +81,6 @@ interface INoChangesProps {
 
   /** The user's preference of pull request suggested next action to use **/
   readonly pullRequestSuggestedNextAction?: PullRequestSuggestedNextAction
-
 }
 
 /**
@@ -675,8 +674,8 @@ export class NoChanges extends React.Component<
         aheadBehind.ahead === 1
           ? t('no-changes.one-local-commit', '1 local commit')
           : t('no-changes.number-local-commits', `{{0}} local commits`, {
-            0: aheadBehind.ahead,
-          })
+              0: aheadBehind.ahead,
+            })
       )
     }
 
@@ -796,35 +795,35 @@ export class NoChanges extends React.Component<
     }
 
     const createPullRequestAction: IDropdownSuggestedActionOption<PullRequestSuggestedNextAction> =
-    {
-      title,
-      label: buttonText,
-      description,
-      value: PullRequestSuggestedNextAction.CreatePullRequest,
-      menuItemId: 'create-pull-request',
-      discoverabilityContent:
-        this.renderDiscoverabilityElements(createMenuItem),
-      disabled: !createMenuItem.enabled,
-      onClick: this.onCreatePullRequestClicked,
-    }
+      {
+        title,
+        label: buttonText,
+        description,
+        value: PullRequestSuggestedNextAction.CreatePullRequest,
+        menuItemId: 'create-pull-request',
+        discoverabilityContent:
+          this.renderDiscoverabilityElements(createMenuItem),
+        disabled: !createMenuItem.enabled,
+        onClick: this.onCreatePullRequestClicked,
+      }
 
     const previewPullRequestAction: IDropdownSuggestedActionOption<PullRequestSuggestedNextAction> =
-    {
-      title: `Preview the Pull Request from your current branch`,
-      label: 'Preview Pull Request',
-      description: (
-        <>
-          The current branch (<Ref>{tip.branch.name}</Ref>) is already
-          published to GitHub. Preview the changes this pull request will have
-          before proposing your changes.
-        </>
-      ),
-      value: PullRequestSuggestedNextAction.PreviewPullRequest,
-      menuItemId: 'preview-pull-request',
-      discoverabilityContent:
-        this.renderDiscoverabilityElements(previewPullMenuItem),
-      disabled: !previewPullMenuItem.enabled,
-    }
+      {
+        title: `Preview the Pull Request from your current branch`,
+        label: 'Preview Pull Request',
+        description: (
+          <>
+            The current branch (<Ref>{tip.branch.name}</Ref>) is already
+            published to GitHub. Preview the changes this pull request will have
+            before proposing your changes.
+          </>
+        ),
+        value: PullRequestSuggestedNextAction.PreviewPullRequest,
+        menuItemId: 'preview-pull-request',
+        discoverabilityContent:
+          this.renderDiscoverabilityElements(previewPullMenuItem),
+        disabled: !previewPullMenuItem.enabled,
+      }
 
     return (
       <DropdownSuggestedAction

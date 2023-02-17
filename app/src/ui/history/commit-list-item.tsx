@@ -322,13 +322,13 @@ export class CommitListItem extends React.PureComponent<
       {
         label: __DARWIN__
           ? t(
-            'commit-list-item.Revert-changes-in-commit-darwin',
-            'Revert Changes in Commit'
-          )
+              'commit-list-item.Revert-changes-in-commit-darwin',
+              'Revert Changes in Commit'
+            )
           : t(
-            'commit-list-item.Revert-changes-in-commit',
-            'Revert changes in commit'
-          ),
+              'commit-list-item.Revert-changes-in-commit',
+              'Revert changes in commit'
+            ),
         action: () => {
           if (this.props.onRevertCommit) {
             this.props.onRevertCommit(this.props.commit)
@@ -340,13 +340,13 @@ export class CommitListItem extends React.PureComponent<
       {
         label: __DARWIN__
           ? t(
-            'commit-list-item.create-branch-from-commit-darwin',
-            'Create Branch from Commit'
-          )
+              'commit-list-item.create-branch-from-commit-darwin',
+              'Create Branch from Commit'
+            )
           : t(
-            'commit-list-item.create-branch-from-commit',
-            'Create branch from commit'
-          ),
+              'commit-list-item.create-branch-from-commit',
+              'Create branch from commit'
+            ),
         action: () => {
           if (this.props.onCreateBranch) {
             this.props.onCreateBranch(this.props.commit)
@@ -378,9 +378,9 @@ export class CommitListItem extends React.PureComponent<
       {
         label: __DARWIN__
           ? t(
-            'commit-list-item.cherry-pick-commit-darwin',
-            'Cherry-pick Commit…'
-          )
+              'commit-list-item.cherry-pick-commit-darwin',
+              'Cherry-pick Commit…'
+            )
           : t('commit-list-item.cherry-pick-commit', 'Cherry-pick commit…'),
         action: this.onCherryPick,
         enabled: this.canCherryPick(),
@@ -412,28 +412,28 @@ export class CommitListItem extends React.PureComponent<
       {
         label: __DARWIN__
           ? t(
-            'commit-list-item.cherry-pick-commits-darwin',
-            `Cherry-pick {{0}} Commits…`,
-            { 0: count }
-          )
+              'commit-list-item.cherry-pick-commits-darwin',
+              `Cherry-pick {{0}} Commits…`,
+              { 0: count }
+            )
           : t(
-            'commit-list-item.cherry-pick-commits',
-            `Cherry-pick {{0}} commits…`,
-            { 0: count }
-          ),
+              'commit-list-item.cherry-pick-commits',
+              `Cherry-pick {{0}} commits…`,
+              { 0: count }
+            ),
         action: this.onCherryPick,
         enabled: this.canCherryPick(),
       },
       {
         label: __DARWIN__
           ? t(
-            'commit-list-item.squash-commits-darwin',
-            `Squash {{0}} Commits…`,
-            { 0: count }
-          )
+              'commit-list-item.squash-commits-darwin',
+              `Squash {{0}} Commits…`,
+              { 0: count }
+            )
           : t('commit-list-item.squash-commits', `Squash {{0}} commits…`, {
-            0: count,
-          }),
+              0: count,
+            }),
         action: this.onSquash,
       },
     ]
