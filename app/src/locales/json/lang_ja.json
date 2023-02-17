@@ -1074,9 +1074,11 @@
   "prompts": {
     "discarding-changes": "変更の破棄",
     "discarding-changes-permanently": "変更を完全に破棄する",
+    "discarding-stash": "Discarding stash",
     "force-pushing": "強制Push",
     "removing-repositories": "リポジトリを削除する",
-    "show-a-confirmation": "事前に確認ダイアログを表示…"
+    "show-a-confirmation": "事前に確認ダイアログを表示…",
+    "undo-commit": "Undo commit"
   },
   "publish-repository": {
     "keep-this-code-private": "このコードを非公開にする",
@@ -1173,6 +1175,12 @@
   "revert-progress": {
     "hang-on": "待つ…",
     "reverting": "戻す…"
+  },
+  "saml-reauth-required": {
+    "continue-in-browser": "Continue in browser",
+    "continue-in-browser-darwin": "Continue in Browser",
+    "re-authorization-required": "Re-authorization required",
+    "re-authorization-required-darwin": "Re-authorization Required"
   },
   "selected-commits": {
     "branch-menu-to-cherry-pick-them": "コミットをブランチメニューにドラッグしてcherry-pickします。",

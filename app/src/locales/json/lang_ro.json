@@ -1074,9 +1074,11 @@
   "prompts": {
     "discarding-changes": "Discarding changes",
     "discarding-changes-permanently": "Discarding changes permanently",
+    "discarding-stash": "Discarding stash",
     "force-pushing": "Force pushing",
     "removing-repositories": "Removing repositories",
-    "show-a-confirmation": "Show a confirmation dialog before..."
+    "show-a-confirmation": "Show a confirmation dialog before...",
+    "undo-commit": "Undo commit"
   },
   "publish-repository": {
     "keep-this-code-private": "Keep this code private",
@@ -1173,6 +1175,12 @@
   "revert-progress": {
     "hang-on": "Hang on…",
     "reverting": "Reverting…"
+  },
+  "saml-reauth-required": {
+    "continue-in-browser": "Continue in browser",
+    "continue-in-browser-darwin": "Continue in Browser",
+    "re-authorization-required": "Re-authorization required",
+    "re-authorization-required-darwin": "Re-authorization Required"
   },
   "selected-commits": {
     "branch-menu-to-cherry-pick-them": "Drag the commits to the branch menu to cherry-pick them.",
