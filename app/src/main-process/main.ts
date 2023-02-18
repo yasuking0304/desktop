@@ -152,6 +152,10 @@ if (__WIN32__ && process.argv.length > 1) {
   }
 }
 
+if (__LINUX__ && process.argv.length > 1) {
+  handlePossibleProtocolLauncherArgs(process.argv)
+}
+
 initializeDesktopNotifications()
 
 function handleAppURL(url: string) {
@@ -501,6 +505,8 @@ app.on('ready', () => {
     mainWindow?.quitAndInstallUpdate()
   )
 
+  ipcMain.on('quit-app', () => app.quit())
+
   ipcMain.on('minimize-window', () => mainWindow?.minimizeWindow())
 
   ipcMain.on('maximize-window', () => mainWindow?.maximizeWindow())
@@ -755,7 +761,7 @@ function createWindow() {
     }
   }
 
-  window.onClose(() => {
+  window.onClosed(() => {
     mainWindow = null
     if (!__DARWIN__ && !preventQuit) {
       app.quit()

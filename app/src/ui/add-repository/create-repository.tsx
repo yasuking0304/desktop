@@ -34,6 +34,7 @@ import { showOpenDialog } from '../main-process-proxy'
 import { pathExists } from '../lib/path-exists'
 import { mkdir } from 'fs/promises'
 import { directoryExists } from '../../lib/directory-exists'
+import { FoldoutType } from '../../lib/app-state'
 import { join } from 'path'
 import { isTopMostDialog } from '../dialog/is-top-most'
 import { t } from 'i18next'
@@ -410,6 +411,7 @@ export class CreateRepository extends React.Component<
 
     this.updateDefaultDirectory()
 
+    this.props.dispatcher.closeFoldout(FoldoutType.Repository)
     this.props.dispatcher.selectRepository(repository)
     this.props.dispatcher.recordCreateRepository()
     this.props.onDismissed()

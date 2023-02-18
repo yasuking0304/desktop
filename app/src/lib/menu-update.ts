@@ -136,6 +136,7 @@ const allMenuIds: ReadonlyArray<MenuIDs> = [
   'clone-repository',
   'about',
   'create-pull-request',
+  ...(enableStartingPullRequests() ? ['preview-pull-request' as MenuIDs] : []),
   'squash-and-merge-branch',
 ]
 
@@ -338,7 +339,9 @@ function getRepositoryMenuBuilder(state: IAppState): MenuStateBuilder {
 
     menuStateBuilder.disable('view-repository-on-github')
     menuStateBuilder.disable('create-pull-request')
-
+    if (enableStartingPullRequests()) {
+      menuStateBuilder.disable('preview-pull-request')
+    }
     if (
       selectedState &&
       selectedState.type === SelectionType.MissingRepository
