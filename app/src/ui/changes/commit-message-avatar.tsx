@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react'
 import { Select } from '../lib/select'
 import { Button } from '../lib/button'
@@ -74,10 +72,21 @@ export class CommitMessageAvatar extends React.Component<
   public render() {
     return (
       <div className="commit-message-avatar-component">
-        <div onClick={this.onAvatarClick}>
-          {this.props.warningBadgeVisible && this.renderWarningBadge()}
+        {this.props.warningBadgeVisible && (
+          <Button
+            className="avatar-button"
+            ariaLabel="Commit may be misattributed. View warning."
+            onClick={this.onAvatarClick}
+          >
+            {this.renderWarningBadge()}
+            <Avatar user={this.props.user} title={this.props.title} />
+          </Button>
+        )}
+
+        {!this.props.warningBadgeVisible && (
           <Avatar user={this.props.user} title={this.props.title} />
-        </div>
+        )}
+
         {this.state.isPopoverOpen && this.renderPopover()}
       </div>
     )
@@ -109,7 +118,7 @@ export class CommitMessageAvatar extends React.Component<
     })
   }
 
-  private onAvatarClick = (event: React.FormEvent<HTMLDivElement>) => {
+  private onAvatarClick = (event: React.FormEvent<HTMLButtonElement>) => {
     if (this.props.warningBadgeVisible === false) {
       return
     }
