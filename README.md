@@ -102,6 +102,7 @@ $ sudo dnf install github-desktop
 
 ### OpenSUSE distribution
 
+### Debian/Ubuntu
 
 First install our GPG certificate:
 
