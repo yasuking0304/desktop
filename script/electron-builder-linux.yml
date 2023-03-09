@@ -20,12 +20,3 @@ rpm:
     # keytar dependencies
     - libsecret
     - gnome-keyring
-snap:
-  confinement: 'classic'
-  stagePackages:
-    - default
-    - libcurl3
-    - openssh-client
-    - gettext
-  environment:
-    DISABLE_WAYLAND: 1

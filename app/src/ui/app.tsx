@@ -165,6 +165,7 @@ import { enableStackedPopups } from '../lib/feature-flag'
 import { DialogStackContext } from './dialog'
 import { TestNotifications } from './test-notifications/test-notifications'
 import { NotificationsDebugStore } from '../lib/stores/notifications-debug-store'
+import { PullRequestComment } from './notifications/pull-request-comment'
 
 const MinuteInMilliseconds = 1000 * 60
 const HourInMilliseconds = MinuteInMilliseconds * 60
@@ -421,9 +422,9 @@ export class App extends React.Component<IAppProps, IAppState> {
       case 'view-repository-on-github':
         return this.viewRepositoryOnGitHub()
       case 'compare-on-github':
-        return this.openBranchOnGitub('compare')
+        return this.openBranchOnGitHub('compare')
       case 'branch-on-github':
-        return this.openBranchOnGitub('tree')
+        return this.openBranchOnGitHub('tree')
       case 'create-issue-in-repository-on-github':
         return this.openIssueCreationOnGitHub()
       case 'open-in-shell':
@@ -718,7 +719,7 @@ export class App extends React.Component<IAppProps, IAppState> {
     this.props.dispatcher.startMergeBranchOperation(repository, isSquash)
   }
 
-  private openBranchOnGitub(view: 'tree' | 'compare') {
+  private openBranchOnGitHub(view: 'tree' | 'compare') {
     const htmlURL = this.getCurrentRepositoryGitHubURL()
     if (!htmlURL) {
       return
@@ -2397,6 +2398,23 @@ export class App extends React.Component<IAppProps, IAppState> {
             dispatcher={this.props.dispatcher}
             notificationsDebugStore={this.props.notificationsDebugStore}
             repository={popup.repository}
+            onDismissed={onPopupDismissedFn}
+          />
+        )
+      }
+      case PopupType.PullRequestComment: {
+        return (
+          <PullRequestComment
+            key="pull-request-comment"
+            dispatcher={this.props.dispatcher}
+            shouldCheckoutBranch={popup.shouldCheckoutBranch}
+            shouldChangeRepository={popup.shouldChangeRepository}
+            repository={popup.repository}
+            pullRequest={popup.pullRequest}
+            comment={popup.comment}
+            emoji={this.state.emoji}
+            accounts={this.state.accounts}
+            onSubmit={onPopupDismissedFn}
             onDismissed={onPopupDismissedFn}
           />
         )

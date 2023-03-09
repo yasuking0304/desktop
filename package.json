@@ -164,6 +164,8 @@
     "eslint-plugin-github": "^4.3.7",
     "jest-esm-transformer": "^1.0.0",
     "markdownlint-cli": "^0.32.2",
+    "patch-package": "^6.5.1",
+    "postinstall-postinstall": "^2.1.0",
     "reserved-words": "^0.1.2",
     "tsconfig-paths": "^3.9.0"
   },

@@ -110,12 +110,12 @@ export function enableSubmoduleDiff(): boolean {
 
 /** Should we enable starting pull requests? */
 export function enableStartingPullRequests(): boolean {
-  return enableBetaFeatures()
+  return true
 }
 
 /** Should we enable starting pull requests? */
 export function enableStackedPopups(): boolean {
-  return enableBetaFeatures()
+  return true
 }
 
 /** Should we enable mechanism to prevent closing while the app is updating? */
@@ -126,4 +126,8 @@ export function enablePreventClosingWhileUpdating(): boolean {
 /** Should we enable the new push-pull-fetch dropdown? */
 export function enablePushPullFetchDropdown(): boolean {
   return enableBetaFeatures()
+}
+
+export function enablePullRequestCommentNotifications(): boolean {
+  return enableDevelopmentFeatures()
 }
