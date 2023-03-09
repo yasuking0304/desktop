@@ -168,6 +168,10 @@ export class GitConfigUserForm extends React.Component<
     const label = this.state.emailIsOther
       ? undefined
       : t('common.email', 'Email')
+    // If there is not a label, provide a screen reader announcement.
+    const ariaLabel = label
+      ? undefined
+      : t('common.email', 'Email')
 
     return (
       <Row>
@@ -179,6 +183,7 @@ export class GitConfigUserForm extends React.Component<
           value={this.props.email}
           disabled={this.props.disabled}
           onValueChanged={this.props.onEmailChanged}
+          ariaLabel={ariaLabel}
         />
       </Row>
     )
