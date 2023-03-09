@@ -220,7 +220,7 @@ with the corresponding name exists.
 },
 ```
 
-**Note:** Use `jetBrainsToolboxScriptName` field only on the main edition of 
+**Note:** Use `jetBrainsToolboxScriptName` field only on the main edition of
 the product. When JetBrains Toolbox generates the scripts, it doesn't consider the
 different editions, so when a new product edition is installed, it generates a
 shell script with the same name that overrides the existing one. So it's
@@ -233,7 +233,7 @@ impossible to differentiate between the various editions of the same product.
 4. JetBrains Toolbox will generate a new script with the same name, `pycharm`
 and will override the script generated for the community version
 
-The current method supports only the default generated JetBrains Toolbox shell 
+The current method supports only the default generated JetBrains Toolbox shell
 scripts.
 
 ## macOS

@@ -11,8 +11,6 @@ linux:
     # see https://github.com/shiftkey/desktop/issues/72 for more details
     - x-scheme-handler/x-github-desktop-dev-auth
   target:
-    - deb
-    - rpm
     - AppImage
   maintainer: 'GitHub, Inc <opensource+desktop@github.com>'
 rpm:
@@ -21,3 +19,4 @@ rpm:
     - libcurl
     # keytar dependencies
     - libsecret
+    - gnome-keyring

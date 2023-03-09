@@ -66,7 +66,16 @@ findYarnVersion(path => {
 
   result = spawnSync('node', getYarnArgs([path, 'compile:script']), options)
 
-  if (result.status !== 0) {
-    process.exit(result.status || 1)
+    if (result.status !== 0) {
+      process.exit(result.status || 1)
+    }
+  }
+
+  if (process.platform === 'linux') {
+    result = spawnSync('node', getYarnArgs([path, 'patch-package']), options)
+
+    if (result.status !== 0) {
+      process.exit(result.status || 1)
+    }
   }
 })
