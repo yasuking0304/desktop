@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { encodePathAsUrl } from '../../lib/path'
 import { Button } from '../lib/button'
+import { t } from 'i18next'
 
 const BlankSlateImage = encodePathAsUrl(
   __dirname,
@@ -23,10 +24,18 @@ export class NoBranches extends React.Component<INoBranchesProps> {
         <div className="no-branches">
           <img src={BlankSlateImage} className="blankslate-image" alt="" />
 
-          <div className="title">Sorry, I can't find that branch</div>
+          <div className="title">
+            {t(
+              'no-branches.i-can-not-find-that-branch',
+              `Sorry, I can't find that branch`
+            )}
+          </div>
 
           <div className="subtitle">
-            Do you want to create a new branch instead?
+            {t(
+              'no-branches.create-a-new-branch-instead',
+              'Do you want to create a new branch instead?'
+            )}
           </div>
 
           <Button
@@ -34,12 +43,19 @@ export class NoBranches extends React.Component<INoBranchesProps> {
             onClick={this.props.onCreateNewBranch}
             type="submit"
           >
-            {__DARWIN__ ? 'Create New Branch' : 'Create new branch'}
+            {__DARWIN__
+              ? t('no-branches.create-new-branch-darwin', 'Create New Branch')
+              : t('no-branches.create-new-branch', 'Create new branch')}
           </Button>
 
           <div className="protip">
-            ProTip! Press {this.renderShortcut()} to quickly create a new branch
-            from anywhere within the app
+            {t('no-branches.protip-1', `ProTip! Press `)}
+            {this.renderShortcut()}
+            {t(
+              'no-branches.protip-2',
+              ` to quickly create a new branch
+              from anywhere within the app`
+            )}
           </div>
         </div>
       )

@@ -15,6 +15,7 @@ import {
   getNotificationsPermission,
   requestNotificationsPermission,
 } from '../main-process-proxy'
+import { t } from 'i18next'
 
 interface IAdvancedPreferencesProps {
   readonly useWindowsOpenSSH: boolean
@@ -103,8 +104,14 @@ export class Advanced extends React.Component<
   private reportDesktopUsageLabel() {
     return (
       <span>
-        Help GitHub Desktop improve by submitting{' '}
-        <LinkButton uri={SamplesURL}>usage stats</LinkButton>
+        {t(
+          'advanced.help-github-desktop-improve-by-submitting-1',
+          'Help GitHub Desktop improve by submitting '
+        )}
+        <LinkButton uri={SamplesURL}>
+          {t('advanced.usage-stats', 'usage stats')}
+        </LinkButton>
+        {t('advanced.help-github-desktop-improve-by-submitting-2', ' ')}
       </span>
     )
   }
@@ -113,7 +120,12 @@ export class Advanced extends React.Component<
     return (
       <DialogContent>
         <div className="advanced-section">
-          <h2>If I have changes and I switch branches...</h2>
+          <h2>
+            {t(
+              'advanced.if-i-have-changes-and-i-switch-branches',
+              'If I have changes and I switch branches...'
+            )}
+          </h2>
 
           <RadioButton
             value={UncommittedChangesStrategy.AskForConfirmation}
@@ -121,7 +133,10 @@ export class Advanced extends React.Component<
               this.state.uncommittedChangesStrategy ===
               UncommittedChangesStrategy.AskForConfirmation
             }
-            label="Ask me where I want the changes to go"
+            label={t(
+              'advanced.ask-me-where-i-want-the-changes-to-go',
+              'Ask me where I want the changes to go'
+            )}
             onSelected={this.onUncommittedChangesStrategyChanged}
           />
 
@@ -131,7 +146,10 @@ export class Advanced extends React.Component<
               this.state.uncommittedChangesStrategy ===
               UncommittedChangesStrategy.MoveToNewBranch
             }
-            label="Always bring my changes to my new branch"
+            label={t(
+              'advanced.always-bring-my-changes-to-my-new-branch',
+              'Always bring my changes to my new branch'
+            )}
             onSelected={this.onUncommittedChangesStrategyChanged}
           />
 
@@ -141,14 +159,20 @@ export class Advanced extends React.Component<
               this.state.uncommittedChangesStrategy ===
               UncommittedChangesStrategy.StashOnCurrentBranch
             }
-            label="Always stash and leave my changes on the current branch"
+            label={t(
+              'advanced.always-stash-and-leave-my-changes',
+              'Always stash and leave my changes on the current branch'
+            )}
             onSelected={this.onUncommittedChangesStrategyChanged}
           />
         </div>
         <div className="advanced-section">
-          <h2>Background updates</h2>
+          <h2>{t('advanced.background-updates', 'Background updates')}</h2>
           <Checkbox
-            label="Periodically fetch and refresh status of all repositories"
+            label={t(
+              'advanced.periodically-fetch-and-refresh-status',
+              'Periodically fetch and refresh status of all repositories'
+            )}
             value={
               this.props.repositoryIndicatorsEnabled
                 ? CheckboxValue.On
@@ -157,14 +181,18 @@ export class Advanced extends React.Component<
             onChange={this.onRepositoryIndicatorsEnabledChanged}
           />
           <p className="git-settings-description">
-            Allows the display of up-to-date status indicators in the repository
-            list. Disabling this may improve performance with many repositories.
+            {t(
+              'advanced.allows-the-display-of-up-to-date-status-indicators',
+              `Allows the display of up-to-date status indicators in the
+              repository list. Disabling this may improve performance
+              with many repositories.`
+            )}
           </p>
         </div>
         {this.renderSSHSettings()}
         {this.renderNotificationsSettings()}
         <div className="advanced-section">
-          <h2>Usage</h2>
+          <h2>{t('advanced.usage', 'Usage')}</h2>
           <Checkbox
             label={this.reportDesktopUsageLabel()}
             value={
@@ -186,9 +214,12 @@ export class Advanced extends React.Component<
 
     return (
       <div className="advanced-section">
-        <h2>SSH</h2>
+        <h2>{t('advanced.ssh', 'SSH')}</h2>
         <Checkbox
-          label="Use system OpenSSH (recommended)"
+          label={t(
+            'advanced.use-systemopenssh',
+            'Use system OpenSSH (recommended)'
+          )}
           value={
             this.props.useWindowsOpenSSH ? CheckboxValue.On : CheckboxValue.Off
           }
@@ -201,9 +232,9 @@ export class Advanced extends React.Component<
   private renderNotificationsSettings() {
     return (
       <div className="advanced-section">
-        <h2>Notifications</h2>
+        <h2>{t('advanced.notifications', 'Notifications')}</h2>
         <Checkbox
-          label="Enable notifications"
+          label={t('advanced.enable-notifications', 'Enable notifications')}
           value={
             this.props.notificationsEnabled
               ? CheckboxValue.On
@@ -212,8 +243,12 @@ export class Advanced extends React.Component<
           onChange={this.onNotificationsEnabledChanged}
         />
         <p className="git-settings-description">
-          Allows the display of notifications when high-signal events take place
-          in the current repository.{this.renderNotificationHint()}
+          {t(
+            'advanced.allows-the-display-of-notifications',
+            `Allows the display of notifications when high-signal events take
+            place in the current repository.`
+          )}
+          {this.renderNotificationHint()}
         </p>
       </div>
     )
@@ -251,12 +286,17 @@ export class Advanced extends React.Component<
     if (suggestGrantNotificationPermission) {
       return (
         <>
-          {' '}
-          You need to{' '}
+          {t(
+            'advanced.you-need-to-grant-permission-to-display-1',
+            ' You need to '
+          )}
           <LinkButton onClick={this.onGrantNotificationPermission}>
-            grant permission
-          </LinkButton>{' '}
-          to display these notifications from GitHub Desktop.
+            {t('advanced.grant-permission', 'grant permission')}
+          </LinkButton>
+          {t(
+            'advanced.you-need-to-grant-permission-to-display-2',
+            ' to display these notifications from GitHub Desktop.'
+          )}
         </>
       )
     }
@@ -272,28 +312,35 @@ export class Advanced extends React.Component<
         <>
           <br />
           <br />
-          <span className="warning-icon">⚠️</span> GitHub Desktop has no
-          permission to display notifications. Please, enable them in the{' '}
+          <span className="warning-icon">⚠️</span>
+          {t(
+            'advanced.has-no-permission-to-display-notifications-1',
+            ` GitHub Desktop has no permission to display
+              notifications. Please, enable them in the `
+          )}
           <LinkButton uri={notificationSettingsURL}>
-            Notifications Settings
+            {t('advanced.notifications-settings', 'Notifications Settings')}
           </LinkButton>
-          .
+          {t('advanced.has-no-permission-to-display-notifications-2', '.')}
         </>
       )
     }
 
     const verb = suggestConfigureNotifications
-      ? 'properly configured'
-      : 'enabled'
+      ? t('advanced.properly-configured', 'properly configured')
+      : t('advanced.enabled', 'enabled')
 
     return (
       <>
-        {' '}
-        Make sure notifications are {verb} for GitHub Desktop in the{' '}
+        {t(
+          'advanced.make-sure-notifications-1',
+          ' Make sure notifications are {{0}} for GitHub Desktop in the ',
+          { 0: verb }
+        )}
         <LinkButton uri={notificationSettingsURL}>
-          Notifications Settings
+          {t('advanced.notifications-settings', 'Notifications Settings')}
         </LinkButton>
-        .
+        {t('advanced.make-sure-notifications-2', '.', { 0: verb })}
       </>
     )
   }

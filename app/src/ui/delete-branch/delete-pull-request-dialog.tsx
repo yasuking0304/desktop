@@ -9,6 +9,7 @@ import { PullRequest } from '../../models/pull-request'
 import { Dialog, DialogContent, DialogFooter } from '../dialog'
 import { LinkButton } from '../lib/link-button'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
+import { t } from 'i18next'
 
 interface IDeleteBranchProps {
   readonly dispatcher: Dispatcher
@@ -23,24 +24,45 @@ export class DeletePullRequest extends React.Component<IDeleteBranchProps, {}> {
     return (
       <Dialog
         id="delete-branch"
-        title={__DARWIN__ ? 'Delete Branch' : 'Delete branch'}
+        title={
+          __DARWIN__
+            ? t(
+                'delete-pull-request-dialog.delete-branch-darwin',
+                'Delete Branch'
+              )
+            : t('delete-pull-request-dialog.delete-branch', 'Delete branch')
+        }
         type="warning"
         onDismissed={this.props.onDismissed}
         onSubmit={this.deleteBranch}
       >
         <DialogContent>
-          <p>This branch may have an open pull request associated with it.</p>
           <p>
-            If{' '}
+            {t(
+              'delete-pull-request-dialog.this-branch-may-have-an-open-1',
+              'This branch may have an open pull request associated with it.'
+            )}
+          </p>
+          <p>
+            {t(
+              'delete-pull-request-dialog.this-branch-may-have-an-open-2',
+              'If '
+            )}
             <LinkButton onClick={this.openPullRequest}>
               #{this.props.pullRequest.pullRequestNumber}
-            </LinkButton>{' '}
-            has been merged, you can also go to GitHub to delete the remote
-            branch.
+            </LinkButton>
+            {t(
+              'delete-pull-request-dialog.this-branch-may-have-an-open-3',
+              ` has been merged, you can also go to GitHub to delete the remote
+            branch.`
+            )}
           </p>
         </DialogContent>
         <DialogFooter>
-          <OkCancelButtonGroup destructive={true} okButtonText="Delete" />
+          <OkCancelButtonGroup
+            destructive={true}
+            okButtonText={t('common.delete', 'Delete')}
+          />
         </DialogFooter>
       </Dialog>
     )

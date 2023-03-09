@@ -29,6 +29,7 @@ import {
   InvalidGitAuthorNameMessage,
 } from '../lib/identifier-rules'
 import { Account } from '../../models/account'
+import { t } from 'i18next'
 
 interface IRepositorySettingsProps {
   readonly initialSelectedTab?: RepositorySettingsTab
@@ -165,7 +166,17 @@ export class RepositorySettings extends React.Component<
     return (
       <Dialog
         id="repository-settings"
-        title={__DARWIN__ ? 'Repository Settings' : 'Repository settings'}
+        title={
+          __DARWIN__
+            ? t(
+                'repository-settings.repository-settings-darwin',
+                'Repository Settings'
+              )
+            : t(
+                'repository-settings.repository-settings',
+                'Repository settings'
+              )
+        }
         onDismissed={this.props.onDismissed}
         onSubmit={this.onSubmit}
         disabled={this.state.disabled}
@@ -178,11 +189,26 @@ export class RepositorySettings extends React.Component<
             selectedIndex={this.state.selectedTab}
             type={TabBarType.Vertical}
           >
-            <span>Remote</span>
-            <span>{__DARWIN__ ? 'Ignored Files' : 'Ignored files'}</span>
-            <span>{__DARWIN__ ? 'Git Config' : 'Git config'}</span>
+            <span>{t('repository-settings.remote', 'Remote')}</span>
+            <span>
+              {__DARWIN__
+                ? t('repository-settings.ignored-files-darwin', 'Ignored Files')
+                : t('repository-settings.ignored-files', 'Ignored files')}
+            </span>
+            <span>
+              {__DARWIN__
+                ? t('repository-settings.git-config-darwin', 'Git Config')
+                : t('repository-settings.git-config', 'Git config')}
+            </span>
             {showForkSettings && (
-              <span>{__DARWIN__ ? 'Fork Behavior' : 'Fork behavior'}</span>
+              <span>
+                {__DARWIN__
+                  ? t(
+                      'repository-settings.fork-behavior-darwin',
+                      'Fork Behavior'
+                    )
+                  : t('repository-settings.fork-behavior', 'Fork behavior')}
+              </span>
             )}
           </TabBar>
 
@@ -203,7 +229,7 @@ export class RepositorySettings extends React.Component<
     return (
       <DialogFooter>
         <OkCancelButtonGroup
-          okButtonText="Save"
+          okButtonText={t('common.save', 'Save')}
           okButtonDisabled={this.state.saveDisabled}
         />
       </DialogFooter>

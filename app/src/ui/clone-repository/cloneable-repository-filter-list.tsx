@@ -15,6 +15,7 @@ import { HighlightText } from '../lib/highlight-text'
 import { ClickSource } from '../lib/list'
 import { LinkButton } from '../lib/link-button'
 import { Ref } from '../lib/ref'
+import { t } from 'i18next'
 
 interface ICloneableRepositoryFilterListProps {
   /** The account to clone from. */
@@ -174,7 +175,10 @@ export class CloneableRepositoryFilterList extends React.PureComponent<ICloneabl
         renderNoItems={this.renderNoItems}
         renderPostFilter={this.renderPostFilter}
         onItemClick={this.props.onItemClicked ? this.onItemClick : undefined}
-        placeholderText="Filter your repositories"
+        placeholderText={t(
+          'cloneable-repository-filter-list.placeholder-filter-repositories',
+          'Filter your repositories'
+        )}
       />
     )
   }
@@ -209,7 +213,15 @@ export class CloneableRepositoryFilterList extends React.PureComponent<ICloneabl
   private renderGroupHeader = (identifier: string) => {
     let header = identifier
     if (identifier === YourRepositoriesIdentifier) {
-      header = __DARWIN__ ? 'Your Repositories' : 'Your repositories'
+      header = __DARWIN__
+        ? t(
+            'cloneable-repository-filter-list.your-repositories_darwin',
+            'Your Repositories'
+          )
+        : t(
+            'cloneable-repository-filter-list.your-repositories',
+            'Your repositories'
+          )
     }
     return (
       <div className="clone-repository-list-content clone-repository-list-group-header">
@@ -237,7 +249,10 @@ export class CloneableRepositoryFilterList extends React.PureComponent<ICloneabl
       <Button
         disabled={this.props.loading}
         onClick={this.refreshRepositories}
-        tooltip="Refresh the list of repositories"
+        tooltip={t(
+          'cloneable-repository-filter-list.tooltip-refresh-list',
+          'Refresh the list of repositories'
+        )}
       >
         <Octicon
           symbol={syncClockwise}
@@ -256,7 +271,13 @@ export class CloneableRepositoryFilterList extends React.PureComponent<ICloneabl
 
     if (loading && (repositories === null || repositories.length === 0)) {
       return (
-        <div className="no-items loading">{`Loading repositories from ${endpointName}…`}</div>
+        <div className="no-items loading">
+          {t(
+            'cloneable-repository-filter-list.loading-repositories',
+            `Loading repositories from {{0}}…`,
+            { 0: endpointName }
+          )}
+        </div>
       )
     }
 
@@ -264,7 +285,10 @@ export class CloneableRepositoryFilterList extends React.PureComponent<ICloneabl
       return (
         <div className="no-items no-results-found">
           <div>
-            Sorry, I can't find any repository matching{' '}
+            {t(
+              'cloneable-repository-filter-list.no-match',
+              `Sorry, I can't find any repository matching `
+            )}
             <Ref>{this.props.filterText}</Ref>
           </div>
         </div>
@@ -274,12 +298,28 @@ export class CloneableRepositoryFilterList extends React.PureComponent<ICloneabl
     return (
       <div className="no-items empty-repository-list">
         <div>
-          Looks like there are no repositories for{' '}
-          <Ref>{this.props.account.login}</Ref> on {endpointName}.{' '}
+          {t(
+            'cloneable-repository-filter-list.looks-like-no-repositories-1',
+            `Looks like there are no repositories for `,
+            { 0: endpointName }
+          )}
+          <Ref>{this.props.account.login}</Ref>
+          {t(
+            'cloneable-repository-filter-list.looks-like-no-repositories-2',
+            ' on {{0}}.',
+            { 0: endpointName }
+          )}
+          {t('cloneable-repository-filter-list.created-a-repository-1', ` `)}
           <LinkButton onClick={this.refreshRepositories}>
-            Refresh this list
-          </LinkButton>{' '}
-          if you've created a repository recently.
+            {t(
+              'cloneable-repository-filter-list.refresh-this-list',
+              'Refresh this list'
+            )}
+          </LinkButton>
+          {t(
+            'cloneable-repository-filter-list.created-a-repository-2',
+            ` if you've created a repository recently.`
+          )}
         </div>
       </div>
     )

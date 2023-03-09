@@ -33,6 +33,7 @@ import { dragAndDropManager } from '../lib/drag-and-drop-manager'
 import { DragType } from '../models/drag-drop'
 import { clamp } from '../lib/clamp'
 import { PullRequestSuggestedNextAction } from '../models/pull-request'
+import { t } from 'i18next'
 
 interface IRepositoryViewProps {
   readonly repository: Repository
@@ -164,12 +165,12 @@ export class RepositoryView extends React.Component<
     return (
       <TabBar selectedIndex={selectedTab} onTabClicked={this.onTabClicked}>
         <span className="with-indicator">
-          <span>Changes</span>
+          <span>{t('common.changes-files', 'Changes')}</span>
           {this.renderChangesBadge()}
         </span>
 
         <div className="with-indicator">
-          <span>History</span>
+          <span>{t('common.history', 'History')}</span>
         </div>
       </TabBar>
     )

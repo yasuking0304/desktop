@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { t } from 'i18next'
 
 import { encodePathAsUrl } from '../../lib/path'
 
@@ -17,17 +18,21 @@ export class TutorialWelcome extends React.Component {
     return (
       <div id="tutorial-welcome">
         <div className="header">
-          <h1>Welcome to GitHub Desktop</h1>
+          <h1>{t('welcome.welcome', 'Welcome to GitHub Desktop')}</h1>
           <p>
-            Use this tutorial to get comfortable with Git, GitHub, and GitHub
-            Desktop.
+            {t(
+              'welcome.use-this-tutorial',
+              `Use this tutorial to get comfortable with Git, GitHub, and GitHub
+            Desktop.`
+            )}
           </p>
         </div>
         <ul className="definitions">
           <li>
             <img src={CodeImage} alt="Html syntax icon" />
             <p>
-              <strong>Git</strong> is the version control system.
+              <strong>Git</strong>
+              {t('welcome.definitions-git', ` is the version control system.`)}
             </p>
           </li>
           <li>
@@ -36,15 +41,21 @@ export class TutorialWelcome extends React.Component {
               alt="People with discussion bubbles overhead"
             />
             <p>
-              <strong>GitHub</strong> is where you store your code and
-              collaborate with others.
+              <strong>GitHub</strong>
+              {t(
+                'welcome.definitions-github',
+                ` is where you store your code and collaborate with others.`
+              )}
             </p>
           </li>
           <li>
             <img src={CloudServerImage} alt="Server stack with cloud" />
             <p>
-              <strong>GitHub Desktop</strong> helps you work with GitHub
-              locally.
+              <strong>GitHub Desktop</strong>
+              {t(
+                'welcome.definitions-github-desktop',
+                ` helps you work with GitHub locally.`
+              )}
             </p>
           </li>
         </ul>

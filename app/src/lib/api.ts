@@ -1716,7 +1716,10 @@ export async function createAuthorization(
   password: string,
   oneTimePassword: string | null
 ): Promise<AuthorizationResponse> {
-  const creds = Buffer.from(`${login}:${password}`, 'utf8').toString('base64')
+  const creds =
+    __LINUX__ && login === ''
+      ? Buffer.from(`$${password}`, 'utf8').toString('base64')
+      : Buffer.from(`${login}:${password}`, 'utf8').toString('base64')
   const authorization = `Basic ${creds}`
   const optHeader = oneTimePassword ? { 'X-GitHub-OTP': oneTimePassword } : {}
 

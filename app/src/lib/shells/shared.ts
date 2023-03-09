@@ -7,6 +7,7 @@ import { pathExists as pathExistsLinux } from '../helpers/linux'
 import { IFoundShell } from './found-shell'
 import { ShellError } from './error'
 import { pathExists as pathExistsDefault } from '../../ui/lib/path-exists'
+import { t } from 'i18next'
 
 export type Shell = Darwin.Shell | Win32.Shell | Linux.Shell
 
@@ -101,9 +102,15 @@ export async function launchShell(
   // platform-specific build targets.
   const exists = await pathExists(shell.path)
   if (!exists) {
-    const label = __DARWIN__ ? 'Preferences' : 'Options'
+    const label = __DARWIN__
+      ? t('common.preferences', 'Preferences')
+      : t('common.options', 'Options')
     throw new ShellError(
-      `Could not find executable for '${shell.shell}' at path '${shell.path}'.  Please open ${label} and select an available shell.`
+      t(
+        'shared.error.could-not-find-executable',
+        `Could not find executable for '{{0}' at path '{{1}}'.  Please open {{2}} and select an available shell.`,
+        { 0: shell.shell, 1: shell.path, 2: label }
+      )
     )
   }
 

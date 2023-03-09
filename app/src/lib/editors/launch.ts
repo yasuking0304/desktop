@@ -2,6 +2,24 @@ import { spawn, SpawnOptions } from 'child_process'
 import { pathExists as pathExistsDefault } from '../../ui/lib/path-exists'
 import { pathExists as pathExistsLinux, spawnEditor } from '../helpers/linux'
 import { ExternalEditorError, FoundEditor } from './shared'
+import { t } from 'i18next'
+
+/**
+ * Use a platform-specific pathExists based on the platform, to simplify changes
+ * to the application logic
+ *
+ * @param path the location of some program on disk
+ *
+ * @returns `true` if the path exists on disk, or `false` otherwise
+ *
+ */
+function pathExists(path: string) {
+  if (__LINUX__) {
+    return pathExistsLinux(path)
+  } else {
+    return pathExistsDefault(path)
+  }
+}
 
 /**
  * Use a platform-specific pathExists based on the platform, to simplify changes
@@ -33,9 +51,16 @@ export async function launchExternalEditor(
   const editorPath = editor.path
   const exists = await pathExists(editorPath)
   if (!exists) {
-    const label = __DARWIN__ ? 'Preferences' : 'Options'
+    const label = __DARWIN__
+      ? t('common.preferences', 'Preferences')
+      : t('common.options', 'Options')
     throw new ExternalEditorError(
-      `Could not find executable for '${editor.editor}' at path '${editor.path}'.  Please open ${label} and select an available editor.`,
+      t(
+        'launch.error.could-not-find-executable',
+        `Could not find executable for '{{0}}' at path '{{1}}'.
+       Please open {{2}} and select an available editor.`,
+        { 0: editor.editor, 1: editor.path, 2: label }
+      ),
       { openPreferences: true }
     )
   }

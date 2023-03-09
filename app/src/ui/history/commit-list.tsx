@@ -7,6 +7,7 @@ import { List } from '../lib/list'
 import { arrayEquals } from '../../lib/equality'
 import { DragData, DragType } from '../../models/drag-drop'
 import classNames from 'classnames'
+import { t } from 'i18next'
 
 const RowHeight = 50
 
@@ -261,14 +262,23 @@ export class CommitList extends React.Component<ICommitListProps, {}> {
     isLocalCommit: boolean,
     numUnpushedTags: number
   ) {
+    const tagsPlural =
+      numUnpushedTags > 1
+        ? t('commit-summary.tags', 'tags')
+        : t('commit-summary.tag', 'tag')
     if (isLocalCommit) {
-      return 'This commit has not been pushed to the remote repository'
+      return t(
+        'commit-summary.this-commit-has-not-been-pushed',
+        'This commit has not been pushed to the remote repository'
+      )
     }
 
     if (numUnpushedTags > 0) {
-      return `This commit has ${numUnpushedTags} tag${
-        numUnpushedTags > 1 ? 's' : ''
-      } to push`
+      return t(
+        'commit-summary.this-commit-has-number-tags',
+        `This commit has {{0}} {{1}} to push`,
+        { 0: numUnpushedTags, 1: tagsPlural }
+      )
     }
 
     return undefined

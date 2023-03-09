@@ -16,6 +16,7 @@ import { IAuthor } from '../../models/author'
 import { showContextualMenu } from '../../lib/menu-item'
 import { IMenuItem } from '../../lib/menu-item'
 import { getLegacyStealthEmailForUser } from '../../lib/email'
+import { t } from 'i18next'
 
 interface IAuthorInputProps {
   /**
@@ -781,8 +782,14 @@ export class AuthorInput extends React.Component<IAuthorInputProps, {}> {
     e.preventDefault()
 
     const menu: IMenuItem[] = [
-      { label: 'Undo', action: () => cm.getDoc().undo() },
-      { label: 'Redo', action: () => cm.getDoc().redo() },
+      {
+        label: t('author-input.undo', 'Undo'),
+        action: () => cm.getDoc().undo(),
+      },
+      {
+        label: t('author-input.redo', 'Redo'),
+        action: () => cm.getDoc().redo(),
+      },
       { type: 'separator' },
       { role: 'cut' },
       { role: 'copy' },
@@ -794,7 +801,9 @@ export class AuthorInput extends React.Component<IAuthorInputProps, {}> {
     }
 
     menu.push({
-      label: __DARWIN__ ? 'Select All' : 'Select all',
+      label: __DARWIN__
+        ? t('author-input.select-all-darwin', 'Select All')
+        : t('author-input.select-all', 'Select all'),
       action: () => {
         cm.execCommand('selectAll')
       },

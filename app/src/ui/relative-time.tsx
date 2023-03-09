@@ -2,6 +2,7 @@ import * as React from 'react'
 import { TooltippedContent } from './lib/tooltipped-content'
 import { formatDate } from '../lib/format-date'
 import { formatRelative } from '../lib/format-relative'
+import { t } from 'i18next'
 
 interface IRelativeTimeProps {
   /**
@@ -101,6 +102,8 @@ export class RelativeTime extends React.Component<
 
     // Future date, let's just show as absolute and reschedule. If it's less
     // than a minute into the future we'll treat it as 'just now'.
+    const justNow = t('relative-time.just-now', 'just now')
+
     if (diff > 0 && duration > MINUTE) {
       this.updateAndSchedule(
         absoluteText,
@@ -108,7 +111,7 @@ export class RelativeTime extends React.Component<
         duration
       )
     } else if (duration < MINUTE) {
-      this.updateAndSchedule(absoluteText, 'just now', MINUTE - duration)
+      this.updateAndSchedule(absoluteText, justNow, MINUTE - duration)
     } else if (duration < HOUR) {
       this.updateAndSchedule(absoluteText, relativeText, MINUTE)
     } else if (duration < DAY) {

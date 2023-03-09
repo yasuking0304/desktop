@@ -12,6 +12,7 @@ import { TextBox } from '../lib/text-box'
 import { Row } from '../lib/row'
 
 import { match, IMatch, IMatches } from '../../lib/fuzzy-find'
+import { t } from 'i18next'
 
 /** An item in the filter list. */
 export interface IFilterListItem {
@@ -252,7 +253,9 @@ export class FilterList<T extends IFilterListItem> extends React.Component<
         type="search"
         // eslint-disable-next-line jsx-a11y/no-autofocus
         autoFocus={true}
-        placeholder={this.props.placeholderText || 'Filter'}
+        placeholder={
+          this.props.placeholderText || t('filter-list.filter', 'Filter')
+        }
         className="filter-list-filter-field"
         onValueChanged={this.onFilterValueChanged}
         onEnterPressed={this.onEnterPressed}

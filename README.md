@@ -1,4 +1,4 @@
-# [GitHub Desktop](https://desktop.github.com) - The Linux Fork
+# [GitHub Desktop](https://desktop.github.com) - The Linux Fork (Multilingal Platform)
 
 [![CI](https://github.com/shiftkey/desktop/actions/workflows/ci.yml/badge.svg)](https://github.com/shiftkey/desktop/actions/workflows/ci.yml)
 
@@ -6,14 +6,15 @@
 GitHub app. It is written in [TypeScript](https://www.typescriptlang.org) and
 uses [React](https://reactjs.org/).
 
+[Click here for details (Japanese only)](https://github.com/yasuking0304/desktop/wiki)
 <picture>
   <source
-    srcset="https://user-images.githubusercontent.com/634063/202742848-63fa1488-6254-49b5-af7c-96a6b50ea8af.png"
+    srcset="https://user-images.githubusercontent.com/111163564/218298392-b719e5dc-74c3-4f03-acf2-72c975cf126f.png"
     media="(prefers-color-scheme: dark)"
   />
   <img
     width="1072"
-    src="https://user-images.githubusercontent.com/634063/202742985-bb3b3b94-8aca-404a-8d8a-fd6a6f030672.png"
+    src="https://user-images.githubusercontent.com/111163564/218299136-b5dda126-a4c8-4052-bcd6-5f586d4f4bf1.png"
     alt="A screenshot of the GitHub Desktop application showing changes being viewed and committed with two attributed co-authors"
   />
 </picture>
@@ -23,104 +24,122 @@ uses [React](https://reactjs.org/).
 This repository contains specific patches on top of the upstream
 `desktop/desktop` repository to support Linux usage.
 
-It also publishes [releases](https://github.com/shiftkey/desktop/releases) for various Linux distributions:
+It also hosts preview packages for various Linux distributions:
 
  - AppImage (`.AppImage`)
  - Debian (`.deb`)
  - RPM (`.rpm`)
 
-## Installation via package manager
+Check out the [latest releases](https://github.com/shiftkey/desktop/releases) to
+help out with testing on your distribution.
+
+## Repositories
 
 You can use your operating system's package manager to install `github-desktop` and
-keep it up to date on Debian and RPM-based distributions.
+keep it up to date on Debian/RPM based distributions. There are two options for this:
 
-### Debian/Ubuntu
+* A [PackageCloud](https://packagecloud.io/) repository with excellent global connectivity
+  but very limited bandwidth. This option will stop working each month when the bandwidth
+  limit is reached.
+* A [mirror](https://mattwthomas.com/mirrors/) in the US which has effectively infinite
+  bandwidth and performs well in most regions (especially the Americas and Europe).
 
-There are two APT package feeds available, both hosted in the US. You only need
-to add one or the other here, as both of these are generated based on the
-releases from this repository.
+PackageCloud, which both options depend on, is not a free service. So, if you can afford to
+help with these costs please [**Sponsor**](https://github.com/sponsors/shiftkey) the project
+using the link in the header.
 
-#### [@shiftkey](https://github.com/shiftkey) package feed
+### Debian/Ubuntu distributions
 
-```
-wget -qO - https://apt.packages.shiftkey.dev/gpg.key | gpg --dearmor | sudo tee /usr/share/keyrings/shiftkey-packages.gpg > /dev/null
-sudo sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/shiftkey-packages.gpg] https://apt.packages.shiftkey.dev/ubuntu/ any main" > /etc/apt/sources.list.d/shiftkey-packages.list'
-```
-
-#### [@mwt](https://github.com/mwt) package feed
-
-```sh
-wget -qO - https://mirror.mwt.me/shiftkey-desktop/gpgkey | gpg --dearmor | sudo tee /usr/share/keyrings/mwt-desktop.gpg > /dev/null
-sudo sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/mwt-desktop.gpg] https://mirror.mwt.me/shiftkey-desktop/deb/ any main" > /etc/apt/sources.list.d/mwt-desktop.list'
-```
-
-#### Installation
-
-Once you have a feed configured, run this command to install the application:
+First install our GPG certificate:
 
 ```sh
-sudo apt update && sudo apt install github-desktop
+$ wget -qO - https://mirror.mwt.me/ghd/gpgkey | sudo tee /etc/apt/trusted.gpg.d/shiftkey-desktop.asc > /dev/null
 ```
 
-### Red Hat/CentOS/Fedora/OpenSUSE
-
-There are two RPM package feeds available, both hosted in the US. You only need
-to add one or the other here, as both of these are generated based on the
-releases from this repository.
-
-#### [@shiftkey](https://github.com/shiftkey) package feed
-
-```
-sudo rpm --import https://rpm.packages.shiftkey.dev/gpg.key
-sudo sh -c 'echo -e "[shiftkey-packages]\nname=GitHub Desktop\nbaseurl=https://rpm.packages.shiftkey.dev/rpm/\nenabled=1\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=https://rpm.packages.shiftkey.dev/gpg.key" > /etc/yum.repos.d/shiftkey-packages.repo'
-```
-
-#### [@mwt](https://github.com/mwt) package feed
+To setup the package repository, run one of these commands:
 
 ```sh
-sudo rpm --import https://mirror.mwt.me/shiftkey-desktop/gpgkey
-sudo sh -c 'echo -e "[mwt-packages]\nname=GitHub Desktop\nbaseurl=https://mirror.mwt.me/shiftkey-desktop/rpm\nenabled=1\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=https://mirror.mwt.me/shiftkey-desktop/gpgkey" > /etc/yum.repos.d/mwt-packages.repo'
+# if you want to use packagecloud.io
+$ sudo sh -c 'echo "deb [arch=amd64] https://packagecloud.io/shiftkey/desktop/any/ any main" > /etc/apt/sources.list.d/packagecloud-shiftkey-desktop.list'
+
+# if you want to use the US mirror
+$ sudo sh -c 'echo "deb [arch=amd64] https://mirror.mwt.me/ghd/deb/ any main" > /etc/apt/sources.list.d/packagecloud-shiftkey-desktop.list'
 ```
 
-#### Installation
+Then install GitHub Desktop:
 
-Once you have a feed configured, run this command to install the application:
+```sh
+$ sudo apt update && sudo apt install github-desktop
+```
+
+### Red Hat/CentOS/Fedora distributions
+
+First install our GPG certificate:
+
+```sh
+$ sudo rpm --import https://mirror.mwt.me/ghd/gpgkey
+```
+
+To setup the package repository, run one of these commands:
+
+```sh
+# if you want to use packagecloud.io
+$ sudo sh -c 'echo -e "[shiftkey]\nname=GitHub Desktop\nbaseurl=https://packagecloud.io/shiftkey/desktop/el/7/\$basearch\nenabled=1\ngpgcheck=0\nrepo_gpgcheck=1\ngpgkey=https://mirror.mwt.me/ghd/gpgkey" > /etc/yum.repos.d/shiftkey-desktop.repo'
+
+# if you want to use the US mirror
+$ sudo sh -c 'echo -e "[shiftkey]\nname=GitHub Desktop\nbaseurl=https://mirror.mwt.me/ghd/rpm\nenabled=1\ngpgcheck=0\nrepo_gpgcheck=1\ngpgkey=https://mirror.mwt.me/ghd/gpgkey" > /etc/yum.repos.d/shiftkey-desktop.repo'
+```
+
+Then install GitHub Desktop:
 
 ```sh
 # if yum is your package manager
-sudo yum install github-desktop
+$ sudo yum install github-desktop
 
 # if dnf is your package manager
-sudo dnf install github-desktop
+$ sudo dnf install github-desktop
+```
 
+### OpenSUSE distribution
+
+### Debian/Ubuntu
+
+First install our GPG certificate:
+
+```sh
+$ sudo rpm --import https://mirror.mwt.me/ghd/gpgkey
+```
+
+To setup the package repository, run one of these commands:
+
+```sh
+# if you want to use packagecloud.io
+$ sudo sh -c 'echo -e "[shiftkey]\nname=GitHub Desktop\nbaseurl=https://packagecloud.io/shiftkey/desktop/el/7/\$basearch\nenabled=1\ngpgcheck=0\nrepo_gpgcheck=1\ngpgkey=https://mirror.mwt.me/ghd/gpgkey" > /etc/zypp/repos.d/shiftkey-desktop.repo'
+
+# if you want to use the US mirror
+$ sudo sh -c 'echo -e "[shiftkey]\nname=GitHub Desktop\nbaseurl=https://mirror.mwt.me/ghd/rpm\nenabled=1\ngpgcheck=0\nrepo_gpgcheck=1\ngpgkey=https://mirror.mwt.me/ghd/gpgkey" > /etc/zypp/repos.d/shiftkey-desktop.repo'
+```
+
+Then install GitHub Desktop:
+
+```sh
 # if zypper is your package manager
-sudo zypper ref && sudo zypper in github-desktop
+$ sudo zypper ref && sudo zypper in github-desktop
 ```
 
 ## Other Distributions
 
-### Arch Linux
-
-Arch Linux users can install GitHub Desktop from the [AUR](https://aur.archlinux.org/packages/github-desktop-bin/).
+Arch Linux users can install GitHub Desktop from the
+[AUR](https://aur.archlinux.org/packages/github-desktop-bin/).
 
 `gnome-keyring` is required and the daemon must be launched either at login or when the X server is started. Normally this is handled by a display manager, but in other cases following the instructions found on the [Arch Wiki](https://wiki.archlinux.org/index.php/GNOME/Keyring#Using_the_keyring_outside_GNOME) will fix the issue of not being able to save login credentials.
 
-### Cross-Distribution Packages
-
 GitHub Desktop is also available cross-platform as a [Flatpak](https://github.com/flathub/io.github.shiftey.Desktop) and [AppImage](https://appimage.github.io/GitHubDesktop/).
-
-### deb-get
-
-Debian/Ubuntu users can also install directly from this repository using [`deb-get`](https://github.com/wimpysworld/deb-get): `deb-get install github-desktop`.
 
 ## Known issues
 
 If you're having troubles with Desktop, please refer to the [Known issues](docs/known-issues.md#linux)
 document for guidance and workarounds for common limitations.
-
-If your package manager is still trying to reach PackageCloud, refer to the
-[cleanup instructions](docs/known-issues.md#the-packagecloud-package-feed-is-no-longer-working)
-for details about migrating away.
 
 ## More information
 

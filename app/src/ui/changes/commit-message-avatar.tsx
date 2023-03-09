@@ -8,6 +8,7 @@ import { Avatar } from '../lib/avatar'
 import { Octicon } from '../octicons'
 import * as OcticonSymbol from '../octicons/octicons.generated'
 import { LinkButton } from '../lib/link-button'
+import { t } from 'i18next'
 
 interface ICommitMessageAvatarState {
   readonly isPopoverOpen: boolean
@@ -135,26 +136,46 @@ export class CommitMessageAvatar extends React.Component<
       ? ' Enterprise'
       : ''
 
-    const updateEmailTitle = __DARWIN__ ? 'Update Email' : 'Update email'
+    const updateEmailTitle = __DARWIN__
+      ? t('commit-message-avatar.update-email-darwin', 'Update Email')
+      : t('commit-message-avatar.update-email', 'Update email')
 
     return (
       <Popover
         caretPosition={PopoverCaretPosition.LeftBottom}
         onClickOutside={this.closePopover}
       >
-        <h3>This commit will be misattributed</h3>
+        <h3>
+          {t(
+            'commit-message-avatar.this-commit-will-be-misattributed',
+            'This commit will be misattributed'
+          )}
+        </h3>
         <Row>
           <div>
-            The email in your global Git config (
-            <span className="git-email">{this.props.email}</span>) doesn't match
-            your GitHub{accountTypeSuffix} account.{' '}
-            <LinkButton uri="https://docs.github.com/en/github/committing-changes-to-your-project/why-are-my-commits-linked-to-the-wrong-user">
-              Learn more.
+            {t(
+              'commit-message-avatar.update-email-1',
+              'The email in your global Git config ('
+            )}
+            <span className="git-email">{this.props.email}</span>
+            {t(
+              'commit-message-avatar.update-email-2',
+              `) doesn't match your GitHub{{0}} account. `,
+              { 0: accountTypeSuffix }
+            )}
+            <LinkButton
+              uri={t(
+                'url.commit-message-avatar',
+                'https://docs.github.com/en/github/committing-changes-to-your-project/why-are-my-commits-linked-to-the-wrong-user'
+              )}
+            >
+              {t('commit-message-avatar.learn-more', 'Learn more.')}
             </LinkButton>
           </div>
         </Row>
         <Row>
           <Select
+            label="Your Account Emails"
             value={this.state.accountEmail}
             onChange={this.onSelectedGitHubEmailChange}
           >
@@ -167,16 +188,22 @@ export class CommitMessageAvatar extends React.Component<
         </Row>
         <Row>
           <div className="secondary-text">
-            You can also choose an email local to this repository from the{' '}
+            {t(
+              'commit-message-avatar.you-can-also-choose-an-email-1',
+              'You can also choose an email local to this repository from the '
+            )}
             <LinkButton onClick={this.onRepositorySettingsClick}>
-              repository settings
+              {t(
+                'commit-message-avatar.repository-settings',
+                'repository settings'
+              )}
             </LinkButton>
-            .
+            {t('commit-message-avatar.you-can-also-choose-an-email-2', '.')}
           </div>
         </Row>
         <Row className="button-row">
           <Button onClick={this.onIgnoreClick} type="button">
-            Ignore
+            {t('commit-message-avatar.ignore', 'Ignore')}
           </Button>
           <Button onClick={this.onUpdateEmailClick} type="submit">
             {updateEmailTitle}

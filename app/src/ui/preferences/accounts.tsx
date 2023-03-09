@@ -8,6 +8,7 @@ import { Row } from '../lib/row'
 import { DialogContent } from '../dialog'
 import { Avatar } from '../lib/avatar'
 import { CallToAction } from '../lib/call-to-action'
+import { t } from 'i18next'
 
 interface IAccountsProps {
   readonly dotComAccount: Account | null
@@ -56,7 +57,9 @@ export class Accounts extends React.Component<IAccountsProps, {}> {
           <div className="login">@{account.login}</div>
         </div>
         <Button onClick={this.logout(account)}>
-          {__DARWIN__ ? 'Sign Out' : 'Sign out'}
+          {__DARWIN__
+            ? t('common.sign-out-darwin', 'Sign Out')
+            : t('common.sign-out', 'Sign out')}
         </Button>
       </Row>
     )
@@ -71,7 +74,9 @@ export class Accounts extends React.Component<IAccountsProps, {}> {
   }
 
   private renderSignIn(type: SignInType) {
-    const signInTitle = __DARWIN__ ? 'Sign In' : 'Sign in'
+    const signInTitle = __DARWIN__
+      ? t('common.sign-in-darwin', 'Sign In')
+      : t('common.sign-in', 'Sign in')
     switch (type) {
       case SignInType.DotCom: {
         return (
@@ -80,7 +85,11 @@ export class Accounts extends React.Component<IAccountsProps, {}> {
             onAction={this.onDotComSignIn}
           >
             <div>
-              Sign in to your GitHub.com account to access your repositories.
+              {t(
+                'clone-repository.render-sign-in',
+                `Sign in to your GitHub.com account to
+                 access your repositories.`
+              )}
             </div>
           </CallToAction>
         )
@@ -92,8 +101,11 @@ export class Accounts extends React.Component<IAccountsProps, {}> {
             onAction={this.onEnterpriseSignIn}
           >
             <div>
-              If you have a GitHub Enterprise or AE account at work, sign in to
-              it to get access to your repositories.
+              {t(
+                'clone-repository.render-sign-in-enterprise',
+                `If you have a GitHub Enterprise or AE account at work,
+                 sign in to it to get access to your repositories.`
+              )}
             </div>
           </CallToAction>
         )
