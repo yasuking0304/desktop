@@ -1395,6 +1395,7 @@
     "require-force-push-darwin": "{{0}} Will Require Force Push"
   },
   "warn-local-changes-before-undo": {
+    "changes-in-progress-undo-commit": "You have changes in progress. Undoing the commit might result in\n            some of these changes being lost. Do you want to continue anyway?",
     "changes-in-progress-undo-merge": "You have changes in progress. Undoing the merge commit might\n            result in some of these changes being lost.",
     "do-you-want-to-continue-anyway": "Do you want to continue anyway?",
     "undo-commit": "Undo commit",
