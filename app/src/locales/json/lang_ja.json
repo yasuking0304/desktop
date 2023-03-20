@@ -43,8 +43,8 @@
   "advanced": {
     "allows-the-display-of-notifications": "現在のリポジトリで緊急イベントが発生したときに通知を表示できるようにします。",
     "allows-the-display-of-up-to-date-status-indicators": "リポジトリ リストに最新のステータス インジケータを表示できるようにします。これを無効にすると、多くのリポジトリでのパフォーマンスが向上する可能性があります。",
-    "always-bring-my-changes-to-my-new-branch": "常に新しいブランチに進行中の作業をを引き継ぐ",
-    "always-stash-and-leave-my-changes": "常に進行中の作業をブランチに保存して新しいブランチには残さない(あとで戻せます)",
+    "always-bring-my-changes-to-my-new-branch": "常に新しいブランチに修正中の作業をを引き継ぐ",
+    "always-stash-and-leave-my-changes": "常に修正中の作業をブランチに保存して新しいブランチには残さない(あとで戻せます)",
     "ask-me-where-i-want-the-changes-to-go": "どう変更したいのか確認する",
     "background-updates": "バックグラウンド更新",
     "enable-notifications": "通知を有効にする",
@@ -92,7 +92,7 @@
     "pushing-to": "{{0}} へのPush",
     "refreshing-repository": "リポジトリのリフレッシュ",
     "refreshing-repository-darwin": "リポジトリのリフレッシュ",
-    "unable-to-initialize-cherry-pick": "cherry-pick の進行状況を初期化できません。コミットが指定されていません。"
+    "unable-to-initialize-cherry-pick": "cherry-pick の変更状況を初期化できません。コミットが指定されていません。"
   },
   "appearance": {
     "dark": "Dark",
@@ -311,28 +311,28 @@
     "commit-title-1": " ",
     "commit-title-2": " に{{0}}",
     "commiting-as-1": " ",
-    "commiting-as-2": "{{0}} としてコミットされます",
+    "commiting-as-2": " {{0}} でコミットします",
     "description-field": "説明フィールド",
     "disable-commit-spellcheck": "コミットスペルチェックを無効にする",
     "disable-commit-spellcheck-darwin": "コミットスペルチェックを無効にする",
     "do-not-have-write-access-to-1": " ",
-    "do-not-have-write-access-to-2": " には書き込みアクセス権がありません. Want to ",
-    "do-not-have-write-access-to-3": "?",
+    "do-not-have-write-access-to-2": " には書き込みアクセス権がありません。",
+    "do-not-have-write-access-to-3": "をしますか?",
     "enable-commit-spellcheck": "コミットスペルチェックを有効にする",
     "enable-commit-spellcheck-darwin": "コミットスペルチェックを有効にする",
     "link-create-a-fork": "フォークの作成",
     "link-switch-branches": "ブランチの切り替え",
     "please-information-description-field": "説明フィールドに追加情報を入力します。",
     "protected-branch-1": " ",
-    "protected-branch-2": " は保護されたブランチです。 Want to ",
-    "protected-branch-3": "?",
+    "protected-branch-2": " は保護されたブランチです。",
+    "protected-branch-3": "をしますか?",
     "remove-co-authors": "共同作業者の削除",
     "remove-co-authors-darwin": "共同作業者の削除",
     "stop-amending": "修正を中止",
     "tooltip-committing-changes": "変更をコミットしています…",
     "tooltip-is-anyfiles": "コミットするファイルを 1つ以上選択してください",
     "tooltip-is-summary-blank": "コミットするには概要入力が必要です",
-    "will-modify-your-most-recent-commit-1": "あなたが変更は、",
+    "will-modify-your-most-recent-commit-1": "あなたの変更は、",
     "will-modify-your-most-recent-commit-2": "最新のコミット",
     "will-modify-your-most-recent-commit-3": "を更新してしまいます。 これらの変更を新しいコミットとして行うために ",
     "will-modify-your-most-recent-commit-4": " します。"
@@ -1011,7 +1011,7 @@
     "view-the-files-of-your-repository": "{{0}} でリポジトリのファイルを表示する",
     "view-your-stashed-changes": "一時退避した変更を表示する",
     "when-a-stash-exists-access-it-at-the-bottom": "一時退避した変更が存在します。左側の [一時退避した変更] タブの下部からアクセスできます。",
-    "you-have-number-change-in-progress": "まだコミットしていない進行中の{{1}}が {{0}}つあります。",
+    "you-have-number-change-in-progress": "まだコミットしていない修正中の{{1}}が {{0}}つあります。",
     "you-have-operation": "You have {{0}} waiting to be pushed to {{0}}."
   },
   "no-pull-requests": {
@@ -1041,8 +1041,8 @@
     "create-a-tutorial-repository-darwin": "チュートリアル リポジトリを作成する…",
     "lets-get-start": "始めましょう!",
     "protip": "ヒント! ",
-    "return-to-in-progress-tutorial": "進行中のチュートリアルに戻る",
-    "return-to-in-progress-tutorial-darwin": "進行中のチュートリアルに戻る",
+    "return-to-in-progress-tutorial": "修正中のチュートリアルに戻る",
+    "return-to-in-progress-tutorial-darwin": "修正中のチュートリアルに戻る",
     "tips": "既存のリポジトリフォルダをここにドラッグ&ドロップして Desktop に追加できます"
   },
   "oversized-files-warning": {
@@ -1261,8 +1261,8 @@
   },
   "stash-and-switch-branch-dialog": {
     "bring-my-changes-to-branch-name": "変更内容を {{0}} に反映させる",
-    "in-progress-work-will-be-stashed": "進行中の作業はブランチに保存され新しいブランチには残しません(あとで戻すことができます)",
-    "in-progress-work-will-follow-you": "進行中の作業は、新しいブランチに引き継がれます",
+    "in-progress-work-will-be-stashed": "変更中の作業はブランチに保存され新しいブランチには残しません(あとで戻すことができます)",
+    "in-progress-work-will-follow-you": "変更中の作業は、新しいブランチに引き継がれます",
     "leave-my-changes-on-branch-name": "変更をブランチに保存して {{0}} に切り替える",
     "stash-will-be-overwritten-creating": " 新しいスタッシュを作成すると、現在のスタッシュが上書きされます",
     "switch-branch": "ブランチ切り替え",
@@ -1393,8 +1393,8 @@
     "require-force-push-darwin": "{{0}} は強制Push が必要です"
   },
   "warn-local-changes-before-undo": {
-    "changes-in-progress-undo-commit": "進行中の変更があります。コミットを元に戻すと、これらの変更の一部が失われる可能性があります。続行しますか?",
-    "changes-in-progress-undo-merge": "進行中の変更があります。マージコミットを元に戻すと、これらの変更の一部が失われる可能性があります。",
+    "changes-in-progress-undo-commit": "修正中の変更があります。コミットを元に戻すと、これらの変更の一部が失われる可能性があります。続行しますか?",
+    "changes-in-progress-undo-merge": "修正中の変更があります。マージコミットを元に戻すと、これらの変更の一部が失われる可能性があります。",
     "do-you-want-to-continue-anyway": "続行しますか?",
     "undo-commit": "コミットの取り消し",
     "undo-commit-darwin": "コミットの取り消し",
@@ -1403,7 +1403,7 @@
   "warning-before-reset": {
     "reset-to-commit": "コミットのリセット",
     "reset-to-commit-darwin": "コミットのリセット",
-    "you-have-changes-in-progress": "進行中の変更があります。前のコミットにリセットすると、これらの変更の一部が失われる可能性があります。続行しますか?"
+    "you-have-changes-in-progress": "修正中の変更があります。前のコミットにリセットすると、これらの変更の一部が失われる可能性があります。続行しますか?"
   },
   "welcome": {
     "definitions-git": " はバージョン管理システムです。",
