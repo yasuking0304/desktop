@@ -103,10 +103,12 @@ export class GitConfigUserForm extends React.Component<
         </Row>
         {this.renderEmailDropdown()}
         {this.renderEmailTextBox()}
-        <GitEmailNotFoundWarning
-          accounts={this.accounts}
-          email={this.props.email}
-        />
+        {this.state.emailIsOther ? (
+          <GitEmailNotFoundWarning
+            accounts={this.accounts}
+            email={this.props.email}
+          />
+        ) : null}
       </div>
     )
   }
@@ -169,9 +171,7 @@ export class GitConfigUserForm extends React.Component<
       ? undefined
       : t('common.email', 'Email')
     // If there is not a label, provide a screen reader announcement.
-    const ariaLabel = label
-      ? undefined
-      : t('common.email', 'Email')
+    const ariaLabel = label ? undefined : t('common.email', 'Email')
 
     return (
       <Row>
@@ -184,6 +184,7 @@ export class GitConfigUserForm extends React.Component<
           disabled={this.props.disabled}
           onValueChanged={this.props.onEmailChanged}
           ariaLabel={ariaLabel}
+          ariaControls="git-email-not-found-warning-for-screen-readers"
         />
       </Row>
     )

@@ -783,7 +783,7 @@ export class AuthorInput extends React.Component<IAuthorInputProps, {}> {
 
     const menu: IMenuItem[] = [
       {
-        label: t('author-input.undo', 'Undo'),
+        label: t('common.undo', 'Undo'),
         action: () => cm.getDoc().undo(),
       },
       {

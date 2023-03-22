@@ -108,8 +108,7 @@
   "author-input": {
     "redo": "Redo",
     "select-all": "Select all",
-    "select-all-darwin": "Select All",
-    "undo": "Undo"
+    "select-all-darwin": "Select All"
   },
   "branch-dropdown": {
     "current-branch": "Current branch",
@@ -182,8 +181,8 @@
   "cherry-pick-undone": {
     "cherry-pick-undone-1": "Cherry-pick undone. Successfully removed the {{0}}\n          copied {{1}} from ",
     "cherry-pick-undone-2": ".",
-    "commit": "commit",
-    "commits": "commits"
+    "multiple-commits": "commits",
+    "one-commit": "commit"
   },
   "choose-fork-settings-dialog": {
     "contribute-to-parent-project": "To contribute to the parent project",
@@ -199,11 +198,11 @@
     "cherry-pick-number-commit-to-a-branch": "Cherry-pick {{0}} {{1}}  to a branch",
     "cherry-pick-to-new-branch": "Cherry-pick to new branch",
     "cherry-pick-to-new-branch-darwin": "Cherry-pick to New Branch",
-    "commit": "commit",
-    "commits": "commits",
+    "multiple-commits": "commits",
     "ok-button-text-to-1": "{{0}} to ",
     "ok-button-text-to-2": "…",
     "okbutton": "Cherry-pick {{0}} {{1}}",
+    "one-commit": "commit",
     "you-are-not-able-to-cherry-pick": "You are not able to cherry-pick from and to the same branch"
   },
   "cli-installed": {
@@ -267,10 +266,10 @@
     "yes-commit-files-darwin": "Yes, Commit Files"
   },
   "commit-drag-element": {
-    "commit": "commit",
-    "commits": "commits",
     "insert-here": "Insert here",
     "move-commit-here": "Move {{0}} here",
+    "multiple-commits": "commits",
+    "one-commit": "commit",
     "squash-number-commit": "Squash {{0}} commits"
   },
   "commit-list-item": {
@@ -351,8 +350,6 @@
   },
   "commit-summary": {
     "collapse": "Collapse",
-    "commit": "commit",
-    "commits": "commits",
     "diff-options": "Diff Options",
     "empty-commit-message": "Empty commit message",
     "expand": "Expand",
@@ -386,6 +383,7 @@
     "choose": "Choose…",
     "clone": "Clone",
     "close": "Close",
+    "committed": "Committed",
     "continue": "Continue",
     "copy": "Copy",
     "create": "Create",
@@ -403,8 +401,10 @@
     "ignore": "Ignore",
     "local-path": "Local path",
     "local-path-darwin": "Local Path",
+    "multiple-commits": "commits",
     "name": "Name",
     "ok": "Ok",
+    "one-commit": "commit",
     "opetarion-alias": "{{0}} alias",
     "opetarion-alias-darwin": "{{0}} Alias",
     "options": "Options",
@@ -423,6 +423,7 @@
     "sign-in-darwin": "Sign In",
     "sign-out": "Sign out",
     "sign-out-darwin": "Sign Out",
+    "undo": "Undo",
     "update": "Update",
     "username-or-email": "Username or email address",
     "view-on-github": "View on GitHub",
@@ -714,9 +715,13 @@
     "use-my-global-git-config": "Use my global Git config"
   },
   "git-email-not-found-warning": {
+    "does-not-match": "does not match",
     "edither-your-account": "either of your GitHub.com nor GitHub Enterprise accounts",
-    "email-address-does-not-match": "This email address doesn't\n              match {{0}}, so your commits will be\n              wrongly attributed.",
     "learn-more": "Learn more.",
+    "learn-more-about": "Learn more about commit attribution",
+    "matchs": "matches",
+    "this-email-address": "This email address {{0}} {{1}}. ",
+    "will-be-wrongly-attributed": "Your commits will be wrongly attributed. ",
     "your-account": "your {{0}} account"
   },
   "git-ignore": {
@@ -917,8 +922,6 @@
     "zoom-out-darwin": "Zoom Out"
   },
   "merge-call-to-action": {
-    "commit": "commit",
-    "commits": "commits",
     "merge-into-1": "Merge into ",
     "merge-into-2": " ",
     "this-will-merge-into-1": "This will merge ",
@@ -927,8 +930,6 @@
     "this-will-merge-into-4": " "
   },
   "merge-choose-branch-dialog": {
-    "commit": "commit",
-    "commits": "commits",
     "file": "file",
     "files": "files",
     "into": " into ",
@@ -974,16 +975,14 @@
     "always-available-in-the-toolbar-remote-changes-2": " ",
     "change": "change",
     "changes": "changes",
-    "commit": "commit",
-    "commits": "commits",
     "create-pull-request": "Create Pull Request",
     "create-pull-request-from-current-branch": "Create a Pull Request from your current branch",
     "file-manager": "Explorer",
     "file-manager-darwin": "Finder",
     "file-manager-linux": "your File Manager",
     "menu": "{{0}} menu or ",
+    "multiple-local-commits": "{{0}} local commits",
     "no-local-changes": "No local changes",
-    "number-local-commits": "{{0}} local commits",
     "number-tags": "{{0}} tags",
     "one-local-commit": "1 local commit",
     "one-tag": "1 tag",
@@ -1106,8 +1105,6 @@
   },
   "rebase-choose-branch-dialog": {
     "checking-for-ability-to-rebase": "Checking for ability to rebase automatically…",
-    "commit": "commit",
-    "commits": "commits",
     "number-commit": " {{0}} {{1}}",
     "rebase-1": "Rebase ",
     "rebase-2": " ",
@@ -1282,7 +1279,6 @@
     "restore": "Restore",
     "stashed-changes": "Stashed changes",
     "unable-to-restore-stash": "Unable to restore stash when changes are present on your branch.",
-    "undo": "Undo",
     "will-move-your-stashed-files": " will move your stashed files to the Changes list."
   },
   "terms-and-conditions": {
@@ -1381,9 +1377,9 @@
   },
   "url": {
     "commit-message-avatar": "https://docs.github.com/en/github/committing-changes-to-your-project/why-are-my-commits-linked-to-the-wrong-user",
-    "git-email-not-found-warning-learn-more": "https://docs.github.com/en/github/committing-changes-to-your-project/why-are-my-commits-linked-to-the-wrong-user",
     "keyboard-shortcuts": "https://docs.github.com/en/desktop/installing-and-configuring-github-desktop/overview/keyboard-shortcuts",
-    "show-user-guides": "https://docs.github.com/en/desktop"
+    "show-user-guides": "https://docs.github.com/en/desktop",
+    "why-are-my-commits-linked-to-the-wrong-user": "https://docs.github.com/en/github/committing-changes-to-your-project/why-are-my-commits-linked-to-the-wrong-user"
   },
   "warn-force-push-dialog": {
     "are-you-sure-operation": "Are you sure you want to {{0}}?",

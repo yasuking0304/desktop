@@ -621,8 +621,8 @@ export class NoChanges extends React.Component<
 
     const commitContent =
       aheadBehind.behind === 1
-        ? t('no-changes.commit', 'commit')
-        : t('no-changes.commits', 'commits')
+        ? t('common.one-commit', 'commit')
+        : t('common.multiple-commits', 'commits')
     const title = t(
       'no-changes.pull-number-commits-from-the-remote',
       `Pull {{0}} {{1}} from the {{2}} remote`,
@@ -673,7 +673,7 @@ export class NoChanges extends React.Component<
       itemsToPushDescriptions.push(
         aheadBehind.ahead === 1
           ? t('no-changes.one-local-commit', '1 local commit')
-          : t('no-changes.number-local-commits', `{{0}} local commits`, {
+          : t('no-changes.multiple-local-commits', `{{0}} local commits`, {
               0: aheadBehind.ahead,
             })
       )
