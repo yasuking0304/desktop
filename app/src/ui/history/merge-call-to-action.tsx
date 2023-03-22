@@ -53,8 +53,8 @@ export class MergeCallToAction extends React.Component<
     if (count > 0) {
       const pluralized =
         count === 1
-          ? t('merge-call-to-action.commit', 'commit')
-          : t('merge-call-to-action.commits', 'commits')
+          ? t('common.one-commit', 'commit')
+          : t('common.multiple-commits', 'commits')
       return (
         <div className="merge-message merge-message-legacy">
           {t('merge-call-to-action.this-will-merge-into-1', 'This will merge ')}

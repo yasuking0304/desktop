@@ -108,8 +108,7 @@
   "author-input": {
     "redo": "やり直し",
     "select-all": "全てを選択",
-    "select-all-darwin": "全てを選択",
-    "undo": "元に戻す"
+    "select-all-darwin": "全てを選択"
   },
   "branch-dropdown": {
     "current-branch": "現在のブランチ",
@@ -182,8 +181,8 @@
   "cherry-pick-undone": {
     "cherry-pick-undone-1": "Cherry-pick を元に戻します。",
     "cherry-pick-undone-2": "から{{1}}された {{0}}個のコミットを正常に削除しました。",
-    "commit": "コミット",
-    "commits": "コミット"
+    "multiple-commits": "コミット",
+    "one-commit": "コミット"
   },
   "choose-fork-settings-dialog": {
     "contribute-to-parent-project": "パートナープロジェクトに貢献するため",
@@ -199,11 +198,11 @@
     "cherry-pick-number-commit-to-a-branch": "{{0}}個の{{1}} をブランチに Cherry-pick",
     "cherry-pick-to-new-branch": "新しいブランチに Cherry-pick",
     "cherry-pick-to-new-branch-darwin": "新しいブランチに Cherry-pick",
-    "commit": "コミット",
-    "commits": "コミット",
+    "multiple-commits": "コミット",
     "ok-button-text-to-1": " ",
     "ok-button-text-to-2": " に{{0}}",
     "okbutton": "{{0}}個の{{1}}を Cherry-pick",
+    "one-commit": "コミット",
     "you-are-not-able-to-cherry-pick": "同じブランチから Cherry-pick をすることはできません"
   },
   "cli-installed": {
@@ -267,10 +266,10 @@
     "yes-commit-files-darwin": "はい、コミットします"
   },
   "commit-drag-element": {
-    "commit": "コミット",
-    "commits": "コミット",
     "insert-here": "ここに挿入",
     "move-commit-here": "{{0}}をここに移動",
+    "multiple-commits": "コミット",
+    "one-commit": "コミット",
     "squash-number-commit": "{{0}}個のコミットをまとめる"
   },
   "commit-list-item": {
@@ -351,8 +350,6 @@
   },
   "commit-summary": {
     "collapse": "折りたたむ",
-    "commit": "コミット",
-    "commits": "コミット",
     "diff-options": "違いの設定",
     "empty-commit-message": "空のコミットメッセージ",
     "expand": "展開する",
@@ -386,6 +383,7 @@
     "choose": "選択…",
     "clone": "クローン",
     "close": "閉じる",
+    "committed": "最新コミット ",
     "continue": "次へ",
     "copy": "コピー",
     "create": "作成",
@@ -403,8 +401,10 @@
     "ignore": "無視",
     "local-path": "ローカルパス",
     "local-path-darwin": "ローカルパス",
+    "multiple-commits": "個のコミット",
     "name": "名前",
     "ok": "Ok",
+    "one-commit": "個のコミット",
     "opetarion-alias": "エイリアス{{0}}",
     "opetarion-alias-darwin": "エイリアス{{0}}",
     "options": "設定",
@@ -423,6 +423,7 @@
     "sign-in-darwin": "サインイン",
     "sign-out": "サインアウト",
     "sign-out-darwin": "サインアウト",
+    "undo": "元に戻す",
     "update": "更新",
     "username-or-email": "ユーザー名 または メールアドレス",
     "view-on-github": "GitHub で確認",
@@ -714,15 +715,18 @@
     "use-my-global-git-config": "Git 設定"
   },
   "git-email-not-found-warning": {
+    "does-not-match": "不一致",
     "edither-your-account": "GitHub.com アカウントまたは GitHub Enterprise アカウントのいずれか",
-    "email-address-does-not-match": "このメールアドレスは {{0}} と一致しないため、コミットの属性が間違った状態です。",
     "learn-more": "詳細情報",
+    "learn-more-about": "詳しくはコミットユーザについてをご覧ください",
+    "matchs": "一致",
+    "will-be-wrongly-attributed": "あなたのコミットは誤ったユーザにリンクされます。",
     "your-account": "{{0}} アカウント"
   },
   "git-ignore": {
     "gitignore-learn-more": "詳細情報",
     "gitignore-message-1": " ",
-    "gitignore-message-2": " を編集します。このファイルには、Git が無視すべき意図的に追跡されていないファイルを指定します。Git によって既に追跡されているファイルは影響を受けません。",
+    "gitignore-message-2": " を編集します。このファイルには、Git がコミット時に無視したいファイルとディレクトリを指定します。既にコミットされているファイルは影響を受けません。",
     "placeholder-ignored-files": "除外ファイル"
   },
   "integrations": {
@@ -917,8 +921,6 @@
     "zoom-out-darwin": "ズーム(縮小)"
   },
   "merge-call-to-action": {
-    "commit": "個のコミット",
-    "commits": "個のコミット",
     "merge-into-1": "This will merge ",
     "merge-into-2": " from ",
     "this-will-merge-into-1": "This will merge ",
@@ -927,8 +929,6 @@
     "this-will-merge-into-4": " "
   },
   "merge-choose-branch-dialog": {
-    "commit": "個のコミット",
-    "commits": "個のコミット",
     "file": "個が",
     "files": "個が",
     "into": " into ",
@@ -974,16 +974,14 @@
     "always-available-in-the-toolbar-remote-changes-2": " ",
     "change": "変更",
     "changes": "変更",
-    "commit": "commit",
-    "commits": "commits",
     "create-pull-request": "プルリクエストの作成",
     "create-pull-request-from-current-branch": "現在のブランチからプルリクエストを作成します",
     "file-manager": "Explorer",
     "file-manager-darwin": "Finder",
     "file-manager-linux": "your File Manager",
     "menu": "{{0}}メニューから開くか ",
+    "multiple-local-commits": "{{0}} local commits",
     "no-local-changes": "ローカルの変更はありません",
-    "number-local-commits": "{{0}} local commits",
     "number-tags": "{{0}} tags",
     "one-local-commit": "1 local commit",
     "one-tag": "1 tag",
@@ -995,7 +993,7 @@
     "publish-your-repository": "あなたのブランチを公開",
     "publish-your-repository-to-github": "あなたのブランチを GitHub に公開",
     "pull": "Pull {{0}}",
-    "pull-number-commits-from-the-remote": "Pull {{0}} {{1}} from the {{2}} remote",
+    "pull-number-commits-from-the-remote": "{{2}} リモートからの{{0}}{{1}} をPullします",
     "push": "Push {{0}}",
     "push-to-the-remote": "{{0}} を {{1}} にPushする",
     "select-your-editor": "エディタの設定はこちら ",
@@ -1092,7 +1090,7 @@
     "fetch": "フェッチ {{0}}",
     "force-push": "強制Push {{0}}",
     "hang-on": "お待ちください…",
-    "last-fetched": "最終フェッチ実行 ",
+    "last-fetched": "最新フェッチ ",
     "never-fetched": "まだフェッチ実行していません",
     "publish-branch": "ブランチの公開",
     "publish-branch-to-github": "ブランチを GitHub に公開",
@@ -1106,8 +1104,6 @@
   },
   "rebase-choose-branch-dialog": {
     "checking-for-ability-to-rebase": "自動的にリベースする機能のチェック…",
-    "commit": "個のコミット",
-    "commits": "個のコミット",
     "number-commit": " {{0}}{{1}}",
     "rebase-1": "リベースを ",
     "rebase-2": " に行う",
@@ -1282,7 +1278,6 @@
     "restore": "復元する",
     "stashed-changes": "一時退避された変更",
     "unable-to-restore-stash": "ブランチに変更が存在する場合、退避ファイルを復元できません。",
-    "undo": "元に戻す",
     "will-move-your-stashed-files": " は、退避ファイルを変更リストに移動します。"
   },
   "terms-and-conditions": {
@@ -1381,9 +1376,9 @@
   },
   "url": {
     "commit-message-avatar": "https://docs.github.com/ja/github/committing-changes-to-your-project/why-are-my-commits-linked-to-the-wrong-user",
-    "git-email-not-found-warning-learn-more": "https://docs.github.com/ja/github/committing-changes-to-your-project/why-are-my-commits-linked-to-the-wrong-user",
     "keyboard-shortcuts": "https://docs.github.com/ja/desktop/installing-and-configuring-github-desktop/overview/keyboard-shortcuts",
-    "show-user-guides": "https://docs.github.com/ja/desktop"
+    "show-user-guides": "https://docs.github.com/ja/desktop",
+    "why-are-my-commits-linked-to-the-wrong-user": "https://docs.github.com/ja/github/committing-changes-to-your-project/why-are-my-commits-linked-to-the-wrong-user"
   },
   "warn-force-push-dialog": {
     "are-you-sure-operation": "本当に {{0}} を行いますか?",

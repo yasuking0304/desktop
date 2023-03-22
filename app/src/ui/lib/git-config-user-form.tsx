@@ -169,9 +169,7 @@ export class GitConfigUserForm extends React.Component<
       ? undefined
       : t('common.email', 'Email')
     // If there is not a label, provide a screen reader announcement.
-    const ariaLabel = label
-      ? undefined
-      : t('common.email', 'Email')
+    const ariaLabel = label ? undefined : t('common.email', 'Email')
 
     return (
       <Row>

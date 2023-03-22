@@ -188,8 +188,8 @@ export class MergeChooseBranchDialog extends BaseChooseBranchDialog {
 
     const pluralized =
       commitCount === 1
-        ? t('merge-choose-branch-dialog.commit', 'commit')
-        : t('merge-choose-branch-dialog.commits', 'commits')
+        ? t('common.one-commit', 'commit')
+        : t('common.multiple-commits', 'commits')
     return (
       <React.Fragment>
         {t('merge-choose-branch-dialog.this-will-merge-1', 'This will merge ')}

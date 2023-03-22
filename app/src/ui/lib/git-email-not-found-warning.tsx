@@ -62,7 +62,9 @@ export class GitEmailNotFoundWarning extends React.Component<
       isAttributableEmailFor(account, email)
     )
 
-    const verb = !isAttributableEmail ? 'does not match' : 'matches'
+    const verb = !isAttributableEmail
+      ? t('git-email-not-found-warning.does-not-match', 'does not match')
+      : t('git-email-not-found-warning.matchs', 'matches')
 
     const indicatorIcon = !isAttributableEmail ? (
       <span className="warning-icon">⚠️</span>
@@ -74,12 +76,21 @@ export class GitEmailNotFoundWarning extends React.Component<
 
     const info = !isAttributableEmail ? (
       <>
-        Your commits will be wrongly attributed.{' '}
+        {t(
+          'git-email-not-found-warning.will-be-wrongly-attributed',
+          'Your commits will be wrongly attributed. '
+        )}
         <LinkButton
-          ariaLabel="Learn more about commit attribution"
-          uri="https://docs.github.com/en/github/committing-changes-to-your-project/why-are-my-commits-linked-to-the-wrong-user"
+          ariaLabel={t(
+            'git-email-not-found-warning.learn-more-about',
+            'Learn more about commit attribution'
+          )}
+          uri={t(
+            'url.why-are-my-commits-linked-to-the-wrong-user',
+            'https://docs.github.com/en/github/committing-changes-to-your-project/why-are-my-commits-linked-to-the-wrong-user'
+          )}
         >
-          Learn more.
+          {t('git-email-not-found-warning.learn-more', 'Learn more.')}
         </LinkButton>
       </>
     ) : null

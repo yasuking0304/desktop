@@ -434,7 +434,7 @@ const renderResolvedFileStatusSummary: React.FunctionComponent<{
           props.dispatcher
         )}
       >
-        {t('stash-diff-header.undo', 'Undo')}
+        {t('common.undo', 'Undo')}
       </LinkButton>
     </div>
   )
