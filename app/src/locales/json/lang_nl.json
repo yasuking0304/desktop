@@ -720,6 +720,7 @@
     "learn-more": "Learn more.",
     "learn-more-about": "Learn more about commit attribution",
     "matchs": "matches",
+    "this-email-address": "This email address {{0}} {{1}}. ",
     "will-be-wrongly-attributed": "Your commits will be wrongly attributed. ",
     "your-account": "your {{0}} account"
   },

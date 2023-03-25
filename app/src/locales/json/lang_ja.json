@@ -715,12 +715,13 @@
     "use-my-global-git-config": "Git 設定"
   },
   "git-email-not-found-warning": {
-    "does-not-match": "不一致",
+    "does-not-match": "ありません",
     "edither-your-account": "GitHub.com アカウントまたは GitHub Enterprise アカウントのいずれか",
     "learn-more": "詳細情報",
     "learn-more-about": "詳しくはコミットユーザについてをご覧ください",
-    "matchs": "一致",
-    "will-be-wrongly-attributed": "あなたのコミットは誤ったユーザにリンクされます。",
+    "matchs": "あります",
+    "this-email-address": "このメールアドレスは{{1}}内に{{0}}。 ",
+    "will-be-wrongly-attributed": "あなたのコミットは間違ったユーザにリンクされます。",
     "your-account": "{{0}} アカウント"
   },
   "git-ignore": {
