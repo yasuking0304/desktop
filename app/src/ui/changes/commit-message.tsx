@@ -37,6 +37,7 @@ import { TooltippedContent } from '../lib/tooltipped-content'
 import { TooltipDirection } from '../lib/tooltip'
 import { pick } from '../../lib/pick'
 import { t } from 'i18next'
+import { delay } from 'lodash'
 
 const addAuthorIcon = {
   w: 18,
@@ -141,6 +142,10 @@ interface ICommitMessageState {
    * false when there's no action bar.
    */
   readonly descriptionObscured: boolean
+
+  readonly isCommittingStatusMessage: string
+
+  readonly startedCommitting: number | null
 }
 
 function findUserAutoCompleteProvider(
@@ -179,6 +184,8 @@ export class CommitMessage extends React.Component<
         props.autocompletionProviders
       ),
       descriptionObscured: false,
+      isCommittingStatusMessage: '',
+      startedCommitting: null,
     }
   }
 
@@ -261,6 +268,14 @@ export class CommitMessage extends React.Component<
     ) {
       this.coAuthorInputRef.current?.focus()
     }
+
+    if (
+      prevProps.isCommitting !== this.props.isCommitting &&
+      this.props.isCommitting &&
+      this.state.isCommittingStatusMessage === ''
+    ) {
+      this.setState({ isCommittingStatusMessage: this.getButtonTitle() })
+    }
   }
 
   private clearCommitMessage() {
@@ -317,12 +332,32 @@ export class CommitMessage extends React.Component<
     }
 
     const timer = startTimer('create commit', this.props.repository)
+    this.setState({ startedCommitting: new Date().getTime() })
     const commitCreated = await this.props.onCreateCommit(commitContext)
     timer.done()
 
     if (commitCreated) {
       this.clearCommitMessage()
+      this.updateCommitStatusMessage()
     }
+  }
+
+  /** We want to give a couple seconds for voice reader to be able to read the
+   * in progress message when commit is fast. */
+  private updateCommitStatusMessage() {
+    const timeSinceStartedCommitting = Math.abs(
+      (this.state.startedCommitting ?? new Date().getTime()) -
+        new Date().getTime()
+    )
+    const delayed = 2000 - timeSinceStartedCommitting
+    delay(
+      () =>
+        this.setState({
+          isCommittingStatusMessage: 'Committed Just Now',
+          startedCommitting: null,
+        }),
+      delayed > 0 ? delayed : 0
+    )
   }
 
   private canCommit(): boolean {
@@ -696,15 +731,8 @@ export class CommitMessage extends React.Component<
     this.props.onShowFoldout({ type: FoldoutType.Branch })
   }
 
-  private renderSubmitButton() {
-    const { isCommitting, branch, commitButtonText } = this.props
-    const isSummaryBlank = isEmptyOrWhitespace(this.summaryOrPlaceholder)
-    const buttonEnabled =
-      (this.canCommit() || this.canAmend()) && !isCommitting && !isSummaryBlank
-
-    const loading = isCommitting ? <Loading /> : undefined
-
-    const isAmending = this.props.commitToAmend !== null
+  private getButtonVerb() {
+    const { isCommitting, commitToAmend } = this.props
 
     const amendVerb = isCommitting
       ? t('commit-message.amend-label-amending', 'Amending')
@@ -712,59 +740,86 @@ export class CommitMessage extends React.Component<
     const commitVerb = isCommitting
       ? t('commit-message.commit-label-committing', 'Committing')
       : t('commit-message.commit-label-commit', 'Commit')
+    const isAmending = commitToAmend !== null
 
-    const amendTitle = t('commit-message.amend-title', `{{0}} last commit`, {
-      0: amendVerb,
-    })
-    const commitTitle =
-      branch !== null
-        ? t('commit-message.commit-title', `{{0}} to {{1}}`, {
-            0: commitVerb,
-            1: branch,
-          })
-        : commitVerb
+    return isAmending ? amendVerb : commitVerb
+  }
 
-    let tooltip: string | undefined = undefined
+  private getCommittingButtonText() {
+    const { branch } = this.props
+    const verb = this.getButtonVerb()
 
-    if (buttonEnabled) {
-      tooltip = isAmending ? amendTitle : commitTitle
-    } else {
-      if (isSummaryBlank) {
-        tooltip = t(
-          'commit-message.tooltip-is-summary-blank',
-          `A commit summary is required to commit`
-        )
-      } else if (!this.props.anyFilesSelected && this.props.anyFilesAvailable) {
-        tooltip = t(
-          'commit-message.tooltip-is-anyfiles',
-          `Select one or more files to commit`
-        )
-      } else if (isCommitting) {
-        tooltip = t(
-          'commit-message.tooltip-committing-changes',
-          `Committing changes…`
-        )
-      }
+    if (branch === null) {
+      return verb
     }
 
-    const defaultCommitContents =
-      branch !== null ? (
-        <>
-          {t('commit-message.commit-title-1', '{{0}} to ', { 0: commitVerb })}
-          <strong>{branch}</strong>
-          {t('commit-message.commit-title-2', ' ', { 0: commitVerb })}
-        </>
-      ) : (
-        commitVerb
-      )
+    return (
+      <>
+        {verb} to <strong>{branch}</strong>
+      </>
+    )
+  }
 
-    const defaultAmendContents = <>{amendVerb} last commit</>
+  private getCommittingButtonTitle() {
+    const { branch } = this.props
+    const verb = this.getButtonVerb()
 
-    const defaultContents = isAmending
-      ? defaultAmendContents
-      : defaultCommitContents
+    if (branch === null) {
+      return verb
+    }
 
-    const commitButton = commitButtonText ? commitButtonText : defaultContents
+    return `${verb} to ${branch}`
+  }
+
+  private getButtonText() {
+    const { commitToAmend, commitButtonText } = this.props
+
+    if (commitButtonText) {
+      return commitButtonText
+    }
+
+    const isAmending = commitToAmend !== null
+    return isAmending ? this.getButtonTitle() : this.getCommittingButtonText()
+  }
+
+  private getButtonTitle(): string {
+    const { commitToAmend, commitButtonText } = this.props
+
+    if (commitButtonText) {
+      return commitButtonText
+    }
+
+    const isAmending = commitToAmend !== null
+    return isAmending
+      ? `${this.getButtonVerb()} last commit`
+      : this.getCommittingButtonTitle()
+  }
+
+  private getButtonTooltip(buttonEnabled: boolean) {
+    if (buttonEnabled) {
+      return this.getButtonTitle()
+    }
+
+    const isSummaryBlank = isEmptyOrWhitespace(this.summaryOrPlaceholder)
+    if (isSummaryBlank) {
+      return `A commit summary is required to commit`
+    } else if (!this.props.anyFilesSelected && this.props.anyFilesAvailable) {
+      return `Select one or more files to commit`
+    } else if (this.props.isCommitting) {
+      return `Committing changes…`
+    }
+
+    return undefined
+  }
+
+  private renderSubmitButton() {
+    const { isCommitting } = this.props
+    const isSummaryBlank = isEmptyOrWhitespace(this.summaryOrPlaceholder)
+    const buttonEnabled =
+      (this.canCommit() || this.canAmend()) && !isCommitting && !isSummaryBlank
+    const loading = isCommitting ? <Loading /> : undefined
+    const tooltip = this.getButtonTooltip(buttonEnabled)
+    const commitButton = this.getButtonText()
 
     return (
       <Button
@@ -881,6 +936,9 @@ export class CommitMessage extends React.Component<
         {this.renderPermissionsCommitWarning()}
 
         {this.renderSubmitButton()}
+        <span className="sr-only" aria-live="polite">
+          {this.state.isCommittingStatusMessage}
+        </span>
       </div>
     )
   }
