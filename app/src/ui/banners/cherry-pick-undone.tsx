@@ -16,8 +16,8 @@ export class CherryPickUndone extends React.Component<
     const { countCherryPicked, targetBranchName, onDismissed } = this.props
     const pluralized =
       countCherryPicked === 1
-        ? t('cherry-pick-undone.commit', 'commit')
-        : t('cherry-pick-undone.commits', 'commits')
+        ? t('cherry-pick-undone.one-commit', 'commit')
+        : t('cherry-pick-undone.multiple-commits', 'commits')
     return (
       <SuccessBanner timeout={5000} onDismissed={onDismissed}>
         {t(

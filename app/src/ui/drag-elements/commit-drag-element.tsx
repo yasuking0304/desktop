@@ -114,8 +114,8 @@ export class CommitDragElement extends React.Component<
 
         const pluralized =
           currentDropTarget.data.commits.length === 1
-            ? t('commit-drag-element.commit', 'commit')
-            : t('commit-drag-element.commits', 'commits')
+            ? t('commit-drag-element.one-commit', 'commit')
+            : t('commit-drag-element.multiple-commits', 'commits')
         toolTipContents = (
           <>
             <span>
