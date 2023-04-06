@@ -133,6 +133,9 @@
     "this-branch-is-tracking-1": "This branch is tracking ",
     "this-branch-is-tracking-2": " and renaming this\n            branch will not change the branch name on the remote."
   },
+  "branch-select": {
+    "choose-a-base-branch": "Choose a base branch"
+  },
   "branches-container": {
     "branches": "Branches",
     "choose-a-branch-to-marge-1": "Choose a branch to merge into ",
@@ -202,7 +205,7 @@
     "ok-button-text-to-1": "{{0}} to ",
     "ok-button-text-to-2": "…",
     "okbutton": "Cherry-pick {{0}} {{1}}",
-    "one-commit": "commit",
+    "one-or-less-commit": "commit",
     "you-are-not-able-to-cherry-pick": "You are not able to cherry-pick from and to the same branch"
   },
   "cli-installed": {
@@ -405,6 +408,7 @@
     "name": "Name",
     "ok": "Ok",
     "one-commit": "commit",
+    "one-or-less-commit": "commit",
     "opetarion-alias": "{{0}} alias",
     "opetarion-alias-darwin": "{{0}} Alias",
     "options": "Options",
@@ -604,6 +608,9 @@
     "delete-tag-darwin": "Delete Tag"
   },
   "diff-options": {
+    "caption-diff": "Diff ",
+    "caption-options": "Options",
+    "caption-options-darwin": "Preferences",
     "diff-display": "Diff display",
     "hide-whitespace-changes": "Hide whitespace changes",
     "hide-whitespace-changes-darwin": "Hide Whitespace Changes",
@@ -847,6 +854,8 @@
     "paste": "&Paste",
     "paste-darwin": "Paste",
     "preferences": "Preferences…",
+    "preview-pull-request": "Preview pull request",
+    "preview-pull-request-darwin": "Preview Pull Request",
     "pull": "Pu&ll",
     "pull-darwin": "Pull",
     "pull-request-check-run-failed": "Pull Request Check Run Failed",
@@ -966,7 +975,8 @@
     "protip-2": " to quickly create a new branch\n              from anywhere within the app"
   },
   "no-changes": {
-    "always-available-in-the-toolbar-local-commits": "Always available in the toolbar when there are local commits\n           waiting to be pushed or ",
+    "always-available-in-the-toolbar-local-commits-1": "Always available in the toolbar when there are local commits\n           waiting to be pushed or ",
+    "always-available-in-the-toolbar-local-commits-2": " ",
     "always-available-in-the-toolbar-local-repositories-1": "Always available in the toolbar for local repositories or ",
     "always-available-in-the-toolbar-local-repositories-2": " ",
     "always-available-in-the-toolbar-or-1": "Always available in the toolbar or ",
@@ -982,13 +992,17 @@
     "file-manager-linux": "your File Manager",
     "menu": "{{0}} menu or ",
     "multiple-local-commits": "{{0}} local commits",
+    "multiple-tags": "{{0}} tags",
     "no-local-changes": "No local changes",
-    "number-tags": "{{0}} tags",
     "one-local-commit": "1 local commit",
     "one-tag": "1 tag",
     "open-a-pull-request": "open a pull request, ",
     "open-the-repository-in-your-external-editor": "Open the repository in your external editor",
     "open-the-repository-page-on-github-in-your-browser": "Open the repository page on GitHub in your browser",
+    "preview-pull-request": "Preview Pull Request",
+    "preview-pull-request-1": "The current branch (",
+    "preview-pull-request-2": " is already\n            published to GitHub. Preview the changes this pull request will have\n            before proposing your changes.",
+    "preview-pull-request-title": "Preview the Pull Request from your current branch",
     "publish-branch": "Publish branch",
     "publish-repository": "Publish repository",
     "publish-your-repository": "Publish your branch",
@@ -1044,6 +1058,25 @@
     "return-to-in-progress-tutorial-darwin": "Return to In Progress Tutorial",
     "tips": "You can drag & drop an existing\n              repository folder here to add it to Desktop"
   },
+  "open-pull-request-dialog": {
+    "button_title": "{{0}} pull request on GitHub{{1}}.",
+    "could-not-find-a-default-branch": "Could not find a default branch to compare against.",
+    "create": "Create",
+    "request": "{{0}} Pull request",
+    "request_darwin": "{{0}} Pull Request",
+    "select-a-base-branch-above": "Select a base branch above.",
+    "there_are_no_changes": "There are no changes.",
+    "view": "View"
+  },
+  "open-pull-request-header": {
+    "merge-into-1": "Merge {{0}} into",
+    "merge-into-2": "from",
+    "merge-into-3": ".",
+    "multiple-commits": "{{0}} commits",
+    "one-or-less-commit": "{{0}} commit",
+    "open-a-pull-request": "Open a pull request",
+    "open-a-pull-request-darwin": "Open a Pull Request"
+  },
   "oversized-files-warning": {
     "commit-anyway": "Commit anyway",
     "commit-anyway-darwin": "Commit Anyway",
@@ -1081,9 +1114,20 @@
     "keep-this-code-private": "Keep this code private",
     "will-be-create-as": "Will be created as {{0}}"
   },
+  "pull-request-files-changed": {
+    "showing-changes": "Showing changes from all commits"
+  },
   "pull-request-list": {
     "pull-requests-in": "Pull requests in {{0}}",
     "refresh-the-list-of-pull-request": "Refresh the list of pull requests"
+  },
+  "pull-request-merge-status": {
+    "able-to-merge": "Able to merge.",
+    "can-be-automatically-merge": "These branches can be automatically merged.",
+    "cannot-automatically-merge": "Can't automatically merge.",
+    "donot-worry": "Don’t worry, you can still create the pull request.",
+    "error-checking-merge-status": "Error checking merge status.",
+    "unable-to-merge-unrelated-histories": "Unable to merge unrelated histories in this repository"
   },
   "push-pull-button": {
     "cannot-publish-detached-head": "Cannot publish detached HEAD",
@@ -1280,6 +1324,15 @@
     "stashed-changes": "Stashed changes",
     "unable-to-restore-stash": "Unable to restore stash when changes are present on your branch.",
     "will-move-your-stashed-files": " will move your stashed files to the Changes list."
+  },
+  "status": {
+    "conflicted": "Conflicted",
+    "copied": "Copied",
+    "deleted": "Deleted",
+    "eesolved": "Resolved",
+    "modified": "Modified",
+    "new": "New",
+    "renamed": "Renamed"
   },
   "terms-and-conditions": {
     "additional-services": "Additional Services",

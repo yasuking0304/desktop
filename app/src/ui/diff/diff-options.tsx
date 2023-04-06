@@ -94,7 +94,10 @@ export class DiffOptions extends React.Component<
         onClickOutside={this.closePopover}
       >
         <h3 id="diff-options-popover-header">
-          Diff {__DARWIN__ ? 'Preferences' : 'Options'}
+          {t('diff-options.caption-diff', 'Diff ')}
+          {__DARWIN__
+            ? t('diff-options.caption-options-darwin', 'Preferences')
+            : t('diff-options.caption-options', 'Options')}
         </h3>
         {this.renderHideWhitespaceChanges()}
         {this.renderShowSideBySide()}

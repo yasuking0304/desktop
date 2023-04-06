@@ -385,7 +385,7 @@ export class CommitSummary extends React.Component<
     const commitsPluralized =
       excludedCommitsCount > 1
         ? t('common.multiple-commits', 'commits')
-        : t('common.one-commit', 'commit')
+        : t('common.one-or-less-commit', 'commit')
 
     return (
       // eslint-disable-next-line jsx-a11y/mouse-events-have-key-events
@@ -474,7 +474,7 @@ export class CommitSummary extends React.Component<
     const commitsPluralized =
       numInDiff > 1
         ? t('common.multiple-commits', 'commits')
-        : t('common.one-commit', 'commit')
+        : t('common.one-or-less-commit', 'commit')
     return (
       <div className={summaryClassNames}>
         {t('commit-summary.showing-changes-from-1', 'Showing changes from ')}
