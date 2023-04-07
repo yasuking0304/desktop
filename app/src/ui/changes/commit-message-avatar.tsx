@@ -144,8 +144,9 @@ export class CommitMessageAvatar extends React.Component<
       <Popover
         caretPosition={PopoverCaretPosition.LeftBottom}
         onClickOutside={this.closePopover}
+        ariaLabelledby="misattributed-commit-popover-header"
       >
-        <h3>
+        <h3 id="misattributed-commit-popover-header">
           {t(
             'commit-message-avatar.this-commit-will-be-misattributed',
             'This commit will be misattributed'
