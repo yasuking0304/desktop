@@ -77,9 +77,9 @@ export class OpenPullRequestDialogHeader extends React.Component<
   public render() {
     const title = __DARWIN__
       ? t(
-        'open-pull-request-header.open-a-pull-request-darwin',
-        'Open a Pull Request'
-      )
+          'open-pull-request-header.open-a-pull-request-darwin',
+          'Open a Pull Request'
+        )
       : t('open-pull-request-header.open-a-pull-request', 'Open a pull request')
     const {
       baseBranch,
@@ -94,11 +94,11 @@ export class OpenPullRequestDialogHeader extends React.Component<
     const commits =
       commitCount > 1
         ? t('open-pull-request-header.multiple-commits', `{{0}} commits`, {
-          0: commitCount,
-        })
+            0: commitCount,
+          })
         : t('open-pull-request-header.one-or-less-commit', `{{0}} commit`, {
-          0: commitCount,
-        })
+            0: commitCount,
+          })
 
     return (
       <DialogHeader
