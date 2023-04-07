@@ -81,7 +81,7 @@ const editors: IDarwinExternalEditor[] = [
   },
   {
     name: 'RStudio',
-    bundleIdentifiers: ['org.rstudio.RStudio', 'com.rstudio.desktop'],
+    bundleIdentifiers: ['org.rstudio.RStudio'],
   },
   {
     name: 'TextMate',
@@ -159,10 +159,6 @@ const editors: IDarwinExternalEditor[] = [
   {
     name: 'Pulsar',
     bundleIdentifiers: ['dev.pulsar-edit.pulsar'],
-  },
-  {
-    name: 'Zed',
-    bundleIdentifiers: ['dev.zed.Zed'],
   },
 ]
 

@@ -26,10 +26,7 @@ export class GitIgnore extends React.Component<IGitIgnoreProps, {}> {
           are not affected. `
           )}
           <LinkButton onClick={this.props.onShowExamples}>
-            {t(
-              'git-ignore.gitignore-learn-more-about',
-              'Learn more about gitignore files'
-            )}
+            {t('git-ignore.gitignore-learn-more', 'Learn more')}
           </LinkButton>
         </p>
 

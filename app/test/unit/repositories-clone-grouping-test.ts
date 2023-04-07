@@ -32,7 +32,7 @@ const users = {
 }
 
 describe('clone repository grouping', () => {
-  it('groups repositories by owner', () => {
+  it('groups repositories by organization', () => {
     const repositories: Array<IAPIFullRepository> = [
       {
         clone_url: '',

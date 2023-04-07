@@ -16,17 +16,13 @@ interface IRange {
 
 import getCaretCoordinates from 'textarea-caret'
 import { showContextualMenu } from '../../lib/menu-item'
-import { AriaLiveContainer } from '../accessibility/aria-live-container'
 
-interface IAutocompletingTextInputProps<ElementType, AutocompleteItemType> {
+interface IAutocompletingTextInputProps<ElementType> {
   /**
    * An optional className to be applied to the rendered
    * top level element of the component.
    */
   readonly className?: string
-
-  /** The aria-labelledby attribute for the input field. */
-  readonly elementAriaLabelledBy?: string
 
   /** The placeholder for the input field. */
   readonly placeholder?: string
@@ -40,20 +36,8 @@ interface IAutocompletingTextInputProps<ElementType, AutocompleteItemType> {
   /** Indicates if input field should be required */
   readonly isRequired?: boolean
 
-  /**
-   * Indicates if input field should be considered a combobox by assistive
-   * technologies. Optional. Default: false
-   */
-  readonly isCombobox?: boolean
-
   /** Indicates if input field applies spellcheck */
   readonly spellcheck?: boolean
-
-  /** Indicates if it should always try to autocomplete. Optional (defaults to false) */
-  readonly alwaysAutocomplete?: boolean
-
-  /** Filter for autocomplete items */
-  readonly autocompleteItemFilter?: (item: AutocompleteItemType) => boolean
 
   /**
    * Called when the user changes the value in the input field.
@@ -62,9 +46,6 @@ interface IAutocompletingTextInputProps<ElementType, AutocompleteItemType> {
 
   /** Called on key down. */
   readonly onKeyDown?: (event: React.KeyboardEvent<ElementType>) => void
-
-  /** Called when an autocomplete item has been selected. */
-  readonly onAutocompleteItemSelected?: (value: AutocompleteItemType) => void
 
   /**
    * A list of autocompletion providers that should be enabled for this
@@ -83,9 +64,6 @@ interface IAutocompletingTextInputProps<ElementType, AutocompleteItemType> {
    * in the input field.
    */
   readonly onContextMenu?: (event: React.MouseEvent<any>) => void
-
-  /** Called when the input field receives focus. */
-  readonly onFocus?: (event: React.FocusEvent<ElementType>) => void
 }
 
 interface IAutocompletionState<T> {
@@ -94,8 +72,6 @@ interface IAutocompletionState<T> {
   readonly range: IRange
   readonly rangeText: string
   readonly selectedItem: T | null
-  readonly selectedRowId: string | undefined
-  readonly itemListRowIdPrefix: string
 }
 
 /**
@@ -125,14 +101,12 @@ interface IAutocompletingTextInputState<T> {
 
 /** A text area which provides autocompletions as the user types. */
 export abstract class AutocompletingTextInput<
-  ElementType extends HTMLInputElement | HTMLTextAreaElement,
-  AutocompleteItemType extends Object
+  ElementType extends HTMLInputElement | HTMLTextAreaElement
 > extends React.Component<
-  IAutocompletingTextInputProps<ElementType, AutocompleteItemType>,
-  IAutocompletingTextInputState<AutocompleteItemType>
+  IAutocompletingTextInputProps<ElementType>,
+  IAutocompletingTextInputState<Object>
 > {
   private element: ElementType | null = null
-  private shouldForceAriaLiveMessage = false
 
   /** The identifier for each autocompletion request. */
   private autocompletionRequestID = 0
@@ -143,25 +117,10 @@ export abstract class AutocompletingTextInput<
    */
   protected abstract getElementTagName(): 'textarea' | 'input'
 
-  public constructor(
-    props: IAutocompletingTextInputProps<ElementType, AutocompleteItemType>
-  ) {
+  public constructor(props: IAutocompletingTextInputProps<ElementType>) {
     super(props)
 
-    this.state = {
-      autocompletionState: null,
-    }
-  }
-
-  public componentDidUpdate(
-    prevProps: IAutocompletingTextInputProps<ElementType, AutocompleteItemType>
-  ) {
-    if (
-      this.props.autocompleteItemFilter !== prevProps.autocompleteItemFilter &&
-      this.state.autocompletionState !== null
-    ) {
-      this.open(this.element?.value ?? '')
-    }
+    this.state = { autocompletionState: null }
   }
 
   private renderItem = (row: number): JSX.Element | null => {
@@ -200,7 +159,6 @@ export abstract class AutocompletingTextInput<
 
     const left = coordinates.left
     const top = coordinates.top + YOffset
-    const bottom = coordinates.top + YOffset + 1
     const selectedRow = state.selectedItem
       ? items.indexOf(state.selectedItem)
       : -1
@@ -210,22 +168,13 @@ export abstract class AutocompletingTextInput<
     // The maximum height we can use for the popup without it extending beyond
     // the Window bounds.
     let maxHeight: number
-    let belowElement: boolean = true
     if (
       element.ownerDocument !== null &&
       element.ownerDocument.defaultView !== null
     ) {
       const windowHeight = element.ownerDocument.defaultView.innerHeight
       const spaceToBottomOfWindow = windowHeight - popupAbsoluteTop - YOffset
-      if (
-        spaceToBottomOfWindow < DefaultPopupHeight &&
-        popupAbsoluteTop >= DefaultPopupHeight
-      ) {
-        maxHeight = DefaultPopupHeight
-        belowElement = false
-      } else {
-        maxHeight = Math.min(DefaultPopupHeight, spaceToBottomOfWindow)
-      }
+      maxHeight = Math.min(DefaultPopupHeight, spaceToBottomOfWindow)
     } else {
       maxHeight = DefaultPopupHeight
     }
@@ -247,58 +196,24 @@ export abstract class AutocompletingTextInput<
     const searchText = state.rangeText
 
     const className = classNames('autocompletion-popup', state.provider.kind)
-    const shouldForceAriaLiveMessage = this.shouldForceAriaLiveMessage
-    this.shouldForceAriaLiveMessage = false
-
-    const suggestionsMessage =
-      items.length === 1 ? '1 suggestion' : `${items.length} suggestions`
 
     return (
-      <div
-        className={className}
-        style={belowElement ? { top, left, height } : { bottom, left, height }}
-      >
+      <div className={className} style={{ top, left, height }}>
         <List
-          accessibleListId="autocomplete-container"
-          ref={this.onAutocompletionListRef}
           rowCount={items.length}
           rowHeight={RowHeight}
-          rowId={this.getRowId}
           selectedRows={[selectedRow]}
           rowRenderer={this.renderItem}
           scrollToRow={selectedRow}
+          selectOnHover={true}
+          focusOnHover={false}
           onRowMouseDown={this.onRowMouseDown}
           onRowClick={this.insertCompletionOnClick}
           onSelectedRowChanged={this.onSelectedRowChanged}
           invalidationProps={searchText}
         />
-        <AriaLiveContainer shouldForceChange={shouldForceAriaLiveMessage}>
-          {suggestionsMessage}
-        </AriaLiveContainer>
       </div>
     )
-  }
-
-  private getRowId: (row: number) => string = row => {
-    const state = this.state.autocompletionState
-    if (!state) {
-      return ''
-    }
-
-    return `autocomplete-item-row-${state.itemListRowIdPrefix}-${row}`
-  }
-
-  private onAutocompletionListRef = (ref: List | null) => {
-    const { autocompletionState } = this.state
-    if (ref && autocompletionState && autocompletionState.selectedItem) {
-      const { items, selectedItem } = autocompletionState
-      this.setState({
-        autocompletionState: {
-          ...autocompletionState,
-          selectedRowId: this.getRowId(items.indexOf(selectedItem)),
-        },
-      })
-    }
   }
 
   private onRowMouseDown = (row: number, event: React.MouseEvent<any>) => {
@@ -327,7 +242,6 @@ export abstract class AutocompletingTextInput<
     const newAutoCompletionState = {
       ...currentAutoCompletionState,
       selectedItem: newSelectedItem,
-      selectedRowId: newSelectedItem === null ? undefined : this.getRowId(row),
     }
 
     this.setState({ autocompletionState: newAutoCompletionState })
@@ -358,56 +272,19 @@ export abstract class AutocompletingTextInput<
     }
   }
 
-  private getActiveAutocompleteItemId(): string | undefined {
-    const { autocompletionState } = this.state
-
-    if (autocompletionState === null) {
-      return undefined
-    }
-
-    if (autocompletionState.selectedRowId) {
-      return autocompletionState.selectedRowId
-    }
-
-    if (autocompletionState.selectedItem === null) {
-      return undefined
-    }
-
-    const index = autocompletionState.items.indexOf(
-      autocompletionState.selectedItem
-    )
-
-    return this.getRowId(index)
-  }
-
   private renderTextInput() {
-    const { autocompletionState } = this.state
-
-    const autocompleteVisible =
-      autocompletionState !== null && autocompletionState.items.length > 0
-
     const props = {
       type: 'text',
-      role: this.props.isCombobox ? ('combobox' as const) : undefined,
       placeholder: this.props.placeholder,
       value: this.props.value,
       ref: this.onRef,
       onChange: this.onChange,
       onKeyDown: this.onKeyDown,
-      onFocus: this.onFocus,
       onBlur: this.onBlur,
       onContextMenu: this.onContextMenu,
       disabled: this.props.disabled,
       'aria-required': this.props.isRequired ? true : false,
       spellCheck: this.props.spellcheck,
-      autoComplete: 'off',
-      'aria-labelledby': this.props.elementAriaLabelledBy,
-      'aria-expanded': autocompleteVisible,
-      'aria-autocomplete': 'list' as const,
-      'aria-haspopup': 'listbox' as const,
-      'aria-controls': 'autocomplete-container',
-      'aria-owns': 'autocomplete-container',
-      'aria-activedescendant': this.getActiveAutocompleteItemId(),
     }
 
     return React.createElement<React.HTMLAttributes<ElementType>, ElementType>(
@@ -418,16 +295,6 @@ export abstract class AutocompletingTextInput<
 
   private onBlur = (e: React.FocusEvent<ElementType>) => {
     this.close()
-  }
-
-  private onFocus = (e: React.FocusEvent<ElementType>) => {
-    if (!this.props.alwaysAutocomplete || this.element === null) {
-      return
-    }
-
-    this.open(this.element.value)
-
-    this.props.onFocus?.(e)
   }
 
   private onRef = (ref: ElementType | null) => {
@@ -471,10 +338,7 @@ export abstract class AutocompletingTextInput<
     this.element.selectionEnd = newCaretPosition
   }
 
-  private insertCompletion(
-    item: AutocompleteItemType,
-    source: 'mouseclick' | 'keyboard'
-  ) {
+  private insertCompletion(item: Object, source: 'mouseclick' | 'keyboard') {
     const element = this.element!
     const autocompletionState = this.state.autocompletionState!
     const originalText = element.value
@@ -508,12 +372,7 @@ export abstract class AutocompletingTextInput<
       this.setCursorPosition(newCaretPosition)
     }
 
-    this.props.onAutocompleteItemSelected?.(item)
-
     this.close()
-    if (this.props.alwaysAutocomplete) {
-      this.open('')
-    }
   }
 
   private getMovementDirection(
@@ -569,16 +428,11 @@ export abstract class AutocompletingTextInput<
         const newAutoCompletionState = {
           ...currentAutoCompletionState,
           selectedItem: newSelectedItem,
-          selectedRowId:
-            newSelectedItem === null ? undefined : this.getRowId(nextRow),
         }
 
         this.setState({ autocompletionState: newAutoCompletionState })
       }
-    } else if (
-      event.key === 'Enter' ||
-      (event.key === 'Tab' && !event.shiftKey)
-    ) {
+    } else if (event.key === 'Enter' || event.key === 'Tab') {
       const item = currentAutoCompletionState.selectedItem
       if (item) {
         event.preventDefault()
@@ -597,7 +451,7 @@ export abstract class AutocompletingTextInput<
   private async attemptAutocompletion(
     str: string,
     caretPosition: number
-  ): Promise<IAutocompletionState<AutocompleteItemType> | null> {
+  ): Promise<IAutocompletionState<any> | null> {
     for (const provider of this.props.autocompletionProviders) {
       // NB: RegExps are stateful (AAAAAAAAAAAAAAAAAA) so defensively copy the
       // regex we're given.
@@ -612,32 +466,17 @@ export abstract class AutocompletingTextInput<
       while ((result = regex.exec(str))) {
         const index = regex.lastIndex
         const text = result[1] || ''
-        if (index === caretPosition || this.props.alwaysAutocomplete) {
+        if (index === caretPosition) {
           const range = { start: index - text.length, length: text.length }
-          let items = await provider.getAutocompletionItems(text)
+          const items = await provider.getAutocompletionItems(text)
 
-          if (this.props.autocompleteItemFilter) {
-            items = items.filter(this.props.autocompleteItemFilter)
-          }
-
-          return {
-            provider,
-            items,
-            range,
-            selectedItem: null,
-            selectedRowId: undefined,
-            rangeText: text,
-            itemListRowIdPrefix: this.buildAutocompleteListRowIdPrefix(),
-          }
+          const selectedItem = items[0]
+          return { provider, items, range, selectedItem, rangeText: text }
         }
       }
     }
 
     return null
-  }
-
-  private buildAutocompleteListRowIdPrefix() {
-    return new Date().getTime().toString()
   }
 
   private onChange = async (event: React.FormEvent<ElementType>) => {
@@ -647,10 +486,6 @@ export abstract class AutocompletingTextInput<
       this.props.onValueChanged(str)
     }
 
-    return this.open(str)
-  }
-
-  private async open(str: string) {
     const element = this.element
 
     if (element === null) {
@@ -675,7 +510,6 @@ export abstract class AutocompletingTextInput<
       return
     }
 
-    this.shouldForceAriaLiveMessage = true
     this.setState({ autocompletionState })
   }
 }

@@ -1,15 +1,11 @@
 import { AutocompletingTextInput } from './autocompleting-text-input'
 
-export class AutocompletingTextArea<
-  AutocompleteItemType = Object
-> extends AutocompletingTextInput<HTMLTextAreaElement, AutocompleteItemType> {
+export class AutocompletingTextArea extends AutocompletingTextInput<HTMLTextAreaElement> {
   protected getElementTagName(): 'textarea' | 'input' {
     return 'textarea'
   }
 }
-export class AutocompletingInput<
-  AutocompleteItemType = Object
-> extends AutocompletingTextInput<HTMLInputElement, AutocompleteItemType> {
+export class AutocompletingInput extends AutocompletingTextInput<HTMLInputElement> {
   protected getElementTagName(): 'textarea' | 'input' {
     return 'input'
   }

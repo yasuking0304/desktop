@@ -77,7 +77,6 @@ export class CompareSidebar extends React.Component<
   private textbox: TextBox | null = null
   private readonly loadChangedFilesScheduler = new ThrottledScheduler(200)
   private branchList: BranchList | null = null
-  private commitListRef = React.createRef<CommitList>()
   private loadingMoreCommitsPromise: Promise<void> | null = null
   private resultCount = 0
 
@@ -131,10 +130,6 @@ export class CompareSidebar extends React.Component<
         this.textbox.blur()
       }
     }
-  }
-
-  public focusHistory() {
-    this.commitListRef.current?.focus()
   }
 
   public componentWillMount() {
@@ -239,7 +234,6 @@ export class CompareSidebar extends React.Component<
 
     return (
       <CommitList
-        ref={this.commitListRef}
         gitHubRepository={this.props.repository.gitHubRepository}
         isLocalRepository={this.props.isLocalRepository}
         commitLookup={this.props.commitLookup}

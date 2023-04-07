@@ -41,7 +41,6 @@ import {
 import { Prompts } from './prompts'
 import { Repository } from '../../models/repository'
 import { t } from 'i18next'
-import { Notifications } from './notifications'
 
 interface IPreferencesProps {
   readonly dispatcher: Dispatcher
@@ -99,8 +98,6 @@ interface IPreferencesState {
    */
   readonly existingLockFilePath?: string
   readonly repositoryIndicatorsEnabled: boolean
-
-  readonly initiallySelectedTheme: ApplicationTheme
 }
 
 /** The app-level preferences component. */
@@ -135,7 +132,6 @@ export class Preferences extends React.Component<
       availableShells: [],
       selectedShell: this.props.selectedShell,
       repositoryIndicatorsEnabled: this.props.repositoryIndicatorsEnabled,
-      initiallySelectedTheme: this.props.selectedTheme,
     }
   }
 
@@ -195,14 +191,6 @@ export class Preferences extends React.Component<
     })
   }
 
-  private onCancel = () => {
-    if (this.state.initiallySelectedTheme !== this.props.selectedTheme) {
-      this.onSelectedThemeChanged(this.state.initiallySelectedTheme)
-    }
-
-    this.props.onDismissed()
-  }
-
   public render() {
     return (
       <Dialog
@@ -212,7 +200,7 @@ export class Preferences extends React.Component<
             ? t('common.preferences', 'Preferences')
             : t('common.options', 'Options')
         }
-        onDismissed={this.onCancel}
+        onDismissed={this.props.onDismissed}
         onSubmit={this.onSave}
       >
         <div className="preferences-container">
@@ -237,10 +225,6 @@ export class Preferences extends React.Component<
             <span>
               <Octicon className="icon" symbol={OcticonSymbol.paintbrush} />
               {t('preferences.appearance', 'Appearance')}
-            </span>
-            <span>
-              <Octicon className="icon" symbol={OcticonSymbol.bell} />
-              Notifications
             </span>
             <span>
               <Octicon className="icon" symbol={OcticonSymbol.question} />
@@ -350,14 +334,6 @@ export class Preferences extends React.Component<
           />
         )
         break
-      case PreferencesTab.Notifications:
-        View = (
-          <Notifications
-            notificationsEnabled={this.state.notificationsEnabled}
-            onNotificationsEnabledChanged={this.onNotificationsEnabledChanged}
-          />
-        )
-        break
       case PreferencesTab.Prompts: {
         View = (
           <Prompts
@@ -379,10 +355,6 @@ export class Preferences extends React.Component<
               this.onConfirmDiscardChangesPermanentlyChanged
             }
             onConfirmUndoCommitChanged={this.onConfirmUndoCommitChanged}
-            uncommittedChangesStrategy={this.state.uncommittedChangesStrategy}
-            onUncommittedChangesStrategyChanged={
-              this.onUncommittedChangesStrategyChanged
-            }
           />
         )
         break
@@ -391,10 +363,16 @@ export class Preferences extends React.Component<
         View = (
           <Advanced
             useWindowsOpenSSH={this.state.useWindowsOpenSSH}
+            notificationsEnabled={this.state.notificationsEnabled}
             optOutOfUsageTracking={this.state.optOutOfUsageTracking}
             repositoryIndicatorsEnabled={this.state.repositoryIndicatorsEnabled}
+            uncommittedChangesStrategy={this.state.uncommittedChangesStrategy}
             onUseWindowsOpenSSHChanged={this.onUseWindowsOpenSSHChanged}
+            onNotificationsEnabledChanged={this.onNotificationsEnabledChanged}
             onOptOutofReportingChanged={this.onOptOutofReportingChanged}
+            onUncommittedChangesStrategyChanged={
+              this.onUncommittedChangesStrategyChanged
+            }
             onRepositoryIndicatorsEnabledChanged={
               this.onRepositoryIndicatorsEnabledChanged
             }
@@ -501,14 +479,27 @@ export class Preferences extends React.Component<
   private renderFooter() {
     const hasDisabledError = this.state.disallowedCharactersMessage != null
 
-    return (
-      <DialogFooter>
-        <OkCancelButtonGroup
-          okButtonText={t('common.save', 'Save')}
-          okButtonDisabled={hasDisabledError}
-        />
-      </DialogFooter>
-    )
+    const index = this.state.selectedIndex
+    switch (index) {
+      case PreferencesTab.Accounts:
+      case PreferencesTab.Appearance:
+        return null
+      case PreferencesTab.Integrations:
+      case PreferencesTab.Advanced:
+      case PreferencesTab.Prompts:
+      case PreferencesTab.Git: {
+        return (
+          <DialogFooter>
+            <OkCancelButtonGroup
+              okButtonText={t('common.save', 'Save')}
+              okButtonDisabled={hasDisabledError}
+            />
+          </DialogFooter>
+        )
+      }
+      default:
+        return assertNever(index, `Unknown tab index: ${index}`)
+    }
   }
 
   private onSave = async () => {

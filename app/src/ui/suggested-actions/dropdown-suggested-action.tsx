@@ -69,54 +69,46 @@ export interface IDropdownSuggestedActionProps<T extends string> {
 }
 
 interface IDropdownSuggestedActionState<T extends string> {
-  readonly selectedActionValue: T
+  readonly selectedAction: IDropdownSuggestedActionOption<T>
 }
 
 export class DropdownSuggestedAction<T extends string> extends React.Component<
   IDropdownSuggestedActionProps<T>,
   IDropdownSuggestedActionState<T>
 > {
-  private get selectedAction() {
-    const selectedAction = this.props.suggestedActions.find(
-      a => a.value === this.state.selectedActionValue
-    )
-    if (selectedAction === undefined) {
-      // Shouldn't happen .. but if it did we don't want to crash app, but we want to tell dev what is up
-      sendNonFatalException(
-        'NoSuggestedActionsProvided',
-        new Error(
-          'The DropdownSuggestedActions component was provided an empty array. It requires an array of at least one item.'
-        )
-      )
-    }
-    return selectedAction
-  }
-
   public constructor(props: IDropdownSuggestedActionProps<T>) {
     super(props)
 
     const { selectedActionValue, suggestedActions } = props
-    const firstActionValue = suggestedActions[0].value
-
+    const firstAction = suggestedActions[0]
+    const selectedAction =
+      selectedActionValue !== undefined
+        ? suggestedActions.find(
+            a => a.value === this.props.selectedActionValue
+          ) ?? firstAction
+        : firstAction
     this.state = {
-      selectedActionValue: selectedActionValue ?? firstActionValue,
+      selectedAction,
     }
   }
 
   private onActionSelectionChange = (
     option: IDropdownSelectButtonOption<T>
   ) => {
-    this.setState({ selectedActionValue: option.value })
-    this.props.onSuggestedActionChanged(option.value)
-  }
+    const selectedAction = this.props.suggestedActions.find(
+      a => a.value === option.value
+    )
 
-  private onActionSubmitted = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (this.selectedAction === undefined) {
-      // Just a type check
+    if (selectedAction === undefined) {
       return
     }
 
-    const { onClick, menuItemId } = this.selectedAction
+    this.setState({ selectedAction })
+    this.props.onSuggestedActionChanged(selectedAction.value)
+  }
+
+  private onActionSubmitted = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const { onClick, menuItemId } = this.state.selectedAction
     onClick?.(e)
 
     if (!e.defaultPrevented && menuItemId !== undefined) {
@@ -125,9 +117,16 @@ export class DropdownSuggestedAction<T extends string> extends React.Component<
   }
 
   public render() {
-    if (this.selectedAction === undefined) {
-      // Just a type check
-      return
+    const { selectedAction } = this.state
+    if (selectedAction === undefined) {
+      // Shouldn't happen .. but if it did we don't want to crash app and tell dev what is up
+      sendNonFatalException(
+        'NoSuggestedActionsProvided',
+        new Error(
+          'The DropdownSuggestedActions component was provided an empty array. It requires an array of at least one item.'
+        )
+      )
+      return null
     }
 
     const {
@@ -137,7 +136,7 @@ export class DropdownSuggestedAction<T extends string> extends React.Component<
       disabled,
       value,
       title,
-    } = this.selectedAction
+    } = selectedAction
 
     const className = classNames(
       'suggested-action',

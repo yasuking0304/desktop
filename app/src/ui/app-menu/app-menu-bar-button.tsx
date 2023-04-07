@@ -202,11 +202,9 @@ export class AppMenuBarButton extends React.Component<
         onMouseEnter={this.onMouseEnter}
         onKeyDown={this.onKeyDown}
         tabIndex={-1}
-        buttonRole="menuitem"
-        buttonAriaHaspopup="menu"
+        role="menuitem"
       >
         <MenuListItem
-          menuItemId={`app-menu-${item.label}`}
           item={item}
           highlightAccessKey={this.props.highlightMenuAccessKey}
           renderAcceleratorText={false}
@@ -257,7 +255,7 @@ export class AppMenuBarButton extends React.Component<
     if (this.isMenuOpen) {
       this.props.onClose(this.props.menuItem, source)
     } else {
-      this.props.onOpen(this.props.menuItem, true)
+      this.props.onOpen(this.props.menuItem)
     }
   }
 
@@ -276,7 +274,6 @@ export class AppMenuBarButton extends React.Component<
         state={menuState}
         enableAccessKeyNavigation={this.props.enableAccessKeyNavigation}
         autoHeight={true}
-        ariaLabelledby={`app-menu-${this.props.menuItem.label}`}
       />
     )
   }

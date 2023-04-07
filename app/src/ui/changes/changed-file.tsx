@@ -7,7 +7,6 @@ import { mapStatus, mapStatusCaption } from '../../lib/status'
 import { WorkingDirectoryFileChange } from '../../models/status'
 import { TooltipDirection } from '../lib/tooltip'
 import { TooltippedContent } from '../lib/tooltipped-content'
-import { AriaLiveContainer } from '../accessibility/aria-live-container'
 
 interface IChangedFileProps {
   readonly file: WorkingDirectoryFileChange
@@ -53,13 +52,6 @@ export class ChangedFile extends React.Component<IChangedFileProps, {}> {
       filePadding -
       statusWidth
 
-    const includedText =
-      this.props.include === true
-        ? 'included'
-        : this.props.include === undefined
-        ? 'partially included'
-        : 'not included'
-
     return (
       <div className="file">
         <TooltippedContent
@@ -84,10 +76,6 @@ export class ChangedFile extends React.Component<IChangedFileProps, {}> {
           availableWidth={availablePathWidth}
           ariaHidden={true}
         />
-
-        <AriaLiveContainer>
-          {path} {mapStatus(status)} {includedText}
-        </AriaLiveContainer>
 
         <Octicon
           symbol={iconForStatus(status)}

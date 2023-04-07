@@ -97,7 +97,7 @@ export class EmojiAutocompletionProvider
   }
 
   private renderHighlightedTitle(hit: IEmojiHit) {
-    const emoji = hit.emoji.replaceAll(':', '')
+    const emoji = hit.emoji
 
     if (!hit.matchLength) {
       return <div className="title">{emoji}</div>

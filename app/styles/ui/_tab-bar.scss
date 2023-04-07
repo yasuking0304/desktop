@@ -144,7 +144,7 @@
 
     &:focus {
       border-radius: var(--outlined-border-radius);
-      outline-offset: 3px;
+      outline-color: var(--alt-focus-color);
     }
 
     // Center item contest horizontally and vertically

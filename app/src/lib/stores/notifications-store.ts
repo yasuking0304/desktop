@@ -149,9 +149,9 @@ export class NotificationsStore {
 
     if (!this.isValidRepositoryForEvent(repository, event)) {
       if (this.isRecentRepositoryEvent(event)) {
-        this.statsStore.recordPullRequestCommentNotificationFromRecentRepo()
+        this.statsStore.recordPullRequestReviewNotiificationFromRecentRepo()
       } else {
-        this.statsStore.recordPullRequestCommentNotificationFromNonRecentRepo()
+        this.statsStore.recordPullRequestReviewNotiificationFromNonRecentRepo()
       }
       return
     }
@@ -193,7 +193,7 @@ export class NotificationsStore {
       pullRequest.pullRequestNumber
     }\n${truncateWithEllipsis(comment.body, 50)}`
     const onClick = () => {
-      this.statsStore.recordPullRequestCommentNotificationClicked()
+      // TODO: this.statsStore.recordPullRequestReviewNotificationClicked(review.state)
 
       this.onPullRequestCommentCallback?.(repository, pullRequest, comment)
     }
@@ -210,7 +210,7 @@ export class NotificationsStore {
       onClick,
     })
 
-    this.statsStore.recordPullRequestCommentNotificationShown()
+    // TODO: this.statsStore.recordPullRequestReviewNotificationShown(review.state)
   }
 
   private async handlePullRequestReviewSubmitEvent(
@@ -224,9 +224,9 @@ export class NotificationsStore {
 
     if (!this.isValidRepositoryForEvent(repository, event)) {
       if (this.isRecentRepositoryEvent(event)) {
-        this.statsStore.recordPullRequestReviewNotificationFromRecentRepo()
+        this.statsStore.recordPullRequestReviewNotiificationFromRecentRepo()
       } else {
-        this.statsStore.recordPullRequestReviewNotificationFromNonRecentRepo()
+        this.statsStore.recordPullRequestReviewNotiificationFromNonRecentRepo()
       }
       return
     }

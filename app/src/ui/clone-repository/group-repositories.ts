@@ -1,9 +1,8 @@
 import { IAPIRepository } from '../../lib/api'
 import { IFilterListGroup, IFilterListItem } from '../lib/filter-list'
+import { caseInsensitiveCompare } from '../../lib/compare'
 import { OcticonSymbolType } from '../octicons'
 import * as OcticonSymbol from '../octicons/octicons.generated'
-import { entries, groupBy } from 'lodash'
-import { caseInsensitiveEquals, compare } from '../../lib/compare'
 
 /** The identifier for the "Your Repositories" grouping. */
 export const YourRepositoriesIdentifier = 'your-repositories'
@@ -36,36 +35,53 @@ function getIcon(gitHubRepo: IAPIRepository): OcticonSymbolType {
   return OcticonSymbol.repo
 }
 
-const toListItems = (repositories: ReadonlyArray<IAPIRepository>) =>
-  repositories
-    .map<ICloneableRepositoryListItem>(repo => ({
-      id: repo.html_url,
-      text: [`${repo.owner.login}/${repo.name}`],
-      url: repo.clone_url,
-      name: repo.name,
-      icon: getIcon(repo),
-    }))
-    .sort((x, y) => compare(x.name, y.name))
+function convert(
+  repositories: ReadonlyArray<IAPIRepository>
+): ReadonlyArray<ICloneableRepositoryListItem> {
+  const repos: ReadonlyArray<ICloneableRepositoryListItem> = repositories.map(
+    repo => {
+      const icon = getIcon(repo)
+
+      return {
+        id: repo.html_url,
+        text: [`${repo.owner.login}/${repo.name}`],
+        url: repo.clone_url,
+        name: repo.name,
+        icon,
+      }
+    }
+  )
+
+  return repos
+}
 
 export function groupRepositories(
   repositories: ReadonlyArray<IAPIRepository>,
   login: string
 ): ReadonlyArray<IFilterListGroup<ICloneableRepositoryListItem>> {
-  const groups = groupBy(repositories, x =>
-    caseInsensitiveEquals(x.owner.login, login)
-      ? YourRepositoriesIdentifier
-      : x.owner.login
+  const userRepos = repositories.filter(repo => repo.owner.type === 'User')
+  const orgRepos = repositories.filter(
+    repo => repo.owner.type === 'Organization'
   )
 
-  return entries(groups)
-    .map(([identifier, repos]) => ({ identifier, items: toListItems(repos) }))
-    .sort((x, y) => {
-      if (x.identifier === YourRepositoriesIdentifier) {
-        return -1
-      } else if (y.identifier === YourRepositoriesIdentifier) {
-        return 1
-      } else {
-        return compare(x.identifier, y.identifier)
-      }
+  const groups = [
+    {
+      identifier: YourRepositoriesIdentifier,
+      items: convert(userRepos),
+    },
+  ]
+
+  const orgs = orgRepos.map(repo => repo.owner.login)
+  const distinctOrgs = Array.from(new Set(orgs))
+
+  for (const org of distinctOrgs.sort(caseInsensitiveCompare)) {
+    const orgRepositories = orgRepos.filter(repo => repo.owner.login === org)
+
+    groups.push({
+      identifier: org,
+      items: convert(orgRepositories),
     })
+  }
+
+  return groups
 }

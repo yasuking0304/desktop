@@ -12,7 +12,7 @@ import {
 } from '.'
 import { Account } from '../../models/account'
 import { AppMenu, IMenu } from '../../models/app-menu'
-import { Author } from '../../models/author'
+import { IAuthor } from '../../models/author'
 import { Branch, BranchType, IAheadBehind } from '../../models/branch'
 import { BranchesTab } from '../../models/branches-tab'
 import { CloneRepositoryTab } from '../../models/clone-repository-tab'
@@ -317,7 +317,6 @@ import { ValidNotificationPullRequestReview } from '../valid-notification-pull-r
 import { determineMergeability } from '../git/merge-tree'
 import { PopupManager } from '../popup-manager'
 import { t } from 'i18next'
-import { resizableComponentClass } from '../../ui/resizable'
 
 const LastSelectedRepositoryIDKey = 'last-selected-repository-id'
 
@@ -451,7 +450,6 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
   private windowState: WindowState | null = null
   private windowZoomFactor: number = 1
-  private resizablePaneActive = false
   private isUpdateAvailableBannerVisible: boolean = false
   private isUpdateShowcaseVisible: boolean = false
 
@@ -991,7 +989,6 @@ export class AppStore extends TypedBaseStore<IAppState> {
       showCIStatusPopover: this.showCIStatusPopover,
       notificationsEnabled: getNotificationsEnabled(),
       pullRequestSuggestedNextAction: this.pullRequestSuggestedNextAction,
-      resizablePaneActive: this.resizablePaneActive,
     }
   }
 
@@ -6330,7 +6327,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
    */
   public _setCoAuthors(
     repository: Repository,
-    coAuthors: ReadonlyArray<Author>
+    coAuthors: ReadonlyArray<IAuthor>
   ) {
     this.gitStoreCache.get(repository).setCoAuthors(coAuthors)
     return Promise.resolve()
@@ -7693,33 +7690,6 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
     this.emitUpdate()
   }
-
-  private isResizePaneActive() {
-    if (document.activeElement === null) {
-      return false
-    }
-
-    const appMenuBar = document.getElementById('app-menu-bar')
-
-    // Don't track windows menu items as focused elements for keeping
-    // track of recently focused elements we want to act upon
-    if (appMenuBar?.contains(document.activeElement)) {
-      return this.resizablePaneActive
-    }
-
-    return (
-      document.activeElement.closest(`.${resizableComponentClass}`) !== null
-    )
-  }
-
-  public _appFocusedElementChanged() {
-    const resizablePaneActive = this.isResizePaneActive()
-
-    if (resizablePaneActive !== this.resizablePaneActive) {
-      this.resizablePaneActive = resizablePaneActive
-      this.emitUpdate()
-    }
-  }
 }
 
 /**
@@ -7784,12 +7754,5 @@ function constrain(
   min = -Infinity,
   max = Infinity
 ): IConstrainedValue {
-  // Match CSS's behavior where min-width takes precedence over max-width
-  // See https://stackoverflow.com/a/16063871
-  const constrainedMax = max < min ? min : max
-  return {
-    value: typeof value === 'number' ? value : value.value,
-    min,
-    max: constrainedMax,
-  }
+  return { value: typeof value === 'number' ? value : value.value, min, max }
 }

@@ -36,5 +36,3 @@ export type MenuIDs =
   | 'toggle-stashed-changes'
   | 'create-issue-in-repository-on-github'
   | 'preview-pull-request'
-  | 'decrease-active-resizable-width'
-  | 'increase-active-resizable-width'

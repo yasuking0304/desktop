@@ -56,7 +56,7 @@ import { getTipSha } from '../../lib/tip'
 
 import { Account } from '../../models/account'
 import { AppMenu, ExecutableMenuItem } from '../../models/app-menu'
-import { Author, UnknownAuthor } from '../../models/author'
+import { IAuthor } from '../../models/author'
 import { Branch, IAheadBehind } from '../../models/branch'
 import { BranchesTab } from '../../models/branches-tab'
 import { CloneRepositoryTab } from '../../models/clone-repository-tab'
@@ -1550,17 +1550,6 @@ export class Dispatcher {
     await this.appStore._showCreateForkDialog(repository)
   }
 
-  public async showUnknownAuthorsCommitWarning(
-    authors: ReadonlyArray<UnknownAuthor>,
-    onCommitAnyway: () => void
-  ) {
-    return this.appStore._showPopup({
-      type: PopupType.UnknownAuthors,
-      authors,
-      onCommit: onCommitAnyway,
-    })
-  }
-
   /**
    * Register a new error handler.
    *
@@ -2288,7 +2277,7 @@ export class Dispatcher {
    */
   public setCoAuthors(
     repository: Repository,
-    coAuthors: ReadonlyArray<Author>
+    coAuthors: ReadonlyArray<IAuthor>
   ) {
     return this.appStore._setCoAuthors(repository, coAuthors)
   }
@@ -3992,10 +3981,6 @@ export class Dispatcher {
     this.statsStore.recordPullRequestReviewDialogSwitchToPullRequest(reviewType)
   }
 
-  public recordPullRequestCommentDialogSwitchToPullRequest() {
-    this.statsStore.recordPullRequestCommentDialogSwitchToPullRequest()
-  }
-
   public showUnreachableCommits(selectedTab: UnreachableCommitsTab) {
     this.statsStore.recordMultiCommitDiffUnreachableCommitsDialogOpenedCount()
 
@@ -4065,9 +4050,5 @@ export class Dispatcher {
     value: PullRequestSuggestedNextAction
   ) {
     return this.appStore._setPullRequestSuggestedNextAction(value)
-  }
-
-  public appFocusedElementChanged() {
-    this.appStore._appFocusedElementChanged()
   }
 }

@@ -4,7 +4,6 @@ import {
   Repository,
 } from '../../models/repository'
 import {
-  CoAuthorAutocompletionProvider,
   EmojiAutocompletionProvider,
   IAutocompletionProvider,
   IssuesAutocompletionProvider,
@@ -43,16 +42,7 @@ export function buildAutocompletionProviders(
     const account = accounts.find(a => a.endpoint === gitHubRepository.endpoint)
 
     autocompletionProviders.push(
-      new UserAutocompletionProvider(
-        gitHubUserStore,
-        gitHubRepository,
-        account
-      ),
-      new CoAuthorAutocompletionProvider(
-        gitHubUserStore,
-        gitHubRepository,
-        account
-      )
+      new UserAutocompletionProvider(gitHubUserStore, gitHubRepository, account)
     )
   }
 

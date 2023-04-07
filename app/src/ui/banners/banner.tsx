@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import * as React from 'react'
 import { Octicon } from '../octicons'
 import * as OcticonSymbol from '../octicons/octicons.generated'
@@ -29,9 +32,9 @@ export class Banner extends React.Component<IBannerProps, {}> {
 
     return (
       <div className="close">
-        <button onClick={this.props.onDismissed}>
+        <a onClick={this.props.onDismissed}>
           <Octicon symbol={OcticonSymbol.x} />
-        </button>
+        </a>
       </div>
     )
   }

@@ -17,7 +17,7 @@ import {
   Repository,
 } from '../../models/repository'
 import { Account } from '../../models/account'
-import { Author, UnknownAuthor } from '../../models/author'
+import { IAuthor } from '../../models/author'
 import { List, ClickSource } from '../lib/list'
 import { Checkbox, CheckboxValue } from '../lib/checkbox'
 import {
@@ -49,7 +49,7 @@ import * as OcticonSymbol from '../octicons/octicons.generated'
 import { IStashEntry } from '../../models/stash-entry'
 import classNames from 'classnames'
 import { hasWritePermission } from '../../models/github-repository'
-import { hasConflictedFiles } from '../../lib/status'
+import { hasConflictedFiles, mapStatus } from '../../lib/status'
 import { createObservableRef } from '../lib/observable-ref'
 import { Tooltip, TooltipDirection } from '../lib/tooltip'
 import { Popup } from '../../models/popup'
@@ -191,7 +191,7 @@ interface IChangesListProps {
    * Co-Authored-By commit message trailers depending on whether
    * the user has chosen to do so.
    */
-  readonly coAuthors: ReadonlyArray<Author>
+  readonly coAuthors: ReadonlyArray<IAuthor>
 
   /** The name of the currently selected external editor */
   readonly externalEditorLabel?: string
@@ -241,7 +241,6 @@ export class ChangesList extends React.Component<
   IChangesState
 > {
   private headerRef = createObservableRef<HTMLDivElement>()
-  private listRef = React.createRef<List>()
 
   public constructor(props: IChangesListProps) {
     super(props)
@@ -326,6 +325,13 @@ export class ChangesList extends React.Component<
         checkboxTooltip={checkboxTooltip}
       />
     )
+  }
+
+  private getFileAriaLabel = (row: number): string => {
+    const { workingDirectory } = this.props
+    const { path, status } = workingDirectory.files[row]
+
+    return `${path}  ${mapStatus(status)}`
   }
 
   private onDiscardAllChanges = () => {
@@ -840,7 +846,6 @@ export class ChangesList extends React.Component<
       <CommitMessage
         onCreateCommit={this.props.onCreateCommit}
         branch={this.props.branch}
-        mostRecentLocalCommit={this.props.mostRecentLocalCommit}
         commitAuthor={this.props.commitAuthor}
         isShowingModal={this.props.isShowingModal}
         isShowingFoldout={this.props.isShowingFoldout}
@@ -867,9 +872,6 @@ export class ChangesList extends React.Component<
         commitSpellcheckEnabled={this.props.commitSpellcheckEnabled}
         onCoAuthorsUpdated={this.onCoAuthorsUpdated}
         onShowCoAuthoredByChanged={this.onShowCoAuthoredByChanged}
-        onConfirmCommitWithUnknownCoAuthors={
-          this.onConfirmCommitWithUnknownCoAuthors
-        }
         onPersistCommitMessage={this.onPersistCommitMessage}
         onCommitMessageFocusSet={this.onCommitMessageFocusSet}
         onRefreshAuthor={this.onRefreshAuthor}
@@ -882,20 +884,12 @@ export class ChangesList extends React.Component<
     )
   }
 
-  private onCoAuthorsUpdated = (coAuthors: ReadonlyArray<Author>) =>
+  private onCoAuthorsUpdated = (coAuthors: ReadonlyArray<IAuthor>) =>
     this.props.dispatcher.setCoAuthors(this.props.repository, coAuthors)
 
   private onShowCoAuthoredByChanged = (showCoAuthors: boolean) => {
     const { dispatcher, repository } = this.props
     dispatcher.setShowCoAuthoredBy(repository, showCoAuthors)
-  }
-
-  private onConfirmCommitWithUnknownCoAuthors = (
-    coAuthors: ReadonlyArray<UnknownAuthor>,
-    onCommitAnyway: () => void
-  ) => {
-    const { dispatcher } = this.props
-    dispatcher.showUnknownAuthorsCommitWarning(coAuthors, onCommitAnyway)
   }
 
   private onRefreshAuthor = () =>
@@ -947,10 +941,12 @@ export class ChangesList extends React.Component<
     )
 
     return (
+      // eslint-disable-next-line jsx-a11y/role-supports-aria-props
       <button
         className={className}
         onClick={this.onStashEntryClicked}
         tabIndex={0}
+        aria-selected={this.props.isShowingStashEntry}
       >
         <Octicon className="stack-icon" symbol={StashIcon} />
         <div className="text">
@@ -977,10 +973,6 @@ export class ChangesList extends React.Component<
     return
   }
 
-  public focus() {
-    this.listRef.current?.focus()
-  }
-
   public render() {
     const { workingDirectory, rebaseConflictState, isCommitting } = this.props
     const { files } = workingDirectory
@@ -1004,7 +996,7 @@ export class ChangesList extends React.Component<
         : t('changes-list.files', 'files')
     const selectedChangesDescription = t(
       'changes-list.files-changes-description',
-      '{{0}}/{{1}} changed {{2}}  included',
+      '{{0}}/{{1}} changed {{2}}  selected',
       { 0: selectedChangeCount, 1: files.length, 2: totalFilesPlural }
     )
 
@@ -1017,52 +1009,44 @@ export class ChangesList extends React.Component<
       files.length === 0 || isCommitting || rebaseConflictState !== null
 
     return (
-      <>
-        <div className="changes-list-container file-list">
-          <div
-            className="header"
-            onContextMenu={this.onContextMenu}
-            ref={this.headerRef}
-          >
-            <Tooltip target={this.headerRef} direction={TooltipDirection.NORTH}>
-              {selectedChangesDescription}
-            </Tooltip>
-            <div className="sr-only" id="changesDescription">
-              {selectedChangesDescription}
-            </div>
-            <Checkbox
-              label={filesDescription}
-              value={includeAllValue}
-              onChange={this.onIncludeAllChanged}
-              disabled={disableAllCheckbox}
-              ariaDescribedBy="changesDescription"
-            />
-          </div>
-          <List
-            ref={this.listRef}
-            id="changes-list"
-            rowCount={files.length}
-            rowHeight={RowHeight}
-            rowRenderer={this.renderRow}
-            selectedRows={this.state.selectedRows}
-            selectionMode="multi"
-            onSelectionChanged={this.props.onFileSelectionChanged}
-            invalidationProps={{
-              workingDirectory: workingDirectory,
-              isCommitting: isCommitting,
-            }}
-            onRowClick={this.props.onRowClick}
-            onScroll={this.onScroll}
-            setScrollTop={this.props.changesListScrollTop}
-            onRowKeyDown={this.onRowKeyDown}
-            onRowContextMenu={this.onItemContextMenu}
-            ariaLabel={filesDescription}
+      <div className="changes-list-container file-list">
+        <div
+          className="header"
+          onContextMenu={this.onContextMenu}
+          ref={this.headerRef}
+        >
+          <Tooltip target={this.headerRef} direction={TooltipDirection.NORTH}>
+            {selectedChangesDescription}
+          </Tooltip>
+          <Checkbox
+            label={filesDescription}
+            value={includeAllValue}
+            onChange={this.onIncludeAllChanged}
+            disabled={disableAllCheckbox}
           />
         </div>
-
+        <List
+          id="changes-list"
+          rowCount={files.length}
+          rowHeight={RowHeight}
+          rowRenderer={this.renderRow}
+          getRowAriaLabel={this.getFileAriaLabel}
+          selectedRows={this.state.selectedRows}
+          selectionMode="multi"
+          onSelectionChanged={this.props.onFileSelectionChanged}
+          invalidationProps={{
+            workingDirectory: workingDirectory,
+            isCommitting: isCommitting,
+          }}
+          onRowClick={this.props.onRowClick}
+          onScroll={this.onScroll}
+          setScrollTop={this.props.changesListScrollTop}
+          onRowKeyDown={this.onRowKeyDown}
+          onRowContextMenu={this.onItemContextMenu}
+        />
         {this.renderStashedChanges()}
         {this.renderCommitMessageForm()}
-      </>
+      </div>
     )
   }
 }
