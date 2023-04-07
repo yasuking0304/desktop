@@ -106,7 +106,7 @@
     "ts-loader": "^9",
     "ts-node": "^7.0.0",
     "typescript": "^4.6.4",
-    "webpack": "^5.68.0",
+    "webpack": "^5.76.0",
     "webpack-bundle-analyzer": "^4.5.0",
     "webpack-dev-middleware": "^5.3.1",
     "webpack-hot-middleware": "^2.25.1",
@@ -174,7 +174,7 @@
   },
   "optionalDependencies": {
     "electron-installer-debian": "3.1.0",
-    "electron-installer-redhat": "3.3.0",
+    "electron-installer-redhat": "3.4.0",
     "electron-winstaller": "^5.0.0"
   }
 }

@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import { CommittedFileChange } from '../../models/status'
-import { mapStatus, mapStatusCaption } from '../../lib/status'
+import { mapStatus } from '../../lib/status'
 import { PathLabel } from '../lib/path-label'
 import { Octicon, iconForStatus } from '../octicons'
 
@@ -46,7 +46,7 @@ export class CommittedFileItem extends React.Component<ICommittedFileItemProps> 
         <Octicon
           symbol={iconForStatus(status)}
           className={'status status-' + fileStatus.toLowerCase()}
-          title={mapStatusCaption(status)}
+          title={fileStatus}
         />
       </div>
     )

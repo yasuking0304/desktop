@@ -674,8 +674,8 @@ export class NoChanges extends React.Component<
         aheadBehind.ahead === 1
           ? t('no-changes.one-local-commit', '1 local commit')
           : t('no-changes.multiple-local-commits', `{{0}} local commits`, {
-            0: aheadBehind.ahead,
-          })
+              0: aheadBehind.ahead,
+            })
       )
     }
 
@@ -684,7 +684,9 @@ export class NoChanges extends React.Component<
       itemsToPushDescriptions.push(
         tagsToPush.length === 1
           ? t('no-changes.one-tag', '1 tag')
-          : t('no-changes.multiple-tags', `{{0}} tags`, { 0: tagsToPush.length })
+          : t('no-changes.multiple-tags', `{{0}} tags`, {
+              0: tagsToPush.length,
+            })
       )
     }
 
@@ -796,43 +798,43 @@ export class NoChanges extends React.Component<
     }
 
     const createPullRequestAction: IDropdownSuggestedActionOption<PullRequestSuggestedNextAction> =
-    {
-      title,
-      label: buttonText,
-      description,
-      value: PullRequestSuggestedNextAction.CreatePullRequest,
-      menuItemId: 'create-pull-request',
-      discoverabilityContent:
-        this.renderDiscoverabilityElements(createMenuItem),
-      disabled: !createMenuItem.enabled,
-      onClick: this.onCreatePullRequestClicked,
-    }
+      {
+        title,
+        label: buttonText,
+        description,
+        value: PullRequestSuggestedNextAction.CreatePullRequest,
+        menuItemId: 'create-pull-request',
+        discoverabilityContent:
+          this.renderDiscoverabilityElements(createMenuItem),
+        disabled: !createMenuItem.enabled,
+        onClick: this.onCreatePullRequestClicked,
+      }
 
     const previewPullRequestAction: IDropdownSuggestedActionOption<PullRequestSuggestedNextAction> =
-    {
-      title: t(
-        'no-changes.preview-pull-request-title',
-        `Preview the Pull Request from your current branch`
-      ),
-      label: t('no-changes.preview-pull-request', 'Preview Pull Request'),
-      description: (
-        <>
-          {t('no-changes.preview-pull-request-1', 'The current branch (')}
-          <Ref>{tip.branch.name}</Ref>
-          {t(
-            'no-changes.preview-pull-request-2',
-            `) is already
+      {
+        title: t(
+          'no-changes.preview-pull-request-title',
+          `Preview the Pull Request from your current branch`
+        ),
+        label: t('no-changes.preview-pull-request', 'Preview Pull Request'),
+        description: (
+          <>
+            {t('no-changes.preview-pull-request-1', 'The current branch (')}
+            <Ref>{tip.branch.name}</Ref>
+            {t(
+              'no-changes.preview-pull-request-2',
+              `) is already
             published to GitHub. Preview the changes this pull request will have
             before proposing your changes.`
-          )}
-        </>
-      ),
-      value: PullRequestSuggestedNextAction.PreviewPullRequest,
-      menuItemId: 'preview-pull-request',
-      discoverabilityContent:
-        this.renderDiscoverabilityElements(previewPullMenuItem),
-      disabled: !previewPullMenuItem.enabled,
-    }
+            )}
+          </>
+        ),
+        value: PullRequestSuggestedNextAction.PreviewPullRequest,
+        menuItemId: 'preview-pull-request',
+        discoverabilityContent:
+          this.renderDiscoverabilityElements(previewPullMenuItem),
+        disabled: !previewPullMenuItem.enabled,
+      }
 
     return (
       <DropdownSuggestedAction

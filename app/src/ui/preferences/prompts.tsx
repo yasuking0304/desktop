@@ -1,7 +1,9 @@
 import * as React from 'react'
+import { UncommittedChangesStrategy } from '../../models/uncommitted-changes-strategy'
 import { DialogContent } from '../dialog'
 import { Checkbox, CheckboxValue } from '../lib/checkbox'
 import { t } from 'i18next'
+import { RadioButton } from '../lib/radio-button'
 
 interface IPromptsPreferencesProps {
   readonly confirmRepositoryRemoval: boolean
@@ -10,12 +12,16 @@ interface IPromptsPreferencesProps {
   readonly confirmDiscardStash: boolean
   readonly confirmForcePush: boolean
   readonly confirmUndoCommit: boolean
+  readonly uncommittedChangesStrategy: UncommittedChangesStrategy
   readonly onConfirmDiscardChangesChanged: (checked: boolean) => void
   readonly onConfirmDiscardChangesPermanentlyChanged: (checked: boolean) => void
   readonly onConfirmDiscardStashChanged: (checked: boolean) => void
   readonly onConfirmRepositoryRemovalChanged: (checked: boolean) => void
   readonly onConfirmForcePushChanged: (checked: boolean) => void
   readonly onConfirmUndoCommitChanged: (checked: boolean) => void
+  readonly onUncommittedChangesStrategyChanged: (
+    value: UncommittedChangesStrategy
+  ) => void
 }
 
 interface IPromptsPreferencesState {
@@ -25,6 +31,7 @@ interface IPromptsPreferencesState {
   readonly confirmDiscardStash: boolean
   readonly confirmForcePush: boolean
   readonly confirmUndoCommit: boolean
+  readonly uncommittedChangesStrategy: UncommittedChangesStrategy
 }
 
 export class Prompts extends React.Component<
@@ -42,6 +49,7 @@ export class Prompts extends React.Component<
       confirmDiscardStash: this.props.confirmDiscardStash,
       confirmForcePush: this.props.confirmForcePush,
       confirmUndoCommit: this.props.confirmUndoCommit,
+      uncommittedChangesStrategy: this.props.uncommittedChangesStrategy,
     }
   }
 
@@ -99,68 +107,125 @@ export class Prompts extends React.Component<
     this.props.onConfirmRepositoryRemovalChanged(value)
   }
 
+  private onUncommittedChangesStrategyChanged = (
+    value: UncommittedChangesStrategy
+  ) => {
+    this.setState({ uncommittedChangesStrategy: value })
+    this.props.onUncommittedChangesStrategyChanged(value)
+  }
+
   public render() {
     return (
       <DialogContent>
-        <h2>
-          {t(
-            'prompts.show-a-confirmation',
-            'Show a confirmation dialog before...'
-          )}
-        </h2>
-        <Checkbox
-          label={t('prompts.removing-repositories', 'Removing repositories')}
-          value={
-            this.state.confirmRepositoryRemoval
-              ? CheckboxValue.On
-              : CheckboxValue.Off
-          }
-          onChange={this.onConfirmRepositoryRemovalChanged}
-        />
-        <Checkbox
-          label={t('prompts.discarding-changes', 'Discarding changes')}
-          value={
-            this.state.confirmDiscardChanges
-              ? CheckboxValue.On
-              : CheckboxValue.Off
-          }
-          onChange={this.onConfirmDiscardChangesChanged}
-        />
-        <Checkbox
-          label={t(
-            'prompts.discarding-changes-permanently',
-            'Discarding changes permanently'
-          )}
-          value={
-            this.state.confirmDiscardChangesPermanently
-              ? CheckboxValue.On
-              : CheckboxValue.Off
-          }
-          onChange={this.onConfirmDiscardChangesPermanentlyChanged}
-        />
-        <Checkbox
-          label={t('prompts.discarding-stash', 'Discarding stash')}
-          value={
-            this.state.confirmDiscardStash
-              ? CheckboxValue.On
-              : CheckboxValue.Off
-          }
-          onChange={this.onConfirmDiscardStashChanged}
-        />
-        <Checkbox
-          label={t('prompts.force-pushing', 'Force pushing')}
-          value={
-            this.state.confirmForcePush ? CheckboxValue.On : CheckboxValue.Off
-          }
-          onChange={this.onConfirmForcePushChanged}
-        />
-        <Checkbox
-          label={t('prompts.undo-commit', 'Undo commit')}
-          value={
-            this.state.confirmUndoCommit ? CheckboxValue.On : CheckboxValue.Off
-          }
-          onChange={this.onConfirmUndoCommitChanged}
-        />
+        <div className="advanced-section">
+          <h2>
+            {t(
+              'prompts.show-a-confirmation',
+              'Show a confirmation dialog before...'
+            )}
+          </h2>
+          <Checkbox
+            label={t('prompts.removing-repositories', 'Removing repositories')}
+            value={
+              this.state.confirmRepositoryRemoval
+                ? CheckboxValue.On
+                : CheckboxValue.Off
+            }
+            onChange={this.onConfirmRepositoryRemovalChanged}
+          />
+          <Checkbox
+            label={t('prompts.discarding-changes', 'Discarding changes')}
+            value={
+              this.state.confirmDiscardChanges
+                ? CheckboxValue.On
+                : CheckboxValue.Off
+            }
+            onChange={this.onConfirmDiscardChangesChanged}
+          />
+          <Checkbox
+            label={t(
+              'prompts.discarding-changes-permanently',
+              'Discarding changes permanently'
+            )}
+            value={
+              this.state.confirmDiscardChangesPermanently
+                ? CheckboxValue.On
+                : CheckboxValue.Off
+            }
+            onChange={this.onConfirmDiscardChangesPermanentlyChanged}
+          />
+          <Checkbox
+            label={t('prompts.discarding-stash', 'Discarding stash')}
+            value={
+              this.state.confirmDiscardStash
+                ? CheckboxValue.On
+                : CheckboxValue.Off
+            }
+            onChange={this.onConfirmDiscardStashChanged}
+          />
+          <Checkbox
+            label={t('prompts.force-pushing', 'Force pushing')}
+            value={
+              this.state.confirmForcePush ? CheckboxValue.On : CheckboxValue.Off
+            }
+            onChange={this.onConfirmForcePushChanged}
+          />
+          <Checkbox
+            label={t('prompts.undo-commit', 'Undo commit')}
+            value={
+              this.state.confirmUndoCommit
+                ? CheckboxValue.On
+                : CheckboxValue.Off
+            }
+            onChange={this.onConfirmUndoCommitChanged}
+          />
+        </div>
+        <div className="advanced-section">
+          <h2>
+            {t(
+              'prompts.if-i-have-changes-and-i-switch-branches',
+              'If I have changes and I switch branches...'
+            )}
+          </h2>
+          <RadioButton
+            value={UncommittedChangesStrategy.AskForConfirmation}
+            checked={
+              this.state.uncommittedChangesStrategy ===
+              UncommittedChangesStrategy.AskForConfirmation
+            }
+            label={t(
+              'prompts.ask-me-where-i-want-the-changes-to-go',
+              'Ask me where I want the changes to go'
+            )}
+            onSelected={this.onUncommittedChangesStrategyChanged}
+          />
+
+          <RadioButton
+            value={UncommittedChangesStrategy.MoveToNewBranch}
+            checked={
+              this.state.uncommittedChangesStrategy ===
+              UncommittedChangesStrategy.MoveToNewBranch
+            }
+            label={t(
+              'prompts.always-bring-my-changes-to-my-new-branch',
+              'Always bring my changes to my new branch'
+            )}
+            onSelected={this.onUncommittedChangesStrategyChanged}
+          />
+
+          <RadioButton
+            value={UncommittedChangesStrategy.StashOnCurrentBranch}
+            checked={
+              this.state.uncommittedChangesStrategy ===
+              UncommittedChangesStrategy.StashOnCurrentBranch
+            }
+            label={t(
+              'prompts.always-stash-and-leave-my-changes',
+              'Always stash and leave my changes on the current branch'
+            )}
+            onSelected={this.onUncommittedChangesStrategyChanged}
+          />
+        </div>
       </DialogContent>
     )
   }

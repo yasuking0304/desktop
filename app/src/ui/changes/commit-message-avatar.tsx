@@ -144,8 +144,9 @@ export class CommitMessageAvatar extends React.Component<
       <Popover
         caretPosition={PopoverCaretPosition.LeftBottom}
         onClickOutside={this.closePopover}
+        ariaLabelledby="misattributed-commit-popover-header"
       >
-        <h3>
+        <h3 id="misattributed-commit-popover-header">
           {t(
             'commit-message-avatar.this-commit-will-be-misattributed',
             'This commit will be misattributed'
@@ -164,6 +165,7 @@ export class CommitMessageAvatar extends React.Component<
               { 0: accountTypeSuffix }
             )}
             <LinkButton
+              ariaLabel="Learn more about commit attribution"
               uri={t(
                 'url.commit-message-avatar',
                 'https://docs.github.com/en/github/committing-changes-to-your-project/why-are-my-commits-linked-to-the-wrong-user'

@@ -292,6 +292,22 @@ export function buildDefaultMenu({
         accelerator: 'CmdOrCtrl+-',
         click: zoom(ZoomDirection.Out),
       },
+      {
+        label: __DARWIN__
+          ? 'Expand Active Resizable'
+          : 'Expand active resizable',
+        id: 'increase-active-resizable-width',
+        accelerator: 'CmdOrCtrl+9',
+        click: emit('increase-active-resizable-width'),
+      },
+      {
+        label: __DARWIN__
+          ? 'Contract Active Resizable'
+          : 'Contract active resizable',
+        id: 'decrease-active-resizable-width',
+        accelerator: 'CmdOrCtrl+8',
+        click: emit('decrease-active-resizable-width'),
+      },
       separator,
       {
         label: t('menu.reload-darwin', '&Reload'),
@@ -351,6 +367,12 @@ export function buildDefaultMenu({
           : t('menu.pull', 'Pu&ll'),
         accelerator: 'CmdOrCtrl+Shift+P',
         click: emit('pull'),
+      },
+      {
+        id: 'fetch',
+        label: __DARWIN__ ? 'Fetch' : '&Fetch',
+        accelerator: 'CmdOrCtrl+Shift+T',
+        click: emit('fetch'),
       },
       {
         label: removeRepoLabel,
@@ -659,6 +681,10 @@ export function buildDefaultMenu({
               'Pull Request Check Run Failed'
             ),
             click: emit('pull-request-check-run-failed'),
+          },
+          {
+            label: 'Show App Error',
+            click: emit('show-app-error'),
           },
         ],
       },

@@ -41,32 +41,13 @@
     "warning-helper-text3-3": " here instead?"
   },
   "advanced": {
-    "allows-the-display-of-notifications": "Allows the display of notifications when high-signal events take\n            place in the current repository.",
     "allows-the-display-of-up-to-date-status-indicators": "Allows the display of up-to-date status indicators in the\n              repository list. Disabling this may improve performance\n              with many repositories.",
-    "always-bring-my-changes-to-my-new-branch": "Always bring my changes to my new branch",
-    "always-stash-and-leave-my-changes": "Always stash and leave my changes on the current branch",
-    "ask-me-where-i-want-the-changes-to-go": "Ask me where I want the changes to go",
     "background-updates": "Background updates",
-    "enable-notifications": "Enable notifications",
-    "enabled": "enabled",
-    "grant-permission": "grant permission",
-    "has-no-permission-to-display-notifications-1": " GitHub Desktop has no permission to display\n              notifications. Please, enable them in the ",
-    "has-no-permission-to-display-notifications-2": ".",
     "help-github-desktop-improve-by-submitting-1": "Help GitHub Desktop improve by submitting ",
     "help-github-desktop-improve-by-submitting-2": " ",
-    "if-i-have-changes-and-i-switch-branches": "If I have changes and I switch branches...",
-    "make-sure-notifications-1": " Make sure notifications are {{0}} for GitHub Desktop in the ",
-    "make-sure-notifications-2": ".",
-    "notifications": "Notifications",
-    "notifications-settings": "Notifications Settings",
     "periodically-fetch-and-refresh-status": "Periodically fetch and refresh status of all repositories",
-    "properly-configured": "properly configured",
-    "ssh": "SSH",
     "usage": "Usage",
-    "usage-stats": "usage stats",
-    "use-systemopenssh": "Use system OpenSSH (recommended)",
-    "you-need-to-grant-permission-to-display-1": " You need to ",
-    "you-need-to-grant-permission-to-display-2": " to display these notifications from GitHub Desktop."
+    "usage-stats": "usage stats"
   },
   "app": {
     "adding-this-feature": "Adding this feature",
@@ -104,11 +85,6 @@
     "message-of-light": "The default theme of GitHub Desktop",
     "message-of-system": "Automatically switch theme to match system theme",
     "system": "System"
-  },
-  "author-input": {
-    "redo": "Redo",
-    "select-all": "Select all",
-    "select-all-darwin": "Select All"
   },
   "branch-dropdown": {
     "current-branch": "Current branch",
@@ -303,15 +279,8 @@
   "commit-message": {
     "add-co-authors": "Add co-authors",
     "add-co-authors-darwin": "Add Co-Authors",
-    "amend-label-amend": "Amend",
-    "amend-label-amending": "Amending",
-    "amend-title": "{{0}} last commit",
-    "commit-label-commit": "Commit",
-    "commit-label-committing": "Committing",
     "commit-summaries-length-over": "Great commit summaries contain fewer than 50 characters",
     "commit-title": "{{0}} to {{1}}",
-    "commit-title-1": "{{0}} to ",
-    "commit-title-2": " ",
     "commiting-as-1": "Committing as ",
     "commiting-as-2": " {{0}}",
     "description-field": "Description",
@@ -331,9 +300,6 @@
     "remove-co-authors": "Remove co-authors",
     "remove-co-authors-darwin": "Remove Co-Authors",
     "stop-amending": "Stop amending",
-    "tooltip-committing-changes": "Committing changes…",
-    "tooltip-is-anyfiles": "Select one or more files to commit",
-    "tooltip-is-summary-blank": "A commit summary is required to commit",
     "will-modify-your-most-recent-commit-1": "Your changes will modify your",
     "will-modify-your-most-recent-commit-2": "most recent commit",
     "will-modify-your-most-recent-commit-3": ". ",
@@ -1001,7 +967,7 @@
     "open-the-repository-page-on-github-in-your-browser": "Open the repository page on GitHub in your browser",
     "preview-pull-request": "Preview Pull Request",
     "preview-pull-request-1": "The current branch (",
-    "preview-pull-request-2": " is already\n            published to GitHub. Preview the changes this pull request will have\n            before proposing your changes.",
+    "preview-pull-request-2": ") is already\n            published to GitHub. Preview the changes this pull request will have\n            before proposing your changes.",
     "preview-pull-request-title": "Preview the Pull Request from your current branch",
     "publish-branch": "Publish branch",
     "publish-repository": "Publish repository",
@@ -1025,7 +991,7 @@
     "view-your-stashed-changes": "View your stashed changes",
     "when-a-stash-exists-access-it-at-the-bottom": "When a stash exists, access it at the bottom of the Changes tab to the\n        left.",
     "you-have-number-change-in-progress": "You have {{0}} {{1}} in\n          progress that you have not yet committed.",
-    "you-have-operation": "You have {{0}} waiting to be pushed to {{0}}."
+    "you-have-operation": "You have {{0}} waiting to be pushed to {{1}}."
   },
   "no-pull-requests": {
     "creat-a-new-branch": "create a new branch",
@@ -1057,6 +1023,11 @@
     "return-to-in-progress-tutorial": "Return to in progress tutorial",
     "return-to-in-progress-tutorial-darwin": "Return to In Progress Tutorial",
     "tips": "You can drag & drop an existing\n              repository folder here to add it to Desktop"
+  },
+  "notifications": {
+    "allows-the-display-of-notifications": "Allows the display of notifications when high-signal events take\n                place in the current repository.",
+    "enable-notifications": "Enable notifications",
+    "notifications": "Notifications"
   },
   "open-pull-request-dialog": {
     "button_title": "{{0}} pull request on GitHub{{1}}.",
@@ -1099,13 +1070,18 @@
     "appearance": "Appearance",
     "git": "Git",
     "integrations": "Integrations",
+    "notifications": "Notifications",
     "prompts": "Prompts"
   },
   "prompts": {
+    "always-bring-my-changes-to-my-new-branch": "Always bring my changes to my new branch",
+    "always-stash-and-leave-my-changes": "Always stash and leave my changes on the current branch",
+    "ask-me-where-i-want-the-changes-to-go": "Ask me where I want the changes to go",
     "discarding-changes": "Discarding changes",
     "discarding-changes-permanently": "Discarding changes permanently",
     "discarding-stash": "Discarding stash",
     "force-pushing": "Force pushing",
+    "if-i-have-changes-and-i-switch-branches": "If I have changes and I switch branches...",
     "removing-repositories": "Removing repositories",
     "show-a-confirmation": "Show a confirmation dialog before...",
     "undo-commit": "Undo commit"

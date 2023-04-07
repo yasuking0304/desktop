@@ -41,32 +41,13 @@
     "warning-helper-text3-3": "しますか?"
   },
   "advanced": {
-    "allows-the-display-of-notifications": "現在のリポジトリで緊急イベントが発生したときに通知を表示できるようにします。",
     "allows-the-display-of-up-to-date-status-indicators": "リポジトリ リストに最新のステータス インジケータを表示できるようにします。これを無効にすると、多くのリポジトリでのパフォーマンスが向上する可能性があります。",
-    "always-bring-my-changes-to-my-new-branch": "常に新しいブランチに修正中の作業をを引き継ぐ",
-    "always-stash-and-leave-my-changes": "常に修正中の作業をブランチに保存して新しいブランチには残さない(あとで戻せます)",
-    "ask-me-where-i-want-the-changes-to-go": "どう変更したいのか確認する",
     "background-updates": "バックグラウンド更新",
-    "enable-notifications": "通知を有効にする",
-    "enabled": "有効",
-    "grant-permission": "アクセス許可の付与",
-    "has-no-permission-to-display-notifications-1": " GitHub Desktop には、通知を表示する権限がありません。",
-    "has-no-permission-to-display-notifications-2": "でそれらを有効にしてください。",
     "help-github-desktop-improve-by-submitting-1": "GitHub Desktop が ",
     "help-github-desktop-improve-by-submitting-2": " を送信することで改善に貢献する",
-    "if-i-have-changes-and-i-switch-branches": "変更中のブランチを切り替える場合…",
-    "make-sure-notifications-1": "  ",
-    "make-sure-notifications-2": " で通知の設定が{{0}}であることを確認してください。",
-    "notifications": "通知設定",
-    "notifications-settings": "通知の設定",
     "periodically-fetch-and-refresh-status": "すべてのリポジトリのステータスを定期的にフェッチおよび更新する",
-    "properly-configured": "適切な構成",
-    "ssh": "SSH",
     "usage": "使われ方",
-    "usage-stats": "使用状況",
-    "use-systemopenssh": "システムの OpenSSH を使う (推奨)",
-    "you-need-to-grant-permission-to-display-1": " GitHub Desktop からこれらの通知を表示するには、 ",
-    "you-need-to-grant-permission-to-display-2": " にする必要があります。"
+    "usage-stats": "使用状況"
   },
   "app": {
     "adding-this-feature": "この機能の追加",
@@ -104,11 +85,6 @@
     "message-of-light": "GitHub Desktop のデフォルトのテーマです",
     "message-of-system": "システムテーマと一致するようにテーマを自動的に切り替えます",
     "system": "システムの規定"
-  },
-  "author-input": {
-    "redo": "やり直し",
-    "select-all": "全てを選択",
-    "select-all-darwin": "全てを選択"
   },
   "branch-dropdown": {
     "current-branch": "現在のブランチ",
@@ -303,15 +279,8 @@
   "commit-message": {
     "add-co-authors": "共同作業者の追加",
     "add-co-authors-darwin": "共同作業者の追加",
-    "amend-label-amend": "コミットを修正する",
-    "amend-label-amending": "コミットを修正中",
-    "amend-title": "{{0}} last commit",
-    "commit-label-commit": "コミット",
-    "commit-label-committing": "コミット中",
     "commit-summaries-length-over": "概要入力は50文字未満でお願いします",
     "commit-title": "{{1}} に{{0}}",
-    "commit-title-1": " ",
-    "commit-title-2": " に{{0}}",
     "commiting-as-1": " ",
     "commiting-as-2": " {{0}} でコミットします",
     "description-field": "説明フィールド",
@@ -331,9 +300,6 @@
     "remove-co-authors": "共同作業者の削除",
     "remove-co-authors-darwin": "共同作業者の削除",
     "stop-amending": "修正を中止",
-    "tooltip-committing-changes": "変更をコミットしています…",
-    "tooltip-is-anyfiles": "コミットするファイルを 1つ以上選択してください",
-    "tooltip-is-summary-blank": "コミットするには概要入力が必要です",
     "will-modify-your-most-recent-commit-1": "あなたの変更は、",
     "will-modify-your-most-recent-commit-2": "最新のコミット",
     "will-modify-your-most-recent-commit-3": "を更新してしまいます。 これらの変更を新しいコミットとして行うために ",
@@ -1058,6 +1024,11 @@
     "return-to-in-progress-tutorial-darwin": "修正中のチュートリアルに戻る",
     "tips": "既存のリポジトリフォルダをここにドラッグ&ドロップして Desktop に追加できます"
   },
+  "notifications": {
+    "allows-the-display-of-notifications": "現在のリポジトリで緊急のイベントが発生したときに通知を表示できるようにします。",
+    "enable-notifications": "通知を有効にする",
+    "notifications": "通知"
+  },
   "open-pull-request-dialog": {
     "button_title": "GitHub{{1}} でプルリクエストを{{0}}します",
     "could-not-find-a-default-branch": "比較するデフォルト ブランチが見つかりませんでした。",
@@ -1099,13 +1070,18 @@
     "appearance": "配色テーマ",
     "git": "Git",
     "integrations": "アプリ連携",
+    "notifications": "通知",
     "prompts": "確認"
   },
   "prompts": {
+    "always-bring-my-changes-to-my-new-branch": "新しいブランチに修正中の作業をを引き継ぐ",
+    "always-stash-and-leave-my-changes": "修正中の作業を退避して新しいブランチに反映しない(あとで戻せます)",
+    "ask-me-where-i-want-the-changes-to-go": "どのように修正するのか確認する",
     "discarding-changes": "変更の破棄",
     "discarding-changes-permanently": "変更を完全に破棄する",
     "discarding-stash": "一時退避場所の破棄",
     "force-pushing": "強制プッシュ",
+    "if-i-have-changes-and-i-switch-branches": "修正中のブランチを切り替える場合…",
     "removing-repositories": "リポジトリを削除する",
     "show-a-confirmation": "事前に確認ダイアログを表示…",
     "undo-commit": "コミットの取り消し"
