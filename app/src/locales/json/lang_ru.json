@@ -1155,6 +1155,10 @@
     "rename-branch-darwin": "Rename Branch",
     "rename-branch-name": "Rename {{0}}"
   },
+  "render-banner": {
+    "reorder-of-commit-unfone": "Reorder of {{0}} {{1}} undone.",
+    "squash-of-commit-unfone": "Successfully reordered {{0}} {{1}}."
+  },
   "repositories-list": {
     "add": "Add",
     "add-existing-repository": "Add existing repository…",
@@ -1309,6 +1313,9 @@
     "modified": "Modified",
     "new": "New",
     "renamed": "Renamed"
+  },
+  "successful-squash": {
+    "successfully-squashed": "Successfully squashed {{1}} {{0}}."
   },
   "terms-and-conditions": {
     "additional-services": "Additional Services",

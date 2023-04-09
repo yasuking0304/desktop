@@ -1155,6 +1155,10 @@
     "rename-branch-darwin": "ブランチ名の変更",
     "rename-branch-name": "{{0}} のブランチ名を変更"
   },
+  "render-banner": {
+    "reorder-of-commit-unfone": "{{0}}{{1}}の並び替えができませんでした。",
+    "squash-of-commit-unfone": "{{0}}{{1}}の並び替えに成功しました。"
+  },
   "repositories-list": {
     "add": "追加",
     "add-existing-repository": "既存のリポジトリを追加…",
@@ -1309,6 +1313,9 @@
     "modified": "変更",
     "new": "追加",
     "renamed": "リネーム"
+  },
+  "successful-squash": {
+    "successfully-squashed": "{{1}}{{0}}のまとめに成功しました。"
   },
   "terms-and-conditions": {
     "additional-services": "追加サービス",
