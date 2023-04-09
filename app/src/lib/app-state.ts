@@ -15,7 +15,7 @@ import {
   PullRequest,
   PullRequestSuggestedNextAction,
 } from '../models/pull-request'
-import { IAuthor } from '../models/author'
+import { Author } from '../models/author'
 import { MergeTreeResult } from '../models/merge'
 import { ICommitMessage } from '../models/commit-message'
 import {
@@ -25,7 +25,6 @@ import {
   ICloneProgress,
   IMultiCommitOperationProgress,
 } from '../models/progress'
-import { Popup } from '../models/popup'
 
 import { SignInState } from './stores/sign-in-store'
 
@@ -50,6 +49,7 @@ import {
   MultiCommitOperationStep,
 } from '../models/multi-commit-operation'
 import { IChangesetData } from './git'
+import { Popup } from '../models/popup'
 
 export enum SelectionType {
   Repository,
@@ -59,15 +59,15 @@ export enum SelectionType {
 
 export type PossibleSelections =
   | {
-    type: SelectionType.Repository
-    repository: Repository
-    state: IRepositoryState
-  }
+      type: SelectionType.Repository
+      repository: Repository
+      state: IRepositoryState
+    }
   | {
-    type: SelectionType.CloningRepository
-    repository: CloningRepository
-    progress: ICloneProgress
-  }
+      type: SelectionType.CloningRepository
+      repository: CloningRepository
+      progress: ICloneProgress
+    }
   | { type: SelectionType.MissingRepository; repository: Repository }
 
 /** All of the shared app state. */
@@ -109,6 +109,16 @@ export interface IAppState {
    * where 1 equals 100% (ie actual size) and 2 represents 200%.
    */
   readonly windowZoomFactor: number
+
+  /**
+   * Whether or not the currently active element is itself, or is contained
+   * within, a resizable component. This is used to determine whether or not
+   * to enable the Expand/Contract pane menu items. Note that this doesn't
+   * necessarily mean that keyboard resides within the resizable component since
+   * using the Windows in-app menu bar will steal focus from the currently
+   * active element (but return it once closed).
+   */
+  readonly resizablePaneActive: boolean
 
   /**
    * A value indicating whether or not the current application
@@ -318,8 +328,8 @@ export interface IAppState {
 
   /** The users last chosen pull request suggested next action. */
   readonly pullRequestSuggestedNextAction:
-  | PullRequestSuggestedNextAction
-  | undefined
+    | PullRequestSuggestedNextAction
+    | undefined
 }
 
 export enum FoldoutType {
@@ -685,7 +695,7 @@ export interface IChangesState {
    * Co-Authored-By commit message trailers depending on whether
    * the user has chosen to do so.
    */
-  readonly coAuthors: ReadonlyArray<IAuthor>
+  readonly coAuthors: ReadonlyArray<Author>
 
   /**
    * Stores information about conflicts in the working directory

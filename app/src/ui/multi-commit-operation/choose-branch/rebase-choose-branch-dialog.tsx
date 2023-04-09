@@ -176,8 +176,8 @@ export abstract class RebaseChooseBranchDialog extends BaseChooseBranchDialog {
 
     const pluralized =
       commitsToRebase === 1
-        ? t('rebase-choose-branch-dialog.commit', 'commit')
-        : t('rebase-choose-branch-dialog.commits', 'commits')
+        ? t('common.one-commit', 'commit')
+        : t('common.multiple-commits', 'commits')
     return (
       <>
         {t(

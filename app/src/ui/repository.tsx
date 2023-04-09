@@ -31,9 +31,9 @@ import { openFile } from './lib/open-file'
 import { AheadBehindStore } from '../lib/stores/ahead-behind-store'
 import { dragAndDropManager } from '../lib/drag-and-drop-manager'
 import { DragType } from '../models/drag-drop'
-import { MultiCommitOperationKind } from '../models/multi-commit-operation'
-import { clamp } from '../lib/clamp'
 import { t } from 'i18next'
+import { PullRequestSuggestedNextAction } from '../models/pull-request'
+import { clamp } from '../lib/clamp'
 
 interface IRepositoryViewProps {
   readonly repository: Repository
@@ -94,6 +94,9 @@ interface IRepositoryViewProps {
     repository: Repository,
     commits: ReadonlyArray<CommitOneLine>
   ) => void
+
+  /** The user's preference of pull request suggested next action to use **/
+  readonly pullRequestSuggestedNextAction?: PullRequestSuggestedNextAction
 }
 
 interface IRepositoryViewState {
@@ -117,6 +120,12 @@ export class RepositoryView extends React.Component<
   // the Compare list is rendered.
   private forceCompareListScrollTop: boolean = false
 
+  private readonly changesSidebarRef = React.createRef<ChangesSidebar>()
+  private readonly compareSidebarRef = React.createRef<CompareSidebar>()
+
+  private focusHistoryNeeded: boolean = false
+  private focusChangesNeeded: boolean = false
+
   public constructor(props: IRepositoryViewProps) {
     super(props)
 
@@ -124,6 +133,14 @@ export class RepositoryView extends React.Component<
       changesListScrollTop: 0,
       compareListScrollTop: 0,
     }
+  }
+
+  public setFocusHistoryNeeded(): void {
+    this.focusHistoryNeeded = true
+  }
+
+  public setFocusChangesNeeded(): void {
+    this.focusChangesNeeded = true
   }
 
   public scrollCompareListToTop(): void {
@@ -203,6 +220,7 @@ export class RepositoryView extends React.Component<
 
     return (
       <ChangesSidebar
+        ref={this.changesSidebarRef}
         repository={this.props.repository}
         dispatcher={this.props.dispatcher}
         changes={this.props.state.changesState}
@@ -251,10 +269,6 @@ export class RepositoryView extends React.Component<
     } = state
     const { tip } = branchesState
     const currentBranch = tip.kind === TipState.Valid ? tip.branch : null
-    const isCherryPickInProgress =
-      mcos !== null &&
-      mcos.operationDetail.kind === MultiCommitOperationKind.CherryPick
-
     const scrollTop =
       this.forceCompareListScrollTop ||
       this.previousSection === RepositorySectionTab.Changes
@@ -265,6 +279,7 @@ export class RepositoryView extends React.Component<
 
     return (
       <CompareSidebar
+        ref={this.compareSidebarRef}
         repository={repository}
         isLocalRepository={remote === null}
         compareState={compareState}
@@ -284,7 +299,7 @@ export class RepositoryView extends React.Component<
         compareListScrollTop={scrollTop}
         tagsToPush={tagsToPush}
         aheadBehindStore={aheadBehindStore}
-        isCherryPickInProgress={isCherryPickInProgress}
+        isMultiCommitOperationInProgress={mcos !== null}
       />
     )
   }
@@ -471,6 +486,9 @@ export class RepositoryView extends React.Component<
               this.props.externalEditorLabel !== undefined
             }
             dispatcher={this.props.dispatcher}
+            pullRequestSuggestedNextAction={
+              this.props.pullRequestSuggestedNextAction
+            }
           />
         )
       }
@@ -559,6 +577,18 @@ export class RepositoryView extends React.Component<
 
   public componentWillUnmount() {
     window.removeEventListener('keydown', this.onGlobalKeyDown)
+  }
+
+  public componentDidUpdate(): void {
+    if (this.focusChangesNeeded) {
+      this.focusChangesNeeded = false
+      this.changesSidebarRef.current?.focus()
+    }
+
+    if (this.focusHistoryNeeded) {
+      this.focusHistoryNeeded = false
+      this.compareSidebarRef.current?.focusHistory()
+    }
   }
 
   private onGlobalKeyDown = (event: KeyboardEvent) => {

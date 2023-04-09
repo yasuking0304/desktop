@@ -149,34 +149,6 @@ const editors: ILinuxExternalEditor[] = [
     paths: ['/usr/bin/mousepad'],
   },
   {
-    name: 'Kate',
-    paths: ['/usr/bin/kate'],
-  },
-  {
-    name: 'GEdit',
-    paths: ['/usr/bin/gedit'],
-  },
-  {
-    name: 'GNOME Text Editor',
-    paths: ['/usr/bin/gnome-text-editor'],
-  },
-  {
-    name: 'GNOME Builder',
-    paths: ['/usr/bin/gnome-builder'],
-  },
-  {
-    name: 'Notepadqq',
-    paths: ['/usr/bin/notepadqq'],
-  },
-  {
-    name: 'Geany',
-    paths: ['/usr/bin/geany'],
-  },
-  {
-    name: 'Mousepad',
-    paths: ['/usr/bin/mousepad'],
-  },
-  {
     name: 'IntelliJ PhpStorm',
     paths: ['/snap/bin/phpstorm'],
   },

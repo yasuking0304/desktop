@@ -136,6 +136,7 @@ const allMenuIds: ReadonlyArray<MenuIDs> = [
   'clone-repository',
   'about',
   'create-pull-request',
+  ...(enableStartingPullRequests() ? ['preview-pull-request' as MenuIDs] : []),
   'squash-and-merge-branch',
 ]
 
@@ -257,8 +258,8 @@ function getRepositoryMenuBuilder(state: IAppState): MenuStateBuilder {
     menuStateBuilder.setEnabled(
       'rename-branch',
       (onNonDefaultBranch || !hasPublishedBranch) &&
-      !branchIsUnborn &&
-      !onDetachedHead
+        !branchIsUnborn &&
+        !onDetachedHead
     )
     menuStateBuilder.setEnabled(
       'delete-branch',
@@ -267,8 +268,8 @@ function getRepositoryMenuBuilder(state: IAppState): MenuStateBuilder {
     menuStateBuilder.setEnabled(
       'update-branch-with-contribution-target-branch',
       onBranch &&
-      hasContributionTargetDefaultBranch &&
-      !onContributionTargetDefaultBranch
+        hasContributionTargetDefaultBranch &&
+        !onContributionTargetDefaultBranch
     )
     menuStateBuilder.setEnabled('merge-branch', onBranch)
     menuStateBuilder.setEnabled('squash-and-merge-branch', onBranch)
@@ -338,7 +339,9 @@ function getRepositoryMenuBuilder(state: IAppState): MenuStateBuilder {
 
     menuStateBuilder.disable('view-repository-on-github')
     menuStateBuilder.disable('create-pull-request')
-
+    if (enableStartingPullRequests()) {
+      menuStateBuilder.disable('preview-pull-request')
+    }
     if (
       selectedState &&
       selectedState.type === SelectionType.MissingRepository
@@ -377,6 +380,7 @@ function getMenuState(state: IAppState): Map<MenuIDs, IMenuItemState> {
 
   return getAllMenusEnabledBuilder()
     .merge(getRepositoryMenuBuilder(state))
+    .merge(getAppMenuBuilder(state))
     .merge(getInWelcomeFlowBuilder(state.showWelcomeFlow))
     .merge(getNoRepositoriesBuilder(state)).state
 }
@@ -423,6 +427,16 @@ function getNoRepositoriesBuilder(state: IAppState): MenuStateBuilder {
       menuStateBuilder.disable(id)
     }
   }
+
+  return menuStateBuilder
+}
+
+function getAppMenuBuilder(state: IAppState): MenuStateBuilder {
+  const menuStateBuilder = new MenuStateBuilder()
+  const enabled = state.resizablePaneActive
+
+  menuStateBuilder.setEnabled('increase-active-resizable-width', enabled)
+  menuStateBuilder.setEnabled('decrease-active-resizable-width', enabled)
 
   return menuStateBuilder
 }

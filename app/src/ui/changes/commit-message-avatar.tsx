@@ -72,10 +72,21 @@ export class CommitMessageAvatar extends React.Component<
   public render() {
     return (
       <div className="commit-message-avatar-component">
-        <Button className="avatar-button" onClick={this.onAvatarClick}>
-          {this.props.warningBadgeVisible && this.renderWarningBadge()}
+        {this.props.warningBadgeVisible && (
+          <Button
+            className="avatar-button"
+            ariaLabel="Commit may be misattributed. View warning."
+            onClick={this.onAvatarClick}
+          >
+            {this.renderWarningBadge()}
+            <Avatar user={this.props.user} title={this.props.title} />
+          </Button>
+        )}
+
+        {!this.props.warningBadgeVisible && (
           <Avatar user={this.props.user} title={this.props.title} />
-        </Button>
+        )}
+
         {this.state.isPopoverOpen && this.renderPopover()}
       </div>
     )
@@ -133,8 +144,9 @@ export class CommitMessageAvatar extends React.Component<
       <Popover
         caretPosition={PopoverCaretPosition.LeftBottom}
         onClickOutside={this.closePopover}
+        ariaLabelledby="misattributed-commit-popover-header"
       >
-        <h3>
+        <h3 id="misattributed-commit-popover-header">
           {t(
             'commit-message-avatar.this-commit-will-be-misattributed',
             'This commit will be misattributed'
@@ -153,6 +165,7 @@ export class CommitMessageAvatar extends React.Component<
               { 0: accountTypeSuffix }
             )}
             <LinkButton
+              ariaLabel="Learn more about commit attribution"
               uri={t(
                 'url.commit-message-avatar',
                 'https://docs.github.com/en/github/committing-changes-to-your-project/why-are-my-commits-linked-to-the-wrong-user'
@@ -164,6 +177,7 @@ export class CommitMessageAvatar extends React.Component<
         </Row>
         <Row>
           <Select
+            label="Your Account Emails"
             value={this.state.accountEmail}
             onChange={this.onSelectedGitHubEmailChange}
           >

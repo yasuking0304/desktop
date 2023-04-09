@@ -52,8 +52,8 @@ interface ICommitProps {
   readonly showUnpushedIndicator: boolean
   readonly unpushedIndicatorTitle?: string
   readonly unpushedTags?: ReadonlyArray<string>
-  readonly isCherryPickInProgress?: boolean
   readonly disableSquashing?: boolean
+  readonly isMultiCommitOperationInProgress?: boolean
 }
 
 interface ICommitListItemState {
@@ -127,7 +127,7 @@ export class CommitListItem extends React.PureComponent<
       author: { date },
     } = commit
 
-    const isDraggable = this.canCherryPick()
+    const isDraggable = this.isDraggable()
     const hasEmptySummary = commit.summary.length === 0
     const commitSummary = hasEmptySummary
       ? t('commit-list-item.empty-commit-message', 'Empty commit message')
@@ -322,13 +322,13 @@ export class CommitListItem extends React.PureComponent<
       {
         label: __DARWIN__
           ? t(
-            'commit-list-item.Revert-changes-in-commit-darwin',
-            'Revert Changes in Commit'
-          )
+              'commit-list-item.Revert-changes-in-commit-darwin',
+              'Revert Changes in Commit'
+            )
           : t(
-            'commit-list-item.Revert-changes-in-commit',
-            'Revert changes in commit'
-          ),
+              'commit-list-item.Revert-changes-in-commit',
+              'Revert changes in commit'
+            ),
         action: () => {
           if (this.props.onRevertCommit) {
             this.props.onRevertCommit(this.props.commit)
@@ -340,13 +340,13 @@ export class CommitListItem extends React.PureComponent<
       {
         label: __DARWIN__
           ? t(
-            'commit-list-item.create-branch-from-commit-darwin',
-            'Create Branch from Commit'
-          )
+              'commit-list-item.create-branch-from-commit-darwin',
+              'Create Branch from Commit'
+            )
           : t(
-            'commit-list-item.create-branch-from-commit',
-            'Create branch from commit'
-          ),
+              'commit-list-item.create-branch-from-commit',
+              'Create branch from commit'
+            ),
         action: () => {
           if (this.props.onCreateBranch) {
             this.props.onCreateBranch(this.props.commit)
@@ -378,9 +378,9 @@ export class CommitListItem extends React.PureComponent<
       {
         label: __DARWIN__
           ? t(
-            'commit-list-item.cherry-pick-commit-darwin',
-            'Cherry-pick Commit…'
-          )
+              'commit-list-item.cherry-pick-commit-darwin',
+              'Cherry-pick Commit…'
+            )
           : t('commit-list-item.cherry-pick-commit', 'Cherry-pick commit…'),
         action: this.onCherryPick,
         enabled: this.canCherryPick(),
@@ -412,40 +412,57 @@ export class CommitListItem extends React.PureComponent<
       {
         label: __DARWIN__
           ? t(
-            'commit-list-item.cherry-pick-commits-darwin',
-            `Cherry-pick {{0}} Commits…`,
-            { 0: count }
-          )
+              'commit-list-item.cherry-pick-commits-darwin',
+              `Cherry-pick {{0}} Commits…`,
+              { 0: count }
+            )
           : t(
-            'commit-list-item.cherry-pick-commits',
-            `Cherry-pick {{0}} commits…`,
-            { 0: count }
-          ),
+              'commit-list-item.cherry-pick-commits',
+              `Cherry-pick {{0}} commits…`,
+              { 0: count }
+            ),
         action: this.onCherryPick,
         enabled: this.canCherryPick(),
       },
       {
         label: __DARWIN__
           ? t(
-            'commit-list-item.squash-commits-darwin',
-            `Squash {{0}} Commits…`,
-            { 0: count }
-          )
+              'commit-list-item.squash-commits-darwin',
+              `Squash {{0}} Commits…`,
+              { 0: count }
+            )
           : t('commit-list-item.squash-commits', `Squash {{0}} commits…`, {
-            0: count,
-          }),
+              0: count,
+            }),
         action: this.onSquash,
+        enabled: this.canSquash(),
       },
     ]
   }
 
-  private canCherryPick(): boolean {
-    const { onCherryPick, isCherryPickInProgress } = this.props
+  private isDraggable(): boolean {
+    const { onCherryPick, onSquash, isMultiCommitOperationInProgress } =
+      this.props
     return (
-      onCherryPick !== undefined &&
-      this.onSquash !== undefined &&
-      isCherryPickInProgress === false
-      // TODO: isSquashInProgress === false
+      (onCherryPick !== undefined || onSquash !== undefined) &&
+      isMultiCommitOperationInProgress === false
+    )
+  }
+
+  private canCherryPick(): boolean {
+    const { onCherryPick, isMultiCommitOperationInProgress } = this.props
+    return (
+      onCherryPick !== undefined && isMultiCommitOperationInProgress === false
+    )
+  }
+
+  private canSquash(): boolean {
+    const { onSquash, disableSquashing, isMultiCommitOperationInProgress } =
+      this.props
+    return (
+      onSquash !== undefined &&
+      disableSquashing === false &&
+      isMultiCommitOperationInProgress === false
     )
   }
 

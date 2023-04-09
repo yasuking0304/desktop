@@ -2,8 +2,9 @@ import * as React from 'react'
 import { Branch } from '../../models/branch'
 import { BranchSelect } from '../branches/branch-select'
 import { DialogHeader } from '../dialog/header'
-import { createUniqueId } from '../lib/id-pool'
+import { createUniqueId, releaseUniqueId } from '../lib/id-pool'
 import { Ref } from '../lib/ref'
+import { t } from 'i18next'
 
 interface IOpenPullRequestDialogHeaderProps {
   /** The base branch of the pull request */
@@ -46,16 +47,40 @@ interface IOpenPullRequestDialogHeaderProps {
   readonly onDismissed?: () => void
 }
 
+interface IOpenPullRequestDialogHeaderState {
+  /**
+   * An id for the h1 element that contains the title of this dialog. Used to
+   * aid in accessibility by allowing the h1 to be referenced in an
+   * aria-labeledby/aria-describedby attributed. Undefined if the dialog does
+   * not have a title or the component has not yet been mounted.
+   */
+  readonly titleId: string
+}
+
 /**
  * A header component for the open pull request dialog. Made to house the
  * base branch dropdown and merge details common to all pull request views.
  */
 export class OpenPullRequestDialogHeader extends React.Component<
   IOpenPullRequestDialogHeaderProps,
-  {}
+  IOpenPullRequestDialogHeaderState
 > {
+  public constructor(props: IOpenPullRequestDialogHeaderProps) {
+    super(props)
+    this.state = { titleId: createUniqueId(`Dialog_Open_Pull_Request`) }
+  }
+
+  public componentWillUnmount() {
+    releaseUniqueId(this.state.titleId)
+  }
+
   public render() {
-    const title = __DARWIN__ ? 'Open a Pull Request' : 'Open a pull request'
+    const title = __DARWIN__
+      ? t(
+          'open-pull-request-header.open-a-pull-request-darwin',
+          'Open a Pull Request'
+        )
+      : t('open-pull-request-header.open-a-pull-request', 'Open a pull request')
     const {
       baseBranch,
       currentBranch,
@@ -66,18 +91,27 @@ export class OpenPullRequestDialogHeader extends React.Component<
       onBranchChange,
       onDismissed,
     } = this.props
-    const commits = `${commitCount} commit${commitCount > 1 ? 's' : ''}`
+    const commits =
+      commitCount > 1
+        ? t('open-pull-request-header.multiple-commits', `{{0}} commits`, {
+            0: commitCount,
+          })
+        : t('open-pull-request-header.one-or-less-commit', `{{0}} commit`, {
+            0: commitCount,
+          })
 
     return (
       <DialogHeader
         title={title}
-        titleId={createUniqueId(`Dialog_${title}_${title}`)}
+        titleId={this.state.titleId}
         dismissable={true}
         onDismissed={onDismissed}
       >
         <div className="break"></div>
         <div className="base-branch-details">
-          Merge {commits} into{' '}
+          {t('open-pull-request-header.merge-into-1', 'Merge {{0}} into', {
+            0: commits,
+          })}{' '}
           <BranchSelect
             branch={baseBranch}
             defaultBranch={defaultBranch}
@@ -92,7 +126,9 @@ export class OpenPullRequestDialogHeader extends React.Component<
               </>
             }
           />{' '}
-          from <Ref>{currentBranch.name}</Ref>.
+          {t('open-pull-request-header.merge-into-2', 'from')}{' '}
+          <Ref>{currentBranch.name}</Ref>
+          {t('open-pull-request-header.merge-into-3', '.')}
         </div>
       </DialogHeader>
     )

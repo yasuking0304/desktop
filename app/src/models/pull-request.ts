@@ -16,7 +16,7 @@ export class PullRequestRef {
     public readonly ref: string,
     public readonly sha: string,
     public readonly gitHubRepository: GitHubRepository
-  ) { }
+  ) {}
 }
 
 export class PullRequest {
@@ -39,7 +39,7 @@ export class PullRequest {
     public readonly author: string,
     public readonly draft: boolean,
     public readonly body: string
-  ) { }
+  ) {}
 }
 
 /** The types of pull request suggested next actions */

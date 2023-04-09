@@ -12,7 +12,7 @@ import {
 } from '.'
 import { Account } from '../../models/account'
 import { AppMenu, IMenu } from '../../models/app-menu'
-import { IAuthor } from '../../models/author'
+import { Author } from '../../models/author'
 import { Branch, BranchType, IAheadBehind } from '../../models/branch'
 import { BranchesTab } from '../../models/branches-tab'
 import { CloneRepositoryTab } from '../../models/clone-repository-tab'
@@ -95,6 +95,7 @@ import {
   IAPIOrganization,
   getEndpointForRepository,
   IAPIFullRepository,
+  IAPIComment,
 } from '../api'
 import { shell } from '../app-shell'
 import {
@@ -316,6 +317,7 @@ import { ValidNotificationPullRequestReview } from '../valid-notification-pull-r
 import { determineMergeability } from '../git/merge-tree'
 import { PopupManager } from '../popup-manager'
 import { t } from 'i18next'
+import { resizableComponentClass } from '../../ui/resizable'
 
 const LastSelectedRepositoryIDKey = 'last-selected-repository-id'
 
@@ -449,6 +451,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
   private windowState: WindowState | null = null
   private windowZoomFactor: number = 1
+  private resizablePaneActive = false
   private isUpdateAvailableBannerVisible: boolean = false
   private isUpdateShowcaseVisible: boolean = false
 
@@ -601,6 +604,10 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
     this.notificationsStore.onPullRequestReviewSubmitNotification(
       this.onPullRequestReviewSubmitNotification
+    )
+
+    this.notificationsStore.onPullRequestCommentNotification(
+      this.onPullRequestCommentNotification
     )
 
     onShowInstallingUpdate(this.onShowInstallingUpdate)
@@ -984,6 +991,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
       showCIStatusPopover: this.showCIStatusPopover,
       notificationsEnabled: getNotificationsEnabled(),
       pullRequestSuggestedNextAction: this.pullRequestSuggestedNextAction,
+      resizablePaneActive: this.resizablePaneActive,
     }
   }
 
@@ -1323,8 +1331,8 @@ export class AppStore extends TypedBaseStore<IAppState> {
     // and it also exists in the repository
     const defaultBranch =
       currentBranch != null &&
-        cachedDefaultBranch != null &&
-        currentBranch.name !== cachedDefaultBranch.name
+      cachedDefaultBranch != null &&
+      currentBranch.name !== cachedDefaultBranch.name
         ? cachedDefaultBranch
         : null
 
@@ -1641,17 +1649,17 @@ export class AppStore extends TypedBaseStore<IAppState> {
     const diff =
       shas.length > 1
         ? await getCommitRangeDiff(
-          repository,
-          file,
-          shas,
-          this.hideWhitespaceInHistoryDiff
-        )
+            repository,
+            file,
+            shas,
+            this.hideWhitespaceInHistoryDiff
+          )
         : await getCommitDiff(
-          repository,
-          file,
-          shas[0],
-          this.hideWhitespaceInHistoryDiff
-        )
+            repository,
+            file,
+            shas[0],
+            this.hideWhitespaceInHistoryDiff
+          )
 
     const stateAfterLoad = this.repositoryStateCache.get(repository)
     const { shas: shasAfter } = stateAfterLoad.commitSelection
@@ -2585,7 +2593,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
       if (
         multiCommitOperationState !== null &&
         multiCommitOperationState.operationDetail.kind ===
-        MultiCommitOperationKind.CherryPick &&
+          MultiCommitOperationKind.CherryPick &&
         multiCommitOperationState.operationDetail.sourceBranch !== null
       ) {
         theirBranch =
@@ -2621,7 +2629,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
     if (
       multiCommitOperationState !== null &&
       multiCommitOperationState.operationDetail.kind ===
-      MultiCommitOperationKind.Merge &&
+        MultiCommitOperationKind.Merge &&
       multiCommitOperationState.operationDetail.sourceBranch !== null
     ) {
       theirBranch = multiCommitOperationState.operationDetail.sourceBranch.name
@@ -2882,7 +2890,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
       const currentFiles =
         stashEntry !== null &&
-          stashEntry.files.kind === StashedChangesLoadStates.Loaded
+        stashEntry.files.kind === StashedChangesLoadStates.Loaded
           ? stashEntry.files.files
           : []
 
@@ -2977,7 +2985,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
     if (
       changesStateAfterLoad.selection.kind !== ChangesSelectionKind.Stash ||
       changesStateAfterLoad.selection.selectedStashedFile !==
-      selectionBeforeLoad.selectedStashedFile
+        selectionBeforeLoad.selectedStashedFile
     ) {
       return
     }
@@ -4296,9 +4304,9 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
             const refreshTitle = __DARWIN__
               ? t(
-                'app-store.refreshing-repository-darwin',
-                'Refreshing Repository'
-              )
+                  'app-store.refreshing-repository-darwin',
+                  'Refreshing Repository'
+                )
               : t('app-store.refreshing-repository', 'Refreshing repository')
             const refreshStartProgress = pushWeight + fetchWeight
 
@@ -4494,9 +4502,9 @@ export class AppStore extends TypedBaseStore<IAppState> {
           const refreshStartProgress = pullWeight + fetchWeight
           const refreshTitle = __DARWIN__
             ? t(
-              'app-store.refreshing-repository-darwin',
-              'Refreshing Repository'
-            )
+                'app-store.refreshing-repository-darwin',
+                'Refreshing Repository'
+              )
             : t('app-store.refreshing-repository', 'Refreshing repository')
 
           this.updatePushPullFetchProgress(repository, {
@@ -5810,10 +5818,11 @@ export class AppStore extends TypedBaseStore<IAppState> {
     return `The following paths aren't Git repositories:\n\n${invalidPaths
       .slice(0, MaxInvalidFoldersToDisplay)
       .map(path => `- ${path}`)
-      .join('\n')}${invalidPaths.length > MaxInvalidFoldersToDisplay
+      .join('\n')}${
+      invalidPaths.length > MaxInvalidFoldersToDisplay
         ? `\n\n(and ${invalidPaths.length - MaxInvalidFoldersToDisplay} more)`
         : ''
-      }`
+    }`
   }
 
   private async withAuthenticatingUser<T>(
@@ -6133,8 +6142,8 @@ export class AppStore extends TypedBaseStore<IAppState> {
     const encodedBaseBranch =
       baseBranch !== undefined
         ? baseForkPreface +
-        encodeURIComponent(baseBranch.nameWithoutRemote) +
-        '...'
+          encodeURIComponent(baseBranch.nameWithoutRemote) +
+          '...'
         : ''
 
     const compareForkPreface = isForkContributingToParent
@@ -6275,8 +6284,8 @@ export class AppStore extends TypedBaseStore<IAppState> {
       this.emitError(
         new Error(
           `Couldn't find branch '${headRefName}' in remote '${remote.name}'. ` +
-          `A common reason for this is that the PR author has deleted their ` +
-          `branch or their forked repository.`
+            `A common reason for this is that the PR author has deleted their ` +
+            `branch or their forked repository.`
         )
       )
       return
@@ -6321,7 +6330,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
    */
   public _setCoAuthors(
     repository: Repository,
-    coAuthors: ReadonlyArray<IAuthor>
+    coAuthors: ReadonlyArray<Author>
   ) {
     this.gitStoreCache.get(repository).setCoAuthors(coAuthors)
     return Promise.resolve()
@@ -6424,7 +6433,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
       changesState.conflictState === null ||
       multiCommitOperationState === null ||
       multiCommitOperationState.step.kind !==
-      MultiCommitOperationStepKind.ShowConflicts
+        MultiCommitOperationStepKind.ShowConflicts
     ) {
       return
     }
@@ -7324,8 +7333,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
   private onPullRequestReviewSubmitNotification = async (
     repository: RepositoryWithGitHubRepository,
     pullRequest: PullRequest,
-    review: ValidNotificationPullRequestReview,
-    numberOfComments: number
+    review: ValidNotificationPullRequestReview
   ) => {
     const selectedRepository =
       this.selectedRepository ?? (await this._selectRepository(repository))
@@ -7346,7 +7354,33 @@ export class AppStore extends TypedBaseStore<IAppState> {
       review,
       pullRequest,
       repository,
-      numberOfComments,
+    })
+  }
+
+  private onPullRequestCommentNotification = async (
+    repository: RepositoryWithGitHubRepository,
+    pullRequest: PullRequest,
+    comment: IAPIComment
+  ) => {
+    const selectedRepository =
+      this.selectedRepository ?? (await this._selectRepository(repository))
+
+    const state = this.repositoryStateCache.get(repository)
+
+    const { branchesState } = state
+    const { tip } = branchesState
+    const currentBranch = tip.kind === TipState.Valid ? tip.branch : null
+
+    return this._showPopup({
+      type: PopupType.PullRequestComment,
+      shouldCheckoutBranch:
+        currentBranch !== null && currentBranch.name !== pullRequest.head.ref,
+      shouldChangeRepository:
+        selectedRepository === null ||
+        selectedRepository.hash !== repository.hash,
+      comment,
+      pullRequest,
+      repository,
     })
   }
 
@@ -7387,13 +7421,13 @@ export class AppStore extends TypedBaseStore<IAppState> {
     const changesetData =
       commitsBetweenBranches.length > 0
         ? await gitStore.performFailableOperation(() =>
-          getBranchMergeBaseChangedFiles(
-            repository,
-            baseBranch.name,
-            currentBranch.name,
-            commitsBetweenBranches[0]
+            getBranchMergeBaseChangedFiles(
+              repository,
+              baseBranch.name,
+              currentBranch.name,
+              commitsBetweenBranches[0]
+            )
           )
-        )
         : emptyChangeSet
 
     if (changesetData === undefined) {
@@ -7419,10 +7453,10 @@ export class AppStore extends TypedBaseStore<IAppState> {
       mergeStatus:
         commitSHAs.length > 0 || !hasMergeBase
           ? {
-            kind: hasMergeBase
-              ? ComputedAction.Loading
-              : ComputedAction.Invalid,
-          }
+              kind: hasMergeBase
+                ? ComputedAction.Loading
+                : ComputedAction.Invalid,
+            }
           : null,
     })
 
@@ -7659,6 +7693,33 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
     this.emitUpdate()
   }
+
+  private isResizePaneActive() {
+    if (document.activeElement === null) {
+      return false
+    }
+
+    const appMenuBar = document.getElementById('app-menu-bar')
+
+    // Don't track windows menu items as focused elements for keeping
+    // track of recently focused elements we want to act upon
+    if (appMenuBar?.contains(document.activeElement)) {
+      return this.resizablePaneActive
+    }
+
+    return (
+      document.activeElement.closest(`.${resizableComponentClass}`) !== null
+    )
+  }
+
+  public _appFocusedElementChanged() {
+    const resizablePaneActive = this.isResizePaneActive()
+
+    if (resizablePaneActive !== this.resizablePaneActive) {
+      this.resizablePaneActive = resizablePaneActive
+      this.emitUpdate()
+    }
+  }
 }
 
 /**
@@ -7723,5 +7784,12 @@ function constrain(
   min = -Infinity,
   max = Infinity
 ): IConstrainedValue {
-  return { value: typeof value === 'number' ? value : value.value, min, max }
+  // Match CSS's behavior where min-width takes precedence over max-width
+  // See https://stackoverflow.com/a/16063871
+  const constrainedMax = max < min ? min : max
+  return {
+    value: typeof value === 'number' ? value : value.value,
+    min,
+    max: constrainedMax,
+  }
 }

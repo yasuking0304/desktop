@@ -45,7 +45,7 @@ const editors: IDarwinExternalEditor[] = [
   },
   {
     name: 'VSCodium',
-    bundleIdentifiers: ['com.visualstudio.code.oss'],
+    bundleIdentifiers: ['com.visualstudio.code.oss', 'com.vscodium'],
   },
   {
     name: 'Sublime Text',
@@ -81,7 +81,7 @@ const editors: IDarwinExternalEditor[] = [
   },
   {
     name: 'RStudio',
-    bundleIdentifiers: ['org.rstudio.RStudio'],
+    bundleIdentifiers: ['org.rstudio.RStudio', 'com.rstudio.desktop'],
   },
   {
     name: 'TextMate',
@@ -155,6 +155,14 @@ const editors: IDarwinExternalEditor[] = [
   {
     name: 'Fleet',
     bundleIdentifiers: ['Fleet.app'],
+  },
+  {
+    name: 'Pulsar',
+    bundleIdentifiers: ['dev.pulsar-edit.pulsar'],
+  },
+  {
+    name: 'Zed',
+    bundleIdentifiers: ['dev.zed.Zed'],
   },
 ]
 

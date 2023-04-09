@@ -363,11 +363,11 @@ export class PushPullButton extends React.Component<IPushPullButtonProps> {
 
   private detachedHeadButton(rebaseInProgress: boolean) {
     const description = rebaseInProgress
-    ? t('push-pull-button.rebase-in-progress', 'Rebase in progress')
-    : t(
-        'push-pull-button.cannot-publish-detached-head',
-        'Cannot publish detached HEAD'
-      )
+      ? t('push-pull-button.rebase-in-progress', 'Rebase in progress')
+      : t(
+          'push-pull-button.cannot-publish-detached-head',
+          'Cannot publish detached HEAD'
+        )
 
     return (
       <ToolbarButton
@@ -386,14 +386,14 @@ export class PushPullButton extends React.Component<IPushPullButtonProps> {
     shouldNudge: boolean
   ) {
     const description = isGitHub
-    ? t(
-        'push-pull-button.publish-branch-to-github',
-        'Publish this branch to GitHub'
-      )
-    : t(
-        'push-pull-button.publish-branch-to-remote',
-        'Publish this branch to the remote'
-      )
+      ? t(
+          'push-pull-button.publish-branch-to-github',
+          'Publish this branch to GitHub'
+        )
+      : t(
+          'push-pull-button.publish-branch-to-remote',
+          'Publish this branch to the remote'
+        )
 
     if (!enablePushPullFetchDropdown()) {
       const className = classNames(

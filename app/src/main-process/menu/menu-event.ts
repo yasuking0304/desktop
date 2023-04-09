@@ -2,6 +2,7 @@ export type MenuEvent =
   | 'push'
   | 'force-push'
   | 'pull'
+  | 'fetch'
   | 'show-changes'
   | 'show-history'
   | 'add-local-repository'
@@ -44,3 +45,5 @@ export type MenuEvent =
   | 'pull-request-check-run-failed'
   | 'preview-pull-request'
   | 'show-app-error'
+  | 'decrease-active-resizable-width'
+  | 'increase-active-resizable-width'

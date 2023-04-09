@@ -245,13 +245,12 @@ export class CommitSummary extends React.Component<
     const icon = expanded ? OcticonSymbol.fold : OcticonSymbol.unfold
 
     return (
-      // eslint-disable-next-line jsx-a11y/anchor-is-valid, jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-      <a onClick={onClick} className="expander">
+      <button onClick={onClick} className="expander">
         <Octicon symbol={icon} />
         {expanded
           ? t('commit-summary.collapse', 'Collapse')
           : t('commit-summary.expand', 'Expand')}
-      </a>
+      </button>
     )
   }
 
@@ -384,8 +383,8 @@ export class CommitSummary extends React.Component<
 
     const commitsPluralized =
       excludedCommitsCount > 1
-        ? t('commit-summary.commits', 'commits')
-        : t('commit-summary.commit', 'commit')
+        ? t('common.multiple-commits', 'commits')
+        : t('common.one-or-less-commit', 'commit')
 
     return (
       // eslint-disable-next-line jsx-a11y/mouse-events-have-key-events
@@ -473,8 +472,8 @@ export class CommitSummary extends React.Component<
     const numInDiff = selectedCommits.length - commitsNotInDiff
     const commitsPluralized =
       numInDiff > 1
-        ? t('commit-summary.commits', 'commits')
-        : t('commit-summary.commit', 'commit')
+        ? t('common.multiple-commits', 'commits')
+        : t('common.one-or-less-commit', 'commit')
     return (
       <div className={summaryClassNames}>
         {t('commit-summary.showing-changes-from-1', 'Showing changes from ')}
