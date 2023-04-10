@@ -31,9 +31,9 @@ import { openFile } from './lib/open-file'
 import { AheadBehindStore } from '../lib/stores/ahead-behind-store'
 import { dragAndDropManager } from '../lib/drag-and-drop-manager'
 import { DragType } from '../models/drag-drop'
-import { clamp } from '../lib/clamp'
 import { PullRequestSuggestedNextAction } from '../models/pull-request'
 import { t } from 'i18next'
+import { clamp } from '../lib/clamp'
 
 interface IRepositoryViewProps {
   readonly repository: Repository
