@@ -121,23 +121,25 @@ export function renderBanner(
         />
       )
     case BannerType.SquashUndone: {
-      const pluralized = banner.commitsCount === 1
-        ? t("common.one-commit", "commit")
-        : t("common.multiple-commits", "commits")
+      const pluralized =
+        banner.commitsCount === 1
+          ? t('common.one-commit', 'commit')
+          : t('common.multiple-commits', 'commits')
       return (
         <SuccessBanner timeout={5000} onDismissed={onDismissed}>
           {t(
-            "render-banner.squash-of-commit-unfone",
-            "Squash of {{0}} {{1}} undone.",
+            'render-banner.squash-of-commit-undone',
+            'Squash of {{0}} {{1}} undone.',
             { 0: banner.commitsCount, 1: pluralized }
           )}
         </SuccessBanner>
       )
     }
     case BannerType.SuccessfulReorder: {
-      const pluralized = banner.count === 1
-        ? t("common.one-commit", "commit")
-        : t("common.multiple-commits", "commits")
+      const pluralized =
+        banner.count === 1
+          ? t('common.one-commit', 'commit')
+          : t('common.multiple-commits', 'commits')
 
       return (
         <SuccessBanner
@@ -147,8 +149,8 @@ export function renderBanner(
         >
           <span>
             {t(
-              "render-banner.squash-of-commit-unfone",
-              "Successfully reordered {{0}} {{1}}.",
+              'render-banner.successfully-reordered-commit',
+              'Successfully reordered {{0}} {{1}}.',
               { 0: banner.count, 1: pluralized }
             )}
           </span>
@@ -156,14 +158,15 @@ export function renderBanner(
       )
     }
     case BannerType.ReorderUndone: {
-      const pluralized = banner.commitsCount === 1
-        ? t("common.one-commit", "commit")
-        : t("common.multiple-commits", "commits")
+      const pluralized =
+        banner.commitsCount === 1
+          ? t('common.one-commit', 'commit')
+          : t('common.multiple-commits', 'commits')
       return (
         <SuccessBanner timeout={5000} onDismissed={onDismissed}>
           {t(
-            "render-banner.reorder-of-commit-unfone",
-            "Reorder of {{0}} {{1}} undone.",
+            'render-banner.reorder-of-commit-undone',
+            'Reorder of {{0}} {{1}} undone.',
             { 0: banner.commitsCount, 1: pluralized }
           )}
         </SuccessBanner>
