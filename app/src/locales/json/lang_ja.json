@@ -46,8 +46,10 @@
     "help-github-desktop-improve-by-submitting-1": "GitHub Desktop が ",
     "help-github-desktop-improve-by-submitting-2": " を送信することで改善に貢献する",
     "periodically-fetch-and-refresh-status": "すべてのリポジトリのステータスを定期的にフェッチおよび更新する",
+    "ssh": "SSH",
     "usage": "使われ方",
-    "usage-stats": "使用状況"
+    "usage-stats": "使用状況",
+    "use-system-openssh": "システムの OpenSSH を使う (推奨)"
   },
   "app": {
     "adding-this-feature": "この機能の追加",
