@@ -29,6 +29,7 @@ import {
   getUnmergedStatusEntryDescription,
   getLabelForManualResolutionOption,
 } from '../../../lib/status'
+import { t } from 'i18next'
 
 /**
  * Renders an unmerged file status and associated buttons for the merge conflicts modal
@@ -178,7 +179,11 @@ const renderManualConflictedFile: React.FunctionComponent<{
     if (entry.them === GitStatusEntry.Deleted && theirBranch !== undefined) {
       targetBranch = theirBranch
     }
-    conflictTypeString = `File does not exist on ${targetBranch}.`
+    conflictTypeString = t(
+      'stash-diff-header.file-does-not-exist',
+      `File does not exist on {{0}}.`,
+      { 0: targetBranch }
+    )
   }
 
   const content = (
@@ -229,8 +234,10 @@ const renderConflictedFileWithConflictMarkers: React.FunctionComponent<{
   )
   const message =
     humanReadableConflicts === 1
-      ? `1 conflict`
-      : `${humanReadableConflicts} conflicts`
+      ? t('stash-diff-header.one-onflict', `1 conflict`)
+      : t('stash-diff-header.number-onflicts', `{{0}} conflicts`, {
+          0: humanReadableConflicts,
+        })
 
   const disabled = props.resolvedExternalEditor === null
   const tooltip = editorButtonTooltip(props.resolvedExternalEditor)
@@ -385,7 +392,7 @@ function resolvedFileStatusString(
   if (manualResolution === ManualConflictResolution.theirs) {
     return getUnmergedStatusEntryDescription(status.entry.them, branch)
   }
-  return 'No conflicts remaining'
+  return t('stash-diff-header.no-conflicts-remaining', 'No conflicts remaining')
 }
 
 const renderResolvedFileStatusSummary: React.FunctionComponent<{
@@ -400,7 +407,14 @@ const renderResolvedFileStatusSummary: React.FunctionComponent<{
     isConflictWithMarkers(props.status) &&
     props.status.conflictMarkerCount === 0
   ) {
-    return <div className="file-conflicts-status">No conflicts remaining</div>
+    return (
+      <div className="file-conflicts-status">
+        {t(
+          'stash-diff-header.no-conflicts-remaining',
+          'No conflicts remaining'
+        )}
+      </div>
+    )
   }
 
   const statusString = resolvedFileStatusString(
@@ -420,7 +434,7 @@ const renderResolvedFileStatusSummary: React.FunctionComponent<{
           props.dispatcher
         )}
       >
-        Undo
+        {t('common.undo', 'Undo')}
       </LinkButton>
     </div>
   )
@@ -454,7 +468,9 @@ function calculateConflicts(conflictMarkers: number) {
 
 function editorButtonString(editorName: string | null): string {
   const defaultEditorString = 'editor'
-  return `Open in ${editorName || defaultEditorString}`
+  return t('stash-diff-header.open-in', `Open in {{0}}`, {
+    0: editorName || defaultEditorString,
+  })
 }
 
 function editorButtonTooltip(editorName: string | null): string | undefined {
@@ -464,10 +480,19 @@ function editorButtonTooltip(editorName: string | null): string | undefined {
   }
 
   if (__DARWIN__) {
-    return `No editor configured in Preferences > Advanced`
+    return t(
+      'stash-diff-header.no-editor-configured-darwin',
+      `No editor configured in Preferences > Advanced`
+    )
   } else {
-    return `No editor configured in Options > Advanced`
+    return t(
+      'stash-diff-header.no-editor-configured',
+      `No editor configured in Options > Advanced`
+    )
   }
 }
 
-const manualConflictString = 'Manual conflict'
+const manualConflictString = t(
+  'stash-diff-header.manual-conflict',
+  'Manual conflict'
+)

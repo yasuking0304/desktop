@@ -58,6 +58,7 @@ import * as OcticonSymbol from '../octicons/octicons.generated'
 import { WhitespaceHintPopover } from './whitespace-hint-popover'
 import { PopoverCaretPosition } from '../lib/popover'
 import { HiddenBidiCharsWarning } from './hidden-bidi-chars-warning'
+import { t } from 'i18next'
 
 // This is a custom version of the no-newline octicon that's exactly as
 // tall as it needs to be (8px) which helps with aligning it on the line.
@@ -115,13 +116,19 @@ function createNoNewlineIndicatorWidget() {
   const titleElem = document.createElementNS(xmlns, 'title')
   titleElem.setAttribute('id', titleId)
   titleElem.setAttribute('lang', 'en')
-  titleElem.textContent = 'No newline at end of file'
+  titleElem.textContent = t(
+    'menu.no-newline-at-end-of-file',
+    'No newline at end of file'
+  )
   svgElem.appendChild(titleElem)
 
   const pathElem = document.createElementNS(xmlns, 'path')
   pathElem.setAttribute('role', 'presentation')
   pathElem.setAttribute('d', d)
-  pathElem.textContent = 'No newline at end of file'
+  pathElem.textContent = t(
+    'menu.no-newline-at-end-of-file',
+    'No newline at end of file'
+  )
   svgElem.appendChild(pathElem)
 
   widget.appendChild(svgElem)
@@ -218,7 +225,7 @@ function showSearch(cm: Editor) {
   const searchField = dialog.querySelector('.CodeMirror-search-field')
 
   if (searchField instanceof HTMLInputElement) {
-    searchField.placeholder = 'Search'
+    searchField.placeholder = t('menu.search', 'Search')
     searchField.style.removeProperty('width')
   }
 }
@@ -654,7 +661,7 @@ export class TextDiff extends React.Component<ITextDiffProps, ITextDiffState> {
 
     const items: IMenuItem[] = [
       {
-        label: 'Copy',
+        label: t('common.copy', 'Copy'),
         action,
         enabled: isTextSelected,
       },
@@ -688,7 +695,9 @@ export class TextDiff extends React.Component<ITextDiffProps, ITextDiffState> {
 
     return this.diffToRestore === null
       ? {
-          label: __DARWIN__ ? 'Expand Whole File' : 'Expand whole file',
+          label: __DARWIN__
+            ? t('menu.expand-whole-file-darwin', 'Expand Whole File')
+            : t('menu.expand-whole-file', 'Expand whole file'),
           action: this.onExpandWholeFile,
           // If there is only one hunk that can't be expanded, disable this item
           enabled:
@@ -697,8 +706,11 @@ export class TextDiff extends React.Component<ITextDiffProps, ITextDiffState> {
         }
       : {
           label: __DARWIN__
-            ? 'Collapse Expanded Lines'
-            : 'Collapse expanded lines',
+            ? t(
+                'menu.collapse-expanded-lines-darwin',
+                'Collapse Expanded Lines'
+              )
+            : t('menu.collapse-expanded-lines', 'Collapse expanded lines'),
           action: this.onCollapseExpandedLines,
         }
   }
@@ -830,19 +842,38 @@ export class TextDiff extends React.Component<ITextDiffProps, ITextDiffState> {
     let type = ''
 
     if (rangeType === DiffRangeType.Additions) {
-      type = __DARWIN__ ? 'Added' : 'added'
+      type = __DARWIN__
+        ? t('text-diff.added-darwin', 'Added')
+        : t('text-diff.added', 'added')
     } else if (rangeType === DiffRangeType.Deletions) {
-      type = __DARWIN__ ? 'Removed' : 'removed'
+      type = __DARWIN__
+        ? t('text-diff.removed-darwin', 'Removed')
+        : t('text-diff.removed', 'removed')
     } else if (rangeType === DiffRangeType.Mixed) {
-      type = __DARWIN__ ? 'Modified' : 'modified'
+      type = __DARWIN__
+        ? t('text-diff.modified-darwin', 'Modified')
+        : t('text-diff.modified', 'modified')
     } else {
-      assertNever(rangeType, `Invalid range type: ${rangeType}`)
+      assertNever(
+        rangeType,
+        t('text-diff.invalid-range-type', `Invalid range type: {{0}}`, {
+          0: rangeType,
+        })
+      )
     }
 
     const plural = numLines > 1 ? 's' : ''
     return __DARWIN__
-      ? `Discard ${type} Line${plural}${suffix}`
-      : `Discard ${type} line${plural}${suffix}`
+      ? t(
+          'text-diff.discard-line-type-darwin',
+          `Discard {{0}} Line{{1}}{{2}}`,
+          { 0: type, 1: plural, 2: suffix }
+        )
+      : t('text-diff.discard-line-type', `Discard {{0}} line{{1}}{{2}}`, {
+          0: type,
+          1: plural,
+          2: suffix,
+        })
   }
 
   private onCopy = (editor: Editor, event: Event) => {
@@ -1117,7 +1148,7 @@ export class TextDiff extends React.Component<ITextDiffProps, ITextDiffState> {
     if (this.canExpandDiff()) {
       const hunkExpandUpHandle = document.createElement('div')
       hunkExpandUpHandle.classList.add('hunk-expand-up-handle')
-      hunkExpandUpHandle.title = 'Expand Up'
+      hunkExpandUpHandle.title = t('text-diff.expand-up', 'Expand Up')
       hunkExpandUpHandle.addEventListener(
         'click',
         this.onHunkExpandHalfHandleMouseDown.bind(this, hunks, hunk, 'up')
@@ -1130,7 +1161,7 @@ export class TextDiff extends React.Component<ITextDiffProps, ITextDiffState> {
 
       const hunkExpandDownHandle = document.createElement('div')
       hunkExpandDownHandle.classList.add('hunk-expand-down-handle')
-      hunkExpandDownHandle.title = 'Expand Down'
+      hunkExpandDownHandle.title = t('text-diff.expand-down', 'Expand Down')
       hunkExpandDownHandle.addEventListener(
         'click',
         this.onHunkExpandHalfHandleMouseDown.bind(this, hunks, hunk, 'down')
@@ -1143,7 +1174,7 @@ export class TextDiff extends React.Component<ITextDiffProps, ITextDiffState> {
 
       const hunkExpandWholeHandle = document.createElement('div')
       hunkExpandWholeHandle.classList.add('hunk-expand-whole-handle')
-      hunkExpandWholeHandle.title = 'Expand whole'
+      hunkExpandWholeHandle.title = t('text-diff.expand-whole', 'Expand whole')
       hunkExpandWholeHandle.addEventListener(
         'click',
         this.onHunkExpandWholeHandleMouseDown.bind(this, hunks, hunk)
@@ -1275,12 +1306,21 @@ export class TextDiff extends React.Component<ITextDiffProps, ITextDiffState> {
     )[0]
     if (hunkExpandWholeHandle !== undefined) {
       if (classNameInfo['expandable-short'] === true) {
-        hunkExpandWholeHandle.setAttribute('title', 'Expand All')
+        hunkExpandWholeHandle.setAttribute(
+          'title',
+          t('text-diff.expand-all', 'Expand All')
+        )
       } else if (classNameInfo['expandable-both'] !== true) {
         if (classNameInfo['expandable-down']) {
-          hunkExpandWholeHandle.setAttribute('title', 'Expand Down')
+          hunkExpandWholeHandle.setAttribute(
+            'title',
+            t('text-diff.expand-down', 'Expand Down')
+          )
         } else {
-          hunkExpandWholeHandle.setAttribute('title', 'Expand Up')
+          hunkExpandWholeHandle.setAttribute(
+            'title',
+            t('text-diff.expand-up', 'Expand Up')
+          )
         }
       }
     }

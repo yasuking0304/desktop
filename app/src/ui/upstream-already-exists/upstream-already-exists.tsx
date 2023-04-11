@@ -6,6 +6,7 @@ import { Ref } from '../lib/ref'
 import { forceUnwrap } from '../../lib/fatal-error'
 import { UpstreamRemoteName } from '../../lib/stores'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
+import { t } from 'i18next'
 
 interface IUpstreamAlreadyExistsProps {
   readonly repository: Repository
@@ -28,11 +29,17 @@ export class UpstreamAlreadyExists extends React.Component<IUpstreamAlreadyExist
   public render() {
     const name = this.props.repository.name
     const gitHubRepository = forceUnwrap(
-      'A repository must have a GitHub repository to add an upstream remote',
+      t(
+        'upstream-already-exists.must-have-a-github-repository',
+        'A repository must have a GitHub repository to add an upstream remote'
+      ),
       this.props.repository.gitHubRepository
     )
     const parent = forceUnwrap(
-      'A repository must have a parent repository to add an upstream remote',
+      t(
+        'upstream-already-exists.must-have-a-parent-repository',
+        'A repository must have a parent repository to add an upstream remote'
+      ),
       gitHubRepository.parent
     )
     const parentName = parent.fullName
@@ -41,7 +48,15 @@ export class UpstreamAlreadyExists extends React.Component<IUpstreamAlreadyExist
     return (
       <Dialog
         title={
-          __DARWIN__ ? 'Upstream Already Exists' : 'Upstream already exists'
+          __DARWIN__
+            ? t(
+                'upstream-already-exists.upstream-already-exists-darwin',
+                'Upstream Already Exists'
+              )
+            : t(
+                'upstream-already-exists.upstream-already-exists',
+                'Upstream already exists'
+              )
         }
         onDismissed={this.props.onDismissed}
         onSubmit={this.onUpdate}
@@ -49,25 +64,48 @@ export class UpstreamAlreadyExists extends React.Component<IUpstreamAlreadyExist
       >
         <DialogContent>
           <p>
-            The repository <Ref>{name}</Ref> is a fork of{' '}
-            <Ref>{parentName}</Ref>, but its <Ref>{UpstreamRemoteName}</Ref>{' '}
-            remote points elsewhere.
+            {t(
+              'upstream-already-exists.the-repository-is-a-fork-1',
+              'The repository '
+            )}
+            <Ref>{name}</Ref>
+            {t(
+              'upstream-already-exists.the-repository-is-a-fork-2',
+              ' is a fork of '
+            )}
+            <Ref>{parentName}</Ref>
+            {t(
+              'upstream-already-exists.the-repository-is-a-fork-3',
+              ', but its '
+            )}
+            <Ref>{UpstreamRemoteName}</Ref>
+            {t(
+              'upstream-already-exists.the-repository-is-a-fork-4',
+              ' remote points elsewhere.'
+            )}
           </p>
           <ul>
             <li>
-              Current: <Ref>{existingURL}</Ref>
+              {t('upstream-already-exists.current', 'Current: ')}
+              <Ref>{existingURL}</Ref>
             </li>
             <li>
-              Expected: <Ref>{replacementURL}</Ref>
+              {t('upstream-already-exists.expected', 'Expected: ')}
+              <Ref>{replacementURL}</Ref>
             </li>
           </ul>
-          <p>Would you like to update the remote to use the expected URL?</p>
+          <p>
+            {t(
+              'upstream-already-exists.would-you-like-to-update',
+              'Would you like to update the remote to use the expected URL?'
+            )}
+          </p>
         </DialogContent>
         <DialogFooter>
           <OkCancelButtonGroup
             destructive={true}
-            okButtonText="Update"
-            cancelButtonText="Ignore"
+            okButtonText={t('common.update', 'Update')}
+            cancelButtonText={t('common.ignore', 'Ignore')}
             onCancelButtonClick={this.onIgnore}
           />
         </DialogFooter>

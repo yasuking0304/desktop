@@ -40,6 +40,7 @@ import {
 } from '../../lib/helpers/default-branch'
 import { Prompts } from './prompts'
 import { Repository } from '../../models/repository'
+import { t } from 'i18next'
 import { Notifications } from './notifications'
 
 interface IPreferencesProps {
@@ -206,7 +207,11 @@ export class Preferences extends React.Component<
     return (
       <Dialog
         id="preferences"
-        title={__DARWIN__ ? 'Preferences' : 'Options'}
+        title={
+          __DARWIN__
+            ? t('common.preferences', 'Preferences')
+            : t('common.options', 'Options')
+        }
         onDismissed={this.onCancel}
         onSubmit={this.onSave}
       >
@@ -219,31 +224,31 @@ export class Preferences extends React.Component<
           >
             <span>
               <Octicon className="icon" symbol={OcticonSymbol.home} />
-              Accounts
+              {t('preferences.accounts', 'Accounts')}
             </span>
             <span>
               <Octicon className="icon" symbol={OcticonSymbol.person} />
-              Integrations
+              {t('preferences.integrations', 'Integrations')}
             </span>
             <span>
               <Octicon className="icon" symbol={OcticonSymbol.gitCommit} />
-              Git
+              {t('preferences.git', 'Git')}
             </span>
             <span>
               <Octicon className="icon" symbol={OcticonSymbol.paintbrush} />
-              Appearance
+              {t('preferences.appearance', 'Appearance')}
             </span>
             <span>
               <Octicon className="icon" symbol={OcticonSymbol.bell} />
-              Notifications
+              {t('preferences.notifications', 'Notifications')}
             </span>
             <span>
               <Octicon className="icon" symbol={OcticonSymbol.question} />
-              Prompts
+              {t('preferences.prompts', 'Prompts')}
             </span>
             <span>
               <Octicon className="icon" symbol={OcticonSymbol.settings} />
-              Advanced
+              {t('preferences.advanced', 'Advanced')}
             </span>
           </TabBar>
 
@@ -499,7 +504,7 @@ export class Preferences extends React.Component<
     return (
       <DialogFooter>
         <OkCancelButtonGroup
-          okButtonText="Save"
+          okButtonText={t('common.save', 'Save')}
           okButtonDisabled={hasDisabledError}
         />
       </DialogFooter>

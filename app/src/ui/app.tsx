@@ -163,6 +163,7 @@ import { uuid } from '../lib/uuid'
 import { InstallingUpdate } from './installing-update/installing-update'
 import { enableStackedPopups } from '../lib/feature-flag'
 import { DialogStackContext } from './dialog'
+import { t } from 'i18next'
 import { TestNotifications } from './test-notifications/test-notifications'
 import { NotificationsDebugStore } from '../lib/stores/notifications-debug-store'
 import { PullRequestComment } from './notifications/pull-request-comment'
@@ -577,7 +578,7 @@ export class App extends React.Component<IAppProps, IAppState> {
       pullRequest,
       repository,
       shouldChangeRepository: true,
-      commitMessage: 'Adding this feature',
+      commitMessage: t('app.adding-this-feature', 'Adding this feature'),
       commitSha: pullRequest.head.sha,
       checks,
     }
@@ -2779,10 +2780,14 @@ export class App extends React.Component<IAppProps, IAppState> {
       title = alias ?? repository.name
     } else if (this.state.repositories.length > 0) {
       icon = OcticonSymbol.repo
-      title = __DARWIN__ ? 'Select a Repository' : 'Select a repository'
+      title = __DARWIN__
+        ? t('app.select-a-repository-darwin', 'Select a Repository')
+        : t('app.select-a-repository', 'Select a repository')
     } else {
       icon = OcticonSymbol.repo
-      title = __DARWIN__ ? 'No Repositories' : 'No repositories'
+      title = __DARWIN__
+        ? t('app.no-repositories-darwin', 'No Repositories')
+        : t('app.no-repositories', 'No repositories')
     }
 
     const isOpen =
@@ -2808,7 +2813,11 @@ export class App extends React.Component<IAppProps, IAppState> {
       <ToolbarDropdown
         icon={icon}
         title={title}
-        description={__DARWIN__ ? 'Current Repository' : 'Current repository'}
+        description={
+          __DARWIN__
+            ? t('app.current-repository-darwin', 'Current Repository')
+            : t('app.current-repository', 'Current repository')
+        }
         tooltip={tooltip}
         foldoutStyle={foldoutStyle}
         onContextMenu={this.onRepositoryToolbarButtonContextMenu}

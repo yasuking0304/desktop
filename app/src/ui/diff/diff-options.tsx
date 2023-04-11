@@ -4,6 +4,7 @@ import { Octicon } from '../octicons'
 import * as OcticonSymbol from '../octicons/octicons.generated'
 import { RadioButton } from '../lib/radio-button'
 import { Popover, PopoverCaretPosition } from '../lib/popover'
+import { t } from 'i18next'
 
 interface IDiffOptionsProps {
   readonly isInteractiveDiff: boolean
@@ -93,7 +94,10 @@ export class DiffOptions extends React.Component<
         onClickOutside={this.closePopover}
       >
         <h3 id="diff-options-popover-header">
-          Diff {__DARWIN__ ? 'Preferences' : 'Options'}
+          {t('diff-options.caption-diff', 'Diff ')}
+          {__DARWIN__
+            ? t('diff-options.caption-options-darwin', 'Preferences')
+            : t('diff-options.caption-options', 'Options')}
         </h3>
         {this.renderHideWhitespaceChanges()}
         {this.renderShowSideBySide()}
@@ -111,11 +115,11 @@ export class DiffOptions extends React.Component<
   private renderShowSideBySide() {
     return (
       <section>
-        <h4>Diff display</h4>
+        <h4>{t('diff-options.diff-display', 'Diff display')}</h4>
         <RadioButton
           value="Unified"
           checked={!this.props.showSideBySideDiff}
-          label="Unified"
+          label={t('diff-options.unified', 'Unified')}
           onSelected={this.onUnifiedSelected}
         />
         <RadioButton
@@ -123,7 +127,7 @@ export class DiffOptions extends React.Component<
           checked={this.props.showSideBySideDiff}
           label={
             <>
-              <div>Split</div>
+              <div>{t('diff-options.split', 'Split')}</div>
             </>
           }
           onSelected={this.onSideBySideSelected}
@@ -135,7 +139,7 @@ export class DiffOptions extends React.Component<
   private renderHideWhitespaceChanges() {
     return (
       <section>
-        <h4>Whitespace</h4>
+        <h4>{t('diff-options.whitespace', 'Whitespace')}</h4>
         <Checkbox
           value={
             this.props.hideWhitespaceChanges
@@ -144,13 +148,24 @@ export class DiffOptions extends React.Component<
           }
           onChange={this.onHideWhitespaceChangesChanged}
           label={
-            __DARWIN__ ? 'Hide Whitespace Changes' : 'Hide whitespace changes'
+            __DARWIN__
+              ? t(
+                  'diff-options.hide-whitespace-changes-darwin',
+                  'Hide Whitespace Changes'
+                )
+              : t(
+                  'diff-options.hide-whitespace-changes',
+                  'Hide whitespace changes'
+                )
           }
         />
         {this.props.isInteractiveDiff && (
           <p className="secondary-text">
-            Interacting with individual lines or hunks will be disabled while
-            hiding whitespace.
+            {t(
+              'diff-options.interacting-with-individual-lines',
+              `Interacting with individual lines or hunks will be disabled while
+            hiding whitespace.`
+            )}
           </p>
         )}
       </section>

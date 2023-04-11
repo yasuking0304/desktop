@@ -5,6 +5,7 @@ import { GitConfigUserForm } from '../lib/git-config-user-form'
 import { getDotComAPIEndpoint } from '../../lib/api'
 import { Row } from '../lib/row'
 import { RadioButton } from '../lib/radio-button'
+import { t } from 'i18next'
 
 interface IGitConfigProps {
   readonly account: Account | null
@@ -41,11 +42,19 @@ export class GitConfig extends React.Component<IGitConfigProps> {
     return (
       <DialogContent>
         <div className="advanced-section">
-          <h2>For this repository I wish to</h2>
+          <h2>
+            {t(
+              'git-config.for-this-repository',
+              'For this repository I wish to'
+            )}
+          </h2>
           <Row>
             <div>
               <RadioButton
-                label="Use my global Git config"
+                label={t(
+                  'git-config.use-my-global-git-config',
+                  'Use my global Git config'
+                )}
                 checked={
                   this.props.gitConfigLocation === GitConfigLocation.Global
                 }
@@ -53,7 +62,10 @@ export class GitConfig extends React.Component<IGitConfigProps> {
                 onSelected={this.onGitConfigLocationChanged}
               />
               <RadioButton
-                label="Use a local Git config"
+                label={t(
+                  'git-config.use-a-local-git-config',
+                  'Use a local Git config'
+                )}
                 checked={
                   this.props.gitConfigLocation === GitConfigLocation.Local
                 }

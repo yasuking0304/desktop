@@ -6,6 +6,7 @@ import { Ref } from '../lib/ref'
 import { RadioButton } from '../lib/radio-button'
 import { Account } from '../../models/account'
 import { GitConfigUserForm } from '../lib/git-config-user-form'
+import { t } from 'i18next'
 
 interface IGitProps {
   readonly name: string
@@ -87,14 +88,18 @@ export class Git extends React.Component<IGitProps, IGitState> {
     if (sanitizedBranchName === '') {
       return (
         <>
-          <Ref>{proposedBranchName}</Ref> is an invalid branch name.
+          {t('git.invalid-branch-name-1', ' ')}
+          <Ref>{proposedBranchName}</Ref>
+          {t('git.invalid-branch-name-2', ' is an invalid branch name.')}
         </>
       )
     }
 
     return (
       <>
-        Will be saved as <Ref>{sanitizedBranchName}</Ref>.
+        {t('git.save-sanitized-branch-name-1', 'Will be saved as ')}
+        <Ref>{sanitizedBranchName}</Ref>.
+        {t('git.save-sanitized-branch-name-2', ' ')}
       </>
     )
   }
@@ -104,7 +109,12 @@ export class Git extends React.Component<IGitProps, IGitState> {
 
     return (
       <div className="default-branch-component">
-        <h2>Default branch name for new repositories</h2>
+        <h2>
+          {t(
+            'git.default-branch-name-for-new-repositories',
+            'Default branch name for new repositories'
+          )}
+        </h2>
 
         {SuggestedBranchNames.map((branchName: string) => (
           <RadioButton
@@ -121,7 +131,7 @@ export class Git extends React.Component<IGitProps, IGitState> {
           key={OtherNameForDefaultBranch}
           checked={defaultBranchIsOther}
           value={OtherNameForDefaultBranch}
-          label="Other…"
+          label={t('git.radio-button-other', 'Other…')}
           onSelected={this.onDefaultBranchChanged}
         />
 
@@ -135,7 +145,10 @@ export class Git extends React.Component<IGitProps, IGitState> {
         )}
 
         <p className="git-settings-description">
-          These preferences will edit your global Git config.
+          {t(
+            'git.edit-your-global-git-config',
+            'These preferences will edit your global Git config.'
+          )}
         </p>
       </div>
     )

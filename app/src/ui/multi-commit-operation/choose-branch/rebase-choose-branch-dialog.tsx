@@ -5,6 +5,7 @@ import { RebasePreview } from '../../../models/rebase'
 import { ActionStatusIcon } from '../../lib/action-status-icon'
 import { updateRebasePreview } from '../../lib/update-branch'
 import { BaseChooseBranchDialog } from './base-choose-branch-dialog'
+import { t } from 'i18next'
 
 export abstract class RebaseChooseBranchDialog extends BaseChooseBranchDialog {
   private rebasePreview: RebasePreview | null = null
@@ -62,16 +63,24 @@ export abstract class RebaseChooseBranchDialog extends BaseChooseBranchDialog {
 
   protected getSubmitButtonToolTip = () => {
     return this.selectedBranchIsCurrentBranch()
-      ? 'You are not able to rebase this branch onto itself'
+      ? t(
+          'rebase-choose-branch-dialog.you-are-not-able-to-rebase',
+          'You are not able to rebase this branch onto itself'
+        )
       : !this.selectedBranchIsAheadOfCurrentBranch()
-      ? 'There are no commits on the current branch to rebase'
+      ? t(
+          'rebase-choose-branch-dialog.there-are-no-commits',
+          'There are no commits on the current branch to rebase'
+        )
       : undefined
   }
 
   protected getDialogTitle = (branchName: string) => {
     return (
       <>
-        Rebase <strong>{branchName}</strong>
+        {t('rebase-choose-branch-dialog.rebase-1', 'Rebase ')}
+        <strong>{branchName}</strong>
+        {t('rebase-choose-branch-dialog.rebase-2', ' ')}
       </>
     )
   }
@@ -123,11 +132,25 @@ export abstract class RebaseChooseBranchDialog extends BaseChooseBranchDialog {
   }
 
   private renderLoadingRebaseMessage() {
-    return <>Checking for ability to rebase automatically…</>
+    return (
+      <>
+        {t(
+          'rebase-choose-branch-dialog.checking-for-ability-to-rebase',
+          'Checking for ability to rebase automatically…'
+        )}
+      </>
+    )
   }
 
   private renderInvalidRebaseMessage() {
-    return <>Unable to start rebase. Check you have chosen a valid branch.</>
+    return (
+      <>
+        {t(
+          'rebase-choose-branch-dialog.unable-to-start-rebase',
+          'Unable to start rebase. Check you have chosen a valid branch.'
+        )}
+      </>
+    )
   }
 
   private renderCleanRebaseMessage(
@@ -138,20 +161,43 @@ export abstract class RebaseChooseBranchDialog extends BaseChooseBranchDialog {
     if (commitsToRebase <= 0) {
       return (
         <>
-          This branch is up to date with{` `}
+          {t(
+            'rebase-choose-branch-dialog.this-branch-is-up-to-date-with-1',
+            `This branch is up to date with `
+          )}
           <strong>{currentBranch.name}</strong>
+          {t(
+            'rebase-choose-branch-dialog.this-branch-is-up-to-date-with-2',
+            ' '
+          )}
         </>
       )
     }
 
-    const pluralized = commitsToRebase === 1 ? 'commit' : 'commits'
+    const pluralized =
+      commitsToRebase === 1
+        ? t('common.one-commit', 'commit')
+        : t('common.multiple-commits', 'commits')
     return (
       <>
-        This will update <strong>{currentBranch.name}</strong>
-        {` by applying its `}
-        <strong>{` ${commitsToRebase} ${pluralized}`}</strong>
-        {` on top of `}
+        {t(
+          'rebase-choose-branch-dialog.this-will-update-1',
+          'This will update '
+        )}
+        <strong>{currentBranch.name}</strong>
+        {t(
+          'rebase-choose-branch-dialog.this-will-update-2',
+          ` by applying its `
+        )}
+        <strong>
+          {t('rebase-choose-branch-dialog.number-commit', ` {{0}} {{1}}`, {
+            0: commitsToRebase,
+            1: pluralized,
+          })}
+        </strong>
+        {t('rebase-choose-branch-dialog.this-will-update-3', ` on top of `)}
         <strong>{baseBranch.name}</strong>
+        {t('rebase-choose-branch-dialog.this-will-update-4', ` `)}
       </>
     )
   }

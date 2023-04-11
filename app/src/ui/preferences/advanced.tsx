@@ -4,6 +4,7 @@ import { Checkbox, CheckboxValue } from '../lib/checkbox'
 import { LinkButton } from '../lib/link-button'
 import { SamplesURL } from '../../lib/stats'
 import { isWindowsOpenSSHAvailable } from '../../lib/ssh/ssh'
+import { t } from 'i18next'
 
 interface IAdvancedPreferencesProps {
   readonly useWindowsOpenSSH: boolean
@@ -64,8 +65,14 @@ export class Advanced extends React.Component<
   private reportDesktopUsageLabel() {
     return (
       <span>
-        Help GitHub Desktop improve by submitting{' '}
-        <LinkButton uri={SamplesURL}>usage stats</LinkButton>
+        {t(
+          'advanced.help-github-desktop-improve-by-submitting-1',
+          'Help GitHub Desktop improve by submitting '
+        )}
+        <LinkButton uri={SamplesURL}>
+          {t('advanced.usage-stats', 'usage stats')}
+        </LinkButton>
+        {t('advanced.help-github-desktop-improve-by-submitting-2', ' ')}
       </span>
     )
   }
@@ -74,9 +81,12 @@ export class Advanced extends React.Component<
     return (
       <DialogContent>
         <div className="advanced-section">
-          <h2>Background updates</h2>
+          <h2>{t('advanced.background-updates', 'Background updates')}</h2>
           <Checkbox
-            label="Periodically fetch and refresh status of all repositories"
+            label={t(
+              'advanced.periodically-fetch-and-refresh-status',
+              'Periodically fetch and refresh status of all repositories'
+            )}
             value={
               this.props.repositoryIndicatorsEnabled
                 ? CheckboxValue.On
@@ -85,13 +95,17 @@ export class Advanced extends React.Component<
             onChange={this.onRepositoryIndicatorsEnabledChanged}
           />
           <p className="git-settings-description">
-            Allows the display of up-to-date status indicators in the repository
-            list. Disabling this may improve performance with many repositories.
+            {t(
+              'advanced.allows-the-display-of-up-to-date-status-indicators',
+              `Allows the display of up-to-date status indicators in the
+              repository list. Disabling this may improve performance
+              with many repositories.`
+            )}
           </p>
         </div>
         {this.renderSSHSettings()}
         <div className="advanced-section">
-          <h2>Usage</h2>
+          <h2>{t('advanced.usage', 'Usage')}</h2>
           <Checkbox
             label={this.reportDesktopUsageLabel()}
             value={
@@ -113,9 +127,12 @@ export class Advanced extends React.Component<
 
     return (
       <div className="advanced-section">
-        <h2>SSH</h2>
+        <h2>{t('advanced.ssh', 'SSH')}</h2>
         <Checkbox
-          label="Use system OpenSSH (recommended)"
+          label={t(
+            'advanced.use-system-openssh',
+            'Use system OpenSSH (recommended)'
+          )}
           value={
             this.props.useWindowsOpenSSH ? CheckboxValue.On : CheckboxValue.Off
           }

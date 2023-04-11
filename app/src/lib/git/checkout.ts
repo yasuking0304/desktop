@@ -15,6 +15,7 @@ import {
 } from './environment'
 import { WorkingDirectoryFileChange } from '../../models/status'
 import { ManualConflictResolution } from '../../models/manual-conflict-resolution'
+import { t } from 'i18next'
 
 export type ProgressCallback = (progress: ICheckoutProgress) => void
 
@@ -75,7 +76,11 @@ export async function checkoutBranch(
   }
 
   if (progressCallback) {
-    const title = `Checking out branch ${branch.name}`
+    const title = t(
+      'checkout.checking-out-branch',
+      `Checking out branch {{0}}`,
+      { 0: branch.name }
+    )
     const kind = 'checkout'
     const targetBranch = branch.name
 

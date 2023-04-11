@@ -2,6 +2,7 @@ import * as React from 'react'
 import { IRemote } from '../../models/remote'
 import { TextBox } from '../lib/text-box'
 import { DialogContent } from '../dialog'
+import { t } from 'i18next'
 
 interface IRemoteProps {
   /** The remote being shown. */
@@ -17,9 +18,15 @@ export class Remote extends React.Component<IRemoteProps, {}> {
     const remote = this.props.remote
     return (
       <DialogContent>
-        <p>Primary remote repository ({remote.name})</p>
+        <p>
+          {t(
+            'remote.primary-remote-repository',
+            'Primary remote repository ({{0}})',
+            { 0: remote.name }
+          )}
+        </p>
         <TextBox
-          placeholder="Remote URL"
+          placeholder={t('remote.placeholder-remote-url', 'Remote URL')}
           value={remote.url}
           onValueChanged={this.props.onRemoteUrlChanged}
         />
