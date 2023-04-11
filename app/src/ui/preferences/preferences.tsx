@@ -211,7 +211,8 @@ export class Preferences extends React.Component<
           __DARWIN__
             ? t('common.preferences', 'Preferences')
             : t('common.options', 'Options')
-        }        onDismissed={this.onCancel}
+        }
+        onDismissed={this.onCancel}
         onSubmit={this.onSave}
       >
         <div className="preferences-container">
@@ -239,7 +240,7 @@ export class Preferences extends React.Component<
             </span>
             <span>
               <Octicon className="icon" symbol={OcticonSymbol.bell} />
-              Notifications
+              {t('preferences.notifications', 'Notifications')}
             </span>
             <span>
               <Octicon className="icon" symbol={OcticonSymbol.question} />

@@ -60,7 +60,10 @@ export class ConfirmDiscardStashDialog extends React.Component<
           </Row>
           <Row>
             <Checkbox
-              label="Do not show this message again"
+              label={t(
+                'common.do-not-show-message-again',
+                'Do not show this message again'
+              )}
               value={
                 this.state.confirmDiscardStash
                   ? CheckboxValue.Off

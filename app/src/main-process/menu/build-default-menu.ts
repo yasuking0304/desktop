@@ -555,9 +555,11 @@ export function buildDefaultMenu({
     },
   ]
 
-  if (enableStartingPullRequests()) {
+  if (!hasCurrentPullRequest && enableStartingPullRequests()) {
     branchSubmenu.push({
-      label: __DARWIN__ ? 'Preview Pull Request' : 'Preview pull request',
+      label: __DARWIN__
+        ? t('menu.preview-pull-request-darwin', 'Preview Pull Request')
+        : t('menu.preview-pull-request', 'Preview pull request'),
       id: 'preview-pull-request',
       accelerator: 'CmdOrCtrl+Alt+P',
       click: emit('preview-pull-request'),

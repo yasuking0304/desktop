@@ -41,32 +41,15 @@
     "warning-helper-text3-3": "しますか?"
   },
   "advanced": {
-    "allows-the-display-of-notifications": "現在のリポジトリで緊急イベントが発生したときに通知を表示できるようにします。",
     "allows-the-display-of-up-to-date-status-indicators": "リポジトリ リストに最新のステータス インジケータを表示できるようにします。これを無効にすると、多くのリポジトリでのパフォーマンスが向上する可能性があります。",
-    "always-bring-my-changes-to-my-new-branch": "常に新しいブランチに修正中の作業をを引き継ぐ",
-    "always-stash-and-leave-my-changes": "常に修正中の作業をブランチに保存して新しいブランチには残さない(あとで戻せます)",
-    "ask-me-where-i-want-the-changes-to-go": "どう変更したいのか確認する",
     "background-updates": "バックグラウンド更新",
-    "enable-notifications": "通知を有効にする",
-    "enabled": "有効",
-    "grant-permission": "アクセス許可の付与",
-    "has-no-permission-to-display-notifications-1": " GitHub Desktop には、通知を表示する権限がありません。",
-    "has-no-permission-to-display-notifications-2": "でそれらを有効にしてください。",
     "help-github-desktop-improve-by-submitting-1": "GitHub Desktop が ",
     "help-github-desktop-improve-by-submitting-2": " を送信することで改善に貢献する",
-    "if-i-have-changes-and-i-switch-branches": "変更中のブランチを切り替える場合…",
-    "make-sure-notifications-1": "  ",
-    "make-sure-notifications-2": " で通知の設定が{{0}}であることを確認してください。",
-    "notifications": "通知設定",
-    "notifications-settings": "通知の設定",
     "periodically-fetch-and-refresh-status": "すべてのリポジトリのステータスを定期的にフェッチおよび更新する",
-    "properly-configured": "適切な構成",
     "ssh": "SSH",
     "usage": "使われ方",
     "usage-stats": "使用状況",
-    "use-systemopenssh": "システムの OpenSSH を使う (推奨)",
-    "you-need-to-grant-permission-to-display-1": " GitHub Desktop からこれらの通知を表示するには、 ",
-    "you-need-to-grant-permission-to-display-2": " にする必要があります。"
+    "use-system-openssh": "システムの OpenSSH を使う (推奨)"
   },
   "app": {
     "adding-this-feature": "この機能の追加",
@@ -105,11 +88,6 @@
     "message-of-system": "システムテーマと一致するようにテーマを自動的に切り替えます",
     "system": "システムの規定"
   },
-  "author-input": {
-    "redo": "やり直し",
-    "select-all": "全てを選択",
-    "select-all-darwin": "全てを選択"
-  },
   "branch-dropdown": {
     "current-branch": "現在のブランチ",
     "current-branch-darwin": "現在のブランチ",
@@ -132,6 +110,9 @@
     "current-stashed-changes": "このブランチで現在隠されている変更は、ブランチの名前が変更されると GitHub Desktop に表示されなくなります。",
     "this-branch-is-tracking-1": "このブランチは ",
     "this-branch-is-tracking-2": " を追跡しており、このブランチの名前を変更してもリモートのブランチ名は変更されません。"
+  },
+  "branch-select": {
+    "choose-a-base-branch": "ベースブランチの選択"
   },
   "branches-container": {
     "branches": "ブランチ",
@@ -202,7 +183,7 @@
     "ok-button-text-to-1": " ",
     "ok-button-text-to-2": " に{{0}}",
     "okbutton": "{{0}}個の{{1}}を Cherry-pick",
-    "one-commit": "コミット",
+    "one-or-less-commit": "コミット",
     "you-are-not-able-to-cherry-pick": "同じブランチから Cherry-pick をすることはできません"
   },
   "cli-installed": {
@@ -300,15 +281,8 @@
   "commit-message": {
     "add-co-authors": "共同作業者の追加",
     "add-co-authors-darwin": "共同作業者の追加",
-    "amend-label-amend": "コミットを修正する",
-    "amend-label-amending": "コミットを修正中",
-    "amend-title": "{{0}} last commit",
-    "commit-label-commit": "コミット",
-    "commit-label-committing": "コミット中",
     "commit-summaries-length-over": "概要入力は50文字未満でお願いします",
     "commit-title": "{{1}} に{{0}}",
-    "commit-title-1": " ",
-    "commit-title-2": " に{{0}}",
     "commiting-as-1": " ",
     "commiting-as-2": " {{0}} でコミットします",
     "description-field": "説明フィールド",
@@ -328,9 +302,6 @@
     "remove-co-authors": "共同作業者の削除",
     "remove-co-authors-darwin": "共同作業者の削除",
     "stop-amending": "修正を中止",
-    "tooltip-committing-changes": "変更をコミットしています…",
-    "tooltip-is-anyfiles": "コミットするファイルを 1つ以上選択してください",
-    "tooltip-is-summary-blank": "コミットするには概要入力が必要です",
     "will-modify-your-most-recent-commit-1": "あなたの変更は、",
     "will-modify-your-most-recent-commit-2": "最新のコミット",
     "will-modify-your-most-recent-commit-3": "を更新してしまいます。 これらの変更を新しいコミットとして行うために ",
@@ -350,7 +321,7 @@
   },
   "commit-summary": {
     "collapse": "折りたたむ",
-    "diff-options": "違いの設定",
+    "diff-options": "差分検出の設定",
     "empty-commit-message": "空のコミットメッセージ",
     "expand": "展開する",
     "file": "ファイル",
@@ -405,6 +376,7 @@
     "name": "名前",
     "ok": "Ok",
     "one-commit": "個のコミット",
+    "one-or-less-commit": "個のコミット",
     "opetarion-alias": "エイリアス{{0}}",
     "opetarion-alias-darwin": "エイリアス{{0}}",
     "options": "設定",
@@ -434,8 +406,8 @@
     "ahead": "({{0}}) の前方",
     "behind": "({{0}}) の後方",
     "error": {
-      "unable-to-reorder": "git reorderできません。並べ替えは、並べ替えに必要な最後のコミットまでのすべてのコミットを再生します。マージコミットは、これらのコミットの間に存在することはできません。",
-      "unable-to-squash": "git squashできません。まとめには、まとめに必要な最後のコミットまでのすべてのコミットを再生します。マージコミットは、これらのコミットの間に存在することはできません。"
+      "unable-to-reorder": "git reorderできません。コミットの並べ替えは、マージコミット以降から最新のコミットまでが対象です。間にマージコミットが存在してはいけません。",
+      "unable-to-squash": "git squashできません。コミットをまとめるのは、マージコミット以降から最新のコミットまでが対象です。間にマージコミットが存在してはいけません。"
     },
     "no-branch-to-compare": "比較するブランチがありません",
     "no-branch-to-compare-darwin": "比較するブランチがありません",
@@ -468,10 +440,10 @@
     "confirm-exit-tutorial-darwin": "チュートリアルの終了"
   },
   "confirm-force-push": {
-    "force-push will-rewrite-history-1": "強制Pushは ",
+    "force-push will-rewrite-history-1": "強制プッシュは ",
     "force-push will-rewrite-history-2": "の履歴を書き換えます。このブランチで作業している共同作業者は、リモートの履歴と一致するように自分のローカルブランチをリセットする必要があります。",
-    "i-am-sure": "もちろんです",
-    "want-to-force-push": "強制Pushしますが、よろしいですか?"
+    "i-am-sure": "大丈夫です",
+    "want-to-force-push": "強制プッシュしますが、よろしいですか?"
   },
   "confirm-remove-repository": {
     "also-move-this-repository": "また、このリポジトリを {{0}} に移動します",
@@ -604,6 +576,9 @@
     "delete-tag-darwin": "タグの削除"
   },
   "diff-options": {
+    "caption-diff": "差分検出の",
+    "caption-options": "設定",
+    "caption-options-darwin": "設定",
     "diff-display": "変更点の表示",
     "hide-whitespace-changes": "空白だけの変更を非表示",
     "hide-whitespace-changes-darwin": "空白だけの変更を非表示",
@@ -715,9 +690,13 @@
     "use-my-global-git-config": "Git 設定"
   },
   "git-email-not-found-warning": {
+    "does-not-match": "ありません",
     "edither-your-account": "GitHub.com アカウントまたは GitHub Enterprise アカウントのいずれか",
-    "email-address-does-not-match": "このメールアドレスは {{0}} と一致しないため、コミットの属性が間違った状態です。",
     "learn-more": "詳細情報",
+    "learn-more-about": "詳しくはコミットユーザについてをご覧ください",
+    "matchs": "あります",
+    "this-email-address": "このメールアドレスは{{1}}内に{{0}}。 ",
+    "will-be-wrongly-attributed": "あなたのコミットは間違ったユーザにリンクされます。",
     "your-account": "{{0}} アカウント"
   },
   "git-ignore": {
@@ -774,7 +753,7 @@
     "compare-to-branch-darwin": "ブランチと比較",
     "confirm-delete": "削除…",
     "confirm-force-push": "強制P&ush…",
-    "confirm-force-push-darwin": "強制Push…",
+    "confirm-force-push-darwin": "強制プッシュ…",
     "confirm-remove": "削除(&R)…",
     "confirm-remove-darwin": "削除…",
     "confirm-rename": "ブランチ名の変更…",
@@ -820,7 +799,7 @@
     "find": "検索(&F)",
     "find-darwin": "検索",
     "force-push": "強制P&ush",
-    "force-push-darwin": "強制Push",
+    "force-push-darwin": "強制プッシュ",
     "go-to-summary": "概要へ(&S)",
     "go-to-summary-darwin": "概要へ",
     "help": "ヘルプ(&H)",
@@ -840,16 +819,18 @@
     "open-in-shell-darwin": "{{0}} で開く",
     "open-working-directory": "E&xplorerで表示",
     "open-working-directory-darwin": "Finderで表示",
-    "open-working-directory-linux": "File Managerで表示",
+    "open-working-directory-linux": "ファイルマネージャーで表示",
     "options": "設定(O)…",
     "paste": "貼り付け(&P)",
     "paste-darwin": "貼り付け",
     "preferences": "設定…",
-    "pull": "Pu&ll",
-    "pull-darwin": "Pull",
+    "preview-pull-request": "プルリクエストのプレビュー",
+    "preview-pull-request-darwin": "プルリクエストのプレビュー",
+    "pull": "プル(&L)",
+    "pull-darwin": "プル",
     "pull-request-check-run-failed": "プルリクエスト チェックの実行に失敗しました",
-    "push": "P&ush",
-    "push-darwin": "Push",
+    "push": "プッシュ(&U)",
+    "push-darwin": "プッシュ",
     "rebase-current-branch": "現在のブランチのリベース(&E)…",
     "rebase-current-branch-darwin": "現在のブランチのリベース…",
     "recycle-bin": "ゴミ箱",
@@ -880,14 +861,14 @@
     "show-changes-darwin": "変更点 表示",
     "show-history": "変更履歴(&H)",
     "show-history-darwin": "変更履歴 表示",
-    "show-in-explorer": "Explorer で表示",
-    "show-in-file-manager": "File Manager で表示",
-    "show-in-finger": "Finder で表示",
+    "show-in-explorer": "Explorerで表示",
+    "show-in-file-manager": "ファイルマネージャーで表示",
+    "show-in-finger": "Finderで表示",
     "show-keyboard-shortcuts": "キーボード ショートカットの参照",
     "show-keyboard-shortcuts-darwin": "キーボード ショートカットの参照",
     "show-logs-in-finder": "Explorerでログを表示(&S)",
     "show-logs-in-finder-darwin": "Finderでログを表示",
-    "show-logs-in-finder-linux": "File Managerでログを表示(&H)",
+    "show-logs-in-finder-linux": "ファイルマネージャーでログを表示(&H)",
     "show-notification": "通知を表示",
     "show-popup": "ポップアップの表示",
     "show-repository-list": "リポジトリリスト(&L)",
@@ -964,52 +945,57 @@
     "protip-2": " を押すと、アプリ内のどこからでも 新規ブランチをすばやく作成できます。"
   },
   "no-changes": {
-    "always-available-in-the-toolbar-local-commits": "Always available in the toolbar when there are local commits\n           waiting to be pushed or ",
-    "always-available-in-the-toolbar-local-repositories-1": "Always available in the toolbar for local repositories or ",
-    "always-available-in-the-toolbar-local-repositories-2": " ",
+    "always-available-in-the-toolbar-local-commits-1": "プッシュ待ちのローカルコミットは、ツールバーからか ",
+    "always-available-in-the-toolbar-local-commits-2": " のキーボード操作で、いつでも可能です",
+    "always-available-in-the-toolbar-local-repositories-1": "for local repositories は、ツールバーからか ",
+    "always-available-in-the-toolbar-local-repositories-2": "のキーボード操作で、いつでも可能です",
     "always-available-in-the-toolbar-or-1": "ツールバーまたは ",
-    "always-available-in-the-toolbar-or-2": " で常に使用可能です",
-    "always-available-in-the-toolbar-remote-changes-1": "Always available in the toolbar when there are remote changes or ",
-    "always-available-in-the-toolbar-remote-changes-2": " ",
+    "always-available-in-the-toolbar-or-2": " のキーボード操作で、いつでも可能です",
+    "always-available-in-the-toolbar-remote-changes-1": "リモートの更新は、ツールバーからか ",
+    "always-available-in-the-toolbar-remote-changes-2": " のキーボード操作で、いつでも可能です",
     "change": "変更",
     "changes": "変更",
     "create-pull-request": "プルリクエストの作成",
     "create-pull-request-from-current-branch": "現在のブランチからプルリクエストを作成します",
     "file-manager": "Explorer",
     "file-manager-darwin": "Finder",
-    "file-manager-linux": "your File Manager",
+    "file-manager-linux": "ファイルマネージャー",
     "menu": "{{0}}メニューから開くか ",
-    "multiple-local-commits": "{{0}} local commits",
+    "multiple-local-commits": "{{0}}個のローカルコミット",
+    "multiple-tags": "{{0}}個のタグ",
     "no-local-changes": "ローカルの変更はありません",
-    "number-tags": "{{0}} tags",
-    "one-local-commit": "1 local commit",
-    "one-tag": "1 tag",
-    "open-a-pull-request": "open a pull request, ",
+    "one-local-commit": "1個のローカルコミット",
+    "one-tag": "1個のタグ",
+    "open-a-pull-request": "プルリクエストを開く",
     "open-the-repository-in-your-external-editor": "外部エディタでリポジトリを開きます",
     "open-the-repository-page-on-github-in-your-browser": "ブラウザでGitHubのリポジトリページを開きます",
+    "preview-pull-request": "プルリクエストのプレビュー",
+    "preview-pull-request-1": "現在のブランチ (",
+    "preview-pull-request-2": ") は既に GitHub に公開されています。プルリクエストで修正を提案する前にプレビューを表示して確認します。",
+    "preview-pull-request-title": "現在のブランチからのプルリクエストのプレビューを表示します",
     "publish-branch": "ブランチの公開",
     "publish-repository": "リポジトリの公開",
     "publish-your-repository": "あなたのブランチを公開",
     "publish-your-repository-to-github": "あなたのブランチを GitHub に公開",
-    "pull": "Pull {{0}}",
-    "pull-number-commits-from-the-remote": "{{2}} リモートからの{{0}}{{1}} をPullします",
-    "push": "Push {{0}}",
-    "push-to-the-remote": "{{0}} を {{1}} にPushする",
+    "pull": "{{0}}からプル",
+    "pull-number-commits-from-the-remote": "{{2}} リモートからの{{0}}{{1}} をプルします",
+    "push": "{{0}}にプッシュ",
+    "push-to-the-remote": "{{0}}を {{1}} にプッシュします",
     "select-your-editor": "エディタの設定はこちら ",
-    "the-current-branch-1": "The current branch (",
-    "the-current-branch-2": ") hasn't been published\n        to the remote yet. By publishing it {{0}} you\n        can share it, {{1}}\n        and collaborate with others.",
+    "the-current-branch-1": "現在のブランチ (",
+    "the-current-branch-2": ") はまだリモートに公開されていないようです。 By publishing it {{0}} you\n        can share it, {{1}}\n        and collaborate with others.",
     "the-current-branch-us-already-published-1": "現在のブランチ (",
-    "the-current-branch-us-already-published-2": ") は既に GitHub に公開されています。プルリクエストを作成して、変更を提案し、共同作業を行います。",
+    "the-current-branch-us-already-published-2": ") は既に GitHub に公開されています。プルリクエストを作成して、変更の提案・共同作業を行います。",
     "the-remote": "the remote",
     "there-are-no-uncommitted-changes": "このリポジトリにはコミットされていない変更はありません。次に何をすべきかについてのいくつかの良い提案があります。",
     "this-repository-is-currently-only": "このリポジトリは現在、ローカル マシンでのみ利用できます。 GitHub に公開することで、共有したり、他のユーザーと共同作業したりできます。",
     "to-github": "to GitHub",
     "view-stash": "一時退避したファイルを参照",
-    "view-the-files-of-your-repository": "{{0}} でリポジトリのファイルを表示する",
-    "view-your-stashed-changes": "一時退避した変更を表示する",
+    "view-the-files-of-your-repository": "{{0}} でリポジトリのファイルを表示します",
+    "view-your-stashed-changes": "一時退避した変更を表示します",
     "when-a-stash-exists-access-it-at-the-bottom": "一時退避した変更が存在します。左側の [一時退避した変更] タブの下部からアクセスできます。",
     "you-have-number-change-in-progress": "まだコミットしていない修正中の{{1}}が {{0}}つあります。",
-    "you-have-operation": "You have {{0}} waiting to be pushed to {{0}}."
+    "you-have-operation": "{{0}}が {{1}} にプッシュ待ちです。"
   },
   "no-pull-requests": {
     "creat-a-new-branch": "新規ブランチの作成",
@@ -1042,6 +1028,30 @@
     "return-to-in-progress-tutorial-darwin": "修正中のチュートリアルに戻る",
     "tips": "既存のリポジトリフォルダをここにドラッグ&ドロップして Desktop に追加できます"
   },
+  "notifications": {
+    "allows-the-display-of-notifications": "現在のリポジトリで緊急のイベントが発生したときに通知を表示できるようにします。",
+    "enable-notifications": "通知を有効にする",
+    "notifications": "通知"
+  },
+  "open-pull-request-dialog": {
+    "button_title": "GitHub{{1}} でプルリクエストを{{0}}します",
+    "could-not-find-a-default-branch": "比較するデフォルト ブランチが見つかりませんでした。",
+    "create": "作成",
+    "request": "プルリクエストの{{0}}",
+    "request_darwin": "プルリクエストの{{0}}",
+    "select-a-base-branch-above": "ベースブランチの選択",
+    "there_are_no_changes": "変更点はありません",
+    "view": "閲覧"
+  },
+  "open-pull-request-header": {
+    "merge-into-1": "{{0}}をマージします。マージ先:",
+    "merge-into-2": "マージ元:",
+    "merge-into-3": " ",
+    "multiple-commits": "{{0}}個のコミット",
+    "one-or-less-commit": "{{0}}個のコミット",
+    "open-a-pull-request": "プルリクエストを開く",
+    "open-a-pull-request-darwin": "プルリクエストを開く"
+  },
   "oversized-files-warning": {
     "commit-anyway": "とにかくコミットする",
     "commit-anyway-darwin": "とにかくコミットする",
@@ -1064,13 +1074,18 @@
     "appearance": "配色テーマ",
     "git": "Git",
     "integrations": "アプリ連携",
+    "notifications": "通知",
     "prompts": "確認"
   },
   "prompts": {
+    "always-bring-my-changes-to-my-new-branch": "新しいブランチに修正中の作業をを引き継ぐ",
+    "always-stash-and-leave-my-changes": "修正中の作業を退避して新しいブランチに反映しない(あとで戻せます)",
+    "ask-me-where-i-want-the-changes-to-go": "どのように修正するのか確認する",
     "discarding-changes": "変更の破棄",
     "discarding-changes-permanently": "変更を完全に破棄する",
     "discarding-stash": "一時退避場所の破棄",
-    "force-pushing": "強制Push",
+    "force-pushing": "強制プッシュ",
+    "if-i-have-changes-and-i-switch-branches": "修正中のブランチを切り替える場合…",
     "removing-repositories": "リポジトリを削除する",
     "show-a-confirmation": "事前に確認ダイアログを表示…",
     "undo-commit": "コミットの取り消し"
@@ -1079,15 +1094,26 @@
     "keep-this-code-private": "このコードを非公開にする",
     "will-be-create-as": "{{0}} として作成されます"
   },
+  "pull-request-files-changed": {
+    "showing-changes": "すべてのコミットの変更を表示"
+  },
   "pull-request-list": {
     "pull-requests-in": "{{0}} 内のプルリクエスト",
     "refresh-the-list-of-pull-request": "プルリクエストのリストを更新する"
+  },
+  "pull-request-merge-status": {
+    "able-to-merge": "マージ可能です。",
+    "can-be-automatically-merge": "このブランチは自動的にマージ可能です。",
+    "cannot-automatically-merge": "自動マージはできません。",
+    "donot-worry": "プルリクエストを作成することはできますので、ご安心ください。",
+    "error-checking-merge-status": "マージ状態のチェックでエラーが発生しました。",
+    "unable-to-merge-unrelated-histories": "リポジトリ内の関連のない履歴をマージできません"
   },
   "push-pull-button": {
     "cannot-publish-detached-head": "detached HEAD を公開できません",
     "cannot-publish-unborn-head": "unborn HEAD を公開できません",
     "fetch": "フェッチ {{0}}",
-    "force-push": "強制Push {{0}}",
+    "force-push": "強制プッシュ {{0}}",
     "hang-on": "お待ちください…",
     "last-fetched": "最新フェッチ ",
     "never-fetched": "まだフェッチ実行していません",
@@ -1096,8 +1122,8 @@
     "publish-branch-to-remote": "ブランチを リモート に公開",
     "publish-repository": "リポジトリの公開",
     "publish-this-repository": "リポジトリを GitHub に公開",
-    "pull": "Pull {{0}}",
-    "pull-with-rebase": "リベース後に Pull {{0}}",
+    "pull": "プル {{0}}",
+    "pull-with-rebase": "リベース後に プル {{0}}",
     "push": "Push {{0}}",
     "rebase-in-progress": "リベース中"
   },
@@ -1132,6 +1158,10 @@
     "rename-branch": "ブランチ名の変更",
     "rename-branch-darwin": "ブランチ名の変更",
     "rename-branch-name": "{{0}} のブランチ名を変更"
+  },
+  "render-banner": {
+    "reorder-of-commit-unfone": "{{0}}{{1}}の並び替えができませんでした。",
+    "squash-of-commit-unfone": "{{0}}{{1}}の並び替えに成功しました。"
   },
   "repositories-list": {
     "add": "追加",
@@ -1279,6 +1309,18 @@
     "unable-to-restore-stash": "ブランチに変更が存在する場合、退避ファイルを復元できません。",
     "will-move-your-stashed-files": " は、退避ファイルを変更リストに移動します。"
   },
+  "status": {
+    "conflicted": "競合中",
+    "copied": "コピー",
+    "deleted": "削除",
+    "eesolved": "解決済み",
+    "modified": "変更",
+    "new": "追加",
+    "renamed": "リネーム"
+  },
+  "successful-squash": {
+    "successfully-squashed": "{{1}}{{0}}のまとめに成功しました。"
+  },
   "terms-and-conditions": {
     "additional-services": "追加サービス",
     "auto-update-services": "自動更新サービス",
@@ -1375,16 +1417,16 @@
   },
   "url": {
     "commit-message-avatar": "https://docs.github.com/ja/github/committing-changes-to-your-project/why-are-my-commits-linked-to-the-wrong-user",
-    "git-email-not-found-warning-learn-more": "https://docs.github.com/ja/github/committing-changes-to-your-project/why-are-my-commits-linked-to-the-wrong-user",
     "keyboard-shortcuts": "https://docs.github.com/ja/desktop/installing-and-configuring-github-desktop/overview/keyboard-shortcuts",
-    "show-user-guides": "https://docs.github.com/ja/desktop"
+    "show-user-guides": "https://docs.github.com/ja/desktop",
+    "why-are-my-commits-linked-to-the-wrong-user": "https://docs.github.com/ja/github/committing-changes-to-your-project/why-are-my-commits-linked-to-the-wrong-user"
   },
   "warn-force-push-dialog": {
     "are-you-sure-operation": "本当に {{0}} を行いますか?",
     "begin-operation": "{{0}} の開始",
-    "end-of-the-operation-flow": "{{0}} の最後に、GitHub Desktop を使用すると、ブランチを強制的にプッシュして upstream ブランチを更新できます。強制Pushは、リモートの履歴を変更し、このブランチの共同作業者に問題を引き起こす可能性があります",
-    "require-force-push": "{{0}} は強制Push が必要です",
-    "require-force-push-darwin": "{{0}} は強制Push が必要です"
+    "end-of-the-operation-flow": "{{0}} の最後に、GitHub Desktop を使用すると、ブランチを強制的にプッシュして upstream ブランチを更新できます。強制プッシュは、リモートの履歴を変更し、このブランチの共同作業者に問題を引き起こす可能性があります",
+    "require-force-push": "{{0}} は強制プッシュ が必要です",
+    "require-force-push-darwin": "{{0}} は強制プッシュ が必要です"
   },
   "warn-local-changes-before-undo": {
     "changes-in-progress-undo-commit": "修正中の変更があります。コミットを元に戻すと、これらの変更の一部が失われる可能性があります。続行しますか?",
@@ -1409,8 +1451,8 @@
   "workflow-push-rejected": {
     "continue-in-browser": "ブラウザで続行",
     "continue-in-browser-darwin": "ブラウザで続行",
-    "push-rejected": "Push拒否",
-    "push-rejected-darwin": "Push拒否",
+    "push-rejected": "プッシュ拒否",
+    "push-rejected-darwin": "プッシュ拒否",
     "the-push-was-rejected-by-the-server-1": "ワークフローファイル ",
     "the-push-was-rejected-by-the-server-2": "への変更が含まれているために、Pushがサーバーによって拒否されました。ワークフローファイルにPushできるようにするには、GitHub Desktop が追加の権限を要求する必要があります。",
     "would-you-like-to-open-a-browser": "ブラウザを開いて、GitHub Desktop にワークフローファイルを更新する権限を付与しますか?"

@@ -147,18 +147,31 @@ export class CommitMessageAvatar extends React.Component<
         ariaLabelledby="misattributed-commit-popover-header"
       >
         <h3 id="misattributed-commit-popover-header">
-          This commit will be misattributed
+          {t(
+            'commit-message-avatar.this-commit-will-be-misattributed',
+            'This commit will be misattributed'
+          )}
         </h3>
         <Row>
           <div>
-            The email in your global Git config (
-            <span className="git-email">{this.props.email}</span>) doesn't match
-            your GitHub{accountTypeSuffix} account.{' '}
+            {t(
+              'commit-message-avatar.update-email-1',
+              'The email in your global Git config ('
+            )}
+            <span className="git-email">{this.props.email}</span>
+            {t(
+              'commit-message-avatar.update-email-2',
+              `) doesn't match your GitHub{{0}} account. `,
+              { 0: accountTypeSuffix }
+            )}
             <LinkButton
               ariaLabel="Learn more about commit attribution"
-              uri="https://docs.github.com/en/github/committing-changes-to-your-project/why-are-my-commits-linked-to-the-wrong-user"
+              uri={t(
+                'url.commit-message-avatar',
+                'https://docs.github.com/en/github/committing-changes-to-your-project/why-are-my-commits-linked-to-the-wrong-user'
+              )}
             >
-              Learn more
+              {t('commit-message-avatar.learn-more', 'Learn more.')}
             </LinkButton>
           </div>
         </Row>

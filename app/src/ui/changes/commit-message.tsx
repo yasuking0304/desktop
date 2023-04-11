@@ -763,12 +763,8 @@ export class CommitMessage extends React.Component<
   private getButtonVerb() {
     const { isCommitting, commitToAmend } = this.props
 
-    const amendVerb = isCommitting
-      ? t('commit-message.amend-label-amending', 'Amending')
-      : t('commit-message.amend-label-amend', 'Amend')
-    const commitVerb = isCommitting
-      ? t('commit-message.commit-label-committing', 'Committing')
-      : t('commit-message.commit-label-commit', 'Commit')
+    const amendVerb = isCommitting ? 'Amending' : 'Amend'
+    const commitVerb = isCommitting ? 'Committing' : 'Commit'
     const isAmending = commitToAmend !== null
 
     return isAmending ? amendVerb : commitVerb
@@ -784,7 +780,10 @@ export class CommitMessage extends React.Component<
 
     return (
       <>
-        {verb} to <strong>{branch}</strong>
+        {t('commit-message.commit-title', `{{0}} to {{1}}`, {
+          0: verb,
+          1: branch,
+        })}
       </>
     )
   }

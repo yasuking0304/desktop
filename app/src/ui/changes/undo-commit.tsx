@@ -37,7 +37,8 @@ export class UndoCommit extends React.Component<IUndoCommitProps, {}> {
       <div id="undo-commit" role="group" aria-label="Undo commit">
         <div className="commit-info">
           <div className="ago">
-            {t("common.committed", "Committed")} <RelativeTime date={authorDate} />
+            {t('common.committed', 'Committed')}{' '}
+            <RelativeTime date={authorDate} />
           </div>
           <RichText
             emoji={this.props.emoji}
@@ -48,7 +49,7 @@ export class UndoCommit extends React.Component<IUndoCommitProps, {}> {
         </div>
         <div className="actions" title={title}>
           <Button size="small" disabled={disabled} onClick={this.props.onUndo}>
-            {t("common.undo", "Undo")}
+            {t('common.undo', 'Undo')}
           </Button>
         </div>
       </div>
