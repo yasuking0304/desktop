@@ -764,11 +764,11 @@ export class CommitMessage extends React.Component<
     const { isCommitting, commitToAmend } = this.props
 
     const amendVerb = isCommitting
-      ? t('commit-message.amend-label-amending', 'Amending')
-      : t('commit-message.amend-label-amend', 'Amend')
+      ? t('commit-message.amending', 'Amending')
+      : t('commit-message.amend', 'Amend')
     const commitVerb = isCommitting
-      ? t('commit-message.commit-label-committing', 'Committing')
-      : t('commit-message.commit-label-commit', 'Commit')
+      ? t('commit-message.committing', 'Committing')
+      : t('commit-message.commit', 'Commit')
     const isAmending = commitToAmend !== null
 
     return isAmending ? amendVerb : commitVerb
@@ -784,7 +784,10 @@ export class CommitMessage extends React.Component<
 
     return (
       <>
-        {verb} to <strong>{branch}</strong>
+        {t('commit-message.commit-title', `{{0}} to {{1}}`, {
+          0: verb,
+          1: branch,
+        })}
       </>
     )
   }
@@ -831,11 +834,17 @@ export class CommitMessage extends React.Component<
 
     const isSummaryBlank = isEmptyOrWhitespace(this.summaryOrPlaceholder)
     if (isSummaryBlank) {
-      return `A commit summary is required to commit`
+      return t(
+        'commit-message.summary-is-required-to-commit',
+        `A commit summary is required to commit`
+      )
     } else if (!this.props.anyFilesSelected && this.props.anyFilesAvailable) {
-      return `Select one or more files to commit`
+      return t(
+        'commit-message.select-one-or-more-files-to-commit',
+        `Select one or more files to commit`
+      )
     } else if (this.props.isCommitting) {
-      return `Committing changes…`
+      return t('commit-message.committing-changes', `Committing changes…`)
     }
 
     return undefined

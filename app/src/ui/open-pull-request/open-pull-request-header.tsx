@@ -4,6 +4,7 @@ import { BranchSelect } from '../branches/branch-select'
 import { DialogHeader } from '../dialog/header'
 import { createUniqueId, releaseUniqueId } from '../lib/id-pool'
 import { Ref } from '../lib/ref'
+import { t } from 'i18next'
 
 interface IOpenPullRequestDialogHeaderProps {
   /** The base branch of the pull request */
@@ -74,7 +75,12 @@ export class OpenPullRequestDialogHeader extends React.Component<
   }
 
   public render() {
-    const title = __DARWIN__ ? 'Open a Pull Request' : 'Open a pull request'
+    const title = __DARWIN__
+      ? t(
+          'open-pull-request-header.open-a-pull-request-darwin',
+          'Open a Pull Request'
+        )
+      : t('open-pull-request-header.open-a-pull-request', 'Open a pull request')
     const {
       baseBranch,
       currentBranch,
@@ -85,7 +91,14 @@ export class OpenPullRequestDialogHeader extends React.Component<
       onBranchChange,
       onDismissed,
     } = this.props
-    const commits = `${commitCount} commit${commitCount > 1 ? 's' : ''}`
+    const commits =
+      commitCount > 1
+        ? t('open-pull-request-header.multiple-commits', `{{0}} commits`, {
+            0: commitCount,
+          })
+        : t('open-pull-request-header.one-or-less-commit', `{{0}} commit`, {
+            0: commitCount,
+          })
 
     return (
       <DialogHeader
@@ -96,7 +109,9 @@ export class OpenPullRequestDialogHeader extends React.Component<
       >
         <div className="break"></div>
         <div className="base-branch-details">
-          Merge {commits} into{' '}
+          {t('open-pull-request-header.merge-into-1', 'Merge {{0}} into', {
+            0: commits,
+          })}{' '}
           <BranchSelect
             branch={baseBranch}
             defaultBranch={defaultBranch}
@@ -111,7 +126,9 @@ export class OpenPullRequestDialogHeader extends React.Component<
               </>
             }
           />{' '}
-          from <Ref>{currentBranch.name}</Ref>.
+          {t('open-pull-request-header.merge-into-2', 'from')}{' '}
+          <Ref>{currentBranch.name}</Ref>
+          {t('open-pull-request-header.merge-into-3', '.')}
         </div>
       </DialogHeader>
     )

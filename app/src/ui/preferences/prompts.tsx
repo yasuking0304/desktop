@@ -118,13 +118,15 @@ export class Prompts extends React.Component<
     return (
       <DialogContent>
         <div className="advanced-section">
-        {t(
-            'prompts.show-a-confirmation',
-            'Show a confirmation dialog before...'
-          )}
+          <h2>
+            {t(
+              'prompts.show-a-confirmation',
+              'Show a confirmation dialog before...'
+            )}
+          </h2>
           <Checkbox
-          label={t('prompts.removing-repositories', 'Removing repositories')}
-          value={
+            label={t('prompts.removing-repositories', 'Removing repositories')}
+            value={
               this.state.confirmRepositoryRemoval
                 ? CheckboxValue.On
                 : CheckboxValue.Off
@@ -132,8 +134,8 @@ export class Prompts extends React.Component<
             onChange={this.onConfirmRepositoryRemovalChanged}
           />
           <Checkbox
-          label={t('prompts.discarding-changes', 'Discarding changes')}
-          value={
+            label={t('prompts.discarding-changes', 'Discarding changes')}
+            value={
               this.state.confirmDiscardChanges
                 ? CheckboxValue.On
                 : CheckboxValue.Off
@@ -179,15 +181,22 @@ export class Prompts extends React.Component<
           />
         </div>
         <div className="advanced-section">
-          <h2>If I have changes and I switch branches...</h2>
-
+          <h2>
+            {t(
+              'prompts.if-i-have-changes-and-i-switch-branches',
+              'If I have changes and I switch branches...'
+            )}
+          </h2>
           <RadioButton
             value={UncommittedChangesStrategy.AskForConfirmation}
             checked={
               this.state.uncommittedChangesStrategy ===
               UncommittedChangesStrategy.AskForConfirmation
             }
-            label="Ask me where I want the changes to go"
+            label={t(
+              'prompts.ask-me-where-i-want-the-changes-to-go',
+              'Ask me where I want the changes to go'
+            )}
             onSelected={this.onUncommittedChangesStrategyChanged}
           />
 
@@ -197,7 +206,10 @@ export class Prompts extends React.Component<
               this.state.uncommittedChangesStrategy ===
               UncommittedChangesStrategy.MoveToNewBranch
             }
-            label="Always bring my changes to my new branch"
+            label={t(
+              'prompts.always-bring-my-changes-to-my-new-branch',
+              'Always bring my changes to my new branch'
+            )}
             onSelected={this.onUncommittedChangesStrategyChanged}
           />
 
@@ -207,7 +219,10 @@ export class Prompts extends React.Component<
               this.state.uncommittedChangesStrategy ===
               UncommittedChangesStrategy.StashOnCurrentBranch
             }
-            label="Always stash and leave my changes on the current branch"
+            label={t(
+              'prompts.always-stash-and-leave-my-changes',
+              'Always stash and leave my changes on the current branch'
+            )}
             onSelected={this.onUncommittedChangesStrategyChanged}
           />
         </div>

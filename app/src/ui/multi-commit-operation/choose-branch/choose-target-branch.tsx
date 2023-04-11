@@ -146,7 +146,7 @@ export class ChooseTargetBranchDialog extends React.Component<
     const pluralize =
       this.props.commitCount > 1
         ? t('choose-target-branch.multiple-commits', 'commits')
-        : t('choose-target-branch.one-commit', 'commit')
+        : t('choose-target-branch.one-or-less-commit', 'commit')
     const okButtonText = t(
       'choose-target-branch.okbutton',
       `Cherry-pick {{0}} {{1}}`,
@@ -189,7 +189,7 @@ export class ChooseTargetBranchDialog extends React.Component<
     const pluralize =
       this.props.commitCount > 1
         ? t('choose-target-branch.multiple-commits', 'commits')
-        : t('choose-target-branch.one-commit', 'commit')
+        : t('choose-target-branch.one-or-less-commit', 'commit')
     return (
       <Dialog
         id="cherry-pick"

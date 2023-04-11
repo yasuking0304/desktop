@@ -25,6 +25,7 @@ import { clamp } from '../../lib/clamp'
 import { getDotComAPIEndpoint } from '../../lib/api'
 import { createCommitURL } from '../../lib/commit-url'
 import { DiffOptions } from '../diff/diff-options'
+import { t } from 'i18next'
 
 interface IPullRequestFilesChangedProps {
   readonly repository: Repository
@@ -230,7 +231,10 @@ export class PullRequestFilesChanged extends React.Component<
     return (
       <div className="files-changed-header">
         <div className="commits-displayed">
-          Showing changes from all commits
+          {t(
+            'pull-request-files-changed.showing-changes',
+            'Showing changes from all commits'
+          )}
         </div>
         <DiffOptions
           isInteractiveDiff={false}

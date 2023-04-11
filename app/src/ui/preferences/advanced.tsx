@@ -130,7 +130,7 @@ export class Advanced extends React.Component<
         <h2>{t('advanced.ssh', 'SSH')}</h2>
         <Checkbox
           label={t(
-            'advanced.use-systemopenssh',
+            'advanced.use-system-openssh',
             'Use system OpenSSH (recommended)'
           )}
           value={
