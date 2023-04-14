@@ -46,8 +46,10 @@
     "help-github-desktop-improve-by-submitting-1": "GitHub Desktop が ",
     "help-github-desktop-improve-by-submitting-2": " を送信することで改善に貢献する",
     "periodically-fetch-and-refresh-status": "すべてのリポジトリのステータスを定期的にフェッチおよび更新する",
+    "ssh": "SSH",
     "usage": "使われ方",
-    "usage-stats": "使用状況"
+    "usage-stats": "使用状況",
+    "use-system-openssh": "システムの OpenSSH を使う (推奨)"
   },
   "app": {
     "adding-this-feature": "この機能の追加",
@@ -279,10 +281,15 @@
   "commit-message": {
     "add-co-authors": "共同作業者の追加",
     "add-co-authors-darwin": "共同作業者の追加",
+    "amend": "直前のコミットを修正",
+    "amending": "直前のコミットを修正中",
+    "commit": "コミット",
     "commit-summaries-length-over": "概要入力は50文字未満でお願いします",
     "commit-title": "{{1}} に{{0}}",
     "commiting-as-1": " ",
     "commiting-as-2": " {{0}} でコミットします",
+    "committing": "コミット中",
+    "committing-changes": "変更をコミットしています…",
     "description-field": "説明フィールド",
     "disable-commit-spellcheck": "コミットスペルチェックを無効にする",
     "disable-commit-spellcheck-darwin": "コミットスペルチェックを無効にする",
@@ -299,7 +306,9 @@
     "protected-branch-3": "をしますか?",
     "remove-co-authors": "共同作業者の削除",
     "remove-co-authors-darwin": "共同作業者の削除",
+    "select-one-or-more-files-to-commit": "コミットするファイルを 1つ以上選択してください",
     "stop-amending": "修正を中止",
+    "summary-is-required-to-commit": "コミットするには概要入力が必要です",
     "will-modify-your-most-recent-commit-1": "あなたの変更は、",
     "will-modify-your-most-recent-commit-2": "最新のコミット",
     "will-modify-your-most-recent-commit-3": "を更新してしまいます。 これらの変更を新しいコミットとして行うために ",
@@ -790,6 +799,8 @@
     "exit": "終了(&X)",
     "expand-whole-file": "ファイル全体を展開する",
     "expand-whole-file-darwin": "ファイル全体を展開する",
+    "fetch": "フェッチ(&F)",
+    "fetch-darwin": "フェッチ",
     "file": "ファイル(&F)",
     "file-darwin": "ファイル",
     "find": "検索(&F)",
@@ -1156,8 +1167,9 @@
     "rename-branch-name": "{{0}} のブランチ名を変更"
   },
   "render-banner": {
-    "reorder-of-commit-unfone": "{{0}}{{1}}の並び替えができませんでした。",
-    "squash-of-commit-unfone": "{{0}}{{1}}の並び替えに成功しました。"
+    "reorder-of-commit-undone": "{{0}}{{1}}の並び替えができませんでした。",
+    "squash-of-commit-undone": "{{0}}{{1}}のまとめができませんでした。",
+    "successfully-reordered-commit": "{{0}}{{1}}の並び替えに成功しました。"
   },
   "repositories-list": {
     "add": "追加",
@@ -1315,7 +1327,7 @@
     "renamed": "リネーム"
   },
   "successful-squash": {
-    "successfully-squashed": "{{1}}{{0}}のまとめに成功しました。"
+    "successfully-squashed": "{{0}}{{1}}のまとめに成功しました。"
   },
   "terms-and-conditions": {
     "additional-services": "追加サービス",

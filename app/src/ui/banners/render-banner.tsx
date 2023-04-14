@@ -128,7 +128,7 @@ export function renderBanner(
       return (
         <SuccessBanner timeout={5000} onDismissed={onDismissed}>
           {t(
-            'render-banner.squash-of-commit-unfone',
+            'render-banner.squash-of-commit-undone',
             'Squash of {{0}} {{1}} undone.',
             { 0: banner.commitsCount, 1: pluralized }
           )}
@@ -149,7 +149,7 @@ export function renderBanner(
         >
           <span>
             {t(
-              'render-banner.squash-of-commit-unfone',
+              'render-banner.successfully-reordered-commit',
               'Successfully reordered {{0}} {{1}}.',
               { 0: banner.count, 1: pluralized }
             )}
@@ -165,7 +165,7 @@ export function renderBanner(
       return (
         <SuccessBanner timeout={5000} onDismissed={onDismissed}>
           {t(
-            'render-banner.reorder-of-commit-unfone',
+            'render-banner.reorder-of-commit-undone',
             'Reorder of {{0}} {{1}} undone.',
             { 0: banner.commitsCount, 1: pluralized }
           )}
