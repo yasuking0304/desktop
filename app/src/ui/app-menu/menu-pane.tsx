@@ -247,5 +247,5 @@ const supportedKeys = [
   'Enter',
   ' ',
 ] as const
-const isSupportedKey = (key: string): key is (typeof supportedKeys)[number] =>
+const isSupportedKey = (key: string): key is typeof supportedKeys[number] =>
   (supportedKeys as readonly string[]).includes(key)

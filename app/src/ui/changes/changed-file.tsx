@@ -57,8 +57,8 @@ export class ChangedFile extends React.Component<IChangedFileProps, {}> {
       this.props.include === true
         ? 'included'
         : this.props.include === undefined
-          ? 'partially included'
-          : 'not included'
+        ? 'partially included'
+        : 'not included'
 
     return (
       <div className="file">

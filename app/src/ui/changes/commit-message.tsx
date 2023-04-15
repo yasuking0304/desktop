@@ -298,7 +298,7 @@ export class CommitMessage extends React.Component<
 
     if (
       prevProps.mostRecentLocalCommit?.sha !==
-      this.props.mostRecentLocalCommit?.sha &&
+        this.props.mostRecentLocalCommit?.sha &&
       this.props.mostRecentLocalCommit !== null
     ) {
       this.setState({
@@ -335,8 +335,8 @@ export class CommitMessage extends React.Component<
     const token = 'Co-Authored-By'
     return this.isCoAuthorInputEnabled
       ? coAuthors
-        .filter(isKnownAuthor)
-        .map(a => ({ token, value: `${a.name} <${a.email}>` }))
+          .filter(isKnownAuthor)
+          .map(a => ({ token, value: `${a.name} <${a.email}>` }))
       : []
   }
 
@@ -528,8 +528,8 @@ export class CommitMessage extends React.Component<
         ? t('commit-message.remove-co-authors-darwin', 'Remove Co-Authors')
         : t('commit-message.remove-co-authors', 'Remove co-authors')
       : __DARWIN__
-        ? t('commit-message.add-co-authors-darwin', 'Add Co-Authors')
-        : t('commit-message.add-co-authors', 'Add co-authors')
+      ? t('commit-message.add-co-authors-darwin', 'Add Co-Authors')
+      : t('commit-message.add-co-authors', 'Add co-authors')
   }
 
   private getAddRemoveCoAuthorsMenuItem(): IMenuItem {
@@ -573,19 +573,19 @@ export class CommitMessage extends React.Component<
   private getCommitSpellcheckEnabilityMenuItem(isEnabled: boolean): IMenuItem {
     const enableLabel = __DARWIN__
       ? t(
-        'commit-message.enable-commit-spellcheck-darwin',
-        'Enable Commit Spellcheck'
-      )
+          'commit-message.enable-commit-spellcheck-darwin',
+          'Enable Commit Spellcheck'
+        )
       : t('commit-message.enable-commit-spellcheck', 'Enable commit spellcheck')
     const disableLabel = __DARWIN__
       ? t(
-        'commit-message.disable-commit-spellcheck-darwin',
-        'Disable Commit Spellcheck'
-      )
+          'commit-message.disable-commit-spellcheck-darwin',
+          'Disable Commit Spellcheck'
+        )
       : t(
-        'commit-message.disable-commit-spellcheck',
-        'Disable commit spellcheck'
-      )
+          'commit-message.disable-commit-spellcheck',
+          'Disable commit spellcheck'
+        )
     return {
       label: isEnabled ? disableLabel : enableLabel,
       action: () => this.props.onCommitSpellcheckEnabledChanged(!isEnabled),
