@@ -25,7 +25,7 @@ export class SuccessfulSquash extends React.Component<
         <span>
           {t(
             'successful-squash.successfully-squashed',
-            'Successfully squashed {{1}} {{0}}.',
+            'Successfully squashed {{0}} {{1}}.',
             { 0: count, 1: pluralized }
           )}
         </span>

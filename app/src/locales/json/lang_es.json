@@ -139,7 +139,7 @@
     "exclude-selected-files-darwin": "Exclude Selected Files",
     "file": "file",
     "files": "files",
-    "files-changes-description": "{{0}}/{{1}} changed {{2}}  selected",
+    "files-changes-description": "{{0}}/{{1}} changed {{2}}  included",
     "files-description": "{{0}} changed {{1}}",
     "ignore-all-file-add-to-gitignore": "Ignore all {{0}} files (add to .gitignore)",
     "ignore-all-file-add-to-gitignore-darwin": "Ignore All {{0}} Files (Add to .gitignore)",
@@ -281,10 +281,15 @@
   "commit-message": {
     "add-co-authors": "Add co-authors",
     "add-co-authors-darwin": "Add Co-Authors",
+    "amend": "Amend",
+    "amending": "Amending",
+    "commit": "Commit",
     "commit-summaries-length-over": "Great commit summaries contain fewer than 50 characters",
     "commit-title": "{{0}} to {{1}}",
     "commiting-as-1": "Committing as ",
     "commiting-as-2": " {{0}}",
+    "committing": "Committing",
+    "committing-changes": "Committing changes…",
     "description-field": "Description",
     "disable-commit-spellcheck": "Disable commit spellcheck",
     "disable-commit-spellcheck-darwin": "Disable Commit Spellcheck",
@@ -301,7 +306,9 @@
     "protected-branch-3": "?",
     "remove-co-authors": "Remove co-authors",
     "remove-co-authors-darwin": "Remove Co-Authors",
+    "select-one-or-more-files-to-commit": "Select one or more files to commit",
     "stop-amending": "Stop amending",
+    "summary-is-required-to-commit": "A commit summary is required to commit",
     "will-modify-your-most-recent-commit-1": "Your changes will modify your",
     "will-modify-your-most-recent-commit-2": "most recent commit",
     "will-modify-your-most-recent-commit-3": ". ",
@@ -794,6 +801,8 @@
     "exit": "E&xit",
     "expand-whole-file": "Expand whole file",
     "expand-whole-file-darwin": "Expand Whole File",
+    "fetch": "&Fetch",
+    "fetch-darwin": "Fetch",
     "file": "&File",
     "file-darwin": "File",
     "find": "&Find",
@@ -995,7 +1004,7 @@
     "view-your-stashed-changes": "View your stashed changes",
     "when-a-stash-exists-access-it-at-the-bottom": "When a stash exists, access it at the bottom of the Changes tab to the\n        left.",
     "you-have-number-change-in-progress": "You have {{0}} {{1}} in\n          progress that you have not yet committed.",
-    "you-have-operation": "You have {{0}} waiting to be pushed to {{0}}."
+    "you-have-operation": "You have {{0}} waiting to be pushed to {{1}}."
   },
   "no-pull-requests": {
     "creat-a-new-branch": "create a new branch",
@@ -1160,8 +1169,9 @@
     "rename-branch-name": "Rename {{0}}"
   },
   "render-banner": {
-    "reorder-of-commit-unfone": "Reorder of {{0}} {{1}} undone.",
-    "squash-of-commit-unfone": "Successfully reordered {{0}} {{1}}."
+    "reorder-of-commit-undone": "Reorder of {{0}} {{1}} undone.",
+    "squash-of-commit-undone": "Squash of {{0}} {{1}} undone.",
+    "successfully-reordered-commit": "Successfully reordered {{0}} {{1}}."
   },
   "repositories-list": {
     "add": "Add",
@@ -1319,7 +1329,7 @@
     "renamed": "Renamed"
   },
   "successful-squash": {
-    "successfully-squashed": "Successfully squashed {{1}} {{0}}."
+    "successfully-squashed": "Successfully squashed {{0}} {{1}}."
   },
   "terms-and-conditions": {
     "additional-services": "Additional Services",
