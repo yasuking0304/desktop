@@ -227,7 +227,9 @@ export class NoChanges extends React.Component<
 
   private renderDiscoverabilityKeyboardShortcut(menuItem: IMenuItemInfo) {
     return menuItem.acceleratorKeys.map((k, i) => {
-      return menuItem.acceleratorKeys.length === i + 1 ? (
+      return __DARWIN__ ? (
+        <kbd key={k + i}>{k}</kbd>
+      ) : menuItem.acceleratorKeys.length === i + 1 ? (
         <kbd key={k + i}>{k}</kbd>
       ) : (
         <>
