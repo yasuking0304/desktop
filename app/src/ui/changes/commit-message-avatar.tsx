@@ -9,6 +9,8 @@ import { Octicon } from '../octicons'
 import * as OcticonSymbol from '../octicons/octicons.generated'
 import { LinkButton } from '../lib/link-button'
 import { t } from 'i18next'
+import { ToggledtippedContent } from '../lib/toggletipped-content'
+import { TooltipDirection } from '../lib/tooltip'
 
 interface ICommitMessageAvatarState {
   readonly isPopoverOpen: boolean
@@ -20,13 +22,6 @@ interface ICommitMessageAvatarState {
 interface ICommitMessageAvatarProps {
   /** The user whose avatar should be displayed. */
   readonly user?: IAvatarUser
-
-  /**
-   * The title of the avatar.
-   * Defaults to the name and email if undefined and is
-   * skipped completely if title is null
-   */
-  readonly title?: string | JSX.Element | null
 
   /** Current email address configured by the user. */
   readonly email?: string
@@ -69,6 +64,26 @@ export class CommitMessageAvatar extends React.Component<
     }
   }
 
+  private getTitle(): string | JSX.Element | undefined {
+    const { user } = this.props
+
+    if (user === undefined) {
+      return 'Unknown user'
+    }
+
+    const { name, email } = user
+
+    if (user.name) {
+      return (
+        <>
+          Committing as <strong>{name}</strong> {email}
+        </>
+      )
+    }
+
+    return email
+  }
+
   public render() {
     return (
       <div className="commit-message-avatar-component">
@@ -79,12 +94,18 @@ export class CommitMessageAvatar extends React.Component<
             onClick={this.onAvatarClick}
           >
             {this.renderWarningBadge()}
-            <Avatar user={this.props.user} title={this.props.title} />
+            <Avatar user={this.props.user} title={null} />
           </Button>
         )}
 
         {!this.props.warningBadgeVisible && (
-          <Avatar user={this.props.user} title={this.props.title} />
+          <ToggledtippedContent
+            tooltip={this.getTitle()}
+            direction={TooltipDirection.NORTH}
+            ariaLabel="Show Commit Author Details"
+          >
+            <Avatar user={this.props.user} title={null} />
+          </ToggledtippedContent>
         )}
 
         {this.state.isPopoverOpen && this.renderPopover()}
@@ -140,6 +161,11 @@ export class CommitMessageAvatar extends React.Component<
       ? t('commit-message-avatar.update-email-darwin', 'Update Email')
       : t('commit-message-avatar.update-email', 'Update email')
 
+    const userName =
+      this.props.user && this.props.user.name
+        ? ` for ${this.props.user.name}`
+        : ''
+
     return (
       <Popover
         caretPosition={PopoverCaretPosition.LeftBottom}
@@ -158,7 +184,7 @@ export class CommitMessageAvatar extends React.Component<
               'commit-message-avatar.update-email-1',
               'The email in your global Git config ('
             )}
-            <span className="git-email">{this.props.email}</span>
+            <span className="git-email">{this.props.email}</span>)
             {t(
               'commit-message-avatar.update-email-2',
               `) doesn't match your GitHub{{0}} account. `,

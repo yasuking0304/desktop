@@ -23,6 +23,7 @@ import { encodePathAsUrl } from '../../lib/path'
 import { TooltippedContent } from '../lib/tooltipped-content'
 import memoizeOne from 'memoize-one'
 import { t } from 'i18next'
+import { KeyboardShortcut } from '../keyboard-shortcut/keyboard-shortcut'
 
 const BlankSlateImage = encodePathAsUrl(__dirname, 'static/empty-no-repo.svg')
 
@@ -263,12 +264,19 @@ export class RepositoriesList extends React.Component<
 
         <div className="protip">
           {t('repositories-list.pro-tip-1', 'ProTip! Press ')}
-          {this.renderAddLocalShortcut()}
+          <div className="kbd-shortcut">
+            <KeyboardShortcut darwinKeys={['⌘', 'O']} keys={['Ctrl', 'O']} />
+          </div>
           {t(
             'repositories-list.pro-tip-2',
             ' to quickly add a local repository, and '
           )}
-          {this.renderCloneRepositoryShortcut()}
+          <div className="kbd-shortcut">
+            <KeyboardShortcut
+              darwinKeys={['⇧', '⌘', 'O']}
+              keys={['Ctrl', 'Shift', 'O']}
+            />
+          </div>
           {t(
             'repositories-list.pro-tip-3',
             ' to clone from anywhere within the app'
@@ -276,41 +284,6 @@ export class RepositoriesList extends React.Component<
         </div>
       </div>
     )
-  }
-
-  private renderAddLocalShortcut() {
-    if (__DARWIN__) {
-      return (
-        <div className="kbd-shortcut">
-          <kbd>⌘</kbd>
-          <kbd>O</kbd>
-        </div>
-      )
-    } else {
-      return (
-        <div className="kbd-shortcut">
-          <kbd>Ctrl</kbd> + <kbd>O</kbd>
-        </div>
-      )
-    }
-  }
-
-  private renderCloneRepositoryShortcut() {
-    if (__DARWIN__) {
-      return (
-        <div className="kbd-shortcut">
-          <kbd>⇧</kbd>
-          <kbd>⌘</kbd>
-          <kbd>O</kbd>
-        </div>
-      )
-    } else {
-      return (
-        <div className="kbd-shortcut">
-          <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>O</kbd>
-        </div>
-      )
-    }
   }
 
   private onNewRepositoryButtonClick = () => {

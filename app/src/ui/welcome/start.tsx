@@ -106,11 +106,11 @@ export class Start extends React.Component<IStartProps, {}> {
           {t(
             'start.welcome-sends-usage-1',
             `GitHub Desktop sends usage metrics to improve the product and inform
-          feature decisions. Read more about what metrics are sent and how we
-          use them `
+            feature decisions. `
           )}
-          <LinkButton uri={SamplesURL}>{t('start.here', 'here')}</LinkButton>
-          {t('start.welcome-sends-usage-2', '.')}
+          <LinkButton uri={SamplesURL}>
+            {t('start.learn-more-about', 'Learn more about user metrics.')}
+          </LinkButton>
         </div>
       </div>
     )

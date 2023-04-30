@@ -18,6 +18,7 @@ import { Ref } from '../lib/ref'
 import { suggestedExternalEditor } from '../../lib/editors/shared'
 import { TutorialStepInstructions } from './tutorial-step-instruction'
 import { t } from 'i18next'
+import { KeyboardShortcut } from '../keyboard-shortcut/keyboard-shortcut'
 
 const TutorialPanelImage = encodePathAsUrl(
   __dirname,
@@ -205,19 +206,10 @@ export class TutorialPanel extends React.Component<
               )}
             </p>
             <div className="action">
-              {__DARWIN__ ? (
-                <>
-                  <kbd>⌘</kbd>
-                  <kbd>⇧</kbd>
-                  <kbd>N</kbd>
-                </>
-              ) : (
-                <>
-                  <kbd>Ctrl</kbd>
-                  <kbd>Shift</kbd>
-                  <kbd>N</kbd>
-                </>
-              )}
+              <KeyboardShortcut
+                darwinKeys={['⌘', '⇧', 'N']}
+                keys={['Ctrl', 'Shift', 'N']}
+              />
             </div>
           </TutorialStepInstructions>
           <TutorialStepInstructions
@@ -247,19 +239,10 @@ export class TutorialPanel extends React.Component<
                     ? t('tutorial-panel.open-editor-darwin', 'Open Editor')
                     : t('tutorial-panel.open-editor', 'Open editor')}
                 </Button>
-                {__DARWIN__ ? (
-                  <>
-                    <kbd>⌘</kbd>
-                    <kbd>⇧</kbd>
-                    <kbd>A</kbd>
-                  </>
-                ) : (
-                  <>
-                    <kbd>Ctrl</kbd>
-                    <kbd>Shift</kbd>
-                    <kbd>A</kbd>
-                  </>
-                )}
+                <KeyboardShortcut
+                  darwinKeys={['⌘', '⇧', 'A']}
+                  keys={['Ctrl', 'Shift', 'A']}
+                />
               </div>
             )}
           </TutorialStepInstructions>
@@ -301,17 +284,7 @@ export class TutorialPanel extends React.Component<
               )}
             </p>
             <div className="action">
-              {__DARWIN__ ? (
-                <>
-                  <kbd>⌘</kbd>
-                  <kbd>P</kbd>
-                </>
-              ) : (
-                <>
-                  <kbd>Ctrl</kbd>
-                  <kbd>P</kbd>
-                </>
-              )}
+              <KeyboardShortcut darwinKeys={['⌘', 'P']} keys={['Ctrl', 'P']} />
             </div>
           </TutorialStepInstructions>
           <TutorialStepInstructions
@@ -345,17 +318,7 @@ export class TutorialPanel extends React.Component<
                   : t('tutorial-panel.open-pull-request', 'Open pull request')}
                 <Octicon symbol={OcticonSymbol.linkExternal} />
               </Button>
-              {__DARWIN__ ? (
-                <>
-                  <kbd>⌘</kbd>
-                  <kbd>R</kbd>
-                </>
-              ) : (
-                <>
-                  <kbd>Ctrl</kbd>
-                  <kbd>R</kbd>
-                </>
-              )}
+              <KeyboardShortcut darwinKeys={['⌘', 'R']} keys={['Ctrl', 'R']} />
             </div>
           </TutorialStepInstructions>
         </ol>
