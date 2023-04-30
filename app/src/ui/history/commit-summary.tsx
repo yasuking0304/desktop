@@ -586,8 +586,7 @@ export class CommitSummary extends React.Component<
               symbol={OcticonSymbol.diffAdded}
             />
             {t('commit-summary.number-files-added', '{{0}} added', {
-              0: filesAdded,
-              1: filesPlural,
+              0: filesAdded
             })}
           </span>
         ) : null}
@@ -598,8 +597,7 @@ export class CommitSummary extends React.Component<
               symbol={OcticonSymbol.diffModified}
             />
             {t('commit-summary.number-files-midified', '{{0}} modified', {
-              0: filesModified,
-              1: filesPlural,
+              0: filesModified
             })}
           </span>
         ) : null}
@@ -610,8 +608,7 @@ export class CommitSummary extends React.Component<
               symbol={OcticonSymbol.diffRemoved}
             />
             {t('commit-summary.number-files-deleted', '{{0}} deleted', {
-              0: filesRemoved,
-              1: filesPlural,
+              0: filesRemoved
             })}
           </span>
         ) : null}

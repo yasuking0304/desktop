@@ -151,7 +151,7 @@ body.theme-dark {
   --co-author-tag-background-color: #{$blue-800};
   --co-author-tag-border-color: #{$blue-700};
 
-  --base-border: 1px solid var(--box-border-color);
+  --base-border: 1px solid var(--secondary-button-border-color);
   --contrast-border: 1px solid var(--box-border-contrast-color);
 
   --shadow-color: #{rgba(black, 0.5)};

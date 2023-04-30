@@ -603,14 +603,30 @@ export class NoChanges extends React.Component<
     }
 
     const isGitHub = this.props.repository.gitHubRepository !== null
-
+    const commitWord =
+      aheadBehind.behind === 1
+        ? t('no-changes.one-commit', 'a commit')
+        : t('no-changes.multiple-commits', 'commits')
+    const remoteName = isGitHub
+      ? 'GitHub'
+      : t('no-changes.the-remote', 'the remote')
+    const donotWord =
+      aheadBehind.behind === 1
+        ? t('no-changes.does-not', 'does not')
+        : t('no-changes.do-not', 'do not')
     const description = (
       <>
-        The current branch (<Ref>{tip.branch.name}</Ref>) has{' '}
-        {aheadBehind.behind === 1 ? 'a commit' : 'commits'} on{' '}
-        {isGitHub ? 'GitHub' : 'the remote'} that{' '}
-        {aheadBehind.behind === 1 ? 'does not' : 'do not'} exist on your
-        machine.
+        {t(
+          'no-changes.commit-on-remote-that-do-not-1',
+          'The current branch (',
+          { 0: commitWord, 1: remoteName, 2: donotWord }
+        )}
+        <Ref>{tip.branch.name}</Ref>
+        {t(
+          'no-changes.commit-on-remote-that-do-not-2',
+          ') has {{0}} on {{1}} that {{2}} exist on your machine.',
+          { 0: commitWord, 1: remoteName, 2: donotWord }
+        )}
       </>
     )
 

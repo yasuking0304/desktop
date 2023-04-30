@@ -76,7 +76,10 @@ export class CommitMessageAvatar extends React.Component<
     if (user.name) {
       return (
         <>
-          Committing as <strong>{name}</strong> {email}
+          {t('commit-message-avatar.committing-as-1', 'Committing as ')}
+          <strong>{name}</strong>
+          <br></br> {email}
+          {t('commit-message-avatar.committing-as-2', ' ')}
         </>
       )
     }
@@ -160,11 +163,6 @@ export class CommitMessageAvatar extends React.Component<
     const updateEmailTitle = __DARWIN__
       ? t('commit-message-avatar.update-email-darwin', 'Update Email')
       : t('commit-message-avatar.update-email', 'Update email')
-
-    const userName =
-      this.props.user && this.props.user.name
-        ? ` for ${this.props.user.name}`
-        : ''
 
     return (
       <Popover
