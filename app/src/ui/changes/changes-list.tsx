@@ -51,10 +51,11 @@ import classNames from 'classnames'
 import { hasWritePermission } from '../../models/github-repository'
 import { hasConflictedFiles } from '../../lib/status'
 import { createObservableRef } from '../lib/observable-ref'
-import { Tooltip, TooltipDirection } from '../lib/tooltip'
+import { TooltipDirection } from '../lib/tooltip'
 import { Popup } from '../../models/popup'
 import { EOL } from 'os'
 import { t } from 'i18next'
+import { TooltippedContent } from '../lib/tooltipped-content'
 
 const RowHeight = 29
 const StashIcon: OcticonSymbol.OcticonSymbolType = {
@@ -241,7 +242,7 @@ export class ChangesList extends React.Component<
   IChangesState
 > {
   private headerRef = createObservableRef<HTMLDivElement>()
-  private listRef = React.createRef<List>()
+  private includeAllCheckBoxRef = React.createRef<Checkbox>()
 
   public constructor(props: IChangesListProps) {
     super(props)
@@ -978,7 +979,7 @@ export class ChangesList extends React.Component<
   }
 
   public focus() {
-    this.listRef.current?.focus()
+    this.includeAllCheckBoxRef.current?.focus()
   }
 
   public render() {
@@ -1004,7 +1005,7 @@ export class ChangesList extends React.Component<
         : t('changes-list.files', 'files')
     const selectedChangesDescription = t(
       'changes-list.files-changes-description',
-      '{{0}}/{{1}} changed {{2}}  selected',
+      '{{0}}/{{1}} changed {{2}}  included',
       { 0: selectedChangeCount, 1: files.length, 2: totalFilesPlural }
     )
 
@@ -1024,22 +1025,25 @@ export class ChangesList extends React.Component<
             onContextMenu={this.onContextMenu}
             ref={this.headerRef}
           >
-            <Tooltip target={this.headerRef} direction={TooltipDirection.NORTH}>
-              {selectedChangesDescription}
-            </Tooltip>
+            <TooltippedContent
+              tooltip={selectedChangesDescription}
+              direction={TooltipDirection.NORTH}
+              openOnFocus={true}
+            >
+              <Checkbox
+                ref={this.includeAllCheckBoxRef}
+                label={filesDescription}
+                value={includeAllValue}
+                onChange={this.onIncludeAllChanged}
+                disabled={disableAllCheckbox}
+                ariaDescribedBy="changesDescription"
+              />
+            </TooltippedContent>
             <div className="sr-only" id="changesDescription">
               {selectedChangesDescription}
             </div>
-            <Checkbox
-              label={filesDescription}
-              value={includeAllValue}
-              onChange={this.onIncludeAllChanged}
-              disabled={disableAllCheckbox}
-              ariaDescribedBy="changesDescription"
-            />
           </div>
           <List
-            ref={this.listRef}
             id="changes-list"
             rowCount={files.length}
             rowHeight={RowHeight}
@@ -1059,7 +1063,6 @@ export class ChangesList extends React.Component<
             ariaLabel={filesDescription}
           />
         </div>
-
         {this.renderStashedChanges()}
         {this.renderCommitMessageForm()}
       </>
