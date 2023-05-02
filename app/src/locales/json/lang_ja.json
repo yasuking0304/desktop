@@ -281,10 +281,15 @@
   "commit-message": {
     "add-co-authors": "共同作業者の追加",
     "add-co-authors-darwin": "共同作業者の追加",
+    "amend": "直前のコミットを修正",
+    "amending": "直前のコミットを修正中",
+    "commit": "コミット",
     "commit-summaries-length-over": "概要入力は50文字未満でお願いします",
     "commit-title": "{{1}} に{{0}}",
     "commiting-as-1": " ",
     "commiting-as-2": " {{0}} でコミットします",
+    "committing": "コミット中",
+    "committing-changes": "変更をコミットしています…",
     "description-field": "説明フィールド",
     "disable-commit-spellcheck": "コミットスペルチェックを無効にする",
     "disable-commit-spellcheck-darwin": "コミットスペルチェックを無効にする",
@@ -301,7 +306,9 @@
     "protected-branch-3": "をしますか?",
     "remove-co-authors": "共同作業者の削除",
     "remove-co-authors-darwin": "共同作業者の削除",
+    "select-one-or-more-files-to-commit": "コミットするファイルを 1つ以上選択してください",
     "stop-amending": "修正を中止",
+    "summary-is-required-to-commit": "コミットするには概要入力が必要です",
     "will-modify-your-most-recent-commit-1": "あなたの変更は、",
     "will-modify-your-most-recent-commit-2": "最新のコミット",
     "will-modify-your-most-recent-commit-3": "を更新してしまいます。 これらの変更を新しいコミットとして行うために ",
@@ -792,6 +799,8 @@
     "exit": "終了(&X)",
     "expand-whole-file": "ファイル全体を展開する",
     "expand-whole-file-darwin": "ファイル全体を展開する",
+    "fetch": "フェッチ(&F)",
+    "fetch-darwin": "フェッチ",
     "file": "ファイル(&F)",
     "file-darwin": "ファイル",
     "find": "検索(&F)",
@@ -1158,8 +1167,9 @@
     "rename-branch-name": "{{0}} のブランチ名を変更"
   },
   "render-banner": {
-    "reorder-of-commit-unfone": "{{0}}{{1}}の並び替えができませんでした。",
-    "squash-of-commit-unfone": "{{0}}{{1}}の並び替えに成功しました。"
+    "reorder-of-commit-undone": "{{0}}{{1}}の並び替えができませんでした。",
+    "squash-of-commit-undone": "{{0}}{{1}}のまとめができませんでした。",
+    "successfully-reordered-commit": "{{0}}{{1}}の並び替えに成功しました。"
   },
   "repositories-list": {
     "add": "追加",
@@ -1284,9 +1294,9 @@
   },
   "stash-and-switch-branch-dialog": {
     "bring-my-changes-to-branch-name": "変更内容を {{0}} に反映させる",
-    "in-progress-work-will-be-stashed": "変更中の作業はブランチに保存され新しいブランチには残しません(あとで戻すことができます)",
+    "in-progress-work-will-be-stashed": "変更中の作業はブランチに一時退避され新しいブランチには残しません(あとで戻すことができます)",
     "in-progress-work-will-follow-you": "変更中の作業は、新しいブランチに引き継がれます",
-    "leave-my-changes-on-branch-name": "変更をブランチに保存して {{0}} に切り替える",
+    "leave-my-changes-on-branch-name": "変更をブランチに一時退避して {{0}} に切り替える",
     "stash-will-be-overwritten-creating": " 新しいスタッシュを作成すると、現在のスタッシュが上書きされます",
     "switch-branch": "ブランチ切り替え",
     "switch-branch-darwin": "ブランチ切り替え",
@@ -1317,7 +1327,7 @@
     "renamed": "リネーム"
   },
   "successful-squash": {
-    "successfully-squashed": "{{1}}{{0}}のまとめに成功しました。"
+    "successfully-squashed": "{{0}}{{1}}のまとめに成功しました。"
   },
   "terms-and-conditions": {
     "additional-services": "追加サービス",

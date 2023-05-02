@@ -370,7 +370,9 @@ export function buildDefaultMenu({
       },
       {
         id: 'fetch',
-        label: __DARWIN__ ? 'Fetch' : '&Fetch',
+        label: __DARWIN__
+          ? t('menu.fetch-darwin', 'Fetch')
+          : t('menu.fetch', '&Fetch'),
         accelerator: 'CmdOrCtrl+Shift+T',
         click: emit('fetch'),
       },

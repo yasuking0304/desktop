@@ -763,8 +763,12 @@ export class CommitMessage extends React.Component<
   private getButtonVerb() {
     const { isCommitting, commitToAmend } = this.props
 
-    const amendVerb = isCommitting ? 'Amending' : 'Amend'
-    const commitVerb = isCommitting ? 'Committing' : 'Commit'
+    const amendVerb = isCommitting
+      ? t('commit-message.amending', 'Amending')
+      : t('commit-message.amend', 'Amend')
+    const commitVerb = isCommitting
+      ? t('commit-message.committing', 'Committing')
+      : t('commit-message.commit', 'Commit')
     const isAmending = commitToAmend !== null
 
     return isAmending ? amendVerb : commitVerb
@@ -830,11 +834,17 @@ export class CommitMessage extends React.Component<
 
     const isSummaryBlank = isEmptyOrWhitespace(this.summaryOrPlaceholder)
     if (isSummaryBlank) {
-      return `A commit summary is required to commit`
+      return t(
+        'commit-message.summary-is-required-to-commit',
+        `A commit summary is required to commit`
+      )
     } else if (!this.props.anyFilesSelected && this.props.anyFilesAvailable) {
-      return `Select one or more files to commit`
+      return t(
+        'commit-message.select-one-or-more-files-to-commit',
+        `Select one or more files to commit`
+      )
     } else if (this.props.isCommitting) {
-      return `Committing changes…`
+      return t('commit-message.committing-changes', `Committing changes…`)
     }
 
     return undefined
