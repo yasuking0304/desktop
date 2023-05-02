@@ -79,14 +79,14 @@
   },
   "appearance": {
     "dark": "Dark",
-    "high-contrast": "High Contrast",
     "light": "Light",
     "loading-system-theme": "Loading system theme",
-    "message-of-dark": "GitHub Desktop is for you too, creatures of the night",
-    "message-of-high-contrast": "Customizable High Contrast Theme",
-    "message-of-light": "The default theme of GitHub Desktop",
-    "message-of-system": "Automatically switch theme to match system theme",
-    "system": "System"
+    "system": "System",
+    "theme": "Theme"
+  },
+  "binary-file": {
+    "open-file-in-external-program": "Open file in external program.",
+    "this-binary-file-has-changed": "This binary file has changed."
   },
   "branch-dropdown": {
     "current-branch": "Current branch",
@@ -286,8 +286,6 @@
     "commit": "Commit",
     "commit-summaries-length-over": "Great commit summaries contain fewer than 50 characters",
     "commit-title": "{{0}} to {{1}}",
-    "commiting-as-1": "Committing as ",
-    "commiting-as-2": " {{0}}",
     "committing": "Committing",
     "committing-changes": "Committing changes…",
     "description-field": "Description",
@@ -315,6 +313,8 @@
     "will-modify-your-most-recent-commit-4": " to make these changes as a new commit."
   },
   "commit-message-avatar": {
+    "committing-as-1": "Committing as ",
+    "committing-as-2": " ",
     "ignore": "Ignore",
     "learn-more": "Learn more.",
     "repository-settings": "repository settings",
@@ -770,6 +770,8 @@
     "contact-github-support-darwin": "Contact GitHub Support…",
     "context-open-in-external-editor": "Open in external editor",
     "context-open-in-external-editor-darwin": "Open in External Editor",
+    "contract-active-resizable": "Contract active resizable",
+    "contract-active-resizable-darwin": "Contract Active Resizable",
     "copy": "&Copy",
     "copy-branch-name": "Copy branch name",
     "copy-branch-name-darwin": "Copy Branch Name",
@@ -799,6 +801,8 @@
     "edit": "&Edit",
     "edit-darwin": "Edit",
     "exit": "E&xit",
+    "expand-active-resizable": "Expand active resizable",
+    "expand-active-resizable-darwin": "Expand Active Resizable",
     "expand-whole-file": "Expand whole file",
     "expand-whole-file-darwin": "Expand Whole File",
     "fetch": "&Fetch",
@@ -1040,12 +1044,24 @@
   "notifications": {
     "allows-the-display-of-notifications": "Allows the display of notifications when high-signal events take\n                place in the current repository.",
     "enable-notifications": "Enable notifications",
-    "notifications": "Notifications"
+    "enabled": "enabled",
+    "has-no-permission-to-display-notifications-1": " GitHub Desktop has no permission to display notifications. \n                Please, enable them in the ",
+    "has-no-permission-to-display-notifications-2": ".",
+    "make-sure-notifications-1": " Make sure notifications are {{0}} for GitHub Desktop in the ",
+    "make-sure-notifications-2": ".",
+    "notifications": "Notifications",
+    "notifications-settings": "Notifications Settings",
+    "properly-configured": "properly configured"
+  },
+  "open-file": {
+    "unable-to-open-file": "Unable to open file {{0}} in an external program.\n         Please check you have a program associated with this file extension"
   },
   "open-pull-request-dialog": {
     "button_title": "{{0}} pull request on GitHub{{1}}.",
     "could-not-find-a-default-branch": "Could not find a default branch to compare against.",
     "create": "Create",
+    "is-up-to-date-with-1": " is up to date with all commits from ",
+    "is-up-to-date-with-2": ".",
     "request": "{{0}} Pull request",
     "request_darwin": "{{0}} Pull Request",
     "select-a-base-branch-above": "Select a base branch above.",
@@ -1265,6 +1281,11 @@
     "select-all": "Select all",
     "select-all-darwin": "Select All"
   },
+  "side-by-side-diff-row": {
+    "expand-all": "Expand All",
+    "expand-down": "Expand Down",
+    "expand-up": "Expand Up"
+  },
   "sign-in": {
     "continue-with-browser": "Continue with browser",
     "continue-with-browser-darwin": "Continue With Browser",
@@ -1278,12 +1299,14 @@
     "sign-in": "Sign in to your GitHub Enterprise"
   },
   "start": {
-    "by-creating-an-account": "By creating an account, you agree to the ",
+    "by-creating-an-account-1": "By creating an account, you agree to the ",
+    "by-creating-an-account-2": ".",
     "create-free-account": "Create your free account.",
     "github-privacy-statement": "GitHub Privacy Statement",
-    "here": "here",
+    "learn-more-about": "Learn more about user metrics.",
     "new-to-github": "New to GitHub? ",
-    "privacy-practices": ". For more information about GitHub's privacy practices, see the ",
+    "privacy-practices-1": ". For more information about GitHub's privacy practices, see the ",
+    "privacy-practices-2": ".",
     "sign-in-github-com": "Sign in to GitHub.com",
     "sign-in-github-enterprise": "Sign in to GitHub Enterprise",
     "skip-this-step": "Skip this step",
@@ -1390,6 +1413,13 @@
     "your-default-editor-is-1": "Your default editor is ",
     "your-default-editor-is-2": ". You can change your preferred editor in ",
     "your-default-editor-is-3": ""
+  },
+  "unreachable-commits-dialog": {
+    "about-unreachable-commits": "Learn more about unreachable commits.",
+    "commit-reachability": "Commit reachability",
+    "commit-reachability-darwin": "Commit Reachability",
+    "reachable": "Reachable",
+    "unreachable": "Unreachable"
   },
   "untrusted-certificate": {
     "gitHub-desktop-cannot-verify-1": "GitHub Desktop cannot verify the identity of {{0}}. The \n            certificate ({{1}}) is invalid or untrusted. ",
