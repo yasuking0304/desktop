@@ -19,17 +19,14 @@ interface IRadioButtonProps<T> {
   readonly checked: boolean
 
   /**
-   * The label of the radio button. If not provided, the children are used
+   * The label of the radio button.
    */
-  readonly label?: string | JSX.Element
+  readonly label: string | JSX.Element
 
   /**
    * The value of the radio button.
    */
   readonly value: T
-
-  /** Optional: The tab index of the radio button */
-  readonly tabIndex?: number
 }
 
 interface IRadioButtonState {
@@ -61,11 +58,8 @@ export class RadioButton<T extends string> extends React.Component<
           value={this.props.value}
           checked={this.props.checked}
           onChange={this.onSelected}
-          tabIndex={this.props.tabIndex}
         />
-        <label htmlFor={this.state.inputId}>
-          {this.props.label ?? this.props.children}
-        </label>
+        <label htmlFor={this.state.inputId}>{this.props.label}</label>
       </div>
     )
   }

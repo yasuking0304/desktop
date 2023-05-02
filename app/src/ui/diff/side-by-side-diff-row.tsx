@@ -19,7 +19,6 @@ import { PopoverCaretPosition } from '../lib/popover'
 import { WhitespaceHintPopover } from './whitespace-hint-popover'
 import { TooltippedContent } from '../lib/tooltipped-content'
 import { TooltipDirection } from '../lib/tooltip'
-import { t } from 'i18next'
 
 interface ISideBySideDiffRowProps {
   /**
@@ -342,7 +341,7 @@ export class SideBySideDiffRow extends React.Component<
       case DiffHunkExpansionType.Up:
         return {
           icon: OcticonSymbol.foldUp,
-          title: t('side-by-side-diff-row.expand-up', 'Expand Up'),
+          title: 'Expand Up',
           handler: this.onExpandHunk(hunkIndex, 'up'),
         }
       // This can only be the last dummy hunk. In this case, we expand the
@@ -350,13 +349,13 @@ export class SideBySideDiffRow extends React.Component<
       case DiffHunkExpansionType.Down:
         return {
           icon: OcticonSymbol.foldDown,
-          title: t('side-by-side-diff-row.expand-down', 'Expand Down'),
+          title: 'Expand Down',
           handler: this.onExpandHunk(hunkIndex - 1, 'down'),
         }
       case DiffHunkExpansionType.Short:
         return {
           icon: OcticonSymbol.fold,
-          title: t('side-by-side-diff-row.expand-all', 'Expand All'),
+          title: 'Expand All',
           handler: this.onExpandHunk(hunkIndex, 'up'),
         }
     }

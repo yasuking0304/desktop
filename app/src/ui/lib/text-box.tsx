@@ -25,15 +25,6 @@ export interface ITextBoxProps {
   /** Whether the input field is disabled. */
   readonly disabled?: boolean
 
-  /** Indicates if input field should be required */
-  readonly required?: boolean
-
-  /**
-   * Indicates whether or not the control displays an invalid state.
-   * Default: true
-   */
-  readonly displayInvalidState?: boolean
-
   /**
    * Called when the user changes the value in the input field.
    *
@@ -250,11 +241,7 @@ export class TextBox extends React.Component<ITextBoxProps, ITextBoxState> {
     const inputId = label ? this.state.inputId : undefined
 
     return (
-      <div
-        className={classNames('text-box-component', className, {
-          'no-invalid-state': this.props.displayInvalidState === false,
-        })}
-      >
+      <div className={classNames('text-box-component', className)}>
         {label && <label htmlFor={inputId}>{label}</label>}
 
         <input
@@ -275,7 +262,6 @@ export class TextBox extends React.Component<ITextBoxProps, ITextBoxState> {
           spellCheck={this.props.spellcheck === true}
           aria-label={this.props.ariaLabel}
           aria-controls={this.props.ariaControls}
-          required={this.props.required}
         />
       </div>
     )

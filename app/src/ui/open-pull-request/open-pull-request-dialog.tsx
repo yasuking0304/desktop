@@ -188,13 +188,8 @@ export class OpenPullRequestDialog extends React.Component<IOpenPullRequestDialo
     const hasMergeBase = mergeStatus?.kind !== ComputedAction.Invalid
     const message = hasMergeBase ? (
       <>
-        <Ref>{baseBranch.name}</Ref>
-        {t(
-          'open-pull-request-dialog.is-up-to-date-with-1',
-          ' is up to date with all commits from '
-        )}
-        <Ref>{currentBranch.name}</Ref>
-        {t('open-pull-request-dialog.is-up-to-date-with-2', '.')}
+        <Ref>{baseBranch.name}</Ref> is up to date with all commits from{' '}
+        <Ref>{currentBranch.name}</Ref>.
       </>
     ) : (
       <>

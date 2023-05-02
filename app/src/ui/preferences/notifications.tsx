@@ -131,38 +131,28 @@ export class Notifications extends React.Component<
         <>
           <br />
           <br />
-          <span className="warning-icon">⚠️</span>
-          {t(
-            'notifications.has-no-permission-to-display-notifications-1',
-            ` GitHub Desktop has no permission to display notifications. 
-                Please, enable them in the `
-          )}
+          <span className="warning-icon">⚠️</span> GitHub Desktop has no
+          permission to display notifications. Please, enable them in the{' '}
           <LinkButton uri={notificationSettingsURL}>
-            {t(
-              'notifications.notifications-settings',
-              'Notifications Settings'
-            )}
+            Notifications Settings
           </LinkButton>
-          {t('notifications.has-no-permission-to-display-notifications-2', '.')}
+          .
         </>
       )
     }
 
     const verb = suggestConfigureNotifications
-      ? t('notifications.properly-configured', 'properly configured')
-      : t('notifications.enabled', 'enabled')
+      ? 'properly configured'
+      : 'enabled'
 
     return (
       <>
-        {t(
-          'notifications.make-sure-notifications-1',
-          ` Make sure notifications are {{0}} for GitHub Desktop in the `,
-          { 0: verb }
-        )}
+        {' '}
+        Make sure notifications are {verb} for GitHub Desktop in the{' '}
         <LinkButton uri={notificationSettingsURL}>
-          {t('notifications.notifications-settings', 'Notifications Settings')}
+          Notifications Settings
         </LinkButton>
-        {t('notifications.make-sure-notifications-2', '.', { 0: verb })}
+        .
       </>
     )
   }

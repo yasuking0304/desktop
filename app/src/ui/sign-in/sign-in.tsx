@@ -21,7 +21,6 @@ import { getDotComAPIEndpoint } from '../../lib/api'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
 import { Button } from '../lib/button'
 import { t } from 'i18next'
-import { HorizontalRule } from '../lib/horizontal-rule'
 
 interface ISignInProps {
   readonly dispatcher: Dispatcher
@@ -250,7 +249,9 @@ export class SignIn extends React.Component<ISignInProps, ISignInState> {
           </Button>
         </Row>
 
-        <HorizontalRule title="or" />
+        <div className="horizontal-rule">
+          <span className="horizontal-rule-content">or</span>
+        </div>
 
         <Row>
           <TextBox

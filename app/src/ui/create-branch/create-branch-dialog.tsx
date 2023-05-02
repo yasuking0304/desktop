@@ -390,15 +390,11 @@ export class CreateBranch extends React.Component<
             'create-branch-dialog.new-branch-will-be-checked-out-branch-2',
             '. '
           )}
-          {defaultBranch?.name === currentBranchName && (
-            <>
-              <Ref>{currentBranchName}</Ref>
-              {t(
-                'create-branch-dialog.new-branch-will-be-checked-out-branch-3',
-                'is the {{0}} for your repository.',
-                { 0: defaultBranchLink }
-              )}
-            </>
+          <Ref>{currentBranchName}</Ref>
+          {t(
+            'create-branch-dialog.new-branch-will-be-checked-out-branch-3',
+            'is the {{0}} for your repository.',
+            { 0: defaultBranchLink }
           )}
         </div>
       )

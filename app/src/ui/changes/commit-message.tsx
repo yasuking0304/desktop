@@ -33,10 +33,10 @@ import { Popup, PopupType } from '../../models/popup'
 import { RepositorySettingsTab } from '../repository-settings/repository-settings'
 import { IdealSummaryLength } from '../../lib/wrap-rich-text-commit-message'
 import { isEmptyOrWhitespace } from '../../lib/is-empty-or-whitespace'
+import { TooltippedContent } from '../lib/tooltipped-content'
 import { TooltipDirection } from '../lib/tooltip'
 import { pick } from '../../lib/pick'
 import { t } from 'i18next'
-import { ToggledtippedContent } from '../lib/toggletipped-content'
 
 const addAuthorIcon = {
   w: 18,
@@ -427,6 +427,15 @@ export class CommitMessage extends React.Component<
   private renderAvatar() {
     const { commitAuthor, repository } = this.props
     const { gitHubRepository } = repository
+    const avatarTitle = commitAuthor ? (
+      <>
+        {t('commit-message.commiting-as-1', 'Committing as ')}
+        <strong>{commitAuthor.name}</strong>
+        {t('commit-message.commiting-as-2', ' {{0}}', {
+          0: commitAuthor.email,
+        })}
+      </>
+    ) : undefined
     const avatarUser: IAvatarUser | undefined =
       commitAuthor !== null
         ? getAvatarUserFromAuthor(commitAuthor, gitHubRepository)
@@ -445,6 +454,7 @@ export class CommitMessage extends React.Component<
     return (
       <CommitMessageAvatar
         user={avatarUser}
+        title={avatarTitle}
         email={commitAuthor?.email}
         isEnterpriseAccount={
           repositoryAccount?.endpoint !== getDotComAPIEndpoint()
@@ -868,7 +878,7 @@ export class CommitMessage extends React.Component<
 
   private renderSummaryLengthHint(): JSX.Element | null {
     return (
-      <ToggledtippedContent
+      <TooltippedContent
         delay={0}
         tooltip={
           <>
@@ -889,10 +899,9 @@ export class CommitMessage extends React.Component<
         direction={TooltipDirection.NORTH}
         className="length-hint"
         tooltipClassName="length-hint-tooltip"
-        ariaLabel="Open Summary Length Info"
       >
         <Octicon symbol={OcticonSymbol.lightBulb} />
-      </ToggledtippedContent>
+      </TooltippedContent>
     )
   }
 
@@ -927,7 +936,7 @@ export class CommitMessage extends React.Component<
           {this.renderAvatar()}
 
           <AutocompletingInput
-            required={true}
+            isRequired={true}
             className={summaryInputClassName}
             placeholder={this.props.placeholder}
             value={this.state.summary}

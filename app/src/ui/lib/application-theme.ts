@@ -9,6 +9,20 @@ import {
 } from '../main-process-proxy'
 import { ThemeSource } from './theme-source'
 
+/** Interface for set of customizable styles */
+export interface ICustomTheme {
+  // application background color
+  background: string
+  // application border color
+  border: string
+  // main application text color
+  text: string
+  // used to indicate a selected item or action button
+  activeItem: string
+  // text used on selected item or action button
+  activeText: string
+}
+
 /**
  * A set of the user-selectable appearances (aka themes)
  */
@@ -16,9 +30,13 @@ export enum ApplicationTheme {
   Light = 'light',
   Dark = 'dark',
   System = 'system',
+  HighContrast = 'highContrast',
 }
 
-export type ApplicableTheme = ApplicationTheme.Light | ApplicationTheme.Dark
+export type ApplicableTheme =
+  | ApplicationTheme.Light
+  | ApplicationTheme.Dark
+  | ApplicationTheme.HighContrast
 
 /**
  * Gets the friendly name of an application theme for use
@@ -30,6 +48,7 @@ export function getThemeName(theme: ApplicationTheme): ThemeSource {
     case ApplicationTheme.Light:
       return 'light'
     case ApplicationTheme.Dark:
+    case ApplicationTheme.HighContrast:
       return 'dark'
     default:
       return 'system'
@@ -72,7 +91,8 @@ function getApplicationThemeSetting(): ApplicationTheme {
 
   if (
     themeSetting === ApplicationTheme.Light ||
-    themeSetting === ApplicationTheme.Dark
+    themeSetting === ApplicationTheme.Dark ||
+    themeSetting === ApplicationTheme.HighContrast
   ) {
     return themeSetting
   }

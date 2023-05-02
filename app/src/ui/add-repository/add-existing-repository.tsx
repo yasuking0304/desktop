@@ -16,6 +16,7 @@ import { FoldoutType } from '../../lib/app-state'
 import untildify from 'untildify'
 import { showOpenDialog } from '../main-process-proxy'
 import { Ref } from '../lib/ref'
+import { isGitRepository } from './create-repository'
 import { t } from 'i18next'
 
 interface IAddExistingRepositoryProps {
@@ -291,9 +292,9 @@ export class AddExistingRepository extends React.Component<
   }
 
   private onPathChanged = async (path: string) => {
-    if (this.state.path !== path) {
-      this.updatePath(path)
-    }
+    const isRepository = await isGitRepository(this.resolvedPath(path))
+
+    this.setState({ path, isRepository })
   }
 
   private showFilePicker = async () => {
