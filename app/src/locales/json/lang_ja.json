@@ -79,14 +79,14 @@
   },
   "appearance": {
     "dark": "Dark",
-    "high-contrast": "ハイコントラスト",
     "light": "Light",
     "loading-system-theme": "システムテーマのロード中",
-    "message-of-dark": "夜間の生活に適した GitHub Desktop のテーマです",
-    "message-of-high-contrast": "カスタマイズ可能なハイコントラストテーマです",
-    "message-of-light": "GitHub Desktop のデフォルトのテーマです",
-    "message-of-system": "システムテーマと一致するようにテーマを自動的に切り替えます",
-    "system": "システムの規定"
+    "system": "システムの規定",
+    "theme": "配色テーマ"
+  },
+  "binary-file": {
+    "open-file-in-external-program": "外部プログラムを開きます。",
+    "this-binary-file-has-changed": "バイナリファイルが変更されました。"
   },
   "branch-dropdown": {
     "current-branch": "現在のブランチ",
@@ -127,8 +127,8 @@
   "changes-list": {
     "confirm-discard-all-changes": "すべての変更を破棄する…",
     "confirm-discard-all-changes-darwin": "すべての変更を破棄する…",
-    "confirm-stash-all-changes": "すべての変更を隠す…",
-    "confirm-stash-all-changes-darwin": "すべての変更を隠す…",
+    "confirm-stash-all-changes": "すべての変更を一時退避する…",
+    "confirm-stash-all-changes-darwin": "すべての変更を一時退避する…",
     "create-filename": "作成 {{0}}",
     "delete-filename": "削除 {{0}}",
     "discard-changes": "変更の破棄",
@@ -150,8 +150,8 @@
     "include-selected-files": "選択したファイルを含める",
     "include-selected-files-darwin": "選択したファイルを含める",
     "open-in-external-editor": "{{0}} で開く",
-    "stash-all-changes": "すべての変更を隠す",
-    "stash-all-changes-darwin": "すべての変更を隠す",
+    "stash-all-changes": "すべての変更を一時退避する",
+    "stash-all-changes-darwin": "すべての変更を一時退避する",
     "stashed-changes": "一時退避した変更",
     "summary-required": "概要 (必須入力)",
     "update-filename": "更新 {{0}}"
@@ -251,15 +251,15 @@
     "move-commit-here": "{{0}}をここに移動",
     "multiple-commits": "コミット",
     "one-commit": "コミット",
-    "squash-number-commit": "{{0}}個のコミットをまとめる"
+    "squash-number-commit": "{{0}}個のコミットをスカッシュする"
   },
   "commit-list-item": {
     "amend-commit": "コミットの修正…",
     "amend-commit-darwin": "コミットの修正…",
-    "cherry-pick-commit": "Cherry-pick コミット…",
-    "cherry-pick-commit-darwin": "Cherry-pick コミット…",
-    "cherry-pick-commits": "Cherry-pick {{0}}個のコミット…",
-    "cherry-pick-commits-darwin": "Cherry-pick {{0}}個のコミット…",
+    "cherry-pick-commit": "コミットをチェリーピックする…",
+    "cherry-pick-commit-darwin": "コミットをチェリーピックする…",
+    "cherry-pick-commits": "{{0}}個のコミットをチェリーピックする…",
+    "cherry-pick-commits-darwin": "{{0}}個のコミットをチェリーピックする…",
     "comform-create-tag": "タグの作成…",
     "confim-detele-tag": "タグの削除…",
     "copy-sha": "SHA のコピー",
@@ -271,8 +271,8 @@
     "reset-to-commit-darwin": "コミットを取り消す…",
     "Revert-changes-in-commit": "コミットの変更を元に戻す",
     "Revert-changes-in-commit-darwin": "コミットの変更を元に戻す",
-    "squash-commits": "{{0}}個のコミットをまとめる…",
-    "squash-commits-darwin": "{{0}}個のコミットをまとめる…",
+    "squash-commits": "{{0}}個のコミットをスカッシュ(結合)する…",
+    "squash-commits-darwin": "{{0}}個のコミットをスカッシュ(結合)する…",
     "undo-commit": "コミットを元に戻す…",
     "undo-commit-darwin": "コミットを元に戻す…",
     "view-on-github": "GitHub で確認",
@@ -286,8 +286,6 @@
     "commit": "コミット",
     "commit-summaries-length-over": "概要入力は50文字未満でお願いします",
     "commit-title": "{{1}} に{{0}}",
-    "commiting-as-1": " ",
-    "commiting-as-2": " {{0}} でコミットします",
     "committing": "コミット中",
     "committing-changes": "変更をコミットしています…",
     "description-field": "説明フィールド",
@@ -315,6 +313,8 @@
     "will-modify-your-most-recent-commit-4": " します。"
   },
   "commit-message-avatar": {
+    "committing-as-1": " ",
+    "committing-as-2": " でコミットされます",
     "ignore": "無視",
     "learn-more": "詳細情報。",
     "repository-settings": "リポジトリ設定",
@@ -414,14 +414,14 @@
     "behind": "({{0}}) の後方",
     "error": {
       "unable-to-reorder": "git reorderできません。コミットの並べ替えは、マージコミット以降から最新のコミットまでが対象です。間にマージコミットが存在してはいけません。",
-      "unable-to-squash": "git squashできません。コミットをまとめるのは、マージコミット以降から最新のコミットまでが対象です。間にマージコミットが存在してはいけません。"
+      "unable-to-squash": "git squashできません。コミットのスカッシュは(一つに結合するのは)、マージコミット以降から最新のコミットまでが対象です。間にマージコミットが存在してはいけません。"
     },
     "no-branch-to-compare": "比較するブランチがありません",
     "no-branch-to-compare-darwin": "比較するブランチがありません",
     "no-history": "変更履歴なし",
     "select-branch-to-compare": "比較するブランチを選択…",
     "select-branch-to-compare-darwin": "比較するブランチを選択…",
-    "squash-number-commits": "{{0}}個のコミットをまとめる",
+    "squash-number-commits": "{{0}}個のコミットをスカッシュ(結合)する",
     "the-compare-branch-1": "比較されたブランチ(",
     "the-compare-branch-2": ") がブランチと最新の状態です",
     "your-branch-1": "あなたのブランチは比較されたブランチで最新です (",
@@ -504,7 +504,7 @@
     "default-branch-source-is-determined-1": "デフォルトのブランチソースは、",
     "default-branch-source-is-determined-2": "フォークの動作設定",
     "default-branch-source-is-determined-3": "で決定されます",
-    "do-not-have-any-branch-checked-out": "現在ブランチは未作成です(コミットは含まれていません)。Creating\n          a new branch will rename the current branch.",
+    "do-not-have-any-branch-checked-out": "現在ブランチは未作成です(コミットは含まれていません)。Creating a new branch will rename the current branch.",
     "error": {
       "unknown-tip-kind": "Unknown tip kind {{0}}"
     },
@@ -513,7 +513,7 @@
     "new-branch-will-be-based-on-2": "'s ",
     "new-branch-will-be-based-on-3": " (",
     "new-branch-will-be-based-on-4": "){{0}}.",
-    "new-branch-will-be-checked-out-branch-1": "Your new branch will be based on your currently checked out\n            branch (",
+    "new-branch-will-be-checked-out-branch-1": "Your new branch will be based on your currently checked out branch (",
     "new-branch-will-be-checked-out-branch-2": "). ",
     "new-branch-will-be-checked-out-branch-3": "is the {{0}} for your repository."
   },
@@ -764,10 +764,14 @@
     "confirm-remove": "削除(&R)…",
     "confirm-remove-darwin": "削除…",
     "confirm-rename": "ブランチ名の変更…",
-    "confirm-stash-all-changes": "すべての変更を隠す(&S)…",
-    "confirm-stash-all-changes-darwin": "すべての変更を隠す…",
+    "confirm-stash-all-changes": "すべての変更を一時退避する(&S)…",
+    "confirm-stash-all-changes-darwin": "すべての変更を一時退避する…",
+    "contact-github-support": "GitHub サポートに連絡(&C)…",
+    "contact-github-support-darwin": "GitHub サポートに連絡…",
     "context-open-in-external-editor": "外部エディタを開く",
     "context-open-in-external-editor-darwin": "外部エディタを開く",
+    "contract-active-resizable": "アクティブ要素の幅を狭める",
+    "contract-active-resizable-darwin": "アクティブ要素の幅を狭める",
     "copy": "コピー(&C)",
     "copy-branch-name": "ブランチ名のコピー",
     "copy-branch-name-darwin": "ブランチ名のコピー",
@@ -797,6 +801,8 @@
     "edit": "編集(&E)",
     "edit-darwin": "編集",
     "exit": "終了(&X)",
+    "expand-active-resizable": "アクティブ要素の幅を広げる",
+    "expand-active-resizable-darwin": "アクティブ要素の幅を広げる",
     "expand-whole-file": "ファイル全体を展開する",
     "expand-whole-file-darwin": "ファイル全体を展開する",
     "fetch": "フェッチ(&F)",
@@ -883,8 +889,8 @@
     "show-user-guides": "ユーザーガイドの参照",
     "squash-and-merge-into-branch": "コミットをまとめて現在のブランチにマージ(&H)…",
     "squash-and-merge-into-branch-darwin": "コミットをまとめて現在のブランチにマージ…",
-    "stash-all-changes": "すべての変更を隠す(&S)",
-    "stash-all-changes-darwin": "すべての変更を隠す",
+    "stash-all-changes": "すべての変更を一時退避する(&S)",
+    "stash-all-changes-darwin": "すべての変更を一時退避する",
     "toggle-developer-tools": "開発者ツールの切り替え(&T)",
     "toggle-developer-tools-darwin": "開発者ツールの切り替え",
     "toggle-full-screen": "フルスクリーンの切り替え(&F)",
@@ -962,15 +968,21 @@
     "always-available-in-the-toolbar-remote-changes-2": " のキーボード操作で、いつでも可能です",
     "change": "変更",
     "changes": "変更",
+    "commit-on-remote-that-do-not-1": "{{1}}の既存のブランチ(",
+    "commit-on-remote-that-do-not-2": ")には、このPCに反映されていないコミットがあります。",
     "create-pull-request": "プルリクエストの作成",
     "create-pull-request-from-current-branch": "現在のブランチからプルリクエストを作成します",
+    "do-not": "do not",
+    "does-not": "does not",
     "file-manager": "Explorer",
     "file-manager-darwin": "Finder",
     "file-manager-linux": "ファイルマネージャー",
     "menu": "{{0}}メニューから開くか ",
+    "multiple-commits": "commits",
     "multiple-local-commits": "{{0}}個のローカルコミット",
     "multiple-tags": "{{0}}個のタグ",
     "no-local-changes": "ローカルの変更はありません",
+    "one-commit": "a commit",
     "one-local-commit": "1個のローカルコミット",
     "one-tag": "1個のタグ",
     "open-a-pull-request": "プルリクエストを開く",
@@ -993,7 +1005,7 @@
     "the-current-branch-2": ") はまだリモートに公開されていないようです。 By publishing it {{0}} you\n        can share it, {{1}}\n        and collaborate with others.",
     "the-current-branch-us-already-published-1": "現在のブランチ (",
     "the-current-branch-us-already-published-2": ") は既に GitHub に公開されています。プルリクエストを作成して、変更の提案・共同作業を行います。",
-    "the-remote": "the remote",
+    "the-remote": "リモート",
     "there-are-no-uncommitted-changes": "このリポジトリにはコミットされていない変更はありません。次に何をすべきかについてのいくつかの良い提案があります。",
     "this-repository-is-currently-only": "このリポジトリは現在、ローカル マシンでのみ利用できます。 GitHub に公開することで、共有したり、他のユーザーと共同作業したりできます。",
     "to-github": "to GitHub",
@@ -1038,12 +1050,24 @@
   "notifications": {
     "allows-the-display-of-notifications": "現在のリポジトリで緊急のイベントが発生したときに通知を表示できるようにします。",
     "enable-notifications": "通知を有効にする",
-    "notifications": "通知"
+    "enabled": "有効である",
+    "has-no-permission-to-display-notifications-1": " GitHub Desktop は通知を表示する権限がありません。",
+    "has-no-permission-to-display-notifications-2": " で有効にしてください。",
+    "make-sure-notifications-1": " ",
+    "make-sure-notifications-2": " で GitHub Desktop が{{0}}ことを確認してください。",
+    "notifications": "通知",
+    "notifications-settings": "通知とアクション の設定",
+    "properly-configured": "正しく設定されている"
+  },
+  "open-file": {
+    "unable-to-open-file": "{{0}} を開くことが出来ません。このファイルの拡張子にプログラムが関連付けされているか確認してください"
   },
   "open-pull-request-dialog": {
     "button_title": "GitHub{{1}} でプルリクエストを{{0}}します",
     "could-not-find-a-default-branch": "比較するデフォルト ブランチが見つかりませんでした。",
     "create": "作成",
+    "is-up-to-date-with-1": " は ",
+    "is-up-to-date-with-2": " からのすべてのコミットにより最新の状態になっています。",
     "request": "プルリクエストの{{0}}",
     "request_darwin": "プルリクエストの{{0}}",
     "select-a-base-branch-above": "ベースブランチの選択",
@@ -1216,7 +1240,7 @@
   "selected-commits": {
     "branch-menu-to-cherry-pick-them": "コミットをブランチメニューにドラッグしてcherry-pickします。",
     "commits": "コミット",
-    "commits-to-squash-or-reorder-them": "コミットをドラッグしてスカッシュするか、並べ替えます。",
+    "commits-to-squash-or-reorder-them": "コミットをドラッグしてスカッシュ(結合)するか、並べ替えます。",
     "file-does-not-exist": "ファイルがディスク上に存在しません",
     "file-does-not-exist-darwin": "ファイルがディスク上に存在しません",
     "no-commit-selected": "コミットが選択されていません",
@@ -1263,6 +1287,11 @@
     "select-all": "すべて選択",
     "select-all-darwin": "すべて選択"
   },
+  "side-by-side-diff-row": {
+    "expand-all": "すべて展開",
+    "expand-down": "下に展開",
+    "expand-up": "上に展開"
+  },
   "sign-in": {
     "continue-with-browser": "ブラウザで続行",
     "continue-with-browser-darwin": "ブラウザで続行",
@@ -1276,12 +1305,14 @@
     "sign-in": "GitHub Enterprise にサインイン"
   },
   "start": {
-    "by-creating-an-account": "アカウントを作成することにより、以下に同意したことになります ",
+    "by-creating-an-account-1": "アカウントを作成することにより ",
+    "by-creating-an-account-2": " に同意したことになります。",
     "create-free-account": "フリーアカウントを作成",
-    "github-privacy-statement": "GitHub のプライバシーについての声明",
-    "here": "こちら",
+    "github-privacy-statement": "GitHub のプライバシーに関する声明",
+    "learn-more-about": "詳しくは、ユーザーメトリクスの記事をご覧ください。",
     "new-to-github": "Githubは初めてですか? ",
-    "privacy-practices": "。GitHub のプライバシー慣行の詳細については、",
+    "privacy-practices-1": "GitHub の個人情報の扱いの詳細につきましては ",
+    "privacy-practices-2": " をご覧ください。",
     "sign-in-github-com": "GitHub.com にサインイン",
     "sign-in-github-enterprise": "GitHub Enterprise にサインイン",
     "skip-this-step": "この手順をスキップ",
@@ -1327,7 +1358,7 @@
     "renamed": "リネーム"
   },
   "successful-squash": {
-    "successfully-squashed": "{{0}}{{1}}のまとめに成功しました。"
+    "successfully-squashed": "{{0}}{{1}}のスカッシュ(結合)に成功しました。"
   },
   "terms-and-conditions": {
     "additional-services": "追加サービス",
@@ -1388,6 +1419,13 @@
     "your-default-editor-is-1": "デフォルトのエディターは ",
     "your-default-editor-is-2": "です。",
     "your-default-editor-is-3": "でお好みのエディタに変更できます。"
+  },
+  "unreachable-commits-dialog": {
+    "about-unreachable-commits": "コミットの到達可否の詳細をご覧ください。",
+    "commit-reachability": "コミットの到達可否",
+    "commit-reachability-darwin": "コミットの到達可否",
+    "reachable": "到達可能",
+    "unreachable": "到達不能"
   },
   "untrusted-certificate": {
     "gitHub-desktop-cannot-verify-1": "GitHub デスクトップは {{0}} の ID を検証できません。証明書 ({{1}}) が無効であるか、信頼されていません。",
