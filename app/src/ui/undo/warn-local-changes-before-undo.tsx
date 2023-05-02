@@ -52,6 +52,8 @@ export class WarnLocalChangesBeforeUndo extends React.Component<
         disabled={this.state.isLoading}
         onSubmit={this.onSubmit}
         onDismissed={this.props.onDismissed}
+        role="alertdialog"
+        ariaDescribedBy="undo-warning-message"
       >
         {this.getWarningDialog()}
         <DialogFooter>
@@ -70,7 +72,7 @@ export class WarnLocalChangesBeforeUndo extends React.Component<
     }
     return (
       <DialogContent>
-        <Row>
+        <Row id="undo-warning-message">
           {t(
             'warn-local-changes-before-undo.changes-in-progress-undo-commit',
             `You have changes in progress. Undoing the commit might result in

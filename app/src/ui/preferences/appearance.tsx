@@ -3,69 +3,21 @@ import {
   ApplicationTheme,
   supportsSystemThemeChanges,
   getCurrentlyAppliedTheme,
-  ICustomTheme,
 } from '../lib/application-theme'
 import { Row } from '../lib/row'
 import { DialogContent } from '../dialog'
-import {
-  VerticalSegmentedControl,
-  ISegmentedItem,
-} from '../lib/vertical-segmented-control'
-import { CustomThemeSelector } from './custom-theme-selector'
-import { enableHighContrastTheme } from '../../lib/feature-flag'
 import { t } from 'i18next'
+import { RadioGroup } from '../lib/radio-group'
+import { encodePathAsUrl } from '../../lib/path'
 
 interface IAppearanceProps {
   readonly selectedTheme: ApplicationTheme
-  readonly customTheme?: ICustomTheme
   readonly onSelectedThemeChanged: (theme: ApplicationTheme) => void
-  readonly onCustomThemeChanged: (theme: ICustomTheme) => void
 }
 
 interface IAppearanceState {
   readonly selectedTheme: ApplicationTheme | null
 }
-
-const systemTheme: ISegmentedItem<ApplicationTheme> = {
-  title: t('appearance.system', 'System'),
-  description: t(
-    'appearance.message-of-system',
-    'Automatically switch theme to match system theme'
-  ),
-  key: ApplicationTheme.System,
-}
-
-const themes: ReadonlyArray<ISegmentedItem<ApplicationTheme>> = [
-  {
-    title: t('appearance.light', 'Light'),
-    description: t(
-      'appearance.message-of-light',
-      'The default theme of GitHub Desktop'
-    ),
-    key: ApplicationTheme.Light,
-  },
-  {
-    title: t('appearance.dark', 'Dark'),
-    description: t(
-      'appearance.message-of-dark',
-      'GitHub Desktop is for you too, creatures of the night'
-    ),
-    key: ApplicationTheme.Dark,
-  },
-  ...(enableHighContrastTheme()
-    ? [
-        {
-          title: t('appearance.high-contrast', 'High Contrast'),
-          description: t(
-            'appearance.message-of-high-contrast',
-            'Customizable High Contrast Theme'
-          ),
-          key: ApplicationTheme.HighContrast,
-        },
-      ]
-    : []),
-  ...(supportsSystemThemeChanges() ? [systemTheme] : []),
-]
 
 export class Appearance extends React.Component<
   IAppearanceProps,
@@ -110,8 +62,47 @@ export class Appearance extends React.Component<
     this.props.onSelectedThemeChanged(theme)
   }
 
-  private onCustomThemeChanged = (theme: ICustomTheme) => {
-    this.props.onCustomThemeChanged(theme)
+  public renderThemeSwatch = (theme: ApplicationTheme) => {
+    const darkThemeImage = encodePathAsUrl(__dirname, 'static/ghd_dark.svg')
+    const lightThemeImage = encodePathAsUrl(__dirname, 'static/ghd_light.svg')
+
+    switch (theme) {
+      case ApplicationTheme.Light:
+        return (
+          <span>
+            <img src={lightThemeImage} alt="" />
+            <span className="theme-value-label">
+              {t('appearance.light', 'Light')}
+            </span>
+          </span>
+        )
+      case ApplicationTheme.Dark:
+        return (
+          <span>
+            <img src={darkThemeImage} alt="" />
+            <span className="theme-value-label">
+              {t('appearance.dark', 'Dark')}
+            </span>
+          </span>
+        )
+      case ApplicationTheme.System:
+        /** Why three images? The system theme swatch uses the first image
+         * positioned relatively to get the label container size and uses the
+         * second and third positioned absolutely over first and third one
+         * clipped in half to render a split dark and light theme swatch. */
+        return (
+          <span>
+            <span className="system-theme-swatch">
+              <img src={lightThemeImage} alt="" />
+              <img src={lightThemeImage} alt="" />
+              <img src={darkThemeImage} alt="" />
+            </span>
+            <span className="theme-value-label">
+              {t('appearance.system', 'System')}
+            </span>
+          </span>
+        )
+    }
   }
 
   public render() {
@@ -127,22 +118,24 @@ export class Appearance extends React.Component<
       )
     }
 
+    const themes = [
+      ApplicationTheme.Light,
+      ApplicationTheme.Dark,
+      ...(supportsSystemThemeChanges() ? [ApplicationTheme.System] : []),
+    ]
+
     return (
       <DialogContent>
-        <Row>
-          <VerticalSegmentedControl
-            items={themes}
-            selectedKey={selectedTheme}
-            onSelectionChanged={this.onSelectedThemeChanged}
-          />
-        </Row>
-        <Row>
-          <CustomThemeSelector
-            onCustomThemeChanged={this.onCustomThemeChanged}
-            selectedTheme={selectedTheme}
-            customTheme={this.props.customTheme}
-          />
-        </Row>
+        <h2 id="theme-heading">{t('appearance.theme', 'Theme')}</h2>
+
+        <RadioGroup<ApplicationTheme>
+          ariaLabelledBy="theme-heading"
+          className="theme-selector"
+          selectedKey={selectedTheme}
+          radioButtonKeys={themes}
+          onSelectionChanged={this.onSelectedThemeChanged}
+          renderRadioButtonLabelContents={this.renderThemeSwatch}
+        />
       </DialogContent>
     )
   }

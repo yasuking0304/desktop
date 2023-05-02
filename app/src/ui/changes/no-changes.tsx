@@ -29,6 +29,7 @@ import {
 import { PullRequestSuggestedNextAction } from '../../models/pull-request'
 import { enableStartingPullRequests } from '../../lib/feature-flag'
 import { t } from 'i18next'
+import { KeyboardShortcut } from '../keyboard-shortcut/keyboard-shortcut'
 
 function formatMenuItemLabel(text: string) {
   if (__WIN32__ || __LINUX__) {
@@ -225,17 +226,13 @@ export class NoChanges extends React.Component<
     )
   }
 
-  private renderDiscoverabilityKeyboardShortcut(menuItem: IMenuItemInfo) {
-    return menuItem.acceleratorKeys.map((k, i) => {
-      return menuItem.acceleratorKeys.length === i + 1 ? (
-        <kbd key={k + i}>{k}</kbd>
-      ) : (
-        <>
-          <kbd key={k + i}>{k}</kbd>
-          <>+</>
-        </>
-      )
-    })
+  private renderDiscoverabilityKeyboardShortcut(menuItemInfo: IMenuItemInfo) {
+    return (
+      <KeyboardShortcut
+        darwinKeys={menuItemInfo.acceleratorKeys}
+        keys={menuItemInfo.acceleratorKeys}
+      />
+    )
   }
 
   private renderMenuBackedAction(
@@ -606,14 +603,30 @@ export class NoChanges extends React.Component<
     }
 
     const isGitHub = this.props.repository.gitHubRepository !== null
-
+    const commitWord =
+      aheadBehind.behind === 1
+        ? t('no-changes.one-commit', 'a commit')
+        : t('no-changes.multiple-commits', 'commits')
+    const remoteName = isGitHub
+      ? 'GitHub'
+      : t('no-changes.the-remote', 'the remote')
+    const donotWord =
+      aheadBehind.behind === 1
+        ? t('no-changes.does-not', 'does not')
+        : t('no-changes.do-not', 'do not')
     const description = (
       <>
-        The current branch (<Ref>{tip.branch.name}</Ref>) has{' '}
-        {aheadBehind.behind === 1 ? 'a commit' : 'commits'} on{' '}
-        {isGitHub ? 'GitHub' : 'the remote'} that{' '}
-        {aheadBehind.behind === 1 ? 'does not' : 'do not'} exist on your
-        machine.
+        {t(
+          'no-changes.commit-on-remote-that-do-not-1',
+          'The current branch (',
+          { 0: commitWord, 1: remoteName, 2: donotWord }
+        )}
+        <Ref>{tip.branch.name}</Ref>
+        {t(
+          'no-changes.commit-on-remote-that-do-not-2',
+          ') has {{0}} on {{1}} that {{2}} exist on your machine.',
+          { 0: commitWord, 1: remoteName, 2: donotWord }
+        )}
       </>
     )
 
