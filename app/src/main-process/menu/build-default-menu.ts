@@ -294,16 +294,19 @@ export function buildDefaultMenu({
       },
       {
         label: __DARWIN__
-          ? 'Expand Active Resizable'
-          : 'Expand active resizable',
+          ? t('menu.expand-active-resizable-darwin', 'Expand Active Resizable')
+          : t('menu.expand-active-resizable', 'Expand active resizable'),
         id: 'increase-active-resizable-width',
         accelerator: 'CmdOrCtrl+9',
         click: emit('increase-active-resizable-width'),
       },
       {
         label: __DARWIN__
-          ? 'Contract Active Resizable'
-          : 'Contract active resizable',
+          ? t(
+              'menu.contract-active-resizable-darwin',
+              'Contract Active Resizable'
+            )
+          : t('menu.contract-active-resizable', 'Contract active resizable'),
         id: 'decrease-active-resizable-width',
         accelerator: 'CmdOrCtrl+8',
         click: emit('decrease-active-resizable-width'),

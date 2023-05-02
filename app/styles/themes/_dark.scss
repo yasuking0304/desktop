@@ -54,11 +54,11 @@ body.theme-dark {
   --scroll-bar-thumb-background-color: rgba(255, 255, 255, 0.2);
 
   /**
-    * Background color for custom scroll bars in their active state.
-    * The color is applied to the thumb part of the scrollbar.
-    *
-    * Note: Only applies to win32 and linux platforms
-    */
+   * Background color for custom scroll bars in their active state.
+   * The color is applied to the thumb part of the scrollbar.
+   *
+   * Note: Only applies to win32 and linux platforms
+   */
   --scroll-bar-thumb-background-color-active: rgba(255, 255, 255, 0.5);
 
   // Box
@@ -151,7 +151,7 @@ body.theme-dark {
   --co-author-tag-background-color: #{$blue-800};
   --co-author-tag-border-color: #{$blue-700};
 
-  --base-border: 1px solid var(--box-border-color);
+  --base-border: 1px solid var(--secondary-button-border-color);
   --contrast-border: 1px solid var(--box-border-contrast-color);
 
   --shadow-color: #{rgba(black, 0.5)};
