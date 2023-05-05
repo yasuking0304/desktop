@@ -914,6 +914,8 @@ export class CommitMessage extends React.Component<
       'nudge-arrow-left': this.props.shouldNudge === true,
     })
 
+    const { placeholder, isCommitting, commitSpellcheckEnabled } = this.props
+
     return (
       // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
       <div
@@ -928,8 +930,9 @@ export class CommitMessage extends React.Component<
 
           <AutocompletingInput
             required={true}
+            screenReaderLabel="Commit summary"
             className={summaryInputClassName}
-            placeholder={this.props.placeholder}
+            placeholder={placeholder}
             value={this.state.summary}
             onValueChanged={this.onSummaryChanged}
             onElementRef={this.onSummaryInputRef}
@@ -937,8 +940,8 @@ export class CommitMessage extends React.Component<
               this.state.commitMessageAutocompletionProviders
             }
             onContextMenu={this.onAutocompletingInputContextMenu}
-            disabled={this.props.isCommitting === true}
-            spellcheck={this.props.commitSpellcheckEnabled}
+            disabled={isCommitting === true}
+            spellcheck={commitSpellcheckEnabled}
           />
           {showSummaryLengthHint && this.renderSummaryLengthHint()}
         </div>
@@ -949,6 +952,10 @@ export class CommitMessage extends React.Component<
         >
           <AutocompletingTextArea
             className={descriptionClassName}
+            screenReaderLabel={t(
+              'commit-message.commit-description',
+              'Commit description'
+            )}
             placeholder={t('commit-message.description-field', 'Description')}
             value={this.state.description || ''}
             onValueChanged={this.onDescriptionChanged}
@@ -958,8 +965,8 @@ export class CommitMessage extends React.Component<
             ref={this.onDescriptionFieldRef}
             onElementRef={this.onDescriptionTextAreaRef}
             onContextMenu={this.onAutocompletingInputContextMenu}
-            disabled={this.props.isCommitting === true}
-            spellcheck={this.props.commitSpellcheckEnabled}
+            disabled={isCommitting === true}
+            spellcheck={commitSpellcheckEnabled}
           />
           {this.renderActionBar()}
         </FocusContainer>
