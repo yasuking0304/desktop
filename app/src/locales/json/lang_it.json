@@ -117,7 +117,7 @@
   "branches-container": {
     "branches": "Branches",
     "choose-a-branch-to-marge-1": "Choose a branch to merge into ",
-    "choose-a-branch-to-marge-2": "",
+    "choose-a-branch-to-marge-2": " ",
     "marge-a-branch": "Merge a branch into {{0}}",
     "new-branch": "New branch",
     "new-branch-darwin": "New Branch",
@@ -284,6 +284,7 @@
     "amend": "Amend",
     "amending": "Amending",
     "commit": "Commit",
+    "commit-description": "Commit description",
     "commit-summaries-length-over": "Great commit summaries contain fewer than 50 characters",
     "commit-title": "{{0}} to {{1}}",
     "committing": "Committing",
@@ -941,6 +942,15 @@
     "this-will-merge-3": " ",
     "unable-to-merge-unrelated-histories": "Unable to merge unrelated histories in this repository"
   },
+  "missing-repository": {
+    "cannot-find": "Can't find \"{{0}}\"",
+    "clone-again": "Clone Again",
+    "it-was-last-seen-at-1": "It was last seen at ",
+    "it-was-last-seen-at-2": ". ",
+    "it-was-last-seen-at-3": "Check again.",
+    "locate": "Locate…",
+    "remove": "Remove"
+  },
   "move-to-applications-folder": {
     "detected-that-youre-not-running": "We've detected that you're not running GitHub Desktop from the\n              Applications folder of your machine. This could cause problems\n              with the app, including impacting your ability to sign in.",
     "do-you-want-to-move": "Do you want to move GitHub Desktop to the Applications folder\n              now? This will also restart the app.",
@@ -1023,7 +1033,7 @@
     "i-can-not-find-that-pull-request": "Sorry, I can't find that pull request!",
     "loading-pull-requests-fast": "Loading pull requests as fast as I can!",
     "no-open-pull-requests-1": "No open pull requests in ",
-    "no-open-pull-requests-2": "",
+    "no-open-pull-requests-2": " ",
     "would-you-like-creat-a-new-branch-1": "Would you like to ",
     "would-you-like-creat-a-new-branch-2": " and get going on your next project?",
     "would-you-like-creat-a-pull-request-1": "Would you like to ",
@@ -1321,7 +1331,7 @@
     "welcome-sends-usage-2": " ",
     "welcome-text": "GitHub Desktop is a seamless way to contribute to projects on\n              GitHub and GitHub Enterprise. Sign in below to get started with\n              your existing projects.",
     "welcome-to-1": "Welcome to ",
-    "welcome-to-2": ""
+    "welcome-to-2": " "
   },
   "stash-and-switch-branch-dialog": {
     "bring-my-changes-to-branch-name": "Bring my changes to {{0}}",
@@ -1418,7 +1428,14 @@
     "publishing-will-push-or-upload": "Publishing will “push”, or upload, your commits to this branch\n               of your repository on GitHub. Publish using the third button in\n               the top bar.",
     "your-default-editor-is-1": "Your default editor is ",
     "your-default-editor-is-2": ". You can change your preferred editor in ",
-    "your-default-editor-is-3": ""
+    "your-default-editor-is-3": " "
+  },
+  "unreachable-commits-dialog": {
+    "about-unreachable-commits": "Learn more about unreachable commits.",
+    "commit-reachability": "Commit reachability",
+    "commit-reachability-darwin": "Commit Reachability",
+    "reachable": "Reachable",
+    "unreachable": "Unreachable"
   },
   "unreachable-commits-dialog": {
     "about-unreachable-commits": "Learn more about unreachable commits.",
@@ -1429,7 +1446,7 @@
   },
   "untrusted-certificate": {
     "gitHub-desktop-cannot-verify-1": "GitHub Desktop cannot verify the identity of {{0}}. The \n            certificate ({{1}}) is invalid or untrusted. ",
-    "gitHub-desktop-cannot-verify-2": "",
+    "gitHub-desktop-cannot-verify-2": " ",
     "if-this-is-a-github-enterprise-trial": "If this is a GitHub Enterprise trial.",
     "if-you-are-unsure-of-what-to-do": "If you are unsure of what to do, cancel and contact your system\n              administrator.",
     "if-your-github-enterprise-instance": "If your GitHub Enterprise instance is run on an unusual\n                top-level domain.",

@@ -284,6 +284,7 @@
     "amend": "直前のコミットを修正",
     "amending": "直前のコミットを修正中",
     "commit": "コミット",
+    "commit-description": "コミットの概要説明",
     "commit-summaries-length-over": "概要入力は50文字未満でお願いします",
     "commit-title": "{{1}} に{{0}}",
     "committing": "コミット中",
@@ -337,9 +338,9 @@
     "lines": "行",
     "not-included": " 含まれていません。",
     "number-changed-file": "{{0}}{{1}} 変更 ",
-    "number-files-added": "{{0}}{{1}} 追加",
-    "number-files-deleted": "{{0}}{{1}} 削除",
-    "number-files-midified": "{{0}}{{1}} 変更",
+    "number-files-added": "追加 {{0}}",
+    "number-files-deleted": "削除 {{0}}",
+    "number-files-midified": "変更 {{0}}",
     "number-lines-added": "{{0}}{{1}} 追加",
     "number-lines-deleted": "{{0}}{{1}} 削除",
     "number-unreachable-commits": "到達不能な {{0}}{{1}}",
@@ -941,6 +942,15 @@
     "this-will-merge-3": " ",
     "unable-to-merge-unrelated-histories": "このリポジトリ内の無関係な履歴をマージできません"
   },
+  "missing-repository": {
+    "cannot-find": "\"{{0}}\" が見つかりません",
+    "clone-again": "もう一度クローン",
+    "it-was-last-seen-at-1": " ",
+    "it-was-last-seen-at-2": "で見られたのが最後です。",
+    "it-was-last-seen-at-3": "もう一度確認してください。",
+    "locate": "場所の指定…",
+    "remove": "削除"
+  },
   "move-to-applications-folder": {
     "detected-that-youre-not-running": "アプリケーションフォルダ から GitHub Desktop を実行していないことが検出されました。これにより、サインイン機能に影響を与えるなど、アプリに問題が発生する可能性があります。",
     "do-you-want-to-move": "GitHub デスクトップを アプリケーションフォルダ に移動しますか?これにより、アプリケーションも再起動します。",
@@ -1387,12 +1397,12 @@
     "removed-darwin": "削除"
   },
   "tutorial-panel": {
-    "a-branch-allows-you-to-work": "ブランチを使用すると、一度に異なるバージョンのリポジトリで作業できます。ブランチを作成するには、トップバーのブランチメニューに移動し、\"{{0}}\"をクリックします。",
-    "a-commit-allows-you-to-save-sets": "コミットを使用すると、変更のセーブセットを保存できます。左下の「概要」フィールドに、行った変更を説明する短いメッセージを書きます。完了したら、青い [コミット] ボタンをクリックして終了します。",
-    "a-pull-request-allows-you-to-propose": "プル要求を使用すると、コードの変更を提案できます。1つを開くと、誰かにレビューとマージを依頼することになります。これはデモリポジトリなので、このプルリクエストはプライベートになります。",
+    "a-branch-allows-you-to-work": "ブランチを使用すると、一度に異なるバージョンのリポジトリで作業できます。ブランチを作成するには、画面上部のツールバーのブランチメニューに移動し、\"{{0}}\"をクリックします。",
+    "a-commit-allows-you-to-save-sets": "コミットを使用すると、変更のセーブセットを保存できます。左下の「概要」フィールドに、行なった変更を説明する短いメッセージを書きます。完了したら、青い [コミット] ボタンをクリックして終了します。",
+    "a-pull-request-allows-you-to-propose": "プルリクエストを使用すると、コードの変更を提案できます。1つを開くと、誰かにレビューとマージを依頼することになります。これはデモ用のリポジトリなので、このプルリクエストはプライベートになります。",
     "atom-editor": "Atom",
     "create-a-branch": "ブランチを作成する",
-    "does-not-look-like-you-have-editor-1": "テキストエディタがインストールされているようには見えません。 ",
+    "does-not-look-like-you-have-editor-1": "テキストエディタがインストールされていないようです。 ",
     "does-not-look-like-you-have-editor-2": " または ",
     "does-not-look-like-you-have-editor-3": " をお勧めしますので、いずれかをお気軽にご利用ください。",
     "edit-a-file": "ファイルの編集",
@@ -1415,8 +1425,8 @@
     "open-this-repository-in-your-preferred-2": " ファイルを編集して保存し、戻ってきます。",
     "partially-checked-check-list": "部分的にチェックされたチェックリスト",
     "publish-to-github": "GitHub に公開する",
-    "publishing-will-push-or-upload": "公開すると、GitHub 上のリポジトリのこのブランチへのコミットが \"Push\" またはアップロードされます。トップバーの3番目のボタンを使用して公開します。",
-    "your-default-editor-is-1": "デフォルトのエディターは ",
+    "publishing-will-push-or-upload": "公開すると、GitHub 上のリポジトリのこのブランチへのコミットが \"プッシュ\" またはアップロードされます。画面上部のツールバーの左から3番目のボタンを使用して公開します。",
+    "your-default-editor-is-1": "デフォルトのエディタは ",
     "your-default-editor-is-2": "です。",
     "your-default-editor-is-3": "でお好みのエディタに変更できます。"
   },
@@ -1429,7 +1439,7 @@
   },
   "untrusted-certificate": {
     "gitHub-desktop-cannot-verify-1": "GitHub デスクトップは {{0}} の ID を検証できません。証明書 ({{1}}) が無効であるか、信頼されていません。",
-    "gitHub-desktop-cannot-verify-2": "",
+    "gitHub-desktop-cannot-verify-2": " ",
     "if-this-is-a-github-enterprise-trial": "もし GitHub Enterprise の試用版である場合。",
     "if-you-are-unsure-of-what-to-do": "対処方法がわからない場合は、キャンセルしてシステム管理者に問い合わせてください。",
     "if-your-github-enterprise-instance": "もし GitHub Enterprise インスタンスが異常なトップレベルドメインで実行されている場合。",

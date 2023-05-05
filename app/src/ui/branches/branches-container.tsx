@@ -176,7 +176,7 @@ export class BranchesContainer extends React.Component<
               'Choose a branch to merge into '
             )}
             <strong>{currentBranch.name}</strong>
-            {t('branches-container.choose-a-branch-to-marge-2', '')}
+            {t('branches-container.choose-a-branch-to-marge-2', ' ')}
           </span>
         </Button>
       </Row>
