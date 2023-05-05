@@ -69,7 +69,7 @@ export class NoPullRequests extends React.Component<INoPullRequestsProps, {}> {
               'No open pull requests in '
             )}
             <Ref>{this.props.repositoryName}</Ref>
-            {t('no-pull-requests.no-open-pull-requests-2', '')}
+            {t('no-pull-requests.no-open-pull-requests-2', ' ')}
           </div>
         </div>
       )

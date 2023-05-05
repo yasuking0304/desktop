@@ -33,10 +33,10 @@ import { Popup, PopupType } from '../../models/popup'
 import { RepositorySettingsTab } from '../repository-settings/repository-settings'
 import { IdealSummaryLength } from '../../lib/wrap-rich-text-commit-message'
 import { isEmptyOrWhitespace } from '../../lib/is-empty-or-whitespace'
-import { TooltippedContent } from '../lib/tooltipped-content'
 import { TooltipDirection } from '../lib/tooltip'
 import { pick } from '../../lib/pick'
 import { t } from 'i18next'
+import { ToggledtippedContent } from '../lib/toggletipped-content'
 
 const addAuthorIcon = {
   w: 18,
@@ -427,15 +427,6 @@ export class CommitMessage extends React.Component<
   private renderAvatar() {
     const { commitAuthor, repository } = this.props
     const { gitHubRepository } = repository
-    const avatarTitle = commitAuthor ? (
-      <>
-        {t('commit-message.commiting-as-1', 'Committing as ')}
-        <strong>{commitAuthor.name}</strong>
-        {t('commit-message.commiting-as-2', ' {{0}}', {
-          0: commitAuthor.email,
-        })}
-      </>
-    ) : undefined
     const avatarUser: IAvatarUser | undefined =
       commitAuthor !== null
         ? getAvatarUserFromAuthor(commitAuthor, gitHubRepository)
@@ -454,7 +445,6 @@ export class CommitMessage extends React.Component<
     return (
       <CommitMessageAvatar
         user={avatarUser}
-        title={avatarTitle}
         email={commitAuthor?.email}
         isEnterpriseAccount={
           repositoryAccount?.endpoint !== getDotComAPIEndpoint()
@@ -878,7 +868,7 @@ export class CommitMessage extends React.Component<
 
   private renderSummaryLengthHint(): JSX.Element | null {
     return (
-      <TooltippedContent
+      <ToggledtippedContent
         delay={0}
         tooltip={
           <>
@@ -899,9 +889,10 @@ export class CommitMessage extends React.Component<
         direction={TooltipDirection.NORTH}
         className="length-hint"
         tooltipClassName="length-hint-tooltip"
+        ariaLabel="Open Summary Length Info"
       >
         <Octicon symbol={OcticonSymbol.lightBulb} />
-      </TooltippedContent>
+      </ToggledtippedContent>
     )
   }
 
@@ -923,6 +914,8 @@ export class CommitMessage extends React.Component<
       'nudge-arrow-left': this.props.shouldNudge === true,
     })
 
+    const { placeholder, isCommitting, commitSpellcheckEnabled } = this.props
+
     return (
       // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
       <div
@@ -936,9 +929,10 @@ export class CommitMessage extends React.Component<
           {this.renderAvatar()}
 
           <AutocompletingInput
-            isRequired={true}
+            required={true}
+            screenReaderLabel="Commit summary"
             className={summaryInputClassName}
-            placeholder={this.props.placeholder}
+            placeholder={placeholder}
             value={this.state.summary}
             onValueChanged={this.onSummaryChanged}
             onElementRef={this.onSummaryInputRef}
@@ -946,8 +940,8 @@ export class CommitMessage extends React.Component<
               this.state.commitMessageAutocompletionProviders
             }
             onContextMenu={this.onAutocompletingInputContextMenu}
-            disabled={this.props.isCommitting === true}
-            spellcheck={this.props.commitSpellcheckEnabled}
+            disabled={isCommitting === true}
+            spellcheck={commitSpellcheckEnabled}
           />
           {showSummaryLengthHint && this.renderSummaryLengthHint()}
         </div>
@@ -958,6 +952,10 @@ export class CommitMessage extends React.Component<
         >
           <AutocompletingTextArea
             className={descriptionClassName}
+            screenReaderLabel={t(
+              'commit-message.commit-description',
+              'Commit description'
+            )}
             placeholder={t('commit-message.description-field', 'Description')}
             value={this.state.description || ''}
             onValueChanged={this.onDescriptionChanged}
@@ -967,8 +965,8 @@ export class CommitMessage extends React.Component<
             ref={this.onDescriptionFieldRef}
             onElementRef={this.onDescriptionTextAreaRef}
             onContextMenu={this.onAutocompletingInputContextMenu}
-            disabled={this.props.isCommitting === true}
-            spellcheck={this.props.commitSpellcheckEnabled}
+            disabled={isCommitting === true}
+            spellcheck={commitSpellcheckEnabled}
           />
           {this.renderActionBar()}
         </FocusContainer>

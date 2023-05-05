@@ -1,8 +1,8 @@
 import { spawn, SpawnOptions } from 'child_process'
+import { t } from 'i18next'
 import { pathExists as pathExistsDefault } from '../../ui/lib/path-exists'
 import { pathExists as pathExistsLinux, spawnEditor } from '../helpers/linux'
 import { ExternalEditorError, FoundEditor } from './shared'
-import { t } from 'i18next'
 
 /**
  * Use a platform-specific pathExists based on the platform, to simplify changes
