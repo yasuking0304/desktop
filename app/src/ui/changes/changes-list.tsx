@@ -1028,6 +1028,7 @@ export class ChangesList extends React.Component<
             <TooltippedContent
               tooltip={selectedChangesDescription}
               direction={TooltipDirection.NORTH}
+              openOnFocus={true}
             >
               <Checkbox
                 ref={this.includeAllCheckBoxRef}
