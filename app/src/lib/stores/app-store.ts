@@ -4448,7 +4448,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
           }
         }
 
-        const title = `Pulling ${remote.name}`
+        const title = t('common.pulling', `Pulling {{0}}`, { 0: remote.name })
         const kind = 'pull'
         this.updatePushPullFetchProgress(repository, {
           kind,

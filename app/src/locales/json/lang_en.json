@@ -284,6 +284,7 @@
     "amend": "Amend",
     "amending": "Amending",
     "commit": "Commit",
+    "commit-description": "Commit description",
     "commit-summaries-length-over": "Great commit summaries contain fewer than 50 characters",
     "commit-title": "{{0}} to {{1}}",
     "committing": "Committing",
@@ -392,6 +393,7 @@
     "overwrite": "Overwrite",
     "password": "Password",
     "preferences": "Preferences",
+    "pulling": "Pulling {{0}}",
     "remove": "Remove",
     "remove-alias": "Remove alias",
     "remove-alias-darwin": "Remove Alias",
@@ -1148,6 +1150,12 @@
     "donot-worry": "Don’t worry, you can still create the pull request.",
     "error-checking-merge-status": "Error checking merge status.",
     "unable-to-merge-unrelated-histories": "Unable to merge unrelated histories in this repository"
+  },
+  "push-needs-pull-warning": {
+    "desktop-is-unable-to-push-commits": "Desktop is unable to push commits to this branch because there are\n            commits on the remote that are not present on your local branch.\n            Fetch these new commits before pushing in order to reconcile them\n            with your local commits.",
+    "fetch": "Fetch",
+    "newer-commits-on-remote": "Newer commits on remote",
+    "newer-commits-on-remote-darwin": "Newer commits on remote"
   },
   "push-pull-button": {
     "cannot-publish-detached-head": "Cannot publish detached HEAD",

@@ -72,7 +72,7 @@
       "pruner-is-already-active": "A branch pruner is already active and cannot start updating\n           on {{0}}",
       "should-only-have-on-background-fetcher-active": "We should only have on background fetcher active at once,\n         but we're trying to start background fetching on {{0}}\n         while another background fetcher is still active!"
     },
-    "pushing-to": "{{0}} へのPush",
+    "pushing-to": "{{0}} にプッシュ",
     "refreshing-repository": "リポジトリのリフレッシュ",
     "refreshing-repository-darwin": "リポジトリのリフレッシュ",
     "unable-to-initialize-cherry-pick": "cherry-pick の変更状況を初期化できません。コミットが指定されていません。"
@@ -193,7 +193,7 @@
     "the-command-line-tool-has-been-installed-2": " にインストールされました。"
   },
   "clone": {
-    "cloning-into": "{{0}} へのクローン作成"
+    "cloning-into": "{{0}} にクローン作成"
   },
   "clone-generic-repository": {
     "hubot-cool-repo": "hubot/cool-repo",
@@ -229,7 +229,7 @@
     "your-repositories_darwin": "リポジトリ"
   },
   "cloning-repositories-store": {
-    "clone": "{{0}} へのクローン作成"
+    "clone": "{{0}} にクローン作成"
   },
   "cloning-repository": {
     "cloning": "クローン作成中 {{0}}"
@@ -284,6 +284,7 @@
     "amend": "直前のコミットを修正",
     "amending": "直前のコミットを修正中",
     "commit": "コミット",
+    "commit-description": "コミットの概要説明",
     "commit-summaries-length-over": "概要入力は50文字未満でお願いします",
     "commit-title": "{{1}} に{{0}}",
     "committing": "コミット中",
@@ -392,6 +393,7 @@
     "overwrite": "上書き",
     "password": "パスワード",
     "preferences": "設定",
+    "pulling": "{{0}} にプル中",
     "remove": "削除",
     "remove-alias": "エイリアス削除",
     "remove-alias-darwin": "エイリアス削除",
@@ -1149,11 +1151,17 @@
     "error-checking-merge-status": "マージ状態のチェックでエラーが発生しました。",
     "unable-to-merge-unrelated-histories": "リポジトリ内の関連のない履歴をマージできません"
   },
+  "push-needs-pull-warning": {
+    "desktop-is-unable-to-push-commits": "Desktop is unable to push commits to this branch because there are\n            commits on the remote that are not present on your local branch.\n            Fetch these new commits before pushing in order to reconcile them\n            with your local commits.",
+    "fetch": "フェッチ",
+    "newer-commits-on-remote": "リモートに新しいコミットがあります",
+    "newer-commits-on-remote-darwin": "リモートに新しいコミットがあります"
+  },
   "push-pull-button": {
     "cannot-publish-detached-head": "detached HEAD を公開できません",
     "cannot-publish-unborn-head": "unborn HEAD を公開できません",
-    "fetch": "フェッチ {{0}}",
-    "force-push": "強制プッシュ {{0}}",
+    "fetch": "{{0}} にフェッチ",
+    "force-push": "{{0}} に強制プッシュ",
     "hang-on": "お待ちください…",
     "last-fetched": "最新フェッチ ",
     "never-fetched": "まだフェッチ実行していません",
@@ -1162,9 +1170,9 @@
     "publish-branch-to-remote": "ブランチを リモート に公開",
     "publish-repository": "リポジトリの公開",
     "publish-this-repository": "リポジトリを GitHub に公開",
-    "pull": "プル {{0}}",
-    "pull-with-rebase": "リベース後に プル {{0}}",
-    "push": "Push {{0}}",
+    "pull": "{{0}} にプル",
+    "pull-with-rebase": "リベース後に {{0}} にプル",
+    "push": "{{0}} にプッシュ",
     "rebase-in-progress": "リベース中"
   },
   "rebase-choose-branch-dialog": {
@@ -1372,7 +1380,7 @@
   "terms-and-conditions": {
     "additional-services": "追加サービス",
     "auto-update-services": "自動更新サービス",
-    "connecting-to-github": "GitHub への接続",
+    "connecting-to-github": "GitHub に接続",
     "disclaimers-and-limitations-of-liability": "免責事項および責任の制限",
     "github-s-logos": "GitHub の商標およびロゴ",
     "miscellanea": "その他",
