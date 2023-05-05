@@ -284,6 +284,7 @@
     "amend": "Amend",
     "amending": "Amending",
     "commit": "Commit",
+    "commit-description": "Commit description",
     "commit-summaries-length-over": "Great commit summaries contain fewer than 50 characters",
     "commit-title": "{{0}} to {{1}}",
     "committing": "Committing",
