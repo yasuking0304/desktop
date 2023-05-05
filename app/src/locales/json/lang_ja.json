@@ -72,7 +72,7 @@
       "pruner-is-already-active": "A branch pruner is already active and cannot start updating\n           on {{0}}",
       "should-only-have-on-background-fetcher-active": "We should only have on background fetcher active at once,\n         but we're trying to start background fetching on {{0}}\n         while another background fetcher is still active!"
     },
-    "pushing-to": "{{0}} へのPush",
+    "pushing-to": "{{0}} にプッシュ",
     "refreshing-repository": "リポジトリのリフレッシュ",
     "refreshing-repository-darwin": "リポジトリのリフレッシュ",
     "unable-to-initialize-cherry-pick": "cherry-pick の変更状況を初期化できません。コミットが指定されていません。"
@@ -193,7 +193,7 @@
     "the-command-line-tool-has-been-installed-2": " にインストールされました。"
   },
   "clone": {
-    "cloning-into": "{{0}} へのクローン作成"
+    "cloning-into": "{{0}} にクローン作成"
   },
   "clone-generic-repository": {
     "hubot-cool-repo": "hubot/cool-repo",
@@ -229,7 +229,7 @@
     "your-repositories_darwin": "リポジトリ"
   },
   "cloning-repositories-store": {
-    "clone": "{{0}} へのクローン作成"
+    "clone": "{{0}} にクローン作成"
   },
   "cloning-repository": {
     "cloning": "クローン作成中 {{0}}"
@@ -1374,7 +1374,7 @@
   "terms-and-conditions": {
     "additional-services": "追加サービス",
     "auto-update-services": "自動更新サービス",
-    "connecting-to-github": "GitHub への接続",
+    "connecting-to-github": "GitHub に接続",
     "disclaimers-and-limitations-of-liability": "免責事項および責任の制限",
     "github-s-logos": "GitHub の商標およびロゴ",
     "miscellanea": "その他",
