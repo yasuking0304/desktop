@@ -66,6 +66,7 @@
     "airbnb-browser-shims": "^3.0.0",
     "ajv": "^6.12.3",
     "awesome-node-loader": "^1.1.0",
+    "azure-storage": "^2.10.7",
     "chalk": "^2.2.0",
     "cross-env": "^5.0.5",
     "css-loader": "^6.7.1",
