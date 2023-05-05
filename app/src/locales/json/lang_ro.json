@@ -393,6 +393,7 @@
     "overwrite": "Overwrite",
     "password": "Password",
     "preferences": "Preferences",
+    "pulling": "Pulling {{0}}",
     "remove": "Remove",
     "remove-alias": "Remove alias",
     "remove-alias-darwin": "Remove Alias",

@@ -393,6 +393,7 @@
     "overwrite": "上書き",
     "password": "パスワード",
     "preferences": "設定",
+    "pulling": "{{0}} にプル中",
     "remove": "削除",
     "remove-alias": "エイリアス削除",
     "remove-alias-darwin": "エイリアス削除",
@@ -1153,8 +1154,8 @@
   "push-pull-button": {
     "cannot-publish-detached-head": "detached HEAD を公開できません",
     "cannot-publish-unborn-head": "unborn HEAD を公開できません",
-    "fetch": "フェッチ {{0}}",
-    "force-push": "強制プッシュ {{0}}",
+    "fetch": "{{0}} にフェッチ",
+    "force-push": "{{0}} に強制プッシュ",
     "hang-on": "お待ちください…",
     "last-fetched": "最新フェッチ ",
     "never-fetched": "まだフェッチ実行していません",
@@ -1163,9 +1164,9 @@
     "publish-branch-to-remote": "ブランチを リモート に公開",
     "publish-repository": "リポジトリの公開",
     "publish-this-repository": "リポジトリを GitHub に公開",
-    "pull": "プル {{0}}",
-    "pull-with-rebase": "リベース後に プル {{0}}",
-    "push": "Push {{0}}",
+    "pull": "{{0}} にプル",
+    "pull-with-rebase": "リベース後に {{0}} にプル",
+    "push": "{{0}} にプッシュ",
     "rebase-in-progress": "リベース中"
   },
   "rebase-choose-branch-dialog": {
