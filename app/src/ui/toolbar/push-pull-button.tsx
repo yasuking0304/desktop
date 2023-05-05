@@ -365,9 +365,9 @@ export class PushPullButton extends React.Component<IPushPullButtonProps> {
     const description = rebaseInProgress
       ? t('push-pull-button.rebase-in-progress', 'Rebase in progress')
       : t(
-        'push-pull-button.cannot-publish-detached-head',
-        'Cannot publish detached HEAD'
-      )
+          'push-pull-button.cannot-publish-detached-head',
+          'Cannot publish detached HEAD'
+        )
 
     return (
       <ToolbarButton
@@ -387,13 +387,13 @@ export class PushPullButton extends React.Component<IPushPullButtonProps> {
   ) {
     const description = isGitHub
       ? t(
-        'push-pull-button.publish-branch-to-github',
-        'Publish this branch to GitHub'
-      )
+          'push-pull-button.publish-branch-to-github',
+          'Publish this branch to GitHub'
+        )
       : t(
-        'push-pull-button.publish-branch-to-remote',
-        'Publish this branch to the remote'
-      )
+          'push-pull-button.publish-branch-to-remote',
+          'Publish this branch to the remote'
+        )
 
     if (!enablePushPullFetchDropdown()) {
       const className = classNames(
@@ -467,8 +467,8 @@ export class PushPullButton extends React.Component<IPushPullButtonProps> {
   ) {
     const title = pullWithRebase
       ? t('push-pull-button.pull-with-rebase', `Pull {{0}} with rebase`, {
-        0: remoteName,
-      })
+          0: remoteName,
+        })
       : t('push-pull-button.pull', `Pull {{0}}`, { 0: remoteName })
 
     const dropdownItemTypes = [DropdownItemType.Fetch]

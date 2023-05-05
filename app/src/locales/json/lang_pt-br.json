@@ -1151,6 +1151,12 @@
     "error-checking-merge-status": "Error checking merge status.",
     "unable-to-merge-unrelated-histories": "Unable to merge unrelated histories in this repository"
   },
+  "push-needs-pull-warning": {
+    "desktop-is-unable-to-push-commits": "Desktop is unable to push commits to this branch because there are\n            commits on the remote that are not present on your local branch.\n            Fetch these new commits before pushing in order to reconcile them\n            with your local commits.",
+    "fetch": "Fetch",
+    "newer-commits-on-remote": "Newer commits on remote",
+    "newer-commits-on-remote-darwin": "Newer commits on remote"
+  },
   "push-pull-button": {
     "cannot-publish-detached-head": "Cannot publish detached HEAD",
     "cannot-publish-unborn-head": "Cannot publish unborn HEAD",

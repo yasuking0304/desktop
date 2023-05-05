@@ -1151,6 +1151,12 @@
     "error-checking-merge-status": "マージ状態のチェックでエラーが発生しました。",
     "unable-to-merge-unrelated-histories": "リポジトリ内の関連のない履歴をマージできません"
   },
+  "push-needs-pull-warning": {
+    "desktop-is-unable-to-push-commits": "Desktop is unable to push commits to this branch because there are\n            commits on the remote that are not present on your local branch.\n            Fetch these new commits before pushing in order to reconcile them\n            with your local commits.",
+    "fetch": "フェッチ",
+    "newer-commits-on-remote": "リモートに新しいコミットがあります",
+    "newer-commits-on-remote-darwin": "リモートに新しいコミットがあります"
+  },
   "push-pull-button": {
     "cannot-publish-detached-head": "detached HEAD を公開できません",
     "cannot-publish-unborn-head": "unborn HEAD を公開できません",
