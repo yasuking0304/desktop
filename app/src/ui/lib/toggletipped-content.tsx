@@ -104,7 +104,6 @@ export class ToggledtippedContent extends React.Component<
             <Tooltip
               target={this.buttonRefObservable}
               className={tooltipClassName}
-              isToggleTip={true}
               {...rest}
             >
               {tooltip}
