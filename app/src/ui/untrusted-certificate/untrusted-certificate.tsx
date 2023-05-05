@@ -64,7 +64,7 @@ export class UntrustedCertificate extends React.Component<
                 'This may indicate attackers are trying to steal your data.'
               )}
             </strong>
-            {t('untrusted-certificate.gitHub-desktop-cannot-verify-2', '', {
+            {t('untrusted-certificate.gitHub-desktop-cannot-verify-2', ' ', {
               0: host,
               1: this.props.certificate.subjectName,
             })}

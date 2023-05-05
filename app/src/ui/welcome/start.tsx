@@ -31,7 +31,7 @@ export class Start extends React.Component<IStartProps, {}> {
         <h1 className="welcome-title">
           {t('start.welcome-to-1', 'Welcome to ')}
           GitHub&nbsp;Desktop
-          {t('start.welcome-to-2', '')}
+          {t('start.welcome-to-2', ' ')}
         </h1>
         {!this.props.loadingBrowserAuth ? (
           <>

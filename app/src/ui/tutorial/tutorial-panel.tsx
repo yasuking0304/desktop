@@ -184,7 +184,7 @@ export class TutorialPanel extends React.Component<
                     ? t('common.preferences', 'Preferences')
                     : t('common.options', 'Options')}
                 </LinkButton>
-                {t('tutorial-panel.your-default-editor-is-3', '')}
+                {t('tutorial-panel.your-default-editor-is-3', ' ')}
               </p>
             )}
           </TutorialStepInstructions>
@@ -340,7 +340,7 @@ export class TutorialPanel extends React.Component<
   private onPreferencesClick = () => {
     this.props.dispatcher.showPopup({
       type: PopupType.Preferences,
-      initialSelectedTab: PreferencesTab.Advanced,
+      initialSelectedTab: PreferencesTab.Integrations,
     })
   }
 }

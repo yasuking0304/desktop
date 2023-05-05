@@ -10,6 +10,7 @@ import { LinkButton } from './lib/link-button'
 import { addSafeDirectory, getRepositoryType } from '../lib/git'
 import { Ref } from './lib/ref'
 import { Loading } from './lib/loading'
+import { t } from 'i18next'
 
 interface IMissingRepositoryProps {
   readonly dispatcher: Dispatcher
@@ -77,14 +78,14 @@ export class MissingRepository extends React.Component<
     if (!isPathUnsafe) {
       buttons.push(
         <Button key="locate" onClick={this.locate} type="submit">
-          Locate…
+          {t('missing-repository.locate', 'Locate…')}
         </Button>
       )
 
       if (this.canCloneAgain()) {
         buttons.push(
           <Button key="clone-again" onClick={this.cloneAgain}>
-            Clone Again
+            {t('missing-repository.clone-again', 'Clone Again')}
           </Button>
         )
       }
@@ -104,7 +105,7 @@ export class MissingRepository extends React.Component<
 
     buttons.push(
       <Button key="remove" onClick={this.remove}>
-        Remove
+        {t('missing-repository.remove', 'Remove')}
       </Button>
     )
 
@@ -136,11 +137,21 @@ export class MissingRepository extends React.Component<
     return (
       <UiView id="missing-repository-view">
         <div className="title-container">
-          <div className="title">Can't find "{this.props.repository.name}"</div>
+          <div className="title">
+            {t('missing-repository.cannot-find', 'Can\'t find "{{0}}"', {
+              0: this.props.repository.name,
+            })}
+          </div>
           <div className="details">
-            It was last seen at{' '}
-            <span className="path">{this.props.repository.path}</span>.{' '}
-            <LinkButton onClick={this.checkAgain}>Check&nbsp;again.</LinkButton>
+            {t(
+              'missing-repository.it-was-last-seen-at-1',
+              'It was last seen at '
+            )}
+            <span className="path">{this.props.repository.path}</span>
+            {t('missing-repository.it-was-last-seen-at-2', '. ')}
+            <LinkButton onClick={this.checkAgain}>
+              {t('missing-repository.it-was-last-seen-at-3', 'Check again.')}
+            </LinkButton>
           </div>
         </div>
 
