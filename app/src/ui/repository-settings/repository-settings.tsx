@@ -222,25 +222,13 @@ export class RepositorySettings extends React.Component<
 
           <div className="active-tab">{this.renderActiveTab()}</div>
         </div>
-        {this.renderFooter()}
-      </Dialog>
-    )
-  }
-
-  private renderFooter() {
-    const tab = this.state.selectedTab
-    const remote = this.state.remote
-    if (tab === RepositorySettingsTab.Remote && !remote) {
-      return null
-    }
-
-    return (
-      <DialogFooter>
-        <OkCancelButtonGroup
+        <DialogFooter>
+          <OkCancelButtonGroup
           okButtonText={t('common.save', 'Save')}
-          okButtonDisabled={this.state.saveDisabled}
-        />
-      </DialogFooter>
+            okButtonDisabled={this.state.saveDisabled}
+          />
+        </DialogFooter>
+      </Dialog>
     )
   }
 
