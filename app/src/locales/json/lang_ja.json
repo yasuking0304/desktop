@@ -589,12 +589,12 @@
     "caption-options": "設定",
     "caption-options-darwin": "設定",
     "diff-display": "変更点の表示",
-    "hide-whitespace-changes": "空白だけの変更を非表示",
-    "hide-whitespace-changes-darwin": "空白だけの変更を非表示",
-    "interacting-with-individual-lines": "タブコードや半角スペースだけの部分的な変更がある行を無視します。",
+    "hide-whitespace-changes": "スペースによる変更を非表示",
+    "hide-whitespace-changes-darwin": "スペースによる変更を非表示",
+    "interacting-with-individual-lines": "タブコードや半角スペースによる部分的な変更がある行を無視します。",
     "split": "分割",
     "unified": "統合",
-    "whitespace": "空白の扱い"
+    "whitespace": "スペースの扱い"
   },
   "discard-changes-dialog": {
     "are-you-sure-discard-all-changed": "変更された {{0}}ファイルを、すべて破棄してよろしいですか?",

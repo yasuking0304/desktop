@@ -224,7 +224,7 @@ export class RepositorySettings extends React.Component<
         </div>
         <DialogFooter>
           <OkCancelButtonGroup
-          okButtonText={t('common.save', 'Save')}
+            okButtonText={t('common.save', 'Save')}
             okButtonDisabled={this.state.saveDisabled}
           />
         </DialogFooter>
