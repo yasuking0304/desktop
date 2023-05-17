@@ -75,7 +75,7 @@
     "pushing-to": "{{0}} にプッシュ",
     "refreshing-repository": "リポジトリのリフレッシュ",
     "refreshing-repository-darwin": "リポジトリのリフレッシュ",
-    "unable-to-initialize-cherry-pick": "cherry-pick の変更状況を初期化できません。コミットが指定されていません。"
+    "unable-to-initialize-cherry-pick": "チェリーピックの変更状況を初期化できません。コミットが指定されていません。"
   },
   "appearance": {
     "dark": "Dark",
@@ -160,7 +160,7 @@
     "checking-out-branch": "ブランチ {{0}} のチェックアウト"
   },
   "cherry-pick-undone": {
-    "cherry-pick-undone-1": "Cherry-pick を元に戻します。",
+    "cherry-pick-undone-1": "チェリーピックを元に戻します。",
     "cherry-pick-undone-2": "から{{1}}された {{0}}個のコミットを正常に削除しました。",
     "multiple-commits": "コミット",
     "one-commit": "コミット"
@@ -172,19 +172,19 @@
     "we-will-for-my-own-purposes-2": " リポジトリに貢献するのを手助けします",
     "we-will-help-you-contribute-1": "私たちはあなたが ",
     "we-will-help-you-contribute-2": " リポジトリに貢献するのを手助けします",
-    "you-have-changes-on-this-branch": "このブランチに変更があります。あなたは彼らとどうしたいですか?",
+    "you-have-changes-on-this-branch": "このブランチに変更があります。どのように対応しますか?",
     "you-planning-to-use-this-fork": "このフォークをどのように使用する予定ですか?"
   },
   "choose-target-branch": {
-    "cherry-pick-number-commit-to-a-branch": "{{0}}個の{{1}} をブランチに Cherry-pick",
-    "cherry-pick-to-new-branch": "新しいブランチに Cherry-pick",
-    "cherry-pick-to-new-branch-darwin": "新しいブランチに Cherry-pick",
+    "cherry-pick-number-commit-to-a-branch": "{{0}}個の{{1}} をブランチにチェリーピック",
+    "cherry-pick-to-new-branch": "新しいブランチにチェリーピック",
+    "cherry-pick-to-new-branch-darwin": "新しいブランチにチェリーピック",
     "multiple-commits": "コミット",
     "ok-button-text-to-1": " ",
     "ok-button-text-to-2": " に{{0}}",
-    "okbutton": "{{0}}個の{{1}}を Cherry-pick",
+    "okbutton": "{{0}}個の{{1}}をチェリーピック",
     "one-or-less-commit": "コミット",
-    "you-are-not-able-to-cherry-pick": "同じブランチから Cherry-pick をすることはできません"
+    "you-are-not-able-to-cherry-pick": "同じブランチからチェリーピックをすることはできません"
   },
   "cli-installed": {
     "command-line-tool-installed": "コマンドラインツールがインストールされました",
@@ -348,8 +348,8 @@
     "showing-changes-from-2": " {{0}} {{1}}",
     "tag": "タグ",
     "tags": "タグ",
-    "this-commit-has-not-been-pushed": "このコミットはリモートリポジトリにPushされていません",
-    "this-commit-has-number-tags": "このコミットにはPushする{{1}}が{{0}}個あります"
+    "this-commit-has-not-been-pushed": "このコミットはリモートリポジトリにプッシュされていません",
+    "this-commit-has-number-tags": "このコミットにはプッシュする{{1}}が{{0}}個あります"
   },
   "common": {
     "about-github-desktop": "GitHub Desktop について",
@@ -468,7 +468,7 @@
       "if-you-use-ssh-authentication-check-that": "- SSH 認証を使用する場合は、鍵が ssh-agent に追加され、アカウントに関連付けられていることを確認してください。",
       "if-you-use-ssh-authentication-ensure": "- SSH 認証を使用する場合は、リポジトリー・ホスティング・サービスのホスト鍵検証パスを確認してください。",
       "if-you-used-username": "- ユーザー名/パスワード認証を使用した場合は、アカウントのパスワードの代わりに個人用アクセストークンを使用する必要があります。リポジトリホスティングサービスのドキュメントを確認してください。",
-      "the-repository-is-archived-on-github": "- リポジトリは GitHub にアーカイブされます。リポジトリの設定をチェックして、コミットをPushすることが引き続き許可されていることを確認します。",
+      "the-repository-is-archived-on-github": "- リポジトリは GitHub にアーカイブされます。リポジトリの設定をチェックして、コミットをプッシュすることが引き続き許可されていることを確認します。",
       "you-are-not-logged": "- アカウントにログインしていません: {{0}} を参照してください",
       "you-do-not-have-permission": "- このリポジトリにアクセスする権限がありません。",
       "you-may-need-to-log-out": "- トークンを更新するには、ログアウトしてから再度ログインする必要がある場合があります。"
@@ -552,7 +552,7 @@
     "start-tutorial": "チュートリアルの開始",
     "will-create-a-repository-1": "ローカルマシンにリポジトリが作成され、アカウント ",
     "will-create-a-repository-2": " で ",
-    "will-create-a-repository-3": "に Pushされます。このリポジトリはあなただけに表示され、パブリックには表示されません。"
+    "will-create-a-repository-3": "に プッシュされます。このリポジトリはあなただけに表示され、パブリックには表示されません。"
   },
   "delete-branch-dialog": {
     "branch-also-exists-on-the-remote": "ブランチはリモートにも存在しますが、そちらも削除しますか?",
@@ -589,12 +589,12 @@
     "caption-options": "設定",
     "caption-options-darwin": "設定",
     "diff-display": "変更点の表示",
-    "hide-whitespace-changes": "空白だけの変更を非表示",
-    "hide-whitespace-changes-darwin": "空白だけの変更を非表示",
-    "interacting-with-individual-lines": "タブコードや半角スペースだけの部分的な変更がある行を無視します。",
+    "hide-whitespace-changes": "スペースによる変更を非表示",
+    "hide-whitespace-changes-darwin": "スペースによる変更を非表示",
+    "interacting-with-individual-lines": "タブコードや半角スペースによる部分的な変更がある行を無視します。",
     "split": "分割",
     "unified": "統合",
-    "whitespace": "空白の扱い"
+    "whitespace": "スペースの扱い"
   },
   "discard-changes-dialog": {
     "are-you-sure-discard-all-changed": "変更された {{0}}ファイルを、すべて破棄してよろしいですか?",
@@ -761,7 +761,7 @@
     "compare-to-branch": "ブランチと比較(&C)",
     "compare-to-branch-darwin": "ブランチと比較",
     "confirm-delete": "削除…",
-    "confirm-force-push": "強制P&ush…",
+    "confirm-force-push": "強制プッシュ(&U)…",
     "confirm-force-push-darwin": "強制プッシュ…",
     "confirm-remove": "削除(&R)…",
     "confirm-remove-darwin": "削除…",
@@ -813,7 +813,7 @@
     "file-darwin": "ファイル",
     "find": "検索(&F)",
     "find-darwin": "検索",
-    "force-push": "強制P&ush",
+    "force-push": "強制プッシュ(&U)",
     "force-push-darwin": "強制プッシュ",
     "go-to-summary": "概要へ(&S)",
     "go-to-summary-darwin": "概要へ",
@@ -1137,6 +1137,9 @@
     "will-be-create-as": "{{0}} として作成されます"
   },
   "pull-request-files-changed": {
+    "file-does-not-exist": "ファイルがディスク上に存在しません",
+    "file-does-not-exist-darwin": "ファイルがディスク上に存在しません",
+    "open-in-external-editor": "{{0}} で開く",
     "showing-changes": "すべてのコミットの変更を表示"
   },
   "pull-request-list": {
@@ -1255,7 +1258,7 @@
     "re-authorization-required-darwin": "再認証が必要"
   },
   "selected-commits": {
-    "branch-menu-to-cherry-pick-them": "コミットをブランチメニューにドラッグしてcherry-pickします。",
+    "branch-menu-to-cherry-pick-them": "コミットをブランチメニューにドラッグしてチェリーピックします。",
     "commits": "コミット",
     "commits-to-squash-or-reorder-them": "コミットをドラッグしてスカッシュ(結合)するか、並べ替えます。",
     "file-does-not-exist": "ファイルがディスク上に存在しません",
@@ -1263,7 +1266,7 @@
     "no-commit-selected": "コミットが選択されていません",
     "no-file-selected": "ファイルが選択されていません",
     "non-consecutive-commits": "連続しないコミット",
-    "open-in": "Open in {{0}}",
+    "open-in-external-editor": "{{0}} で開く",
     "range-of-consecutive-commits": "または連続するコミットの範囲 ",
     "right-click-on-multiple-commits": "複数のコミットを右クリックしてオプションを表示します。",
     "select-a-single-commit": "単一のコミット {{0}}を選択して差分を表示します。",
@@ -1517,7 +1520,7 @@
     "push-rejected": "プッシュ拒否",
     "push-rejected-darwin": "プッシュ拒否",
     "the-push-was-rejected-by-the-server-1": "ワークフローファイル ",
-    "the-push-was-rejected-by-the-server-2": "への変更が含まれているために、Pushがサーバーによって拒否されました。ワークフローファイルにPushできるようにするには、GitHub Desktop が追加の権限を要求する必要があります。",
+    "the-push-was-rejected-by-the-server-2": "への変更が含まれているために、プッシュがサーバーによって拒否されました。ワークフローファイルにプッシュできるようにするには、GitHub Desktop が追加の権限を要求する必要があります。",
     "would-you-like-to-open-a-browser": "ブラウザを開いて、GitHub Desktop にワークフローファイルを更新する権限を付与しますか?"
   }
 }

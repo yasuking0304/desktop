@@ -159,8 +159,14 @@ export class PullRequestFilesChanged extends React.Component<
       showContextualMenu([
         {
           label: __DARWIN__
-            ? 'File Does Not Exist on Disk'
-            : 'File does not exist on disk',
+            ? t(
+                'pull-request-files-changed.file-does-not-exist-darwin',
+                'File Does Not Exist on Disk'
+              )
+            : t(
+                'pull-request-files-changed.file-does-not-exist',
+                'File does not exist on disk'
+              ),
           enabled: false,
         },
       ])
@@ -173,7 +179,13 @@ export class PullRequestFilesChanged extends React.Component<
     const isSafeExtension = isSafeFileExtension(extension)
     const openInExternalEditor =
       externalEditorLabel !== undefined
-        ? `Open in ${externalEditorLabel}`
+        ? t(
+            'pull-request-files-changed.open-in-external-editor',
+            'Open in {{0}}',
+            {
+              0: externalEditorLabel,
+            }
+          )
         : DefaultEditorLabel
 
     const items: IMenuItem[] = [

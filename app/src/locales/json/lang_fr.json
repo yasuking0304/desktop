@@ -1137,6 +1137,9 @@
     "will-be-create-as": "Will be created as {{0}}"
   },
   "pull-request-files-changed": {
+    "file-does-not-exist": "File does not exist on disk",
+    "file-does-not-exist-darwin": "File Does Not Exist on Disk",
+    "open-in-external-editor": "Open in {{0}}",
     "showing-changes": "Showing changes from all commits"
   },
   "pull-request-list": {
@@ -1263,7 +1266,7 @@
     "no-commit-selected": "No commit selected",
     "no-file-selected": "No file selected",
     "non-consecutive-commits": "non-consecutive commits",
-    "open-in": "Open in {{0}}",
+    "open-in-external-editor": "Open in {{0}}",
     "range-of-consecutive-commits": "or a range of consecutive commits ",
     "right-click-on-multiple-commits": "Right click on multiple commits to see options.",
     "select-a-single-commit": "Select a single commit {{0}}to view a diff.",

@@ -414,7 +414,7 @@ export class SelectedCommits extends React.Component<
 
     const isSafeExtension = isSafeFileExtension(extension)
     const openInExternalEditor = externalEditorLabel
-      ? t('selected-commits.open-in', `Open in {{0}}`, {
+      ? t('selected-commits.open-in-external-editor', `Open in {{0}}`, {
           0: externalEditorLabel,
         })
       : DefaultEditorLabel
