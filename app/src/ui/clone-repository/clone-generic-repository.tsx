@@ -41,7 +41,6 @@ export class CloneGenericRepository extends React.Component<
             )}
             value={this.props.url}
             onValueChanged={this.onUrlChanged}
-            // eslint-disable-next-line jsx-a11y/no-autofocus
             autoFocus={true}
             label={
               <span>

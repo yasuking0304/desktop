@@ -8,6 +8,7 @@ import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
 import { Ref } from '../lib/ref'
 import { LinkButton } from '../lib/link-button'
 import { t } from 'i18next'
+import { PasswordTextBox } from '../lib/password-text-box'
 
 interface IGenericGitAuthenticationProps {
   /** The hostname with which the user tried to authenticate. */
@@ -87,9 +88,8 @@ export class GenericGitAuthentication extends React.Component<
           </Row>
 
           <Row>
-            <TextBox
-              label={t('generic-git-auth.password', 'Password')}
-              type="password"
+            <PasswordTextBox
+            label={t('generic-git-auth.password', 'Password')}
               value={this.state.password}
               onValueChanged={this.onPasswordChange}
             />

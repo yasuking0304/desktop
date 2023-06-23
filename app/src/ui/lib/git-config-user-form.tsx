@@ -19,6 +19,8 @@ interface IGitConfigUserFormProps {
 
   readonly onNameChanged: (name: string) => void
   readonly onEmailChanged: (email: string) => void
+
+  readonly isLoadingGitConfig: boolean
 }
 
 interface IGitConfigUserFormState {
@@ -50,7 +52,8 @@ export class GitConfigUserForm extends React.Component<
     this.state = {
       emailIsOther:
         this.accountEmails.length > 0 &&
-        !this.accountEmails.includes(this.props.email),
+        !this.accountEmails.includes(this.props.email) &&
+        !this.props.isLoadingGitConfig,
     }
   }
 
@@ -72,7 +75,8 @@ export class GitConfigUserForm extends React.Component<
       this.setState({
         emailIsOther:
           this.accountEmails.length > 0 &&
-          !this.accountEmails.includes(this.props.email),
+          !this.accountEmails.includes(this.props.email) &&
+          !this.props.isLoadingGitConfig,
       })
     }
 

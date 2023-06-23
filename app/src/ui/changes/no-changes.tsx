@@ -27,7 +27,6 @@ import {
   IDropdownSuggestedActionOption,
 } from '../suggested-actions/dropdown-suggested-action'
 import { PullRequestSuggestedNextAction } from '../../models/pull-request'
-import { enableStartingPullRequests } from '../../lib/feature-flag'
 import { t } from 'i18next'
 import { KeyboardShortcut } from '../keyboard-shortcut/keyboard-shortcut'
 
@@ -793,24 +792,6 @@ export class NoChanges extends React.Component<
       'no-changes.create-pull-request',
       `Create Pull Request`
     )
-
-    if (!enableStartingPullRequests()) {
-      return (
-        <MenuBackedSuggestedAction
-          key="create-pr-action"
-          title={title}
-          menuItemId={'create-pull-request'}
-          description={description}
-          buttonText={buttonText}
-          discoverabilityContent={this.renderDiscoverabilityElements(
-            createMenuItem
-          )}
-          type="primary"
-          disabled={!createMenuItem.enabled}
-          onClick={this.onCreatePullRequestClicked}
-        />
-      )
-    }
 
     const previewPullMenuItem = this.getMenuItemInfo('preview-pull-request')
 

@@ -310,7 +310,7 @@ export function parseConfigLockFilePathFromError(result: IGitResult) {
 function getDescriptionForError(error: DugiteError): string | null {
   if (isAuthFailureError(error)) {
     const menuHint = __DARWIN__
-      ? t('core.menu-preferences-darwin', 'GitHub Desktop > Preferences.')
+      ? t('core.menu-preferences-darwin', 'GitHub Desktop > Settings.')
       : t('core.menu-preferences', 'File > Options.')
 
     const massageAuthenticationFailed = t(

@@ -100,6 +100,8 @@ interface IPreferencesState {
   readonly repositoryIndicatorsEnabled: boolean
 
   readonly initiallySelectedTheme: ApplicationTheme
+
+  readonly isLoadingGitConfig: boolean
 }
 
 /** The app-level preferences component. */
@@ -135,6 +137,7 @@ export class Preferences extends React.Component<
       selectedShell: this.props.selectedShell,
       repositoryIndicatorsEnabled: this.props.repositoryIndicatorsEnabled,
       initiallySelectedTheme: this.props.selectedTheme,
+      isLoadingGitConfig: true,
     }
   }
 
@@ -191,6 +194,7 @@ export class Preferences extends React.Component<
       uncommittedChangesStrategy: this.props.uncommittedChangesStrategy,
       availableShells,
       availableEditors,
+      isLoadingGitConfig: false,
     })
   }
 
@@ -334,6 +338,7 @@ export class Preferences extends React.Component<
               onNameChanged={this.onCommitterNameChanged}
               onEmailChanged={this.onCommitterEmailChanged}
               onDefaultBranchChanged={this.onDefaultBranchChanged}
+              isLoadingGitConfig={this.state.isLoadingGitConfig}
             />
           </>
         )

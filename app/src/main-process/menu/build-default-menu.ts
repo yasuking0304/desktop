@@ -7,7 +7,6 @@ import { UNSAFE_openDirectory } from '../shell'
 import { MenuLabelsEvent } from '../../models/menu-labels'
 import * as ipcWebContents from '../ipc-webcontents'
 import { mkdir } from 'fs/promises'
-import { enableStartingPullRequests } from '../../lib/feature-flag'
 import { t } from 'i18next'
 
 const platformDefaultShell = __WIN32__
@@ -79,7 +78,7 @@ export function buildDefaultMenu({
         },
         separator,
         {
-          label: t('menu.preferences', 'Preferences…'),
+          label: t('menu.preferences', 'Settings…'),
           id: 'preferences',
           accelerator: 'CmdOrCtrl+,',
           click: emit('show-preferences'),
@@ -560,16 +559,14 @@ export function buildDefaultMenu({
     },
   ]
 
-  if (!hasCurrentPullRequest && enableStartingPullRequests()) {
-    branchSubmenu.push({
-      label: __DARWIN__
-        ? t('menu.preview-pull-request-darwin', 'Preview Pull Request')
-        : t('menu.preview-pull-request', 'Preview pull request'),
-      id: 'preview-pull-request',
-      accelerator: 'CmdOrCtrl+Alt+P',
-      click: emit('preview-pull-request'),
-    })
-  }
+  branchSubmenu.push({
+    label: __DARWIN__
+      ? t('menu.preview-pull-request-darwin', 'Preview Pull Request')
+      : t('menu.preview-pull-request', 'Preview pull request'),
+    id: 'preview-pull-request',
+    accelerator: 'CmdOrCtrl+Alt+P',
+    click: emit('preview-pull-request'),
+  })
 
   branchSubmenu.push({
     label: pullRequestLabel,

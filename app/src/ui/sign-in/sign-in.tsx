@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/no-autofocus */
 import * as React from 'react'
 import { Dispatcher } from '../dispatcher'
 import {
@@ -22,6 +21,7 @@ import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
 import { Button } from '../lib/button'
 import { t } from 'i18next'
 import { HorizontalRule } from '../lib/horizontal-rule'
+import { PasswordTextBox } from '../lib/password-text-box'
 
 interface ISignInProps {
   readonly dispatcher: Dispatcher
@@ -260,10 +260,9 @@ export class SignIn extends React.Component<ISignInProps, ISignInState> {
           />
         </Row>
         <Row>
-          <TextBox
+          <PasswordTextBox
             label={t('common.password', 'Password')}
             value={this.state.password}
-            type="password"
             onValueChanged={this.onPasswordChanged}
           />
         </Row>

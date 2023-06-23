@@ -24,7 +24,6 @@ import { t } from 'i18next'
  *                           of the clone operation. When provided this enables
  *                           the '--progress' command line flag for
  *                           'git clone'.
- *
  */
 export async function clone(
   url: string,
