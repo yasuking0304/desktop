@@ -419,13 +419,13 @@ export class NoRepositoriesView extends React.Component<
       OcticonSymbol.repoClone,
       __DARWIN__
         ? t(
-          'no-repositories-view.clone-a-repository-darwin',
-          'Clone a Repository from the Internet…'
-        )
+            'no-repositories-view.clone-a-repository-darwin',
+            'Clone a Repository from the Internet…'
+          )
         : t(
-          'no-repositories-view.clone-a-repository',
-          'Clone a repository from the Internet…'
-        ),
+            'no-repositories-view.clone-a-repository',
+            'Clone a repository from the Internet…'
+          ),
       this.onShowClone,
       undefined,
       !this.isUserSignedIn()

@@ -220,7 +220,7 @@ export class SelectedCommits extends React.Component<
     if (this.historyRef) {
       const historyBottom = this.historyRef.getBoundingClientRect().bottom
       this.setState({
-        hideDescriptionBorder: descriptionBottom >= historyBottom,
+        hideDescriptionBorder: Number(descriptionBottom) >= historyBottom,
       })
     }
   }
@@ -323,16 +323,6 @@ export class SelectedCommits extends React.Component<
       __dirname,
       'static/empty-no-commit.svg'
     )
-    const nonConsecutiveCommit = enableMultiCommitDiffs()
-      ? t('selected-commits.non-consecutive-commits', 'non-consecutive commits')
-      : t('selected-commits.commits', 'commits')
-
-    const rangeOfConsecutiveCommit = enableMultiCommitDiffs()
-      ? t(
-          'selected-commits.range-of-consecutive-commits',
-          'or a range of consecutive commits '
-        )
-      : ''
     return (
       <div id="multiple-commits-selected" className="blankslate">
         <div className="panel blankslate">

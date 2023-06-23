@@ -32,17 +32,17 @@ export class Start extends React.Component<IStartProps, {}> {
         aria-label="Welcome to GitHub Desktop"
         aria-describedby="start-description"
       >
-      <h1 className="welcome-title">
-        {t('start.welcome-to-1', 'Welcome to ')}
-        GitHub&nbsp;Desktop
-        {t('start.welcome-to-2', ' ')}
-      </h1>
-      {!this.props.loadingBrowserAuth ? (
+        <h1 className="welcome-title">
+          {t('start.welcome-to-1', 'Welcome to ')}
+          GitHub&nbsp;Desktop
+          {t('start.welcome-to-2', ' ')}
+        </h1>
+        {!this.props.loadingBrowserAuth ? (
           <>
             <p id="start-description" className="welcome-text">
-            {t(
-              'start.welcome-text',
-              `GitHub Desktop is a seamless way to contribute to projects on
+              {t(
+                'start.welcome-text',
+                `GitHub Desktop is a seamless way to contribute to projects on
               GitHub and GitHub Enterprise. Sign in below to get started with
               your existing projects.`
               )}
