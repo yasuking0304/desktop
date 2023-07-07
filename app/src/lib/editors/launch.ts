@@ -17,7 +17,7 @@ export async function launchExternalEditor(
   const exists = await pathExists(editorPath)
   if (!exists) {
     const label = __DARWIN__
-      ? t('common.preferences', 'Settings')
+      ? t('common.settings', 'Settings')
       : t('common.options', 'Options')
     throw new ExternalEditorError(
       t(

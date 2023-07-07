@@ -72,6 +72,12 @@ interface ICommitListProps {
    */
   readonly onCreateBranch?: (commit: CommitOneLine) => void
 
+  /**
+   * Callback to fire to checkout the selected commit in the current
+   * repository
+   */
+  readonly onCheckoutCommit?: (commit: CommitOneLine) => void
+
   /** Callback to fire to open the dialog to create a new tag on the given commit */
   readonly onCreateTag?: (targetCommitSha: string) => void
 
@@ -203,6 +209,7 @@ export class CommitList extends React.Component<ICommitListProps, {}> {
         canBeResetTo={
           this.props.canResetToCommits === true && isResettableCommit
         }
+        canBeCheckedOut={row > 0} //Cannot checkout the current commit
         showUnpushedIndicator={showUnpushedIndicator}
         unpushedIndicatorTitle={this.getUnpushedIndicatorTitle(
           isLocal,
@@ -212,6 +219,7 @@ export class CommitList extends React.Component<ICommitListProps, {}> {
         commit={commit}
         emoji={this.props.emoji}
         onCreateBranch={this.props.onCreateBranch}
+        onCheckoutCommit={this.props.onCheckoutCommit}
         onCreateTag={this.props.onCreateTag}
         onDeleteTag={this.props.onDeleteTag}
         onCherryPick={this.props.onCherryPick}
