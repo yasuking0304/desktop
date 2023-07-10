@@ -220,8 +220,6 @@ export class BranchesContainer extends React.Component<
       item,
       matches,
       this.props.currentBranch,
-      this.props.onRenameBranch,
-      this.props.onDeleteBranch,
       this.onDropOntoBranch,
       this.onDropOntoCurrentBranch
     )
@@ -253,6 +251,8 @@ export class BranchesContainer extends React.Component<
               DragType.Commit
             )}
             renderPreList={this.renderPreList}
+            onRenameBranch={this.props.onRenameBranch}
+            onDeleteBranch={this.props.onDeleteBranch}
           />
         )
 

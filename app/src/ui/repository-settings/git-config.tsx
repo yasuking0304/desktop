@@ -15,6 +15,7 @@ interface IGitConfigProps {
   readonly email: string
   readonly globalName: string
   readonly globalEmail: string
+  readonly isLoadingGitConfig: boolean
 
   readonly onGitConfigLocationChanged: (value: GitConfigLocation) => void
   readonly onNameChanged: (name: string) => void
@@ -90,6 +91,7 @@ export class GitConfig extends React.Component<IGitConfigProps> {
             disabled={this.props.gitConfigLocation === GitConfigLocation.Global}
             onEmailChanged={this.props.onEmailChanged}
             onNameChanged={this.props.onNameChanged}
+            isLoadingGitConfig={this.props.isLoadingGitConfig}
           />
         </div>
       </DialogContent>

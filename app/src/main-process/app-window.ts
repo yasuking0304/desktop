@@ -7,7 +7,6 @@ import {
   nativeTheme,
 } from 'electron'
 import { Emitter, Disposable } from 'event-kit'
-import { join } from 'path'
 import { encodePathAsUrl } from '../lib/path'
 import {
   getWindowState,
@@ -18,6 +17,7 @@ import { URLActionType } from '../lib/parse-app-url'
 import { ILaunchStats } from '../lib/stats'
 import { menuFromElectronMenu } from '../models/app-menu'
 import { now } from './now'
+import * as path from 'path'
 import windowStateKeeper from 'electron-window-state'
 import * as ipcMain from './ipc-main'
 import * as ipcWebContents from './ipc-webcontents'
@@ -26,7 +26,6 @@ import {
   terminateDesktopNotifications,
 } from './notifications'
 import { addTrustedIPCSender } from './trusted-ipc-sender'
-import { enablePreventClosingWhileUpdating } from '../lib/feature-flag'
 
 export class AppWindow {
   private window: Electron.BrowserWindow
@@ -76,13 +75,7 @@ export class AppWindow {
     } else if (__WIN32__) {
       windowOptions.frame = false
     } else if (__LINUX__) {
-      windowOptions.icon = join(__dirname, 'static', 'logos', '512x512.png')
-
-      // relax restriction here for users trying to run app at a small
-      // resolution and any other side-effects of dropping this restriction are
-      // currently unsupported
-      delete windowOptions.minHeight
-      delete windowOptions.minWidth
+      windowOptions.icon = path.join(__dirname, 'static', 'icon-logo.png')
     }
 
     this.window = new BrowserWindow(windowOptions)
@@ -121,7 +114,6 @@ export class AppWindow {
       // app is updating, we will prevent the window from closing only when the
       // app is also quitting.
       if (
-        enablePreventClosingWhileUpdating() &&
         (!__DARWIN__ || quitting) &&
         !quittingEvenIfUpdating &&
         this.isDownloadingUpdate

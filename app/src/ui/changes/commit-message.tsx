@@ -37,6 +37,7 @@ import { TooltipDirection } from '../lib/tooltip'
 import { pick } from '../../lib/pick'
 import { t } from 'i18next'
 import { ToggledtippedContent } from '../lib/toggletipped-content'
+import { PreferencesTab } from '../../models/preferences'
 
 const addAuthorIcon = {
   w: 18,
@@ -458,6 +459,8 @@ export class CommitMessage extends React.Component<
         }
         onUpdateEmail={this.onUpdateUserEmail}
         onOpenRepositorySettings={this.onOpenRepositorySettings}
+        onOpenGitSettings={this.onOpenGitSettings}
+        repository={repository}
       />
     )
   }
@@ -472,6 +475,13 @@ export class CommitMessage extends React.Component<
       type: PopupType.RepositorySettings,
       repository: this.props.repository,
       initialSelectedTab: RepositorySettingsTab.GitConfig,
+    })
+  }
+
+  private onOpenGitSettings = () => {
+    this.props.onShowPopup({
+      type: PopupType.Preferences,
+      initialSelectedTab: PreferencesTab.Git,
     })
   }
 

@@ -59,7 +59,7 @@ export async function findEditorOrDefault(
     const match = editors.find(p => p.editor === name) || null
     if (!match) {
       const menuItemName = __DARWIN__
-        ? t('common.preferences', 'Preferences')
+        ? t('common.settings', 'Settings')
         : t('common.options', 'Options')
       const message = t(
         'lookup.error.the-editor-could-not-be-found',

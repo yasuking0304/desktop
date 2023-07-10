@@ -181,7 +181,7 @@ export class TutorialPanel extends React.Component<
                 )}
                 <LinkButton onClick={this.onPreferencesClick}>
                   {__DARWIN__
-                    ? t('common.preferences', 'Preferences')
+                    ? t('common.settings', 'Settings')
                     : t('common.options', 'Options')}
                 </LinkButton>
                 {t('tutorial-panel.your-default-editor-is-3', ' ')}

@@ -85,7 +85,7 @@ export async function launchShell(
   const exists = await pathExists(shell.path)
   if (!exists) {
     const label = __DARWIN__
-      ? t('common.preferences', 'Preferences')
+      ? t('common.settings', 'Settings')
       : t('common.options', 'Options')
     throw new ShellError(
       t(

@@ -37,7 +37,7 @@ export class GitIgnore extends React.Component<IGitIgnoreProps, {}> {
           )}
           value={this.props.text || ''}
           onValueChanged={this.props.onIgnoreTextChanged}
-          rows={6}
+          textareaClassName="gitignore"
         />
       </DialogContent>
     )

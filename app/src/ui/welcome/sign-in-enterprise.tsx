@@ -25,15 +25,17 @@ export class SignInEnterprise extends React.Component<
     }
 
     return (
-      <div id="sign-in-enterprise">
+      <section
+        id="sign-in-enterprise"
+        aria-label="Sign in to your GitHub Enterprise"
+      >
         <h1 className="welcome-title">
           {t('sign-in-enterprise.sign-in', 'Sign in to your GitHub Enterprise')}
         </h1>
-
         <SignIn signInState={state} dispatcher={this.props.dispatcher}>
           <Button onClick={this.cancel}>Cancel</Button>
         </SignIn>
-      </div>
+      </section>
     )
   }
 
