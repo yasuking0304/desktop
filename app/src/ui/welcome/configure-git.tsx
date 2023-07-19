@@ -15,7 +15,7 @@ interface IConfigureGitProps {
 export class ConfigureGit extends React.Component<IConfigureGitProps, {}> {
   public render() {
     return (
-      <div id="configure-git">
+      <section id="configure-git" aria-label="Configure Git">
         <h1 className="welcome-title">
           {t('configure-git.configure-git', 'Configure Git')}
         </h1>
@@ -34,7 +34,7 @@ export class ConfigureGit extends React.Component<IConfigureGitProps, {}> {
         >
           <Button onClick={this.cancel}>{t('common.cancel', 'Cancel')}</Button>
         </ConfigureGitUser>
-      </div>
+      </section>
     )
   }
 

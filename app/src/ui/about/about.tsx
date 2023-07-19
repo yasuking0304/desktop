@@ -14,10 +14,11 @@ import { Disposable } from 'event-kit'
 import { Loading } from '../lib/loading'
 import { RelativeTime } from '../relative-time'
 import { assertNever } from '../../lib/fatal-error'
-import { ReleaseNotesUri, LinuxReleasesUri } from '../lib/releases'
+import { ReleaseNotesUri } from '../lib/releases'
 import { encodePathAsUrl } from '../../lib/path'
 import { isTopMostDialog } from '../dialog/is-top-most'
 import { t } from 'i18next'
+import { isWindowsAndNoLongerSupportedByElectron } from '../../lib/get-os'
 
 const logoPath = __DARWIN__
   ? 'static/logo-64x64@2x.png'
@@ -163,10 +164,11 @@ export class About extends React.Component<IAboutProps, IAboutState> {
       case UpdateStatus.CheckingForUpdates:
       case UpdateStatus.UpdateAvailable:
       case UpdateStatus.UpdateNotChecked:
-        const disabled = ![
-          UpdateStatus.UpdateNotChecked,
-          UpdateStatus.UpdateNotAvailable,
-        ].includes(updateStatus)
+        const disabled =
+          ![
+            UpdateStatus.UpdateNotChecked,
+            UpdateStatus.UpdateNotAvailable,
+          ].includes(updateStatus) || isWindowsAndNoLongerSupportedByElectron()
 
         const onClick = this.state.altKeyPressed
           ? this.props.onCheckForNonStaggeredUpdates
@@ -297,6 +299,18 @@ export class About extends React.Component<IAboutProps, IAboutState> {
 
     if (__RELEASE_CHANNEL__ === 'development') {
       return null
+    }
+
+    if (isWindowsAndNoLongerSupportedByElectron()) {
+      return (
+        <DialogError>
+          This operating system is no longer supported. Software updates have
+          been disabled.{' '}
+          <LinkButton uri="https://docs.github.com/en/desktop/installing-and-configuring-github-desktop/overview/supported-operating-systems">
+            Supported operating systems
+          </LinkButton>
+        </DialogError>
+      )
     }
 
     if (!this.state.updateState.lastSuccessfulCheck) {

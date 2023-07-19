@@ -7,6 +7,7 @@ import * as OcticonSymbol from '../octicons/octicons.generated'
 import { Ref } from './ref'
 import { IStashEntry } from '../../models/stash-entry'
 import { t } from 'i18next'
+import { enableMoveStash } from '../../lib/feature-flag'
 
 export function renderBranchHasRemoteWarning(branch: Branch) {
   if (branch.upstream != null) {
@@ -64,7 +65,7 @@ export function renderBranchNameExistsOnRemoteWarning(
 }
 
 export function renderStashWillBeLostWarning(stash: IStashEntry | null) {
-  if (stash === null) {
+  if (stash === null || enableMoveStash()) {
     return null
   }
   return (
