@@ -607,6 +607,19 @@ export function buildDefaultMenu({
     },
   }
 
+  const contactSupportItem: Electron.MenuItemConstructorOptions = {
+    label: __DARWIN__
+      ? t('menu.contact-github-support-darwin', 'Contact GitHub Support…')
+      : t('menu.contact-github-support', '&Contact GitHub support…'),
+    click() {
+      shell
+        .openExternal(
+          `https://github.com/contact?from_desktop_app=1&app_version=${app.getVersion()}`
+        )
+        .catch(err => log.error('Failed opening contact support page', err))
+    },
+  }
+
   const showUserGuides: Electron.MenuItemConstructorOptions = {
     label: t('menu.show-user-guides', 'Show User Guides'),
     click() {
@@ -652,6 +665,7 @@ export function buildDefaultMenu({
 
   const helpItems = [
     submitIssueItem,
+    contactSupportItem,
     showUserGuides,
     showKeyboardShortcuts,
     showLogsItem,

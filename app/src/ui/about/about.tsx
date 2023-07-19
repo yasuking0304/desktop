@@ -138,17 +138,6 @@ export class About extends React.Component<IAboutProps, IAboutState> {
       return null
     }
 
-    if (__LINUX__) {
-      const linuxReleaseLink = (
-        <LinkButton uri={LinuxReleasesUri}>View Releases</LinkButton>
-      )
-      return (
-        <Row>
-          <p className="no-padding">{linuxReleaseLink}</p>
-        </Row>
-      )
-    }
-
     const updateStatus = this.state.updateState.status
 
     switch (updateStatus) {
@@ -254,12 +243,7 @@ export class About extends React.Component<IAboutProps, IAboutState> {
 
   private renderUpdateDetails() {
     if (__LINUX__) {
-      return (
-        <p>
-          Please visit the GitHub Desktop for Linux release page for
-          Linux-specific release notes and to download the latest version.
-        </p>
-      )
+      return null
     }
 
     if (__RELEASE_CHANNEL__ === 'development') {
@@ -331,10 +315,6 @@ export class About extends React.Component<IAboutProps, IAboutState> {
 
   private renderBetaLink() {
     if (__RELEASE_CHANNEL__ === 'beta') {
-      return
-    }
-
-    if (__LINUX__) {
       return
     }
 
