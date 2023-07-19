@@ -831,7 +831,7 @@
     "open-working-directory": "E&xplorerで表示",
     "open-working-directory-darwin": "Finderで表示",
     "open-working-directory-linux": "ファイルマネージャーで表示",
-    "options": "設定(O)…",
+    "options": "設定(&O)…",
     "paste": "貼り付け(&P)",
     "paste-darwin": "貼り付け",
     "preferences": "設定…",
