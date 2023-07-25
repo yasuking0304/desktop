@@ -58,6 +58,13 @@ interface IPullRequestFilesChangedProps {
   /** If the latest commit of the pull request is not local, this will contain
    * it's SHA  */
   readonly nonLocalCommitSHA: string | null
+
+  /**
+   * Callback to open a selected file using the configured external editor
+   *
+   * @param fullPath The full path to the file on disk
+   */
+  readonly onOpenInExternalEditor: (fullPath: string) => void
 }
 
 interface IPullRequestFilesChangedState {
@@ -159,8 +166,14 @@ export class PullRequestFilesChanged extends React.Component<
       showContextualMenu([
         {
           label: __DARWIN__
-            ? 'File Does Not Exist on Disk'
-            : 'File does not exist on disk',
+            ? t(
+                'pull-request-files-changed.file-does-not-exist-darwin',
+                'File Does Not Exist on Disk'
+              )
+            : t(
+                'pull-request-files-changed.file-does-not-exist',
+                'File does not exist on disk'
+              ),
           enabled: false,
         },
       ])
@@ -173,7 +186,13 @@ export class PullRequestFilesChanged extends React.Component<
     const isSafeExtension = isSafeFileExtension(extension)
     const openInExternalEditor =
       externalEditorLabel !== undefined
-        ? `Open in ${externalEditorLabel}`
+        ? t(
+            'pull-request-files-changed.open-in-external-editor',
+            'Open in {{0}}',
+            {
+              0: externalEditorLabel,
+            }
+          )
         : DefaultEditorLabel
 
     const items: IMenuItem[] = [
@@ -225,6 +244,13 @@ export class PullRequestFilesChanged extends React.Component<
     )
   }
 
+  private onRowDoubleClick = (row: number) => {
+    const files = this.props.files
+    const file = files[row]
+
+    this.props.onOpenInExternalEditor(file.path)
+  }
+
   private renderHeader() {
     const { hideWhitespaceInDiff } = this.props
     const { showSideBySideDiff } = this.state
@@ -265,6 +291,7 @@ export class PullRequestFilesChanged extends React.Component<
           selectedFile={selectedFile}
           availableWidth={clamp(fileListWidth)}
           onContextMenu={this.onFileContextMenu}
+          onRowDoubleClick={this.onRowDoubleClick}
         />
       </Resizable>
     )

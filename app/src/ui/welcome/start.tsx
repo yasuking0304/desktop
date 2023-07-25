@@ -27,7 +27,11 @@ interface IStartProps {
 export class Start extends React.Component<IStartProps, {}> {
   public render() {
     return (
-      <div id="start">
+      <section
+        id="start"
+        aria-label="Welcome to GitHub Desktop"
+        aria-describedby="start-description"
+      >
         <h1 className="welcome-title">
           {t('start.welcome-to-1', 'Welcome to ')}
           GitHub&nbsp;Desktop
@@ -35,22 +39,13 @@ export class Start extends React.Component<IStartProps, {}> {
         </h1>
         {!this.props.loadingBrowserAuth ? (
           <>
-            <p className="welcome-text">
+            <p id="start-description" className="welcome-text">
               {t(
                 'start.welcome-text',
                 `GitHub Desktop is a seamless way to contribute to projects on
               GitHub and GitHub Enterprise. Sign in below to get started with
               your existing projects.`
               )}
-            </p>
-            <p className="welcome-text">
-              {t('start.new-to-github', 'New to GitHub? ')}
-              <LinkButton
-                uri={CreateAccountURL}
-                className="create-account-link"
-              >
-                {t('start.create-free-account', 'Create your free account.')}
-              </LinkButton>
             </p>
           </>
         ) : (
@@ -63,6 +58,7 @@ export class Start extends React.Component<IStartProps, {}> {
             className="button-with-icon"
             disabled={this.props.loadingBrowserAuth}
             onClick={this.signInWithBrowser}
+            autoFocus={true}
           >
             {this.props.loadingBrowserAuth && <Loading />}
             {t('start.sign-in-github-com', 'Sign in to GitHub.com')}
@@ -82,6 +78,12 @@ export class Start extends React.Component<IStartProps, {}> {
           )}
         </div>
         <div className="skip-action-container">
+          <p className="welcome-text">
+            New to GitHub?{' '}
+            <LinkButton uri={CreateAccountURL} className="create-account-link">
+              Create your free account.
+            </LinkButton>
+          </p>
           <LinkButton className="skip-button" onClick={this.skip}>
             {t('start.skip-this-step', 'Skip this step')}
           </LinkButton>
@@ -115,7 +117,7 @@ export class Start extends React.Component<IStartProps, {}> {
           </LinkButton>
           {t('start.welcome-sends-usage-2', ' ')}
         </div>
-      </div>
+      </section>
     )
   }
 

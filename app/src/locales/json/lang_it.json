@@ -27,18 +27,7 @@
     "add-local-repository": "Add local repository",
     "add-local-repository-darwin": "Add Local Repository",
     "add-repository": "Add repository",
-    "add-repository-darwin": "Add Repository",
-    "create-a-repository": "create a repository",
-    "warning-helper-bare-repository": "This directory appears to be a bare repository. Bare repositories\n               are not currently supported.",
-    "warning-helper-text1-1": "The Git repository",
-    "warning-helper-text1-2": " at ",
-    "warning-helper-text1-3": " appears to be owned by another user on your machine. Adding\n                  untrusted repositories may automatically execute files in the\n                  repository.",
-    "warning-helper-text2-1": "If you trust the owner of the directory you can",
-    "warning-helper-text2-2": "add an exception for this directory",
-    "warning-helper-text2-3": " in order to continue.",
-    "warning-helper-text3-1": "This directory does not appear to be a Git repository.",
-    "warning-helper-text3-2": "Would you like to ",
-    "warning-helper-text3-3": " here instead?"
+    "add-repository-darwin": "Add Repository"
   },
   "advanced": {
     "allows-the-display-of-up-to-date-status-indicators": "Allows the display of up-to-date status indicators in the\n              repository list. Disabling this may improve performance\n              with many repositories.",
@@ -90,9 +79,7 @@
   },
   "branch-dropdown": {
     "current-branch": "Current branch",
-    "current-branch-darwin": "Current Branch",
-    "switching-to-branch": "Switching to branch",
-    "switching-to-branch-darwin": "Switching to Branch"
+    "current-branch-darwin": "Current Branch"
   },
   "branch-list": {
     "default-branch": "Default branch",
@@ -157,7 +144,11 @@
     "update-filename": "Update {{0}}"
   },
   "checkout": {
-    "checking-out-branch": "Checking out branch {{0}}"
+    "checking-out-branch": "Checking out branch {{0}}",
+    "checking-out-commit": "Checking out commit",
+    "checking-out-commit-darwin": "Checking out Commit",
+    "switching-to-branch": "Switching to branch",
+    "switching-to-branch-darwin": "Switching to Branch"
   },
   "cherry-pick-undone": {
     "cherry-pick-undone-1": "Cherry-pick undone. Successfully removed the {{0}}\n          copied {{1}} from ",
@@ -314,12 +305,9 @@
     "will-modify-your-most-recent-commit-4": " to make these changes as a new commit."
   },
   "commit-message-avatar": {
-    "committing-as-1": "Committing as ",
-    "committing-as-2": " ",
     "ignore": "Ignore",
     "learn-more": "Learn more.",
     "repository-settings": "repository settings",
-    "this-commit-will-be-misattributed": "This commit will be misattributed",
     "update-email": "Update email",
     "update-email-1": "The email in your global Git config (",
     "update-email-2": ") doesn't match your GitHub{{0}} account. ",
@@ -400,6 +388,7 @@
     "repository-name": "repository name",
     "repository-path": "repository path",
     "save": "Save",
+    "settings": "Settings",
     "sign-in": "Sign in",
     "sign-in-darwin": "Sign In",
     "sign-out": "Sign out",
@@ -438,6 +427,13 @@
     "example-commit": "Example commit",
     "use-github-account": "Use my GitHub{{0}} account name and email address"
   },
+  "confirm-checkout-commit": {
+    "checking-out-a-commit": "Checking out a commit will create a detached HEAD, and you will\n              no longer be on any branch. Are you sure you want to checkout\n              this commit?",
+    "checkout": "Checkout",
+    "checkout-commit": "Checkout commit?",
+    "checkout-commit-darwin": "Checkout Commit?",
+    "do-not-show-this-messaeg-again": "Do not show this message again"
+  },
   "confirm-discard-stash": {
     "are-you-sure-you-want-to-discard": "Are you sure you want to discard these stashed changes?",
     "discard": "Discard stash?",
@@ -474,7 +470,7 @@
       "you-may-need-to-log-out": "- You may need to log out and log back in to refresh your token."
     },
     "menu-preferences": "File > Options.",
-    "menu-preferences-darwin": "GitHub Desktop > Preferences."
+    "menu-preferences-darwin": "GitHub Desktop > Settings."
   },
   "crash-app": {
     "exit": "Exit",
@@ -587,7 +583,7 @@
   "diff-options": {
     "caption-diff": "Diff ",
     "caption-options": "Options",
-    "caption-options-darwin": "Preferences",
+    "caption-options-darwin": "Settings",
     "diff-display": "Diff display",
     "hide-whitespace-changes": "Hide whitespace changes",
     "hide-whitespace-changes-darwin": "Hide Whitespace Changes",
@@ -838,7 +834,7 @@
     "options": "&Options…",
     "paste": "&Paste",
     "paste-darwin": "Paste",
-    "preferences": "Preferences…",
+    "preferences": "Settings…",
     "preview-pull-request": "Preview pull request",
     "preview-pull-request-darwin": "Preview Pull Request",
     "pull": "Pu&ll",
@@ -1119,12 +1115,17 @@
     "notifications": "Notifications",
     "prompts": "Prompts"
   },
+  "progress-dialog": {
+    "commit-0-of-1": "Commit {{0}} of {{1}}",
+    "in-progress": "{{0}} in progress"
+  },
   "prompts": {
     "always-bring-my-changes-to-my-new-branch": "Always bring my changes to my new branch",
     "always-stash-and-leave-my-changes": "Always stash and leave my changes on the current branch",
     "ask-me-where-i-want-the-changes-to-go": "Ask me where I want the changes to go",
     "discarding-changes": "Discarding changes",
     "discarding-changes-permanently": "Discarding changes permanently",
+    "discarding-checking-out": "Checking out a commit",
     "discarding-stash": "Discarding stash",
     "force-pushing": "Force pushing",
     "if-i-have-changes-and-i-switch-branches": "If I have changes and I switch branches...",
@@ -1137,6 +1138,9 @@
     "will-be-create-as": "Will be created as {{0}}"
   },
   "pull-request-files-changed": {
+    "file-does-not-exist": "File does not exist on disk",
+    "file-does-not-exist-darwin": "File Does Not Exist on Disk",
+    "open-in-external-editor": "Open in {{0}}",
     "showing-changes": "Showing changes from all commits"
   },
   "pull-request-list": {
@@ -1155,13 +1159,12 @@
     "desktop-is-unable-to-push-commits": "Desktop is unable to push commits to this branch because there are\n            commits on the remote that are not present on your local branch.\n            Fetch these new commits before pushing in order to reconcile them\n            with your local commits.",
     "fetch": "Fetch",
     "newer-commits-on-remote": "Newer commits on remote",
-    "newer-commits-on-remote-darwin": "Newer commits on remote"
+    "newer-commits-on-remote-darwin": "Newer Commits on Remote"
   },
   "push-pull-button": {
     "cannot-publish-detached-head": "Cannot publish detached HEAD",
     "cannot-publish-unborn-head": "Cannot publish unborn HEAD",
     "fetch": "Fetch {{0}}",
-    "force-push": "Force Push {{0}}",
     "hang-on": "Hang on…",
     "last-fetched": "Last fetched",
     "never-fetched": "Never fetched",
@@ -1255,19 +1258,13 @@
     "re-authorization-required-darwin": "Re-authorization Required"
   },
   "selected-commits": {
-    "branch-menu-to-cherry-pick-them": "Drag the commits to the branch menu to cherry-pick them.",
-    "commits": "commits",
-    "commits-to-squash-or-reorder-them": "Drag the commits to squash or reorder them.",
     "file-does-not-exist": "File does not exist on disk",
     "file-does-not-exist-darwin": "File Does Not Exist on Disk",
     "no-commit-selected": "No commit selected",
     "no-file-selected": "No file selected",
-    "non-consecutive-commits": "non-consecutive commits",
-    "open-in": "Open in {{0}}",
-    "range-of-consecutive-commits": "or a range of consecutive commits ",
-    "right-click-on-multiple-commits": "Right click on multiple commits to see options.",
-    "select-a-single-commit": "Select a single commit {{0}}to view a diff.",
-    "unable-to-display-diff": "Unable to display diff when multiple\n                {{0}} are selected.",
+    "open-in-external-editor": "Open in {{0}}",
+    "select-a-single-commit": "Select a single commit or a range of consecutive commits to view a diff.",
+    "unable-to-display-diff": "Unable to display diff when multiple\n                non-consecutive selected.",
     "view-on-github": "View on GitHub",
     "view-on-github-enteprise": "View on GitHub Enterprise",
     "you-can": "You can:"
@@ -1324,10 +1321,8 @@
   "start": {
     "by-creating-an-account-1": "By creating an account, you agree to the ",
     "by-creating-an-account-2": ".",
-    "create-free-account": "Create your free account.",
     "github-privacy-statement": "GitHub Privacy Statement",
     "learn-more-about": "Learn more about user metrics.",
-    "new-to-github": "New to GitHub? ",
     "privacy-practices-1": " For more information about GitHub's privacy practices, see the ",
     "privacy-practices-2": ".",
     "sign-in-github-com": "Sign in to GitHub.com",

@@ -22,6 +22,7 @@ import { Select } from './select'
 import { GitEmailNotFoundWarning } from './git-email-not-found-warning'
 import { getDotComAPIEndpoint } from '../../lib/api'
 import { t } from 'i18next'
+import { Loading } from './loading'
 
 interface IConfigureGitUserProps {
   /** The logged-in accounts. */
@@ -54,6 +55,8 @@ interface IConfigureGitUserState {
    * choice to delete the lock file.
    */
   readonly existingLockFilePath?: string
+
+  readonly loadingGitConfig: boolean
 }
 
 /**
@@ -83,6 +86,7 @@ export class ConfigureGitUser extends React.Component<
       gitHubName: account?.name || account?.login || '',
       gitHubEmail:
         this.account !== null ? lookupPreferredEmail(this.account) : '',
+      loadingGitConfig: true,
     }
   }
 
@@ -114,6 +118,7 @@ export class ConfigureGitUser extends React.Component<
           prevState.manualEmail.length === 0
             ? globalUserEmail || ''
             : prevState.manualEmail,
+        loadingGitConfig: false,
       }),
       () => {
         // Chances are low that we actually have an account at mount-time
@@ -253,6 +258,7 @@ export class ConfigureGitUser extends React.Component<
           canBeUndone={false}
           canBeAmended={false}
           canBeResetTo={false}
+          canBeCheckedOut={false}
           isLocal={false}
           showUnpushedIndicator={false}
           selectedCommits={[dummyCommit]}
@@ -282,6 +288,7 @@ export class ConfigureGitUser extends React.Component<
           checked={this.state.useGitHubAuthorInfo}
           onSelected={this.onUseGitHubInfoSelected}
           value="github-account"
+          autoFocus={true}
         />
         <RadioButton
           label={t(
@@ -307,7 +314,7 @@ export class ConfigureGitUser extends React.Component<
           label={t('common.name', 'Name')}
           placeholder={t('common.your-name', 'Your Name')}
           value={this.state.gitHubName}
-          disabled={true}
+          readOnly={true}
         />
 
         <Select
@@ -335,20 +342,33 @@ export class ConfigureGitUser extends React.Component<
   private renderGitConfigForm() {
     return (
       <Form className="sign-in-form" onSubmit={this.save}>
-        <TextBox
-          label={t('common.name', 'Name')}
-          placeholder={t('common.your-name', 'Your Name')}
-          value={this.state.manualName}
-          onValueChanged={this.onNameChange}
-        />
+        {this.state.loadingGitConfig && (
+          <div className="git-config-loading">
+            <Loading /> Checking for an existing git config…
+          </div>
+        )}
+        {!this.state.loadingGitConfig && (
+          <>
+            <TextBox
+              label={t('common.name', 'Name')}
+              placeholder={t('common.your-name', 'Your Name')}
+              onValueChanged={this.onNameChange}
+              value={this.state.manualName}
+              autoFocus={true}
+            />
 
-        <TextBox
-          type="email"
-          label={t('common.email', 'Email')}
-          placeholder={t('common.your-email', 'common.your-email@example.com')}
-          value={this.state.manualEmail}
-          onValueChanged={this.onEmailChange}
-        />
+            <TextBox
+              type="email"
+              label={t('common.email', 'Email')}
+              placeholder={t(
+                'common.your-email',
+                'common.your-email@example.com'
+              )}
+              value={this.state.manualEmail}
+              onValueChanged={this.onEmailChange}
+            />
+          </>
+        )}
 
         {this.account !== null && (
           <GitEmailNotFoundWarning

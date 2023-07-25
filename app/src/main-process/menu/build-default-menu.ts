@@ -1,4 +1,4 @@
-import { Menu, shell, BrowserWindow } from 'electron'
+import { Menu, shell, app, BrowserWindow } from 'electron'
 import { ensureItemIds } from './ensure-item-ids'
 import { MenuEvent } from './menu-event'
 import { truncateWithEllipsis } from '../../lib/truncate-with-ellipsis'
@@ -7,7 +7,6 @@ import { UNSAFE_openDirectory } from '../shell'
 import { MenuLabelsEvent } from '../../models/menu-labels'
 import * as ipcWebContents from '../ipc-webcontents'
 import { mkdir } from 'fs/promises'
-import { enableStartingPullRequests } from '../../lib/feature-flag'
 import { t } from 'i18next'
 
 const platformDefaultShell = __WIN32__
@@ -79,7 +78,7 @@ export function buildDefaultMenu({
         },
         separator,
         {
-          label: t('menu.preferences', 'Preferences…'),
+          label: t('menu.preferences', 'Settings…'),
           id: 'preferences',
           accelerator: 'CmdOrCtrl+,',
           click: emit('show-preferences'),
@@ -560,16 +559,14 @@ export function buildDefaultMenu({
     },
   ]
 
-  if (!hasCurrentPullRequest && enableStartingPullRequests()) {
-    branchSubmenu.push({
-      label: __DARWIN__
-        ? t('menu.preview-pull-request-darwin', 'Preview Pull Request')
-        : t('menu.preview-pull-request', 'Preview pull request'),
-      id: 'preview-pull-request',
-      accelerator: 'CmdOrCtrl+Alt+P',
-      click: emit('preview-pull-request'),
-    })
-  }
+  branchSubmenu.push({
+    label: __DARWIN__
+      ? t('menu.preview-pull-request-darwin', 'Preview Pull Request')
+      : t('menu.preview-pull-request', 'Preview pull request'),
+    id: 'preview-pull-request',
+    accelerator: 'CmdOrCtrl+Alt+P',
+    click: emit('preview-pull-request'),
+  })
 
   branchSubmenu.push({
     label: pullRequestLabel,
@@ -607,6 +604,19 @@ export function buildDefaultMenu({
       shell
         .openExternal('https://github.com/shiftkey/desktop/issues/new/choose')
         .catch(err => log.error('Failed opening issue creation page', err))
+    },
+  }
+
+  const contactSupportItem: Electron.MenuItemConstructorOptions = {
+    label: __DARWIN__
+      ? t('menu.contact-github-support-darwin', 'Contact GitHub Support…')
+      : t('menu.contact-github-support', '&Contact GitHub support…'),
+    click() {
+      shell
+        .openExternal(
+          `https://github.com/contact?from_desktop_app=1&app_version=${app.getVersion()}`
+        )
+        .catch(err => log.error('Failed opening contact support page', err))
     },
   }
 
@@ -655,6 +665,7 @@ export function buildDefaultMenu({
 
   const helpItems = [
     submitIssueItem,
+    contactSupportItem,
     showUserGuides,
     showKeyboardShortcuts,
     showLogsItem,
