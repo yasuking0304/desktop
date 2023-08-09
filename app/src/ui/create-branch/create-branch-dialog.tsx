@@ -301,6 +301,7 @@ export class CreateBranch extends React.Component<
           `Unknown tip kind {{0}}`,
           { 0: tipKind }
         )
+      )
     }
   }
 

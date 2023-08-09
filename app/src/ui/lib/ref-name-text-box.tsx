@@ -21,6 +21,11 @@ interface IRefNameProps {
   readonly label?: string | JSX.Element
 
   /**
+   * The placeholder of the text box.
+   */
+  readonly placeholder?: string
+
+  /**
    * The aria-describedby attribute for the text box.
    */
   readonly ariaDescribedBy?: string

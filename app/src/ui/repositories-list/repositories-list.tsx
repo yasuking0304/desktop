@@ -247,7 +247,7 @@ export class RepositoriesList extends React.Component<
     const getGroupAriaLabel = (group: number) => groups[group].identifier
 
     const ListComponent = enableSectionList() ? SectionFilterList : FilterList
-    const filterListProps: typeof ListComponent['prototype']['props'] = {
+    const filterListProps: (typeof ListComponent)['prototype']['props'] = {
       rowHeight: RowHeight,
       selectedItem: selectedItem,
       filterText: this.props.filterText,

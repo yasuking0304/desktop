@@ -316,9 +316,9 @@ export class PullRequestList extends React.Component<
 
   private renderPostFilter = () => {
     const tooltip = t(
-          'pull-request-list.refresh-the-list-of-pull-request',
-          'Refresh the list of pull requests'
-        )
+      'pull-request-list.refresh-the-list-of-pull-request',
+      'Refresh the list of pull requests'
+    )
 
     return (
       <Button
