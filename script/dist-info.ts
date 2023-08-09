@@ -2,14 +2,11 @@ import * as Path from 'path'
 import * as Fs from 'fs'
 
 import { getProductName, getVersion } from '../app/package-info'
-import { getReleaseBranchName } from './build-platforms'
 
 const productName = getProductName()
 const version = getVersion()
 
 const projectRoot = Path.join(__dirname, '..')
-
-const publishChannels = ['production', 'test', 'beta']
 
 export function getDistRoot() {
   return Path.join(projectRoot, 'dist')
@@ -28,7 +25,7 @@ export function getExecutableName() {
   if (process.platform === 'win32') {
     return `${getWindowsIdentifierName()}${suffix}`
   } else if (process.platform === 'linux') {
-    return `github-desktop${suffix}`
+    return 'desktop'
   } else {
     return productName
   }
@@ -101,63 +98,31 @@ export function getWindowsIdentifierName() {
 }
 
 export function getBundleSizes() {
-  // eslint-disable-next-line no-sync
-  const rendererStats = Fs.statSync(
-    Path.join(projectRoot, 'out', 'renderer.js')
-  )
-  // eslint-disable-next-line no-sync
-  const mainStats = Fs.statSync(Path.join(projectRoot, 'out', 'main.js'))
-  return { rendererSize: rendererStats.size, mainSize: mainStats.size }
-}
-
-export function isPublishable(): boolean {
-  const channelFromBranch = getChannelFromBranch()
-  return channelFromBranch !== undefined
-    ? publishChannels.includes(channelFromBranch)
-    : false
-}
-
-export function getChannel() {
-  const channelFromBranch = getChannelFromBranch()
-  return channelFromBranch !== undefined
-    ? channelFromBranch
-    : process.env.NODE_ENV || 'development'
-}
-
-function getChannelFromBranch(): string | undefined {
-  // Branch name format: __release-CHANNEL-DEPLOY_ID
-  const pieces = getReleaseBranchName().split('-')
-  if (pieces.length < 3 || pieces[0] !== '__release') {
-    return
+  const outPath = Path.join(projectRoot, 'out')
+  return {
+    // eslint-disable-next-line no-sync
+    rendererBundleSize: Fs.statSync(Path.join(outPath, 'renderer.js')).size,
+    // eslint-disable-next-line no-sync
+    mainBundleSize: Fs.statSync(Path.join(outPath, 'main.js')).size,
   }
-  return pieces[1]
 }
+export const isPublishable = () =>
+  ['production', 'beta', 'test'].includes(getChannel())
 
-export function getReleaseSHA() {
-  // Branch name format: __release-CHANNEL-DEPLOY_ID
-  const pieces = getReleaseBranchName().split('-')
-  if (pieces.length < 3 || pieces[0] !== '__release') {
-    return null
-  }
+export const getChannel = () =>
+  process.env.RELEASE_CHANNEL ?? process.env.NODE_ENV ?? 'development'
 
-  return pieces[2]
-}
-
-export function getDistArchitecture(): 'arm64' | 'x64' | 'armv7l' {
+export function getDistArchitecture(): 'arm64' | 'x64' {
   // If a specific npm_config_arch is set, we use that one instead of the OS arch (to support cross compilation)
   if (
     process.env.npm_config_arch === 'arm64' ||
-    process.env.npm_config_arch === 'x64' ||
-    process.env.npm_config_arch === 'armv7l'
+    process.env.npm_config_arch === 'x64'
   ) {
     return process.env.npm_config_arch
   }
 
   if (process.arch === 'arm64') {
     return 'arm64'
-  }
-  if (process.arch === 'armv7l') {
-    return 'armv7l'
   }
 
   // TODO: Check if it's x64 running on an arm64 Windows with IsWow64Process2
@@ -181,8 +146,7 @@ export function getUpdatesURL() {
 export function shouldMakeDelta() {
   // Only production and beta channels include deltas. Test releases aren't
   // necessarily sequential so deltas wouldn't make sense.
-  const channelsWithDeltas = ['production', 'beta']
-  return channelsWithDeltas.indexOf(getChannel()) > -1
+  return ['production', 'beta'].includes(getChannel())
 }
 
 export function getIconFileName(): string {
