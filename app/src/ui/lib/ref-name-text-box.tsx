@@ -21,6 +21,11 @@ interface IRefNameProps {
   readonly label?: string | JSX.Element
 
   /**
+   * The aria-describedby attribute for the text box.
+   */
+  readonly ariaDescribedBy?: string
+
+  /**
    * Called when the user changes the ref name.
    *
    * A sanitized value for the ref name is passed.
@@ -45,11 +50,6 @@ interface IRefNameProps {
    * A sanitized value for the ref name is passed.
    */
   readonly onBlur?: (sanitizedValue: string) => void
-
-  /**
-   * The placeholder of the text box.
-   */
-  readonly placeholder?: string
 }
 
 interface IRefNameState {
@@ -91,6 +91,7 @@ export class RefNameTextBox extends React.Component<
           placeholder={this.props.placeholder}
           value={this.state.proposedValue}
           ref={this.textBoxRef}
+          ariaDescribedBy={this.props.ariaDescribedBy}
           onValueChanged={this.onValueChange}
           onBlur={this.onBlur}
         />

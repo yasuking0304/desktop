@@ -323,6 +323,7 @@ export class SelectedCommits extends React.Component<
       __dirname,
       'static/empty-no-commit.svg'
     )
+
     return (
       <div id="multiple-commits-selected" className="blankslate">
         <div className="panel blankslate">
@@ -343,6 +344,9 @@ export class SelectedCommits extends React.Component<
                   `Select a single commit or a range of consecutive commits to view a diff.`
                 )}
               </li>
+              <li>Drag the commits to the branch menu to cherry-pick them.</li>
+              <li>Drag the commits to squash or reorder them.</li>
+              <li>Right click on multiple commits to see options.</li>
             </ul>
           </div>
         </div>

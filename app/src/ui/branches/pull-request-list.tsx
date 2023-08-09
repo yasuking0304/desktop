@@ -22,6 +22,7 @@ import { DragType } from '../../models/drag-drop'
 import { dragAndDropManager } from '../../lib/drag-and-drop-manager'
 import { formatRelative } from '../../lib/format-relative'
 import { t } from 'i18next'
+import { AriaLiveContainer } from '../accessibility/aria-live-container'
 
 interface IPullRequestListItem extends IFilterListItem {
   readonly id: string
@@ -83,6 +84,7 @@ interface IPullRequestListState {
   readonly filterText: string
   readonly groupedItems: ReadonlyArray<IFilterListGroup<IPullRequestListItem>>
   readonly selectedItem: IPullRequestListItem | null
+  readonly screenReaderStateMessage: string | null
 }
 
 function resolveSelectedItem(
@@ -121,6 +123,7 @@ export class PullRequestList extends React.Component<
       filterText: '',
       groupedItems: [group],
       selectedItem,
+      screenReaderStateMessage: null,
     }
   }
 
@@ -131,27 +134,47 @@ export class PullRequestList extends React.Component<
       nextProps,
       this.state.selectedItem
     )
-    this.setState({ groupedItems: [group], selectedItem })
+
+    const loadingStarted =
+      !this.props.isLoadingPullRequests && nextProps.isLoadingPullRequests
+    const loadingComplete =
+      this.props.isLoadingPullRequests && !nextProps.isLoadingPullRequests
+    const numPullRequests = this.props.pullRequests.length
+    const plural = numPullRequests === 1 ? '' : 's'
+    const screenReaderStateMessage = loadingStarted
+      ? 'Hang Tight. Loading pull requests as fast as I can!'
+      : loadingComplete
+      ? `${numPullRequests} pull request${plural} found`
+      : null
+
+    this.setState({
+      groupedItems: [group],
+      selectedItem,
+      screenReaderStateMessage,
+    })
   }
 
   public render() {
     return (
-      <FilterList<IPullRequestListItem>
-        className="pull-request-list"
-        rowHeight={RowHeight}
-        groups={this.state.groupedItems}
-        selectedItem={this.state.selectedItem}
-        renderItem={this.renderPullRequest}
-        filterText={this.state.filterText}
-        onFilterTextChanged={this.onFilterTextChanged}
-        invalidationProps={this.props.pullRequests}
-        onItemClick={this.onItemClick}
-        onSelectionChanged={this.onSelectionChanged}
-        onFilterKeyDown={this.props.onFilterKeyDown}
-        renderGroupHeader={this.renderListHeader}
-        renderNoItems={this.renderNoItems}
-        renderPostFilter={this.renderPostFilter}
-      />
+      <>
+        <FilterList<IPullRequestListItem>
+          className="pull-request-list"
+          rowHeight={RowHeight}
+          groups={this.state.groupedItems}
+          selectedItem={this.state.selectedItem}
+          renderItem={this.renderPullRequest}
+          filterText={this.state.filterText}
+          onFilterTextChanged={this.onFilterTextChanged}
+          invalidationProps={this.props.pullRequests}
+          onItemClick={this.onItemClick}
+          onSelectionChanged={this.onSelectionChanged}
+          onFilterKeyDown={this.props.onFilterKeyDown}
+          renderGroupHeader={this.renderListHeader}
+          renderNoItems={this.renderNoItems}
+          renderPostFilter={this.renderPostFilter}
+        />
+        <AriaLiveContainer message={this.state.screenReaderStateMessage} />
+      </>
     )
   }
 
@@ -292,14 +315,17 @@ export class PullRequestList extends React.Component<
   }
 
   private renderPostFilter = () => {
+    const tooltip = t(
+          'pull-request-list.refresh-the-list-of-pull-request',
+          'Refresh the list of pull requests'
+        )
+
     return (
       <Button
         disabled={this.props.isLoadingPullRequests}
         onClick={this.onRefreshPullRequests}
-        tooltip={t(
-          'pull-request-list.refresh-the-list-of-pull-request',
-          'Refresh the list of pull requests'
-        )}
+        ariaLabel={tooltip}
+        tooltip={tooltip}
       >
         <Octicon
           symbol={syncClockwise}
