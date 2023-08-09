@@ -3,17 +3,15 @@ import { IStashEntry } from '../../models/stash-entry'
 import { Dispatcher } from '../dispatcher'
 import { Repository } from '../../models/repository'
 import { PopupType } from '../../models/popup'
-import { Octicon } from '../octicons'
-import * as OcticonSymbol from '../octicons/octicons.generated'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
 import { t } from 'i18next'
+import { ErrorWithMetadata } from '../../lib/error-with-metadata'
 
 interface IStashDiffHeaderProps {
   readonly stashEntry: IStashEntry
   readonly repository: Repository
   readonly dispatcher: Dispatcher
   readonly askForConfirmationOnDiscardStash: boolean
-  readonly isWorkingTreeClean: boolean
 }
 
 interface IStashDiffHeaderState {
@@ -39,7 +37,6 @@ export class StashDiffHeader extends React.Component<
   }
 
   public render() {
-    const { isWorkingTreeClean } = this.props
     const { isRestoring, isDiscarding } = this.state
 
     return (
@@ -56,38 +53,16 @@ export class StashDiffHeader extends React.Component<
             cancelButtonDisabled={isRestoring || isDiscarding}
             onCancelButtonClick={this.onDiscardClick}
           />
-          {this.renderExplanatoryText()}
+          <div className="explanatory-text">
+            <span className="text">
+              <strong>{t('stash-diff-header.restore', 'Restore')}</strong>
+              {t(
+                'stash-diff-header.will-move-your-stashed-files',
+                ` will move your stashed files to the Changes list.`
+              )}
+            </span>
+          </div>
         </div>
-      </div>
-    )
-  }
-
-  private renderExplanatoryText() {
-    const { isWorkingTreeClean } = this.props
-
-    if (isWorkingTreeClean || this.state.isRestoring) {
-      return (
-        <div className="explanatory-text">
-          <span className="text">
-            <strong>{t('stash-diff-header.restore', 'Restore')}</strong>
-            {t(
-              'stash-diff-header.will-move-your-stashed-files',
-              ` will move your stashed files to the Changes list.`
-            )}
-          </span>
-        </div>
-      )
-    }
-
-    return (
-      <div className="explanatory-text">
-        <Octicon symbol={OcticonSymbol.alert} />
-        <span className="text">
-          {t(
-            'stash-diff-header.unable-to-restore-stash',
-            'Unable to restore stash when changes are present on your branch.'
-          )}
-        </span>
       </div>
     )
   }
@@ -124,8 +99,16 @@ export class StashDiffHeader extends React.Component<
   private onRestoreClick = async () => {
     const { dispatcher, repository, stashEntry } = this.props
 
-    this.setState({ isRestoring: true }, () => {
-      dispatcher.popStash(repository, stashEntry)
-    })
+    try {
+      this.setState({ isRestoring: true })
+      await dispatcher.popStash(repository, stashEntry)
+    } catch (err) {
+      const errorWithMetadata = new ErrorWithMetadata(err, {
+        repository: repository,
+      })
+      dispatcher.postError(errorWithMetadata)
+    } finally {
+      this.setState({ isRestoring: false })
+    }
   }
 }
