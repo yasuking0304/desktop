@@ -173,6 +173,7 @@ import { UnknownAuthors } from './unknown-authors/unknown-authors-dialog'
 import { UnsupportedOSBannerDismissedAtKey } from './banners/windows-version-no-longer-supported-banner'
 import { offsetFromNow } from '../lib/offset-from'
 import { getNumber } from '../lib/local-storage'
+import { RepoRulesBypassConfirmation } from './repository-rules/repo-rules-bypass-confirmation'
 
 const MinuteInMilliseconds = 1000 * 60
 const HourInMilliseconds = MinuteInMilliseconds * 60
@@ -1718,6 +1719,8 @@ export class App extends React.Component<IAppProps, IAppState> {
             repository={repository}
             targetCommit={popup.targetCommit}
             upstreamGitHubRepository={upstreamGhRepo}
+            accounts={this.state.accounts}
+            cachedRepoRulesets={this.state.cachedRepoRulesets}
             onBranchCreatedFromCommit={this.onBranchCreatedFromCommit}
             onDismissed={onPopupDismissedFn}
             dispatcher={this.props.dispatcher}
@@ -2178,6 +2181,8 @@ export class App extends React.Component<IAppProps, IAppState> {
             showBranchProtected={
               repositoryState.changesState.currentBranchProtected
             }
+            repoRulesInfo={repositoryState.changesState.currentRepoRulesInfo}
+            aheadBehind={repositoryState.aheadBehind}
             showCoAuthoredBy={popup.showCoAuthoredBy}
             showNoWriteAccess={!hasWritePermissionForRepository}
             onDismissed={onPopupDismissedFn}
@@ -2216,6 +2221,8 @@ export class App extends React.Component<IAppProps, IAppState> {
             askForConfirmationOnForcePush={
               this.state.askForConfirmationOnForcePush
             }
+            accounts={this.state.accounts}
+            cachedRepoRulesets={this.state.cachedRepoRulesets}
             openFileInExternalEditor={this.openFileInExternalEditor}
             resolvedExternalEditor={this.state.resolvedExternalEditor}
             openRepositoryInShell={this.openCurrentRepositoryInShell}
@@ -2499,6 +2506,17 @@ export class App extends React.Component<IAppProps, IAppState> {
             key="unknown-authors"
             authors={popup.authors}
             onCommit={popup.onCommit}
+            onDismissed={onPopupDismissedFn}
+          />
+        )
+      }
+      case PopupType.ConfirmRepoRulesBypass: {
+        return (
+          <RepoRulesBypassConfirmation
+            key="repo-rules-bypass-confirmation"
+            repository={popup.repository}
+            branch={popup.branch}
+            onConfirm={popup.onConfirm}
             onDismissed={onPopupDismissedFn}
           />
         )

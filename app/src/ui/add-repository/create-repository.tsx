@@ -38,6 +38,8 @@ import { FoldoutType } from '../../lib/app-state'
 import { join } from 'path'
 import { isTopMostDialog } from '../dialog/is-top-most'
 import { t } from 'i18next'
+import { InputError } from '../lib/input-description/input-error'
+import { InputWarning } from '../lib/input-description/input-warning'
 
 /** The sentinel value used to indicate no gitignore should be used. */
 const NoGitIgnoreValue = 'None'
@@ -543,9 +545,14 @@ export class CreateRepository extends React.Component<
     }
 
     return (
-      <Row className="warning-helper-text">
-        <Octicon symbol={OcticonSymbol.alert} />
-        <p>
+      <Row>
+        <InputError
+          id="existing-repository-path-error"
+          trackedUserInput={this.state.path + this.state.name}
+          ariaLiveMessage={
+            'This directory appears to be a Git repository. Would you like to add this repository instead?'
+          }
+        >
           {t(
             'create-repository.render-git-repository-warning-1',
             'This directory appears to be a Git repository. Would you like to '
@@ -554,7 +561,7 @@ export class CreateRepository extends React.Component<
             {t('create-repository.add-this-repository', 'add this repository')}
           </LinkButton>
           {t('create-repository.render-git-repository-warning-2', ' instead?')}
-        </p>
+        </InputError>
       </Row>
     )
   }
@@ -572,9 +579,13 @@ export class CreateRepository extends React.Component<
     }
 
     return (
-      <Row className="warning-helper-text">
-        <Octicon symbol={OcticonSymbol.alert} />
-        <p>
+      <Row>
+        <InputWarning
+          id="readme-overwrite-warning"
+          trackedUserInput={this.state.createWithReadme}
+          ariaLiveMessage="This directory contains a README.md file already. Checking
+          this box will result in the existing file being overwritten."
+        >
           {t(
             'create-repository.render-readme-overwrite-warning-1',
             'This directory contains a '
@@ -585,7 +596,7 @@ export class CreateRepository extends React.Component<
             ` file already. Checking
             this box will result in the existing file being overwritten.`
           )}
-        </p>
+        </InputWarning>
       </Row>
     )
   }
@@ -640,6 +651,7 @@ export class CreateRepository extends React.Component<
               label={t('common.name', 'Name')}
               placeholder={t('common.repository-name', 'repository name')}
               onValueChanged={this.onNameChanged}
+              ariaDescribedBy="existing-repository-path-error"
             />
           </Row>
 
@@ -664,6 +676,7 @@ export class CreateRepository extends React.Component<
               placeholder={t('common.repository-path', 'repository path')}
               onValueChanged={this.onPathChanged}
               disabled={readOnlyPath || loadingDefaultDir}
+              ariaDescribedBy="existing-repository-path-error"
             />
             <Button
               onClick={this.showFilePicker}
@@ -687,6 +700,7 @@ export class CreateRepository extends React.Component<
                   : CheckboxValue.Off
               }
               onChange={this.onCreateWithReadmeChange}
+              ariaDescribedBy="readme-overwrite-warning"
             />
           </Row>
           {this.renderReadmeOverwriteWarning()}
