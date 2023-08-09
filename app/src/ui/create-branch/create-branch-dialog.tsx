@@ -360,6 +360,7 @@ export class CreateBranch extends React.Component<
         <DialogContent>
           <RefNameTextBox
             label={t('common.name', 'Name')}
+            ariaDescribedBy={hasError ? this.ERRORS_ID : undefined}
             placeholder={
               __DARWIN__
                 ? t('common.branch-name-darwin', 'Branch Name')
