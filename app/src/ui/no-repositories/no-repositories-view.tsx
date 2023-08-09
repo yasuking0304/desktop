@@ -377,10 +377,7 @@ export class NoRepositoriesView extends React.Component<
 
   private renderTutorialRepositoryButton() {
     // No tutorial if you're not signed in.
-    if (
-      this.props.dotComAccount === null &&
-      this.props.enterpriseAccount === null
-    ) {
+    if (!this.isUserSignedIn()) {
       return null
     }
 
@@ -429,7 +426,9 @@ export class NoRepositoriesView extends React.Component<
             'no-repositories-view.clone-a-repository',
             'Clone a repository from the Internet…'
           ),
-      this.onShowClone
+      this.onShowClone,
+      undefined,
+      !this.isUserSignedIn()
     )
   }
 
