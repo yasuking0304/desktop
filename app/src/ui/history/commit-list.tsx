@@ -500,14 +500,18 @@ export class CommitList extends React.Component<ICommitListProps, {}> {
 
     if (canBeAmended) {
       items.push({
-        label: __DARWIN__ ? 'Amend Commit…' : 'Amend commit…',
+        label: __DARWIN__
+          ? t('commit-list-item.amend-commit-darwin', 'Amend Commit窶ｦ')
+          : t('commit-list-item.amend-commit', 'Amend commit窶ｦ'),
         action: () => this.props.onAmendCommit?.(commit, isLocal),
       })
     }
 
     if (canBeUndone) {
       items.push({
-        label: __DARWIN__ ? 'Undo Commit…' : 'Undo commit…',
+        label: __DARWIN__
+          ? t('commit-list-item.undo-commit-darwin', 'Undo Commit窶ｦ')
+          : t('commit-list-item.undo-commit', 'Undo commit窶ｦ'),
         action: () => {
           if (this.props.onUndoCommit) {
             this.props.onUndoCommit(commit)
@@ -519,7 +523,9 @@ export class CommitList extends React.Component<ICommitListProps, {}> {
 
     if (enableResetToCommit()) {
       items.push({
-        label: __DARWIN__ ? 'Reset to Commit…' : 'Reset to commit…',
+        label: __DARWIN__
+          ? t('commit-list-item.reset-to-commit-darwin', 'Reset to Commit窶ｦ')
+          : t('commit-list-item.reset-to-commit', 'Reset to commit窶ｦ'),
         action: () => {
           if (this.props.onResetToCommit) {
             this.props.onResetToCommit(commit)
@@ -542,8 +548,14 @@ export class CommitList extends React.Component<ICommitListProps, {}> {
     items.push(
       {
         label: __DARWIN__
-          ? 'Revert Changes in Commit'
-          : 'Revert changes in commit',
+          ? t(
+              'commit-list-item.Revert-changes-in-commit-darwin',
+              'Revert Changes in Commit'
+            )
+          : t(
+              'commit-list-item.Revert-changes-in-commit',
+              'Revert changes in commit'
+            ),
         action: () => {
           if (this.props.onRevertCommit) {
             this.props.onRevertCommit(commit)
@@ -554,8 +566,14 @@ export class CommitList extends React.Component<ICommitListProps, {}> {
       { type: 'separator' },
       {
         label: __DARWIN__
-          ? 'Create Branch from Commit'
-          : 'Create branch from commit',
+          ? t(
+              'commit-list-item.create-branch-from-commit-darwin',
+              'Create Branch from Commit'
+            )
+          : t(
+              'commit-list-item.create-branch-from-commit',
+              'Create branch from commit'
+            ),
         action: () => {
           if (this.props.onCreateBranch) {
             this.props.onCreateBranch(commit)
@@ -563,7 +581,7 @@ export class CommitList extends React.Component<ICommitListProps, {}> {
         },
       },
       {
-        label: 'Create Tag…',
+        label: t('commit-list-item.comform-create-tag', 'Create Tag窶ｦ'),
         action: () => this.props.onCreateTag?.(commit.sha),
         enabled: this.props.onCreateTag !== undefined,
       }
@@ -583,13 +601,18 @@ export class CommitList extends React.Component<ICommitListProps, {}> {
     const windowTagsLabel = commit.tags.length > 1 ? 'Copy tags' : 'Copy tag'
     items.push(
       {
-        label: __DARWIN__ ? 'Cherry-pick Commit…' : 'Cherry-pick commit…',
+        label: __DARWIN__
+          ? t(
+              'commit-list-item.cherry-pick-commit-darwin',
+              'Cherry-pick Commit窶ｦ'
+            )
+          : t('commit-list-item.cherry-pick-commit', 'Cherry-pick commit窶ｦ'),
         action: () => this.props.onCherryPick?.(this.selectedCommits),
         enabled: this.canCherryPick(),
       },
       { type: 'separator' },
       {
-        label: 'Copy SHA',
+        label: t('commit-list-item.copy-sha', 'Copy SHA'),
         action: () => clipboard.writeText(commit.sha),
       },
       {
@@ -640,7 +663,9 @@ export class CommitList extends React.Component<ICommitListProps, {}> {
       const tagName = commit.tags[0]
 
       return {
-        label: `Delete tag ${tagName}`,
+        label: t('commit-list-item.detele-tag', `Delete tag {{0}}`, {
+          0: tagName,
+        }),
         action: () => onDeleteTag(tagName),
         enabled: unpushedTags.includes(tagName),
       }
@@ -650,7 +675,7 @@ export class CommitList extends React.Component<ICommitListProps, {}> {
     const unpushedTagsSet = new Set(unpushedTags)
 
     return {
-      label: 'Delete tag…',
+      label: t('commit-list-item.confim-detele-tag', 'Delete tag窶ｦ'),
       submenu: commit.tags.map(tagName => {
         return {
           label: tagName,
@@ -667,15 +692,29 @@ export class CommitList extends React.Component<ICommitListProps, {}> {
     return [
       {
         label: __DARWIN__
-          ? `Cherry-pick ${count} Commits…`
-          : `Cherry-pick ${count} commits…`,
+          ? t(
+            'commit-list-item.cherry-pick-commits-darwin',
+            `Cherry-pick {{0}} Commits窶ｦ`,
+            { 0: count }
+          )
+        : t(
+            'commit-list-item.cherry-pick-commits',
+            `Cherry-pick {{0}} commits窶ｦ`,
+            { 0: count }
+          ),
         action: () => this.props.onCherryPick?.(this.selectedCommits),
         enabled: this.canCherryPick(),
       },
       {
         label: __DARWIN__
-          ? `Squash ${count} Commits…`
-          : `Squash ${count} commits…`,
+          ? t(
+              'commit-list-item.squash-commits-darwin',
+              `Squash {{0}} Commits窶ｦ`,
+              { 0: count }
+            )
+          : t('commit-list-item.squash-commits', `Squash {{0}} commits窶ｦ`, {
+              0: count,
+            }),
         action: () => this.onSquash(this.selectedCommits, commit, true),
         enabled: this.canSquash(),
       },
