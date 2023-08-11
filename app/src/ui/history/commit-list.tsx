@@ -486,14 +486,17 @@ export class CommitList extends React.Component<ICommitListProps, {}> {
       this.props.canResetToCommits === true && isResettableCommit
     const canBeCheckedOut = row > 0 //Cannot checkout the current commit
 
-    let viewOnGitHubLabel = 'View on GitHub'
+    let viewOnGitHubLabel = t('commit-list.view-on-github', 'View on GitHub')
     const gitHubRepository = this.props.gitHubRepository
 
     if (
       gitHubRepository &&
       gitHubRepository.endpoint !== getDotComAPIEndpoint()
     ) {
-      viewOnGitHubLabel = 'View on GitHub Enterprise'
+      viewOnGitHubLabel = t(
+        'commit-list.view-on-github-enterprise',
+        'View on GitHub Enterprise'
+      )
     }
 
     const items: IMenuItem[] = []
@@ -597,8 +600,14 @@ export class CommitList extends React.Component<ICommitListProps, {}> {
         deleteTagsMenuItem
       )
     }
-    const darwinTagsLabel = commit.tags.length > 1 ? 'Copy Tags' : 'Copy Tag'
-    const windowTagsLabel = commit.tags.length > 1 ? 'Copy tags' : 'Copy tag'
+    const darwinTagsLabel =
+      commit.tags.length > 1
+        ? t('commit-list.copy-tags', 'Copy Tags')
+        : t('commit-list.copy-tag', 'Copy Tag')
+    const windowTagsLabel =
+      commit.tags.length > 1
+        ? t('commit-list.copy-tags', 'Copy Tags')
+        : t('commit-list.copy-tag', 'Copy Tag')
     items.push(
       {
         label: __DARWIN__
@@ -693,15 +702,15 @@ export class CommitList extends React.Component<ICommitListProps, {}> {
       {
         label: __DARWIN__
           ? t(
-            'commit-list-item.cherry-pick-commits-darwin',
-            `Cherry-pick {{0}} Commits…`,
-            { 0: count }
-          )
-        : t(
-            'commit-list-item.cherry-pick-commits',
-            `Cherry-pick {{0}} commits…`,
-            { 0: count }
-          ),
+              'commit-list-item.cherry-pick-commits-darwin',
+              `Cherry-pick {{0}} Commits…`,
+              { 0: count }
+            )
+          : t(
+              'commit-list-item.cherry-pick-commits',
+              `Cherry-pick {{0}} commits…`,
+              { 0: count }
+            ),
         action: () => this.props.onCherryPick?.(this.selectedCommits),
         enabled: this.canCherryPick(),
       },
