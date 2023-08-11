@@ -244,6 +244,12 @@
     "one-commit": "コミット",
     "squash-number-commit": "{{0}}個のコミットをスカッシュする"
   },
+  "commit-list": {
+    "copy-tag": "タグのコピー",
+    "copy-tags": "複数タグのコピー",
+    "view-on-github": "GitHub で確認",
+    "view-on-github-enterprise": "GitHub Enterprise で確認"
+  },
   "commit-list-item": {
     "amend-commit": "コミットの修正…",
     "amend-commit-darwin": "コミットの修正…",
@@ -265,9 +271,7 @@
     "squash-commits": "{{0}}個のコミットをスカッシュ(結合)する…",
     "squash-commits-darwin": "{{0}}個のコミットをスカッシュ(結合)する…",
     "undo-commit": "コミットを元に戻す…",
-    "undo-commit-darwin": "コミットを元に戻す…",
-    "view-on-github": "GitHub で確認",
-    "view-on-github-enterprise": "GitHub Enterprise で確認"
+    "undo-commit-darwin": "コミットを元に戻す…"
   },
   "commit-message": {
     "add-co-authors": "共同作業者の追加",
@@ -306,11 +310,9 @@
   },
   "commit-message-avatar": {
     "ignore": "無視",
-    "learn-more": "詳細情報。",
     "repository-settings": "リポジトリ設定",
     "update-email": "メールの更新",
     "update-email-1": "グローバル Git 設定 (",
-    "update-email-2": ") のメールが GitHub{{0}} アカウントと一致しません。",
     "update-email-darwin": "メールの更新",
     "you-can-also-choose-an-email-1": " ",
     "you-can-also-choose-an-email-2": "から、このリポジトリのローカルなメールアドレスを選択することも可能です。"
@@ -695,13 +697,9 @@
     "use-my-global-git-config": "Git 設定"
   },
   "git-email-not-found-warning": {
-    "does-not-match": "ありません",
     "edither-your-account": "GitHub.com アカウントまたは GitHub Enterprise アカウントのいずれか",
     "learn-more": "詳細情報",
     "learn-more-about": "詳しくはコミットユーザについてをご覧ください",
-    "matchs": "あります",
-    "this-email-address": "このメールアドレスは{{1}}内に{{0}}。 ",
-    "will-be-wrongly-attributed": "あなたのコミットは間違ったユーザにリンクされます。",
     "your-account": "{{0}} アカウント"
   },
   "git-ignore": {
@@ -1357,7 +1355,6 @@
     "open-in": "{{0}} で開く",
     "restore": "復元する",
     "stashed-changes": "一時退避された変更",
-    "unable-to-restore-stash": "ブランチに変更が存在する場合、退避ファイルを復元できません。",
     "will-move-your-stashed-files": " は、退避ファイルを変更リストに移動します。"
   },
   "status": {
@@ -1474,7 +1471,6 @@
     "would-you-like-to-update": "予期された URL を使用するようにリモートを更新しますか?"
   },
   "url": {
-    "commit-message-avatar": "https://docs.github.com/ja/github/committing-changes-to-your-project/why-are-my-commits-linked-to-the-wrong-user",
     "keyboard-shortcuts": "https://docs.github.com/ja/desktop/installing-and-configuring-github-desktop/overview/keyboard-shortcuts",
     "show-user-guides": "https://docs.github.com/ja/desktop",
     "why-are-my-commits-linked-to-the-wrong-user": "https://docs.github.com/ja/github/committing-changes-to-your-project/why-are-my-commits-linked-to-the-wrong-user"

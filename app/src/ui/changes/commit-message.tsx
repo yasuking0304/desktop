@@ -1009,9 +1009,16 @@ export class CommitMessage extends React.Component<
 
       return (
         <CommitWarning icon={CommitWarningIcon.Warning}>
-          <strong>{branch}</strong> is a protected branch. Want to{' '}
-          <LinkButton onClick={this.onSwitchBranch}>switch branches</LinkButton>
-          ?
+          {t('commit-message.protected-branch-1', ' ')}
+          <strong>{branch}</strong>
+          {t(
+            'commit-message.protected-branch-2',
+            ' is a protected branch. Want to '
+          )}
+          <LinkButton onClick={this.onSwitchBranch}>
+            {t('commit-message.link-switch-branches', 'switch branches')}
+          </LinkButton>
+          {t('commit-message.protected-branch-3', '?')}
         </CommitWarning>
       )
     } else if (repoRuleWarningToDisplay === 'publish') {

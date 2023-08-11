@@ -213,7 +213,6 @@
     "looks-like-no-repositories-1": "Looks like there are no repositories for ",
     "looks-like-no-repositories-2": " on {{0}}.",
     "no-match": "Sorry, I can't find any repository matching ",
-    "placeholder-filter-repositories": "Filter your repositories",
     "refresh-this-list": "Refresh this list",
     "tooltip-refresh-list": "Refresh the list of repositories",
     "your-repositories": "Your repositories",
@@ -244,6 +243,12 @@
     "one-commit": "commit",
     "squash-number-commit": "Squash {{0}} commits"
   },
+  "commit-list": {
+    "copy-tag": "Copy Tag",
+    "copy-tags": "Copy Tags",
+    "view-on-github": "View on GitHub",
+    "view-on-github-enterprise": "View on GitHub Enterprise"
+  },
   "commit-list-item": {
     "amend-commit": "Amend commit…",
     "amend-commit-darwin": "Amend Commit…",
@@ -265,9 +270,7 @@
     "squash-commits": "Squash {{0}} commits…",
     "squash-commits-darwin": "Squash {{0}} Commits…",
     "undo-commit": "Undo commit…",
-    "undo-commit-darwin": "Undo Commit…",
-    "view-on-github": "View on GitHub",
-    "view-on-github-enterprise": "View on GitHub Enterprise"
+    "undo-commit-darwin": "Undo Commit…"
   },
   "commit-message": {
     "add-co-authors": "Add co-authors",
@@ -289,11 +292,7 @@
     "enable-commit-spellcheck": "Enable commit spellcheck",
     "enable-commit-spellcheck-darwin": "Enable Commit Spellcheck",
     "link-create-a-fork": "create a fork",
-    "link-switch-branches": "switch branches",
     "please-information-description-field": "Place extra information in the description field.",
-    "protected-branch-1": " ",
-    "protected-branch-2": " is a protected branch. Want to ",
-    "protected-branch-3": "?",
     "remove-co-authors": "Remove co-authors",
     "remove-co-authors-darwin": "Remove Co-Authors",
     "select-one-or-more-files-to-commit": "Select one or more files to commit",
@@ -306,11 +305,9 @@
   },
   "commit-message-avatar": {
     "ignore": "Ignore",
-    "learn-more": "Learn more.",
     "repository-settings": "repository settings",
     "update-email": "Update email",
     "update-email-1": "The email in your global Git config (",
-    "update-email-2": ") doesn't match your GitHub{{0}} account. ",
     "update-email-darwin": "Update Email",
     "you-can-also-choose-an-email-1": "You can also choose an email local to this repository from the ",
     "you-can-also-choose-an-email-2": "."
@@ -695,13 +692,9 @@
     "use-my-global-git-config": "Use my global Git config"
   },
   "git-email-not-found-warning": {
-    "does-not-match": "does not match",
     "edither-your-account": "either of your GitHub.com nor GitHub Enterprise accounts",
     "learn-more": "Learn more.",
     "learn-more-about": "Learn more about commit attribution",
-    "matchs": "matches",
-    "this-email-address": "This email address {{0}} {{1}}. ",
-    "will-be-wrongly-attributed": "Your commits will be wrongly attributed. ",
     "your-account": "your {{0}} account"
   },
   "git-ignore": {
@@ -1357,7 +1350,6 @@
     "open-in": "Open in {{0}}",
     "restore": "Restore",
     "stashed-changes": "Stashed changes",
-    "unable-to-restore-stash": "Unable to restore stash when changes are present on your branch.",
     "will-move-your-stashed-files": " will move your stashed files to the Changes list."
   },
   "status": {
@@ -1474,7 +1466,6 @@
     "would-you-like-to-update": "Would you like to update the remote to use the expected URL?"
   },
   "url": {
-    "commit-message-avatar": "https://docs.github.com/en/github/committing-changes-to-your-project/why-are-my-commits-linked-to-the-wrong-user",
     "keyboard-shortcuts": "https://docs.github.com/en/desktop/installing-and-configuring-github-desktop/overview/keyboard-shortcuts",
     "show-user-guides": "https://docs.github.com/en/desktop",
     "why-are-my-commits-linked-to-the-wrong-user": "https://docs.github.com/en/github/committing-changes-to-your-project/why-are-my-commits-linked-to-the-wrong-user"
