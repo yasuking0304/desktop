@@ -225,6 +225,7 @@ export class RepositoryView extends React.Component<
         repository={this.props.repository}
         dispatcher={this.props.dispatcher}
         changes={this.props.state.changesState}
+        aheadBehind={this.props.state.aheadBehind}
         branch={branchName}
         commitAuthor={this.props.state.commitAuthor}
         emoji={this.props.emoji}
@@ -359,8 +360,7 @@ export class RepositoryView extends React.Component<
 
   private renderStashedChangesContent(): JSX.Element | null {
     const { changesState } = this.props.state
-    const { selection, stashEntry, workingDirectory } = changesState
-    const isWorkingTreeClean = workingDirectory.files.length === 0
+    const { selection, stashEntry } = changesState
 
     if (selection.kind !== ChangesSelectionKind.Stash || stashEntry === null) {
       return null
@@ -379,7 +379,6 @@ export class RepositoryView extends React.Component<
           askForConfirmationOnDiscardStash={
             this.props.askForConfirmationOnDiscardStash
           }
-          isWorkingTreeClean={isWorkingTreeClean}
           showSideBySideDiff={this.props.showSideBySideDiff}
           onOpenBinaryFile={this.onOpenBinaryFile}
           onOpenSubmodule={this.onOpenSubmodule}

@@ -216,7 +216,7 @@ export class Preferences extends React.Component<
         id="preferences"
         title={
           __DARWIN__
-            ? t('common.preferences', 'Preferences')
+            ? t('common.settings', 'Settings')
             : t('common.options', 'Options')
         }
         onDismissed={this.onCancel}
