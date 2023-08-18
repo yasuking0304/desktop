@@ -519,10 +519,7 @@ export class CommitSummary extends React.Component<
             {this.renderLinesChanged()}
             {this.renderTags()}
 
-            <li
-              className="commit-summary-meta-item without-truncation"
-              title={t('commit-summary.diff-options', 'Diff Options')}
-            >
+            <li className="commit-summary-meta-item without-truncation">
               <DiffOptions
                 isInteractiveDiff={false}
                 hideWhitespaceChanges={this.props.hideWhitespaceInDiff}

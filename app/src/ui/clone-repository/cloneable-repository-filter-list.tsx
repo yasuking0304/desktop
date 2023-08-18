@@ -169,7 +169,7 @@ export class CloneableRepositoryFilterList extends React.PureComponent<ICloneabl
 
     const selectedListItem = this.getSelectedListItem(groups, selectedItem)
     const ListComponent = enableSectionList() ? SectionFilterList : FilterList
-    const filterListProps: (typeof ListComponent)['prototype']['props'] = {
+    const filterListProps: typeof ListComponent['prototype']['props'] = {
       className: 'clone-github-repo',
       rowHeight: RowHeight,
       selectedItem: selectedListItem,
@@ -183,7 +183,10 @@ export class CloneableRepositoryFilterList extends React.PureComponent<ICloneabl
       renderNoItems: this.renderNoItems,
       renderPostFilter: this.renderPostFilter,
       onItemClick: this.props.onItemClicked ? this.onItemClick : undefined,
-      placeholderText: 'Filter your repositories',
+      placeholderText: t(
+        'cloneable-repository-filter-list.placeholder-filter-repositories',
+        'Filter your repositories'
+      ),
       getGroupAriaLabel,
     }
 
