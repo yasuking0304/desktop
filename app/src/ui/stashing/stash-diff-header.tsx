@@ -54,8 +54,11 @@ export class StashDiffHeader extends React.Component<
           />
           <div className="explanatory-text" id="restore-description">
             <span className="text">
-              <strong>Restore</strong> will move your stashed files to the
-              Changes list.
+              <strong>{t('stash-diff-header.restore', 'Restore')}</strong>
+              {t(
+                'stash-diff-header.will-move-your-stashed-files',
+                ` will move your stashed files to the Changes list.`
+              )}
             </span>
           </div>
         </div>
