@@ -1,23 +1,15 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import * as React from 'react'
-import { Commit, CommitOneLine } from '../../models/commit'
+import { Commit } from '../../models/commit'
 import { GitHubRepository } from '../../models/github-repository'
 import { IAvatarUser, getAvatarUsersForCommit } from '../../models/avatar'
 import { RichText } from '../lib/rich-text'
 import { RelativeTime } from '../relative-time'
-import { getDotComAPIEndpoint } from '../../lib/api'
-import { clipboard } from 'electron'
-import { showContextualMenu } from '../../lib/menu-item'
 import { CommitAttribution } from '../lib/commit-attribution'
 import { AvatarStack } from '../lib/avatar-stack'
-import { IMenuItem } from '../../lib/menu-item'
 import { Octicon } from '../octicons'
 import * as OcticonSymbol from '../octicons/octicons.generated'
 import { Draggable } from '../lib/draggable'
-import {
-  enableCheckoutCommit,
-  enableResetToCommit,
-} from '../../lib/feature-flag'
 import { dragAndDropManager } from '../../lib/drag-and-drop-manager'
 import {
   DragType,
@@ -32,21 +24,6 @@ interface ICommitProps {
   readonly commit: Commit
   readonly selectedCommits: ReadonlyArray<Commit>
   readonly emoji: Map<string, string>
-  readonly isLocal: boolean
-  readonly canBeUndone: boolean
-  readonly canBeAmended: boolean
-  readonly canBeResetTo: boolean
-  readonly canBeCheckedOut: boolean
-  readonly onResetToCommit?: (commit: Commit) => void
-  readonly onUndoCommit?: (commit: Commit) => void
-  readonly onRevertCommit?: (commit: Commit) => void
-  readonly onViewCommitOnGitHub?: (sha: string) => void
-  readonly onCreateBranch?: (commit: CommitOneLine) => void
-  readonly onCheckoutCommit?: (commit: CommitOneLine) => void
-  readonly onCreateTag?: (targetCommitSha: string) => void
-  readonly onDeleteTag?: (tagName: string) => void
-  readonly onAmendCommit?: (commit: Commit, isLocalCommit: boolean) => void
-  readonly onCherryPick?: (commits: ReadonlyArray<CommitOneLine>) => void
   readonly onRenderCommitDragElement?: (commit: Commit) => void
   readonly onRemoveDragElement?: () => void
   readonly onSquash?: (
@@ -54,9 +31,13 @@ interface ICommitProps {
     squashOnto: Commit,
     isInvokedByContextMenu: boolean
   ) => void
+  /**
+   * Whether or not the commit can be dragged for certain operations like squash,
+   * cherry-pick, reorder, etc. Defaults to false.
+   */
+  readonly isDraggable?: boolean
   readonly showUnpushedIndicator: boolean
   readonly unpushedIndicatorTitle?: string
-  readonly unpushedTags?: ReadonlyArray<string>
   readonly disableSquashing?: boolean
   readonly isMultiCommitOperationInProgress?: boolean
 }
@@ -132,7 +113,7 @@ export class CommitListItem extends React.PureComponent<
       author: { date },
     } = commit
 
-    const isDraggable = this.isDraggable()
+    const isDraggable = this.props.isDraggable || false
     const hasEmptySummary = commit.summary.length === 0
     const commitSummary = hasEmptySummary
       ? t('commit-list-item.empty-commit-message', 'Empty commit message')
@@ -157,7 +138,6 @@ export class CommitListItem extends React.PureComponent<
       >
         <div
           className="commit"
-          onContextMenu={this.onContextMenu}
           onMouseEnter={this.onMouseEnter}
           onMouseLeave={this.onMouseLeave}
           onMouseUp={this.onMouseUp}
@@ -215,310 +195,6 @@ export class CommitListItem extends React.PureComponent<
         <Octicon symbol={OcticonSymbol.arrowUp} />
       </div>
     )
-  }
-
-  private onAmendCommit = () => {
-    this.props.onAmendCommit?.(this.props.commit, this.props.isLocal)
-  }
-
-  private onCopySHA = () => {
-    clipboard.writeText(this.props.commit.sha)
-  }
-
-  private onCopyTags = () => {
-    clipboard.writeText(this.props.commit.tags.join(' '))
-  }
-
-  private onViewOnGitHub = () => {
-    if (this.props.onViewCommitOnGitHub) {
-      this.props.onViewCommitOnGitHub(this.props.commit.sha)
-    }
-  }
-
-  private onCreateTag = () => {
-    if (this.props.onCreateTag) {
-      this.props.onCreateTag(this.props.commit.sha)
-    }
-  }
-
-  private onCherryPick = () => {
-    if (this.props.onCherryPick !== undefined) {
-      this.props.onCherryPick(this.props.selectedCommits)
-    }
-  }
-
-  private onSquash = () => {
-    if (this.props.onSquash !== undefined) {
-      this.props.onSquash(this.props.selectedCommits, this.props.commit, true)
-    }
-  }
-
-  private onContextMenu = (event: React.MouseEvent<any>) => {
-    event.preventDefault()
-
-    let items: IMenuItem[] = []
-    if (this.props.selectedCommits.length > 1) {
-      items = this.getContextMenuMultipleCommits()
-    } else {
-      items = this.getContextMenuForSingleCommit()
-    }
-
-    showContextualMenu(items)
-  }
-
-  private getContextMenuForSingleCommit(): IMenuItem[] {
-    let viewOnGitHubLabel = t(
-      'commit-list-item.view-on-github',
-      'View on GitHub'
-    )
-    const gitHubRepository = this.props.gitHubRepository
-
-    if (
-      gitHubRepository &&
-      gitHubRepository.endpoint !== getDotComAPIEndpoint()
-    ) {
-      viewOnGitHubLabel = t(
-        'commit-list-item.view-on-github-enterprise',
-        'View on GitHub Enterprise'
-      )
-    }
-
-    const items: IMenuItem[] = []
-
-    if (this.props.canBeAmended) {
-      items.push({
-        label: __DARWIN__
-          ? t('commit-list-item.amend-commit-darwin', 'Amend Commit…')
-          : t('commit-list-item.amend-commit', 'Amend commit…'),
-        action: this.onAmendCommit,
-      })
-    }
-
-    if (this.props.canBeUndone) {
-      items.push({
-        label: __DARWIN__
-          ? t('commit-list-item.undo-commit-darwin', 'Undo Commit…')
-          : t('commit-list-item.undo-commit', 'Undo commit…'),
-        action: () => {
-          if (this.props.onUndoCommit) {
-            this.props.onUndoCommit(this.props.commit)
-          }
-        },
-        enabled: this.props.onUndoCommit !== undefined,
-      })
-    }
-
-    if (enableResetToCommit()) {
-      items.push({
-        label: __DARWIN__
-          ? t('commit-list-item.reset-to-commit-darwin', 'Reset to Commit…')
-          : t('commit-list-item.reset-to-commit', 'Reset to commit…'),
-        action: () => {
-          if (this.props.onResetToCommit) {
-            this.props.onResetToCommit(this.props.commit)
-          }
-        },
-        enabled:
-          this.props.canBeResetTo && this.props.onResetToCommit !== undefined,
-      })
-    }
-
-    if (enableCheckoutCommit()) {
-      items.push({
-        label: __DARWIN__ ? 'Checkout Commit' : 'Checkout commit',
-        action: () => {
-          this.props.onCheckoutCommit?.(this.props.commit)
-        },
-        enabled:
-          this.props.canBeCheckedOut &&
-          this.props.onCheckoutCommit !== undefined,
-      })
-    }
-
-    items.push(
-      {
-        label: __DARWIN__
-          ? t(
-              'commit-list-item.Revert-changes-in-commit-darwin',
-              'Revert Changes in Commit'
-            )
-          : t(
-              'commit-list-item.Revert-changes-in-commit',
-              'Revert changes in commit'
-            ),
-        action: () => {
-          if (this.props.onRevertCommit) {
-            this.props.onRevertCommit(this.props.commit)
-          }
-        },
-        enabled: this.props.onRevertCommit !== undefined,
-      },
-      { type: 'separator' },
-      {
-        label: __DARWIN__
-          ? t(
-              'commit-list-item.create-branch-from-commit-darwin',
-              'Create Branch from Commit'
-            )
-          : t(
-              'commit-list-item.create-branch-from-commit',
-              'Create branch from commit'
-            ),
-        action: () => {
-          if (this.props.onCreateBranch) {
-            this.props.onCreateBranch(this.props.commit)
-          }
-        },
-      },
-      {
-        label: t('commit-list-item.comform-create-tag', 'Create Tag…'),
-        action: this.onCreateTag,
-        enabled: this.props.onCreateTag !== undefined,
-      }
-    )
-
-    const deleteTagsMenuItem = this.getDeleteTagsMenuItem()
-
-    if (deleteTagsMenuItem !== null) {
-      items.push(
-        {
-          type: 'separator',
-        },
-        deleteTagsMenuItem
-      )
-    }
-    const darwinTagsLabel =
-      this.props.commit.tags.length > 1 ? 'Copy Tags' : 'Copy Tag'
-    const windowTagsLabel =
-      this.props.commit.tags.length > 1 ? 'Copy tags' : 'Copy tag'
-    items.push(
-      {
-        label: __DARWIN__
-          ? t(
-              'commit-list-item.cherry-pick-commit-darwin',
-              'Cherry-pick Commit…'
-            )
-          : t('commit-list-item.cherry-pick-commit', 'Cherry-pick commit…'),
-        action: this.onCherryPick,
-        enabled: this.canCherryPick(),
-      },
-      { type: 'separator' },
-      {
-        label: t('commit-list-item.copy-sha', 'Copy SHA'),
-        action: this.onCopySHA,
-      },
-      {
-        label: __DARWIN__ ? darwinTagsLabel : windowTagsLabel,
-        action: this.onCopyTags,
-        enabled: this.props.commit.tags.length > 0,
-      },
-      {
-        label: viewOnGitHubLabel,
-        action: this.onViewOnGitHub,
-        enabled: !this.props.isLocal && !!gitHubRepository,
-      }
-    )
-
-    return items
-  }
-
-  private getContextMenuMultipleCommits(): IMenuItem[] {
-    const count = this.props.selectedCommits.length
-
-    return [
-      {
-        label: __DARWIN__
-          ? t(
-              'commit-list-item.cherry-pick-commits-darwin',
-              `Cherry-pick {{0}} Commits…`,
-              { 0: count }
-            )
-          : t(
-              'commit-list-item.cherry-pick-commits',
-              `Cherry-pick {{0}} commits…`,
-              { 0: count }
-            ),
-        action: this.onCherryPick,
-        enabled: this.canCherryPick(),
-      },
-      {
-        label: __DARWIN__
-          ? t(
-              'commit-list-item.squash-commits-darwin',
-              `Squash {{0}} Commits…`,
-              { 0: count }
-            )
-          : t('commit-list-item.squash-commits', `Squash {{0}} commits…`, {
-              0: count,
-            }),
-        action: this.onSquash,
-        enabled: this.canSquash(),
-      },
-    ]
-  }
-
-  private isDraggable(): boolean {
-    const { onCherryPick, onSquash, isMultiCommitOperationInProgress } =
-      this.props
-    return (
-      (onCherryPick !== undefined || onSquash !== undefined) &&
-      isMultiCommitOperationInProgress === false
-    )
-  }
-
-  private canCherryPick(): boolean {
-    const { onCherryPick, isMultiCommitOperationInProgress } = this.props
-    return (
-      onCherryPick !== undefined && isMultiCommitOperationInProgress === false
-    )
-  }
-
-  private canSquash(): boolean {
-    const { onSquash, disableSquashing, isMultiCommitOperationInProgress } =
-      this.props
-    return (
-      onSquash !== undefined &&
-      disableSquashing === false &&
-      isMultiCommitOperationInProgress === false
-    )
-  }
-
-  private getDeleteTagsMenuItem(): IMenuItem | null {
-    const { unpushedTags, onDeleteTag, commit } = this.props
-
-    if (
-      onDeleteTag === undefined ||
-      unpushedTags === undefined ||
-      commit.tags.length === 0
-    ) {
-      return null
-    }
-
-    if (commit.tags.length === 1) {
-      const tagName = commit.tags[0]
-
-      return {
-        label: t('commit-list-item.detele-tag', `Delete tag {{0}}`, {
-          0: tagName,
-        }),
-        action: () => onDeleteTag(tagName),
-        enabled: unpushedTags.includes(tagName),
-      }
-    }
-
-    // Convert tags to a Set to avoid O(n^2)
-    const unpushedTagsSet = new Set(unpushedTags)
-
-    return {
-      label: t('commit-list-item.confim-detele-tag', 'Delete tag…'),
-      submenu: commit.tags.map(tagName => {
-        return {
-          label: tagName,
-          action: () => onDeleteTag(tagName),
-          enabled: unpushedTagsSet.has(tagName),
-        }
-      }),
-    }
   }
 
   private onDragStart = () => {

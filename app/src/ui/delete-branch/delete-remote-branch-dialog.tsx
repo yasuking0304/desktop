@@ -50,32 +50,36 @@ export class DeleteRemoteBranch extends React.Component<
         onDismissed={this.props.onDismissed}
         disabled={this.state.isDeleting}
         loading={this.state.isDeleting}
+        role="alertdialog"
+        ariaDescribedBy="delete-branch-confirmation-message"
       >
         <DialogContent>
-          <p>
-            {t(
-              'delete-remote-branch-dialog.delete-remote-branch-content-1',
-              'Delete remote branch '
-            )}
-            <Ref>{this.props.branch.name}</Ref>
-            {t(
-              'delete-remote-branch-dialog.delete-remote-branch-content-2',
-              '?'
-            )}
-            <br />
-            {t(
-              'delete-remote-branch-dialog.this-action-cannot-be-undone',
-              'This action cannot be undone.'
-            )}
-          </p>
+          <div id="delete-branch-confirmation-message">
+            <p>
+              {t(
+                'delete-remote-branch-dialog.delete-remote-branch-content-1',
+                'Delete remote branch '
+              )}
+              <Ref>{this.props.branch.name}</Ref>
+              {t(
+                'delete-remote-branch-dialog.delete-remote-branch-content-2',
+                '?'
+              )}
+              <br />
+              {t(
+                'delete-remote-branch-dialog.this-action-cannot-be-undone',
+                'This action cannot be undone.'
+              )}
+            </p>
 
-          <p>
-            {t(
-              'delete-remote-branch-dialog.this-branch-does-not-exist-locally',
-              `This branch does not exist locally. Deleting it may impact
-               others collaborating on this branch.`
-            )}
-          </p>
+            <p>
+              {t(
+                'delete-remote-branch-dialog.this-branch-does-not-exist-locally',
+                `This branch does not exist locally. Deleting it may impact
+                others collaborating on this branch.`
+              )}
+            </p>
+          </div>
         </DialogContent>
         <DialogFooter>
           <OkCancelButtonGroup

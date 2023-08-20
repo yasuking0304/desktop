@@ -1,5 +1,4 @@
-import { pathExists } from '../helpers/linux'
-
+import { pathExists } from '../../ui/lib/path-exists'
 import { IFoundEditor } from './found-editor'
 
 /** Represents an external editor on Linux */
@@ -147,10 +146,6 @@ const editors: ILinuxExternalEditor[] = [
   {
     name: 'Mousepad',
     paths: ['/usr/bin/mousepad'],
-  },
-  {
-    name: 'IntelliJ PhpStorm',
-    paths: ['/snap/bin/phpstorm'],
   },
 ]
 

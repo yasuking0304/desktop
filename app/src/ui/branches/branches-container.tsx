@@ -204,8 +204,10 @@ export class BranchesContainer extends React.Component<
         selectedIndex={this.props.selectedTab}
         allowDragOverSwitching={true}
       >
-        <span>{t('branches-container.branches', 'Branches')}</span>
-        <span className="pull-request-tab">
+        <span id="branches-tab">
+          {t('branches-container.branches', 'Branches')}
+        </span>
+        <span id="pull-requests-tab" className="pull-request-tab">
           {__DARWIN__
             ? t('branches-container.pull-requests-darwin', 'Pull Requests')
             : t('branches-container.pull-requests', 'Pull requests')}
@@ -226,7 +228,27 @@ export class BranchesContainer extends React.Component<
   }
 
   private renderSelectedTab() {
+    const { selectedTab, repository } = this.props
+
+    const ariaLabelledBy =
+      selectedTab === BranchesTab.Branches || !repository.gitHubRepository
+        ? 'branches-tab'
+        : 'pull-requests-tab'
+
+    return (
+      <div
+        role="tabpanel"
+        aria-labelledby={ariaLabelledBy}
+        className="branches-container-panel"
+      >
+        {this.renderSelectedTabContent()}
+      </div>
+    )
+  }
+
+  private renderSelectedTabContent() {
     let tab = this.props.selectedTab
+
     if (!this.props.repository.gitHubRepository) {
       tab = BranchesTab.Branches
     }
@@ -255,7 +277,6 @@ export class BranchesContainer extends React.Component<
             onDeleteBranch={this.props.onDeleteBranch}
           />
         )
-
       case BranchesTab.PullRequests: {
         return this.renderPullRequests()
       }

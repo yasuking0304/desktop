@@ -3,10 +3,9 @@ import { ChildProcess } from 'child_process'
 import * as Darwin from './darwin'
 import * as Win32 from './win32'
 import * as Linux from './linux'
-import { pathExists as pathExistsLinux } from '../helpers/linux'
 import { IFoundShell } from './found-shell'
 import { ShellError } from './error'
-import { pathExists as pathExistsDefault } from '../../ui/lib/path-exists'
+import { pathExists } from '../../ui/lib/path-exists'
 import { t } from 'i18next'
 
 export type Shell = Darwin.Shell | Win32.Shell | Linux.Shell
@@ -74,23 +73,6 @@ export async function findShellOrDefault(shell: Shell): Promise<FoundShell> {
   }
 }
 
-/**
- * Use a platform-specific pathExists based on the platform, to simplify changes
- * to the application logic
- *
- * @param path the location of some program on disk
- *
- * @returns `true` if the path exists on disk, or `false` otherwise
- *
- */
-function pathExists(path: string) {
-  if (__LINUX__) {
-    return pathExistsLinux(path)
-  } else {
-    return pathExistsDefault(path)
-  }
-}
-
 /** Launch the given shell at the path. */
 export async function launchShell(
   shell: FoundShell,
@@ -103,7 +85,7 @@ export async function launchShell(
   const exists = await pathExists(shell.path)
   if (!exists) {
     const label = __DARWIN__
-      ? t('common.preferences', 'Preferences')
+      ? t('common.settings', 'Settings')
       : t('common.options', 'Options')
     throw new ShellError(
       t(
