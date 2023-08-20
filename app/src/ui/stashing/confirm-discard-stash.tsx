@@ -50,9 +50,11 @@ export class ConfirmDiscardStashDialog extends React.Component<
         disabled={this.state.isDiscarding}
         onSubmit={this.onSubmit}
         onDismissed={this.props.onDismissed}
+        role="alertdialog"
+        ariaDescribedBy="discard-stash-warning-message"
       >
         <DialogContent>
-          <Row>
+          <Row id="discard-stash-warning-message">
             {t(
               'confirm-discard-stash.are-you-sure-you-want-to-discard',
               'Are you sure you want to discard these stashed changes?'

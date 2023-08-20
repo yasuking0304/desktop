@@ -44,9 +44,11 @@ export class DeleteTag extends React.Component<
         onDismissed={this.props.onDismissed}
         disabled={this.state.isDeleting}
         loading={this.state.isDeleting}
+        role="alertdialog"
+        ariaDescribedBy="delete-tag-confirmation"
       >
         <DialogContent>
-          <p>
+          <p id="delete-tag-confirmation">
             {t(
               'delete-tag-dialog.are-you-sure-you-want-to-delete-the-tag-1',
               'Are you sure you want to delete the tag '
