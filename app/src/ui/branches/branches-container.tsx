@@ -204,7 +204,9 @@ export class BranchesContainer extends React.Component<
         selectedIndex={this.props.selectedTab}
         allowDragOverSwitching={true}
       >
-        <span id="branches-tab">{t('branches-container.branches', 'Branches')}</span>
+        <span id="branches-tab">
+          {t('branches-container.branches', 'Branches')}
+        </span>
         <span id="pull-requests-tab" className="pull-request-tab">
           {__DARWIN__
             ? t('branches-container.pull-requests-darwin', 'Pull Requests')

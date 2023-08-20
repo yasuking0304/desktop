@@ -32,10 +32,16 @@ export class GitEmailNotFoundWarning extends React.Component<IGitEmailNotFoundWa
 
     const learnMore = !isAttributableEmail ? (
       <LinkButton
-        ariaLabel="Learn more about commit attribution"
-        uri="https://docs.github.com/en/github/committing-changes-to-your-project/why-are-my-commits-linked-to-the-wrong-user"
+        ariaLabel={t(
+          'git-email-not-found-warning.learn-more-about',
+          'Learn more about commit attribution'
+        )}
+        uri={t(
+          'url.why-are-my-commits-linked-to-the-wrong-user',
+          'https://docs.github.com/en/github/committing-changes-to-your-project/why-are-my-commits-linked-to-the-wrong-user'
+        )}
       >
-        Learn more.
+        {t('git-email-not-found-warning.learn-more', 'Learn more.')}
       </LinkButton>
     ) : null
 

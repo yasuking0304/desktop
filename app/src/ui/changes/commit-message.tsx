@@ -1064,7 +1064,7 @@ export class CommitMessage extends React.Component<
             <>
               . Want to{' '}
               <LinkButton onClick={this.onSwitchBranch}>
-                switch branches
+                {t('commit-message.link-switch-branches', 'switch branches')}
               </LinkButton>
               ?
             </>
@@ -1091,7 +1091,7 @@ export class CommitMessage extends React.Component<
             <>
               . Want to{' '}
               <LinkButton onClick={this.onSwitchBranch}>
-                switch branches
+                {t('commit-message.link-switch-branches', 'switch branches')}
               </LinkButton>
               ?
             </>

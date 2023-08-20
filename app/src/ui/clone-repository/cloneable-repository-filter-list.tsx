@@ -183,10 +183,10 @@ export class CloneableRepositoryFilterList extends React.PureComponent<ICloneabl
       renderNoItems: this.renderNoItems,
       renderPostFilter: this.renderPostFilter,
       onItemClick: this.props.onItemClicked ? this.onItemClick : undefined,
-      placeholderText={t(
+      placeholderText: t(
         'cloneable-repository-filter-list.placeholder-filter-repositories',
         'Filter your repositories'
-      )},
+      ),
       getGroupAriaLabel,
     }
 
@@ -221,7 +221,15 @@ export class CloneableRepositoryFilterList extends React.PureComponent<ICloneabl
   }
 
   private getYourRepositoriesLabel = () => {
-    return __DARWIN__ ? 'Your Repositories' : 'Your repositories'
+    return __DARWIN__
+      ? t(
+          'cloneable-repository-filter-list.your-repositories_darwin',
+          'Your Repositories'
+        )
+      : t(
+          'cloneable-repository-filter-list.your-repositories',
+          'Your repositories'
+        )
   }
 
   private renderGroupHeader = (identifier: string) => {
@@ -256,7 +264,7 @@ export class CloneableRepositoryFilterList extends React.PureComponent<ICloneabl
       'cloneable-repository-filter-list.tooltip-refresh-list',
       'Refresh the list of repositories'
     )
-  
+
     return (
       <Button
         disabled={this.props.loading}

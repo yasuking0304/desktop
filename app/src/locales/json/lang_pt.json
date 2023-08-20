@@ -244,6 +244,12 @@
     "one-commit": "commit",
     "squash-number-commit": "Squash {{0}} commits"
   },
+  "commit-list": {
+    "copy-tag": "Copy Tag",
+    "copy-tags": "Copy Tags",
+    "view-on-github": "View on GitHub",
+    "view-on-github-enterprise": "View on GitHub Enterprise"
+  },
   "commit-list-item": {
     "amend-commit": "Amend commit…",
     "amend-commit-darwin": "Amend Commit…",
@@ -265,9 +271,7 @@
     "squash-commits": "Squash {{0}} commits…",
     "squash-commits-darwin": "Squash {{0}} Commits…",
     "undo-commit": "Undo commit…",
-    "undo-commit-darwin": "Undo Commit…",
-    "view-on-github": "View on GitHub",
-    "view-on-github-enterprise": "View on GitHub Enterprise"
+    "undo-commit-darwin": "Undo Commit…"
   },
   "commit-message": {
     "add-co-authors": "Add co-authors",
@@ -306,18 +310,15 @@
   },
   "commit-message-avatar": {
     "ignore": "Ignore",
-    "learn-more": "Learn more.",
     "repository-settings": "repository settings",
     "update-email": "Update email",
     "update-email-1": "The email in your global Git config (",
-    "update-email-2": ") doesn't match your GitHub{{0}} account. ",
     "update-email-darwin": "Update Email",
     "you-can-also-choose-an-email-1": "You can also choose an email local to this repository from the ",
     "you-can-also-choose-an-email-2": "."
   },
   "commit-summary": {
     "collapse": "Collapse",
-    "diff-options": "Diff Options",
     "empty-commit-message": "Empty commit message",
     "expand": "Expand",
     "file": "file",
@@ -572,7 +573,7 @@
     "delete-remote-branch-content-2": "?",
     "delete-remote-branch-darwin": "Delete Remote Branch",
     "this-action-cannot-be-undone": "This action cannot be undone.",
-    "this-branch-does-not-exist-locally": "This branch does not exist locally. Deleting it may impact\n               others collaborating on this branch."
+    "this-branch-does-not-exist-locally": "This branch does not exist locally. Deleting it may impact\n                others collaborating on this branch."
   },
   "delete-tag-dialog": {
     "are-you-sure-you-want-to-delete-the-tag-1": "Are you sure you want to delete the tag ",
@@ -695,13 +696,9 @@
     "use-my-global-git-config": "Use my global Git config"
   },
   "git-email-not-found-warning": {
-    "does-not-match": "does not match",
     "edither-your-account": "either of your GitHub.com nor GitHub Enterprise accounts",
     "learn-more": "Learn more.",
     "learn-more-about": "Learn more about commit attribution",
-    "matchs": "matches",
-    "this-email-address": "This email address {{0}} {{1}}. ",
-    "will-be-wrongly-attributed": "Your commits will be wrongly attributed. ",
     "your-account": "your {{0}} account"
   },
   "git-ignore": {
@@ -1357,7 +1354,6 @@
     "open-in": "Open in {{0}}",
     "restore": "Restore",
     "stashed-changes": "Stashed changes",
-    "unable-to-restore-stash": "Unable to restore stash when changes are present on your branch.",
     "will-move-your-stashed-files": " will move your stashed files to the Changes list."
   },
   "status": {
@@ -1474,7 +1470,6 @@
     "would-you-like-to-update": "Would you like to update the remote to use the expected URL?"
   },
   "url": {
-    "commit-message-avatar": "https://docs.github.com/en/github/committing-changes-to-your-project/why-are-my-commits-linked-to-the-wrong-user",
     "keyboard-shortcuts": "https://docs.github.com/en/desktop/installing-and-configuring-github-desktop/overview/keyboard-shortcuts",
     "show-user-guides": "https://docs.github.com/en/desktop",
     "why-are-my-commits-linked-to-the-wrong-user": "https://docs.github.com/en/github/committing-changes-to-your-project/why-are-my-commits-linked-to-the-wrong-user"
