@@ -21,11 +21,6 @@ interface IRefNameProps {
   readonly label?: string | JSX.Element
 
   /**
-   * The placeholder of the text box.
-   */
-  readonly placeholder?: string
-
-  /**
    * The aria-describedby attribute for the text box.
    */
   readonly ariaDescribedBy?: string
@@ -55,6 +50,11 @@ interface IRefNameProps {
    * A sanitized value for the ref name is passed.
    */
   readonly onBlur?: (sanitizedValue: string) => void
+
+  /**
+   * The placeholder of the text box.
+   */
+  readonly placeholder?: string
 }
 
 interface IRefNameState {

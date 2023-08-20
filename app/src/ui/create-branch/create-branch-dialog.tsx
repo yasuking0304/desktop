@@ -33,10 +33,9 @@ import { debounce } from 'lodash'
 import { API, APIRepoRuleType, IAPIRepoRuleset } from '../../lib/api'
 import { Account } from '../../models/account'
 import { getAccountForRepository } from '../../lib/get-account-for-repository'
-import { supportsRepoRules } from '../../lib/endpoint-capabilities'
-import { enableRepoRules } from '../../lib/feature-flag'
 import { InputError } from '../lib/input-description/input-error'
 import { InputWarning } from '../lib/input-description/input-warning'
+import { useRepoRulesLogic } from '../../lib/helpers/repo-rules'
 
 interface ICreateBranchProps {
   readonly repository: Repository
@@ -124,9 +123,7 @@ export class CreateBranch extends React.Component<
       this.props.accounts.length === 0 ||
       this.props.upstreamGitHubRepository === null ||
       branchName === '' ||
-      this.state.currentError !== null ||
-      !enableRepoRules() ||
-      !supportsRepoRules(this.props.upstreamGitHubRepository.endpoint)
+      this.state.currentError !== null
     ) {
       return
     }
@@ -136,7 +133,10 @@ export class CreateBranch extends React.Component<
       this.props.repository
     )
 
-    if (account === null) {
+    if (
+      account === null ||
+      !useRepoRulesLogic(account, this.props.repository)
+    ) {
       return
     }
 
@@ -168,7 +168,7 @@ export class CreateBranch extends React.Component<
     for (const id of toCheckForBypass) {
       const rs = this.props.cachedRepoRulesets.get(id)
 
-      if (!rs?.current_user_can_bypass) {
+      if (rs?.current_user_can_bypass !== 'always') {
         // the user cannot bypass, so stop checking
         cannotBypass = true
         break

@@ -142,8 +142,8 @@ export class DiffOptions extends React.Component<
 
   private renderShowSideBySide() {
     return (
-      <section>
-        <h4>{t('diff-options.diff-display', 'Diff display')}</h4>
+      <fieldset role="radiogroup">
+        <legend>{t('diff-options.diff-display', 'Diff display')}</legend>
         <RadioButton
           value="Unified"
           checked={!this.props.showSideBySideDiff}
@@ -160,7 +160,7 @@ export class DiffOptions extends React.Component<
           }
           onSelected={this.onSideBySideSelected}
         />
-      </section>
+      </fieldset>
     )
   }
 

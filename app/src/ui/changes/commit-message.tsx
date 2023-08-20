@@ -55,8 +55,8 @@ import {
 import { RepoRulesetsForBranchLink } from '../repository-rules/repo-rulesets-for-branch-link'
 import { RepoRulesMetadataFailureList } from '../repository-rules/repo-rules-failure-list'
 import { Dispatcher } from '../dispatcher'
-import { enableRepoRules } from '../../lib/feature-flag'
 import { formatCommitMessage } from '../../lib/format-commit-message'
+import { useRepoRulesLogic } from '../../lib/helpers/repo-rules'
 
 const addAuthorIcon = {
   w: 18,
@@ -176,6 +176,8 @@ interface ICommitMessageState {
 
   readonly isCommittingStatusMessage: string
 
+  readonly repoRulesEnabled: boolean
+
   readonly isRuleFailurePopoverOpen: boolean
 
   readonly repoRuleCommitMessageFailures: RepoRulesMetadataFailures
@@ -232,6 +234,7 @@ export class CommitMessage extends React.Component<
       ),
       descriptionObscured: false,
       isCommittingStatusMessage: '',
+      repoRulesEnabled: false,
       isRuleFailurePopoverOpen: false,
       repoRuleCommitMessageFailures: new RepoRulesMetadataFailures(),
       repoRuleCommitAuthorFailures: new RepoRulesMetadataFailures(),
@@ -353,7 +356,20 @@ export class CommitMessage extends React.Component<
     prevState?: ICommitMessageState,
     forceUpdate: boolean = false
   ) {
-    if (!enableRepoRules()) {
+    let repoRulesEnabled = this.state.repoRulesEnabled
+    if (
+      forceUpdate ||
+      prevProps?.repository !== this.props.repository ||
+      prevProps?.repositoryAccount !== this.props.repositoryAccount
+    ) {
+      repoRulesEnabled = useRepoRulesLogic(
+        this.props.repositoryAccount,
+        this.props.repository
+      )
+      this.setState({ repoRulesEnabled })
+    }
+
+    if (!repoRulesEnabled) {
       return
     }
 
@@ -566,15 +582,19 @@ export class CommitMessage extends React.Component<
    * Whether the user will be prevented from pushing this commit due to a repo rule failure.
    */
   private hasRepoRuleFailure(): boolean {
-    if (!enableRepoRules()) {
+    const { aheadBehind, repoRulesInfo } = this.props
+
+    if (!this.state.repoRulesEnabled) {
       return false
     }
 
     return (
+      repoRulesInfo.basicCommitWarning === true ||
+      repoRulesInfo.pullRequestRequired === true ||
       this.state.repoRuleCommitMessageFailures.status === 'fail' ||
       this.state.repoRuleCommitAuthorFailures.status === 'fail' ||
-      (this.props.aheadBehind === null &&
-        (this.props.repoRulesInfo.creationRestricted === true ||
+      (aheadBehind === null &&
+        (repoRulesInfo.creationRestricted === true ||
           this.state.repoRuleBranchNameFailures.status === 'fail'))
     )
   }
@@ -586,7 +606,7 @@ export class CommitMessage extends React.Component<
   private shouldWarnForRepoRuleBypass(): boolean {
     const { aheadBehind, branch, repoRulesInfo } = this.props
 
-    if (!enableRepoRules()) {
+    if (!this.state.repoRulesEnabled) {
       return false
     }
 
@@ -652,7 +672,7 @@ export class CommitMessage extends React.Component<
     let warningType: CommitMessageAvatarWarningType = 'none'
     if (email !== undefined) {
       if (
-        enableRepoRules() &&
+        this.state.repoRulesEnabled &&
         this.state.repoRuleCommitAuthorFailures.status !== 'pass'
       ) {
         warningType = 'disallowedEmail'
@@ -946,13 +966,13 @@ export class CommitMessage extends React.Component<
       branch,
     } = this.props
 
-    const { repoRuleBranchNameFailures } = this.state
+    const { repoRuleBranchNameFailures, repoRulesEnabled } = this.state
 
     // if one of these is not bypassable, then a failure message needs to be shown rather than just displaying
     // the first one in the if statement.
     let repoRuleWarningToDisplay: 'publish' | 'basic' | null = null
 
-    if (enableRepoRules()) {
+    if (repoRulesEnabled) {
       let publishStatus: RepoRuleEnforced = false
       const basicStatus = repoRulesInfo.basicCommitWarning
 
@@ -1044,7 +1064,7 @@ export class CommitMessage extends React.Component<
             <>
               . Want to{' '}
               <LinkButton onClick={this.onSwitchBranch}>
-                switch branches
+                {t('commit-message.link-switch-branches', 'switch branches')}
               </LinkButton>
               ?
             </>
@@ -1071,7 +1091,7 @@ export class CommitMessage extends React.Component<
             <>
               . Want to{' '}
               <LinkButton onClick={this.onSwitchBranch}>
-                switch branches
+                {t('commit-message.link-switch-branches', 'switch branches')}
               </LinkButton>
               ?
             </>
@@ -1093,7 +1113,7 @@ export class CommitMessage extends React.Component<
     if (
       !branch ||
       !repository.gitHubRepository ||
-      !enableRepoRules() ||
+      !this.state.repoRulesEnabled ||
       this.state.repoRuleCommitMessageFailures.status === 'pass'
     ) {
       return
@@ -1333,9 +1353,8 @@ export class CommitMessage extends React.Component<
       'with-overflow': this.state.descriptionObscured,
     })
 
-    // both of these are calculated, but only the repo rule icon is displayed if both are true, see below
     const showRepoRuleCommitMessageFailureHint =
-      enableRepoRules() &&
+      this.state.repoRulesEnabled &&
       this.state.repoRuleCommitMessageFailures.status !== 'pass'
 
     const showSummaryLengthHint =

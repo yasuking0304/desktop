@@ -50,6 +50,8 @@ export class DeleteBranch extends React.Component<
         onDismissed={this.props.onDismissed}
         disabled={this.state.isDeleting}
         loading={this.state.isDeleting}
+        role="alertdialog"
+        ariaDescribedBy="delete-branch-confirmation-message delete-branch-confirmation-message-remote"
       >
         <DialogContent>
           <p>
@@ -82,7 +84,7 @@ export class DeleteBranch extends React.Component<
     if (this.props.branch.upstreamRemoteName && this.props.existsOnRemote) {
       return (
         <div>
-          <p>
+          <p id="delete-branch-confirmation-message-remote">
             <strong>
               {t(
                 'delete-branch-dialog.branch-also-exists-on-the-remote',

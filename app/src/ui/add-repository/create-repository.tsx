@@ -537,7 +537,7 @@ export class CreateRepository extends React.Component<
     )
   }
 
-  private renderGitRepositoryWarning() {
+  private renderGitRepositoryError() {
     const isRepo = this.state.isRepository
 
     if (!this.state.path || this.state.path.length === 0 || !isRepo) {
@@ -545,7 +545,7 @@ export class CreateRepository extends React.Component<
     }
 
     return (
-      <Row>
+      <Row className="warning-helper-text">
         <InputError
           id="existing-repository-path-error"
           trackedUserInput={this.state.path + this.state.name}
@@ -579,7 +579,7 @@ export class CreateRepository extends React.Component<
     }
 
     return (
-      <Row>
+      <Row className="warning-helper-text">
         <InputWarning
           id="readme-overwrite-warning"
           trackedUserInput={this.state.createWithReadme}
@@ -686,7 +686,7 @@ export class CreateRepository extends React.Component<
             </Button>
           </Row>
 
-          {this.renderGitRepositoryWarning()}
+          {this.renderGitRepositoryError()}
 
           <Row>
             <Checkbox

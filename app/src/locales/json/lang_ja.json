@@ -213,6 +213,7 @@
     "looks-like-no-repositories-1": "{{0}} 上に ",
     "looks-like-no-repositories-2": " のリポジトリが見つかりません。",
     "no-match": "申し訳ありませんが、一致するリポジトリが見つかりません :",
+    "placeholder-filter-repositories": "リポジトリのフィルタ",
     "refresh-this-list": "リストの更新",
     "tooltip-refresh-list": "リポジトリのリストを更新します",
     "your-repositories": "リポジトリ",
@@ -292,7 +293,11 @@
     "enable-commit-spellcheck": "コミットスペルチェックを有効にする",
     "enable-commit-spellcheck-darwin": "コミットスペルチェックを有効にする",
     "link-create-a-fork": "フォークの作成",
+    "link-switch-branches": "ブランチの切り替え",
     "please-information-description-field": "説明フィールドに追加情報を入力します。",
+    "protected-branch-1": " ",
+    "protected-branch-2": " は保護されたブランチです。",
+    "protected-branch-3": "をしますか?",
     "remove-co-authors": "共同作業者の削除",
     "remove-co-authors-darwin": "共同作業者の削除",
     "select-one-or-more-files-to-commit": "コミットするファイルを 1つ以上選択してください",
@@ -653,7 +658,7 @@
     "new-branches-2": " のデフォルトブランチになります。",
     "pull-requests-targeting-1": " ",
     "pull-requests-targeting-2": " をターゲットとするプルリクエストは、プルリクエストリストに表示されます。",
-    "view-on-gitgub-1": "\"View on Github\" でブラウザで開かれるリポジトリは ",
+    "view-on-gitgub-1": "\"Github で確認\" でブラウザで開かれるリポジトリは ",
     "view-on-gitgub-2": " となります。"
   },
   "fork-settings": {
