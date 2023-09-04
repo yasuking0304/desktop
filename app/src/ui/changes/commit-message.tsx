@@ -590,6 +590,7 @@ export class CommitMessage extends React.Component<
 
     return (
       repoRulesInfo.basicCommitWarning === true ||
+      repoRulesInfo.signedCommitsRequired === true ||
       repoRulesInfo.pullRequestRequired === true ||
       this.state.repoRuleCommitMessageFailures.status === 'fail' ||
       this.state.repoRuleCommitAuthorFailures.status === 'fail' ||
@@ -616,6 +617,7 @@ export class CommitMessage extends React.Component<
 
     if (
       repoRulesInfo.basicCommitWarning === 'bypass' ||
+      repoRulesInfo.signedCommitsRequired === 'bypass' ||
       repoRulesInfo.pullRequestRequired === 'bypass'
     ) {
       return true
@@ -757,7 +759,7 @@ export class CommitMessage extends React.Component<
         onAuthorsUpdated={this.onCoAuthorsUpdated}
         authors={this.props.coAuthors}
         autoCompleteProvider={autocompletionProvider}
-        disabled={this.props.isCommitting === true}
+        readOnly={this.props.isCommitting === true}
       />
     )
   }
@@ -968,38 +970,56 @@ export class CommitMessage extends React.Component<
 
     const { repoRuleBranchNameFailures, repoRulesEnabled } = this.state
 
-    // if one of these is not bypassable, then a failure message needs to be shown rather than just displaying
-    // the first one in the if statement.
-    let repoRuleWarningToDisplay: 'publish' | 'basic' | null = null
+    // if one of these is not bypassable, then that failure message needs to be shown rather than
+    // just displaying the first one in the if statement below
+    type WarningToDisplay = 'publish' | 'commitSigning' | 'basic' | null
+    const ruleEnforcementStatuses = new Map<
+      Exclude<WarningToDisplay, null>,
+      RepoRuleEnforced
+    >()
+
+    let repoRuleWarningToDisplay: WarningToDisplay = null
 
     if (repoRulesEnabled) {
-      let publishStatus: RepoRuleEnforced = false
-      const basicStatus = repoRulesInfo.basicCommitWarning
-
+      // has the current branch has been published?
       if (aheadBehind === null && branch !== null) {
         if (
           repoRulesInfo.creationRestricted === true ||
           repoRuleBranchNameFailures.status === 'fail'
         ) {
-          publishStatus = true
+          ruleEnforcementStatuses.set('publish', true)
         } else if (
           repoRulesInfo.creationRestricted === 'bypass' ||
           repoRuleBranchNameFailures.status === 'bypass'
         ) {
-          publishStatus = 'bypass'
+          ruleEnforcementStatuses.set('publish', 'bypass')
         } else {
-          publishStatus = false
+          ruleEnforcementStatuses.set('publish', false)
         }
       }
 
-      if (publishStatus === true && basicStatus) {
-        repoRuleWarningToDisplay = 'publish'
-      } else if (basicStatus === true) {
-        repoRuleWarningToDisplay = 'basic'
-      } else if (publishStatus) {
-        repoRuleWarningToDisplay = 'publish'
-      } else if (basicStatus) {
-        repoRuleWarningToDisplay = 'basic'
+      ruleEnforcementStatuses.set(
+        'commitSigning',
+        repoRulesInfo.signedCommitsRequired
+      )
+      ruleEnforcementStatuses.set('basic', repoRulesInfo.basicCommitWarning)
+
+      // grab the first error to display
+      for (const status of ruleEnforcementStatuses) {
+        if (status[1] === true) {
+          repoRuleWarningToDisplay = status[0]
+          break
+        }
+      }
+
+      // if none errored, display the first bypassed
+      if (repoRuleWarningToDisplay === null) {
+        for (const status of ruleEnforcementStatuses) {
+          if (status[1] === 'bypass') {
+            repoRuleWarningToDisplay = status[0]
+            break
+          }
+        }
       }
     }
 
@@ -1042,10 +1062,7 @@ export class CommitMessage extends React.Component<
         </CommitWarning>
       )
     } else if (repoRuleWarningToDisplay === 'publish') {
-      const canBypass = !(
-        repoRulesInfo.creationRestricted === true ||
-        this.state.repoRuleBranchNameFailures.status === 'fail'
-      )
+      const canBypass = ruleEnforcementStatuses.get('publish') === 'bypass'
 
       return (
         <CommitWarning
@@ -1069,6 +1086,28 @@ export class CommitMessage extends React.Component<
               ?
             </>
           )}
+        </CommitWarning>
+      )
+    } else if (repoRuleWarningToDisplay === 'commitSigning') {
+      const canBypass = repoRulesInfo.signedCommitsRequired === 'bypass'
+
+      return (
+        <CommitWarning
+          icon={canBypass ? CommitWarningIcon.Warning : CommitWarningIcon.Error}
+        >
+          <RepoRulesetsForBranchLink
+            repository={repository.gitHubRepository}
+            branch={branch}
+          >
+            One or more rules
+          </RepoRulesetsForBranchLink>{' '}
+          apply to the branch <strong>{branch}</strong> that require signed
+          commits
+          {canBypass && ', but you can bypass them. Proceed with caution!'}
+          {!canBypass && '.'}{' '}
+          <LinkButton uri="https://docs.github.com/authentication/managing-commit-signature-verification/signing-commits">
+            Learn more about commit signing.
+          </LinkButton>
         </CommitWarning>
       )
     } else if (repoRuleWarningToDisplay === 'basic') {
@@ -1400,7 +1439,7 @@ export class CommitMessage extends React.Component<
             }
             aria-describedby={ariaDescribedBy}
             onContextMenu={this.onAutocompletingInputContextMenu}
-            disabled={isCommitting === true}
+            readOnly={isCommitting === true}
             spellcheck={commitSpellcheckEnabled}
           />
           {showRepoRuleCommitMessageFailureHint &&
@@ -1430,7 +1469,7 @@ export class CommitMessage extends React.Component<
             ref={this.onDescriptionFieldRef}
             onElementRef={this.onDescriptionTextAreaRef}
             onContextMenu={this.onAutocompletingInputContextMenu}
-            disabled={isCommitting === true}
+            readOnly={isCommitting === true}
             spellcheck={commitSpellcheckEnabled}
           />
           {this.renderActionBar()}
