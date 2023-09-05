@@ -821,7 +821,7 @@ export class NoChanges extends React.Component<
         `Preview the Pull Request from your current branch`
       ),
       label: t('no-changes.preview-pull-request', 'Preview Pull Request'),
-    description: (
+      description: (
         <>
           {t('no-changes.preview-pull-request-1', 'The current branch (')}
           <Ref>{tip.branch.name}</Ref>
