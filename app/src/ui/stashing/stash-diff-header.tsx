@@ -50,8 +50,9 @@ export class StashDiffHeader extends React.Component<
             cancelButtonText={t('stash-diff-header.discard', 'Discard')}
             cancelButtonDisabled={isRestoring || isDiscarding}
             onCancelButtonClick={this.onDiscardClick}
+            okButtonAriaDescribedBy="restore-description"
           />
-          <div className="explanatory-text">
+          <div className="explanatory-text" id="restore-description">
             <span className="text">
               <strong>{t('stash-diff-header.restore', 'Restore')}</strong>
               {t(
