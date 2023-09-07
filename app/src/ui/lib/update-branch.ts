@@ -8,9 +8,7 @@ import { Repository } from '../../models/repository'
 import { IDropdownSelectButtonOption } from '../dropdown-select-button'
 import { t } from 'i18next'
 
-export function getMergeOptions(): ReadonlyArray<
-  IDropdownSelectButtonOption<MultiCommitOperationKind>
-> {
+export function getMergeOptions(): ReadonlyArray<IDropdownSelectButtonOption> {
   return [
     {
       label: t('update-branch.create-a-merge-commit', 'Create a merge commit'),
@@ -19,7 +17,7 @@ export function getMergeOptions(): ReadonlyArray<
         `The commits from the selected branch will be added to the
            current branch via a merge commit.`
       ),
-      value: MultiCommitOperationKind.Merge,
+      id: MultiCommitOperationKind.Merge,
     },
     {
       label: t('update-branch.squash-and-merge', 'Squash and merge'),
@@ -28,7 +26,7 @@ export function getMergeOptions(): ReadonlyArray<
         `The commits in the selected branch will be combined into one commit
           in the current branch.`
       ),
-      value: MultiCommitOperationKind.Squash,
+      id: MultiCommitOperationKind.Squash,
     },
     {
       label: t('update-branch.rebase', 'Rebase'),
@@ -37,7 +35,7 @@ export function getMergeOptions(): ReadonlyArray<
         `The commits from the selected branch will be rebased and added to the
          current branch.`
       ),
-      value: MultiCommitOperationKind.Rebase,
+      id: MultiCommitOperationKind.Rebase,
     },
   ]
 }
