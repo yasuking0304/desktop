@@ -1150,8 +1150,8 @@ export class TextDiff extends React.Component<ITextDiffProps, ITextDiffState> {
     marker.appendChild(hunkHandle)
 
     if (this.canExpandDiff()) {
-      const hunkExpandUpHandle = document.createElement('div')
-      hunkExpandUpHandle.classList.add('hunk-expand-up-handle')
+      const hunkExpandUpHandle = document.createElement('button')
+      hunkExpandUpHandle.classList.add('hunk-expander', 'hunk-expand-up-handle')
       hunkExpandUpHandle.title = t('text-diff.expand-up', 'Expand Up')
       hunkExpandUpHandle.addEventListener(
         'click',
@@ -1163,8 +1163,11 @@ export class TextDiff extends React.Component<ITextDiffProps, ITextDiffState> {
         createOcticonElement(OcticonSymbol.foldUp, 'hunk-expand-icon')
       )
 
-      const hunkExpandDownHandle = document.createElement('div')
-      hunkExpandDownHandle.classList.add('hunk-expand-down-handle')
+      const hunkExpandDownHandle = document.createElement('button')
+      hunkExpandDownHandle.classList.add(
+        'hunk-expander',
+        'hunk-expand-down-handle'
+      )
       hunkExpandDownHandle.title = t('text-diff.expand-down', 'Expand Down')
       hunkExpandDownHandle.addEventListener(
         'click',
@@ -1176,8 +1179,11 @@ export class TextDiff extends React.Component<ITextDiffProps, ITextDiffState> {
         createOcticonElement(OcticonSymbol.foldDown, 'hunk-expand-icon')
       )
 
-      const hunkExpandWholeHandle = document.createElement('div')
-      hunkExpandWholeHandle.classList.add('hunk-expand-whole-handle')
+      const hunkExpandWholeHandle = document.createElement('button')
+      hunkExpandWholeHandle.classList.add(
+        'hunk-expander',
+        'hunk-expand-whole-handle'
+      )
       hunkExpandWholeHandle.title = t('text-diff.expand-whole', 'Expand whole')
       hunkExpandWholeHandle.addEventListener(
         'click',
