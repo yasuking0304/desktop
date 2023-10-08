@@ -6,6 +6,7 @@ import { Octicon } from './octicons'
 import * as OcticonSymbol from './octicons/octicons.generated'
 import { UiView } from './ui-view'
 import { t } from 'i18next'
+import { TooltippedContent } from './lib/tooltipped-content'
 
 interface ICloningRepositoryProps {
   readonly repository: CloningRepository
@@ -33,9 +34,13 @@ export class CloningRepositoryView extends React.Component<
           </div>
         </div>
         <progress value={progressValue} />
-        <div title={this.props.progress.description} className="details">
+        <TooltippedContent
+          tagName="div"
+          className="details"
+          tooltip={this.props.progress.description}
+        >
           {this.props.progress.description}
-        </div>
+        </TooltippedContent>
       </UiView>
     )
   }

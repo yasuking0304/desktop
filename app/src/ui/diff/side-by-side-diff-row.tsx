@@ -20,6 +20,12 @@ import { TooltipDirection } from '../lib/tooltip'
 import { t } from 'i18next'
 import { Button } from '../lib/button'
 
+enum DiffRowPrefix {
+  Added = '+',
+  Deleted = '-',
+  Nothing = '\u{A0}',
+}
+
 interface ISideBySideDiffRowProps {
   /**
    * The row data. This contains most of the information used to render the row.
@@ -220,7 +226,7 @@ export class SideBySideDiffRow extends React.Component<
                   isSelected
                 )}
                 {this.renderHunkHandle()}
-                {this.renderContent(row.data)}
+                {this.renderContent(row.data, DiffRowPrefix.Added)}
                 {this.renderWhitespaceHintPopover(DiffColumn.After)}
               </div>
             </div>
@@ -236,7 +242,7 @@ export class SideBySideDiffRow extends React.Component<
             </div>
             <div className={afterClasses}>
               {this.renderLineNumber(lineNumber, DiffColumn.After, isSelected)}
-              {this.renderContent(row.data)}
+              {this.renderContent(row.data, DiffRowPrefix.Added)}
               {this.renderWhitespaceHintPopover(DiffColumn.After)}
             </div>
             {this.renderHunkHandle()}
@@ -258,7 +264,7 @@ export class SideBySideDiffRow extends React.Component<
                   isSelected
                 )}
                 {this.renderHunkHandle()}
-                {this.renderContent(row.data)}
+                {this.renderContent(row.data, DiffRowPrefix.Deleted)}
                 {this.renderWhitespaceHintPopover(DiffColumn.Before)}
               </div>
             </div>
@@ -272,12 +278,12 @@ export class SideBySideDiffRow extends React.Component<
           >
             <div className={beforeClasses}>
               {this.renderLineNumber(lineNumber, DiffColumn.Before, isSelected)}
-              {this.renderContent(row.data)}
+              {this.renderContent(row.data, DiffRowPrefix.Deleted)}
               {this.renderWhitespaceHintPopover(DiffColumn.Before)}
             </div>
             <div className={afterClasses}>
               {this.renderLineNumber(undefined, DiffColumn.After)}
-              {this.renderContentFromString('')}
+              {this.renderContentFromString('', [])}
               {this.renderWhitespaceHintPopover(DiffColumn.After)}
             </div>
             {this.renderHunkHandle()}
@@ -297,7 +303,7 @@ export class SideBySideDiffRow extends React.Component<
                 DiffColumn.Before,
                 before.isSelected
               )}
-              {this.renderContent(before)}
+              {this.renderContent(before, DiffRowPrefix.Deleted)}
               {this.renderWhitespaceHintPopover(DiffColumn.Before)}
             </div>
             <div
@@ -309,7 +315,7 @@ export class SideBySideDiffRow extends React.Component<
                 DiffColumn.After,
                 after.isSelected
               )}
-              {this.renderContent(after)}
+              {this.renderContent(after, DiffRowPrefix.Added)}
               {this.renderWhitespaceHintPopover(DiffColumn.After)}
             </div>
             {this.renderHunkHandle()}
@@ -339,23 +345,28 @@ export class SideBySideDiffRow extends React.Component<
 
   private renderContentFromString(
     content: string,
-    tokens: ReadonlyArray<ILineTokens> = []
+    tokens: ReadonlyArray<ILineTokens> = [],
+    prefix: DiffRowPrefix = DiffRowPrefix.Nothing
   ) {
     return this.renderContent({ content, tokens, noNewLineIndicator: false })
   }
 
   private renderContent(
-    data: Pick<IDiffRowData, 'content' | 'noNewLineIndicator' | 'tokens'>
+    data: Pick<IDiffRowData, 'content' | 'noNewLineIndicator' | 'tokens'>,
+    prefix: DiffRowPrefix = DiffRowPrefix.Nothing
   ) {
     return (
       <div className="content" onContextMenu={this.props.onContextMenuText}>
-        {syntaxHighlightLine(data.content, data.tokens)}
-        {data.noNewLineIndicator && (
-          <Octicon
-            symbol={narrowNoNewlineSymbol}
-            title="No newline at end of file"
-          />
-        )}
+        <div className="prefix">&nbsp;&nbsp;{prefix}&nbsp;&nbsp;</div>
+        <div className="content-wrapper">
+          {syntaxHighlightLine(data.content, data.tokens)}
+          {data.noNewLineIndicator && (
+            <Octicon
+              symbol={narrowNoNewlineSymbol}
+              title="No newline at end of file"
+            />
+          )}
+        </div>
       </div>
     )
   }
