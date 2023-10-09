@@ -30,12 +30,13 @@
     "add-repository-darwin": "Add Repository"
   },
   "advanced": {
-    "allows-the-display-of-up-to-date-status-indicators": "Allows the display of up-to-date status indicators in the\n              repository list. Disabling this may improve performance\n              with many repositories.",
     "background-updates": "Background updates",
     "help-github-desktop-improve-by-submitting-1": "Help GitHub Desktop improve by submitting ",
     "help-github-desktop-improve-by-submitting-2": " ",
-    "periodically-fetch-and-refresh-status": "Periodically fetch and refresh status of all repositories",
+    "show-status-icons-in-the-repository-list": "Show status icons in the repository list",
     "ssh": "SSH",
+    "these-icons-indicate": "These icons indicate which repositories have local or remote\n                changes, and require the periodic fetching of repositories that\n                are not currently selected.",
+    "turning-this-off-will-not-stop": "Turning this off will not stop the periodic fetching of your\n                currently selected repository, but may improve overall app\n                performance for users with many repositories.",
     "usage": "Usage",
     "usage-stats": "usage stats",
     "use-system-openssh": "Use system OpenSSH (recommended)"
@@ -105,7 +106,6 @@
     "branches": "Branches",
     "choose-a-branch-to-marge-1": "Choose a branch to merge into ",
     "choose-a-branch-to-marge-2": " ",
-    "marge-a-branch": "Merge a branch into {{0}}",
     "new-branch": "New branch",
     "new-branch-darwin": "New Branch",
     "pull-requests": "Pull requests",
@@ -213,6 +213,7 @@
     "looks-like-no-repositories-1": "Looks like there are no repositories for ",
     "looks-like-no-repositories-2": " on {{0}}.",
     "no-match": "Sorry, I can't find any repository matching ",
+    "placeholder-filter-repositories": "Filter your repositories",
     "refresh-this-list": "Refresh this list",
     "tooltip-refresh-list": "Refresh the list of repositories",
     "your-repositories": "Your repositories",
@@ -292,7 +293,11 @@
     "enable-commit-spellcheck": "Enable commit spellcheck",
     "enable-commit-spellcheck-darwin": "Enable Commit Spellcheck",
     "link-create-a-fork": "create a fork",
+    "link-switch-branches": "switch branches",
     "please-information-description-field": "Place extra information in the description field.",
+    "protected-branch-1": " ",
+    "protected-branch-2": " is a protected branch. Want to ",
+    "protected-branch-3": "?",
     "remove-co-authors": "Remove co-authors",
     "remove-co-authors-darwin": "Remove Co-Authors",
     "select-one-or-more-files-to-commit": "Select one or more files to commit",
@@ -314,7 +319,6 @@
   },
   "commit-summary": {
     "collapse": "Collapse",
-    "diff-options": "Diff Options",
     "empty-commit-message": "Empty commit message",
     "expand": "Expand",
     "file": "file",
@@ -569,7 +573,7 @@
     "delete-remote-branch-content-2": "?",
     "delete-remote-branch-darwin": "Delete Remote Branch",
     "this-action-cannot-be-undone": "This action cannot be undone.",
-    "this-branch-does-not-exist-locally": "This branch does not exist locally. Deleting it may impact\n               others collaborating on this branch."
+    "this-branch-does-not-exist-locally": "This branch does not exist locally. Deleting it may impact\n                others collaborating on this branch."
   },
   "delete-tag-dialog": {
     "are-you-sure-you-want-to-delete-the-tag-1": "Are you sure you want to delete the tag ",
@@ -882,6 +886,7 @@
     "squash-and-merge-into-branch-darwin": "Squash and Merge into Current Branch…",
     "stash-all-changes": "&Stash all changes",
     "stash-all-changes-darwin": "Stash All Changes",
+    "thank-you": "Thank you",
     "toggle-developer-tools": "&Toggle developer tools",
     "toggle-developer-tools-darwin": "Toggle Developer Tools",
     "toggle-full-screen": "Toggle &full screen",
@@ -1116,6 +1121,7 @@
     "always-bring-my-changes-to-my-new-branch": "Always bring my changes to my new branch",
     "always-stash-and-leave-my-changes": "Always stash and leave my changes on the current branch",
     "ask-me-where-i-want-the-changes-to-go": "Ask me where I want the changes to go",
+    "commit-length": "Commit Length",
     "discarding-changes": "Discarding changes",
     "discarding-changes-permanently": "Discarding changes permanently",
     "discarding-checking-out": "Checking out a commit",
@@ -1124,6 +1130,7 @@
     "if-i-have-changes-and-i-switch-branches": "If I have changes and I switch branches...",
     "removing-repositories": "Removing repositories",
     "show-a-confirmation": "Show a confirmation dialog before...",
+    "show-commit-length-warning": "Show commit length warning",
     "undo-commit": "Undo commit"
   },
   "publish-repository": {
