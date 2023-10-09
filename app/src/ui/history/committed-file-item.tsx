@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import { CommittedFileChange } from '../../models/status'
-import { mapStatus } from '../../lib/status'
+import { mapStatus, mapStatusCaption } from '../../lib/status'
 import { PathLabel } from '../lib/path-label'
 import { Octicon, iconForStatus } from '../octicons'
 import { TooltippedContent } from '../lib/tooltipped-content'
@@ -18,6 +18,7 @@ export class CommittedFileItem extends React.Component<ICommittedFileItemProps> 
     const { file, focused } = this.props
     const { status } = file
     const fileStatus = mapStatus(status)
+    const fileStatusCaption = mapStatusCaption(status)
 
     const listItemPadding = 10 * 2
     const statusWidth = 16
@@ -39,7 +40,7 @@ export class CommittedFileItem extends React.Component<ICommittedFileItemProps> 
         <TooltippedContent
           ancestorFocused={focused}
           openOnFocus={true}
-          tooltip={fileStatus}
+          tooltip={fileStatusCaption}
           direction={TooltipDirection.NORTH}
         >
           <Octicon

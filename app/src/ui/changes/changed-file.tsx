@@ -3,7 +3,7 @@ import * as React from 'react'
 import { PathLabel } from '../lib/path-label'
 import { Octicon, iconForStatus } from '../octicons'
 import { Checkbox, CheckboxValue } from '../lib/checkbox'
-import { mapStatus } from '../../lib/status'
+import { mapStatus, mapStatusCaption } from '../../lib/status'
 import { WorkingDirectoryFileChange } from '../../models/status'
 import { TooltipDirection } from '../lib/tooltip'
 import { TooltippedContent } from '../lib/tooltipped-content'
@@ -41,6 +41,7 @@ export class ChangedFile extends React.Component<IChangedFileProps, {}> {
       this.props
     const { status, path } = file
     const fileStatus = mapStatus(status)
+    const fileStatusCaption = mapStatusCaption(status)
 
     const listItemPadding = 10 * 2
     const checkboxWidth = 20
@@ -94,7 +95,7 @@ export class ChangedFile extends React.Component<IChangedFileProps, {}> {
         <TooltippedContent
           ancestorFocused={focused}
           openOnFocus={true}
-          tooltip={fileStatus}
+          tooltip={fileStatusCaption}
           direction={TooltipDirection.EAST}
         >
           <Octicon

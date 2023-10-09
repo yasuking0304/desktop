@@ -260,9 +260,12 @@ export class Prompts extends React.Component<
           />
         </div>
         <div className="advanced-section">
-          <h2>Commit Length</h2>
+          <h2>{t('prompts.commit-length', 'Commit Length')}</h2>
           <Checkbox
-            label="Show commit length warning"
+            label={t(
+              'prompts.show-commit-length-warning',
+              'Show commit length warning'
+            )}
             value={
               this.props.showCommitLengthWarning
                 ? CheckboxValue.On
