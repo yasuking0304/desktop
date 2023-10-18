@@ -459,6 +459,8 @@ export class App extends React.Component<IAppProps, IAppState> {
         return this.selectAll()
       case 'show-release-notes-popup':
         return this.showFakeReleaseNotesPopup()
+      case 'show-thank-you-popup':
+        return this.showFakeThankYouPopup()
       case 'show-stashed-changes':
         return this.showStashedChanges()
       case 'hide-stashed-changes':
@@ -494,6 +496,22 @@ export class App extends React.Component<IAppProps, IAppState> {
       this.props.dispatcher.showPopup({
         type: PopupType.ReleaseNotes,
         newReleases: await generateDevReleaseSummary(),
+      })
+    }
+  }
+
+  private showFakeThankYouPopup() {
+    if (__DEV__) {
+      this.props.dispatcher.showPopup({
+        type: PopupType.ThankYou,
+        userContributions: [
+          {
+            kind: 'new',
+            message: '[New] Added fake thank you dialog',
+          },
+        ],
+        friendlyName: 'kind contributor',
+        latestVersion: '3.0.0',
       })
     }
   }
@@ -1617,6 +1635,7 @@ export class App extends React.Component<IAppProps, IAppState> {
             uncommittedChangesStrategy={this.state.uncommittedChangesStrategy}
             selectedExternalEditor={this.state.selectedExternalEditor}
             useWindowsOpenSSH={this.state.useWindowsOpenSSH}
+            showCommitLengthWarning={this.state.showCommitLengthWarning}
             notificationsEnabled={this.state.notificationsEnabled}
             optOutOfUsageTracking={this.state.optOutOfUsageTracking}
             enterpriseAccount={this.getEnterpriseAccount()}
@@ -2173,6 +2192,7 @@ export class App extends React.Component<IAppProps, IAppState> {
             commitAuthor={repositoryState.commitAuthor}
             commitMessage={popup.commitMessage}
             commitSpellcheckEnabled={this.state.commitSpellcheckEnabled}
+            showCommitLengthWarning={this.state.showCommitLengthWarning}
             dialogButtonText={popup.dialogButtonText}
             dialogTitle={popup.dialogTitle}
             dispatcher={this.props.dispatcher}
@@ -3276,6 +3296,7 @@ export class App extends React.Component<IAppProps, IAppState> {
           isShowingFoldout={this.state.currentFoldout !== null}
           aheadBehindStore={this.props.aheadBehindStore}
           commitSpellcheckEnabled={this.state.commitSpellcheckEnabled}
+          showCommitLengthWarning={this.state.showCommitLengthWarning}
           onCherryPick={this.startCherryPickWithoutBranch}
           pullRequestSuggestedNextAction={state.pullRequestSuggestedNextAction}
         />

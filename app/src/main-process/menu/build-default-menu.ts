@@ -692,6 +692,10 @@ export function buildDefaultMenu({
             click: emit('show-release-notes-popup'),
           },
           {
+            label: t('menu.thank-you', 'Thank you'),
+            click: emit('show-thank-you-popup'),
+          },
+          {
             label: t(
               'menu.pull-request-check-run-failed',
               'Pull Request Check Run Failed'

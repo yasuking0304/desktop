@@ -66,18 +66,22 @@ export class LocalChangesOverwrittenDialog extends React.Component<
         onDismissed={this.props.onDismissed}
         onSubmit={this.onSubmit}
         type="error"
+        role="alertdialog"
+        ariaDescribedBy="local-changes-error-description"
       >
         <DialogContent>
-          <p>
-            {t(
-              'local-changes-overwritten-dialog.unable-to-action',
-              `Unable to {{0}} when changes are present on
-              your branch. {{1}}`,
-              { 0: this.getRetryActionName(), 1: overwrittenText }
-            )}
-          </p>
-          {this.renderFiles()}
-          {this.renderStashText()}
+          <div id="local-changes-error-description">
+            <p>
+              {t(
+                'local-changes-overwritten-dialog.unable-to-action',
+                `Unable to {{0}} when changes are present on
+                your branch. {{1}}`,
+                { 0: this.getRetryActionName(), 1: overwrittenText }
+              )}
+            </p>
+            {this.renderFiles()}
+            {this.renderStashText()}
+          </div>
         </DialogContent>
         {this.renderFooter()}
       </Dialog>
