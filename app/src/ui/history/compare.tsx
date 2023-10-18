@@ -729,9 +729,9 @@ function getPlaceholderText(state: ICompareState) {
     return __DARWIN__
       ? t(
           'compare.select-branch-to-compare-darwin',
-          'Select Branch to CompareÅc'
+          'Select Branch to Compare‚Ä¶'
         )
-      : t('compare.select-branch-to-compare', 'Select branch to compareÅc')
+      : t('compare.select-branch-to-compare', 'Select branch to compare‚Ä¶')
   } else {
     return undefined
   }

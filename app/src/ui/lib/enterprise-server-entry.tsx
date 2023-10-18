@@ -59,7 +59,6 @@ export class EnterpriseServerEntry extends React.Component<
             'enterprise-server-entry.enterprise-or-ae-address',
             'Enterprise or AE address'
           )}
-          // eslint-disable-next-line jsx-a11y/no-autofocus
           autoFocus={true}
           disabled={disableEntry}
           onValueChanged={this.onServerAddressChanged}
