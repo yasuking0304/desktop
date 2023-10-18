@@ -320,10 +320,14 @@ export class SelectedCommits extends React.Component<
     }
 
     const fileCount = this.props.changesetData.files.length
-    const filesPlural = fileCount === 1 ? 'file' : 'files'
+    const filesPlural =
+      fileCount === 1 ? t('common.file', 'file') : t('common.files', 'files')
     return (
       <div className="file-list-header">
-        {fileCount} changed {filesPlural}
+        {t('selected-commits.number-files-changed', '{{0}} changed {{1}}', {
+          0: fileCount,
+          1: filesPlural,
+        })}
       </div>
     )
   }
@@ -406,9 +410,24 @@ export class SelectedCommits extends React.Component<
                   `Select a single commit or a range of consecutive commits to view a diff.`
                 )}
               </li>
-              <li>Drag the commits to the branch menu to cherry-pick them.</li>
-              <li>Drag the commits to squash or reorder them.</li>
-              <li>Right click on multiple commits to see options.</li>
+              <li>
+                {t(
+                  'selected-commits.drag-the-commits-1',
+                  'Drag the commits to the branch menu to cherry-pick them.'
+                )}
+              </li>
+              <li>
+                {t(
+                  'selected-commits.drag-the-commits-2',
+                  'Drag the commits to squash or reorder them.'
+                )}
+              </li>
+              <li>
+                {t(
+                  'selected-commits.drag-the-commits-3',
+                  'Right click on multiple commits to see options.'
+                )}
+              </li>
             </ul>
           </div>
         </div>

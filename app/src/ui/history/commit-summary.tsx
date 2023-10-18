@@ -542,11 +542,9 @@ export class CommitSummary extends React.Component<
   private renderChangedFilesDescription = () => {
     const fileCount = this.props.changesetData.files.length
     const filesPlural =
-      fileCount === 1
-        ? t('commit-summary.file', 'file')
-        : t('commit-summary.files', 'files')
+      fileCount === 1 ? t('common.file', 'file') : t('common.files', 'files')
     const filesShortDescription = t(
-      'commit-summary.number-changed-file',
+      'commit-summary.number-files-changed',
       `{{0}} changed {{1}}`,
       { 0: fileCount, 1: filesPlural }
     )
@@ -643,13 +641,9 @@ export class CommitSummary extends React.Component<
     }
 
     const linesAddedPlural =
-      linesAdded === 1
-        ? t('commit-summary.line', 'line')
-        : t('commit-summary.lines', 'lines')
+      linesAdded === 1 ? t('common.line', 'line') : t('common.lines', 'lines')
     const linesDeletedPlural =
-      linesDeleted === 1
-        ? t('commit-summary.line', 'line')
-        : t('commit-summary.lines', 'lines')
+      linesDeleted === 1 ? t('common.line', 'line') : t('common.lines', 'lines')
     const linesAddedTitle = t(
       'commit-summary.number-lines-added',
       `{{0}} {{1}} added`,
