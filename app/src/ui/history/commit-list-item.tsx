@@ -18,6 +18,7 @@ import {
 } from '../../models/drag-drop'
 import classNames from 'classnames'
 import { t } from 'i18next'
+import { TooltippedContent } from '../lib/tooltipped-content'
 
 interface ICommitProps {
   readonly gitHubRepository: GitHubRepository | null
@@ -188,12 +189,13 @@ export class CommitListItem extends React.PureComponent<
     }
 
     return (
-      <div
+      <TooltippedContent
+        tagName="div"
         className="unpushed-indicator"
-        title={this.props.unpushedIndicatorTitle}
+        tooltip={this.props.unpushedIndicatorTitle}
       >
         <Octicon symbol={OcticonSymbol.arrowUp} />
-      </div>
+      </TooltippedContent>
     )
   }
 

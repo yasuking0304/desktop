@@ -83,7 +83,7 @@ export class DiffOptions extends React.Component<
   }
 
   public render() {
-    const buttonLabel = `t('diff-options.caption-diff', 'Diff '){
+    const buttonLabel = `${t('diff-options.caption-diff', 'Diff ')}${
       __DARWIN__
         ? t('diff-options.caption-options-darwin', 'Settings')
         : t('diff-options.caption-options', 'Options')

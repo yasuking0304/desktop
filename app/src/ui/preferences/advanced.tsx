@@ -84,8 +84,8 @@ export class Advanced extends React.Component<
           <h2>{t('advanced.background-updates', 'Background updates')}</h2>
           <Checkbox
             label={t(
-              'advanced.periodically-fetch-and-refresh-status',
-              'Periodically fetch and refresh status of all repositories'
+              'advanced.show-status-icons-in-the-repository-list',
+              'Show status icons in the repository list'
             )}
             value={
               this.props.repositoryIndicatorsEnabled
@@ -93,14 +93,28 @@ export class Advanced extends React.Component<
                 : CheckboxValue.Off
             }
             onChange={this.onRepositoryIndicatorsEnabledChanged}
+            ariaDescribedBy="periodic-fecth-description"
           />
-          <p className="git-settings-description">
-            {t(
-              'advanced.allows-the-display-of-up-to-date-status-indicators',
-              `Allows the display of up-to-date status indicators in the
-              repository list. Disabling this may improve performance
-              with many repositories.`
-            )}
+          <p
+            id="periodic-fecth-description"
+            className="git-settings-description"
+          >
+            <p>
+              {t(
+                'advanced.these-icons-indicate',
+                `These icons indicate which repositories have local or remote
+                changes, and require the periodic fetching of repositories that
+                are not currently selected.`
+              )}
+            </p>
+            <p>
+              {t(
+                'advanced.turning-this-off-will-not-stop',
+                `Turning this off will not stop the periodic fetching of your
+                currently selected repository, but may improve overall app
+                performance for users with many repositories.`
+              )}
+            </p>
           </p>
         </div>
         {this.renderSSHSettings()}
