@@ -102,7 +102,7 @@ export class ThankYou extends React.Component<IThankYouProps, IThankYouState> {
       <Dialog
         id="thank-you-notes"
         onDismissed={this.props.onDismissed}
-        title={`Thank you ${this.props.friendlyName}! ??`}
+        title={`Thank you ${this.props.friendlyName}! 🎉`}
         onDialogRef={this.onDialogRef}
       >
         <DialogContent>

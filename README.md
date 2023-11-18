@@ -6,7 +6,7 @@
 GitHub app. It is written in [TypeScript](https://www.typescriptlang.org) and
 uses [React](https://reactjs.org/).
 
-[Click here for details (Japanese only)](https://github.com/yasuking0304/desktop/wiki)
+[Click here for details (This site is only available in Japanese.)](https://github.com/yasuking0304/desktop/wiki)
 <picture>
   <source
     srcset="https://user-images.githubusercontent.com/111163564/218298392-b719e5dc-74c3-4f03-acf2-72c975cf126f.png"
