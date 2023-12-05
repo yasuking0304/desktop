@@ -513,8 +513,9 @@
     "new-branch-will-be-based-on-3": " (",
     "new-branch-will-be-based-on-4": "){{0}}.",
     "new-branch-will-be-checked-out-branch-1": "Your new branch will be based on your currently checked out branch (",
-    "new-branch-will-be-checked-out-branch-2": "). ",
-    "new-branch-will-be-checked-out-branch-3": "is the {{0}} for your repository."
+    "new-branch-will-be-checked-out-branch-2": ")",
+    "new-branch-will-be-checked-out-branch-3": ". ",
+    "new-branch-will-be-checked-out-branch-4": "is the {{0}} for your repository."
   },
   "create-repository": {
     "add-this-repository": "このリポジトリを追加",
@@ -1480,6 +1481,8 @@
     "would-you-like-to-update": "予期された URL を使用するようにリモートを更新しますか?"
   },
   "url": {
+    "github-desktop-issue": "https://github.com/desktop/desktop/issues/new/choose",
+    "github-desktop-issue-linux": "https://github.com/shiftkey/desktop/issues/new/choose",
     "keyboard-shortcuts": "https://docs.github.com/ja/desktop/installing-and-configuring-github-desktop/overview/keyboard-shortcuts",
     "show-user-guides": "https://docs.github.com/ja/desktop",
     "why-are-my-commits-linked-to-the-wrong-user": "https://docs.github.com/ja/github/committing-changes-to-your-project/why-are-my-commits-linked-to-the-wrong-user"
