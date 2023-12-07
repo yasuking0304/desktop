@@ -6,7 +6,7 @@ uses [React](https://reactjs.org/).
 
 [linux version is here](https://github.com/yasuking0304/desktop/tree/linux)
 
-[Click here for details (Japanese only)](https://github.com/yasuking0304/desktop/wiki)
+[Click here for details (This site is only available in Japanese)](https://github.com/yasuking0304/desktop/wiki)
 <picture>
   <source
     srcset="https://user-images.githubusercontent.com/634063/202742848-63fa1488-6254-49b5-af7c-96a6b50ea8af.png"

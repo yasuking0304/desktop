@@ -321,13 +321,9 @@
     "collapse": "Collapse",
     "empty-commit-message": "Empty commit message",
     "expand": "Expand",
-    "file": "file",
-    "files": "files",
-    "line": "line",
-    "lines": "lines",
     "not-included": " not included.",
-    "number-changed-file": "{{0}} changed {{1}}",
     "number-files-added": "{{0}} added",
+    "number-files-changed": "{{0}} changed {{1}}",
     "number-files-deleted": "{{0}} deleted",
     "number-files-midified": "{{0}} modified",
     "number-lines-added": "{{0}} {{1}} added",
@@ -362,11 +358,15 @@
     "email": "Email",
     "enterprise-address": "Enterprise address",
     "error": "Error",
+    "file": "file",
+    "files": "files",
     "finish": "Finish",
     "forgot-password": "Forgot password?",
     "github-desktop": "GitHub Desktop",
     "history": "History",
     "ignore": "Ignore",
+    "line": "line",
+    "lines": "lines",
     "local-path": "Local path",
     "local-path-darwin": "Local Path",
     "multiple-commits": "commits",
@@ -411,8 +411,8 @@
     "no-branch-to-compare": "No branches to compare",
     "no-branch-to-compare-darwin": "No Branches to Compare",
     "no-history": "No history",
-    "select-branch-to-compare": "Select branch to compare...",
-    "select-branch-to-compare-darwin": "Select Branch to Compare...",
+    "select-branch-to-compare": "Select branch to compare…",
+    "select-branch-to-compare-darwin": "Select Branch to Compare…",
     "squash-number-commits": "Squash {{0}} Commits",
     "the-compare-branch-1": "The compared branch (",
     "the-compare-branch-2": ") is up to date with your branch",
@@ -513,8 +513,9 @@
     "new-branch-will-be-based-on-3": " (",
     "new-branch-will-be-based-on-4": "){{0}}.",
     "new-branch-will-be-checked-out-branch-1": "Your new branch will be based on your currently checked out\n            branch (",
-    "new-branch-will-be-checked-out-branch-2": ". ",
-    "new-branch-will-be-checked-out-branch-3": "is the {{0}} for your repository."
+    "new-branch-will-be-checked-out-branch-2": ")",
+    "new-branch-will-be-checked-out-branch-3": ". ",
+    "new-branch-will-be-checked-out-branch-4": "is the {{0}} for your repository."
   },
   "create-repository": {
     "add-this-repository": "add this repository",
@@ -732,7 +733,7 @@
     "Stash-Changes-darwin": "Stash Changes and Continue",
     "the-following-files-would-be-overwritten": "The following files would be overwritten:",
     "this-will-create-a-stash": "This will create a stash with your current changes.\n             You can recover them by restoring the stash afterwards.",
-    "unable-to-action": "Unable to {{0}} when changes are present on\n              your branch. {{1}}",
+    "unable-to-action": "Unable to {{0}} when changes are present on\n                your branch. {{1}}",
     "you-can-stash-your-changes": "You can stash your changes now and recover them afterwards."
   },
   "lookup": {
@@ -954,6 +955,9 @@
     "not-now": "Not Now",
     "this-will-move-github-desktop": "This will move GitHub Desktop to the Applications folder in your\n            machine and restart the app."
   },
+  "multiple-selection": {
+    "number-files-seletced": "{{0}} files selected"
+  },
   "no-branches": {
     "create-a-new-branch-instead": "Do you want to create a new branch instead?",
     "create-new-branch": "Create new branch",
@@ -995,7 +999,7 @@
     "open-the-repository-page-on-github-in-your-browser": "Open the repository page on GitHub in your browser",
     "preview-pull-request": "Preview Pull Request",
     "preview-pull-request-1": "The current branch (",
-    "preview-pull-request-2": ") is already\n            published to GitHub. Preview the changes this pull request will have\n            before proposing your changes.",
+    "preview-pull-request-2": ") is already\n          published to GitHub. Preview the changes this pull request will have\n          before proposing your changes.",
     "preview-pull-request-title": "Preview the Pull Request from your current branch",
     "publish-branch": "Publish branch",
     "publish-repository": "Publish repository",
@@ -1258,10 +1262,14 @@
     "re-authorization-required-darwin": "Re-authorization Required"
   },
   "selected-commits": {
+    "drag-the-commits-1": "Drag the commits to the branch menu to cherry-pick them.",
+    "drag-the-commits-2": "Drag the commits to squash or reorder them.",
+    "drag-the-commits-3": "Right click on multiple commits to see options.",
     "file-does-not-exist": "File does not exist on disk",
     "file-does-not-exist-darwin": "File Does Not Exist on Disk",
     "no-commit-selected": "No commit selected",
     "no-file-selected": "No file selected",
+    "number-files-changed": "{{0}} changed {{1}}",
     "open-in-external-editor": "Open in {{0}}",
     "select-a-single-commit": "Select a single commit or a range of consecutive commits to view a diff.",
     "unable-to-display-diff": "Unable to display diff when multiple\n                non-consecutive selected.",
@@ -1480,6 +1488,8 @@
     "would-you-like-to-update": "Would you like to update the remote to use the expected URL?"
   },
   "url": {
+    "github-desktop-issue": "https://github.com/desktop/desktop/issues/new/choose",
+    "github-desktop-issue-linux": "https://github.com/shiftkey/desktop/issues/new/choose",
     "keyboard-shortcuts": "https://docs.github.com/en/desktop/installing-and-configuring-github-desktop/overview/keyboard-shortcuts",
     "show-user-guides": "https://docs.github.com/en/desktop",
     "why-are-my-commits-linked-to-the-wrong-user": "https://docs.github.com/en/github/committing-changes-to-your-project/why-are-my-commits-linked-to-the-wrong-user"
