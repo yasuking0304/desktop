@@ -411,8 +411,8 @@
     "no-branch-to-compare": "No branches to compare",
     "no-branch-to-compare-darwin": "No Branches to Compare",
     "no-history": "No history",
-    "select-branch-to-compare": "Select branch to compare...",
-    "select-branch-to-compare-darwin": "Select Branch to Compare...",
+    "select-branch-to-compare": "Select branch to compare…",
+    "select-branch-to-compare-darwin": "Select Branch to Compare…",
     "squash-number-commits": "Squash {{0}} Commits",
     "the-compare-branch-1": "The compared branch (",
     "the-compare-branch-2": ") is up to date with your branch",
@@ -513,8 +513,9 @@
     "new-branch-will-be-based-on-3": " (",
     "new-branch-will-be-based-on-4": "){{0}}.",
     "new-branch-will-be-checked-out-branch-1": "Your new branch will be based on your currently checked out\n            branch (",
-    "new-branch-will-be-checked-out-branch-2": ". ",
-    "new-branch-will-be-checked-out-branch-3": "is the {{0}} for your repository."
+    "new-branch-will-be-checked-out-branch-2": ")",
+    "new-branch-will-be-checked-out-branch-3": ". ",
+    "new-branch-will-be-checked-out-branch-4": "is the {{0}} for your repository."
   },
   "create-repository": {
     "add-this-repository": "add this repository",
@@ -732,7 +733,7 @@
     "Stash-Changes-darwin": "Stash Changes and Continue",
     "the-following-files-would-be-overwritten": "The following files would be overwritten:",
     "this-will-create-a-stash": "This will create a stash with your current changes.\n             You can recover them by restoring the stash afterwards.",
-    "unable-to-action": "Unable to {{0}} when changes are present on\n              your branch. {{1}}",
+    "unable-to-action": "Unable to {{0}} when changes are present on\n                your branch. {{1}}",
     "you-can-stash-your-changes": "You can stash your changes now and recover them afterwards."
   },
   "lookup": {
@@ -998,7 +999,7 @@
     "open-the-repository-page-on-github-in-your-browser": "Open the repository page on GitHub in your browser",
     "preview-pull-request": "Preview Pull Request",
     "preview-pull-request-1": "The current branch (",
-    "preview-pull-request-2": ") is already\n            published to GitHub. Preview the changes this pull request will have\n            before proposing your changes.",
+    "preview-pull-request-2": ") is already\n          published to GitHub. Preview the changes this pull request will have\n          before proposing your changes.",
     "preview-pull-request-title": "Preview the Pull Request from your current branch",
     "publish-branch": "Publish branch",
     "publish-repository": "Publish repository",
@@ -1480,6 +1481,8 @@
     "would-you-like-to-update": "Would you like to update the remote to use the expected URL?"
   },
   "url": {
+    "github-desktop-issue": "https://github.com/desktop/desktop/issues/new/choose",
+    "github-desktop-issue-linux": "https://github.com/shiftkey/desktop/issues/new/choose",
     "keyboard-shortcuts": "https://docs.github.com/en/desktop/installing-and-configuring-github-desktop/overview/keyboard-shortcuts",
     "show-user-guides": "https://docs.github.com/en/desktop",
     "why-are-my-commits-linked-to-the-wrong-user": "https://docs.github.com/en/github/committing-changes-to-your-project/why-are-my-commits-linked-to-the-wrong-user"
