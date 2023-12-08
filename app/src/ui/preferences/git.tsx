@@ -3,16 +3,20 @@ import { DialogContent } from '../dialog'
 import { SuggestedBranchNames } from '../../lib/helpers/default-branch'
 import { RefNameTextBox } from '../lib/ref-name-text-box'
 import { Ref } from '../lib/ref'
-import { RadioButton } from '../lib/radio-button'
+import { LinkButton } from '../lib/link-button'
 import { Account } from '../../models/account'
 import { GitConfigUserForm } from '../lib/git-config-user-form'
 import { t } from 'i18next'
+import { RadioGroup } from '../lib/radio-group'
+
+const otherOption = 'Other…'
 
 interface IGitProps {
   readonly name: string
   readonly email: string
   readonly defaultBranch: string
   readonly isLoadingGitConfig: boolean
+  readonly globalGitConfigPath: string | null
 
   readonly dotComAccount: Account | null
   readonly enterpriseAccount: Account | null
@@ -20,6 +24,9 @@ interface IGitProps {
   readonly onNameChanged: (name: string) => void
   readonly onEmailChanged: (email: string) => void
   readonly onDefaultBranchChanged: (defaultBranch: string) => void
+
+  readonly selectedExternalEditor: string | null
+  readonly onOpenFileInExternalEditor: (path: string) => void
 }
 
 interface IGitState {
@@ -118,37 +125,38 @@ export class Git extends React.Component<IGitProps, IGitState> {
     )
   }
 
+  private renderBranchNameOption = (branchName: string) => {
+    return branchName === otherOption ? (
+      <span id="other-branch-name-label">{branchName}</span>
+    ) : (
+      branchName
+    )
+  }
+
   private renderDefaultBranchSetting() {
     const { defaultBranchIsOther } = this.state
 
+    const branchNameOptions = [...SuggestedBranchNames, otherOption]
+    const selectedKey = defaultBranchIsOther
+      ? otherOption
+      : SuggestedBranchNames.find(n => n === this.props.defaultBranch) ??
+        SuggestedBranchNames.at(0) ??
+        otherOption // Should never happen, but TypeScript doesn't know that.
+
     return (
       <div className="default-branch-component">
-        <h2>
+        <h2 id="default-branch-heading">
           {t(
             'git.default-branch-name-for-new-repositories',
             'Default branch name for new repositories'
           )}
         </h2>
-
-        {SuggestedBranchNames.map((branchName: string, i: number) => (
-          <RadioButton
-            key={branchName}
-            checked={
-              (!defaultBranchIsOther &&
-                this.props.defaultBranch === branchName) ||
-              (this.props.isLoadingGitConfig && i === 0)
-            }
-            value={branchName}
-            label={branchName}
-            onSelected={this.onDefaultBranchChanged}
-          />
-        ))}
-        <RadioButton
-          key={OtherNameForDefaultBranch}
-          checked={defaultBranchIsOther}
-          value={OtherNameForDefaultBranch}
-          label={t('git.radio-button-other', 'Other…')}
-          onSelected={this.onDefaultBranchChanged}
+        <RadioGroup<string>
+          ariaLabelledBy="default-branch-heading"
+          selectedKey={selectedKey}
+          radioButtonKeys={branchNameOptions}
+          onSelectionChanged={this.onDefaultBranchChanged}
+          renderRadioButtonLabelContents={this.renderBranchNameOption}
         />
 
         {defaultBranchIsOther && (
@@ -157,14 +165,29 @@ export class Git extends React.Component<IGitProps, IGitState> {
             renderWarningMessage={this.renderWarningMessage}
             onValueChange={this.props.onDefaultBranchChanged}
             ref={this.defaultBranchInputRef}
+            ariaLabelledBy={'other-branch-name-label'}
           />
         )}
 
         <p className="git-settings-description">
-          {t(
-            'git.edit-your-global-git-config',
-            'These preferences will edit your global Git config.'
+          {t('git.edit-your-global-git-config-1', 'These preferences will ')}
+          {this.props.selectedExternalEditor &&
+          this.props.globalGitConfigPath ? (
+            <LinkButton onClick={this.openGlobalGitConfigInEditor}>
+              {t(
+                'git.edit-your-global-git-config-2',
+                'edit your global Git config'
+              )}
+            </LinkButton>
+          ) : (
+            <>
+              {t(
+                'git.edit-your-global-git-config-2',
+                'edit your global Git config'
+              )}
+            </>
           )}
+          {t('git.edit-your-global-git-config-3', '.')}
         </p>
       </div>
     )
@@ -185,6 +208,16 @@ export class Git extends React.Component<IGitProps, IGitState> {
       defaultBranchIsOther: !SuggestedBranchNames.includes(defaultBranch),
     })
 
-    this.props.onDefaultBranchChanged(defaultBranch)
+    this.props.onDefaultBranchChanged(
+      defaultBranch === otherOption ? '' : defaultBranch
+    )
+  }
+
+  // This function is called to open the global git config file in the
+  // user's default editor.
+  private openGlobalGitConfigInEditor = () => {
+    if (this.props.globalGitConfigPath) {
+      this.props.onOpenFileInExternalEditor(this.props.globalGitConfigPath)
+    }
   }
 }

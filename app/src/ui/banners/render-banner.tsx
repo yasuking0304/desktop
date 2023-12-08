@@ -127,7 +127,11 @@ export function renderBanner(
           ? t('common.one-commit', 'commit')
           : t('common.multiple-commits', 'commits')
       return (
-        <SuccessBanner timeout={5000} onDismissed={onDismissed}>
+        <SuccessBanner
+          key="squash-undone"
+          timeout={5000}
+          onDismissed={onDismissed}
+        >
           {t(
             'render-banner.squash-of-commit-undone',
             'Squash of {{0}} {{1}} undone.',
@@ -144,6 +148,7 @@ export function renderBanner(
 
       return (
         <SuccessBanner
+          key="successful-reorder"
           timeout={15000}
           onDismissed={onDismissed}
           onUndo={banner.onUndo}
@@ -164,8 +169,12 @@ export function renderBanner(
           ? t('common.one-commit', 'commit')
           : t('common.multiple-commits', 'commits')
       return (
-        <SuccessBanner timeout={5000} onDismissed={onDismissed}>
-          {t(
+        <SuccessBanner
+          key="reorder-undone"
+          timeout={5000}
+          onDismissed={onDismissed}
+        >
+        {t(
             'render-banner.reorder-of-commit-undone',
             'Reorder of {{0}} {{1}} undone.',
             { 0: banner.commitsCount, 1: pluralized }
