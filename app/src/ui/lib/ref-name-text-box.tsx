@@ -21,6 +21,11 @@ interface IRefNameProps {
   readonly label?: string | JSX.Element
 
   /**
+   * The aria-labelledBy attribute for the text box.
+   */
+  readonly ariaLabelledBy?: string
+
+  /**
    * The aria-describedby attribute for the text box.
    */
   readonly ariaDescribedBy?: string
@@ -96,6 +101,7 @@ export class RefNameTextBox extends React.Component<
           placeholder={this.props.placeholder}
           value={this.state.proposedValue}
           ref={this.textBoxRef}
+          ariaLabelledBy={this.props.ariaLabelledBy}
           ariaDescribedBy={this.props.ariaDescribedBy}
           onValueChanged={this.onValueChange}
           onBlur={this.onBlur}

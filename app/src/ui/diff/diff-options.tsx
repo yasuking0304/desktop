@@ -83,11 +83,11 @@ export class DiffOptions extends React.Component<
   }
 
   public render() {
-    const buttonLabel = `${t('diff-options.caption-diff', 'Diff ')}${
-      __DARWIN__
+    const buttonLabel = t('diff-options.caption-diff', 'Diff {{0}}', {
+      0: __DARWIN__
         ? t('diff-options.caption-options-darwin', 'Settings')
-        : t('diff-options.caption-options', 'Options')
-    }`
+        : t('diff-options.caption-options', 'Options'),
+    })
     return (
       <div className="diff-options-component" ref={this.diffOptionsRef}>
         <button
@@ -99,6 +99,7 @@ export class DiffOptions extends React.Component<
           <Tooltip
             target={this.innerButtonRef}
             direction={TooltipDirection.NORTH}
+            applyAriaDescribedBy={false}
           >
             {buttonLabel}
           </Tooltip>
@@ -113,6 +114,12 @@ export class DiffOptions extends React.Component<
   }
 
   private renderPopover() {
+    const settings_caption = __DARWIN__
+      ? t('diff-options.caption-options-darwin', 'Settings')
+      : t('diff-options.caption-options', 'Options')
+    const header = t('diff-options.caption-diff', 'Diff {{0}}', {
+      0: settings_caption,
+    })
     return (
       <Popover
         ariaLabelledby="diff-options-popover-header"
@@ -121,12 +128,7 @@ export class DiffOptions extends React.Component<
         decoration={PopoverDecoration.Balloon}
         onClickOutside={this.closePopover}
       >
-        <h3 id="diff-options-popover-header">
-          {t('diff-options.caption-diff', 'Diff ')}
-          {__DARWIN__
-            ? t('diff-options.caption-options-darwin', 'Settings')
-            : t('diff-options.caption-options', 'Options')}
-        </h3>
+        <h3 id="diff-options-popover-header">{header}</h3>
         {this.renderHideWhitespaceChanges()}
         {this.renderShowSideBySide()}
       </Popover>

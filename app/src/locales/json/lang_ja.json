@@ -11,7 +11,9 @@
     "github-desktop-may-release-updates": "GitHub Desktop は、問題を早期に発見できるように、ユーザベースにアップデートを徐々にリリースすることがあります。これにより、段階的なロールアウトをバイパスし、利用可能な最新バージョンがある場合は最新バージョンに直接ジャンプできます。",
     "license-and-open-source-notices": "ライセンスおよびオープンソースの通知",
     "looking-for-the-latest-features": "最新の機能をお探しですか?",
+    "no-longer-supported-operating-systems": "このオペレーティング システムはサポートされなくなりました。 ソフトウェアのアップデートが無効になっています。",
     "quit-and-install-update": "終了して更新プログラムをインストールする",
+    "supported-operating-systems": "サポートされているオペレーティング システム",
     "terms-and-conditions": "利用条件",
     "update-has-been-downloaded-and-is-ready": "更新プログラムがダウンロードされ、インストールの準備が整いました。",
     "you-have-the-latest-version-1": "最新バージョンがインストール済み (最終チェック ",
@@ -42,7 +44,6 @@
     "use-system-openssh": "システムの OpenSSH を使う (推奨)"
   },
   "app": {
-    "adding-this-feature": "この機能の追加",
     "current-repository": "現在のリポジトリ",
     "current-repository-darwin": "現在のリポジトリ",
     "no-repositories": "リポジトリなし",
@@ -253,6 +254,8 @@
   "commit-list-item": {
     "amend-commit": "コミットの修正…",
     "amend-commit-darwin": "コミットの修正…",
+    "checkout-commit": "チェックアウト",
+    "checkout-commit-darwin": "チェックアウト",
     "cherry-pick-commit": "コミットをチェリーピックする…",
     "cherry-pick-commit-darwin": "コミットをチェリーピックする…",
     "cherry-pick-commits": "{{0}}個のコミットをチェリーピックする…",
@@ -264,6 +267,16 @@
     "create-branch-from-commit-darwin": "コミットからブランチを作成する",
     "detele-tag": "{{0}} タグを削除する",
     "empty-commit-message": "空のコミットメッセージ",
+    "reorder-choose-locate-1": " ",
+    "reorder-choose-locate-2": "キーを使って新しい場所を選択します",
+    "reorder-comfirm-locate-1": " ",
+    "reorder-comfirm-locate-2": "キー入力で確定します",
+    "reorder-commit": "コミット順の入れ替え",
+    "reorder-commit-darwin": "コミット順の入れ替え",
+    "reorder-commits": "{{0}}個のコミット順を入れ替える…",
+    "reorder-commits-darwin": "{{0}}個のコミット順を入れ替える…",
+    "reorder-commits-title": "コミット順の入れ替え",
+    "reorder-commits-title-darwin": "コミット順の入れ替え",
     "reset-to-commit": "コミットを取り消す…",
     "reset-to-commit-darwin": "コミットを取り消す…",
     "Revert-changes-in-commit": "コミットの変更を元に戻す",
@@ -392,6 +405,8 @@
     "settings": "設定",
     "sign-in": "サインイン",
     "sign-in-darwin": "サインイン",
+    "sign-into": "サインイン",
+    "sign-into-darwin": "サインイン",
     "sign-out": "サインアウト",
     "sign-out-darwin": "サインアウト",
     "undo": "元に戻す",
@@ -458,6 +473,9 @@
     "the-repository-will-be-removed": "リポジトリは GitHub Desktop から削除されます:",
     "you-want-to-remove-repository-1": "GitHub Desktop から \"",
     "you-want-to-remove-repository-2": "\" を削除してもよろしいですか?"
+  },
+  "copy-button": {
+    "copied": "コピーしました"
   },
   "core": {
     "error": {
@@ -583,7 +601,7 @@
     "delete-tag-darwin": "タグの削除"
   },
   "diff-options": {
-    "caption-diff": "差分検出の",
+    "caption-diff": "差異検出の{{0}}",
     "caption-options": "設定",
     "caption-options-darwin": "設定",
     "diff-display": "変更点の表示",
@@ -643,6 +661,15 @@
   "enterprise-server-entry": {
     "enterprise-or-ae-address": "Enterprise または AEアドレス"
   },
+  "expandable-commit-summary": {
+    "added-lines": "{{0}} ファイル追加",
+    "collapse": "折りたたむ",
+    "collapse-commit-details": "コミット詳細を折りたたむ",
+    "copy-the-full-sha": "SHA をフル桁でコピー",
+    "expand": "展開する",
+    "expand-commit-details": "コミット詳細を展開する",
+    "removed-lines": "{{0}} ファイル削除"
+  },
   "fetch": {
     "fetching": "{{0}} をフェッチ中"
   },
@@ -684,7 +711,9 @@
   },
   "git": {
     "default-branch-name-for-new-repositories": "新しいリポジトリのデフォルトのブランチ名",
-    "edit-your-global-git-config": "これらの設定は、あなたのグローバルなGit設定を編集します。",
+    "edit-your-global-git-config-1": "These preferences will ",
+    "edit-your-global-git-config-2": "edit your global Git config",
+    "edit-your-global-git-config-3": ".",
     "invalid-branch-name-1": "",
     "invalid-branch-name-2": " は無効なブランチ名です。",
     "radio-button-other": "その他…",
@@ -692,9 +721,9 @@
     "save-sanitized-branch-name-2": " として保存されます"
   },
   "git-config": {
-    "for-this-repository": "このリポジトリについて私がしたいこと",
-    "use-a-local-git-config": "ローカルの Git 設定を利用する",
-    "use-my-global-git-config": "Git 設定"
+    "for-this-repository": "このリポジトリで使用する名前とメールアドレス",
+    "use-a-local-git-config": "ローカルの Git 構成を使用する",
+    "use-my-global-git-config": "グローバルの Git 構成を使用する"
   },
   "git-email-not-found-warning": {
     "edither-your-account": "GitHub.com アカウントまたは GitHub Enterprise アカウントのいずれか",
@@ -1271,8 +1300,8 @@
     "no-file-selected": "ファイルが選択されていません",
     "number-files-changed": "{{0}}{{1}} 変更",
     "open-in-external-editor": "{{0}} で開く",
-    "select-a-single-commit": "単一のコミット {{0}}を選択して差分を表示します。",
-    "unable-to-display-diff": "複数の {{0}}が選択されている場合、差分を表示できません。",
+    "select-a-single-commit": "単一のコミット {{0}}を選択して差異を表示します。",
+    "unable-to-display-diff": "複数の {{0}}が選択されている場合、差異を表示できません。",
     "view-on-github": "GitHub で確認",
     "view-on-github-enteprise": "GitHub Enterprise で確認",
     "you-can": "以下の対応が可能です:"
@@ -1357,7 +1386,6 @@
     "discard": "破棄する",
     "file-does-not-exist": "ファイルが {{0}}  に存在しません。",
     "manual-conflict": "手動で競合",
-    "no-conflicts-remaining": "競合は残っていません",
     "no-editor-configured": "エディタが設定されていません。 設定 > 詳細設定 で確認してください",
     "no-editor-configured-darwin": "エディタが設定されていません。 設定 > 詳細設定 で確認してください",
     "number-onflicts": "{{0}}個の競合",
@@ -1439,6 +1467,9 @@
     "your-default-editor-is-2": "です。",
     "your-default-editor-is-3": "でお好みのエディタに変更できます。"
   },
+  "unmerged-file": {
+    "no-conflicts-remaining": "競合は残っていません"
+  },
   "unreachable-commits-dialog": {
     "about-unreachable-commits": "コミットの到達可否の詳細をご覧ください。",
     "commit-reachability": "コミットの到達可否",
@@ -1485,6 +1516,7 @@
     "github-desktop-issue-linux": "https://github.com/shiftkey/desktop/issues/new/choose",
     "keyboard-shortcuts": "https://docs.github.com/ja/desktop/installing-and-configuring-github-desktop/overview/keyboard-shortcuts",
     "show-user-guides": "https://docs.github.com/ja/desktop",
+    "supported-operating-systems-for-github-desktop": "https://docs.github.com/ja/desktop/installing-and-configuring-github-desktop/overview/supported-operating-systems",
     "why-are-my-commits-linked-to-the-wrong-user": "https://docs.github.com/ja/github/committing-changes-to-your-project/why-are-my-commits-linked-to-the-wrong-user"
   },
   "warn-force-push-dialog": {

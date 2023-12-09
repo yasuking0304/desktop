@@ -44,6 +44,62 @@ const DAY = HOUR * 24
 //  http://stackoverflow.com/a/16314807
 const MAX_INTERVAL = 2147483647
 
+type RelativeTimeInfo = {
+  absoluteText: string
+  relativeText: string
+  duration?: number
+}
+
+export function getRelativeTimeInfoFromDate(
+  then: Date,
+  onlyRelative: boolean = true
+): RelativeTimeInfo {
+  const diff = then.getTime() - Date.now()
+  const duration = Math.abs(diff)
+
+  const absoluteText = formatDate(then, {
+    dateStyle: 'full',
+    timeStyle: 'short',
+  })
+
+  const relativeText = formatRelative(diff)
+
+  // Future date, let's just show as absolute and reschedule. If it's less
+  // than a minute into the future we'll treat it as 'just now'.
+  if (diff > 0 && duration > MINUTE) {
+    return {
+      absoluteText,
+      relativeText: formatDate(then, {
+        dateStyle: 'medium',
+        timeStyle: 'short',
+      }),
+      duration,
+    }
+  } else if (duration < MINUTE) {
+    return {
+      absoluteText,
+      relativeText: t('relative-time.just-now', 'just now'),
+      duration: MINUTE - duration,
+    }
+  } else if (duration < HOUR) {
+    return { absoluteText, relativeText, duration: MINUTE }
+  } else if (duration < DAY) {
+    return { absoluteText, relativeText, duration: HOUR }
+  } else if (duration < 7 * DAY) {
+    return { absoluteText, relativeText, duration: 6 * HOUR }
+  } else {
+    if (onlyRelative) {
+      return { absoluteText, relativeText, duration: 6 * HOUR }
+    } else {
+      // More than a week ago, just the date will suffice
+      return {
+        absoluteText,
+        relativeText: formatDate(then, { dateStyle: 'medium' }),
+      }
+    }
+  }
+}
+
 /**
  * An auto-updating component rendering a relative time in human readable form.
  *
@@ -90,44 +146,13 @@ export class RelativeTime extends React.Component<
   private updateWithDate(then: Date) {
     const { onlyRelative } = this.props
 
-    const diff = then.getTime() - Date.now()
-    const duration = Math.abs(diff)
+    const { absoluteText, relativeText, duration } =
+      getRelativeTimeInfoFromDate(then, onlyRelative)
 
-    const absoluteText = formatDate(then, {
-      dateStyle: 'full',
-      timeStyle: 'short',
-    })
-
-    const relativeText = formatRelative(diff)
-
-    // Future date, let's just show as absolute and reschedule. If it's less
-    // than a minute into the future we'll treat it as 'just now'.
-    const justNow = t('relative-time.just-now', 'just now')
-
-    if (diff > 0 && duration > MINUTE) {
-      this.updateAndSchedule(
-        absoluteText,
-        formatDate(then, { dateStyle: 'medium', timeStyle: 'short' }),
-        duration
-      )
-    } else if (duration < MINUTE) {
-      this.updateAndSchedule(absoluteText, justNow, MINUTE - duration)
-    } else if (duration < HOUR) {
-      this.updateAndSchedule(absoluteText, relativeText, MINUTE)
-    } else if (duration < DAY) {
-      this.updateAndSchedule(absoluteText, relativeText, HOUR)
-    } else if (duration < 7 * DAY) {
-      this.updateAndSchedule(absoluteText, relativeText, 6 * HOUR)
+    if (duration !== undefined) {
+      this.updateAndSchedule(absoluteText, relativeText, duration)
     } else {
-      if (onlyRelative) {
-        this.updateAndSchedule(absoluteText, relativeText, 6 * HOUR)
-      } else {
-        // More than a week ago, just the date will suffice
-        this.setState({
-          absoluteText,
-          relativeText: formatDate(then, { dateStyle: 'medium' }),
-        })
-      }
+      this.setState({ absoluteText, relativeText })
     }
   }
 
