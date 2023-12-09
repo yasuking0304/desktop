@@ -11,7 +11,9 @@
     "github-desktop-may-release-updates": "GitHub Desktop may release updates to our user base gradually to\n               ensure we catch any problems early. This lets you bypass the\n               gradual rollout and jump straight to the latest version\n               if there's one available.",
     "license-and-open-source-notices": "License and Open Source Notices",
     "looking-for-the-latest-features": "Looking for the latest features?",
+    "no-longer-supported-operating-systems": "This operating system is no longer supported. Software updates have\n              been disabled. ",
     "quit-and-install-update": "Quit and Install Update",
+    "supported-operating-systems": "Supported operating systems",
     "terms-and-conditions": "Terms and Conditions",
     "update-has-been-downloaded-and-is-ready": "An update has been downloaded and is ready to be installed.",
     "you-have-the-latest-version-1": "You have the latest version (last checked ",
@@ -42,7 +44,6 @@
     "use-system-openssh": "Use system OpenSSH (recommended)"
   },
   "app": {
-    "adding-this-feature": "Adding this feature",
     "current-repository": "Current repository",
     "current-repository-darwin": "Current Repository",
     "no-repositories": "No repositories",
@@ -253,6 +254,8 @@
   "commit-list-item": {
     "amend-commit": "Amend commit…",
     "amend-commit-darwin": "Amend Commit…",
+    "checkout-commit": "Checkout commit",
+    "checkout-commit-darwin": "Checkout Commit",
     "cherry-pick-commit": "Cherry-pick commit…",
     "cherry-pick-commit-darwin": "Cherry-pick Commit…",
     "cherry-pick-commits": "Cherry-pick {{0}} commits…",
@@ -264,6 +267,16 @@
     "create-branch-from-commit-darwin": "Create Branch from Commit",
     "detele-tag": "Delete tag {{0}}",
     "empty-commit-message": "Empty commit message",
+    "reorder-choose-locate-1": "Use ",
+    "reorder-choose-locate-2": "to choose a new location.",
+    "reorder-comfirm-locate-1": "Press ",
+    "reorder-comfirm-locate-2": "to confirm.",
+    "reorder-commit": "Reorder commit",
+    "reorder-commit-darwin": "Reorder Commit",
+    "reorder-commits": "Reorder {{0}} commits…",
+    "reorder-commits-darwin": "Reorder {{0}} Commits…",
+    "reorder-commits-title": "Reorder commits",
+    "reorder-commits-title-darwin": "Reorder Commits",
     "reset-to-commit": "Reset to commit…",
     "reset-to-commit-darwin": "Reset to Commit…",
     "Revert-changes-in-commit": "Revert changes in commit",
@@ -392,8 +405,10 @@
     "settings": "Settings",
     "sign-in": "Sign in",
     "sign-in-darwin": "Sign In",
-    "sign-out": "Sign out",
-    "sign-out-darwin": "Sign Out",
+    "sign-into": "Sign into",
+    "sign-into-darwin": "Sign Into",
+    "sign-out": "Sign out of",
+    "sign-out-darwin": "Sign Out of",
     "undo": "Undo",
     "update": "Update",
     "username-or-email": "Username or email address",
@@ -458,6 +473,9 @@
     "the-repository-will-be-removed": "The repository will be removed from GitHub Desktop:",
     "you-want-to-remove-repository-1": "Are you sure you want to remove the repository \"",
     "you-want-to-remove-repository-2": "\" from GitHub Desktop?"
+  },
+  "copy-button": {
+    "copied": "Copied!"
   },
   "core": {
     "error": {
@@ -583,7 +601,7 @@
     "delete-tag-darwin": "Delete Tag"
   },
   "diff-options": {
-    "caption-diff": "Diff ",
+    "caption-diff": "Diff {{0}}",
     "caption-options": "Options",
     "caption-options-darwin": "Settings",
     "diff-display": "Diff display",
@@ -643,6 +661,15 @@
   "enterprise-server-entry": {
     "enterprise-or-ae-address": "Enterprise or AE address"
   },
+  "expandable-commit-summary": {
+    "added-lines": "{{0}} added lines",
+    "collapse": "Collapse",
+    "collapse-commit-details": "Collapse commit details",
+    "copy-the-full-sha": "Copy the full SHA",
+    "expand": "Expand",
+    "expand-commit-details": "Expand commit details",
+    "removed-lines": "{{0}} removed lines"
+  },
   "fetch": {
     "fetching": "Fetching {{0}}"
   },
@@ -684,7 +711,9 @@
   },
   "git": {
     "default-branch-name-for-new-repositories": "Default branch name for new repositories",
-    "edit-your-global-git-config": "These preferences will edit your global Git config.",
+    "edit-your-global-git-config-1": "These preferences will ",
+    "edit-your-global-git-config-2": "edit your global Git config",
+    "edit-your-global-git-config-3": ".",
     "invalid-branch-name-1": " ",
     "invalid-branch-name-2": " is an invalid branch name.",
     "radio-button-other": "Other…",
@@ -837,7 +866,7 @@
     "preview-pull-request-darwin": "Preview Pull Request",
     "pull": "Pu&ll",
     "pull-darwin": "Pull",
-    "pull-request-check-run-failed": "Pull Request Check Run Failed",
+    "pull-request-check-run-failed": "Show App Error",
     "push": "P&ush",
     "push-darwin": "Push",
     "rebase-current-branch": "R&ebase current branch…",
@@ -1357,7 +1386,6 @@
     "discard": "Discard",
     "file-does-not-exist": "File does not exist on {{0}}.",
     "manual-conflict": "Manual conflict",
-    "no-conflicts-remaining": "No conflicts remaining",
     "no-editor-configured": "No editor configured in Options > Advanced",
     "no-editor-configured-darwin": "No editor configured in Preferences > Advanced",
     "number-onflicts": "{{0}} conflicts",
@@ -1439,6 +1467,9 @@
     "your-default-editor-is-2": ". You can change your preferred editor in ",
     "your-default-editor-is-3": " "
   },
+  "unmerged-file": {
+    "no-conflicts-remaining": "No conflicts remaining"
+  },
   "unreachable-commits-dialog": {
     "about-unreachable-commits": "Learn more about unreachable commits.",
     "commit-reachability": "Commit reachability",
@@ -1485,6 +1516,7 @@
     "github-desktop-issue-linux": "https://github.com/shiftkey/desktop/issues/new/choose",
     "keyboard-shortcuts": "https://docs.github.com/en/desktop/installing-and-configuring-github-desktop/overview/keyboard-shortcuts",
     "show-user-guides": "https://docs.github.com/en/desktop",
+    "supported-operating-systems-for-github-desktop": "https://docs.github.com/en/desktop/installing-and-configuring-github-desktop/overview/supported-operating-systems",
     "why-are-my-commits-linked-to-the-wrong-user": "https://docs.github.com/en/github/committing-changes-to-your-project/why-are-my-commits-linked-to-the-wrong-user"
   },
   "warn-force-push-dialog": {

@@ -252,7 +252,7 @@ export class PullRequestList extends React.Component<
       prNumber === selectedPullRequest.pullRequestNumber
     ) {
       dispatcher.endMultiCommitOperation(repository)
-      dispatcher.recordDragStartedAndCanceled()
+      dispatcher.incrementMetric('dragStartedAndCanceledCount')
       return
     }
 

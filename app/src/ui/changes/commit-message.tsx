@@ -1305,6 +1305,7 @@ export class CommitMessage extends React.Component<
         onClick={this.onSubmit}
         disabled={!buttonEnabled}
         tooltip={tooltip}
+        tooltipDismissable={false}
         onlyShowTooltipWhenOverflowed={buttonEnabled}
       >
         <>
