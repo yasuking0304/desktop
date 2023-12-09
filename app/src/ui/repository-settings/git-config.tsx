@@ -37,9 +37,12 @@ export class GitConfig extends React.Component<IGitConfigProps> {
   private renderConfigOptionLabel = (key: GitConfigLocation) => {
     switch (key) {
       case GitConfigLocation.Global:
-        return 'Use my global Git config'
+        return t(
+          'git-config.use-my-global-git-config',
+          'Use my global Git config'
+        )
       case GitConfigLocation.Local:
-        return 'Use a local Git config'
+        return t('git-config.use-a-local-git-config', 'Use a local Git config')
       default:
         return assertNever(key, `Unknown git config location: ${key}`)
     }

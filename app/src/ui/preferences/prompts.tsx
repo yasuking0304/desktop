@@ -139,11 +139,20 @@ export class Prompts extends React.Component<
   private renderSwitchBranchOptionLabel = (key: UncommittedChangesStrategy) => {
     switch (key) {
       case UncommittedChangesStrategy.AskForConfirmation:
-        return 'Ask me where I want the changes to go'
+        return t(
+          'prompts.ask-me-where-i-want-the-changes-to-go',
+          'Ask me where I want the changes to go'
+        )
       case UncommittedChangesStrategy.MoveToNewBranch:
-        return 'Always bring my changes to my new branch'
+        return t(
+          'prompts.always-bring-my-changes-to-my-new-branch',
+          'Always bring my changes to my new branch'
+        )
       case UncommittedChangesStrategy.StashOnCurrentBranch:
-        return 'Always stash and leave my changes on the current branch'
+        return t(
+          'prompts.always-stash-and-leave-my-changes',
+          'Always stash and leave my changes on the current branch'
+        )
       default:
         return assertNever(key, `Unknown uncommitted changes strategy: ${key}`)
     }
@@ -163,7 +172,10 @@ export class Prompts extends React.Component<
     return (
       <div className="advanced-section">
         <h2 id="switch-branch-heading">
-          If I have changes and I switch branches...
+          {t(
+            'prompts.if-i-have-changes-and-i-switch-branches',
+            'If I have changes and I switch branches...'
+          )}
         </h2>
 
         <RadioGroup<UncommittedChangesStrategy>

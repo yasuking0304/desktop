@@ -82,8 +82,8 @@ export class Accounts extends React.Component<IAccountsProps, {}> {
 
   private renderSignIn(type: SignInType) {
     const signInTitle = __DARWIN__
-      ? t('common.sign-in-darwin', 'Sign Into')
-      : t('common.sign-in', 'Sign into')
+      ? t('common.sign-into-darwin', 'Sign Into')
+      : t('common.sign-into', 'Sign into')
     switch (type) {
       case SignInType.DotCom: {
         return (

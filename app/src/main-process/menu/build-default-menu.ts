@@ -706,10 +706,7 @@ export function buildDefaultMenu({
             click: emit('show-thank-you-popup'),
           },
           {
-            label: t(
-              'menu.pull-request-check-run-failed',
-              'Show App Error'
-            ),
+            label: t('menu.pull-request-check-run-failed', 'Show App Error'),
             click: emit('show-app-error'),
           },
         ],

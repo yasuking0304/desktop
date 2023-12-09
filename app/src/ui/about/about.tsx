@@ -177,7 +177,9 @@ export class About extends React.Component<IAboutProps, IAboutState> {
             )
           : ''
 
-        return (
+        return __LINUX__ ? (
+          <></>
+        ) : (
           <Row>
             <Button disabled={disabled} onClick={onClick} tooltip={tooltip}>
               {buttonTitle}
@@ -211,6 +213,9 @@ export class About extends React.Component<IAboutProps, IAboutState> {
   }
 
   private renderUpdateNotAvailable() {
+    if (__LINUX__) {
+      return null
+    }
     const lastCheckedDate = this.state.updateState.lastSuccessfulCheck
 
     // This case is rendered as an error
@@ -288,10 +293,21 @@ export class About extends React.Component<IAboutProps, IAboutState> {
     if (isWindowsAndNoLongerSupportedByElectron()) {
       return (
         <DialogError>
-          This operating system is no longer supported. Software updates have
-          been disabled.{' '}
-          <LinkButton uri="https://docs.github.com/en/desktop/installing-and-configuring-github-desktop/overview/supported-operating-systems">
-            Supported operating systems
+          {t(
+            'about.no-longer-supported-operating-systems',
+            `This operating system is no longer supported. Software updates have
+              been disabled. `
+          )}
+          <LinkButton
+            uri={t(
+              'url.supported-operating-systems-for-github-desktop',
+              'https://docs.github.com/en/desktop/installing-and-configuring-github-desktop/overview/supported-operating-systems'
+            )}
+          >
+            {t(
+              'about.supported-operating-systems',
+              'Supported operating systems'
+            )}
           </LinkButton>
         </DialogError>
       )

@@ -19,6 +19,7 @@ import memoizeOne from 'memoize-one'
 import { Button } from '../lib/button'
 import { Avatar } from '../lib/avatar'
 import { CopyButton } from '../copy-button'
+import { t } from 'i18next'
 
 interface IExpandableCommitSummaryProps {
   readonly repository: Repository
@@ -229,11 +230,23 @@ export class ExpandableCommitSummary extends React.Component<
       <Button
         onClick={isExpanded ? this.onCollapse : this.onExpand}
         className="expander"
-        tooltip={isExpanded ? 'Collapse' : 'Expand'}
+        tooltip={
+          isExpanded
+            ? t('expandable-commit-summary.collapse', 'Collapse')
+            : t('expandable-commit-summary.expand', 'Expand')
+        }
         applyTooltipAriaDescribedBy={false}
         ariaExpanded={isExpanded}
         ariaLabel={
-          isExpanded ? 'Collapse commit details' : 'Expand commit details'
+          isExpanded
+            ? t(
+                'expandable-commit-summary.collapse-commit-details',
+                'Collapse commit details'
+              )
+            : t(
+                'expandable-commit-summary.expand-commit-details',
+                'Expand commit details'
+              )
         }
         ariaControls="expandable-commit-summary"
       >
@@ -458,7 +471,13 @@ export class ExpandableCommitSummary extends React.Component<
       <div className="ecs-meta-item commit-ref">
         <Octicon symbol={OcticonSymbol.gitCommit} />
         <div className="ref selectable">{isExpanded ? sha : shortSha}</div>
-        <CopyButton ariaLabel="Copy the full SHA" copyContent={sha} />
+        <CopyButton
+          ariaLabel={t(
+            'expandable-commit-summary.copy-the-full-sha',
+            'Copy the full SHA'
+          )}
+          copyContent={sha}
+        />
       </div>
     )
   }
@@ -568,13 +587,27 @@ export class ExpandableCommitSummary extends React.Component<
       <div className="ecs-meta-item lines-added-deleted">
         {isExpanded ? <Octicon symbol={OcticonSymbol.diff} /> : null}
         <div className="lines-added">
-          {!isExpanded ? <>+{linesAdded}</> : <>{linesAdded} added lines</>}
+          {!isExpanded ? (
+            <>+{linesAdded}</>
+          ) : (
+            <>
+              {t('expandable-commit-summary.added-lines', '{{0}} added lines', {
+                0: linesAdded,
+              })}
+            </>
+          )}
         </div>
         <div className="lines-deleted">
           {!isExpanded ? (
             <>-{linesDeleted}</>
           ) : (
-            <>{linesDeleted} removed lines</>
+            <>
+              {t(
+                'expandable-commit-summary.removed-lines',
+                '{{0}} removed lines',
+                { 0: linesDeleted }
+              )}
+            </>
           )}
         </div>
       </div>

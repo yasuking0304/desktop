@@ -174,7 +174,7 @@ export function renderBanner(
           timeout={5000}
           onDismissed={onDismissed}
         >
-        {t(
+          {t(
             'render-banner.reorder-of-commit-undone',
             'Reorder of {{0}} {{1}} undone.',
             { 0: banner.commitsCount, 1: pluralized }

@@ -549,8 +549,8 @@ export class CommitList extends React.Component<
 
     const containerWidth = this.containerRef.current?.clientWidth ?? 0
     const reorderCommitsHintTitle = __DARWIN__
-      ? 'Reorder Commits'
-      : 'Reorder commits'
+      ? t('commit-list-item.reorder-commits-title-darwin', 'Reorder Commits')
+      : t('commit-list-item.reorder-commits-title', 'Reorder commits')
 
     return (
       <Popover
@@ -566,12 +566,18 @@ export class CommitList extends React.Component<
       >
         <h4>{reorderCommitsHintTitle}</h4>
         <p>
-          Use <KeyboardShortcut darwinKeys={['↑']} keys={['↑']} />
-          <KeyboardShortcut darwinKeys={['↓']} keys={['↓']} /> to choose a new
-          location.
+          {t('commit-list-item.reorder-choose-locate-1', 'Use ')}
+          <KeyboardShortcut darwinKeys={['↑']} keys={['↑']} />
+          <KeyboardShortcut darwinKeys={['↓']} keys={['↓']} />
+          {t(
+            'commit-list-item.reorder-choose-locate-2',
+            'to choose a new location.'
+          )}
         </p>
         <p>
-          Press <KeyboardShortcut darwinKeys={['⏎']} keys={['⏎']} /> to confirm.
+          {t('commit-list-item.reorder-comfirm-locate-1', 'Press ')}
+          <KeyboardShortcut darwinKeys={['⏎']} keys={['⏎']} />
+          {t('commit-list-item.reorder-comfirm-locate-2', 'to confirm.')}
         </p>
       </Popover>
     )
@@ -706,7 +712,9 @@ export class CommitList extends React.Component<
 
     if (enableCheckoutCommit()) {
       items.push({
-        label: __DARWIN__ ? 'Checkout Commit' : 'Checkout commit',
+        label: __DARWIN__
+          ? t('commit-list-item.checkout-commit-darwin', 'Checkout Commit')
+          : t('commit-list-item.checkout-commit', 'Checkout commit'),
         action: () => {
           this.props.onCheckoutCommit?.(commit)
         },
@@ -715,7 +723,9 @@ export class CommitList extends React.Component<
     }
 
     items.push({
-      label: __DARWIN__ ? 'Reorder Commit' : 'Reorder commit',
+      label: __DARWIN__
+        ? t('commit-list-item.reorder-commit-darwin', 'Reorder Commit')
+        : t('commit-list-item.reorder-commit', 'Reorder commit'),
       action: () => {
         this.props.onKeyboardReorder?.([commit])
       },
@@ -908,8 +918,14 @@ export class CommitList extends React.Component<
       },
       {
         label: __DARWIN__
-          ? `Reorder ${count} Commits…`
-          : `Reorder ${count} commits…`,
+          ? t(
+              'commit-list-item.reorder-commits-darwin',
+              `Reorder {{0}} Commits…`,
+              { 0: count }
+            )
+          : t('commit-list-item.reorder-commits', `Reorder {{0}} commits…`, {
+              0: count,
+            }),
         action: () => this.props.onKeyboardReorder?.(this.selectedCommits),
         enabled: this.canReorder(),
       },

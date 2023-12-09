@@ -9,7 +9,7 @@ import { GitConfigUserForm } from '../lib/git-config-user-form'
 import { t } from 'i18next'
 import { RadioGroup } from '../lib/radio-group'
 
-const otherOption = 'Other…'
+const otherOption = t('git.radio-button-other', 'Other…')
 
 interface IGitProps {
   readonly name: string

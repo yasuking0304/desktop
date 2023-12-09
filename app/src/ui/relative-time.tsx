@@ -78,7 +78,7 @@ export function getRelativeTimeInfoFromDate(
   } else if (duration < MINUTE) {
     return {
       absoluteText,
-      relativeText: 'just now',
+      relativeText: t('relative-time.just-now', 'just now'),
       duration: MINUTE - duration,
     }
   } else if (duration < HOUR) {

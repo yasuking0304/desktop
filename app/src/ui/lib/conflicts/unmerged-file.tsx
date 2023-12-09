@@ -30,7 +30,10 @@ import {
 } from '../../../lib/status'
 import { t } from 'i18next'
 
-const defaultConflictsResolvedMessage = 'No conflicts remaining'
+const defaultConflictsResolvedMessage = t(
+  'unmerged-file.no-conflicts-remaining',
+  'No conflicts remaining'
+)
 
 /**
  * Renders an unmerged file status and associated buttons for the merge conflicts modal
