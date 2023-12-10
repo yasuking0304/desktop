@@ -67,6 +67,9 @@ export class Accounts extends React.Component<IAccountsProps, {}> {
             ? t('common.sign-out-darwin', 'Sign Out of')
             : t('common.sign-out', 'Sign out of')}{' '}
           {accountTypeLabel}
+          {__DARWIN__
+            ? t('common.sign-out-2-darwin', ' ')
+            : t('common.sign-out-2', ' ')}
         </Button>
       </Row>
     )
@@ -84,11 +87,14 @@ export class Accounts extends React.Component<IAccountsProps, {}> {
     const signInTitle = __DARWIN__
       ? t('common.sign-into-darwin', 'Sign Into')
       : t('common.sign-into', 'Sign into')
+    const signInTitle2 = __DARWIN__
+      ? t('common.sign-into-2-darwin', ' ')
+      : t('common.sign-into-2', ' ')
     switch (type) {
       case SignInType.DotCom: {
         return (
           <CallToAction
-            actionTitle={signInTitle + ' GitHub.com'}
+            actionTitle={signInTitle + ' GitHub.com' + signInTitle2}
             onAction={this.onDotComSignIn}
           >
             <div>
@@ -104,7 +110,7 @@ export class Accounts extends React.Component<IAccountsProps, {}> {
       case SignInType.Enterprise:
         return (
           <CallToAction
-            actionTitle={signInTitle + ' GitHub Enterprise'}
+            actionTitle={signInTitle + ' GitHub Enterprise' + signInTitle2}
             onAction={this.onEnterpriseSignIn}
           >
             <div>
