@@ -1,4 +1,5 @@
 import { invokeContextualMenu } from '../ui/main-process-proxy'
+import { t } from 'i18next'
 
 export interface IMenuItem {
   /** The user-facing label. */
@@ -92,6 +93,36 @@ export async function showContextualMenu(
       menuItem.action()
     }
   }
+}
+
+/**
+ * If "role: 'editMenu'" of React menu-item API is used,
+ * it cannot be translated, so expand it.
+ *   exchange [{role:'editMenu'}] to [
+ *     {role:'undo'},{role:'redo'},
+ *       {type:'separator'},
+ *     {role:'cut'},{role:'copy'},{role:'paste'},{role:'delete'},
+ *       {type:'separator'},
+ *     {role:'selectAll'}
+ *   ]
+ *
+ * see https://www.electronjs.org/docs/latest/api/menu-item
+ *
+ * @returns IMenuItem[]
+ */
+export function getEditMenuItemOfReact() {
+  const items: IMenuItem[] = [
+    { role: 'undo', label: t('common.undo', 'Undo') },
+    { role: 'redo', label: t('common.redo', 'Redo') },
+    { type: 'separator' },
+    { role: 'cut', label: t('common.cut', 'Cut') },
+    { role: 'copy', label: t('common.copy', 'Copy') },
+    { role: 'paste', label: t('common.paste', 'Paste') },
+    { role: 'delete', label: t('common.delete', 'Delete') },
+    { type: 'separator' },
+    { role: 'selectAll', label: t('common.select-all', 'Select All') },
+  ]
+  return items
 }
 
 /**

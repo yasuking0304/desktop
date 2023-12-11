@@ -23,7 +23,7 @@ import { CommitWarning, CommitWarningIcon } from './commit-warning'
 import { LinkButton } from '../lib/link-button'
 import { Foldout, FoldoutType } from '../../lib/app-state'
 import { IAvatarUser, getAvatarUserFromAuthor } from '../../models/avatar'
-import { showContextualMenu } from '../../lib/menu-item'
+import { showContextualMenu, getEditMenuItemOfReact } from '../../lib/menu-item'
 import { Account } from '../../models/account'
 import {
   CommitMessageAvatar,
@@ -805,15 +805,12 @@ export class CommitMessage extends React.Component<
     const items: IMenuItem[] = [
       this.getAddRemoveCoAuthorsMenuItem(),
       { type: 'separator' },
-      { role: 'editMenu' },
+      ...getEditMenuItemOfReact(),
       { type: 'separator' },
-    ]
-
-    items.push(
       this.getCommitSpellcheckEnabilityMenuItem(
         this.props.commitSpellcheckEnabled
-      )
-    )
+      ),
+    ]
 
     showContextualMenu(items, true)
   }
