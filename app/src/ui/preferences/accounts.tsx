@@ -64,8 +64,8 @@ export class Accounts extends React.Component<IAccountsProps, {}> {
         </div>
         <Button onClick={this.logout(account)}>
           {__DARWIN__
-            ? t('common.sign-out-darwin', 'Sign Out of')
-            : t('common.sign-out', 'Sign out of')}{' '}
+            ? t('common.sign-out-1-darwin', 'Sign Out of')
+            : t('common.sign-out-1', 'Sign out of')}{' '}
           {accountTypeLabel}
           {__DARWIN__
             ? t('common.sign-out-2-darwin', ' ')
@@ -85,8 +85,8 @@ export class Accounts extends React.Component<IAccountsProps, {}> {
 
   private renderSignIn(type: SignInType) {
     const signInTitle = __DARWIN__
-      ? t('common.sign-into-darwin', 'Sign Into')
-      : t('common.sign-into', 'Sign into')
+      ? t('common.sign-into-1-darwin', 'Sign Into')
+      : t('common.sign-into-1', 'Sign into')
     const signInTitle2 = __DARWIN__
       ? t('common.sign-into-2-darwin', ' ')
       : t('common.sign-into-2', ' ')
