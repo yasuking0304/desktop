@@ -110,12 +110,17 @@ export class Notifications extends React.Component<
     if (suggestGrantNotificationPermission) {
       return (
         <>
-          {' '}
-          You need to{' '}
+          {t('notifications.you-need-to-grant-permission-1', ' You need to ')}
           <LinkButton onClick={this.onGrantNotificationPermission}>
-            grant permission
-          </LinkButton>{' '}
-          to display these notifications from GitHub Desktop.
+            {t(
+              'notifications.you-need-to-grant-permission-2',
+              'grant permission'
+            )}
+          </LinkButton>
+          {t(
+            'notifications.you-need-to-grant-permission-3',
+            ' to display these notifications from GitHub Desktop.'
+          )}
         </>
       )
     }

@@ -1103,7 +1103,10 @@
     "make-sure-notifications-2": ".",
     "notifications": "Notifications",
     "notifications-settings": "Notifications Settings",
-    "properly-configured": "properly configured"
+    "properly-configured": "properly configured",
+    "you-need-to-grant-permission-1": " You need to ",
+    "you-need-to-grant-permission-2": "grant permission",
+    "you-need-to-grant-permission-3": " to display these notifications from GitHub Desktop."
   },
   "open-file": {
     "unable-to-open-file": "Unable to open file {{0}} in an external program.\n         Please check you have a program associated with this file extension"
