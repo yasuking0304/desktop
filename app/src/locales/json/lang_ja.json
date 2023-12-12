@@ -719,9 +719,9 @@
   },
   "git": {
     "default-branch-name-for-new-repositories": "新しいリポジトリのデフォルトのブランチ名",
-    "edit-your-global-git-config-1": "These preferences will ",
-    "edit-your-global-git-config-2": "edit your global Git config",
-    "edit-your-global-git-config-3": ".",
+    "edit-your-global-git-config-1": "これらの設定は、",
+    "edit-your-global-git-config-2": "あなたのグローバルの Git 構成を編集",
+    "edit-your-global-git-config-3": "することになります。",
     "invalid-branch-name-1": "",
     "invalid-branch-name-2": " は無効なブランチ名です。",
     "radio-button-other": "その他…",
@@ -1103,7 +1103,10 @@
     "make-sure-notifications-2": " で GitHub Desktop が{{0}}ことを確認してください。",
     "notifications": "通知",
     "notifications-settings": "通知とアクション の設定",
-    "properly-configured": "正しく設定されている"
+    "properly-configured": "正しく設定されている",
+    "you-need-to-grant-permission-1": " GitHub Desktop からこれらの通知を表示するには、",
+    "you-need-to-grant-permission-2": "アクセス許可を付与",
+    "you-need-to-grant-permission-3": "する必要があります。"
   },
   "open-file": {
     "unable-to-open-file": "{{0}} を開くことが出来ません。このファイルの拡張子にプログラムが関連付けされているか確認してください"
