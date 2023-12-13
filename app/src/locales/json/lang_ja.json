@@ -734,9 +734,13 @@
     "use-my-global-git-config": "グローバルの Git 構成を使用する"
   },
   "git-email-not-found-warning": {
+    "does-not-match": "存在していません",
     "edither-your-account": "GitHub.com アカウントまたは GitHub Enterprise アカウントのいずれか",
     "learn-more": "詳細情報",
     "learn-more-about": "詳しくはコミットユーザについてをご覧ください",
+    "matchs": "存在しています",
+    "this-email-address": "このメールアドレスは {{1}}に{{0}}。{{2}}",
+    "wrongly-attributed": "あなたのコミットは間違ったユーザにリンクされるかも知れません。 ",
     "your-account": "{{0}} アカウント"
   },
   "git-ignore": {
