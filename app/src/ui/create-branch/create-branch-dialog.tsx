@@ -591,8 +591,12 @@ export class CreateBranch extends React.Component<
               <Ref>{currentBranchName}</Ref>
               {t(
                 'create-branch-dialog.new-branch-will-be-checked-out-branch-4',
-                'is the {{0}} for your repository.',
-                { 0: defaultBranchLink }
+                'is the '
+              )}
+              {defaultBranchLink}
+              {t(
+                'create-branch-dialog.new-branch-will-be-checked-out-branch-5',
+                ' for your repository.'
               )}
             </>
           )}
@@ -659,9 +663,9 @@ export class CreateBranch extends React.Component<
           {defaultBranchLink}
           {t('create-branch-dialog.new-branch-will-be-based-on-3', ' (')}
           <Ref>{upstreamDefaultBranch.nameWithoutRemote}</Ref>
-          {t('create-branch-dialog.new-branch-will-be-based-on-4', '){{0}}.', {
-            0: this.renderForkLinkSuffix(),
-          })}
+          {t('create-branch-dialog.new-branch-will-be-based-on-4', ')')}
+          {this.renderForkLinkSuffix()}
+          {t('create-branch-dialog.new-branch-will-be-based-on-5', '.')}
         </div>
       )
     } else {
