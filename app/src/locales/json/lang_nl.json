@@ -395,7 +395,7 @@
     "other": "Other",
     "overwrite": "Overwrite",
     "password": "Password",
-    "paste": "Delete",
+    "paste": "Paste",
     "preferences": "Preferences",
     "pulling": "Pulling {{0}}",
     "redo": "Redo",
@@ -537,11 +537,13 @@
     "new-branch-will-be-based-on-1": "Your new branch will be based on ",
     "new-branch-will-be-based-on-2": "'s ",
     "new-branch-will-be-based-on-3": " (",
-    "new-branch-will-be-based-on-4": "){{0}}.",
+    "new-branch-will-be-based-on-4": ")",
+    "new-branch-will-be-based-on-5": ".",
     "new-branch-will-be-checked-out-branch-1": "Your new branch will be based on your currently checked out\n            branch (",
     "new-branch-will-be-checked-out-branch-2": ")",
     "new-branch-will-be-checked-out-branch-3": ". ",
-    "new-branch-will-be-checked-out-branch-4": "is the {{0}} for your repository."
+    "new-branch-will-be-checked-out-branch-4": "is the ",
+    "new-branch-will-be-checked-out-branch-5": " for your repository."
   },
   "create-repository": {
     "add-this-repository": "add this repository",

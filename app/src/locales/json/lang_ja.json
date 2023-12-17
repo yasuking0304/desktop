@@ -534,14 +534,16 @@
       "unknown-tip-kind": "Unknown tip kind {{0}}"
     },
     "fork-behavior-settings": "フォークの動作設定",
-    "new-branch-will-be-based-on-1": "Your new branch will be based on ",
-    "new-branch-will-be-based-on-2": "'s ",
+    "new-branch-will-be-based-on-1": "新しいブランチは、",
+    "new-branch-will-be-based-on-2": "のブランチ",
     "new-branch-will-be-based-on-3": " (",
-    "new-branch-will-be-based-on-4": "){{0}}.",
-    "new-branch-will-be-checked-out-branch-1": "Your new branch will be based on your currently checked out branch (",
-    "new-branch-will-be-checked-out-branch-2": ")",
-    "new-branch-will-be-checked-out-branch-3": ". ",
-    "new-branch-will-be-checked-out-branch-4": "is the {{0}} for your repository."
+    "new-branch-will-be-based-on-4": ")が基点になっています",
+    "new-branch-will-be-based-on-5": "。",
+    "new-branch-will-be-checked-out-branch-1": "新しいブランチは、現在チェックアウトされているブランチ(",
+    "new-branch-will-be-checked-out-branch-2": ")が基点になっており",
+    "new-branch-will-be-checked-out-branch-3": "。 ",
+    "new-branch-will-be-checked-out-branch-4": "はあなたのリポジトリの",
+    "new-branch-will-be-checked-out-branch-5": "です。"
   },
   "create-repository": {
     "add-this-repository": "このリポジトリを追加",
