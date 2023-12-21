@@ -662,7 +662,7 @@
     "open-in-browser-darwin": "Open in Browser",
     "work-on-an-existing-project": "Work on an existing project in GitHub Desktop",
     "you-re-done": "You're done!",
-    "you-ve-learned-the-basics": "You’ve learned the basics on how to use GitHub Desktop. Here\n                 are some suggestions for what to do next."
+    "you-ve-learned-the-basics": "You've learned the basics on how to use GitHub Desktop. Here\n                 are some suggestions for what to do next."
   },
   "editor-error": {
     "open-options": "Open options",
@@ -678,7 +678,11 @@
     "copy-the-full-sha": "Copy the full SHA",
     "expand": "Expand",
     "expand-commit-details": "Expand commit details",
-    "removed-lines": "{{0}} removed lines"
+    "not-included": " not included.",
+    "number-unreachable-commits": "{{0}} unreachable {{1}}",
+    "removed-lines": "{{0}} removed lines",
+    "showing-changes-from-1": "Showing changes from ",
+    "showing-changes-from-2": "{{0}} {{1}}"
   },
   "fetch": {
     "fetching": "Fetching {{0}}"
@@ -724,11 +728,10 @@
     "edit-your-global-git-config-1": "These preferences will ",
     "edit-your-global-git-config-2": "edit your global Git config",
     "edit-your-global-git-config-3": ".",
-    "invalid-branch-name-1": " ",
-    "invalid-branch-name-2": " is an invalid branch name.",
-    "radio-button-other": "Other…",
-    "save-sanitized-branch-name-1": "Will be saved as ",
-    "save-sanitized-branch-name-2": " "
+    "gitHub-default-branch-description-1": "GitHub's default branch name is ",
+    "gitHub-default-branch-description-2": ". ",
+    "gitHub-default-branch-description-3": "You may want to\n          change it due to different workflows, or because your integrations\n          still require the historical default branch name of ",
+    "gitHub-default-branch-description-4": "."
   },
   "git-config": {
     "for-this-repository": "For this repository I wish to",
@@ -1244,8 +1247,11 @@
     "you-are-not-able-to-rebase": "You are not able to rebase this branch onto itself"
   },
   "ref-name-text-box": {
+    "created": "created",
+    "get-warning-message-as-string": "Warning: Will be {{0}} as {{1}} (with spaces replaced by hyphens).",
     "is-not-a-valid-name": " is not a valid name.",
-    "will-be-created-as-1": "Will be created as ",
+    "warning-not-a-valid-name": "Warning: {{0}} is not a valid name.",
+    "will-be-created-as-1": "Will be {{0}} as ",
     "will-be-created-as-2": "."
   },
   "relative-time": {
