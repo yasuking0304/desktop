@@ -300,9 +300,6 @@ export class CommitList extends React.Component<
         onRenderCommitDragElement={this.onRenderCommitDragElement}
         onRemoveDragElement={this.props.onRemoveCommitDragElement}
         disableSquashing={this.props.disableSquashing}
-        isMultiCommitOperationInProgress={
-          this.props.isMultiCommitOperationInProgress
-        }
       />
     )
   }

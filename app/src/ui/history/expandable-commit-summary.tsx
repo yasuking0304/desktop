@@ -383,7 +383,10 @@ export class ExpandableCommitSummary extends React.Component<
       return
     }
 
-    const commitsPluralized = excludedCommitsCount > 1 ? 'commits' : 'commit'
+    const commitsPluralized =
+      excludedCommitsCount > 1
+        ? t('common.multiple-commits', 'commits')
+        : t('common.one-or-less-commit', 'commit')
 
     return (
       // eslint-disable-next-line jsx-a11y/mouse-events-have-key-events
@@ -394,9 +397,13 @@ export class ExpandableCommitSummary extends React.Component<
       >
         <Octicon symbol={OcticonSymbol.info} />
         <LinkButton onClick={this.showUnreachableCommits}>
-          {excludedCommitsCount} unreachable {commitsPluralized}
-        </LinkButton>{' '}
-        not included.
+          {t(
+            'expandable-commit-summary.number-unreachable-commits',
+            '{{0}} unreachable {{1}}',
+            { 0: excludedCommitsCount, 1: commitsPluralized }
+          )}
+        </LinkButton>
+        {t('expandable-commit-summary.not-included', ' not included.')}
       </div>
     )
   }
@@ -502,11 +509,17 @@ export class ExpandableCommitSummary extends React.Component<
       shasInDiff
     )
     const numInDiff = selectedCommits.length - commitsNotInDiff
-    const commitsPluralized = numInDiff > 1 ? 'commits' : 'commit'
+    const commitsPluralized =
+      numInDiff > 1
+        ? t('common.multiple-commits', 'commits')
+        : t('common.one-or-less-commit', 'commit')
 
     return (
       <>
-        Showing changes from{' '}
+        {t(
+          'expandable-commit-summary.showing-changes-from-1',
+          'Showing changes from '
+        )}
         {commitsNotInDiff > 0 ? (
           <LinkButton
             className="commits-in-diff"
@@ -514,12 +527,20 @@ export class ExpandableCommitSummary extends React.Component<
             onMouseOut={this.onRemoveHighlightOfShas}
             onClick={this.showReachableCommits}
           >
-            {numInDiff} {commitsPluralized}
+            {t(
+              'expandable-commit-summary.showing-changes-from-2',
+              '{{0}} {{1}}',
+              { 0: numInDiff, 1: commitsPluralized }
+            )}
           </LinkButton>
         ) : (
           <>
             {' '}
-            {numInDiff} {commitsPluralized}
+            {t(
+              'expandable-commit-summary.showing-changes-from-2',
+              '{{0}} {{1}}',
+              { 0: numInDiff, 1: commitsPluralized }
+            )}
           </>
         )}
       </>

@@ -753,6 +753,9 @@ export class AppStore extends TypedBaseStore<IAppState> {
         this.statsStore.recordTutorialPrCreated()
         this.statsStore.recordTutorialCompleted()
         break
+      case TutorialStep.Announced:
+        // don't need to record anything for announcment
+        break
       default:
         assertNever(step, 'Unaccounted for step type')
     }
@@ -780,6 +783,11 @@ export class AppStore extends TypedBaseStore<IAppState> {
    */
   public async _markPullRequestTutorialStepAsComplete(repository: Repository) {
     this.tutorialAssessor.markPullRequestTutorialStepAsComplete()
+    await this.updateCurrentTutorialStep(repository)
+  }
+
+  public async _markTutorialCompletionAsAnnounced(repository: Repository) {
+    this.tutorialAssessor.markTutorialCompletionAsAnnounced()
     await this.updateCurrentTutorialStep(repository)
   }
 
@@ -6334,10 +6342,6 @@ export class AppStore extends TypedBaseStore<IAppState> {
     const baseURL = `${htmlURL}/pull/new/${compareString}`
 
     await this._openInBrowser(baseURL)
-
-    if (this.currentOnboardingTutorialStep === TutorialStep.OpenPullRequest) {
-      this._markPullRequestTutorialStepAsComplete(repository)
-    }
   }
 
   public async _updateExistingUpstreamRemote(
@@ -7462,8 +7466,6 @@ export class AppStore extends TypedBaseStore<IAppState> {
   public onChecksFailedNotification = async (
     repository: RepositoryWithGitHubRepository,
     pullRequest: PullRequest,
-    commitMessage: string,
-    commitSha: string,
     checks: ReadonlyArray<IRefCheck>
   ) => {
     const selectedRepository =
@@ -7474,8 +7476,6 @@ export class AppStore extends TypedBaseStore<IAppState> {
       pullRequest,
       repository,
       shouldChangeRepository: true,
-      commitMessage,
-      commitSha,
       checks,
     }
 
