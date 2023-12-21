@@ -678,7 +678,11 @@
     "copy-the-full-sha": "SHA をフル桁でコピー",
     "expand": "展開する",
     "expand-commit-details": "コミット詳細を展開する",
-    "removed-lines": "{{0}} ファイル削除"
+    "not-included": "を除外しています。",
+    "number-unreachable-commits": "到達不能な {{0}}{{1}}",
+    "removed-lines": "{{0}} ファイル削除",
+    "showing-changes-from-1": "変更の表示: ",
+    "showing-changes-from-2": "{{0}} {{1}}"
   },
   "fetch": {
     "fetching": "{{0}} をフェッチ中"
@@ -724,11 +728,10 @@
     "edit-your-global-git-config-1": "これらの設定は、",
     "edit-your-global-git-config-2": "あなたのグローバルの Git 構成を編集",
     "edit-your-global-git-config-3": "することになります。",
-    "invalid-branch-name-1": "",
-    "invalid-branch-name-2": " は無効なブランチ名です。",
-    "radio-button-other": "その他…",
-    "save-sanitized-branch-name-1": " ",
-    "save-sanitized-branch-name-2": " として保存されます"
+    "gitHub-default-branch-description-1": "GitHub のデフォルトのブランチ名は ",
+    "gitHub-default-branch-description-2": "です。 ",
+    "gitHub-default-branch-description-3": " ワークフローが異なったり統合する過程で ",
+    "gitHub-default-branch-description-4": " という過去のデフォルトのブランチ名が依然として必要なため、これを変更することが必要になる場合があります。"
   },
   "git-config": {
     "for-this-repository": "このリポジトリで使用する名前とメールアドレス",
@@ -1244,9 +1247,12 @@
     "you-are-not-able-to-rebase": "このブランチをそれ自体にリベースすることはできません"
   },
   "ref-name-text-box": {
+    "created": "作成",
+    "get-warning-message-as-string": "警告: {{1}} として{{0}}されます。(スペースは'-'に置き換えられます).",
     "is-not-a-valid-name": " は有効な名前ではありません。",
+    "warning-not-a-valid-name": "警告: {{0}} は有効な名前ではありません。",
     "will-be-created-as-1": " ",
-    "will-be-created-as-2": " として作成されます。"
+    "will-be-created-as-2": " として{{0}}されます。"
   },
   "relative-time": {
     "just-now": "たった今"

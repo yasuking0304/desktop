@@ -1196,7 +1196,6 @@ export class App extends React.Component<IAppProps, IAppState> {
               this.props.dispatcher.showFoldout({
                 type: FoldoutType.AppMenu,
                 enableAccessKeyNavigation: true,
-                openedWithAccessKey: true,
               })
             } else {
               this.props.dispatcher.executeMenuItem(menuItemForAccessKey)
@@ -1238,7 +1237,6 @@ export class App extends React.Component<IAppProps, IAppState> {
             this.props.dispatcher.showFoldout({
               type: FoldoutType.AppMenu,
               enableAccessKeyNavigation: true,
-              openedWithAccessKey: false,
             })
           }
         }
@@ -2345,8 +2343,6 @@ export class App extends React.Component<IAppProps, IAppState> {
             shouldChangeRepository={popup.shouldChangeRepository}
             repository={popup.repository}
             pullRequest={popup.pullRequest}
-            commitMessage={popup.commitMessage}
-            commitSha={popup.commitSha}
             checks={popup.checks}
             accounts={this.state.accounts}
             onSubmit={onPopupDismissedFn}
@@ -2407,7 +2403,6 @@ export class App extends React.Component<IAppProps, IAppState> {
             pullRequest={popup.pullRequest}
             review={popup.review}
             emoji={this.state.emoji}
-            accounts={this.state.accounts}
             onSubmit={onPopupDismissedFn}
             onDismissed={onPopupDismissedFn}
           />
@@ -2533,7 +2528,6 @@ export class App extends React.Component<IAppProps, IAppState> {
             pullRequest={popup.pullRequest}
             comment={popup.comment}
             emoji={this.state.emoji}
-            accounts={this.state.accounts}
             onSubmit={onPopupDismissedFn}
             onDismissed={onPopupDismissedFn}
           />
@@ -3348,7 +3342,6 @@ export class App extends React.Component<IAppProps, IAppState> {
     return (
       <Welcome
         dispatcher={this.props.dispatcher}
-        optOut={this.state.optOutOfUsageTracking}
         accounts={this.state.accounts}
         signInState={this.state.signInState}
       />

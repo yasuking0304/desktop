@@ -40,7 +40,6 @@ interface ICommitProps {
   readonly showUnpushedIndicator: boolean
   readonly unpushedIndicatorTitle?: string
   readonly disableSquashing?: boolean
-  readonly isMultiCommitOperationInProgress?: boolean
 }
 
 interface ICommitListItemState {
@@ -228,7 +227,7 @@ function renderRelativeTime(date: Date) {
   return (
     <>
       {` • `}
-      <RelativeTime date={date} abbreviate={true} />
+      <RelativeTime date={date} />
     </>
   )
 }
