@@ -95,14 +95,18 @@ export function buildDefaultMenu({
         separator,
         {
           role: 'services',
+          label: t('menu.services', 'services'),
           submenu: [],
         },
         separator,
-        { role: 'hide' },
-        { role: 'hideOthers' },
-        { role: 'unhide' },
+        { role: 'hide', label: t('menu.hide', 'Hide GitHub Desktop') },
+        {
+          role: 'hideOthers',
+          label: t('menu.hide-others', 'Hide Others'),
+        },
+        { role: 'unhide', label: t('menu.show-all', 'Show All') },
         separator,
-        { role: 'quit' },
+        { role: 'quit', label: t('menu.quit', 'Quit GitHub Desktop') },
       ],
     })
   }
@@ -586,12 +590,13 @@ export function buildDefaultMenu({
   if (__DARWIN__) {
     template.push({
       role: 'window',
+      label: t('menu.window-darwin', 'Window'),
       submenu: [
-        { role: 'minimize' },
-        { role: 'zoom' },
-        { role: 'close' },
+        { role: 'minimize', label: t('menu.minimize-darwin', 'Minimize') },
+        { role: 'zoom', label: t('menu.zoom-darwin', 'Zoom') },
+        { role: 'close', label: t('menu.close-darwin', 'close Window') },
         separator,
-        { role: 'front' },
+        { role: 'front', label: t('menu.front-darwin', 'Bring All to Front') },
       ],
     })
   }
@@ -772,6 +777,7 @@ export function buildDefaultMenu({
   if (__DARWIN__) {
     template.push({
       role: 'help',
+      label: t('menu.help-darwin', 'Help'),
       submenu: helpItems,
     })
   } else {

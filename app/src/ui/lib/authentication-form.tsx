@@ -10,10 +10,13 @@ import { Errors } from './errors'
 import { getDotComAPIEndpoint } from '../../lib/api'
 import { HorizontalRule } from './horizontal-rule'
 import { PasswordTextBox } from './password-text-box'
+import { t } from 'i18next'
 
 /** Text to let the user know their browser will send them back to GH Desktop */
-export const BrowserRedirectMessage =
+export const BrowserRedirectMessage = t(
+  'authentication-form.your-browser-will-redirect',
   "Your browser will redirect you back to GitHub Desktop once you've signed in. If your browser asks for your permission to launch GitHub Desktop please allow it to."
+)
 
 interface IAuthenticationFormProps {
   /**

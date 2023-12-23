@@ -75,6 +75,9 @@
     "system": "System",
     "theme": "Theme"
   },
+  "authentication-form": {
+    "your-browser-will-redirect": "Your browser will redirect you back to GitHub Desktop once you've signed in. If your browser asks for your permission to launch GitHub Desktop please allow it to."
+  },
   "binary-file": {
     "open-file-in-external-program": "Open file in external program.",
     "this-binary-file-has-changed": "This binary file has changed."
@@ -794,6 +797,7 @@
     "branch-darwin": "Branch",
     "clone-repository": "Clo&ne repository…",
     "clone-repository-darwin": "Clone Repository…",
+    "close-darwin": "close Window",
     "collapse-expanded-lines": "Collapse expanded lines",
     "collapse-expanded-lines-darwin": "Collapse Expanded Lines",
     "compare-on-github": "Compare on &GitHub",
@@ -855,12 +859,17 @@
     "find-darwin": "Find",
     "force-push": "Force P&ush",
     "force-push-darwin": "Force Push",
+    "front-darwin": "Bring All to Front",
     "go-to-summary": "Go to &Summary",
     "go-to-summary-darwin": "Go to Summary",
     "help": "&Help",
+    "help-darwin": "Help",
+    "hide": "Hide GitHub Desktop",
+    "hide-others": "Hide Others",
     "install-command-line-tool": "Install Command Line Tool…",
     "merge-into-branch": "&Merge into current branch…",
     "merge-into-branch-darwin": "Merge into Current Branch…",
+    "minimize-darwin": "Minimize",
     "new-create-branch": "New &branch…",
     "new-create-branch-darwin": "New Branch…",
     "new-repository": "New &repository…",
@@ -886,6 +895,7 @@
     "pull-request-check-run-failed": "Show App Error",
     "push": "P&ush",
     "push-darwin": "Push",
+    "quit": "Quit GitHub Desktop",
     "rebase-current-branch": "R&ebase current branch…",
     "rebase-current-branch-darwin": "Rebase Current Branch…",
     "recycle-bin": "Recycle Bin",
@@ -908,8 +918,10 @@
     "search": "Search",
     "select-all": "Select &all",
     "select-all-darwin": "Select All",
+    "services": "services",
     "shell": "Command Prompt",
     "shell-linux": "Terminal",
+    "show-all": "Show All",
     "show-branches-list": "&Branches list",
     "show-branches-list-darwin": "Show Branches List",
     "show-changes": "&Changes",
@@ -951,6 +963,8 @@
     "view-on-github-darwin": "View on GitHub",
     "view-pull-request": "View &pull request on GitHub",
     "view-pull-request-darwin": "View Pull Request on GitHub",
+    "window-darwin": "Window",
+    "zoom-darwin": "Zoom",
     "zoom-in": "Zoom in",
     "zoom-in-darwin": "Zoom In",
     "zoom-out": "Zoom out",
@@ -1381,8 +1395,10 @@
   "start": {
     "by-creating-an-account-1": "By creating an account, you agree to the ",
     "by-creating-an-account-2": ".",
+    "create-your-free-account": "Create your free account.",
     "github-privacy-statement": "GitHub Privacy Statement",
     "learn-more-about": "Learn more about user metrics.",
+    "new-to-github": "New to GitHub? ",
     "privacy-practices-1": " For more information about GitHub's privacy practices, see the ",
     "privacy-practices-2": ".",
     "sign-in-github-com": "Sign in to GitHub.com",
@@ -1426,6 +1442,19 @@
     "modified": "Modified",
     "new": "New",
     "renamed": "Renamed"
+  },
+  "submodule-diff": {
+    "modified": "modified",
+    "modified-and-untracked": "modified and untracked",
+    "open-repository": "Open repository",
+    "open-repository-darwin": "Open Repository",
+    "open-this-submodule-on-gitHub-desktop": "Open this submodule on GitHub Desktop",
+    "submodule-changes": "Submodule changes",
+    "this-is-a-submodule-based-on-the-repository-1": "This is a submodule based on the repository ",
+    "this-is-a-submodule-based-on-the-repository-2": ".",
+    "this-submodule-has-changes": "This submodule has {{0}} changes. Those changes must be committed\n          inside of the submodule before they can be part of the parent\n          repository.",
+    "untracked": "untracked",
+    "you-can-open-this-submodule-on-gitHub-desktop": "You can open this submodule on GitHub Desktop as a normal repository to manage and commit any changes in it."
   },
   "successful-squash": {
     "successfully-squashed": "Successfully squashed {{0}} {{1}}."

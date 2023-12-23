@@ -58,6 +58,11 @@ function packageOSX() {
   cp.execSync(
     `ditto -ck --keepParent "${distPath}/${productName}.app" "${dest}"`
   )
+  // Adding Creatinon set.Env.plist
+  console.log(`Adding shell…`)
+  const shell_name = path.join(__dirname, 'setenv_lang_macos.sh')
+  cp.execSync(`chmod 755 "${shell_name}"`)
+  cp.execSync(`zip -j "${dest}" "${shell_name}"`)
 }
 
 function packageWindows() {
