@@ -698,7 +698,7 @@
     "new-branches-1": "新規ブランチは ",
     "new-branches-2": " のデフォルトブランチになります。",
     "pull-requests-targeting-1": " ",
-    "pull-requests-targeting-2": " をターゲットとするプルリクエストは、プルリクエストリストに表示されます。",
+    "pull-requests-targeting-2": " をターゲットとするプルリクエストは、プルリクエストリストに表示されます(デフォルトのターゲットは親リポジトリです)。",
     "view-on-gitgub-1": "\"Github で確認\" でブラウザで開かれるリポジトリは ",
     "view-on-gitgub-2": " となります。"
   },
