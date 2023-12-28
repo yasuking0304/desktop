@@ -75,6 +75,9 @@
     "system": "System",
     "theme": "Theme"
   },
+  "authentication-form": {
+    "your-browser-will-redirect": "Your browser will redirect you back to GitHub Desktop once you've signed in. If your browser asks for your permission to launch GitHub Desktop please allow it to."
+  },
   "binary-file": {
     "open-file-in-external-program": "Open file in external program.",
     "this-binary-file-has-changed": "This binary file has changed."
@@ -1381,8 +1384,10 @@
   "start": {
     "by-creating-an-account-1": "By creating an account, you agree to the ",
     "by-creating-an-account-2": ".",
+    "create-your-free-account": "Create your free account.",
     "github-privacy-statement": "GitHub Privacy Statement",
     "learn-more-about": "Learn more about user metrics.",
+    "new-to-github": "New to GitHub? ",
     "privacy-practices-1": " For more information about GitHub's privacy practices, see the ",
     "privacy-practices-2": ".",
     "sign-in-github-com": "Sign in to GitHub.com",

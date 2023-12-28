@@ -79,9 +79,9 @@ export class Start extends React.Component<IStartProps, {}> {
         </div>
         <div className="skip-action-container">
           <p className="welcome-text">
-            New to GitHub?{' '}
+            {t('start.new-to-github', 'New to GitHub? ')}
             <LinkButton uri={CreateAccountURL} className="create-account-link">
-              Create your free account.
+              {t('start.create-your-free-account', 'Create your free account.')}
             </LinkButton>
           </p>
           <LinkButton className="skip-button" onClick={this.skip}>
