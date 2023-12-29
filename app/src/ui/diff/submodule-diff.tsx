@@ -6,6 +6,7 @@ import { TooltippedCommitSHA } from '../lib/tooltipped-commit-sha'
 import { Octicon } from '../octicons'
 import * as OcticonSymbol from '../octicons/octicons.generated'
 import { SuggestedAction } from '../suggested-actions'
+import { t } from 'i18next'
 
 type SubmoduleItemIcon =
   | {
@@ -52,7 +53,9 @@ export class SubmoduleDiff extends React.Component<ISubmoduleDiffProps> {
         <div className="content">
           <div className="interstitial-header">
             <div className="text">
-              <h1>Submodule changes</h1>
+              <h1>
+                {t('submodule-diff.submodule-changes', 'Submodule changes')}
+              </h1>
             </div>
           </div>
           {this.renderSubmoduleInfo()}
@@ -82,14 +85,17 @@ export class SubmoduleDiff extends React.Component<ISubmoduleDiffProps> {
     return this.renderSubmoduleDiffItem(
       { octicon: OcticonSymbol.info, className: 'info-icon' },
       <>
-        This is a submodule based on the repository{' '}
+        {t(
+          'submodule-diff.this-is-a-submodule-based-on-the-repository-1',
+          'This is a submodule based on the repository '
+        )}
         <LinkButton
           uri={`https://${repoIdentifier.hostname}/${repoIdentifier.owner}/${repoIdentifier.name}`}
         >
           {repoIdentifier.owner}/{repoIdentifier.name}
           {hostname}
         </LinkButton>
-        .
+        {t('submodule-diff.this-is-a-submodule-based-on-the-repository-2', '.')}
       </>
     )
   }
@@ -146,17 +152,21 @@ export class SubmoduleDiff extends React.Component<ISubmoduleDiffProps> {
 
     const changes =
       diff.status.untrackedChanges && diff.status.modifiedChanges
-        ? 'modified and untracked'
+        ? t('submodule-diff.modified-and-untracked', 'modified and untracked')
         : diff.status.untrackedChanges
-        ? 'untracked'
-        : 'modified'
+        ? t('submodule-diff.untracked', 'untracked')
+        : t('submodule-diff.modified', 'modified')
 
     return this.renderSubmoduleDiffItem(
       { octicon: OcticonSymbol.fileDiff, className: 'untracked-icon' },
       <>
-        This submodule has {changes} changes. Those changes must be committed
-        inside of the submodule before they can be part of the parent
-        repository.
+        {t(
+          'submodule-diff.this-submodule-has-changes',
+          `This submodule has {{0}} changes. Those changes must be committed
+          inside of the submodule before they can be part of the parent
+          repository.`,
+          { 0: changes }
+        )}
       </>
     )
   }
@@ -184,9 +194,19 @@ export class SubmoduleDiff extends React.Component<ISubmoduleDiffProps> {
     return (
       <span>
         <SuggestedAction
-          title="Open this submodule on GitHub Desktop"
-          description="You can open this submodule on GitHub Desktop as a normal repository to manage and commit any changes in it."
-          buttonText={__DARWIN__ ? 'Open Repository' : 'Open repository'}
+          title={t(
+            'submodule-diff.open-this-submodule-on-gitHub-desktop',
+            'Open this submodule on GitHub Desktop'
+          )}
+          description={t(
+            'submodule-diff.you-can-open-this-submodule-on-gitHub-desktop',
+            'You can open this submodule on GitHub Desktop as a normal repository to manage and commit any changes in it.'
+          )}
+          buttonText={
+            __DARWIN__
+              ? t('submodule-diff.open-repository-darwin', 'Open Repository')
+              : t('submodule-diff.open-repository', 'Open repository')
+          }
           type="primary"
           onClick={this.onOpenSubmoduleClick}
         />

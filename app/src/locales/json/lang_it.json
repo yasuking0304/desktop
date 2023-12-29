@@ -1432,6 +1432,19 @@
     "new": "New",
     "renamed": "Renamed"
   },
+  "submodule-diff": {
+    "modified": "modified",
+    "modified-and-untracked": "modified and untracked",
+    "open-repository": "Open repository",
+    "open-repository-darwin": "Open Repository",
+    "open-this-submodule-on-gitHub-desktop": "Open this submodule on GitHub Desktop",
+    "submodule-changes": "Submodule changes",
+    "this-is-a-submodule-based-on-the-repository-1": "This is a submodule based on the repository ",
+    "this-is-a-submodule-based-on-the-repository-2": ".",
+    "this-submodule-has-changes": "This submodule has {{0}} changes. Those changes must be committed\n          inside of the submodule before they can be part of the parent\n          repository.",
+    "untracked": "untracked",
+    "you-can-open-this-submodule-on-gitHub-desktop": "You can open this submodule on GitHub Desktop as a normal repository to manage and commit any changes in it."
+  },
   "successful-squash": {
     "successfully-squashed": "Successfully squashed {{0}} {{1}}."
   },

@@ -269,6 +269,7 @@ function handlePossibleProtocolLauncherArgs(args: ReadonlyArray<string>) {
       }
     })
 
+    log.info('これなんかな')
     if (args.includes(protocolLauncherArg) && matchingUrls.length === 1) {
       handleAppURL(matchingUrls[0])
     } else {

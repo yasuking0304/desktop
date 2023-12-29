@@ -1432,6 +1432,19 @@
     "new": "追加",
     "renamed": "リネーム"
   },
+  "submodule-diff": {
+    "modified": "変更が加えられています",
+    "modified-and-untracked": "追跡されていない変更が加えられています",
+    "open-repository": "リポジトリを開く",
+    "open-repository-darwin": "リポジトリを開く",
+    "open-this-submodule-on-gitHub-desktop": "GitHub Desktop でサブモジュールを開きます",
+    "submodule-changes": "サブモジュールの変更",
+    "this-is-a-submodule-based-on-the-repository-1": "これはリポジトリ ",
+    "this-is-a-submodule-based-on-the-repository-2": " に紐づいているサブモジュールです。",
+    "this-submodule-has-changes": "このサブモジュールには{{0}}。 これらの変更は、上位リポジトリの一部となる以前に、サブモジュール内でコミットする必要があります。",
+    "untracked": "追跡されていない変更があります",
+    "you-can-open-this-submodule-on-gitHub-desktop": "このサブモジュールを GitHub Desktop 上で通常のリポジトリとして開き、そのサブモジュール内の変更を管理およびコミットできます。"
+  },
   "successful-squash": {
     "successfully-squashed": "{{0}}{{1}}のスカッシュ(結合)に成功しました。"
   },
