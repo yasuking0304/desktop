@@ -175,13 +175,19 @@ export class RefNameTextBox extends React.Component<
     // proposed value is invalid.
     if (sanitizedValue.length === 0) {
       return t(
-        'ref-name-text-box.warning-not-a-valid-name','Warning: {{0}} is not a valid name.', {0: proposedValue})
+        'ref-name-text-box.warning-not-a-valid-name',
+        'Warning: {{0}} is not a valid name.',
+        { 0: proposedValue }
+      )
     }
 
-    const warningMessage = this.props.warningMessageVerb ?? t('ref-name-text-box.created', 'created')
+    const warningMessage =
+      this.props.warningMessageVerb ?? t('ref-name-text-box.created', 'created')
     return t(
       'ref-name-text-box.get-warning-message-as-string',
-      'Warning: Will be {{0}} as {{1}} (with spaces replaced by hyphens).', {0: warningMessage, 1: sanitizedValue})
+      'Warning: Will be {{0}} as {{1}} (with spaces replaced by hyphens).',
+      { 0: warningMessage, 1: sanitizedValue }
+    )
   }
 
   private renderWarningMessage(sanitizedValue: string, proposedValue: string) {
@@ -196,12 +202,17 @@ export class RefNameTextBox extends React.Component<
         </>
       )
     }
-    const warningMessage = this.props.warningMessageVerb ?? t('ref-name-text-box.created', 'created')
+    const warningMessage =
+      this.props.warningMessageVerb ?? t('ref-name-text-box.created', 'created')
     return (
       <>
-        {t('ref-name-text-box.will-be-created-as-1', 'Will be {{0}} as ', {0: warningMessage})}
+        {t('ref-name-text-box.will-be-created-as-1', 'Will be {{0}} as ', {
+          0: warningMessage,
+        })}
         <Ref>{sanitizedValue}</Ref>
-        {t('ref-name-text-box.will-be-created-as-2', '.', {0: warningMessage})}
+        {t('ref-name-text-box.will-be-created-as-2', '.', {
+          0: warningMessage,
+        })}
       </>
     )
   }
