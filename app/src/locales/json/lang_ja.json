@@ -8,7 +8,7 @@
     "could-not-determine-the-last-time-update-check": "更新チェックが最後に実行された時刻を特定できませんでした。古いバージョンを実行している可能性があります。手動でアップデートを確認し、問題が解決しない場合は GitHub サポートにお問い合わせください。",
     "downloading-updates": "更新プログラムのダウンロード…",
     "ensure-latest-version": "最新バージョンの確認",
-    "github-desktop-may-release-updates": "GitHub Desktop は、問題を早期に発見できるように、ユーザベースにアップデートを徐々にリリースすることがあります。これにより、段階的なロールアウトをバイパスし、利用可能な最新バージョンがある場合は最新バージョンに直接ジャンプできます。",
+    "github-desktop-may-release-updates": "GitHub Desktop は、問題を早期に発見できるように、ユーザーベースにアップデートを徐々にリリースすることがあります。これにより、段階的なロールアウトをバイパスし、利用可能な最新バージョンがある場合は最新バージョンに直接ジャンプできます。",
     "license-and-open-source-notices": "ライセンスおよびオープンソースの通知",
     "looking-for-the-latest-features": "最新の機能をお探しですか?",
     "no-longer-supported-operating-systems": "このオペレーティング システムはサポートされなくなりました。 ソフトウェアのアップデートが無効になっています。",
@@ -74,6 +74,9 @@
     "loading-system-theme": "システムテーマのロード中",
     "system": "システムの規定",
     "theme": "配色テーマ"
+  },
+  "authentication-form": {
+    "your-browser-will-redirect": "サインインすると、ブラウザーによって GitHub Desktop にリダイレクトされます。ブラウザーが GitHub Desktop の起動許可を求めた場合は、許可してください。"
   },
   "binary-file": {
     "open-file-in-external-program": "外部プログラムを開きます。",
@@ -658,8 +661,8 @@
     "create-repository-darwin": "リポジトリの作成",
     "explore-projects-on-github": "GitHub でプロジェクトを見る",
     "get-started-on a-brand-new-project": "まったく新しいプロジェクトを開始します",
-    "open-in-browser": "ブラウザで開く",
-    "open-in-browser-darwin": "ブラウザで開く",
+    "open-in-browser": "ブラウザーで開く",
+    "open-in-browser-darwin": "ブラウザーで開く",
     "work-on-an-existing-project": "GitHub Desktop で既存のプロジェクトを作業する",
     "you-re-done": "これで完了です!",
     "you-ve-learned-the-basics": "GitHub Desktop の使用方法に関する基本を学習しました。次に何をすべきかの提案をいくつか紹介します。"
@@ -691,19 +694,19 @@
     "filter": "フィルター"
   },
   "fork-contribution-target-description": {
-    "autocompletion-of-user-1": "ユーザ と issue の自動投入先は",
+    "autocompletion-of-user-1": "ユーザー と issue の自動投入先は",
     "autocompletion-of-user-2": " に基づきます。",
     "issues-will-be-created-1": "issueは ",
     "issues-will-be-created-2": " に作成されます。",
     "new-branches-1": "新規ブランチは ",
     "new-branches-2": " のデフォルトブランチになります。",
     "pull-requests-targeting-1": " ",
-    "pull-requests-targeting-2": " をターゲットとするプルリクエストは、プルリクエストリストに表示されます(デフォルトのターゲットは親リポジトリです)。",
-    "view-on-gitgub-1": "\"Github で確認\" でブラウザで開かれるリポジトリは ",
+    "pull-requests-targeting-2": " をターゲットとするプルリクエストは、プルリクエストリストに表示されます(デフォルトのターゲットは上流リポジトリです)。",
+    "view-on-gitgub-1": "\"Github で確認\" でブラウザーで開かれるリポジトリは ",
     "view-on-gitgub-2": " となります。"
   },
   "fork-settings": {
-    "contribute-to-the-parent-repository": "親リポジトリに貢献するため",
+    "contribute-to-the-parent-repository": "上流リポジトリに貢献するため",
     "for-my-own-purposes": "私用目的のため",
     "will-be-using-this-fork": "このフォークの使用目的について…"
   },
@@ -742,10 +745,10 @@
     "does-not-match": "存在していません",
     "edither-your-account": "GitHub.com アカウントまたは GitHub Enterprise アカウントのいずれか",
     "learn-more": "詳細情報",
-    "learn-more-about": "詳しくはコミットユーザについてをご覧ください",
+    "learn-more-about": "詳しくはコミットユーザーについてをご覧ください",
     "matchs": "存在しています",
     "this-email-address": "このメールアドレスは {{1}}に{{0}}。{{2}}",
-    "wrongly-attributed": "あなたのコミットは間違ったユーザにリンクされるかも知れません。 ",
+    "wrongly-attributed": "あなたのコミットは間違ったユーザーにリンクされるかも知れません。 ",
     "your-account": "{{0}} アカウント"
   },
   "git-ignore": {
@@ -756,10 +759,10 @@
   },
   "integrations": {
     "applications": "アプリケーション",
-    "external-editor": "外部エディタ",
-    "external-editor-darwin": "外部エディタ",
+    "external-editor": "外部エディター",
+    "external-editor-darwin": "外部エディター",
     "install-editor-name": "{{0}} をインストールしますか?",
-    "no-editors-found": "エディタが見つかりませんでした。 ",
+    "no-editors-found": "エディターが見つかりませんでした。 ",
     "shell": "シェル"
   },
   "label": {
@@ -771,7 +774,7 @@
   },
   "launch": {
     "error": {
-      "could-not-find-executable": "パス '{{0}}' で '{{1}}' の実行可能ファイルが見つかりませんでした。{{2}} を開き、使用可能なエディタを選択してください。"
+      "could-not-find-executable": "パス '{{0}}' で '{{1}}' の実行可能ファイルが見つかりませんでした。{{2}} を開き、使用可能なエディターを選択してください。"
     }
   },
   "local-changes-overwritten-dialog": {
@@ -784,7 +787,7 @@
   },
   "lookup": {
     "error": {
-      "the-editor-could-not-be-found": "エディタ '{{0}}' が見つかりませんでした。{{1}} を開き、使用可能なエディタを選択してください。"
+      "the-editor-could-not-be-found": "エディター '{{0}}' が見つかりませんでした。{{1}} を開き、使用可能なエディターを選択してください。"
     }
   },
   "menu": {
@@ -810,8 +813,8 @@
     "confirm-stash-all-changes-darwin": "すべての変更を一時退避する…",
     "contact-github-support": "GitHub サポートに連絡(&C)…",
     "contact-github-support-darwin": "GitHub サポートに連絡…",
-    "context-open-in-external-editor": "外部エディタを開く",
-    "context-open-in-external-editor-darwin": "外部エディタを開く",
+    "context-open-in-external-editor": "外部エディターを開く",
+    "context-open-in-external-editor-darwin": "外部エディターを開く",
     "contract-active-resizable": "アクティブ要素の幅を狭める",
     "contract-active-resizable-darwin": "アクティブ要素の幅を狭める",
     "copy": "コピー(&C)",
@@ -1041,8 +1044,8 @@
     "one-local-commit": "1個のローカルコミット",
     "one-tag": "1個のタグ",
     "open-a-pull-request": "プルリクエストを開く",
-    "open-the-repository-in-your-external-editor": "外部エディタでリポジトリを開きます",
-    "open-the-repository-page-on-github-in-your-browser": "ブラウザでGitHubのリポジトリページを開きます",
+    "open-the-repository-in-your-external-editor": "外部エディターでリポジトリを開きます",
+    "open-the-repository-page-on-github-in-your-browser": "ブラウザーでGitHubのリポジトリページを開きます",
     "preview-pull-request": "プルリクエストのプレビュー",
     "preview-pull-request-1": "現在のブランチ (",
     "preview-pull-request-2": ") は既に GitHub に公開されています。プルリクエストで修正を提案する前にプレビューを表示して確認します。",
@@ -1055,7 +1058,7 @@
     "pull-number-commits-from-the-remote": "{{2}} リモートからの{{0}}{{1}} をプルします",
     "push": "{{0}}にプッシュ",
     "push-to-the-remote": "{{0}}を {{1}} にプッシュします",
-    "select-your-editor": "エディタの設定はこちら ",
+    "select-your-editor": "エディターの設定はこちら ",
     "the-current-branch-1": "現在のブランチ (",
     "the-current-branch-2": ") はまだリモートに公開されていないようです。 By publishing it {{0}} you\n        can share it, {{1}}\n        and collaborate with others.",
     "the-current-branch-us-already-published-1": "現在のブランチ (",
@@ -1308,8 +1311,8 @@
     "reverting": "戻す…"
   },
   "saml-reauth-required": {
-    "continue-in-browser": "ブラウザで続行",
-    "continue-in-browser-darwin": "ブラウザで続行",
+    "continue-in-browser": "ブラウザーで続行",
+    "continue-in-browser-darwin": "ブラウザーで続行",
     "re-authorization-required": "再認証が必要",
     "re-authorization-required-darwin": "再認証が必要"
   },
@@ -1367,13 +1370,13 @@
     "expand-up": "上に展開"
   },
   "sign-in": {
-    "continue-with-browser": "ブラウザで続行",
-    "continue-with-browser-darwin": "ブラウザで続行",
-    "sign-in-browser": "ブラウザを使用してサインインする",
-    "sign-in-browser-darwin": "ブラウザを使用してサインインする",
-    "to-improve-the-security-of-your-account": "アカウントのセキュリティを強化するために、GitHub ではブラウザからサインインする必要があります。",
-    "your-browser-will-redirect-you-back": "サインインすると、ブラウザは GitHub Desktop にリダイレクトします。ブラウザから GitHub Desktop の起動許可を求められた場合は、許可を選択してください。",
-    "your-gitHub-enterprise-instance-requires": "GitHub Enterprise インスタンスでは、ブラウザでサインインする必要があります。"
+    "continue-with-browser": "ブラウザーで続行",
+    "continue-with-browser-darwin": "ブラウザーで続行",
+    "sign-in-browser": "ブラウザーを使用してサインインする",
+    "sign-in-browser-darwin": "ブラウザーを使用してサインインする",
+    "to-improve-the-security-of-your-account": "アカウントのセキュリティを強化するために、GitHub ではブラウザーからサインインする必要があります。",
+    "your-browser-will-redirect-you-back": "サインインすると、ブラウザーは GitHub Desktop にリダイレクトします。ブラウザーから GitHub Desktop の起動許可を求められた場合は、許可を選択してください。",
+    "your-gitHub-enterprise-instance-requires": "GitHub Enterprise インスタンスでは、ブラウザーでサインインする必要があります。"
   },
   "sign-in-enterprise": {
     "sign-in": "GitHub Enterprise にサインイン"
@@ -1381,8 +1384,10 @@
   "start": {
     "by-creating-an-account-1": "アカウントを作成することにより ",
     "by-creating-an-account-2": " に同意したことになります。",
+    "create-your-free-account": "無料アカウントを作成する",
     "github-privacy-statement": "GitHub のプライバシーに関する声明",
     "learn-more-about": "詳しくは、ユーザーメトリクスの記事をご覧ください。",
+    "new-to-github": "GitHub は初めてですか? ",
     "privacy-practices-1": "GitHub の個人情報の扱いの詳細につきましては ",
     "privacy-practices-2": " をご覧ください。",
     "sign-in-github-com": "GitHub.com にサインイン",
@@ -1409,8 +1414,8 @@
     "discard": "破棄する",
     "file-does-not-exist": "ファイルが {{0}}  に存在しません。",
     "manual-conflict": "手動で競合",
-    "no-editor-configured": "エディタが設定されていません。 設定 > 詳細設定 で確認してください",
-    "no-editor-configured-darwin": "エディタが設定されていません。 設定 > 詳細設定 で確認してください",
+    "no-editor-configured": "エディターが設定されていません。 設定 > 詳細設定 で確認してください",
+    "no-editor-configured-darwin": "エディターが設定されていません。 設定 > 詳細設定 で確認してください",
     "number-onflicts": "{{0}}個の競合",
     "one-onflict": "1つの競合",
     "open-in": "{{0}} で開く",
@@ -1426,6 +1431,19 @@
     "modified": "変更",
     "new": "追加",
     "renamed": "リネーム"
+  },
+  "submodule-diff": {
+    "modified": "変更が加えられています",
+    "modified-and-untracked": "追跡されていない変更が加えられています",
+    "open-repository": "リポジトリを開く",
+    "open-repository-darwin": "リポジトリを開く",
+    "open-this-submodule-on-gitHub-desktop": "GitHub Desktop でサブモジュールを開きます",
+    "submodule-changes": "サブモジュールの変更",
+    "this-is-a-submodule-based-on-the-repository-1": "これはリポジトリ ",
+    "this-is-a-submodule-based-on-the-repository-2": " に紐づいているサブモジュールです。",
+    "this-submodule-has-changes": "このサブモジュールには{{0}}。 これらの変更は、上位リポジトリの一部となる以前に、サブモジュール内でコミットする必要があります。",
+    "untracked": "追跡されていない変更があります",
+    "you-can-open-this-submodule-on-gitHub-desktop": "このサブモジュールを GitHub Desktop 上で通常のリポジトリとして開き、そのサブモジュール内の変更を管理およびコミットできます。"
   },
   "successful-squash": {
     "successfully-squashed": "{{0}}{{1}}のスカッシュ(結合)に成功しました。"
@@ -1462,33 +1480,33 @@
     "a-pull-request-allows-you-to-propose": "プルリクエストを使用すると、コードの変更を提案できます。1つを開くと、誰かにレビューとマージを依頼することになります。これはデモ用のリポジトリなので、このプルリクエストはプライベートになります。",
     "atom-editor": "Atom",
     "create-a-branch": "ブランチを作成する",
-    "does-not-look-like-you-have-editor-1": "テキストエディタがインストールされていないようです。 ",
+    "does-not-look-like-you-have-editor-1": "テキストエディターがインストールされていないようです。 ",
     "does-not-look-like-you-have-editor-2": " または ",
     "does-not-look-like-you-have-editor-3": " をお勧めしますので、いずれかをお気軽にご利用ください。",
     "edit-a-file": "ファイルの編集",
     "exit-tutorial": "チュートリアルの終了",
     "exit-tutorial-darwin": "チュートリアルの終了",
     "get-started": "はじめに",
-    "i-have-an-editor": "エディタは持っている",
-    "install-a-text-editor": "テキストエディタのインストール",
+    "i-have-an-editor": "エディターは持っている",
+    "install-a-text-editor": "テキストエディターのインストール",
     "make-a-commit": "コミットする",
     "new-branch": "新しいブランチ",
     "new-branch-darwin": "新しいブランチ",
     "open-a-pull-request": "プルリクエストを開く",
-    "open-editor": "エディタを開く",
-    "open-editor-darwin": "エディタを開く",
+    "open-editor": "エディターを開く",
+    "open-editor-darwin": "エディターを開く",
     "open-pull-request": "プルリクエストを開く",
     "open-pull-request-darwin": "プルリクエストを開く",
     "open-the-atom-website": "Atom のウェブサイトを開く",
     "open-the-editor-name-website": "{{0}} のウェブサイトを開く",
-    "open-this-repository-in-your-preferred-1": "このリポジトリを任意のテキストエディタで開きます。",
+    "open-this-repository-in-your-preferred-1": "このリポジトリを任意のテキストエディターで開きます。",
     "open-this-repository-in-your-preferred-2": " ファイルを編集して保存し、戻ってきます。",
     "partially-checked-check-list": "部分的にチェックされたチェックリスト",
     "publish-to-github": "GitHub に公開する",
     "publishing-will-push-or-upload": "公開すると、GitHub 上のリポジトリのこのブランチへのコミットが \"プッシュ\" またはアップロードされます。画面上部のツールバーの左から3番目のボタンを使用して公開します。",
-    "your-default-editor-is-1": "デフォルトのエディタは ",
+    "your-default-editor-is-1": "デフォルトのエディターは ",
     "your-default-editor-is-2": "です。",
-    "your-default-editor-is-3": "でお好みのエディタに変更できます。"
+    "your-default-editor-is-3": "でお好みのエディターに変更できます。"
   },
   "unmerged-file": {
     "no-conflicts-remaining": "競合は残っていません"
@@ -1525,7 +1543,7 @@
     "current": "Current: ",
     "expected": "Expected: ",
     "must-have-a-github-repository": "リポジトリに、上流のリモートを追加するためのGitHubリポジトリが必要です",
-    "must-have-a-parent-repository": "リポジトリに、上流のリモートを追加するための親リポジトリが必要です",
+    "must-have-a-parent-repository": "リポジトリに、上流のリモートを追加するための上流リポジトリが必要です",
     "the-repository-is-a-fork-1": "The repository ",
     "the-repository-is-a-fork-2": " is a fork of ",
     "the-repository-is-a-fork-3": ", but its ",
@@ -1570,12 +1588,12 @@
     "welcome": "GitHub Desktop にようこそ"
   },
   "workflow-push-rejected": {
-    "continue-in-browser": "ブラウザで続行",
-    "continue-in-browser-darwin": "ブラウザで続行",
+    "continue-in-browser": "ブラウザーで続行",
+    "continue-in-browser-darwin": "ブラウザーで続行",
     "push-rejected": "プッシュ拒否",
     "push-rejected-darwin": "プッシュ拒否",
     "the-push-was-rejected-by-the-server-1": "ワークフローファイル ",
     "the-push-was-rejected-by-the-server-2": "への変更が含まれているために、プッシュがサーバーによって拒否されました。ワークフローファイルにプッシュできるようにするには、GitHub Desktop が追加の権限を要求する必要があります。",
-    "would-you-like-to-open-a-browser": "ブラウザを開いて、GitHub Desktop にワークフローファイルを更新する権限を付与しますか?"
+    "would-you-like-to-open-a-browser": "ブラウザーを開いて、GitHub Desktop にワークフローファイルを更新する権限を付与しますか?"
   }
 }

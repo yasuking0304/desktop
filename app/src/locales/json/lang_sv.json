@@ -75,6 +75,9 @@
     "system": "System",
     "theme": "Theme"
   },
+  "authentication-form": {
+    "your-browser-will-redirect": "Your browser will redirect you back to GitHub Desktop once you've signed in. If your browser asks for your permission to launch GitHub Desktop please allow it to."
+  },
   "binary-file": {
     "open-file-in-external-program": "Open file in external program.",
     "this-binary-file-has-changed": "This binary file has changed."
@@ -1381,8 +1384,10 @@
   "start": {
     "by-creating-an-account-1": "By creating an account, you agree to the ",
     "by-creating-an-account-2": ".",
+    "create-your-free-account": "Create your free account.",
     "github-privacy-statement": "GitHub Privacy Statement",
     "learn-more-about": "Learn more about user metrics.",
+    "new-to-github": "New to GitHub? ",
     "privacy-practices-1": " For more information about GitHub's privacy practices, see the ",
     "privacy-practices-2": ".",
     "sign-in-github-com": "Sign in to GitHub.com",
@@ -1426,6 +1431,19 @@
     "modified": "Modified",
     "new": "New",
     "renamed": "Renamed"
+  },
+  "submodule-diff": {
+    "modified": "modified",
+    "modified-and-untracked": "modified and untracked",
+    "open-repository": "Open repository",
+    "open-repository-darwin": "Open Repository",
+    "open-this-submodule-on-gitHub-desktop": "Open this submodule on GitHub Desktop",
+    "submodule-changes": "Submodule changes",
+    "this-is-a-submodule-based-on-the-repository-1": "This is a submodule based on the repository ",
+    "this-is-a-submodule-based-on-the-repository-2": ".",
+    "this-submodule-has-changes": "This submodule has {{0}} changes. Those changes must be committed\n          inside of the submodule before they can be part of the parent\n          repository.",
+    "untracked": "untracked",
+    "you-can-open-this-submodule-on-gitHub-desktop": "You can open this submodule on GitHub Desktop as a normal repository to manage and commit any changes in it."
   },
   "successful-squash": {
     "successfully-squashed": "Successfully squashed {{0}} {{1}}."

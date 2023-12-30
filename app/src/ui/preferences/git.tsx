@@ -68,14 +68,20 @@ export class Git extends React.Component<IGitProps> {
         />
 
         <p id="default-branch-description" className="git-settings-description">
-          {t('git.gitHub-default-branch-description-1', "GitHub's default branch name is ")}
+          {t(
+            'git.gitHub-default-branch-description-1',
+            "GitHub's default branch name is "
+          )}
           <Ref>main</Ref>
           {t('git.gitHub-default-branch-description-2', '. ')}
-          {t('git.gitHub-default-branch-description-3',`You may want to
+          {t(
+            'git.gitHub-default-branch-description-3',
+            `You may want to
           change it due to different workflows, or because your integrations
-          still require the historical default branch name of `)}
+          still require the historical default branch name of `
+          )}
           <Ref>master</Ref>
-          {t('git.gitHub-default-branch-description-4','.')}
+          {t('git.gitHub-default-branch-description-4', '.')}
         </p>
 
         <p className="git-settings-description">
