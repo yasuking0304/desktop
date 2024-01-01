@@ -53,8 +53,8 @@
   },
   "app-error": {
     "clone-failed": "クローンの失敗",
-    "open-options": "設定を開く",
-    "open-options-darwin": "設定を開く",
+    "open-options": "オプションを開く",
+    "open-options-darwin": "オプションを開く",
     "retry-clone": "クローンの再試行",
     "retry-clone-darwin": "クローンの再試行"
   },
@@ -73,7 +73,7 @@
     "light": "Light",
     "loading-system-theme": "システムテーマのロード中",
     "system": "システムの規定",
-    "theme": "配色テーマ"
+    "theme": "外観テーマ"
   },
   "authentication-form": {
     "your-browser-will-redirect": "サインインすると、ブラウザーによって GitHub Desktop にリダイレクトされます。ブラウザーが GitHub Desktop の起動許可を求めた場合は、許可してください。"
@@ -393,7 +393,7 @@
     "one-or-less-commit": "個のコミット",
     "opetarion-alias": "エイリアス{{0}}",
     "opetarion-alias-darwin": "エイリアス{{0}}",
-    "options": "設定",
+    "options": "オプション",
     "organization": "組織",
     "other": "その他",
     "overwrite": "上書き",
@@ -754,7 +754,7 @@
   "git-ignore": {
     "gitignore-learn-more": "詳細情報",
     "gitignore-message-1": " ",
-    "gitignore-message-2": " を編集します。このファイルには、Git がコミット時に無視したいファイルとディレクトリを指定します。既にコミットされているファイルは影響を受けません。",
+    "gitignore-message-2": " を編集します。このファイルには、Git がコミット時に除外したいファイルとディレクトリを指定します。既にコミットされているファイルは影響を受けません。",
     "placeholder-ignored-files": "除外ファイル"
   },
   "integrations": {
@@ -878,7 +878,7 @@
     "open-working-directory": "E&xplorerで表示",
     "open-working-directory-darwin": "Finderで表示",
     "open-working-directory-linux": "ファイルマネージャーで表示",
-    "options": "設定(&O)…",
+    "options": "オプション(&O)…",
     "paste": "貼り付け(&P)",
     "paste-darwin": "貼り付け",
     "preferences": "設定…",
@@ -1163,11 +1163,11 @@
   "preferences": {
     "accounts": "アカウント",
     "advanced": "詳細設定",
-    "appearance": "配色テーマ",
+    "appearance": "外観テーマ",
     "git": "Git",
     "integrations": "アプリ連携",
     "notifications": "通知",
-    "prompts": "確認"
+    "prompts": "プロンプト"
   },
   "progress-dialog": {
     "commit-0-of-1": "コミット {{0}}/{{1}}",
