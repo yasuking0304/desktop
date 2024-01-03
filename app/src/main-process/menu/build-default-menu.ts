@@ -95,14 +95,18 @@ export function buildDefaultMenu({
         separator,
         {
           role: 'services',
+          label: t('menu.services', 'services'),
           submenu: [],
         },
         separator,
-        { role: 'hide' },
-        { role: 'hideOthers' },
-        { role: 'unhide' },
+        { role: 'hide', label: t('menu.hide', 'Hide GitHub Desktop') },
+        {
+          role: 'hideOthers',
+          label: t('menu.hide-others', 'Hide Others'),
+        },
+        { role: 'unhide', label: t('menu.show-all', 'Show All') },
         separator,
-        { role: 'quit' },
+        { role: 'quit', label: t('menu.quit', 'Quit GitHub Desktop') },
       ],
     })
   }
