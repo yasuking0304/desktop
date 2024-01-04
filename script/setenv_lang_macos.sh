@@ -1,7 +1,8 @@
 #!/bin/sh
 # 
 DIR=$HOME"/Library/LaunchAgents"
-FILE=$DIR"/setenv.LANG.plist"
+LABEL="setenv.LANG"
+FILE=$DIR"/"$LABEL".plist"
 
 if [ ! -d $DIR ]; then
   echo 'mkdir '$DIR
@@ -17,7 +18,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>
 <plist version="1.0">
   <dict>
     <key>Label</key>
-    <string>setenv.LANG</string>
+    <string>'$LABEL'</string>
     <key>ProgramArguments</key>
     <array>
       <string>/bin/launchctl</string>
