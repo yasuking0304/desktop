@@ -8,7 +8,7 @@
     "could-not-determine-the-last-time-update-check": "更新チェックが最後に実行された時刻を特定できませんでした。古いバージョンを実行している可能性があります。手動でアップデートを確認し、問題が解決しない場合は GitHub サポートにお問い合わせください。",
     "downloading-updates": "更新プログラムのダウンロード…",
     "ensure-latest-version": "最新バージョンの確認",
-    "github-desktop-may-release-updates": "GitHub Desktop は、問題を早期に発見できるように、ユーザーベースにアップデートを徐々にリリースすることがあります。これにより、段階的なロールアウトをバイパスし、利用可能な最新バージョンがある場合は最新バージョンに直接ジャンプできます。",
+    "github-desktop-may-release-updates": "GitHub Desktop は、問題を早期に発見するために、ユーザーベースにアップデートを段階的にリリースすることがあります。これにより、段階的なロールアウトをバイパスし、最新バージョンがある場合は直接ジャンプできます。",
     "license-and-open-source-notices": "ライセンスおよびオープンソースの通知",
     "looking-for-the-latest-features": "最新の機能をお探しですか?",
     "no-longer-supported-operating-systems": "このオペレーティング システムはサポートされなくなりました。 ソフトウェアのアップデートが無効になっています。",
