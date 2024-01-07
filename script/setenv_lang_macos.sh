@@ -1,5 +1,6 @@
 #!/bin/sh
-# 
+# see https://github.com/yasuking0304/SetEnv-Lang-MacOS
+
 DIR=$HOME"/Library/LaunchAgents"
 LABEL="setenv.LANG"
 FILE=$DIR"/"$LABEL".plist"
