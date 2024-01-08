@@ -290,8 +290,8 @@
     "undo-commit-darwin": "コミットを元に戻す…"
   },
   "commit-message": {
-    "add-co-authors": "共同作業者の追加",
-    "add-co-authors-darwin": "共同作業者の追加",
+    "add-co-authors": "コラボレーターの追加",
+    "add-co-authors-darwin": "コラボレーターの追加",
     "amend": "直前のコミットを修正",
     "amending": "直前のコミットを修正中",
     "commit": "コミット",
@@ -314,8 +314,8 @@
     "protected-branch-1": " ",
     "protected-branch-2": " は保護されたブランチです。",
     "protected-branch-3": "をしますか?",
-    "remove-co-authors": "共同作業者の削除",
-    "remove-co-authors-darwin": "共同作業者の削除",
+    "remove-co-authors": "コラボレーターの削除",
+    "remove-co-authors-darwin": "コラボレーターの削除",
     "select-one-or-more-files-to-commit": "コミットするファイルを 1つ以上選択してください",
     "stop-amending": "修正を中止",
     "summary-is-required-to-commit": "コミットするには概要入力が必要です",
@@ -473,7 +473,7 @@
   },
   "confirm-force-push": {
     "force-push will-rewrite-history-1": "強制プッシュは ",
-    "force-push will-rewrite-history-2": "の履歴を書き換えます。このブランチで作業している共同作業者は、リモートの履歴と一致するように自分のローカルブランチをリセットする必要があります。",
+    "force-push will-rewrite-history-2": "の履歴を書き換えます。このブランチで作業しているコラボレーターは、リモートの履歴と一致するように自分のローカルブランチをリセットする必要があります。",
     "i-am-sure": "大丈夫です",
     "want-to-force-push": "強制プッシュしますが、よろしいですか?"
   },
