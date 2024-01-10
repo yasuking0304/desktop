@@ -665,7 +665,7 @@
     "open-in-browser-darwin": "ブラウザーで開く",
     "work-on-an-existing-project": "GitHub Desktop で既存のプロジェクトを作業する",
     "you-re-done": "これで完了です!",
-    "you-ve-learned-the-basics": "GitHub Desktop の使用方法に関する基本を学習しました。次に何をすべきかの提案をいくつか紹介します。"
+    "you-ve-learned-the-basics": "GitHub Desktop の使用方法に関する基本を学習しました。次に何をするべきか、提案をいくつか紹介します。"
   },
   "editor-error": {
     "open-options": "設定を開く",
@@ -1075,7 +1075,7 @@
     "the-current-branch-us-already-published-1": "現在のブランチ (",
     "the-current-branch-us-already-published-2": ") は既に GitHub に公開されています。プルリクエストを作成して、変更の提案・共同作業を行います。",
     "the-remote": "リモート",
-    "there-are-no-uncommitted-changes": "このリポジトリにはコミットされていない変更はありません。次に何をすべきかについてのいくつかの良い提案があります。",
+    "there-are-no-uncommitted-changes": "このリポジトリにはコミットされていない変更はありません。次に何をするべきか、いくつか提案があります。",
     "this-repository-is-currently-only": "このリポジトリは現在、ローカル マシンでのみ利用できます。 GitHub に公開することで、共有したり、他のユーザーと共同作業したりできます。",
     "to-github": "to GitHub",
     "view-stash": "一時退避したファイルを参照",
