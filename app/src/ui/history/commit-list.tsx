@@ -27,6 +27,7 @@ import {
   PopoverScreenBorderPadding,
 } from '../lib/popover'
 import { KeyboardShortcut } from '../keyboard-shortcut/keyboard-shortcut'
+import { Account } from '../../models/account'
 
 const RowHeight = 50
 
@@ -175,6 +176,8 @@ interface ICommitListProps {
 
   /** Shas that should be highlighted */
   readonly shasToHighlight?: ReadonlyArray<string>
+
+  readonly accounts: ReadonlyArray<Account>
 }
 
 interface ICommitListState {
@@ -300,6 +303,7 @@ export class CommitList extends React.Component<
         onRenderCommitDragElement={this.onRenderCommitDragElement}
         onRemoveDragElement={this.props.onRemoveCommitDragElement}
         disableSquashing={this.props.disableSquashing}
+        accounts={this.props.accounts}
       />
     )
   }
@@ -599,6 +603,7 @@ export class CommitList extends React.Component<
             selectedCommits={commits}
             isKeyboardInsertion={true}
             emoji={emoji}
+            accounts={this.props.accounts}
           />
         )
       default:

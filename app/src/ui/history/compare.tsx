@@ -32,6 +32,7 @@ import { getSquashedCommitDescription } from '../../lib/squash/squashed-commit-d
 import { doMergeCommitsExistAfterCommit } from '../../lib/git'
 import { t } from 'i18next'
 import { KeyboardInsertionData } from '../lib/list'
+import { Account } from '../../models/account'
 
 interface ICompareSidebarProps {
   readonly repository: Repository
@@ -58,6 +59,7 @@ interface ICompareSidebarProps {
   readonly aheadBehindStore: AheadBehindStore
   readonly isMultiCommitOperationInProgress?: boolean
   readonly shasToHighlight: ReadonlyArray<string>
+  readonly accounts: ReadonlyArray<Account>
 }
 
 interface ICompareSidebarState {
@@ -290,6 +292,7 @@ export class CompareSidebar extends React.Component<
           this.props.isMultiCommitOperationInProgress
         }
         keyboardReorderData={this.state.keyboardReorderData}
+        accounts={this.props.accounts}
       />
     )
   }

@@ -6,6 +6,7 @@ import { Commit } from '../../models/commit'
 import { CommitList } from './commit-list'
 import { LinkButton } from '../lib/link-button'
 import { t } from 'i18next'
+import { Account } from '../../models/account'
 
 export enum UnreachableCommitsTab {
   Unreachable,
@@ -30,6 +31,8 @@ interface IUnreachableCommitsDialogProps {
 
   /** Called to dismiss the  */
   readonly onDismissed: () => void
+
+  readonly accounts: ReadonlyArray<Account>
 }
 
 interface IUnreachableCommitsDialogState {
@@ -114,6 +117,7 @@ export class UnreachableCommitsDialog extends React.Component<
             localCommitSHAs={[]}
             emoji={emoji}
             onCommitsSelected={this.onCommitsSelected}
+            accounts={this.props.accounts}
           />
         </div>
       </>
