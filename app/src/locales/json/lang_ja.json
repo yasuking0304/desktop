@@ -155,8 +155,8 @@
     "switching-to-branch-darwin": "ブランチの切り替え"
   },
   "cherry-pick-undone": {
-    "cherry-pick-undone-1": "チェリーピックを元に戻します。",
-    "cherry-pick-undone-2": "から{{1}}された {{0}}個のコミットを正常に削除しました。",
+    "cherry-pick-undone-1": "チェリーピックを元に戻します。コピーされた {{0}}個のコミットを ",
+    "cherry-pick-undone-2": " から削除しました。",
     "multiple-commits": "コミット",
     "one-commit": "コミット"
   },
@@ -1455,6 +1455,20 @@
     "this-submodule-has-changes": "このサブモジュールには{{0}}。 これらの変更は、上位リポジトリの一部となる以前に、サブモジュール内でコミットする必要があります。",
     "untracked": "追跡されていない変更があります",
     "you-can-open-this-submodule-on-gitHub-desktop": "このサブモジュールを GitHub Desktop 上で通常のリポジトリとして開き、そのサブモジュール内の変更を管理およびコミットできます。"
+  },
+  "successful-merge": {
+    "successfully-merged-into-branch-1": " ",
+    "successfully-merged-into-branch-2": " へのマージに成功しました",
+    "successfully-merged-srcbranch-into-distbranch-1": " ",
+    "successfully-merged-srcbranch-into-distbranch-2": " から ",
+    "successfully-merged-srcbranch-into-distbranch-3": " へのマージに成功しました"
+  },
+  "successful-rebase": {
+    "successfully-rebased-branch-1": " ",
+    "successfully-rebased-branch-2": " のリベースに成功しました",
+    "successfully-rebased-onto-branch-1": " ",
+    "successfully-rebased-onto-branch-2": " は ",
+    "successfully-rebased-onto-branch-3": " からのリベースに成功しました"
   },
   "successful-squash": {
     "successfully-squashed": "{{0}}{{1}}のスカッシュ(結合)に成功しました。"
