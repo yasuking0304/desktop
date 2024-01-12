@@ -1456,6 +1456,20 @@
     "untracked": "追跡されていない変更があります",
     "you-can-open-this-submodule-on-gitHub-desktop": "このサブモジュールを GitHub Desktop 上で通常のリポジトリとして開き、そのサブモジュール内の変更を管理およびコミットできます。"
   },
+  "successful-merge": {
+    "successfully-merged-into-branch-1": " ",
+    "successfully-merged-into-branch-2": " へのマージに成功しました",
+    "successfully-merged-srcbranch-into-distbranch-1": " ",
+    "successfully-merged-srcbranch-into-distbranch-2": " から ",
+    "successfully-merged-srcbranch-into-distbranch-3": " へのマージに成功しました"
+  },
+  "successful-rebase": {
+    "successfully-rebased-branch-1": " ",
+    "successfully-rebased-branch-2": " のリベースに成功しました",
+    "successfully-rebased-onto-branch-1": " ",
+    "successfully-rebased-onto-branch-2": " は ",
+    "successfully-rebased-onto-branch-3": " からのリベースに成功しました"
+  },
   "successful-squash": {
     "successfully-squashed": "{{0}}{{1}}のスカッシュ(結合)に成功しました。"
   },

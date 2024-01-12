@@ -1456,6 +1456,20 @@
     "untracked": "untracked",
     "you-can-open-this-submodule-on-gitHub-desktop": "You can open this submodule on GitHub Desktop as a normal repository to manage and commit any changes in it."
   },
+  "successful-merge": {
+    "successfully-merged-into-branch-1": "Successfully merged into ",
+    "successfully-merged-into-branch-2": " ",
+    "successfully-merged-srcbranch-into-distbranch-1": "Successfully merged ",
+    "successfully-merged-srcbranch-into-distbranch-2": " into ",
+    "successfully-merged-srcbranch-into-distbranch-3": " "
+  },
+  "successful-rebase": {
+    "successfully-rebased-branch-1": "Successfully rebased ",
+    "successfully-rebased-branch-2": " ",
+    "successfully-rebased-onto-branch-1": "Successfully rebased ",
+    "successfully-rebased-onto-branch-2": " onto ",
+    "successfully-rebased-onto-branch-3": " "
+  },
   "successful-squash": {
     "successfully-squashed": "Successfully squashed {{0}} {{1}}."
   },
