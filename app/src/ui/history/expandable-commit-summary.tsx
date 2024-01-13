@@ -20,6 +20,7 @@ import { Button } from '../lib/button'
 import { Avatar } from '../lib/avatar'
 import { CopyButton } from '../copy-button'
 import { t } from 'i18next'
+import { Account } from '../../models/account'
 
 interface IExpandableCommitSummaryProps {
   readonly repository: Repository
@@ -46,6 +47,8 @@ interface IExpandableCommitSummaryProps {
 
   /** Called to show unreachable commits dialog */
   readonly showUnreachableCommits: (tab: UnreachableCommitsTab) => void
+
+  readonly accounts: ReadonlyArray<Account>
 }
 
 interface IExpandableCommitSummaryState {
@@ -431,7 +434,7 @@ export class ExpandableCommitSummary extends React.Component<
     return this.state.avatarUsers.map((user, i) => {
       return (
         <div className="author selectable" key={i}>
-          <Avatar user={user} title={null} />
+          <Avatar accounts={this.props.accounts} user={user} title={null} />
           <div>{this.renderExpandedAuthor(user)}</div>
         </div>
       )
@@ -439,12 +442,12 @@ export class ExpandableCommitSummary extends React.Component<
   }
 
   private renderAuthorStack = () => {
-    const { selectedCommits, repository } = this.props
+    const { selectedCommits, repository, accounts } = this.props
     const { avatarUsers } = this.state
 
     return (
       <>
-        <AvatarStack users={avatarUsers} />
+        <AvatarStack users={avatarUsers} accounts={accounts} />
         <CommitAttribution
           gitHubRepository={repository.gitHubRepository}
           commits={selectedCommits}

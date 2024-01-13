@@ -8,7 +8,7 @@
     "could-not-determine-the-last-time-update-check": "更新チェックが最後に実行された時刻を特定できませんでした。古いバージョンを実行している可能性があります。手動でアップデートを確認し、問題が解決しない場合は GitHub サポートにお問い合わせください。",
     "downloading-updates": "更新プログラムのダウンロード…",
     "ensure-latest-version": "最新バージョンの確認",
-    "github-desktop-may-release-updates": "GitHub Desktop は、問題を早期に発見できるように、ユーザーベースにアップデートを徐々にリリースすることがあります。これにより、段階的なロールアウトをバイパスし、利用可能な最新バージョンがある場合は最新バージョンに直接ジャンプできます。",
+    "github-desktop-may-release-updates": "GitHub Desktop は、問題を早期に発見するために、ユーザーベースにアップデートを段階的にリリースすることがあります。これにより、段階的なロールアウトをバイパスし、最新バージョンがある場合は直接ジャンプできます。",
     "license-and-open-source-notices": "ライセンスおよびオープンソースの通知",
     "looking-for-the-latest-features": "最新の機能をお探しですか?",
     "no-longer-supported-operating-systems": "このオペレーティング システムはサポートされなくなりました。 ソフトウェアのアップデートが無効になっています。",
@@ -290,8 +290,8 @@
     "undo-commit-darwin": "コミットを元に戻す…"
   },
   "commit-message": {
-    "add-co-authors": "共同作業者の追加",
-    "add-co-authors-darwin": "共同作業者の追加",
+    "add-co-authors": "コラボレーターの追加",
+    "add-co-authors-darwin": "コラボレーターの追加",
     "amend": "直前のコミットを修正",
     "amending": "直前のコミットを修正中",
     "commit": "コミット",
@@ -314,8 +314,8 @@
     "protected-branch-1": " ",
     "protected-branch-2": " は保護されたブランチです。",
     "protected-branch-3": "をしますか?",
-    "remove-co-authors": "共同作業者の削除",
-    "remove-co-authors-darwin": "共同作業者の削除",
+    "remove-co-authors": "コラボレーターの削除",
+    "remove-co-authors-darwin": "コラボレーターの削除",
     "select-one-or-more-files-to-commit": "コミットするファイルを 1つ以上選択してください",
     "stop-amending": "修正を中止",
     "summary-is-required-to-commit": "コミットするには概要入力が必要です",
@@ -473,7 +473,7 @@
   },
   "confirm-force-push": {
     "force-push will-rewrite-history-1": "強制プッシュは ",
-    "force-push will-rewrite-history-2": "の履歴を書き換えます。このブランチで作業している共同作業者は、リモートの履歴と一致するように自分のローカルブランチをリセットする必要があります。",
+    "force-push will-rewrite-history-2": "の履歴を書き換えます。このブランチで作業しているコラボレーターは、リモートの履歴と一致するように自分のローカルブランチをリセットする必要があります。",
     "i-am-sure": "大丈夫です",
     "want-to-force-push": "強制プッシュしますが、よろしいですか?"
   },
@@ -665,7 +665,7 @@
     "open-in-browser-darwin": "ブラウザーで開く",
     "work-on-an-existing-project": "GitHub Desktop で既存のプロジェクトを作業する",
     "you-re-done": "これで完了です!",
-    "you-ve-learned-the-basics": "GitHub Desktop の使用方法に関する基本を学習しました。次に何をすべきかの提案をいくつか紹介します。"
+    "you-ve-learned-the-basics": "GitHub Desktop の使用方法に関する基本を学習しました。次に何をするべきか、提案をいくつか紹介します。"
   },
   "editor-error": {
     "open-options": "設定を開く",
@@ -797,6 +797,7 @@
     "branch-darwin": "ブランチ",
     "clone-repository": "リポジトリのクローン(&N)…",
     "clone-repository-darwin": "リポジトリのクローン…",
+    "close-darwin": "ウィンドウを閉じる",
     "collapse-expanded-lines": "展開された行を折りたたむ",
     "collapse-expanded-lines-darwin": "展開された行を折りたたむ",
     "compare-on-github": "&GitHub で比較",
@@ -858,12 +859,17 @@
     "find-darwin": "検索",
     "force-push": "強制プッシュ(&U)",
     "force-push-darwin": "強制プッシュ",
+    "front-darwin": "すべてを手前に移動",
     "go-to-summary": "概要へ(&S)",
     "go-to-summary-darwin": "概要へ",
     "help": "ヘルプ(&H)",
+    "help-darwin": "ヘルプ",
+    "hide": "GitHub Desktop を非表示にする",
+    "hide-others": "その他を非表示にする",
     "install-command-line-tool": "コマンドラインツール追加…",
     "merge-into-branch": "現在のブランチにマージ(&M)…",
     "merge-into-branch-darwin": "現在のブランチにマージ…",
+    "minimize-darwin": "最小化",
     "new-create-branch": "新規ブランチ(&B)…",
     "new-create-branch-darwin": "新規ブランチ…",
     "new-repository": "新規リポジトリ(&R)…",
@@ -889,6 +895,7 @@
     "pull-request-check-run-failed": "プルリクエスト チェックの実行に失敗しました",
     "push": "プッシュ(&U)",
     "push-darwin": "プッシュ",
+    "quit": "GitHub Desktop を終了",
     "rebase-current-branch": "現在のブランチのリベース(&E)…",
     "rebase-current-branch-darwin": "現在のブランチのリベース…",
     "recycle-bin": "ゴミ箱",
@@ -911,8 +918,10 @@
     "search": "検索",
     "select-all": "全てを選択(&A)",
     "select-all-darwin": "全てを選択",
+    "services": "サービス",
     "shell": "コマンドプロンプト",
     "shell-linux": "ターミナル",
+    "show-all": "すべて表示",
     "show-branches-list": "ブランチリスト(&B)",
     "show-branches-list-darwin": "ブランチリストを表示",
     "show-changes": "変更点(&C)",
@@ -954,6 +963,8 @@
     "view-on-github-darwin": "GitHub で確認",
     "view-pull-request": "GitHub でプルリクエストを参照(&P)",
     "view-pull-request-darwin": "GitHub でプルリクエストを参照",
+    "window-darwin": "ウィンドウ",
+    "zoom-darwin": "ズーム",
     "zoom-in": "ズーム(拡大)",
     "zoom-in-darwin": "ズーム(拡大)",
     "zoom-out": "ズーム(縮小)",
@@ -1064,7 +1075,7 @@
     "the-current-branch-us-already-published-1": "現在のブランチ (",
     "the-current-branch-us-already-published-2": ") は既に GitHub に公開されています。プルリクエストを作成して、変更の提案・共同作業を行います。",
     "the-remote": "リモート",
-    "there-are-no-uncommitted-changes": "このリポジトリにはコミットされていない変更はありません。次に何をすべきかについてのいくつかの良い提案があります。",
+    "there-are-no-uncommitted-changes": "このリポジトリにはコミットされていない変更はありません。次に何をするべきか、いくつか提案があります。",
     "this-repository-is-currently-only": "このリポジトリは現在、ローカル マシンでのみ利用できます。 GitHub に公開することで、共有したり、他のユーザーと共同作業したりできます。",
     "to-github": "to GitHub",
     "view-stash": "一時退避したファイルを参照",
@@ -1444,6 +1455,20 @@
     "this-submodule-has-changes": "このサブモジュールには{{0}}。 これらの変更は、上位リポジトリの一部となる以前に、サブモジュール内でコミットする必要があります。",
     "untracked": "追跡されていない変更があります",
     "you-can-open-this-submodule-on-gitHub-desktop": "このサブモジュールを GitHub Desktop 上で通常のリポジトリとして開き、そのサブモジュール内の変更を管理およびコミットできます。"
+  },
+  "successful-merge": {
+    "successfully-merged-into-branch-1": " ",
+    "successfully-merged-into-branch-2": " へのマージに成功しました",
+    "successfully-merged-srcbranch-into-distbranch-1": " ",
+    "successfully-merged-srcbranch-into-distbranch-2": " から ",
+    "successfully-merged-srcbranch-into-distbranch-3": " へのマージに成功しました"
+  },
+  "successful-rebase": {
+    "successfully-rebased-branch-1": " ",
+    "successfully-rebased-branch-2": " のリベースに成功しました",
+    "successfully-rebased-onto-branch-1": " ",
+    "successfully-rebased-onto-branch-2": " は ",
+    "successfully-rebased-onto-branch-3": " からのリベースに成功しました"
   },
   "successful-squash": {
     "successfully-squashed": "{{0}}{{1}}のスカッシュ(結合)に成功しました。"

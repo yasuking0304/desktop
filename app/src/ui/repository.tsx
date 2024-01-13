@@ -307,6 +307,7 @@ export class RepositoryView extends React.Component<
         askForConfirmationOnCheckoutCommit={
           this.props.askForConfirmationOnCheckoutCommit
         }
+        accounts={this.props.accounts}
       />
     )
   }
@@ -442,6 +443,7 @@ export class RepositoryView extends React.Component<
         onChangeImageDiffType={this.onChangeImageDiffType}
         onDiffOptionsOpened={this.onDiffOptionsOpened}
         showDragOverlay={showDragOverlay}
+        accounts={this.props.accounts}
       />
     )
   }

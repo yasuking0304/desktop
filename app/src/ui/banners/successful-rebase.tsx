@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { SuccessBanner } from './success-banner'
+import { t } from 'i18next'
 
 export function SuccessfulRebase({
   baseBranch,
@@ -13,15 +14,23 @@ export function SuccessfulRebase({
   const message =
     baseBranch !== undefined ? (
       <span>
-        {'Successfully rebased '}
+        {t(
+          'successful-rebase.successfully-rebased-onto-branch-1',
+          'Successfully rebased '
+        )}
         <strong>{targetBranch}</strong>
-        {' onto '}
+        {t('successful-rebase.successfully-rebased-onto-branch-2', ' onto ')}
         <strong>{baseBranch}</strong>
+        {t('successful-rebase.successfully-rebased-onto-branch-3', ' ')}
       </span>
     ) : (
       <span>
-        {'Successfully rebased '}
+        {t(
+          'successful-rebase.successfully-rebased-branch-1',
+          'Successfully rebased '
+        )}
         <strong>{targetBranch}</strong>
+        {t('successful-rebase.successfully-rebased-branch-2', ' ')}
       </span>
     )
 
