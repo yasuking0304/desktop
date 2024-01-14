@@ -155,8 +155,8 @@
     "switching-to-branch-darwin": "ブランチの切り替え"
   },
   "cherry-pick-undone": {
-    "cherry-pick-undone-1": "チェリーピックを元に戻します。",
-    "cherry-pick-undone-2": "から{{1}}された {{0}}個のコミットを正常に削除しました。",
+    "cherry-pick-undone-1": "チェリーピックを元に戻します。コピーされた {{0}}個のコミットを ",
+    "cherry-pick-undone-2": " から削除しました。",
     "multiple-commits": "コミット",
     "one-commit": "コミット"
   },
