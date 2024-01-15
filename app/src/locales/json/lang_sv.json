@@ -54,7 +54,7 @@
   "app-error": {
     "clone-failed": "Clone failed",
     "open-options": "Open options",
-    "open-options-darwin": "Open Preferences",
+    "open-settings-darwin": "Open Settings",
     "retry-clone": "Retry clone",
     "retry-clone-darwin": "Retry Clone"
   },
@@ -669,7 +669,7 @@
   },
   "editor-error": {
     "open-options": "Open options",
-    "open-options-darwin": "Open Preferences"
+    "open-settings-darwin": "Open Settings"
   },
   "enterprise-server-entry": {
     "enterprise-or-ae-address": "Enterprise or AE address"
@@ -1345,12 +1345,13 @@
   },
   "shared": {
     "error": {
-      "could-not-find-executable": "Could not find executable for '{{0}' at path '{{1}}'.  Please open {{2}} and select an available shell."
+      "could-not-find-executable": "Could not find executable for '{{0}}' at path '{{1}}'.  Please open {{2}} and select an available shell.",
+      "could-not-find-terminal": "Could not find terminal applicaion. Please open {{0}} and select an available shell."
     }
   },
   "shell-error": {
     "unable-to-open-options": "Open options",
-    "unable-to-open-options-darwin": "Open Preferences",
+    "unable-to-open-settings-darwin": "Open Settings",
     "unable-to-open-shell": "Unable to open shell",
     "unable-to-open-shell-darwin": "Unable to Open Shell"
   },

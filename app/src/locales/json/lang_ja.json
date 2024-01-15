@@ -54,7 +54,7 @@
   "app-error": {
     "clone-failed": "クローンの失敗",
     "open-options": "オプションを開く",
-    "open-options-darwin": "オプションを開く",
+    "open-settings-darwin": "オプションを開く",
     "retry-clone": "クローンの再試行",
     "retry-clone-darwin": "クローンの再試行"
   },
@@ -669,7 +669,7 @@
   },
   "editor-error": {
     "open-options": "設定を開く",
-    "open-options-darwin": "設定を開く"
+    "open-settings-darwin": "設定を開く"
   },
   "enterprise-server-entry": {
     "enterprise-or-ae-address": "Enterprise または AEアドレス"
@@ -1345,12 +1345,13 @@
   },
   "shared": {
     "error": {
-      "could-not-find-executable": "パス '{{0}}' で '{{1}' の実行可能ファイルが見つかりませんでした。 {{2}} を開き、使用可能なシェルを選択してください。"
+      "could-not-find-executable": "'{{0}}'の実行の際に '{{1}}' ファイルが見つかりませんでした。 {{2}}を開き、使用可能なシェルを選択してください。",
+      "could-not-find-terminal": "Terminal が見つかりませんでした。 {{0}}を開き、使用可能なシェルを選択してください。"
     }
   },
   "shell-error": {
-    "unable-to-open-options": "設定を開く",
-    "unable-to-open-options-darwin": "設定を開く",
+    "unable-to-open-options": "オプションを開く",
+    "unable-to-open-settings-darwin": "設定を開く",
     "unable-to-open-shell": "シェルを開けません",
     "unable-to-open-shell-darwin": "シェルを開けません"
   },

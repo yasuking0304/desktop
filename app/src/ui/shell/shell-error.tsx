@@ -60,8 +60,8 @@ export class ShellError extends React.Component<IShellErrorProps, {}> {
             cancelButtonText={
               __DARWIN__
                 ? t(
-                    'shell-error.unable-to-open-options-darwin',
-                    'Open Preferences'
+                    'shell-error.unable-to-open-settings-darwin',
+                    'Open Settings'
                   )
                 : t('shell-error.unable-to-open-options', 'Open options')
             }
