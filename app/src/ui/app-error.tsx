@@ -203,7 +203,7 @@ export class AppError extends React.Component<IAppErrorProps, IAppErrorState> {
           onOkButtonClick={this.onCloseButtonClick}
           cancelButtonText={
             __DARWIN__
-              ? t('app-error.open-options-darwin', 'Open Preferences')
+              ? t('app-error.open-settings-darwin', 'Open Settings')
               : t('app-error.open-options', 'Open options')
           }
           onCancelButtonClick={this.showPreferencesDialog}

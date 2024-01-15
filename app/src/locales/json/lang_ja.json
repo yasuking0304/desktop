@@ -54,7 +54,7 @@
   "app-error": {
     "clone-failed": "クローンの失敗",
     "open-options": "オプションを開く",
-    "open-options-darwin": "オプションを開く",
+    "open-settings-darwin": "オプションを開く",
     "retry-clone": "クローンの再試行",
     "retry-clone-darwin": "クローンの再試行"
   },
@@ -155,8 +155,8 @@
     "switching-to-branch-darwin": "ブランチの切り替え"
   },
   "cherry-pick-undone": {
-    "cherry-pick-undone-1": "チェリーピックを元に戻します。",
-    "cherry-pick-undone-2": "から{{1}}された {{0}}個のコミットを正常に削除しました。",
+    "cherry-pick-undone-1": "チェリーピックを元に戻します。コピーされた {{0}}個のコミットを ",
+    "cherry-pick-undone-2": " から削除しました。",
     "multiple-commits": "コミット",
     "one-commit": "コミット"
   },
@@ -548,6 +548,23 @@
     "new-branch-will-be-checked-out-branch-4": "はあなたのリポジトリの",
     "new-branch-will-be-checked-out-branch-5": "です。"
   },
+  "create-fork-dialog": {
+    "do-you-want-to-fork-1": "または続行するために、このリポジトリのフォークを ",
+    "do-you-want-to-fork-2": " に作成しますか?",
+    "do-you-want-to-fork-title": "このリポジトリをフォークしますか?",
+    "donot-have-write-access-1": " ",
+    "donot-have-write-access-2": " への書き込みアクセス権がないようです。 必要な場合は、リポジトリ管理者に問い合わせてください。",
+    "error": {
+      "create-fork-failed-1": "Creating your fork ",
+      "create-fork-failed-2": " failed. ",
+      "you-can-try-1": "You can try ",
+      "you-can-try-2": "creating the fork manually on GitHub",
+      "you-can-try-3": "."
+    },
+    "error-details": "エラー詳細",
+    "fork-this-repository": "このリポジトリをフォーク",
+    "fork-this-repository-darwin": "このリポジトリをフォーク"
+  },
   "create-repository": {
     "add-this-repository": "このリポジトリを追加",
     "create-a-new-repository": "新しいリポジトリの作成",
@@ -669,7 +686,7 @@
   },
   "editor-error": {
     "open-options": "設定を開く",
-    "open-options-darwin": "設定を開く"
+    "open-settings-darwin": "設定を開く"
   },
   "enterprise-server-entry": {
     "enterprise-or-ae-address": "Enterprise または AEアドレス"
@@ -1345,12 +1362,13 @@
   },
   "shared": {
     "error": {
-      "could-not-find-executable": "パス '{{0}}' で '{{1}' の実行可能ファイルが見つかりませんでした。 {{2}} を開き、使用可能なシェルを選択してください。"
+      "could-not-find-executable": "'{{0}}'の実行の際に '{{1}}' ファイルが見つかりませんでした。 {{2}}を開き、使用可能なシェルを選択してください。",
+      "could-not-find-terminal": "Terminal が見つかりませんでした。 {{0}}を開き、使用可能なシェルを選択してください。"
     }
   },
   "shell-error": {
-    "unable-to-open-options": "設定を開く",
-    "unable-to-open-options-darwin": "設定を開く",
+    "unable-to-open-options": "オプションを開く",
+    "unable-to-open-settings-darwin": "設定を開く",
     "unable-to-open-shell": "シェルを開けません",
     "unable-to-open-shell-darwin": "シェルを開けません"
   },
