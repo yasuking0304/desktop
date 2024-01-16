@@ -548,6 +548,23 @@
     "new-branch-will-be-checked-out-branch-4": "is the ",
     "new-branch-will-be-checked-out-branch-5": " for your repository."
   },
+  "create-fork-dialog": {
+    "do-you-want-to-fork-1": " Do you want to create a fork of this repository at ",
+    "do-you-want-to-fork-2": " to continue?",
+    "do-you-want-to-fork-title": "Do you want to fork this repository?",
+    "donot-have-write-access-1": "It looks like you don’t have write access to ",
+    "donot-have-write-access-2": ". If you should, please check with a repository administrator.",
+    "error": {
+      "create-fork-failed-1": "Creating your fork ",
+      "create-fork-failed-2": " failed. ",
+      "you-can-try-1": "You can try ",
+      "you-can-try-2": "creating the fork manually on GitHub",
+      "you-can-try-3": "."
+    },
+    "error-details": "Error details",
+    "fork-this-repository": "Fork this repository",
+    "fork-this-repository-darwin": "Fork This Repository"
+  },
   "create-repository": {
     "add-this-repository": "add this repository",
     "create-a-new-repository": "Create a new repository",

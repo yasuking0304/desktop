@@ -548,6 +548,23 @@
     "new-branch-will-be-checked-out-branch-4": "はあなたのリポジトリの",
     "new-branch-will-be-checked-out-branch-5": "です。"
   },
+  "create-fork-dialog": {
+    "do-you-want-to-fork-1": "または続行するために、このリポジトリのフォークを ",
+    "do-you-want-to-fork-2": " に作成しますか?",
+    "do-you-want-to-fork-title": "このリポジトリをフォークしますか?",
+    "donot-have-write-access-1": " ",
+    "donot-have-write-access-2": " への書き込みアクセス権がないようです。 必要な場合は、リポジトリ管理者に問い合わせてください。",
+    "error": {
+      "create-fork-failed-1": "Creating your fork ",
+      "create-fork-failed-2": " failed. ",
+      "you-can-try-1": "You can try ",
+      "you-can-try-2": "creating the fork manually on GitHub",
+      "you-can-try-3": "."
+    },
+    "error-details": "エラー詳細",
+    "fork-this-repository": "このリポジトリをフォーク",
+    "fork-this-repository-darwin": "このリポジトリをフォーク"
+  },
   "create-repository": {
     "add-this-repository": "このリポジトリを追加",
     "create-a-new-repository": "新しいリポジトリの作成",
