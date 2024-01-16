@@ -2,6 +2,7 @@ import * as React from 'react'
 import { IRevertProgress } from '../../models/progress'
 import { ToolbarButton, ToolbarButtonStyle } from './button'
 import { syncClockwise } from '../octicons'
+import { t } from 'i18next'
 
 interface IRevertProgressProps {
   /** Progress information associated with the current operation */
@@ -12,10 +13,10 @@ interface IRevertProgressProps {
 export class RevertProgress extends React.Component<IRevertProgressProps, {}> {
   public render() {
     const progress = this.props.progress
-    const title = progress.title || 'Hang on…'
+    const title = progress.title || t('revert-progress.hang-on', 'Hang on…')
     return (
       <ToolbarButton
-        title="Reverting…"
+        title={t('revert-progress.reverting', 'Reverting…')}
         description={title}
         progressValue={progress.value}
         className="revert-progress"

@@ -5,6 +5,7 @@ import { Ref } from '../lib/ref'
 import { LinkButton } from '../lib/link-button'
 import { Account } from '../../models/account'
 import { GitConfigUserForm } from '../lib/git-config-user-form'
+import { t } from 'i18next'
 
 interface IGitProps {
   readonly name: string
@@ -52,7 +53,10 @@ export class Git extends React.Component<IGitProps> {
     return (
       <div className="default-branch-component">
         <h2 id="default-branch-heading">
-          Default branch name for new repositories
+          {t(
+            'git.default-branch-name-for-new-repositories',
+            'Default branch name for new repositories'
+          )}
         </h2>
 
         <RefNameTextBox
@@ -64,22 +68,41 @@ export class Git extends React.Component<IGitProps> {
         />
 
         <p id="default-branch-description" className="git-settings-description">
-          GitHub's default branch name is <Ref>main</Ref>. You may want to
+          {t(
+            'git.gitHub-default-branch-description-1',
+            "GitHub's default branch name is "
+          )}
+          <Ref>main</Ref>
+          {t('git.gitHub-default-branch-description-2', '. ')}
+          {t(
+            'git.gitHub-default-branch-description-3',
+            `You may want to
           change it due to different workflows, or because your integrations
-          still require the historical default branch name of <Ref>master</Ref>.
+          still require the historical default branch name of `
+          )}
+          <Ref>master</Ref>
+          {t('git.gitHub-default-branch-description-4', '.')}
         </p>
 
         <p className="git-settings-description">
-          These preferences will{' '}
+          {t('git.edit-your-global-git-config-1', 'These preferences will ')}
           {this.props.selectedExternalEditor &&
           this.props.globalGitConfigPath ? (
             <LinkButton onClick={this.openGlobalGitConfigInEditor}>
-              edit your global Git config file
+              {t(
+                'git.edit-your-global-git-config-2',
+                'edit your global Git config'
+              )}
             </LinkButton>
           ) : (
-            'edit your global Git config file'
+            <>
+              {t(
+                'git.edit-your-global-git-config-2',
+                'edit your global Git config'
+              )}
+            </>
           )}
-          .
+          {t('git.edit-your-global-git-config-3', '.')}
         </p>
       </div>
     )

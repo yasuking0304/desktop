@@ -6,6 +6,7 @@ import * as Linux from './linux'
 import { IFoundShell } from './found-shell'
 import { ShellError } from './error'
 import { pathExists } from '../../ui/lib/path-exists'
+import { t } from 'i18next'
 
 export type Shell = Darwin.Shell | Win32.Shell | Linux.Shell
 
@@ -81,11 +82,26 @@ export async function launchShell(
   // We have to manually cast the wider `Shell` type into the platform-specific
   // type. This is less than ideal, but maybe the best we can do without
   // platform-specific build targets.
+  const label = __DARWIN__
+    ? t('common.settings', 'Settings')
+    : t('common.options', 'Options')
+  if (!shell?.path) {
+    throw new ShellError(
+      t(
+        'shared.error.could-not-find-terminal',
+        `Could not find terminal applicaion. Please open {{0}} and select an available shell.`,
+        { 0: label }
+      )
+    )
+  }
   const exists = await pathExists(shell.path)
   if (!exists) {
-    const label = __DARWIN__ ? 'Settings' : 'Options'
     throw new ShellError(
-      `Could not find executable for '${shell.shell}' at path '${shell.path}'.  Please open ${label} and select an available shell.`
+      t(
+        'shared.error.could-not-find-executable',
+        `Could not find executable for '{{0}}' at path '{{1}}'.  Please open {{2}} and select an available shell.`,
+        { 0: shell.shell, 1: shell.path, 2: label }
+      )
     )
   }
 

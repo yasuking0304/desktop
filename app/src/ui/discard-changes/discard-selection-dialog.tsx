@@ -8,6 +8,7 @@ import { PathText } from '../lib/path-text'
 import { Checkbox, CheckboxValue } from '../lib/checkbox'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
 import { ITextDiff, DiffSelection } from '../../models/diff'
+import { t } from 'i18next'
 
 interface IDiscardSelectionProps {
   readonly repository: Repository
@@ -59,7 +60,9 @@ export class DiscardSelection extends React.Component<
   }
 
   private getOkButtonLabel() {
-    return __DARWIN__ ? 'Discard Changes' : 'Discard changes'
+    return __DARWIN__
+      ? t('discard-changes-dialog.discard-changes-darwin', 'Discard Changes')
+      : t('discard-changes-dialog.discard-changes', 'Discard changes')
   }
 
   public render() {
@@ -69,7 +72,15 @@ export class DiscardSelection extends React.Component<
       <Dialog
         id="discard-changes"
         title={
-          __DARWIN__ ? 'Confirm Discard changes' : 'Confirm discard changes'
+          __DARWIN__
+            ? t(
+                'discard-changes-dialog.confirm-discard-changes-darwin',
+                'Confirm Discard Changes'
+              )
+            : t(
+                'discard-changes-dialog.confirm-discard-changes',
+                'Confirm discard changes'
+              )
         }
         onDismissed={this.props.onDismissed}
         onSubmit={this.discard}
@@ -79,7 +90,12 @@ export class DiscardSelection extends React.Component<
         type="warning"
       >
         <DialogContent>
-          <p>Are you sure you want to discard the selected changes to:</p>
+          <p>
+            {t(
+              'discard-selection-dialog.are-you-sure-discard-seleced-changed',
+              'Are you sure you want to discard the selected changes to:'
+            )}
+          </p>
 
           <ul>
             <li>
@@ -88,7 +104,10 @@ export class DiscardSelection extends React.Component<
           </ul>
 
           <Checkbox
-            label="Do not show this message again"
+            label={t(
+              'common.do-not-show-message-again',
+              'Do not show this message again'
+            )}
             value={
               this.state.confirmDiscardSelection
                 ? CheckboxValue.Off

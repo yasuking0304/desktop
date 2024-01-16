@@ -9,6 +9,7 @@ import { GitHubRepository } from '../../models/github-repository'
 import { CommitListItem } from '../history/commit-list-item'
 import { Octicon } from '../octicons'
 import * as OcticonSymbol from '../octicons/octicons.generated'
+import { t } from 'i18next'
 import { Account } from '../../models/account'
 
 interface ICommitDragElementProps {
@@ -98,7 +99,13 @@ export class CommitDragElement extends React.Component<
         const commitsBeingSquashedCount = this.props.selectedCommits.length + 1
         toolTipContents = (
           <>
-            <span>Squash {commitsBeingSquashedCount} commits</span>
+            <span>
+              {t(
+                'commit-drag-element.squash-number-commit',
+                'Squash {{0}} commits',
+                { 0: commitsBeingSquashedCount }
+              )}
+            </span>
           </>
         )
         break
@@ -106,17 +113,23 @@ export class CommitDragElement extends React.Component<
         if (currentDropTarget.data.type !== DragType.Commit) {
           toolTipContents = (
             <>
-              <span>'Insert here'</span>
+              <span>{t('commit-drag-element.insert-here', 'Insert here')}</span>
             </>
           )
           break
         }
 
         const pluralized =
-          currentDropTarget.data.commits.length === 1 ? 'commit' : 'commits'
+          currentDropTarget.data.commits.length === 1
+            ? t('commit-drag-element.one-commit', 'commit')
+            : t('commit-drag-element.multiple-commits', 'commits')
         toolTipContents = (
           <>
-            <span>{`Move ${pluralized} here`}</span>
+            <span>
+              {t('commit-drag-element.move-commit-here', `Move {{0}} here`, {
+                0: pluralized,
+              })}
+            </span>
           </>
         )
         break

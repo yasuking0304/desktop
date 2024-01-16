@@ -23,7 +23,7 @@ import { CommitWarning, CommitWarningIcon } from './commit-warning'
 import { LinkButton } from '../lib/link-button'
 import { Foldout, FoldoutType } from '../../lib/app-state'
 import { IAvatarUser, getAvatarUserFromAuthor } from '../../models/avatar'
-import { showContextualMenu } from '../../lib/menu-item'
+import { showContextualMenu, getEditMenuItemOfReact } from '../../lib/menu-item'
 import { Account } from '../../models/account'
 import {
   CommitMessageAvatar,
@@ -38,6 +38,7 @@ import { IdealSummaryLength } from '../../lib/wrap-rich-text-commit-message'
 import { isEmptyOrWhitespace } from '../../lib/is-empty-or-whitespace'
 import { TooltipDirection } from '../lib/tooltip'
 import { pick } from '../../lib/pick'
+import { t } from 'i18next'
 import { ToggledtippedContent } from '../lib/toggletipped-content'
 import { PreferencesTab } from '../../models/preferences'
 import {
@@ -760,11 +761,11 @@ export class CommitMessage extends React.Component<
   private get toggleCoAuthorsText(): string {
     return this.props.showCoAuthoredBy
       ? __DARWIN__
-        ? 'Remove Co-Authors'
-        : 'Remove co-authors'
+        ? t('commit-message.remove-co-authors-darwin', 'Remove Co-Authors')
+        : t('commit-message.remove-co-authors', 'Remove co-authors')
       : __DARWIN__
-      ? 'Add Co-Authors'
-      : 'Add co-authors'
+      ? t('commit-message.add-co-authors-darwin', 'Add Co-Authors')
+      : t('commit-message.add-co-authors', 'Add co-authors')
   }
 
   private getAddRemoveCoAuthorsMenuItem(): IMenuItem {
@@ -792,26 +793,32 @@ export class CommitMessage extends React.Component<
     const items: IMenuItem[] = [
       this.getAddRemoveCoAuthorsMenuItem(),
       { type: 'separator' },
-      { role: 'editMenu' },
+      ...getEditMenuItemOfReact(),
       { type: 'separator' },
-    ]
-
-    items.push(
       this.getCommitSpellcheckEnabilityMenuItem(
         this.props.commitSpellcheckEnabled
-      )
-    )
+      ),
+    ]
 
     showContextualMenu(items, true)
   }
 
   private getCommitSpellcheckEnabilityMenuItem(isEnabled: boolean): IMenuItem {
     const enableLabel = __DARWIN__
-      ? 'Enable Commit Spellcheck'
-      : 'Enable commit spellcheck'
+      ? t(
+          'commit-message.enable-commit-spellcheck-darwin',
+          'Enable Commit Spellcheck'
+        )
+      : t('commit-message.enable-commit-spellcheck', 'Enable commit spellcheck')
     const disableLabel = __DARWIN__
-      ? 'Disable Commit Spellcheck'
-      : 'Disable commit spellcheck'
+      ? t(
+          'commit-message.disable-commit-spellcheck-darwin',
+          'Disable Commit Spellcheck'
+        )
+      : t(
+          'commit-message.disable-commit-spellcheck',
+          'Disable commit spellcheck'
+        )
     return {
       label: isEnabled ? disableLabel : enableLabel,
       action: () => this.props.onCommitSpellcheckEnabledChanged(!isEnabled),
@@ -913,11 +920,24 @@ export class CommitMessage extends React.Component<
     if (commitToAmend !== null) {
       return (
         <CommitWarning icon={CommitWarningIcon.Information}>
-          Your changes will modify your <strong>most recent commit</strong>.{' '}
+          {t(
+            'commit-message.will-modify-your-most-recent-commit-1',
+            'Your changes will modify your'
+          )}
+          <strong>
+            {t(
+              'commit-message.will-modify-your-most-recent-commit-2',
+              'most recent commit'
+            )}
+          </strong>
+          {t('commit-message.will-modify-your-most-recent-commit-3', '. ')}
           <LinkButton onClick={this.props.onStopAmending}>
-            Stop amending
-          </LinkButton>{' '}
-          to make these changes as a new commit.
+            {t('commit-message.stop-amending', 'Stop amending')}
+          </LinkButton>
+          {t(
+            'commit-message.will-modify-your-most-recent-commit-4',
+            ' to make these changes as a new commit.'
+          )}
         </CommitWarning>
       )
     } else {
@@ -993,12 +1013,16 @@ export class CommitMessage extends React.Component<
     if (showNoWriteAccess) {
       return (
         <CommitWarning icon={CommitWarningIcon.Warning}>
-          You don't have write access to <strong>{repository.name}</strong>.
-          Want to{' '}
+          {t(
+            'commit-message.do-not-have-write-access-to-1',
+            `You don't have write access to `
+          )}
+          <strong>{repository.name}</strong>
+          {t('commit-message.do-not-have-write-access-to-2', '. Want to ')}
           <LinkButton onClick={this.props.onShowCreateForkDialog}>
-            create a fork
+            {t('commit-message.link-create-a-fork', 'create a fork')}
           </LinkButton>
-          ?
+          {t('commit-message.do-not-have-write-access-to-3', '?')}
         </CommitWarning>
       )
     } else if (showBranchProtected) {
@@ -1012,9 +1036,16 @@ export class CommitMessage extends React.Component<
 
       return (
         <CommitWarning icon={CommitWarningIcon.Warning}>
-          <strong>{branch}</strong> is a protected branch. Want to{' '}
-          <LinkButton onClick={this.onSwitchBranch}>switch branches</LinkButton>
-          ?
+          {t('commit-message.protected-branch-1', ' ')}
+          <strong>{branch}</strong>
+          {t(
+            'commit-message.protected-branch-2',
+            ' is a protected branch. Want to '
+          )}
+          <LinkButton onClick={this.onSwitchBranch}>
+            {t('commit-message.link-switch-branches', 'switch branches')}
+          </LinkButton>
+          {t('commit-message.protected-branch-3', '?')}
         </CommitWarning>
       )
     } else if (repoRuleWarningToDisplay === 'publish') {
@@ -1037,7 +1068,7 @@ export class CommitMessage extends React.Component<
             <>
               . Want to{' '}
               <LinkButton onClick={this.onSwitchBranch}>
-                switch branches
+                {t('commit-message.link-switch-branches', 'switch branches')}
               </LinkButton>
               ?
             </>
@@ -1086,7 +1117,7 @@ export class CommitMessage extends React.Component<
             <>
               . Want to{' '}
               <LinkButton onClick={this.onSwitchBranch}>
-                switch branches
+                {t('commit-message.link-switch-branches', 'switch branches')}
               </LinkButton>
               ?
             </>
@@ -1156,8 +1187,12 @@ export class CommitMessage extends React.Component<
   private getButtonVerb() {
     const { isCommitting, commitToAmend } = this.props
 
-    const amendVerb = isCommitting ? 'Amending' : 'Amend'
-    const commitVerb = isCommitting ? 'Committing' : 'Commit'
+    const amendVerb = isCommitting
+      ? t('commit-message.amending', 'Amending')
+      : t('commit-message.amend', 'Amend')
+    const commitVerb = isCommitting
+      ? t('commit-message.committing', 'Committing')
+      : t('commit-message.commit', 'Commit')
     const isAmending = commitToAmend !== null
 
     return isAmending ? amendVerb : commitVerb
@@ -1173,7 +1208,10 @@ export class CommitMessage extends React.Component<
 
     return (
       <>
-        {verb} to <strong>{branch}</strong>
+        {t('commit-message.commit-title', `{{0}} to {{1}}`, {
+          0: verb,
+          1: branch,
+        })}
       </>
     )
   }
@@ -1220,11 +1258,17 @@ export class CommitMessage extends React.Component<
 
     const isSummaryBlank = isEmptyOrWhitespace(this.summaryOrPlaceholder)
     if (isSummaryBlank) {
-      return `A commit summary is required to commit`
+      return t(
+        'commit-message.summary-is-required-to-commit',
+        `A commit summary is required to commit`
+      )
     } else if (!this.props.anyFilesSelected && this.props.anyFilesAvailable) {
-      return `Select one or more files to commit`
+      return t(
+        'commit-message.select-one-or-more-files-to-commit',
+        `Select one or more files to commit`
+      )
     } else if (this.props.isCommitting) {
-      return `Committing changes…`
+      return t('commit-message.committing-changes', `Committing changes…`)
     }
 
     return undefined
@@ -1264,10 +1308,16 @@ export class CommitMessage extends React.Component<
         tooltip={
           <>
             <div className="title">
-              Great commit summaries contain fewer than 50 characters
+              {t(
+                'commit-message.commit-summaries-length-over',
+                'Great commit summaries contain fewer than 50 characters'
+              )}
             </div>
             <div className="description">
-              Place extra information in the description field.
+              {t(
+                'commit-message.please-information-description-field',
+                'Place extra information in the description field.'
+              )}
             </div>
           </>
         }
@@ -1394,8 +1444,11 @@ export class CommitMessage extends React.Component<
         >
           <AutocompletingTextArea
             className={descriptionClassName}
-            screenReaderLabel="Commit description"
-            placeholder="Description"
+            screenReaderLabel={t(
+              'commit-message.commit-description',
+              'Commit description'
+            )}
+            placeholder={t('commit-message.description-field', 'Description')}
             value={this.state.description || ''}
             onValueChanged={this.onDescriptionChanged}
             autocompletionProviders={

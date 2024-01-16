@@ -6,6 +6,7 @@ import { Octicon } from '../octicons'
 import * as OcticonSymbol from '../octicons/octicons.generated'
 import { Ref } from './ref'
 import { IStashEntry } from '../../models/stash-entry'
+import { t } from 'i18next'
 import { enableMoveStash } from '../../lib/feature-flag'
 
 export function renderBranchHasRemoteWarning(branch: Branch) {
@@ -14,8 +15,16 @@ export function renderBranchHasRemoteWarning(branch: Branch) {
       <Row className="warning-helper-text">
         <Octicon symbol={OcticonSymbol.alert} />
         <p>
-          This branch is tracking <Ref>{branch.upstream}</Ref> and renaming this
-          branch will not change the branch name on the remote.
+          {t(
+            'branch-name-warnings.this-branch-is-tracking-1',
+            'This branch is tracking '
+          )}
+          <Ref>{branch.upstream}</Ref>
+          {t(
+            'branch-name-warnings.this-branch-is-tracking-2',
+            ` and renaming this
+            branch will not change the branch name on the remote.`
+          )}
         </p>
       </Row>
     )
@@ -41,7 +50,15 @@ export function renderBranchNameExistsOnRemoteWarning(
     <Row className="warning-helper-text">
       <Octicon symbol={OcticonSymbol.alert} />
       <p>
-        A branch named <Ref>{sanitizedName}</Ref> already exists on the remote.
+        {t(
+          'branch-name-warnings.branch-name-already-exists-1',
+          'A branch named '
+        )}
+        <Ref>{sanitizedName}</Ref>
+        {t(
+          'branch-name-warnings.branch-name-already-exists-2',
+          ' already exists on the remote.'
+        )}
       </p>
     </Row>
   )
@@ -55,8 +72,11 @@ export function renderStashWillBeLostWarning(stash: IStashEntry | null) {
     <Row className="warning-helper-text">
       <Octicon symbol={OcticonSymbol.alert} />
       <p>
-        Your current stashed changes on this branch will no longer be visible in
-        GitHub Desktop if the branch is renamed.
+        {t(
+          'branch-name-warnings.current-stashed-changes',
+          `Your current stashed changes on this branch will no longer be visible in
+          GitHub Desktop if the branch is renamed.`
+        )}
       </p>
     </Row>
   )

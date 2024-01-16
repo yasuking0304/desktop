@@ -6,25 +6,35 @@ import { MultiCommitOperationKind } from '../../models/multi-commit-operation'
 import { RebasePreview } from '../../models/rebase'
 import { Repository } from '../../models/repository'
 import { IDropdownSelectButtonOption } from '../dropdown-select-button'
+import { t } from 'i18next'
 
 export function getMergeOptions(): ReadonlyArray<IDropdownSelectButtonOption> {
   return [
     {
-      label: 'Create a merge commit',
-      description:
-        'The commits from the selected branch will be added to the current branch via a merge commit.',
+      label: t('update-branch.create-a-merge-commit', 'Create a merge commit'),
+      description: t(
+        'update-branch.description-create-a-merge-commit',
+        `The commits from the selected branch will be added to the
+           current branch via a merge commit.`
+      ),
       id: MultiCommitOperationKind.Merge,
     },
     {
-      label: 'Squash and merge',
-      description:
-        'The commits in the selected branch will be combined into one commit in the current branch.',
+      label: t('update-branch.squash-and-merge', 'Squash and merge'),
+      description: t(
+        'update-branch.description-squash-and-merge',
+        `The commits in the selected branch will be combined into one commit
+          in the current branch.`
+      ),
       id: MultiCommitOperationKind.Squash,
     },
     {
-      label: 'Rebase',
-      description:
-        'The commits from the selected branch will be rebased and added to the current branch.',
+      label: t('update-branch.rebase', 'Rebase'),
+      description: t(
+        'update-branch.description-rebase',
+        `The commits from the selected branch will be rebased and added to the
+         current branch.`
+      ),
       id: MultiCommitOperationKind.Rebase,
     },
   ]

@@ -10,6 +10,7 @@ import {
 } from '../models/status'
 import { assertNever } from './fatal-error'
 import { ManualConflictResolution } from '../models/manual-conflict-resolution'
+import { t } from 'i18next'
 
 /**
  * Convert a given `AppFileStatusKind` value to a human-readable string to be
@@ -39,6 +40,37 @@ export function mapStatus(status: AppFileStatus): string {
       return 'Conflicted'
     case AppFileStatusKind.Copied:
       return 'Copied'
+    default:
+      return assertNever(status, `Unknown file status ${status}`)
+  }
+}
+
+/**
+ * Convert a given `AppFileStatusKind` value to a localized language string to be
+ * presented to users which describes the state of a file.
+ */
+export function mapStatusCaption(status: AppFileStatus): string {
+  switch (status.kind) {
+    case AppFileStatusKind.New:
+    case AppFileStatusKind.Untracked:
+      return t('status.new', 'New')
+    case AppFileStatusKind.Modified:
+      return t('status.modified', 'Modified')
+    case AppFileStatusKind.Deleted:
+      return t('status.deleted', 'Deleted')
+    case AppFileStatusKind.Renamed:
+      return t('status.renamed', 'Renamed')
+    case AppFileStatusKind.Conflicted:
+      if (isConflictWithMarkers(status)) {
+        const conflictsCount = status.conflictMarkerCount
+        return conflictsCount > 0
+          ? t('status.conflicted', 'Conflicted')
+          : t('status.eesolved', 'Resolved')
+      }
+
+      return t('status.conflicted', 'Conflicted')
+    case AppFileStatusKind.Copied:
+      return t('status.copied', 'Copied')
     default:
       return assertNever(status, `Unknown file status ${status}`)
   }

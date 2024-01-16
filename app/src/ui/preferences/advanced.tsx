@@ -4,6 +4,7 @@ import { Checkbox, CheckboxValue } from '../lib/checkbox'
 import { LinkButton } from '../lib/link-button'
 import { SamplesURL } from '../../lib/stats'
 import { isWindowsOpenSSHAvailable } from '../../lib/ssh/ssh'
+import { t } from 'i18next'
 
 interface IAdvancedPreferencesProps {
   readonly useWindowsOpenSSH: boolean
@@ -64,8 +65,14 @@ export class Advanced extends React.Component<
   private reportDesktopUsageLabel() {
     return (
       <span>
-        Help GitHub Desktop improve by submitting{' '}
-        <LinkButton uri={SamplesURL}>usage stats</LinkButton>
+        {t(
+          'advanced.help-github-desktop-improve-by-submitting-1',
+          'Help GitHub Desktop improve by submitting '
+        )}
+        <LinkButton uri={SamplesURL}>
+          {t('advanced.usage-stats', 'usage stats')}
+        </LinkButton>
+        {t('advanced.help-github-desktop-improve-by-submitting-2', ' ')}
       </span>
     )
   }
@@ -74,9 +81,12 @@ export class Advanced extends React.Component<
     return (
       <DialogContent>
         <div className="advanced-section">
-          <h2>Background updates</h2>
+          <h2>{t('advanced.background-updates', 'Background updates')}</h2>
           <Checkbox
-            label="Show status icons in the repository list"
+            label={t(
+              'advanced.show-status-icons-in-the-repository-list',
+              'Show status icons in the repository list'
+            )}
             value={
               this.props.repositoryIndicatorsEnabled
                 ? CheckboxValue.On
@@ -90,20 +100,26 @@ export class Advanced extends React.Component<
             className="git-settings-description"
           >
             <p>
-              These icons indicate which repositories have local or remote
-              changes, and require the periodic fetching of repositories that
-              are not currently selected.
+              {t(
+                'advanced.these-icons-indicate',
+                `These icons indicate which repositories have local or remote
+                changes, and require the periodic fetching of repositories that
+                are not currently selected.`
+              )}
             </p>
             <p>
-              Turning this off will not stop the periodic fetching of your
-              currently selected repository, but may improve overall app
-              performance for users with many repositories.
+              {t(
+                'advanced.turning-this-off-will-not-stop',
+                `Turning this off will not stop the periodic fetching of your
+                currently selected repository, but may improve overall app
+                performance for users with many repositories.`
+              )}
             </p>
           </div>
         </div>
         {this.renderSSHSettings()}
         <div className="advanced-section">
-          <h2>Usage</h2>
+          <h2>{t('advanced.usage', 'Usage')}</h2>
           <Checkbox
             label={this.reportDesktopUsageLabel()}
             value={
@@ -125,9 +141,12 @@ export class Advanced extends React.Component<
 
     return (
       <div className="advanced-section">
-        <h2>SSH</h2>
+        <h2>{t('advanced.ssh', 'SSH')}</h2>
         <Checkbox
-          label="Use system OpenSSH (recommended)"
+          label={t(
+            'advanced.use-system-openssh',
+            'Use system OpenSSH (recommended)'
+          )}
           value={
             this.props.useWindowsOpenSSH ? CheckboxValue.On : CheckboxValue.Off
           }

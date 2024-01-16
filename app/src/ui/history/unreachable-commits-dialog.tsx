@@ -5,6 +5,7 @@ import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
 import { Commit } from '../../models/commit'
 import { CommitList } from './commit-list'
 import { LinkButton } from '../lib/link-button'
+import { t } from 'i18next'
 import { Account } from '../../models/account'
 
 export enum UnreachableCommitsTab {
@@ -92,8 +93,10 @@ export class UnreachableCommitsDialog extends React.Component<
         onTabClicked={this.onTabClicked}
         selectedIndex={this.state.selectedTab}
       >
-        <span>Unreachable</span>
-        <span>Reachable</span>
+        <span>
+          {t('unreachable-commits-dialog.unreachable', 'Unreachable')}
+        </span>
+        <span>{t('unreachable-commits-dialog.reachable', 'Reachable')}</span>
       </TabBar>
     )
   }
@@ -146,7 +149,10 @@ export class UnreachableCommitsDialog extends React.Component<
           : ''}{' '}
         in the ancestry path of the most recent commit in your selection.{' '}
         <LinkButton uri="https://github.com/desktop/desktop/blob/development/docs/learn-more/unreachable-commits.md">
-          Learn more about unreachable commits.
+          {t(
+            'unreachable-commits-dialog.about-unreachable-commits',
+            'Learn more about unreachable commits.'
+          )}
         </LinkButton>
       </div>
     )
@@ -156,7 +162,17 @@ export class UnreachableCommitsDialog extends React.Component<
     return (
       <Dialog
         className="unreachable-commits"
-        title={__DARWIN__ ? 'Commit Reachability' : 'Commit reachability'}
+        title={
+          __DARWIN__
+            ? t(
+                'unreachable-commits-dialog.commit-reachability-darwin',
+                'Commit Reachability'
+              )
+            : t(
+                'unreachable-commits-dialog.commit-reachability',
+                'Commit reachability'
+              )
+        }
         onSubmit={this.props.onDismissed}
         onDismissed={this.props.onDismissed}
       >

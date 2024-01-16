@@ -1,3 +1,4 @@
+import '../locales/i18n'
 import '../lib/logging/main/install'
 
 import {
@@ -101,7 +102,8 @@ const possibleProtocols = new Set(['x-github-client'])
 if (__DEV__) {
   possibleProtocols.add('x-github-desktop-dev-auth')
 } else {
-  possibleProtocols.add('x-github-desktop-auth')
+  //possibleProtocols.add('x-github-desktop-auth')
+  possibleProtocols.add('x-github-desktop-dev-auth')
 }
 // Also support Desktop Classic's protocols.
 if (__DARWIN__) {
@@ -149,6 +151,10 @@ if (__WIN32__ && process.argv.length > 1) {
   } else {
     handlePossibleProtocolLauncherArgs(process.argv)
   }
+}
+
+if (__LINUX__ && process.argv.length > 1) {
+  handlePossibleProtocolLauncherArgs(process.argv)
 }
 
 initializeDesktopNotifications()
@@ -268,6 +274,16 @@ function handlePossibleProtocolLauncherArgs(args: ReadonlyArray<string>) {
       handleAppURL(matchingUrls[0])
     } else {
       log.error(`Malformed launch arguments received: ${args}`)
+    }
+  } else if (__LINUX__) {
+    // we expect this call to have several parameters before the URL we want,
+    // so we should filter out the program name as well as any parameters that
+    // look like arguments to Electron
+    const argsWithoutParameters = args.filter(
+      a => !a.endsWith('github-desktop') && !a.startsWith('--')
+    )
+    if (argsWithoutParameters.length > 0) {
+      handleAppURL(argsWithoutParameters[0])
     }
   } else if (args.length > 1) {
     handleAppURL(args[1])

@@ -7,6 +7,7 @@ import { KeyboardInsertionData, List } from '../lib/list'
 import { arrayEquals } from '../../lib/equality'
 import { DragData, DragType } from '../../models/drag-drop'
 import classNames from 'classnames'
+import { t } from 'i18next'
 import memoizeOne from 'memoize-one'
 import { IMenuItem, showContextualMenu } from '../../lib/menu-item'
 import {
@@ -345,14 +346,23 @@ export class CommitList extends React.Component<
     isLocalCommit: boolean,
     numUnpushedTags: number
   ) {
+    const tagsPlural =
+      numUnpushedTags > 1
+        ? t('commit-summary.tags', 'tags')
+        : t('commit-summary.tag', 'tag')
     if (isLocalCommit) {
-      return 'This commit has not been pushed to the remote repository'
+      return t(
+        'commit-summary.this-commit-has-not-been-pushed',
+        'This commit has not been pushed to the remote repository'
+      )
     }
 
     if (numUnpushedTags > 0) {
-      return `This commit has ${numUnpushedTags} tag${
-        numUnpushedTags > 1 ? 's' : ''
-      } to push`
+      return t(
+        'commit-summary.this-commit-has-number-tags',
+        `This commit has {{0}} {{1}} to push`,
+        { 0: numUnpushedTags, 1: tagsPlural }
+      )
     }
 
     return undefined
@@ -540,8 +550,8 @@ export class CommitList extends React.Component<
 
     const containerWidth = this.containerRef.current?.clientWidth ?? 0
     const reorderCommitsHintTitle = __DARWIN__
-      ? 'Reorder Commits'
-      : 'Reorder commits'
+      ? t('commit-list-item.reorder-commits-title-darwin', 'Reorder Commits')
+      : t('commit-list-item.reorder-commits-title', 'Reorder commits')
 
     return (
       <Popover
@@ -557,12 +567,18 @@ export class CommitList extends React.Component<
       >
         <h4>{reorderCommitsHintTitle}</h4>
         <p>
-          Use <KeyboardShortcut darwinKeys={['↑']} keys={['↑']} />
-          <KeyboardShortcut darwinKeys={['↓']} keys={['↓']} /> to choose a new
-          location.
+          {t('commit-list-item.reorder-choose-locate-1', 'Use ')}
+          <KeyboardShortcut darwinKeys={['↑']} keys={['↑']} />
+          <KeyboardShortcut darwinKeys={['↓']} keys={['↓']} />
+          {t(
+            'commit-list-item.reorder-choose-locate-2',
+            'to choose a new location.'
+          )}
         </p>
         <p>
-          Press <KeyboardShortcut darwinKeys={['⏎']} keys={['⏎']} /> to confirm.
+          {t('commit-list-item.reorder-comfirm-locate-1', 'Press ')}
+          <KeyboardShortcut darwinKeys={['⏎']} keys={['⏎']} />
+          {t('commit-list-item.reorder-comfirm-locate-2', 'to confirm.')}
         </p>
       </Popover>
     )
@@ -644,28 +660,35 @@ export class CommitList extends React.Component<
       this.props.canResetToCommits === true && isResettableCommit
     const canBeCheckedOut = row > 0 //Cannot checkout the current commit
 
-    let viewOnGitHubLabel = 'View on GitHub'
+    let viewOnGitHubLabel = t('commit-list.view-on-github', 'View on GitHub')
     const gitHubRepository = this.props.gitHubRepository
 
     if (
       gitHubRepository &&
       gitHubRepository.endpoint !== getDotComAPIEndpoint()
     ) {
-      viewOnGitHubLabel = 'View on GitHub Enterprise'
+      viewOnGitHubLabel = t(
+        'commit-list.view-on-github-enterprise',
+        'View on GitHub Enterprise'
+      )
     }
 
     const items: IMenuItem[] = []
 
     if (canBeAmended) {
       items.push({
-        label: __DARWIN__ ? 'Amend Commit…' : 'Amend commit…',
+        label: __DARWIN__
+          ? t('commit-list-item.amend-commit-darwin', 'Amend Commit…')
+          : t('commit-list-item.amend-commit', 'Amend commit…'),
         action: () => this.props.onAmendCommit?.(commit, isLocal),
       })
     }
 
     if (canBeUndone) {
       items.push({
-        label: __DARWIN__ ? 'Undo Commit…' : 'Undo commit…',
+        label: __DARWIN__
+          ? t('commit-list-item.undo-commit-darwin', 'Undo Commit…')
+          : t('commit-list-item.undo-commit', 'Undo commit…'),
         action: () => {
           if (this.props.onUndoCommit) {
             this.props.onUndoCommit(commit)
@@ -677,7 +700,9 @@ export class CommitList extends React.Component<
 
     if (enableResetToCommit()) {
       items.push({
-        label: __DARWIN__ ? 'Reset to Commit…' : 'Reset to commit…',
+        label: __DARWIN__
+          ? t('commit-list-item.reset-to-commit-darwin', 'Reset to Commit…')
+          : t('commit-list-item.reset-to-commit', 'Reset to commit…'),
         action: () => {
           if (this.props.onResetToCommit) {
             this.props.onResetToCommit(commit)
@@ -689,7 +714,9 @@ export class CommitList extends React.Component<
 
     if (enableCheckoutCommit()) {
       items.push({
-        label: __DARWIN__ ? 'Checkout Commit' : 'Checkout commit',
+        label: __DARWIN__
+          ? t('commit-list-item.checkout-commit-darwin', 'Checkout Commit')
+          : t('commit-list-item.checkout-commit', 'Checkout commit'),
         action: () => {
           this.props.onCheckoutCommit?.(commit)
         },
@@ -698,7 +725,9 @@ export class CommitList extends React.Component<
     }
 
     items.push({
-      label: __DARWIN__ ? 'Reorder Commit' : 'Reorder commit',
+      label: __DARWIN__
+        ? t('commit-list-item.reorder-commit-darwin', 'Reorder Commit')
+        : t('commit-list-item.reorder-commit', 'Reorder commit'),
       action: () => {
         this.props.onKeyboardReorder?.([commit])
       },
@@ -708,8 +737,14 @@ export class CommitList extends React.Component<
     items.push(
       {
         label: __DARWIN__
-          ? 'Revert Changes in Commit'
-          : 'Revert changes in commit',
+          ? t(
+              'commit-list-item.Revert-changes-in-commit-darwin',
+              'Revert Changes in Commit'
+            )
+          : t(
+              'commit-list-item.Revert-changes-in-commit',
+              'Revert changes in commit'
+            ),
         action: () => {
           if (this.props.onRevertCommit) {
             this.props.onRevertCommit(commit)
@@ -720,8 +755,14 @@ export class CommitList extends React.Component<
       { type: 'separator' },
       {
         label: __DARWIN__
-          ? 'Create Branch from Commit'
-          : 'Create branch from commit',
+          ? t(
+              'commit-list-item.create-branch-from-commit-darwin',
+              'Create Branch from Commit'
+            )
+          : t(
+              'commit-list-item.create-branch-from-commit',
+              'Create branch from commit'
+            ),
         action: () => {
           if (this.props.onCreateBranch) {
             this.props.onCreateBranch(commit)
@@ -729,7 +770,7 @@ export class CommitList extends React.Component<
         },
       },
       {
-        label: 'Create Tag…',
+        label: t('commit-list-item.comform-create-tag', 'Create Tag…'),
         action: () => this.props.onCreateTag?.(commit.sha),
         enabled: this.props.onCreateTag !== undefined,
       }
@@ -745,17 +786,28 @@ export class CommitList extends React.Component<
         deleteTagsMenuItem
       )
     }
-    const darwinTagsLabel = commit.tags.length > 1 ? 'Copy Tags' : 'Copy Tag'
-    const windowTagsLabel = commit.tags.length > 1 ? 'Copy tags' : 'Copy tag'
+    const darwinTagsLabel =
+      commit.tags.length > 1
+        ? t('commit-list.copy-tags', 'Copy Tags')
+        : t('commit-list.copy-tag', 'Copy Tag')
+    const windowTagsLabel =
+      commit.tags.length > 1
+        ? t('commit-list.copy-tags', 'Copy Tags')
+        : t('commit-list.copy-tag', 'Copy Tag')
     items.push(
       {
-        label: __DARWIN__ ? 'Cherry-pick Commit…' : 'Cherry-pick commit…',
+        label: __DARWIN__
+          ? t(
+              'commit-list-item.cherry-pick-commit-darwin',
+              'Cherry-pick Commit…'
+            )
+          : t('commit-list-item.cherry-pick-commit', 'Cherry-pick commit…'),
         action: () => this.props.onCherryPick?.(this.selectedCommits),
         enabled: this.canCherryPick(),
       },
       { type: 'separator' },
       {
-        label: 'Copy SHA',
+        label: t('commit-list-item.copy-sha', 'Copy SHA'),
         action: () => clipboard.writeText(commit.sha),
       },
       {
@@ -811,7 +863,9 @@ export class CommitList extends React.Component<
       const tagName = commit.tags[0]
 
       return {
-        label: `Delete tag ${tagName}`,
+        label: t('commit-list-item.detele-tag', `Delete tag {{0}}`, {
+          0: tagName,
+        }),
         action: () => onDeleteTag(tagName),
         enabled: unpushedTags.includes(tagName),
       }
@@ -821,7 +875,7 @@ export class CommitList extends React.Component<
     const unpushedTagsSet = new Set(unpushedTags)
 
     return {
-      label: 'Delete tag…',
+      label: t('commit-list-item.confim-detele-tag', 'Delete tag…'),
       submenu: commit.tags.map(tagName => {
         return {
           label: tagName,
@@ -838,22 +892,42 @@ export class CommitList extends React.Component<
     return [
       {
         label: __DARWIN__
-          ? `Cherry-pick ${count} Commits…`
-          : `Cherry-pick ${count} commits…`,
+          ? t(
+              'commit-list-item.cherry-pick-commits-darwin',
+              `Cherry-pick {{0}} Commits…`,
+              { 0: count }
+            )
+          : t(
+              'commit-list-item.cherry-pick-commits',
+              `Cherry-pick {{0}} commits…`,
+              { 0: count }
+            ),
         action: () => this.props.onCherryPick?.(this.selectedCommits),
         enabled: this.canCherryPick(),
       },
       {
         label: __DARWIN__
-          ? `Squash ${count} Commits…`
-          : `Squash ${count} commits…`,
+          ? t(
+              'commit-list-item.squash-commits-darwin',
+              `Squash {{0}} Commits…`,
+              { 0: count }
+            )
+          : t('commit-list-item.squash-commits', `Squash {{0}} commits…`, {
+              0: count,
+            }),
         action: () => this.onSquash(this.selectedCommits, commit, true),
         enabled: this.canSquash(),
       },
       {
         label: __DARWIN__
-          ? `Reorder ${count} Commits…`
-          : `Reorder ${count} commits…`,
+          ? t(
+              'commit-list-item.reorder-commits-darwin',
+              `Reorder {{0}} Commits…`,
+              { 0: count }
+            )
+          : t('commit-list-item.reorder-commits', `Reorder {{0}} commits…`, {
+              0: count,
+            }),
         action: () => this.props.onKeyboardReorder?.(this.selectedCommits),
         enabled: this.canReorder(),
       },

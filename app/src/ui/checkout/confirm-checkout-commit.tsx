@@ -6,6 +6,7 @@ import { Row } from '../lib/row'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
 import { Checkbox, CheckboxValue } from '../lib/checkbox'
 import { CommitOneLine } from '../../models/commit'
+import { t } from 'i18next'
 
 interface IConfirmCheckoutCommitProps {
   readonly dispatcher: Dispatcher
@@ -36,7 +37,9 @@ export class ConfirmCheckoutCommitDialog extends React.Component<
   }
 
   public render() {
-    const title = __DARWIN__ ? 'Checkout Commit?' : 'Checkout commit?'
+    const title = __DARWIN__
+      ? t('confirm-checkout-commit.checkout-commit-darwin', 'Checkout Commit?')
+      : t('confirm-checkout-commit.checkout-commit', 'Checkout commit?')
 
     return (
       <Dialog
@@ -52,13 +55,19 @@ export class ConfirmCheckoutCommitDialog extends React.Component<
       >
         <DialogContent>
           <Row id="checking-out-commit-confirmation">
-            Checking out a commit will create a detached HEAD, and you will no
-            longer be on any branch. Are you sure you want to checkout this
-            commit?
+            {t(
+              'confirm-checkout-commit.checking-out-a-commit',
+              `Checking out a commit will create a detached HEAD, and you will
+              no longer be on any branch. Are you sure you want to checkout
+              this commit?`
+            )}
           </Row>
           <Row>
             <Checkbox
-              label="Do not show this message again"
+              label={t(
+                'confirm-checkout-commit.do-not-show-this-messaeg-again',
+                'Do not show this message again'
+              )}
               value={
                 this.state.confirmCheckoutCommit
                   ? CheckboxValue.Off
@@ -69,7 +78,10 @@ export class ConfirmCheckoutCommitDialog extends React.Component<
           </Row>
         </DialogContent>
         <DialogFooter>
-          <OkCancelButtonGroup destructive={true} okButtonText="Checkout" />
+          <OkCancelButtonGroup
+            destructive={true}
+            okButtonText={t('confirm-checkout-commit.checkout', 'Checkout')}
+          />
         </DialogFooter>
       </Dialog>
     )

@@ -1,4 +1,5 @@
 import { spawn, SpawnOptions } from 'child_process'
+import { t } from 'i18next'
 import { pathExists } from '../../ui/lib/path-exists'
 import { ExternalEditorError, FoundEditor } from './shared'
 
@@ -15,9 +16,16 @@ export async function launchExternalEditor(
   const editorPath = editor.path
   const exists = await pathExists(editorPath)
   if (!exists) {
-    const label = __DARWIN__ ? 'Settings' : 'Options'
+    const label = __DARWIN__
+      ? t('common.settings', 'Settings')
+      : t('common.options', 'Options')
     throw new ExternalEditorError(
-      `Could not find executable for '${editor.editor}' at path '${editor.path}'.  Please open ${label} and select an available editor.`,
+      t(
+        'launch.error.could-not-find-executable',
+        `Could not find executable for '{{0}}' at path '{{1}}'.
+       Please open {{2}} and select an available editor.`,
+        { 0: editor.editor, 1: editor.path, 2: label }
+      ),
       { openPreferences: true }
     )
   }

@@ -4,6 +4,7 @@ import { CloneOptions } from '../../models/clone-options'
 import { CloneProgressParser, executionOptionsWithProgress } from '../progress'
 import { getDefaultBranch } from '../helpers/default-branch'
 import { envForRemoteOperation } from './environment'
+import { t } from 'i18next'
 
 /**
  * Clones a repository from a given url into to the specified path.
@@ -47,7 +48,9 @@ export async function clone(
   if (progressCallback) {
     args.push('--progress')
 
-    const title = `Cloning into ${path}`
+    const title = t('clone.cloning-into', `Cloning into {{0}}`, {
+      0: path,
+    })
     const kind = 'clone'
 
     opts = await executionOptionsWithProgress(

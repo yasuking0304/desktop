@@ -17,6 +17,7 @@ import { assertNever } from '../../lib/fatal-error'
 import { ReleaseNotesUri } from '../lib/releases'
 import { encodePathAsUrl } from '../../lib/path'
 import { isTopMostDialog } from '../dialog/is-top-most'
+import { t } from 'i18next'
 import { isWindowsAndNoLongerSupportedByElectron } from '../../lib/get-os'
 
 const logoPath = __DARWIN__
@@ -144,7 +145,7 @@ export class About extends React.Component<IAboutProps, IAboutState> {
         return (
           <Row>
             <Button onClick={this.onQuitAndInstall}>
-              Quit and Install Update
+              {t('about.quit-and-install-update', 'Quit and Install Update')}
             </Button>
           </Row>
         )
@@ -163,14 +164,22 @@ export class About extends React.Component<IAboutProps, IAboutState> {
           : this.props.onCheckForUpdates
 
         const buttonTitle = this.state.altKeyPressed
-          ? 'Ensure Latest Version'
-          : 'Check for Updates'
+          ? t('about.ensure-latest-version', 'Ensure Latest Version')
+          : t('about.check-for-updates', 'Check for Updates')
 
         const tooltip = this.state.altKeyPressed
-          ? "GitHub Desktop may release updates to our user base gradually to ensure we catch any problems early. This lets you bypass the gradual rollout and jump straight to the latest version if there's one available."
+          ? t(
+              'about.github-desktop-may-release-updates',
+              `GitHub Desktop may release updates to our user base gradually to
+               ensure we catch any problems early. This lets you bypass the
+               gradual rollout and jump straight to the latest version
+               if there's one available.`
+            )
           : ''
 
-        return (
+        return __LINUX__ ? (
+          <></>
+        ) : (
           <Row>
             <Button disabled={disabled} onClick={onClick} tooltip={tooltip}>
               {buttonTitle}
@@ -189,7 +198,7 @@ export class About extends React.Component<IAboutProps, IAboutState> {
     return (
       <Row className="update-status">
         <Loading />
-        <span>Checking for updates…</span>
+        <span>{t('about.checking-for-updates', 'Checking for updates…')}</span>
       </Row>
     )
   }
@@ -198,12 +207,15 @@ export class About extends React.Component<IAboutProps, IAboutState> {
     return (
       <Row className="update-status">
         <Loading />
-        <span>Downloading update…</span>
+        <span>{t('about.downloading-updates', 'Downloading update…')}</span>
       </Row>
     )
   }
 
   private renderUpdateNotAvailable() {
+    if (__LINUX__) {
+      return null
+    }
     const lastCheckedDate = this.state.updateState.lastSuccessfulCheck
 
     // This case is rendered as an error
@@ -213,8 +225,12 @@ export class About extends React.Component<IAboutProps, IAboutState> {
 
     return (
       <p className="update-status">
-        You have the latest version (last checked{' '}
-        <RelativeTime date={lastCheckedDate} />)
+        {t(
+          'about.you-have-the-latest-version-1',
+          `You have the latest version (last checked `
+        )}
+        <RelativeTime date={lastCheckedDate} />
+        {t('about.you-have-the-latest-version-2', ')')}
       </p>
     )
   }
@@ -222,7 +238,10 @@ export class About extends React.Component<IAboutProps, IAboutState> {
   private renderUpdateReady() {
     return (
       <p className="update-status">
-        An update has been downloaded and is ready to be installed.
+        {t(
+          'about.update-has-been-downloaded-and-is-ready',
+          'An update has been downloaded and is ready to be installed.'
+        )}
       </p>
     )
   }
@@ -274,10 +293,21 @@ export class About extends React.Component<IAboutProps, IAboutState> {
     if (isWindowsAndNoLongerSupportedByElectron()) {
       return (
         <DialogError>
-          This operating system is no longer supported. Software updates have
-          been disabled.{' '}
-          <LinkButton uri="https://docs.github.com/en/desktop/installing-and-configuring-github-desktop/overview/supported-operating-systems">
-            Supported operating systems
+          {t(
+            'about.no-longer-supported-operating-systems',
+            `This operating system is no longer supported. Software updates have
+              been disabled. `
+          )}
+          <LinkButton
+            uri={t(
+              'url.supported-operating-systems-for-github-desktop',
+              'https://docs.github.com/en/desktop/installing-and-configuring-github-desktop/overview/supported-operating-systems'
+            )}
+          >
+            {t(
+              'about.supported-operating-systems',
+              'Supported operating systems'
+            )}
           </LinkButton>
         </DialogError>
       )
@@ -286,9 +316,12 @@ export class About extends React.Component<IAboutProps, IAboutState> {
     if (!this.state.updateState.lastSuccessfulCheck) {
       return (
         <DialogError>
-          Couldn't determine the last time an update check was performed. You
-          may be running an old version. Please try manually checking for
-          updates and contact GitHub Support if the problem persists
+          {t(
+            'about.could-not-determine-the-last-time-update-check',
+            `Couldn't determine the last time an update check was performed.
+            You may be running an old version. Please try manually checking for
+            updates and contact GitHub Support if the problem persists`
+          )}
         </DialogError>
       )
     }
@@ -303,12 +336,18 @@ export class About extends React.Component<IAboutProps, IAboutState> {
 
     return (
       <div>
-        <p className="no-padding">Looking for the latest features?</p>
         <p className="no-padding">
-          Check out the{' '}
+          {t(
+            'about.looking-for-the-latest-features',
+            'Looking for the latest features?'
+          )}
+        </p>
+        <p className="no-padding">
+          {t('about.check-out-the-beta-channel-1', 'Check out the ')}
           <LinkButton uri="https://desktop.github.com/beta">
-            Beta Channel
+            {t('about.check-out-the-beta-channel-2', 'Beta Channel')}
           </LinkButton>
+          {t('about.check-out-the-beta-channel-3', ' ')}
         </p>
       </div>
     )
@@ -348,12 +387,15 @@ export class About extends React.Component<IAboutProps, IAboutState> {
           </p>
           <p className="no-padding">
             <LinkButton onClick={this.props.onShowTermsAndConditions}>
-              Terms and Conditions
+              {t('about.terms-and-conditions', 'Terms and Conditions')}
             </LinkButton>
           </p>
           <p>
             <LinkButton onClick={this.props.onShowAcknowledgements}>
-              License and Open Source Notices
+              {t(
+                'about.license-and-open-source-notices',
+                'License and Open Source Notices'
+              )}
             </LinkButton>
           </p>
           {this.renderUpdateDetails()}

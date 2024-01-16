@@ -30,6 +30,7 @@ import {
   PullRequestSuggestedNextAction,
   isIdPullRequestSuggestedNextAction,
 } from '../../models/pull-request'
+import { t } from 'i18next'
 import { KeyboardShortcut } from '../keyboard-shortcut/keyboard-shortcut'
 
 function formatMenuItemLabel(text: string) {
@@ -209,11 +210,11 @@ export class NoChanges extends React.Component<
 
   private getPlatformFileManagerName() {
     if (__DARWIN__) {
-      return 'Finder'
+      return t('no-changes.file-manager-darwin', 'Finder')
     } else if (__WIN32__) {
-      return 'Explorer'
+      return t('no-changes.file-manager', 'Explorer')
     }
-    return 'your File Manager'
+    return t('no-changes.file-manager-linux', 'your File Manager')
   }
 
   private renderDiscoverabilityElements(menuItem: IMenuItemInfo) {
@@ -221,7 +222,7 @@ export class NoChanges extends React.Component<
 
     return (
       <>
-        {parentMenusText} menu or{' '}
+        {t('no-changes.menu', '{{0}} menu or ', { 0: parentMenusText })}
         {this.renderDiscoverabilityKeyboardShortcut(menuItem)}
       </>
     )
@@ -267,7 +268,11 @@ export class NoChanges extends React.Component<
 
     return this.renderMenuBackedAction(
       'open-working-directory',
-      `View the files of your repository in ${fileManager}`,
+      t(
+        'no-changes.view-the-files-of-your-repository',
+        `View the files of your repository in {{0}}`,
+        { 0: fileManager }
+      ),
       undefined,
       this.onShowInFileManagerClicked
     )
@@ -285,7 +290,10 @@ export class NoChanges extends React.Component<
 
     return this.renderMenuBackedAction(
       'view-repository-on-github',
-      `Open the repository page on GitHub in your browser`,
+      t(
+        'no-changes.open-the-repository-page-on-github-in-your-browser',
+        `Open the repository page on GitHub in your browser`
+      ),
       undefined,
       this.onViewOnGitHubClicked
     )
@@ -321,13 +329,18 @@ export class NoChanges extends React.Component<
       return null
     }
 
-    const title = `Open the repository in your external editor`
+    const title = t(
+      'no-changes.open-the-repository-in-your-external-editor',
+      `Open the repository in your external editor`
+    )
 
     const description = (
       <>
-        Select your editor in{' '}
+        {t('no-changes.select-your-editor', 'Select your editor in ')}
         <LinkButton onClick={this.openIntegrationPreferences}>
-          {__DARWIN__ ? 'Preferences' : 'Options'}
+          {__DARWIN__
+            ? t('common.preferences', 'Preferences')
+            : t('common.options', 'Options')}
         </LinkButton>
       </>
     )
@@ -412,16 +425,27 @@ export class NoChanges extends React.Component<
     }
 
     const numChanges = stashEntry.files.files.length
+    const changePlural =
+      numChanges === 1
+        ? t('no-changes.change', 'change')
+        : t('no-changes.changes', 'changes')
     const description = (
       <>
-        You have {numChanges} {numChanges === 1 ? 'change' : 'changes'} in
-        progress that you have not yet committed.
+        {t(
+          'no-changes.you-have-number-change-in-progress',
+          `You have {{0}} {{1}} in
+          progress that you have not yet committed.`,
+          { 0: numChanges, 1: changePlural }
+        )}
       </>
     )
     const discoverabilityContent = (
       <>
-        When a stash exists, access it at the bottom of the Changes tab to the
-        left.
+        {t(
+          'no-changes.when-a-stash-exists-access-it-at-the-bottom',
+          `When a stash exists, access it at the bottom of the Changes tab to the
+        left.`
+        )}
       </>
     )
     const itemId: MenuIDs = 'toggle-stashed-changes'
@@ -434,11 +458,14 @@ export class NoChanges extends React.Component<
     return (
       <MenuBackedSuggestedAction
         key="view-stash-action"
-        title="View your stashed changes"
+        title={t(
+          'no-changes.view-your-stashed-changes',
+          'View your stashed changes'
+        )}
         menuItemId={itemId}
         description={description}
         discoverabilityContent={discoverabilityContent}
-        buttonText="View stash"
+        buttonText={t('no-changes.view-stash', 'View stash')}
         type="primary"
         disabled={menuItem !== null && !menuItem.enabled}
         onClick={this.onViewStashClicked}
@@ -464,18 +491,33 @@ export class NoChanges extends React.Component<
 
     const discoverabilityContent = (
       <>
-        Always available in the toolbar for local repositories or{' '}
+        {t(
+          'no-changes.always-available-in-the-toolbar-local-repositories-1',
+          'Always available in the toolbar for local repositories or '
+        )}
         {this.renderDiscoverabilityKeyboardShortcut(menuItem)}
+        {t(
+          'no-changes.always-available-in-the-toolbar-local-repositories-2',
+          ' '
+        )}
       </>
     )
 
     return (
       <MenuBackedSuggestedAction
         key="publish-repository-action"
-        title="Publish your repository to GitHub"
-        description="This repository is currently only available on your local machine. By publishing it on GitHub you can share it, and collaborate with others."
+        title={t(
+          'no-changes.publish-your-repository-to-github',
+          'Publish your repository to GitHub'
+        )}
+        description={t(
+          'no-changes.this-repository-is-currently-only',
+          `This repository is currently only available on your local machine.
+          By publishing it on GitHub you can share it, and collaborate
+          with others.`
+        )}
         discoverabilityContent={discoverabilityContent}
-        buttonText="Publish repository"
+        buttonText={t('no-changes.publish-repository', 'Publish repository')}
         menuItemId={itemId}
         type="primary"
         disabled={!menuItem.enabled}
@@ -501,31 +543,44 @@ export class NoChanges extends React.Component<
     }
 
     const isGitHub = this.props.repository.gitHubRepository !== null
-
+    const toGitHubContent = isGitHub
+      ? t('no-changes.to-github', 'to GitHub')
+      : ''
+    const openPRContent = isGitHub
+      ? t('no-changes.open-a-pull-request', 'open a pull request, ')
+      : ''
     const description = (
       <>
-        The current branch (<Ref>{tip.branch.name}</Ref>) hasn't been published
-        to the remote yet. By publishing it {isGitHub ? 'to GitHub' : ''} you
-        can share it, {isGitHub ? 'open a pull request, ' : ''}
-        and collaborate with others.
+        {t('no-changes.the-current-branch-1', 'The current branch (')}
+        <Ref>{tip.branch.name}</Ref>
+        {t(
+          'no-changes.the-current-branch-2',
+          `) hasn't been published to the remote yet. By publishing it {{0}}
+          you can share it, {{1}} and collaborate with others.`,
+          { 0: toGitHubContent, 1: openPRContent }
+        )}
       </>
     )
 
     const discoverabilityContent = (
       <>
-        Always available in the toolbar or{' '}
+        {t(
+          'no-changes.always-available-in-the-toolbar-or-1',
+          'Always available in the toolbar or '
+        )}
         {this.renderDiscoverabilityKeyboardShortcut(menuItem)}
+        {t('no-changes.always-available-in-the-toolbar-or-2', ' ')}
       </>
     )
 
     return (
       <MenuBackedSuggestedAction
         key="publish-branch-action"
-        title="Publish your branch"
+        title={t('no-changes.publish-your-repository', 'Publish your branch')}
         menuItemId={itemId}
         description={description}
         discoverabilityContent={discoverabilityContent}
-        buttonText="Publish branch"
+        buttonText={t('no-changes.publish-branch', 'Publish branch')}
         type="primary"
         disabled={!menuItem.enabled}
         onClick={this.onPublishBranchClicked}
@@ -550,29 +605,59 @@ export class NoChanges extends React.Component<
     }
 
     const isGitHub = this.props.repository.gitHubRepository !== null
-
+    const commitWord =
+      aheadBehind.behind === 1
+        ? t('no-changes.one-commit', 'a commit')
+        : t('no-changes.multiple-commits', 'commits')
+    const remoteName = isGitHub
+      ? 'GitHub'
+      : t('no-changes.the-remote', 'the remote')
+    const donotWord =
+      aheadBehind.behind === 1
+        ? t('no-changes.does-not', 'does not')
+        : t('no-changes.do-not', 'do not')
     const description = (
       <>
-        The current branch (<Ref>{tip.branch.name}</Ref>) has{' '}
-        {aheadBehind.behind === 1 ? 'a commit' : 'commits'} on{' '}
-        {isGitHub ? 'GitHub' : 'the remote'} that{' '}
-        {aheadBehind.behind === 1 ? 'does not' : 'do not'} exist on your
-        machine.
+        {t(
+          'no-changes.commit-on-remote-that-do-not-1',
+          'The current branch (',
+          { 0: commitWord, 1: remoteName, 2: donotWord }
+        )}
+        <Ref>{tip.branch.name}</Ref>
+        {t(
+          'no-changes.commit-on-remote-that-do-not-2',
+          ') has {{0}} on {{1}} that {{2}} exist on your machine.',
+          { 0: commitWord, 1: remoteName, 2: donotWord }
+        )}
       </>
     )
 
     const discoverabilityContent = (
       <>
-        Always available in the toolbar when there are remote changes or{' '}
+        {t(
+          'no-changes.always-available-in-the-toolbar-remote-changes-1',
+          'Always available in the toolbar when there are remote changes or '
+        )}
         {this.renderDiscoverabilityKeyboardShortcut(menuItem)}
+        {t('no-changes.always-available-in-the-toolbar-remote-changes-2', ' ')}
       </>
     )
 
-    const title = `Pull ${aheadBehind.behind} ${
-      aheadBehind.behind === 1 ? 'commit' : 'commits'
-    } from the ${remote.name} remote`
+    const commitContent =
+      aheadBehind.behind === 1
+        ? t('common.one-commit', 'commit')
+        : t('common.multiple-commits', 'commits')
+    const title = t(
+      'no-changes.pull-number-commits-from-the-remote',
+      `Pull {{0}} {{1}} from the {{2}} remote`,
+      {
+        0: aheadBehind.behind,
+        1: commitContent,
+        2: remote.name,
+      }
+    )
 
-    const buttonText = `Pull ${remote.name}`
+    const buttonText = t('no-changes.pull', `Pull {{0}}`, { 0: remote.name })
 
     return (
       <MenuBackedSuggestedAction
@@ -611,34 +696,53 @@ export class NoChanges extends React.Component<
       itemsToPushTypes.push('commits')
       itemsToPushDescriptions.push(
         aheadBehind.ahead === 1
-          ? '1 local commit'
-          : `${aheadBehind.ahead} local commits`
+          ? t('no-changes.one-local-commit', '1 local commit')
+          : t('no-changes.multiple-local-commits', `{{0}} local commits`, {
+              0: aheadBehind.ahead,
+            })
       )
     }
 
     if (tagsToPush !== null && tagsToPush.length > 0) {
       itemsToPushTypes.push('tags')
       itemsToPushDescriptions.push(
-        tagsToPush.length === 1 ? '1 tag' : `${tagsToPush.length} tags`
+        tagsToPush.length === 1
+          ? t('no-changes.one-tag', '1 tag')
+          : t('no-changes.multiple-tags', `{{0}} tags`, {
+              0: tagsToPush.length,
+            })
       )
     }
 
-    const description = `You have ${itemsToPushDescriptions.join(
-      ' and '
-    )} waiting to be pushed to ${isGitHub ? 'GitHub' : 'the remote'}.`
+    const theRemoteContent = t('no-changes.the-remote', 'the remote')
+    const description = t(
+      'no-changes.you-have-operation',
+      `You have {{0}} waiting to be pushed to {{1}}.`,
+      {
+        0: itemsToPushDescriptions.join(' and '),
+        1: isGitHub ? 'GitHub' : theRemoteContent,
+      }
+    )
 
     const discoverabilityContent = (
       <>
-        Always available in the toolbar when there are local commits waiting to
-        be pushed or {this.renderDiscoverabilityKeyboardShortcut(menuItem)}
+        {t(
+          'no-changes.always-available-in-the-toolbar-local-commits-1',
+          `Always available in the toolbar when there are local commits
+           waiting to be pushed or `
+        )}
+        {this.renderDiscoverabilityKeyboardShortcut(menuItem)}
+        {t('no-changes.always-available-in-the-toolbar-local-commits-2', ` `)}
       </>
     )
 
-    const title = `Push ${itemsToPushTypes.join(' and ')} to the ${
-      remote.name
-    } remote`
+    const title = t(
+      'no-changes.push-to-the-remote',
+      `Push {{0}} to the {{1}} remote`,
+      { 0: itemsToPushTypes.join(' and '), 1: remote.name }
+    )
 
-    const buttonText = `Push ${remote.name}`
+    const buttonText = t('no-changes.push', `Push {{0}}`, { 0: remote.name })
 
     return (
       <MenuBackedSuggestedAction
@@ -669,14 +773,28 @@ export class NoChanges extends React.Component<
 
     const description = (
       <>
-        The current branch (<Ref>{tip.branch.name}</Ref>) is already published
-        to GitHub. Create a pull request to propose and collaborate on your
-        changes.
+        {t(
+          'no-changes.the-current-branch-us-already-published-1',
+          'The current branch ('
+        )}
+        <Ref>{tip.branch.name}</Ref>
+        {t(
+          'no-changes.the-current-branch-us-already-published-2',
+          `) is already published
+          to GitHub. Create a pull request to propose and collaborate on your
+          changes.`
+        )}
       </>
     )
 
-    const title = `Create a Pull Request from your current branch`
-    const buttonText = `Create Pull Request`
+    const title = t(
+      'no-changes.create-pull-request-from-current-branch',
+      `Create a Pull Request from your current branch`
+    )
+    const buttonText = t(
+      'no-changes.create-pull-request',
+      `Create Pull Request`
+    )
 
     const previewPullMenuItem = this.getMenuItemInfo('preview-pull-request')
 
@@ -698,13 +816,21 @@ export class NoChanges extends React.Component<
     }
 
     const previewPullRequestAction: IDropdownSuggestedActionOption = {
-      title: `Preview the Pull Request from your current branch`,
-      label: 'Preview Pull Request',
+      title: t(
+        'no-changes.preview-pull-request-title',
+        `Preview the Pull Request from your current branch`
+      ),
+      label: t('no-changes.preview-pull-request', 'Preview Pull Request'),
       description: (
         <>
-          The current branch (<Ref>{tip.branch.name}</Ref>) is already published
-          to GitHub. Preview the changes this pull request will have before
-          proposing your changes.
+          {t('no-changes.preview-pull-request-1', 'The current branch (')}
+          <Ref>{tip.branch.name}</Ref>
+          {t(
+            'no-changes.preview-pull-request-2',
+            `) is already
+          published to GitHub. Preview the changes this pull request will have
+          before proposing your changes.`
+          )}
         </>
       ),
       id: PullRequestSuggestedNextAction.PreviewPullRequest,
@@ -766,10 +892,13 @@ export class NoChanges extends React.Component<
         <div className="content">
           <div className="interstitial-header">
             <div className="text">
-              <h1>No local changes</h1>
+              <h1>{t('no-changes.no-local-changes', 'No local changes')}</h1>
               <p>
-                There are no uncommitted changes in this repository. Here are
-                some friendly suggestions for what to do next.
+                {t(
+                  'no-changes.there-are-no-uncommitted-changes',
+                  `There are no uncommitted changes in this repository. Here are
+                  some friendly suggestions for what to do next.`
+                )}
               </p>
             </div>
             <img src={PaperStackImage} className="blankslate-image" alt="" />

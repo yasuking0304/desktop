@@ -1,9 +1,12 @@
-# [GitHub Desktop](https://desktop.github.com)
+# [GitHub Desktop](https://desktop.github.com) Multilingal Platform
 
 [GitHub Desktop](https://desktop.github.com/) is an open-source [Electron](https://www.electronjs.org/)-based
 GitHub app. It is written in [TypeScript](https://www.typescriptlang.org) and
 uses [React](https://reactjs.org/).
 
+[linux version is here](https://github.com/yasuking0304/desktop/tree/linux)
+
+[Click here for details (This site is only available in Japanese)](https://github.com/yasuking0304/desktop/wiki)
 <picture>
   <source
     srcset="https://user-images.githubusercontent.com/634063/202742848-63fa1488-6254-49b5-af7c-96a6b50ea8af.png"
@@ -11,7 +14,7 @@ uses [React](https://reactjs.org/).
   />
   <img
     width="1072"
-    src="https://user-images.githubusercontent.com/634063/202742985-bb3b3b94-8aca-404a-8d8a-fd6a6f030672.png"
+    src="https://user-images.githubusercontent.com/111163564/236433396-f33fc461-ab77-44b3-8612-58ca35d988b6.JPG"
     alt="A screenshot of the GitHub Desktop application showing changes being viewed and committed with two attributed co-authors"
   />
 </picture>

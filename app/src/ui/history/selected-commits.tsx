@@ -35,6 +35,7 @@ import { IConstrainedValue } from '../../lib/app-state'
 import { clamp } from '../../lib/clamp'
 import { pathExists } from '../lib/path-exists'
 import { UnreachableCommitsTab } from './unreachable-commits-dialog'
+import { t } from 'i18next'
 import { enableCommitDetailsHeaderExpansion } from '../../lib/feature-flag'
 import { ExpandableCommitSummary } from './expandable-commit-summary'
 import { DiffHeader } from '../diff/diff-header'
@@ -154,7 +155,9 @@ export class SelectedCommits extends React.Component<
     if (file == null) {
       // don't show both 'empty' messages
       const message =
-        this.props.changesetData.files.length === 0 ? '' : 'No file selected'
+        this.props.changesetData.files.length === 0
+          ? ''
+          : t('selected-commits.no-file-selected', 'No file selected')
 
       return (
         <div className="panel blankslate" id="diff">
@@ -320,10 +323,14 @@ export class SelectedCommits extends React.Component<
     }
 
     const fileCount = this.props.changesetData.files.length
-    const filesPlural = fileCount === 1 ? 'file' : 'files'
+    const filesPlural =
+      fileCount === 1 ? t('common.file', 'file') : t('common.files', 'files')
     return (
       <div className="file-list-header">
-        {fileCount} changed {filesPlural}
+        {t('selected-commits.number-files-changed', '{{0}} changed {{1}}', {
+          0: fileCount,
+          1: filesPlural,
+        })}
       </div>
     )
   }
@@ -392,17 +399,38 @@ export class SelectedCommits extends React.Component<
           <img src={BlankSlateImage} className="blankslate-image" alt="" />
           <div>
             <p>
-              Unable to display diff when multiple non-consecutive selected.
+              {t(
+                'selected-commits.unable-to-display-diff',
+                `Unable to display diff when multiple
+                non-consecutive selected.`
+              )}
             </p>
-            <div>You can:</div>
+            <div>{t('selected-commits.you-can', 'You can:')}</div>
             <ul>
               <li>
-                Select a single commit or a range of consecutive commits to view
-                a diff.
+                {t(
+                  'selected-commits.select-a-single-commit',
+                  `Select a single commit or a range of consecutive commits to view a diff.`
+                )}
               </li>
-              <li>Drag the commits to the branch menu to cherry-pick them.</li>
-              <li>Drag the commits to squash or reorder them.</li>
-              <li>Right click on multiple commits to see options.</li>
+              <li>
+                {t(
+                  'selected-commits.drag-the-commits-1',
+                  'Drag the commits to the branch menu to cherry-pick them.'
+                )}
+              </li>
+              <li>
+                {t(
+                  'selected-commits.drag-the-commits-2',
+                  'Drag the commits to squash or reorder them.'
+                )}
+              </li>
+              <li>
+                {t(
+                  'selected-commits.drag-the-commits-3',
+                  'Right click on multiple commits to see options.'
+                )}
+              </li>
             </ul>
           </div>
         </div>
@@ -430,8 +458,14 @@ export class SelectedCommits extends React.Component<
       showContextualMenu([
         {
           label: __DARWIN__
-            ? 'File Does Not Exist on Disk'
-            : 'File does not exist on disk',
+            ? t(
+                'selected-commits.file-does-not-exist-darwin',
+                'File Does Not Exist on Disk'
+              )
+            : t(
+                'selected-commits.file-does-not-exist',
+                'File does not exist on disk'
+              ),
           enabled: false,
         },
       ])
@@ -442,7 +476,9 @@ export class SelectedCommits extends React.Component<
 
     const isSafeExtension = isSafeFileExtension(extension)
     const openInExternalEditor = externalEditorLabel
-      ? `Open in ${externalEditorLabel}`
+      ? t('selected-commits.open-in-external-editor', `Open in {{0}}`, {
+          0: externalEditorLabel,
+        })
       : DefaultEditorLabel
 
     const items: IMenuItem[] = [
@@ -473,14 +509,20 @@ export class SelectedCommits extends React.Component<
       { type: 'separator' },
     ]
 
-    let viewOnGitHubLabel = 'View on GitHub'
+    let viewOnGitHubLabel = t(
+      'selected-commits.view-on-github',
+      'View on GitHub'
+    )
     const gitHubRepository = repository.gitHubRepository
 
     if (
       gitHubRepository &&
       gitHubRepository.endpoint !== getDotComAPIEndpoint()
     ) {
-      viewOnGitHubLabel = 'View on GitHub Enterprise'
+      viewOnGitHubLabel = t(
+        'selected-commits.view-on-github-enteprise',
+        'View on GitHub Enterprise'
+      )
     }
 
     items.push({
@@ -510,7 +552,7 @@ function NoCommitSelected() {
   return (
     <div className="panel blankslate">
       <img src={BlankSlateImage} className="blankslate-image" alt="" />
-      No commit selected
+      {t('selected-commits.no-commit-selected', 'No commit selected')}
     </div>
   )
 }

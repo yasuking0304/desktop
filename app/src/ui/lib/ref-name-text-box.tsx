@@ -3,6 +3,7 @@ import * as React from 'react'
 import { sanitizedRefName } from '../../lib/sanitize-ref-name'
 import { TextBox } from './text-box'
 import { Ref } from './ref'
+import { t } from 'i18next'
 import { InputWarning } from './input-description/input-warning'
 
 interface IRefNameProps {
@@ -49,6 +50,11 @@ interface IRefNameProps {
    * A sanitized value for the ref name is passed.
    */
   readonly onBlur?: (sanitizedValue: string) => void
+
+  /**
+   * The placeholder of the text box.
+   */
+  readonly placeholder?: string
 }
 
 interface IRefNameState {
@@ -87,6 +93,7 @@ export class RefNameTextBox extends React.Component<
       <div className="ref-name-text-box">
         <TextBox
           label={this.props.label}
+          placeholder={this.props.placeholder}
           value={this.state.proposedValue}
           ref={this.textBoxRef}
           ariaLabelledBy={this.props.ariaLabelledBy}
@@ -167,12 +174,20 @@ export class RefNameTextBox extends React.Component<
     // an empty string we show a message saying that the
     // proposed value is invalid.
     if (sanitizedValue.length === 0) {
-      return `Warning: ${proposedValue} is not a valid name.`
+      return t(
+        'ref-name-text-box.warning-not-a-valid-name',
+        'Warning: {{0}} is not a valid name.',
+        { 0: proposedValue }
+      )
     }
 
-    return `Warning: Will be ${
-      this.props.warningMessageVerb ?? 'created '
-    } as ${sanitizedValue} (with spaces replaced by hyphens).`
+    const warningMessage =
+      this.props.warningMessageVerb ?? t('ref-name-text-box.created', 'created')
+    return t(
+      'ref-name-text-box.get-warning-message-as-string',
+      'Warning: Will be {{0}} as {{1}} (with spaces replaced by hyphens).',
+      { 0: warningMessage, 1: sanitizedValue }
+    )
   }
 
   private renderWarningMessage(sanitizedValue: string, proposedValue: string) {
@@ -182,15 +197,22 @@ export class RefNameTextBox extends React.Component<
     if (sanitizedValue.length === 0) {
       return (
         <>
-          <Ref>{proposedValue}</Ref> is not a valid name.
+          <Ref>{proposedValue}</Ref>
+          {t('ref-name-text-box.is-not-a-valid-name', ' is not a valid name.')}
         </>
       )
     }
-
+    const warningMessage =
+      this.props.warningMessageVerb ?? t('ref-name-text-box.created', 'created')
     return (
       <>
-        Will be {this.props.warningMessageVerb ?? 'created'} as{' '}
-        <Ref>{sanitizedValue}</Ref>.
+        {t('ref-name-text-box.will-be-created-as-1', 'Will be {{0}} as ', {
+          0: warningMessage,
+        })}
+        <Ref>{sanitizedValue}</Ref>
+        {t('ref-name-text-box.will-be-created-as-2', '.', {
+          0: warningMessage,
+        })}
       </>
     )
   }

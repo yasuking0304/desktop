@@ -3,6 +3,9 @@ import {
   getReleaseSummary,
 } from '../../src/lib/release-notes'
 
+// To bypass multilingual checks
+process.env.GITHUB_DESKTOP_LANG = 'en_US'
+
 describe('release-notes', () => {
   describe('parseReleaseEntries', () => {
     it('formats lowercased fixed message', () => {

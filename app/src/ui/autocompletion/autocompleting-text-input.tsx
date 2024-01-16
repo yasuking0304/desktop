@@ -9,7 +9,7 @@ import { IAutocompletionProvider } from './index'
 import { fatalError } from '../../lib/fatal-error'
 import classNames from 'classnames'
 import getCaretCoordinates from 'textarea-caret'
-import { showContextualMenu } from '../../lib/menu-item'
+import { showContextualMenu, getEditMenuItemOfReact } from '../../lib/menu-item'
 import { AriaLiveContainer } from '../accessibility/aria-live-container'
 import { createUniqueId, releaseUniqueId } from '../lib/id-pool'
 import {
@@ -360,7 +360,7 @@ export abstract class AutocompletingTextInput<
       this.props.onContextMenu(event)
     } else {
       event.preventDefault()
-      showContextualMenu([{ role: 'editMenu' }])
+      showContextualMenu(getEditMenuItemOfReact())
     }
   }
 

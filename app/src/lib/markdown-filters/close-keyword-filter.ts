@@ -1,3 +1,4 @@
+import { t } from 'i18next'
 import { GitHubRepository } from '../../models/github-repository'
 import { issueUrl } from './issue-link-filter'
 import { IssueReference } from './issue-mention-filter'
@@ -180,11 +181,17 @@ export class CloseKeywordFilter implements INodeFilter {
 
   private createTooltipContent(closesText: string, issueNumber: string) {
     const tooltipSpan = document.createElement('span')
+    const actionContext =
+      this.markdownContext === 'Commit'
+        ? t('close-keyword-filter.commit', 'commit')
+        : t('close-keyword-filter.pull-request', 'pull request')
     tooltipSpan.textContent = closesText
     tooltipSpan.classList.add('issue-keyword')
-    tooltipSpan.ariaLabel = `This ${
-      this.markdownContext === 'Commit' ? 'commit' : 'pull request'
-    } closes ${issueNumber}.`
+    tooltipSpan.ariaLabel = t(
+      'close-keyword-filter.this-action-context-closes',
+      `This {{0}} closes {{1}}.`,
+      { 0: actionContext, 1: issueNumber }
+    )
     return tooltipSpan
   }
 }

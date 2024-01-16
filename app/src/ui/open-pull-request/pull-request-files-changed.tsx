@@ -25,6 +25,7 @@ import { clamp } from '../../lib/clamp'
 import { getDotComAPIEndpoint } from '../../lib/api'
 import { createCommitURL } from '../../lib/commit-url'
 import { DiffOptions } from '../diff/diff-options'
+import { t } from 'i18next'
 
 interface IPullRequestFilesChangedProps {
   readonly repository: Repository
@@ -165,8 +166,14 @@ export class PullRequestFilesChanged extends React.Component<
       showContextualMenu([
         {
           label: __DARWIN__
-            ? 'File Does Not Exist on Disk'
-            : 'File does not exist on disk',
+            ? t(
+                'pull-request-files-changed.file-does-not-exist-darwin',
+                'File Does Not Exist on Disk'
+              )
+            : t(
+                'pull-request-files-changed.file-does-not-exist',
+                'File does not exist on disk'
+              ),
           enabled: false,
         },
       ])
@@ -179,7 +186,13 @@ export class PullRequestFilesChanged extends React.Component<
     const isSafeExtension = isSafeFileExtension(extension)
     const openInExternalEditor =
       externalEditorLabel !== undefined
-        ? `Open in ${externalEditorLabel}`
+        ? t(
+            'pull-request-files-changed.open-in-external-editor',
+            'Open in {{0}}',
+            {
+              0: externalEditorLabel,
+            }
+          )
         : DefaultEditorLabel
 
     const items: IMenuItem[] = [
@@ -244,7 +257,10 @@ export class PullRequestFilesChanged extends React.Component<
     return (
       <div className="files-changed-header">
         <div className="commits-displayed">
-          Showing changes from all commits
+          {t(
+            'pull-request-files-changed.showing-changes',
+            'Showing changes from all commits'
+          )}
         </div>
         <DiffOptions
           isInteractiveDiff={false}

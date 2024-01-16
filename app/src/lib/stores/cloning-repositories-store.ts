@@ -6,6 +6,7 @@ import { RetryAction, RetryActionType } from '../../models/retry-actions'
 import { clone as cloneRepo } from '../git'
 import { ErrorWithMetadata } from '../error-with-metadata'
 import { BaseStore } from './base-store'
+import { t } from 'i18next'
 
 /** The store in charge of repository currently being cloned. */
 export class CloningRepositoriesStore extends BaseStore {
@@ -25,7 +26,9 @@ export class CloningRepositoriesStore extends BaseStore {
     const repository = new CloningRepository(path, url)
     this._repositories.push(repository)
 
-    const title = `Cloning into ${path}`
+    const title = t('cloning-repositories-store.clone', `Cloning into {{0}}`, {
+      0: path,
+    })
 
     this.stateByID.set(repository.id, { kind: 'clone', title, value: 0 })
     this.emitUpdate()

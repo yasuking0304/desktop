@@ -7,6 +7,7 @@ import { Checkbox, CheckboxValue } from '../lib/checkbox'
 import { Dialog, DialogContent, DialogFooter } from '../dialog'
 import { Ref } from '../lib/ref'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
+import { t } from 'i18next'
 
 interface IDeleteBranchProps {
   readonly dispatcher: Dispatcher
@@ -39,7 +40,11 @@ export class DeleteBranch extends React.Component<
     return (
       <Dialog
         id="delete-branch"
-        title={__DARWIN__ ? 'Delete Branch' : 'Delete branch'}
+        title={
+          __DARWIN__
+            ? t('delete-branch-dialog.delete-branch-darwin', 'Delete Branch')
+            : t('delete-branch-dialog.delete-branch', 'Delete branch')
+        }
         type="warning"
         onSubmit={this.deleteBranch}
         onDismissed={this.props.onDismissed}
@@ -49,15 +54,27 @@ export class DeleteBranch extends React.Component<
         ariaDescribedBy="delete-branch-confirmation-message delete-branch-confirmation-message-remote"
       >
         <DialogContent>
-          <p id="delete-branch-confirmation-message">
-            Delete branch <Ref>{this.props.branch.name}</Ref>?<br />
-            This action cannot be undone.
+          <p>
+            {t(
+              'delete-branch-dialog.confirm-delete-branch-1',
+              'Delete branch '
+            )}
+            <Ref>{this.props.branch.name}</Ref>
+            {t('delete-branch-dialog.confirm-delete-branch-2', '?')}
+            <br />
+            {t(
+              'delete-branch-dialog.confirm-delete-branch-3',
+              'This action cannot be undone.'
+            )}
           </p>
 
           {this.renderDeleteOnRemote()}
         </DialogContent>
         <DialogFooter>
-          <OkCancelButtonGroup destructive={true} okButtonText="Delete" />
+          <OkCancelButtonGroup
+            destructive={true}
+            okButtonText={t('common.delete', 'Delete')}
+          />
         </DialogFooter>
       </Dialog>
     )
@@ -69,12 +86,18 @@ export class DeleteBranch extends React.Component<
         <div>
           <p id="delete-branch-confirmation-message-remote">
             <strong>
-              The branch also exists on the remote, do you wish to delete it
-              there as well?
+              {t(
+                'delete-branch-dialog.branch-also-exists-on-the-remote',
+                `The branch also exists on the remote, do you wish to delete it
+                there as well?`
+              )}
             </strong>
           </p>
           <Checkbox
-            label="Yes, delete this branch on the remote"
+            label={t(
+              'delete-branch-dialog.yes-delete-this-branch',
+              'Yes, delete this branch on the remote'
+            )}
             value={
               this.state.includeRemoteBranch
                 ? CheckboxValue.On

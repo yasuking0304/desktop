@@ -8,6 +8,7 @@ import { Octicon } from '../octicons'
 import * as OcticonSymbol from '../octicons/octicons.generated'
 import { SuggestedAction } from '../suggested-actions'
 import { SuggestedActionGroup } from '../suggested-actions'
+import { t } from 'i18next'
 
 const ClappingHandsImage = encodePathAsUrl(
   __dirname,
@@ -60,10 +61,13 @@ export class TutorialDone extends React.Component<ITutorialDoneProps, {}> {
         <div className="content">
           <div className="header">
             <div className="text">
-              <h1 ref={this.header}>You're done!</h1>
+              <h1 ref={this.header}>{t('done.you-re-done', `You're done!`)}</h1>
               <p>
-                You’ve learned the basics on how to use GitHub Desktop. Here are
-                some suggestions for what to do next.
+                {t(
+                  'done.you-ve-learned-the-basics',
+                  `You've learned the basics on how to use GitHub Desktop. Here
+                 are some suggestions for what to do next.`
+                )}
               </p>
             </div>
             <img
@@ -74,27 +78,52 @@ export class TutorialDone extends React.Component<ITutorialDoneProps, {}> {
           </div>
           <SuggestedActionGroup>
             <SuggestedAction
-              title="Explore projects on GitHub"
-              description="Contribute to a project that interests you"
-              buttonText={__DARWIN__ ? 'Open in Browser' : 'Open in browser'}
+              title={t(
+                'done.explore-projects-on-github',
+                'Explore projects on GitHub'
+              )}
+              description={t(
+                'done.contribute-to-a-project',
+                'Contribute to a project that interests you'
+              )}
+              buttonText={
+                __DARWIN__
+                  ? t('done.open-in-browser-darwin', 'Open in Browser')
+                  : t('done.open-in-browser', 'Open in browser')
+              }
               onClick={this.openDotcomExplore}
               type="normal"
               image={TelescopeOcticon}
             />
             <SuggestedAction
-              title="Create a new repository"
-              description="Get started on a brand new project"
+              title={t(
+                'done.create-a-new-repository',
+                'Create a new repository'
+              )}
+              description={t(
+                'done.get-started-on a-brand-new-project',
+                'Get started on a brand new project'
+              )}
               buttonText={
-                __DARWIN__ ? 'Create Repository' : 'Create repository'
+                __DARWIN__
+                  ? t('done.create-repository-darwin', 'Create Repository')
+                  : t('done.create-repository', 'Create repository')
               }
               onClick={this.onCreateNewRepository}
               type="normal"
               image={PlusOcticon}
             />
             <SuggestedAction
-              title="Add a local repository"
-              description="Work on an existing project in GitHub Desktop"
-              buttonText={__DARWIN__ ? 'Add Repository' : 'Add repository'}
+              title={t('done.add-a-local-repository', 'Add a local repository')}
+              description={t(
+                'done.work-on-an-existing-project',
+                'Work on an existing project in GitHub Desktop'
+              )}
+              buttonText={
+                __DARWIN__
+                  ? t('done.add-repository-darwin', 'Add Repository')
+                  : t('done.add-repository', 'Add repository')
+              }
               onClick={this.onAddExistingRepository}
               type="normal"
               image={FileDirectoryOcticon}

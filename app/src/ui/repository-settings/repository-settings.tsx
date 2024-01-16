@@ -29,6 +29,7 @@ import {
   InvalidGitAuthorNameMessage,
 } from '../lib/identifier-rules'
 import { Account } from '../../models/account'
+import { t } from 'i18next'
 import { Octicon } from '../octicons'
 import * as OcticonSymbol from '../octicons/octicons.generated'
 
@@ -170,7 +171,17 @@ export class RepositorySettings extends React.Component<
     return (
       <Dialog
         id="repository-settings"
-        title={__DARWIN__ ? 'Repository Settings' : 'Repository settings'}
+        title={
+          __DARWIN__
+            ? t(
+                'repository-settings.repository-settings-darwin',
+                'Repository Settings'
+              )
+            : t(
+                'repository-settings.repository-settings',
+                'Repository settings'
+              )
+        }
         onDismissed={this.props.onDismissed}
         onSubmit={this.onSubmit}
         disabled={this.state.disabled}
@@ -185,20 +196,29 @@ export class RepositorySettings extends React.Component<
           >
             <span>
               <Octicon className="icon" symbol={OcticonSymbol.server} />
-              Remote
+              {t('repository-settings.remote', 'Remote')}
             </span>
             <span>
               <Octicon className="icon" symbol={OcticonSymbol.file} />
-              {__DARWIN__ ? 'Ignored Files' : 'Ignored files'}
+              {__DARWIN__
+                ? t('repository-settings.ignored-files-darwin', 'Ignored Files')
+                : t('repository-settings.ignored-files', 'Ignored files')}
             </span>
             <span>
               <Octicon className="icon" symbol={OcticonSymbol.gitCommit} />
-              {__DARWIN__ ? 'Git Config' : 'Git config'}
+              {__DARWIN__
+                ? t('repository-settings.git-config-darwin', 'Git Config')
+                : t('repository-settings.git-config', 'Git config')}
             </span>
             {showForkSettings && (
               <span>
                 <Octicon className="icon" symbol={OcticonSymbol.repoForked} />
-                {__DARWIN__ ? 'Fork Behavior' : 'Fork behavior'}
+                {__DARWIN__
+                  ? t(
+                      'repository-settings.fork-behavior-darwin',
+                      'Fork Behavior'
+                    )
+                  : t('repository-settings.fork-behavior', 'Fork behavior')}
               </span>
             )}
           </TabBar>
@@ -207,7 +227,7 @@ export class RepositorySettings extends React.Component<
         </div>
         <DialogFooter>
           <OkCancelButtonGroup
-            okButtonText="Save"
+            okButtonText={t('common.save', 'Save')}
             okButtonDisabled={this.state.saveDisabled}
           />
         </DialogFooter>

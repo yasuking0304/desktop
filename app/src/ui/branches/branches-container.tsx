@@ -33,6 +33,7 @@ import { dragAndDropManager } from '../../lib/drag-and-drop-manager'
 import { DragType, DropTargetType } from '../../models/drag-drop'
 import { enablePullRequestQuickView } from '../../lib/feature-flag'
 import { PullRequestQuickView } from '../pull-request-quick-view'
+import { t } from 'i18next'
 
 interface IBranchesContainerProps {
   readonly dispatcher: Dispatcher
@@ -170,7 +171,12 @@ export class BranchesContainer extends React.Component<
           tooltip={`Choose a branch to merge into ${currentBranch.name}`}
         >
           <Octicon className="icon" symbol={OcticonSymbol.gitMerge} />
-          Choose a branch to merge into <strong>{currentBranch.name}</strong>
+          {t(
+            'branches-container.choose-a-branch-to-marge-1',
+            'Choose a branch to merge into '
+          )}
+          <strong>{currentBranch.name}</strong>
+          {t('branches-container.choose-a-branch-to-marge-2', ' ')}
         </Button>
       </Row>
     )
@@ -197,9 +203,13 @@ export class BranchesContainer extends React.Component<
         selectedIndex={this.props.selectedTab}
         allowDragOverSwitching={true}
       >
-        <span id="branches-tab">Branches</span>
+        <span id="branches-tab">
+          {t('branches-container.branches', 'Branches')}
+        </span>
         <span id="pull-requests-tab" className="pull-request-tab">
-          {__DARWIN__ ? 'Pull Requests' : 'Pull requests'}
+          {__DARWIN__
+            ? t('branches-container.pull-requests-darwin', 'Pull Requests')
+            : t('branches-container.pull-requests', 'Pull requests')}
           {this.renderOpenPullRequestsBubble()}
         </span>
       </TabBar>
@@ -284,7 +294,9 @@ export class BranchesContainer extends React.Component<
       return null
     }
 
-    const label = __DARWIN__ ? 'New Branch' : 'New branch'
+    const label = __DARWIN__
+      ? t('branches-container.new-branch-darwin', 'New Branch')
+      : t('branches-container.new-branch', 'New branch')
 
     return (
       // eslint-disable-next-line jsx-a11y/no-static-element-interactions

@@ -3,6 +3,7 @@ import { DialogContent } from '../dialog'
 import { TextArea } from '../lib/text-area'
 import { LinkButton } from '../lib/link-button'
 import { Ref } from '../lib/ref'
+import { t } from 'i18next'
 
 interface IGitIgnoreProps {
   readonly text: string | null
@@ -16,16 +17,24 @@ export class GitIgnore extends React.Component<IGitIgnoreProps, {}> {
     return (
       <DialogContent>
         <p>
-          Editing <Ref>.gitignore</Ref>. This file specifies intentionally
+          {t('git-ignore.gitignore-message-1', 'Editing ')}
+          <Ref>.gitignore</Ref>
+          {t(
+            'git-ignore.gitignore-message-2',
+            `. This file specifies intentionally
           untracked files that Git should ignore. Files already tracked by Git
-          are not affected.{' '}
+          are not affected. `
+          )}
           <LinkButton onClick={this.props.onShowExamples}>
-            Learn more about gitignore files
+            {t('git-ignore.gitignore-learn-more', 'Learn more')}
           </LinkButton>
         </p>
 
         <TextArea
-          placeholder="Ignored files"
+          placeholder={t(
+            'git-ignore.placeholder-ignored-files',
+            'Ignored files'
+          )}
           value={this.props.text || ''}
           onValueChanged={this.props.onIgnoreTextChanged}
           textareaClassName="gitignore"

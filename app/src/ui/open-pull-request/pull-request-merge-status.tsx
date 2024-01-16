@@ -3,6 +3,7 @@ import { assertNever } from '../../lib/fatal-error'
 import { ComputedAction } from '../../models/computed-action'
 import { MergeTreeResult } from '../../models/merge'
 import { Octicon } from '../octicons'
+import { t } from 'i18next'
 import * as OcticonSymbol from '../octicons/octicons.generated'
 
 interface IPullRequestMergeStatusProps {
@@ -24,33 +25,55 @@ export class PullRequestMergeStatus extends React.Component<IPullRequestMergeSta
       case ComputedAction.Loading:
         return (
           <span className="pr-merge-status-loading">
-            <strong>Checking mergeability&hellip;</strong> Don’t worry, you can
-            still create the pull request.
+            <strong>Checking mergeability&hellip;</strong>{' '}
+            {t(
+              'pull-request-merge-status.donot-worry',
+              `Don’t worry, you can still create the pull request.`
+            )}
           </span>
         )
       case ComputedAction.Invalid:
         return (
           <span className="pr-merge-status-invalid">
-            <strong>Error checking merge status.</strong> Unable to merge
-            unrelated histories in this repository
+            <strong>
+              {t(
+                'pull-request-merge-status.error-checking-merge-status',
+                `Error checking merge status.`
+              )}
+            </strong>{' '}
+            {t(
+              'pull-request-merge-status.unable-to-merge-unrelated-histories',
+              `Unable to merge unrelated histories in this repository`
+            )}
           </span>
         )
       case ComputedAction.Clean:
         return (
           <span className="pr-merge-status-clean">
             <strong>
-              <Octicon symbol={OcticonSymbol.check} /> Able to merge.
+              <Octicon symbol={OcticonSymbol.check} />{' '}
+              {t('pull-request-merge-status.able-to-merge', `Able to merge.`)}
             </strong>{' '}
-            These branches can be automatically merged.
+            {t(
+              'pull-request-merge-status.can-be-automatically-merge',
+              `These branches can be automatically merged.`
+            )}
           </span>
         )
       case ComputedAction.Conflicts:
         return (
           <span className="pr-merge-status-conflicts">
             <strong>
-              <Octicon symbol={OcticonSymbol.x} /> Can't automatically merge.
+              <Octicon symbol={OcticonSymbol.x} />{' '}
+              {t(
+                'pull-request-merge-status.cannot-automatically-merge',
+                `Can't automatically merge.`
+              )}
             </strong>{' '}
-            Don’t worry, you can still create the pull request.
+            {t(
+              'pull-request-merge-status.donot-worry',
+              `Don’t worry, you can still create the pull request.`
+            )}
           </span>
         )
       default:

@@ -9,6 +9,7 @@ import {
 } from '../dialog'
 import { shell } from '../../lib/app-shell'
 import { suggestedExternalEditor } from '../../lib/editors/shared'
+import { t } from 'i18next'
 
 interface IEditorErrorProps {
   /**
@@ -30,7 +31,7 @@ interface IEditorErrorProps {
   /** Render the "Install ${Default}" link as the default action */
   readonly suggestDefaultEditor?: boolean
 
-  /** Render the "Open Preferences" link as the default action */
+  /** Render the "Open Settings" link as the default action */
   readonly viewPreferences?: boolean
 }
 
@@ -63,7 +64,11 @@ export class EditorError extends React.Component<IEditorErrorProps, {}> {
         <DialogFooter>
           <OkCancelButtonGroup
             okButtonText="Close"
-            cancelButtonText={__DARWIN__ ? 'Open Preferences' : 'Open options'}
+            cancelButtonText={
+              __DARWIN__
+                ? t('editor-error.open-settings-darwin', 'Open Settings')
+                : t('editor-error.open-options', 'Open options')
+            }
             onCancelButtonClick={this.onShowPreferencesDialog}
           />
         </DialogFooter>

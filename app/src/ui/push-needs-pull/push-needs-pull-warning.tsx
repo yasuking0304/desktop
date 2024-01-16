@@ -4,6 +4,7 @@ import { DialogFooter, DialogContent, Dialog } from '../dialog'
 import { FetchType } from '../../models/fetch'
 import { Repository } from '../../models/repository'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
+import { t } from 'i18next'
 
 interface IPushNeedsPullWarningProps {
   readonly dispatcher: Dispatcher
@@ -31,7 +32,15 @@ export class PushNeedsPullWarning extends React.Component<
     return (
       <Dialog
         title={
-          __DARWIN__ ? 'Newer Commits on Remote' : 'Newer commits on remote'
+          __DARWIN__
+            ? t(
+                'push-needs-pull-warning.newer-commits-on-remote-darwin',
+                'Newer Commits on Remote'
+              )
+            : t(
+                'push-needs-pull-warning.newer-commits-on-remote',
+                'Newer commits on remote'
+              )
         }
         dismissable={!this.state.isLoading}
         disabled={this.state.isLoading}
@@ -42,15 +51,18 @@ export class PushNeedsPullWarning extends React.Component<
       >
         <DialogContent>
           <p>
-            Desktop is unable to push commits to this branch because there are
+            {t(
+              'push-needs-pull-warning.desktop-is-unable-to-push-commits',
+              `Desktop is unable to push commits to this branch because there are
             commits on the remote that are not present on your local branch.
             Fetch these new commits before pushing in order to reconcile them
-            with your local commits.
+            with your local commits.`
+            )}
           </p>
         </DialogContent>
         <DialogFooter>
           <OkCancelButtonGroup
-            okButtonText="Fetch"
+            okButtonText={t('push-needs-pull-warning.fetch', 'Fetch')}
             okButtonDisabled={this.state.isLoading}
           />
         </DialogFooter>

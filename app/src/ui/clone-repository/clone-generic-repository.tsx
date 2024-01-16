@@ -4,6 +4,7 @@ import { Button } from '../lib/button'
 import { Row } from '../lib/row'
 import { DialogContent } from '../dialog'
 import { Ref } from '../lib/ref'
+import { t } from 'i18next'
 
 interface ICloneGenericRepositoryProps {
   /** The URL to clone. */
@@ -34,14 +35,27 @@ export class CloneGenericRepository extends React.Component<
       <DialogContent className="clone-generic-repository-content">
         <Row>
           <TextBox
-            placeholder="URL or username/repository"
+            placeholder={t(
+              'clone-generic-repository.placeholder-url-or-user-repository',
+              'URL or username/repository'
+            )}
             value={this.props.url}
             onValueChanged={this.onUrlChanged}
             autoFocus={true}
             label={
               <span>
-                Repository URL or GitHub username and repository
-                <br />(<Ref>hubot/cool-repo</Ref>)
+                {t(
+                  'clone-generic-repository.url-or-user-repository',
+                  'Repository URL or GitHub username and repository'
+                )}
+                <br />(
+                <Ref>
+                  {t(
+                    'clone-generic-repository.hubot-cool-repo',
+                    'hubot/cool-repo'
+                  )}
+                </Ref>
+                )
               </span>
             }
           />
@@ -50,11 +64,17 @@ export class CloneGenericRepository extends React.Component<
         <Row>
           <TextBox
             value={this.props.path}
-            label={__DARWIN__ ? 'Local Path' : 'Local path'}
+            label={
+              __DARWIN__
+                ? t('common.local-path-darwin', 'Local Path')
+                : t('common.local-path', 'Local path')
+            }
             placeholder="repository path"
             onValueChanged={this.props.onPathChanged}
           />
-          <Button onClick={this.props.onChooseDirectory}>Choose…</Button>
+          <Button onClick={this.props.onChooseDirectory}>
+            {t('common.choose', 'Choose…')}
+          </Button>
         </Row>
       </DialogContent>
     )

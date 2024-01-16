@@ -19,6 +19,7 @@ import uniqWith from 'lodash/uniqWith'
 import { LinkButton } from '../lib/link-button'
 import { UnreachableCommitsTab } from './unreachable-commits-dialog'
 import { TooltippedCommitSHA } from '../lib/tooltipped-commit-sha'
+import { t } from 'i18next'
 import memoizeOne from 'memoize-one'
 import { Account } from '../../models/account'
 
@@ -141,7 +142,7 @@ function createState(
 
 function getCommitSummary(selectedCommits: ReadonlyArray<Commit>) {
   return selectedCommits[0].summary.length === 0
-    ? 'Empty commit message'
+    ? t('commit-summary.empty-commit-message', 'Empty commit message')
     : selectedCommits[0].summary
 }
 
@@ -252,7 +253,9 @@ export class CommitSummary extends React.Component<
     return (
       <button onClick={onClick} className="expander">
         <Octicon symbol={icon} />
-        {expanded ? 'Collapse' : 'Expand'}
+        {expanded
+          ? t('commit-summary.collapse', 'Collapse')
+          : t('commit-summary.expand', 'Expand')}
       </button>
     )
   }
@@ -384,7 +387,10 @@ export class CommitSummary extends React.Component<
       return
     }
 
-    const commitsPluralized = excludedCommitsCount > 1 ? 'commits' : 'commit'
+    const commitsPluralized =
+      excludedCommitsCount > 1
+        ? t('common.multiple-commits', 'commits')
+        : t('common.one-or-less-commit', 'commit')
 
     return (
       // eslint-disable-next-line jsx-a11y/mouse-events-have-key-events
@@ -395,9 +401,13 @@ export class CommitSummary extends React.Component<
       >
         <Octicon symbol={OcticonSymbol.info} />
         <LinkButton onClick={this.showUnreachableCommits}>
-          {excludedCommitsCount} unreachable {commitsPluralized}
-        </LinkButton>{' '}
-        not included.
+          {t(
+            'commit-summary.number-unreachable-commits',
+            '{{0}} unreachable {{1}}',
+            { 0: excludedCommitsCount, 1: commitsPluralized }
+          )}
+        </LinkButton>
+        {t('commit-summary.not-included', ' not included.')}
       </div>
     )
   }
@@ -463,10 +473,13 @@ export class CommitSummary extends React.Component<
       shasInDiff
     )
     const numInDiff = selectedCommits.length - commitsNotInDiff
-    const commitsPluralized = numInDiff > 1 ? 'commits' : 'commit'
+    const commitsPluralized =
+      numInDiff > 1
+        ? t('common.multiple-commits', 'commits')
+        : t('common.one-or-less-commit', 'commit')
     return (
       <div className={summaryClassNames}>
-        Showing changes from{' '}
+        {t('commit-summary.showing-changes-from-1', 'Showing changes from ')}
         {commitsNotInDiff > 0 ? (
           <LinkButton
             onMouseOver={this.onHighlightShasInDiff}
@@ -477,8 +490,10 @@ export class CommitSummary extends React.Component<
           </LinkButton>
         ) : (
           <>
-            {' '}
-            {numInDiff} {commitsPluralized}
+            {t('commit-summary.showing-changes-from-2', ' {{0}} {{1}}', {
+              0: numInDiff,
+              1: commitsPluralized,
+            })}
           </>
         )}
       </div>
@@ -529,8 +544,13 @@ export class CommitSummary extends React.Component<
 
   private renderChangedFilesDescription = () => {
     const fileCount = this.props.changesetData.files.length
-    const filesPlural = fileCount === 1 ? 'file' : 'files'
-    const filesShortDescription = `${fileCount} changed ${filesPlural}`
+    const filesPlural =
+      fileCount === 1 ? t('common.file', 'file') : t('common.files', 'files')
+    const filesShortDescription = t(
+      'commit-summary.number-files-changed',
+      `{{0}} changed {{1}}`,
+      { 0: fileCount, 1: filesPlural }
+    )
 
     let filesAdded = 0
     let filesModified = 0
@@ -563,7 +583,9 @@ export class CommitSummary extends React.Component<
               className="files-added-icon"
               symbol={OcticonSymbol.diffAdded}
             />
-            {filesAdded} added
+            {t('commit-summary.number-files-added', '{{0}} added', {
+              0: filesAdded,
+            })}
           </span>
         ) : null}
         {filesModified > 0 ? (
@@ -572,7 +594,9 @@ export class CommitSummary extends React.Component<
               className="files-modified-icon"
               symbol={OcticonSymbol.diffModified}
             />
-            {filesModified} modified
+            {t('commit-summary.number-files-midified', '{{0}} modified', {
+              0: filesModified,
+            })}
           </span>
         ) : null}
         {filesRemoved > 0 ? (
@@ -581,7 +605,9 @@ export class CommitSummary extends React.Component<
               className="files-deleted-icon"
               symbol={OcticonSymbol.diffRemoved}
             />
-            {filesRemoved} deleted
+            {t('commit-summary.number-files-deleted', '{{0}} deleted', {
+              0: filesRemoved,
+            })}
           </span>
         ) : null}
         {filesRenamed > 0 ? (
@@ -617,10 +643,20 @@ export class CommitSummary extends React.Component<
       return null
     }
 
-    const linesAddedPlural = linesAdded === 1 ? 'line' : 'lines'
-    const linesDeletedPlural = linesDeleted === 1 ? 'line' : 'lines'
-    const linesAddedTitle = `${linesAdded} ${linesAddedPlural} added`
-    const linesDeletedTitle = `${linesDeleted} ${linesDeletedPlural} deleted`
+    const linesAddedPlural =
+      linesAdded === 1 ? t('common.line', 'line') : t('common.lines', 'lines')
+    const linesDeletedPlural =
+      linesDeleted === 1 ? t('common.line', 'line') : t('common.lines', 'lines')
+    const linesAddedTitle = t(
+      'commit-summary.number-lines-added',
+      `{{0}} {{1}} added`,
+      { 0: linesAdded, 1: linesAddedPlural }
+    )
+    const linesDeletedTitle = t(
+      'commit-summary.number-lines-deleted',
+      `{{0}} {{1}} deleted`,
+      { 0: linesDeleted, 1: linesDeletedPlural }
+    )
 
     return (
       <>

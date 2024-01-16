@@ -5,6 +5,7 @@ import { Repository } from '../../models/repository'
 import { Branch } from '../../models/branch'
 import { Dispatcher } from '../dispatcher'
 import { Button } from '../lib/button'
+import { t } from 'i18next'
 
 interface IMergeCallToActionProps {
   readonly repository: Repository
@@ -37,7 +38,9 @@ export class MergeCallToAction extends React.Component<
           disabled={count <= 0}
           onClick={this.onMergeClicked}
         >
-          Merge into <strong>{this.props.currentBranch.name}</strong>
+          {t('merge-call-to-action.merge-into-1', 'Merge into ')}
+          <strong>{this.props.currentBranch.name}</strong>
+          {t('merge-call-to-action.merge-into-2', ' ')}
         </Button>
       </div>
     )
@@ -48,19 +51,19 @@ export class MergeCallToAction extends React.Component<
     const count = formState.aheadBehind.behind
 
     if (count > 0) {
-      const pluralized = count === 1 ? 'commit' : 'commits'
+      const pluralized =
+        count === 1
+          ? t('common.one-commit', 'commit')
+          : t('common.multiple-commits', 'commits')
       return (
         <div className="merge-message merge-message-legacy">
-          This will merge
-          <strong>{` ${count} ${pluralized}`}</strong>
-          {` `}
-          from
-          {` `}
+          {t('merge-call-to-action.this-will-merge-into-1', 'This will merge ')}
+          <strong>{`${count} ${pluralized}`}</strong>
+          {t('merge-call-to-action.this-will-merge-into-2', ' from ')}
           <strong>{branch.name}</strong>
-          {` `}
-          into
-          {` `}
+          {t('merge-call-to-action.this-will-merge-into-3', ' into ')}
           <strong>{currentBranch.name}</strong>
+          {t('merge-call-to-action.this-will-merge-into-4', ' ')}
         </div>
       )
     }

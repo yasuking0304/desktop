@@ -12,6 +12,7 @@ import { TextBox } from '../lib/text-box'
 import { Row } from '../lib/row'
 
 import { match, IMatch, IMatches } from '../../lib/fuzzy-find'
+import { t } from 'i18next'
 import { AriaLiveContainer } from '../accessibility/aria-live-container'
 
 /** An item in the filter list. */
@@ -265,7 +266,9 @@ export class FilterList<T extends IFilterListItem> extends React.Component<
         ref={this.onTextBoxRef}
         displayClearButton={true}
         autoFocus={true}
-        placeholder={this.props.placeholderText || 'Filter'}
+        placeholder={
+          this.props.placeholderText || t('filter-list.filter', 'Filter')
+        }
         className="filter-list-filter-field"
         onValueChanged={this.onFilterValueChanged}
         onEnterPressed={this.onEnterPressed}

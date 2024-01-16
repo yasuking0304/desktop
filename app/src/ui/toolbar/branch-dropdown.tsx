@@ -23,6 +23,7 @@ import { BranchType, Branch } from '../../models/branch'
 import { PopupType } from '../../models/popup'
 import { generateBranchContextMenuItems } from '../branches/branch-list-item-context-menu'
 import { showContextualMenu } from '../../lib/menu-item'
+import { t } from 'i18next'
 
 interface IBranchDropdownProps {
   readonly dispatcher: Dispatcher
@@ -125,7 +126,9 @@ export class BranchDropdown extends React.Component<IBranchDropdownProps> {
     let icon: OcticonSymbol.OcticonSymbolType = OcticonSymbol.gitBranch
     let iconClassName: string | undefined = undefined
     let title: string
-    let description = __DARWIN__ ? 'Current Branch' : 'Current branch'
+    let description = __DARWIN__
+      ? t('branch-dropdown.current-branch-darwin', 'Current Branch')
+      : t('branch-dropdown.current-branch', 'Current branch')
     let canOpen = true
     let disabled = false
     let tooltip: string

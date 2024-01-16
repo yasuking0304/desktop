@@ -6,6 +6,7 @@ import { Branch } from '../../models/branch'
 import { Dialog, DialogContent, DialogFooter } from '../dialog'
 import { Ref } from '../lib/ref'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
+import { t } from 'i18next'
 
 interface IDeleteRemoteBranchProps {
   readonly dispatcher: Dispatcher
@@ -33,7 +34,17 @@ export class DeleteRemoteBranch extends React.Component<
     return (
       <Dialog
         id="delete-branch"
-        title={__DARWIN__ ? 'Delete Remote Branch' : 'Delete remote branch'}
+        title={
+          __DARWIN__
+            ? t(
+                'delete-remote-branch-dialog.delete-remote-branch-darwin',
+                'Delete Remote Branch'
+              )
+            : t(
+                'delete-remote-branch-dialog.delete-remote-branch',
+                'Delete remote branch'
+              )
+        }
         type="warning"
         onSubmit={this.deleteBranch}
         onDismissed={this.props.onDismissed}
@@ -45,18 +56,36 @@ export class DeleteRemoteBranch extends React.Component<
         <DialogContent>
           <div id="delete-branch-confirmation-message">
             <p>
-              Delete remote branch <Ref>{this.props.branch.name}</Ref>?<br />
-              This action cannot be undone.
+              {t(
+                'delete-remote-branch-dialog.delete-remote-branch-content-1',
+                'Delete remote branch '
+              )}
+              <Ref>{this.props.branch.name}</Ref>
+              {t(
+                'delete-remote-branch-dialog.delete-remote-branch-content-2',
+                '?'
+              )}
+              <br />
+              {t(
+                'delete-remote-branch-dialog.this-action-cannot-be-undone',
+                'This action cannot be undone.'
+              )}
             </p>
 
             <p>
-              This branch does not exist locally. Deleting it may impact others
-              collaborating on this branch.
+              {t(
+                'delete-remote-branch-dialog.this-branch-does-not-exist-locally',
+                `This branch does not exist locally. Deleting it may impact
+                others collaborating on this branch.`
+              )}
             </p>
           </div>
         </DialogContent>
         <DialogFooter>
-          <OkCancelButtonGroup destructive={true} okButtonText="Delete" />
+          <OkCancelButtonGroup
+            destructive={true}
+            okButtonText={t('common.delete', 'Delete')}
+          />
         </DialogFooter>
       </Dialog>
     )

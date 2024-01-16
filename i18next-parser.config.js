@@ -1,0 +1,22 @@
+module.exports = {
+  locales: [
+    'de',
+    'en',
+    'es',
+    'fr',
+    'it',
+    'ja',
+    'ko',
+    'nl',
+    'pt',
+    'pt-br',
+    'ro',
+    'ru',
+    'sv',
+    'zh',
+    'zh-hant',
+  ],
+  output: 'app/src/locales/json/lang_$LOCALE.json',
+  input: 'app/src/**/*.{js,ts,tsx}',
+  sort: true,
+}

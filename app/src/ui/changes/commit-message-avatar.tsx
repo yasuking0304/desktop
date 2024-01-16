@@ -12,6 +12,7 @@ import { Avatar } from '../lib/avatar'
 import { Octicon } from '../octicons'
 import * as OcticonSymbol from '../octicons/octicons.generated'
 import { LinkButton } from '../lib/link-button'
+import { t } from 'i18next'
 import { OkCancelButtonGroup } from '../dialog'
 import { getConfigValue } from '../../lib/git/config'
 import { Repository } from '../../models/repository'
@@ -270,11 +271,16 @@ export class CommitMessageAvatar extends React.Component<
   private renderWarningPopover() {
     const { warningType, emailRuleFailures } = this.props
 
-    const updateEmailTitle = __DARWIN__ ? 'Update Email' : 'Update email'
+    const updateEmailTitle = __DARWIN__
+      ? t('commit-message-avatar.update-email-darwin', 'Update Email')
+      : t('commit-message-avatar.update-email', 'Update email')
 
     const sharedHeader = (
       <>
-        The email in your global Git config (
+        {t(
+          'commit-message-avatar.update-email-1',
+          'The email in your global Git config ('
+        )}
         <span className="git-email">{this.props.email}</span>)
       </>
     )
@@ -296,16 +302,22 @@ export class CommitMessageAvatar extends React.Component<
         </Row>
         <Row>
           <div className="secondary-text">
-            You can also choose an email local to this repository from the{' '}
+            {t(
+              'commit-message-avatar.you-can-also-choose-an-email-1',
+              'You can also choose an email local to this repository from the '
+            )}
             <LinkButton onClick={this.onRepositorySettingsClick}>
-              repository settings
+              {t(
+                'commit-message-avatar.repository-settings',
+                'repository settings'
+              )}
             </LinkButton>
-            .
+            {t('commit-message-avatar.you-can-also-choose-an-email-2', '.')}
           </div>
         </Row>
         <Row className="button-row">
           <Button onClick={this.onIgnoreClick} type="button">
-            Ignore
+            {t('commit-message-avatar.ignore', 'Ignore')}
           </Button>
           <Button onClick={this.onUpdateEmailClick} type="submit">
             {updateEmailTitle}
@@ -331,10 +343,16 @@ export class CommitMessageAvatar extends React.Component<
               {sharedHeader} doesn't match your GitHub{accountTypeSuffix}{' '}
               account{userName}.{' '}
               <LinkButton
-                ariaLabel="Learn more about commit attribution"
-                uri="https://docs.github.com/en/github/committing-changes-to-your-project/why-are-my-commits-linked-to-the-wrong-user"
+                ariaLabel={t(
+                  'git-email-not-found-warning.learn-more-about',
+                  'Learn more about commit attribution'
+                )}
+                uri={t(
+                  'url.why-are-my-commits-linked-to-the-wrong-user',
+                  'https://docs.github.com/en/github/committing-changes-to-your-project/why-are-my-commits-linked-to-the-wrong-user'
+                )}
               >
-                Learn more
+                {t('git-email-not-found-warning.learn-more', 'Learn more.')}
               </LinkButton>
             </div>
           </Row>

@@ -2,6 +2,7 @@ import { app, dialog } from 'electron'
 import { setCrashMenu } from './menu'
 import { formatError } from '../lib/logging/format-error'
 import { CrashWindow } from './crash-window'
+import { t } from 'i18next'
 
 let hasReportedUncaughtException = false
 
@@ -26,7 +27,15 @@ export function showUncaughtException(isLaunchError: boolean, error: Error) {
   window.onFailedToLoad(async () => {
     await dialog.showMessageBox({
       type: 'error',
-      title: __DARWIN__ ? `Unrecoverable Error` : 'Unrecoverable error',
+      title: __DARWIN__
+        ? t(
+            'show-uncaught-exception.unrecoverable-error-darwin',
+            `Unrecoverable Error`
+          )
+        : t(
+            'show-uncaught-exception.unrecoverable-error',
+            'Unrecoverable error'
+          ),
       message:
         `GitHub Desktop has encountered an unrecoverable error and will need to restart.\n\n` +
         `This has been reported to the team, but if you encounter this repeatedly please report ` +

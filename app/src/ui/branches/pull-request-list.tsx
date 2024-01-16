@@ -21,6 +21,7 @@ import { startTimer } from '../lib/timing'
 import { DragType } from '../../models/drag-drop'
 import { dragAndDropManager } from '../../lib/drag-and-drop-manager'
 import { formatRelative } from '../../lib/format-relative'
+import { t } from 'i18next'
 import { AriaLiveContainer } from '../accessibility/aria-live-container'
 
 interface IPullRequestListItem extends IFilterListItem {
@@ -290,7 +291,9 @@ export class PullRequestList extends React.Component<
   private renderListHeader = () => {
     return (
       <div className="filter-list-group-header">
-        Pull requests in {this.getRepositoryName()}
+        {t('pull-request-list.pull-requests-in', 'Pull requests in {{0}}', {
+          0: this.getRepositoryName(),
+        })}
       </div>
     )
   }
@@ -300,7 +303,10 @@ export class PullRequestList extends React.Component<
   }
 
   private renderPostFilter = () => {
-    const tooltip = 'Refresh the list of pull requests'
+    const tooltip = t(
+      'pull-request-list.refresh-the-list-of-pull-request',
+      'Refresh the list of pull requests'
+    )
 
     return (
       <Button

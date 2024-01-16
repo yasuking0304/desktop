@@ -9,6 +9,7 @@ import {
   renderDefaultBranch,
 } from './branch-renderer'
 import { IBranchListItem } from './group-branches'
+import { t } from 'i18next'
 
 interface IBranchSelectProps {
   /** The initially selected branch. */
@@ -96,7 +97,10 @@ export class BranchSelect extends React.Component<
 
     return (
       <PopoverDropdown
-        contentTitle="Choose a base branch"
+        contentTitle={t(
+          'branch-select.choose-a-base-branch',
+          'Choose a base branch'
+        )}
         buttonContent={selectedBranch?.name ?? ''}
         label="base:"
         ref={this.popoverRef}

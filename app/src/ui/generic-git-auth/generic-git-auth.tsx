@@ -7,6 +7,7 @@ import { RetryAction } from '../../models/retry-actions'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
 import { Ref } from '../lib/ref'
 import { LinkButton } from '../lib/link-button'
+import { t } from 'i18next'
 import { PasswordTextBox } from '../lib/password-text-box'
 
 interface IGenericGitAuthenticationProps {
@@ -49,19 +50,37 @@ export class GenericGitAuthentication extends React.Component<
     return (
       <Dialog
         id="generic-git-auth"
-        title={__DARWIN__ ? `Authentication Failed` : `Authentication failed`}
+        title={
+          __DARWIN__
+            ? t(
+                'generic-git-auth.authentication-failed-darwin',
+                'Authentication Failed'
+              )
+            : t(
+                'generic-git-auth.authentication-failed',
+                'Authentication failed'
+              )
+        }
         onDismissed={this.props.onDismiss}
         onSubmit={this.save}
       >
         <DialogContent>
           <p>
-            We were unable to authenticate with <Ref>{this.props.hostname}</Ref>
-            . Please enter your username and password to try again.
+            {t(
+              'generic-git-auth.we-were-unable-to-authenticate-1',
+              'We were unable to authenticate with '
+            )}
+            <Ref>{this.props.hostname}</Ref>
+            {t(
+              'generic-git-auth.we-were-unable-to-authenticate-2',
+              '. Please enter your username and password to try again.'
+            )}
           </p>
 
           <Row>
             <TextBox
-              label="Username"
+              label={t('generic-git-auth.username', 'Username')}
+              // eslint-disable-next-line jsx-a11y/no-autofocus
               autoFocus={true}
               value={this.state.username}
               onValueChanged={this.onUsernameChange}
@@ -70,7 +89,7 @@ export class GenericGitAuthentication extends React.Component<
 
           <Row>
             <PasswordTextBox
-              label="Password"
+              label={t('generic-git-auth.password', 'Password')}
               value={this.state.password}
               onValueChanged={this.onPasswordChange}
             />
@@ -78,20 +97,27 @@ export class GenericGitAuthentication extends React.Component<
 
           <Row>
             <div>
-              Depending on your repository's hosting service, you might need to
-              use a Personal Access Token (PAT) as your password. Learn more
-              about creating a PAT in our{' '}
+              {t(
+                'generic-git-auth.depending-on-your-repository-s-1',
+                `Depending on your repository's hosting service, you might need
+                 to use a Personal Access Token (PAT) as your password. Learn
+                 more about creating a PAT in our `
+              )}
               <LinkButton uri="https://github.com/desktop/desktop/tree/development/docs/integrations">
-                integration docs
+                {t('generic-git-auth.integration-docs', 'integration docs')}
               </LinkButton>
-              .
+              {t('generic-git-auth.depending-on-your-repository-s-2', '.')}
             </div>
           </Row>
         </DialogContent>
 
         <DialogFooter>
           <OkCancelButtonGroup
-            okButtonText={__DARWIN__ ? 'Save and Retry' : 'Save and retry'}
+            okButtonText={
+              __DARWIN__
+                ? t('generic-git-auth.save-and-retry-darwin', 'Save and Retry')
+                : t('generic-git-auth.save-and-retry', 'Save and retry')
+            }
             okButtonDisabled={disabled}
           />
         </DialogFooter>
