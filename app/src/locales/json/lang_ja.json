@@ -20,6 +20,9 @@
     "you-have-the-latest-version-2": ")"
   },
   "acknowledgements": {
+    "about-license-1": " ",
+    "about-license-2": " は MIT ライセンスの下で公開されているオープンソースプロジェクトです。あなたは ",
+    "about-license-3": " でソースコードを公開することで、このプロジェクトに貢献できます。",
     "also-distributes-these-libraries": "GitHub Desktop はこれらのライブラリも配布しています:",
     "license-and-open-source-notices": "ライセンスとオープンソースの通知",
     "unknown-license": "ライセンス不明",

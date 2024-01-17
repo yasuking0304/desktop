@@ -20,6 +20,9 @@
     "you-have-the-latest-version-2": ")"
   },
   "acknowledgements": {
+    "about-license-1": " ",
+    "about-license-2": " is an open\n            source project published under the MIT License. You can view the\n            source code and contribute to this project on ",
+    "about-license-3": ".",
     "also-distributes-these-libraries": "GitHub Desktop also distributes these libraries:",
     "license-and-open-source-notices": "License and Open Source Notices",
     "unknown-license": "Unknown license",

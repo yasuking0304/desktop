@@ -129,10 +129,16 @@ export class Acknowledgements extends React.Component<
       >
         <DialogContent>
           <p>
-            <LinkButton uri={WebsiteURL}>GitHub Desktop</LinkButton> is an open
+            {t('acknowledgements.about-license-1', ' ')}
+            <LinkButton uri={WebsiteURL}>GitHub Desktop</LinkButton>
+            {t(
+              'acknowledgements.about-license-2',
+              ` is an open
             source project published under the MIT License. You can view the
-            source code and contribute to this project on{' '}
-            <LinkButton uri={RepositoryURL}>GitHub</LinkButton>.
+            source code and contribute to this project on `
+            )}
+            <LinkButton uri={RepositoryURL}>GitHub</LinkButton>
+            {t('acknowledgements.about-license-3', '.')}
           </p>
 
           {desktopLicense}
