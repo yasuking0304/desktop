@@ -1063,7 +1063,7 @@
     "file-manager": "Explorer",
     "file-manager-darwin": "Finder",
     "file-manager-linux": "ファイルマネージャー",
-    "menu": "{{0}}メニューから開くか ",
+    "menu": "{{0}} メニューから開くか ",
     "multiple-commits": "commits",
     "multiple-local-commits": "{{0}}個のローカルコミット",
     "multiple-tags": "{{0}}個のタグ",
