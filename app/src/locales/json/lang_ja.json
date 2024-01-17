@@ -20,6 +20,9 @@
     "you-have-the-latest-version-2": ")"
   },
   "acknowledgements": {
+    "about-license-1": " ",
+    "about-license-2": " は MIT ライセンスの下で公開されているオープンソースプロジェクトです。あなたは ",
+    "about-license-3": " にソースコードを公開することで、このプロジェクトに貢献できます。",
     "also-distributes-these-libraries": "GitHub Desktop はこれらのライブラリも配布しています:",
     "license-and-open-source-notices": "ライセンスとオープンソースの通知",
     "unknown-license": "ライセンス不明",
@@ -77,6 +80,11 @@
   },
   "authentication-form": {
     "your-browser-will-redirect": "サインインすると、ブラウザーによって GitHub Desktop にリダイレクトされます。ブラウザーが GitHub Desktop の起動許可を求めた場合は、許可してください。"
+  },
+  "base-multi-commit-operation": {
+    "abort-operation": "{{0}}を中止",
+    "continue-operation": "{{0}}を続ける",
+    "resolve-conflicts-before-operation": "{{0}}を行う前に競合を解決"
   },
   "binary-file": {
     "open-file-in-external-program": "外部プログラムを開きます。",
@@ -484,6 +492,14 @@
     "the-repository-will-be-removed": "リポジトリは GitHub Desktop から削除されます:",
     "you-want-to-remove-repository-1": "GitHub Desktop から \"",
     "you-want-to-remove-repository-2": "\" を削除してもよろしいですか?"
+  },
+  "conflicts-dialog": {
+    "all-conflicted-files-have-been-resolved": "競合するファイルはすべて解決されました。 ",
+    "all-resolutions-have-been-undone": "すべての解決が取り消されました。",
+    "file-has": "file has",
+    "files-have": "files have",
+    "many-conflicted-files-have-been-resolved": "{{0}}ファイルの競合が解決されました。",
+    "tooltip-resolve-all-changes-before-continuing": "続行する前にすべての変更を解決する"
   },
   "copy-button": {
     "copied": "コピーしました"
@@ -1063,7 +1079,7 @@
     "file-manager": "Explorer",
     "file-manager-darwin": "Finder",
     "file-manager-linux": "ファイルマネージャー",
-    "menu": "{{0}}メニューから開くか ",
+    "menu": "{{0}} メニューから開くか ",
     "multiple-commits": "commits",
     "multiple-local-commits": "{{0}}個のローカルコミット",
     "multiple-tags": "{{0}}個のタグ",
@@ -1267,7 +1283,7 @@
     "number-commit": " {{0}}{{1}}",
     "rebase-1": "リベースを ",
     "rebase-2": " に行う",
-    "there-are-no-commits": "現在のブランチにリベースするコミットはありません",
+    "there-are-no-commits": "現在のブランチにリベースするコミットはありません。",
     "this-branch-is-up-to-date-with-1": "このブランチは ",
     "this-branch-is-up-to-date-with-2": " で最新です",
     "this-will-update-1": "This will update ",
@@ -1275,7 +1291,7 @@
     "this-will-update-3": " on top of ",
     "this-will-update-4": " ",
     "unable-to-start-rebase": "リベースを開始できません。有効なブランチを選択していることを確認してください。",
-    "you-are-not-able-to-rebase": "このブランチをそれ自体にリベースすることはできません"
+    "you-are-not-able-to-rebase": "このブランチをそれ自体にリベースすることはできません。"
   },
   "ref-name-text-box": {
     "created": "作成",
@@ -1301,6 +1317,14 @@
     "reorder-of-commit-undone": "{{0}}{{1}}の並び替えができませんでした。",
     "squash-of-commit-undone": "{{0}}{{1}}のまとめができませんでした。",
     "successfully-reordered-commit": "{{0}}{{1}}の並び替えに成功しました。"
+  },
+  "render-functions": {
+    "all-conflicts-resolved": "すべての競合が解決されました",
+    "many-conflicted-files": "{{0}}ファイルが競合しています",
+    "one-conflicted-file": "1ファイルが競合しています",
+    "open-in-command-line-1": " ",
+    "open-in-command-line-2": "コマンドラインを開くか、",
+    "open-in-command-line-3": "選択したツールで開くか、このダイアログを閉じて手動で解決します。"
   },
   "repositories-list": {
     "add": "追加",

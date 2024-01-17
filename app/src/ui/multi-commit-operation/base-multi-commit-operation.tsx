@@ -14,6 +14,7 @@ import { WarnForcePushDialog } from './dialog/warn-force-push-dialog'
 import { PopupType } from '../../models/popup'
 import { Account } from '../../models/account'
 import { IAPIRepoRuleset } from '../../lib/api'
+import { t } from 'i18next'
 
 export interface IMultiCommitOperationProps {
   readonly repository: Repository
@@ -191,8 +192,16 @@ export abstract class BaseMultiCommitOperation extends React.Component<IMultiCom
         const operation = __DARWIN__
           ? operationDetail.kind
           : operationDetail.kind.toLowerCase()
-        const submit = `Continue ${operation}`
-        const abort = `Abort ${operation}`
+        const submit = t(
+          'base-multi-commit-operation.continue-operation',
+          `Continue {{0}}`,
+          { 0: operation }
+        )
+        const abort = t(
+          'base-multi-commit-operation.abort-operation',
+          `Abort {{0}}`,
+          { 0: operation }
+        )
 
         return (
           <ConflictsDialog
@@ -204,7 +213,11 @@ export abstract class BaseMultiCommitOperation extends React.Component<IMultiCom
             ourBranch={ourBranch}
             theirBranch={theirBranch}
             manualResolutions={manualResolutions}
-            headerTitle={`Resolve conflicts before ${operationDetail.kind}`}
+            headerTitle={t(
+              'base-multi-commit-operation.resolve-conflicts-before-operation',
+              `Resolve conflicts before {{0}}`,
+              { 0: operationDetail.kind }
+            )}
             submitButton={submit}
             abortButton={abort}
             onSubmit={this.onContinueAfterConflicts}
