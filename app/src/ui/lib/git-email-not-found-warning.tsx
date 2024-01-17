@@ -55,11 +55,20 @@ export class GitEmailNotFoundWarning extends React.Component<IGitEmailNotFoundWa
   }
 
   private buildScreenReaderMessage(isAttributableEmail: boolean) {
-    const verb = !isAttributableEmail ? 'does not match' : 'matches'
+    const verb = !isAttributableEmail
+      ? t('git-email-not-found-warning.does-not-match', 'does not match')
+      : t('git-email-not-found-warning.matchs', 'matches')
     const info = !isAttributableEmail
-      ? 'Your commits will be wrongly attributed. '
+      ? t(
+          'git-email-not-found-warning.wrongly-attributed',
+          'Your commits will be wrongly attributed. '
+        )
       : ''
-    return `This email address ${verb} ${this.getAccountTypeDescription()}. ${info}`
+    return t(
+      'git-email-not-found-warning.this-email-address',
+      'This email address {{0}} {{1}}. {{2}}',
+      { 0: verb, 1: this.getAccountTypeDescription(), 2: info }
+    )
   }
 
   public render() {

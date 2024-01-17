@@ -95,14 +95,18 @@ export function buildDefaultMenu({
         separator,
         {
           role: 'services',
+          label: t('menu.services', 'services'),
           submenu: [],
         },
         separator,
-        { role: 'hide' },
-        { role: 'hideOthers' },
-        { role: 'unhide' },
+        { role: 'hide', label: t('menu.hide', 'Hide GitHub Desktop') },
+        {
+          role: 'hideOthers',
+          label: t('menu.hide-others', 'Hide Others'),
+        },
+        { role: 'unhide', label: t('menu.show-all', 'Show All') },
         separator,
-        { role: 'quit' },
+        { role: 'quit', label: t('menu.quit', 'Quit GitHub Desktop') },
       ],
     })
   }
@@ -586,12 +590,13 @@ export function buildDefaultMenu({
   if (__DARWIN__) {
     template.push({
       role: 'window',
+      label: t('menu.window-darwin', 'Window'),
       submenu: [
-        { role: 'minimize' },
-        { role: 'zoom' },
-        { role: 'close' },
+        { role: 'minimize', label: t('menu.minimize-darwin', 'Minimize') },
+        { role: 'zoom', label: t('menu.zoom-darwin', 'Zoom') },
+        { role: 'close', label: t('menu.close-darwin', 'close Window') },
         separator,
-        { role: 'front' },
+        { role: 'front', label: t('menu.front-darwin', 'Bring All to Front') },
       ],
     })
   }
@@ -706,15 +711,29 @@ export function buildDefaultMenu({
             click: emit('show-thank-you-popup'),
           },
           {
-            label: t(
-              'menu.pull-request-check-run-failed',
-              'Pull Request Check Run Failed'
-            ),
-            click: emit('pull-request-check-run-failed'),
+            label: t('menu.pull-request-check-run-failed', 'Show App Error'),
+            click: emit('show-app-error'),
+          },
+        ],
+      },
+      {
+        label: 'Show banner',
+        submenu: [
+          {
+            label: 'Reorder Successful',
+            click: emit('show-test-reorder-banner'),
           },
           {
-            label: 'Show App Error',
-            click: emit('show-app-error'),
+            label: 'Reorder Undone',
+            click: emit('show-test-undone-banner'),
+          },
+          {
+            label: 'Cherry Pick Conflicts',
+            click: emit('show-test-cherry-pick-conflicts-banner'),
+          },
+          {
+            label: 'Merge Successful',
+            click: emit('show-test-merge-successful-banner'),
           },
         ],
       },
@@ -726,15 +745,39 @@ export function buildDefaultMenu({
   }
 
   if (__RELEASE_CHANNEL__ === 'development' || __RELEASE_CHANNEL__ === 'test') {
-    helpItems.push({
-      label: t('menu.show-notification', 'Show notification'),
-      click: emit('test-show-notification'),
-    })
+    helpItems.push(
+      {
+        label: t('menu.show-notification', 'Show notification'),
+        click: emit('test-show-notification'),
+      },
+      {
+        label: 'Show banner',
+        submenu: [
+          {
+            label: 'Update banner',
+            click: emit('show-update-banner'),
+          },
+          {
+            label: `Showcase Update banner`,
+            click: emit('show-showcase-update-banner'),
+          },
+          {
+            label: `${__DARWIN__ ? 'Apple silicon' : 'Arm64'} banner`,
+            click: emit('show-arm64-banner'),
+          },
+          {
+            label: 'Thank you',
+            click: emit('show-thank-you-banner'),
+          },
+        ],
+      }
+    )
   }
 
   if (__DARWIN__) {
     template.push({
       role: 'help',
+      label: t('menu.help-darwin', 'Help'),
       submenu: helpItems,
     })
   } else {

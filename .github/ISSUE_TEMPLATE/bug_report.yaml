@@ -5,62 +5,58 @@ body:
     attributes:
       value: |
         Thanks for filing a bug report! This issue tracker is for [GitHub Desktop](https://desktop.github.com). Please search the issue tracker to see if there is an existing issue for the problem you are experiencing. If you are experiencing issues with the Linux fork of GitHub Desktop please open an issue [in its repository](https://github.com/shiftkey/desktop). If you are experiencing issues with github.com please [contact GitHub Support](https://support.github.com/).
+        <br>このページはマルチランゲージ対応Windows版、Mac版、Linux版の GitHub Desktop のバグレポートです。通常の英語版 Windows/Mac用であれば[GitHub Desktop](https://desktop.github.com)。英語版Linuxであれば[こちら](https://github.com/shiftkey/desktop)にバグレポートを投稿してください。本家に問題なくてマルチランゲージ版だけに問題がある場合もこちらでお願いします。
+        <br>**このページ内では、日本語でもお問い合わせ可能です(ただし上記リンク先は英語でお願いします)。**
   - type: textarea
     id: the-problem
     attributes:
       label: The problem
-      description:
-        Describe the issue you are experiencing with GitHub Desktop. Provide a
-        clear and concise description of what you were trying to do and what
-        happened, along with any error messages you encountered.
+      description: |
+        Describe the issue you are experiencing with GitHub Desktop. Provide a clear and concise description of what you were trying to do and what happened, along with any error messages you encountered.
+        マルチランゲージ対応 GitHub Desktop で起こっている問題をご説明ください。何をしたときエラー発生したのか、もしくは翻訳に問題がある、翻訳されてないなど詳細に記載してくださると助かります。
     validations:
       required: true
   - type: input
     id: version
     attributes:
       label: Release version
-      description:
-        Open the 'About GitHub Desktop' menu item to see the GitHub Desktop
-        version.
+      description: |
+        Open the 'About GitHub Desktop' menu item to see the GitHub Desktop version.
+        メニューから「GitHub Desktop について」を開いて表示されている GitHub Desktop のバージョンを記載してください。
     validations:
       required: true
   - type: input
     id: operating-system
     attributes:
       label: Operating system
-      description:
-        'Enter the specific operating system version you are running (example:
-        Windows 10)'
+      description: |
+        Enter the specific operating system version you are running (example: Windows 11, MacOS Monterey, Ubuntu 23.10...)
+        OSとバージョンを記載してください(例: Windows11, MacOS Monterey, Ubuntu 23.10...)
     validations:
       required: true
   - type: textarea
     id: steps-to-reproduce
     attributes:
       label: Steps to reproduce the behavior
-      description: Provide steps to reproduce the problem you are experiencing.
+      description: |
+        Provide steps to reproduce the problem you are experiencing.
+        発生手順や未翻訳画面を記載してください。
       placeholder: |
         1. Go to '...'
         2. Click on '....'
         3. Scroll down to '....'
-        4. See error
-  - type: textarea
-    id: logs
-    attributes:
-      label: Log files
-      description:
-        Please upload a log file from a day you experienced the issue. To access
-        the log files go to the menu and select `Help` > `Show Logs`.
-      placeholder:
-        You can attach log files by clicking this area to highlight it and then
-        dragging the files in.
+        4. Message not yet translated
   - type: textarea
     id: screenshots
     attributes:
       label: Screenshots
-      description: Add screenshots to help explain your problem, if applicable.
+      description: |
+        Add screenshots to help explain your problem, if applicable.
+        必要に応じて、問題の説明用にスクリーンショットを追加してください。
   - type: textarea
     id: additional-context
     attributes:
       label: Additional context
-      description:
+      description: |
         Add any other context about the problem you are experiencing here.
+        その他に気になったことがあればここに追記をお願いします。

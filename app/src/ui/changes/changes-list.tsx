@@ -222,6 +222,8 @@ interface IChangesListProps {
   readonly commitSpellcheckEnabled: boolean
 
   readonly showCommitLengthWarning: boolean
+
+  readonly accounts: ReadonlyArray<Account>
 }
 
 interface IChangesState {
@@ -579,6 +581,7 @@ export class ChangesList extends React.Component<
       { type: 'separator' },
     ]
     if (paths.length === 1) {
+      const enabled = Path.basename(path) !== GitIgnoreFileName
       items.push({
         label: __DARWIN__
           ? t(
@@ -590,8 +593,29 @@ export class ChangesList extends React.Component<
               'Ignore file (add to .gitignore)'
             ),
         action: () => this.props.onIgnoreFile(path),
-        enabled: Path.basename(path) !== GitIgnoreFileName,
+        enabled,
       })
+
+      const pathComponents = path.split(Path.sep).slice(0, -1)
+      if (pathComponents.length > 0) {
+        const submenu = pathComponents.map((_, index) => {
+          const label = `/${pathComponents
+            .slice(0, pathComponents.length - index)
+            .join('/')}`
+          return {
+            label,
+            action: () => this.props.onIgnoreFile(label),
+          }
+        })
+
+        items.push({
+          label: __DARWIN__
+            ? 'Ignore Folder (Add to .gitignore)'
+            : 'Ignore folder (add to .gitignore)',
+          submenu,
+          enabled,
+        })
+      }
     } else if (paths.length > 1) {
       items.push({
         label: __DARWIN__
@@ -893,6 +917,7 @@ export class ChangesList extends React.Component<
         onCommitSpellcheckEnabledChanged={this.onCommitSpellcheckEnabledChanged}
         onStopAmending={this.onStopAmending}
         onShowCreateForkDialog={this.onShowCreateForkDialog}
+        accounts={this.props.accounts}
       />
     )
   }
@@ -944,10 +969,10 @@ export class ChangesList extends React.Component<
       dispatcher.selectWorkingDirectoryFiles(repository)
 
       // If the button is clicked, that implies the stash was not restored or discarded
-      dispatcher.recordNoActionTakenOnStash()
+      dispatcher.incrementMetric('noActionTakenOnStashCount')
     } else {
       dispatcher.selectStashedFile(repository)
-      dispatcher.recordStashView()
+      dispatcher.incrementMetric('stashViewCount')
     }
   }
 

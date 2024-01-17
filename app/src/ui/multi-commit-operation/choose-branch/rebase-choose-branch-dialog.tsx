@@ -4,127 +4,151 @@ import { ComputedAction } from '../../../models/computed-action'
 import { RebasePreview } from '../../../models/rebase'
 import { ActionStatusIcon } from '../../lib/action-status-icon'
 import { updateRebasePreview } from '../../lib/update-branch'
-import { BaseChooseBranchDialog } from './base-choose-branch-dialog'
 import { t } from 'i18next'
+import {
+  ChooseBranchDialog,
+  IBaseChooseBranchDialogProps,
+  canStartOperation,
+} from './base-choose-branch-dialog'
+import { truncateWithEllipsis } from '../../../lib/truncate-with-ellipsis'
 
-export abstract class RebaseChooseBranchDialog extends BaseChooseBranchDialog {
-  private rebasePreview: RebasePreview | null = null
+interface IRebaseChooseBranchDialogState {
+  readonly rebasePreview: RebasePreview | null
+  readonly selectedBranch: Branch | null
+}
 
-  protected start = () => {
-    const { selectedBranch } = this.state
-    const { repository, currentBranch } = this.props
-    if (!selectedBranch) {
-      return
+export class RebaseChooseBranchDialog extends React.Component<
+  IBaseChooseBranchDialogProps,
+  IRebaseChooseBranchDialogState
+> {
+  public constructor(props: IBaseChooseBranchDialogProps) {
+    super(props)
+
+    this.state = {
+      selectedBranch: null,
+      rebasePreview: null,
     }
+  }
 
-    if (
-      this.rebasePreview === null ||
-      this.rebasePreview.kind !== ComputedAction.Clean
-    ) {
-      return
-    }
-
+  private start = () => {
     if (!this.canStart()) {
       return
     }
 
-    this.props.dispatcher.startRebase(
+    const { selectedBranch, rebasePreview } = this.state
+    const { repository, currentBranch, dispatcher } = this.props
+
+    // Just type checking here, this shouldn't be possible
+    if (
+      selectedBranch === null ||
+      rebasePreview === null ||
+      rebasePreview.kind !== ComputedAction.Clean
+    ) {
+      return
+    }
+
+    dispatcher.startRebase(
       repository,
       selectedBranch,
       currentBranch,
-      this.rebasePreview.commits
+      rebasePreview.commits
     )
   }
 
-  protected canStart = (): boolean => {
-    return (
-      this.state.selectedBranch !== null &&
-      !this.selectedBranchIsCurrentBranch() &&
-      this.selectedBranchIsAheadOfCurrentBranch()
+  private canStart = (): boolean => {
+    const { currentBranch } = this.props
+    const { selectedBranch, rebasePreview } = this.state
+    const commitCount =
+      rebasePreview?.kind === ComputedAction.Clean
+        ? rebasePreview.commits.length
+        : undefined
+    return canStartOperation(
+      selectedBranch,
+      currentBranch,
+      commitCount,
+      rebasePreview?.kind
     )
   }
 
-  private selectedBranchIsCurrentBranch() {
-    const currentBranch = this.props.currentBranch
-    const { selectedBranch } = this.state
-    return (
+  private onSelectionChanged = (selectedBranch: Branch | null) => {
+    this.setState({ selectedBranch })
+
+    if (selectedBranch === null) {
+      this.setState({ rebasePreview: null })
+      return
+    }
+
+    this.updateStatus(selectedBranch)
+  }
+
+  private getSubmitButtonToolTip = () => {
+    const { currentBranch } = this.props
+    const { selectedBranch, rebasePreview } = this.state
+
+    const selectedBranchIsCurrentBranch =
       selectedBranch !== null &&
       currentBranch !== null &&
       selectedBranch.name === currentBranch.name
-    )
-  }
 
-  private selectedBranchIsAheadOfCurrentBranch() {
-    return this.rebasePreview !== null &&
-      this.rebasePreview.kind === ComputedAction.Clean
-      ? this.rebasePreview.commits.length > 0
-      : false
-  }
+    const areCommitsToRebase =
+      rebasePreview?.kind === ComputedAction.Clean
+        ? rebasePreview.commits.length > 0
+        : false
 
-  protected getSubmitButtonToolTip = () => {
-    return this.selectedBranchIsCurrentBranch()
+    return selectedBranchIsCurrentBranch
       ? t(
-          'rebase-choose-branch-dialog.you-are-not-able-to-rebase',
-          'You are not able to rebase this branch onto itself'
-        )
-      : !this.selectedBranchIsAheadOfCurrentBranch()
+        'rebase-choose-branch-dialog.you-are-not-able-to-rebase',
+        'You are not able to rebase this branch onto itself.'
+      )
+    : !areCommitsToRebase
       ? t(
-          'rebase-choose-branch-dialog.there-are-no-commits',
-          'There are no commits on the current branch to rebase'
-        )
+        'rebase-choose-branch-dialog.there-are-no-commits',
+        'There are no commits on the current branch to rebase.'
+      )
       : undefined
   }
 
-  protected getDialogTitle = (branchName: string) => {
+  private getDialogTitle = () => {
+    const truncatedName = truncateWithEllipsis(
+      this.props.currentBranch.name,
+      40
+    )
     return (
       <>
         {t('rebase-choose-branch-dialog.rebase-1', 'Rebase ')}
-        <strong>{branchName}</strong>
+        <strong>{truncatedName}</strong>
         {t('rebase-choose-branch-dialog.rebase-2', ' ')}
       </>
     )
   }
 
-  protected renderActionStatusIcon = () => {
-    return (
-      <ActionStatusIcon
-        status={this.rebasePreview}
-        classNamePrefix="merge-status"
-      />
-    )
-  }
-
-  protected updateStatus = async (baseBranch: Branch) => {
+  private updateStatus = async (baseBranch: Branch) => {
     const { currentBranch: targetBranch, repository } = this.props
     updateRebasePreview(baseBranch, targetBranch, repository, rebasePreview => {
-      this.rebasePreview = rebasePreview
-      this.updateRebaseStatusPreview(baseBranch)
+      this.setState({ rebasePreview })
     })
   }
 
-  private updateRebaseStatusPreview(baseBranch: Branch) {
-    this.setState({ statusPreview: this.getRebaseStatusPreview(baseBranch) })
-  }
-
-  private getRebaseStatusPreview(baseBranch: Branch): JSX.Element | null {
-    if (this.rebasePreview == null) {
+  private renderStatusPreviewMessage(): JSX.Element | null {
+    const { rebasePreview, selectedBranch: baseBranch } = this.state
+    if (rebasePreview == null || baseBranch == null) {
       return null
     }
 
     const { currentBranch } = this.props
 
-    if (this.rebasePreview.kind === ComputedAction.Loading) {
+    if (rebasePreview.kind === ComputedAction.Loading) {
       return this.renderLoadingRebaseMessage()
     }
-    if (this.rebasePreview.kind === ComputedAction.Clean) {
+    if (rebasePreview.kind === ComputedAction.Clean) {
       return this.renderCleanRebaseMessage(
         currentBranch,
         baseBranch,
-        this.rebasePreview.commits.length
+        rebasePreview.commits.length
       )
     }
 
-    if (this.rebasePreview.kind === ComputedAction.Invalid) {
+    if (rebasePreview.kind === ComputedAction.Invalid) {
       return this.renderInvalidRebaseMessage()
     }
 
@@ -199,6 +223,36 @@ export abstract class RebaseChooseBranchDialog extends BaseChooseBranchDialog {
         <strong>{baseBranch.name}</strong>
         {t('rebase-choose-branch-dialog.this-will-update-4', ` `)}
       </>
+    )
+  }
+
+  private renderStatusPreview() {
+    return (
+      <>
+        <ActionStatusIcon
+          status={this.state.rebasePreview}
+          classNamePrefix="merge-status"
+        />
+        <p className="merge-info" id="merge-status-preview">
+          {this.renderStatusPreviewMessage()}
+        </p>
+      </>
+    )
+  }
+
+  public render() {
+    return (
+      <ChooseBranchDialog
+        {...this.props}
+        start={this.start}
+        selectedBranch={this.state.selectedBranch}
+        canStartOperation={this.canStart()}
+        dialogTitle={this.getDialogTitle()}
+        submitButtonTooltip={this.getSubmitButtonToolTip()}
+        onSelectionChanged={this.onSelectionChanged}
+      >
+        {this.renderStatusPreview()}
+      </ChooseBranchDialog>
     )
   }
 }

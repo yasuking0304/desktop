@@ -19,6 +19,7 @@ import {
 import classNames from 'classnames'
 import { t } from 'i18next'
 import { TooltippedContent } from '../lib/tooltipped-content'
+import { Account } from '../../models/account'
 
 interface ICommitProps {
   readonly gitHubRepository: GitHubRepository | null
@@ -40,7 +41,7 @@ interface ICommitProps {
   readonly showUnpushedIndicator: boolean
   readonly unpushedIndicatorTitle?: string
   readonly disableSquashing?: boolean
-  readonly isMultiCommitOperationInProgress?: boolean
+  readonly accounts: ReadonlyArray<Account>
 }
 
 interface ICommitListItemState {
@@ -151,7 +152,10 @@ export class CommitListItem extends React.PureComponent<
               renderUrlsAsLinks={false}
             />
             <div className="description">
-              <AvatarStack users={this.state.avatarUsers} />
+              <AvatarStack
+                users={this.state.avatarUsers}
+                accounts={this.props.accounts}
+              />
               <div className="byline">
                 <CommitAttribution
                   gitHubRepository={this.props.gitHubRepository}
@@ -228,7 +232,7 @@ function renderRelativeTime(date: Date) {
   return (
     <>
       {` • `}
-      <RelativeTime date={date} abbreviate={true} />
+      <RelativeTime date={date} />
     </>
   )
 }

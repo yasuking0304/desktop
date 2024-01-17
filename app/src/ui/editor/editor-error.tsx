@@ -31,7 +31,7 @@ interface IEditorErrorProps {
   /** Render the "Install ${Default}" link as the default action */
   readonly suggestDefaultEditor?: boolean
 
-  /** Render the "Open Preferences" link as the default action */
+  /** Render the "Open Settings" link as the default action */
   readonly viewPreferences?: boolean
 }
 
@@ -66,7 +66,7 @@ export class EditorError extends React.Component<IEditorErrorProps, {}> {
             okButtonText="Close"
             cancelButtonText={
               __DARWIN__
-                ? t('editor-error.open-options-darwin', 'Open Preferences')
+                ? t('editor-error.open-settings-darwin', 'Open Settings')
                 : t('editor-error.open-options', 'Open options')
             }
             onCancelButtonClick={this.onShowPreferencesDialog}

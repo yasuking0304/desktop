@@ -279,7 +279,7 @@ export class NoChanges extends React.Component<
   }
 
   private onShowInFileManagerClicked = () =>
-    this.props.dispatcher.recordSuggestedStepOpenWorkingDirectory()
+    this.props.dispatcher.incrementMetric('suggestedStepOpenWorkingDirectory')
 
   private renderViewOnGitHub() {
     const isGitHub = this.props.repository.gitHubRepository !== null
@@ -300,7 +300,7 @@ export class NoChanges extends React.Component<
   }
 
   private onViewOnGitHubClicked = () =>
-    this.props.dispatcher.recordSuggestedStepViewOnGitHub()
+    this.props.dispatcher.incrementMetric('suggestedStepViewOnGitHub')
 
   private openIntegrationPreferences = () => {
     this.props.dispatcher.showPopup({
@@ -354,7 +354,7 @@ export class NoChanges extends React.Component<
   }
 
   private onOpenInExternalEditorClicked = () =>
-    this.props.dispatcher.recordSuggestedStepOpenInExternalEditor()
+    this.props.dispatcher.incrementMetric('suggestedStepOpenInExternalEditor')
 
   private renderRemoteAction() {
     const { remote, aheadBehind, branchesState, tagsToPush } =
@@ -474,7 +474,7 @@ export class NoChanges extends React.Component<
   }
 
   private onViewStashClicked = () =>
-    this.props.dispatcher.recordSuggestedStepViewStash()
+    this.props.dispatcher.incrementMetric('suggestedStepViewStash')
 
   private renderPublishRepositoryAction() {
     // This is a bit confusing, there's no dedicated
@@ -527,7 +527,7 @@ export class NoChanges extends React.Component<
   }
 
   private onPublishRepositoryClicked = () =>
-    this.props.dispatcher.recordSuggestedStepPublishRepository()
+    this.props.dispatcher.incrementMetric('suggestedStepPublishRepository')
 
   private renderPublishBranchAction(tip: IValidBranch) {
     // This is a bit confusing, there's no dedicated
@@ -589,7 +589,7 @@ export class NoChanges extends React.Component<
   }
 
   private onPublishBranchClicked = () =>
-    this.props.dispatcher.recordSuggestedStepPublishBranch()
+    this.props.dispatcher.incrementMetric('suggestedStepPublishBranch')
 
   private renderPullBranchAction(
     tip: IValidBranch,
@@ -852,7 +852,7 @@ export class NoChanges extends React.Component<
   }
 
   private onCreatePullRequestClicked = () =>
-    this.props.dispatcher.recordSuggestedStepCreatePullRequest()
+    this.props.dispatcher.incrementMetric('suggestedStepCreatePullRequest')
 
   private renderActions() {
     return (
