@@ -81,6 +81,11 @@
   "authentication-form": {
     "your-browser-will-redirect": "Your browser will redirect you back to GitHub Desktop once you've signed in. If your browser asks for your permission to launch GitHub Desktop please allow it to."
   },
+  "base-multi-commit-operation": {
+    "abort-operation": "Abort {{0}}",
+    "continue-operation": "Continue {{0}}",
+    "resolve-conflicts-before-operation": "Resolve conflicts before {{0}}"
+  },
   "binary-file": {
     "open-file-in-external-program": "Open file in external program.",
     "this-binary-file-has-changed": "This binary file has changed."
@@ -487,6 +492,14 @@
     "the-repository-will-be-removed": "The repository will be removed from GitHub Desktop:",
     "you-want-to-remove-repository-1": "Are you sure you want to remove the repository \"",
     "you-want-to-remove-repository-2": "\" from GitHub Desktop?"
+  },
+  "conflicts-dialog": {
+    "all-conflicted-files-have-been-resolved": "All conflicted files have been resolved. ",
+    "all-resolutions-have-been-undone": "All resolutions have been undone.",
+    "file-has": "file has",
+    "files-have": "files have",
+    "many-conflicted-files-have-been-resolved": "{{0}} conflicted {{1}} been resolved.",
+    "tooltip-resolve-all-changes-before-continuing": "Resolve all changes before continuing"
   },
   "copy-button": {
     "copied": "Copied!"
@@ -1270,7 +1283,7 @@
     "number-commit": " {{0}} {{1}}",
     "rebase-1": "Rebase ",
     "rebase-2": " ",
-    "there-are-no-commits": "There are no commits on the current branch to rebase",
+    "there-are-no-commits": "There are no commits on the current branch to rebase.",
     "this-branch-is-up-to-date-with-1": "This branch is up to date with ",
     "this-branch-is-up-to-date-with-2": " ",
     "this-will-update-1": "This will update ",
@@ -1278,7 +1291,7 @@
     "this-will-update-3": " on top of ",
     "this-will-update-4": " ",
     "unable-to-start-rebase": "Unable to start rebase. Check you have chosen a valid branch.",
-    "you-are-not-able-to-rebase": "You are not able to rebase this branch onto itself"
+    "you-are-not-able-to-rebase": "You are not able to rebase this branch onto itself."
   },
   "ref-name-text-box": {
     "created": "created",
@@ -1304,6 +1317,14 @@
     "reorder-of-commit-undone": "Reorder of {{0}} {{1}} undone.",
     "squash-of-commit-undone": "Squash of {{0}} {{1}} undone.",
     "successfully-reordered-commit": "Successfully reordered {{0}} {{1}}."
+  },
+  "render-functions": {
+    "all-conflicts-resolved": "All conflicts resolved",
+    "many-conflicted-files": "{{0}} conflicted files",
+    "one-conflicted-file": "1 conflicted file",
+    "open-in-command-line-1": " ",
+    "open-in-command-line-2": "Open in command line,",
+    "open-in-command-line-3": " your tool of choice, or close to resolve manually."
   },
   "repositories-list": {
     "add": "Add",

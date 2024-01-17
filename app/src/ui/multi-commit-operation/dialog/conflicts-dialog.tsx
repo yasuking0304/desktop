@@ -21,6 +21,7 @@ import {
 import { ManualConflictResolution } from '../../../models/manual-conflict-resolution'
 import { OkCancelButtonGroup } from '../../dialog/ok-cancel-button-group'
 import { DialogSuccess } from '../../dialog/success'
+import { t } from 'i18next'
 
 interface IConflictsDialogProps {
   readonly dispatcher: Dispatcher
@@ -203,19 +204,40 @@ export class ConflictsDialog extends React.Component<
     }
 
     if (countResolved === 0) {
-      return <DialogSuccess>All resolutions have been undone.</DialogSuccess>
+      return (
+        <DialogSuccess>
+          {t(
+            'conflicts-dialog.all-resolutions-have-been-undone',
+            'All resolutions have been undone.'
+          )}
+        </DialogSuccess>
+      )
     }
 
     if (conflictedFilesCount === 0) {
       return (
-        <DialogSuccess>All conflicted files have been resolved. </DialogSuccess>
+        <DialogSuccess>
+          {t(
+            'conflicts-dialog.all-conflicted-files-have-been-resolved',
+            'All conflicted files have been resolved. '
+          )}
+        </DialogSuccess>
       )
     }
 
-    const conflictPluralized = countResolved === 1 ? 'file has' : 'files have'
+    const conflictPluralized =
+      countResolved === 1
+        ? t('conflicts-dialog.file-has', 'file has')
+        : t('conflicts-dialog.files-have', 'files have')
     return (
       <DialogSuccess>
-        {countResolved} conflicted {conflictPluralized} been resolved.
+        {
+          (t(
+            'conflicts-dialog.many-conflicted-files-have-been-resolved',
+            '{{0}} conflicted {{1}} been resolved.'
+          ),
+          { 0: countResolved, 1: conflictPluralized })
+        }
       </DialogSuccess>
     )
   }
@@ -237,7 +259,10 @@ export class ConflictsDialog extends React.Component<
 
     const tooltipString =
       conflictedFiles.length > 0
-        ? 'Resolve all changes before continuing'
+        ? t(
+            'conflicts-dialog.tooltip-resolve-all-changes-before-continuing',
+            'Resolve all changes before continuing'
+          )
         : undefined
 
     return (
