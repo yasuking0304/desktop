@@ -5,7 +5,8 @@ body:
     attributes:
       value: |
         Thanks for submitting a feature request! This issue tracker is for [GitHub Desktop](https://desktop.github.com). Please search the issue tracker to see if there is an existing issue for the feature you are requesting. If you have a feature request for github.com please visit the [GitHub public feedback discussions repository](https://github.com/github/feedback/discussions).
-        このページはマルチランゲージ対応Windows版、Mac版、Linux版の GitHub Desktop の翻訳要望です。翻訳以外の要望は、通常の英語版 Windows/Mac用であれば[GitHub Desktop](https://desktop.github.com)。英語版Linuxであれば[こちら](https://github.com/shiftkey/desktop)に投稿してください。
+        <br>このページはマルチランゲージ対応Windows版、Mac版、Linux版の GitHub Desktop の翻訳要望です。翻訳以外の要望は、通常の英語版 Windows/Mac用であれば[GitHub Desktop](https://desktop.github.com)。英語版Linuxであれば[こちら](https://github.com/shiftkey/desktop)に投稿してください。
+        <br>**このページ内では、日本語でもお問い合わせ可能です(ただし上記リンク先は英語でお願いします)。**
   - type: textarea
     id: the-feature-request
     attributes:
