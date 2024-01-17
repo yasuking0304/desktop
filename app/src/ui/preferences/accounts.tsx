@@ -30,18 +30,21 @@ export class Accounts extends React.Component<IAccountsProps, {}> {
       <DialogContent className="accounts-tab">
         <h2>GitHub.com</h2>
         {this.props.dotComAccount
-          ? this.renderAccount(this.props.dotComAccount)
+          ? this.renderAccount(this.props.dotComAccount, SignInType.DotCom)
           : this.renderSignIn(SignInType.DotCom)}
 
         <h2>GitHub Enterprise</h2>
         {this.props.enterpriseAccount
-          ? this.renderAccount(this.props.enterpriseAccount)
+          ? this.renderAccount(
+              this.props.enterpriseAccount,
+              SignInType.Enterprise
+            )
           : this.renderSignIn(SignInType.Enterprise)}
       </DialogContent>
     )
   }
 
-  private renderAccount(account: Account) {
+  private renderAccount(account: Account, type: SignInType) {
     const avatarUser: IAvatarUser = {
       name: account.name,
       email: lookupPreferredEmail(account),
@@ -49,17 +52,29 @@ export class Accounts extends React.Component<IAccountsProps, {}> {
       endpoint: account.endpoint,
     }
 
+    const accountTypeLabel =
+      type === SignInType.DotCom ? 'GitHub.com' : 'GitHub Enterprise'
+
+    const accounts = [
+      ...(this.props.dotComAccount ? [this.props.dotComAccount] : []),
+      ...(this.props.enterpriseAccount ? [this.props.enterpriseAccount] : []),
+    ]
+
     return (
       <Row className="account-info">
-        <Avatar user={avatarUser} />
+        <Avatar accounts={accounts} user={avatarUser} />
         <div className="user-info">
           <div className="name">{account.name}</div>
           <div className="login">@{account.login}</div>
         </div>
         <Button onClick={this.logout(account)}>
           {__DARWIN__
-            ? t('common.sign-out-darwin', 'Sign Out')
-            : t('common.sign-out', 'Sign out')}
+            ? t('common.sign-out-1-darwin', 'Sign Out of')
+            : t('common.sign-out-1', 'Sign out of')}{' '}
+          {accountTypeLabel}
+          {__DARWIN__
+            ? t('common.sign-out-2-darwin', ' ')
+            : t('common.sign-out-2', ' ')}
         </Button>
       </Row>
     )
@@ -75,13 +90,16 @@ export class Accounts extends React.Component<IAccountsProps, {}> {
 
   private renderSignIn(type: SignInType) {
     const signInTitle = __DARWIN__
-      ? t('common.sign-in-darwin', 'Sign In')
-      : t('common.sign-in', 'Sign in')
+      ? t('common.sign-into-1-darwin', 'Sign Into')
+      : t('common.sign-into-1', 'Sign into')
+    const signInTitle2 = __DARWIN__
+      ? t('common.sign-into-2-darwin', ' ')
+      : t('common.sign-into-2', ' ')
     switch (type) {
       case SignInType.DotCom: {
         return (
           <CallToAction
-            actionTitle={signInTitle}
+            actionTitle={signInTitle + ' GitHub.com' + signInTitle2}
             onAction={this.onDotComSignIn}
           >
             <div>
@@ -97,7 +115,7 @@ export class Accounts extends React.Component<IAccountsProps, {}> {
       case SignInType.Enterprise:
         return (
           <CallToAction
-            actionTitle={signInTitle}
+            actionTitle={signInTitle + ' GitHub Enterprise' + signInTitle2}
             onAction={this.onEnterpriseSignIn}
           >
             <div>

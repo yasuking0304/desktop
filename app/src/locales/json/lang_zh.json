@@ -11,13 +11,18 @@
     "github-desktop-may-release-updates": "GitHub Desktop may release updates to our user base gradually to\n               ensure we catch any problems early. This lets you bypass the\n               gradual rollout and jump straight to the latest version\n               if there's one available.",
     "license-and-open-source-notices": "License and Open Source Notices",
     "looking-for-the-latest-features": "Looking for the latest features?",
+    "no-longer-supported-operating-systems": "This operating system is no longer supported. Software updates have\n              been disabled. ",
     "quit-and-install-update": "Quit and Install Update",
+    "supported-operating-systems": "Supported operating systems",
     "terms-and-conditions": "Terms and Conditions",
     "update-has-been-downloaded-and-is-ready": "An update has been downloaded and is ready to be installed.",
     "you-have-the-latest-version-1": "You have the latest version (last checked ",
     "you-have-the-latest-version-2": ")"
   },
   "acknowledgements": {
+    "about-license-1": " ",
+    "about-license-2": " is an open\n            source project published under the MIT License. You can view the\n            source code and contribute to this project on ",
+    "about-license-3": ".",
     "also-distributes-these-libraries": "GitHub Desktop also distributes these libraries:",
     "license-and-open-source-notices": "License and Open Source Notices",
     "unknown-license": "Unknown license",
@@ -42,7 +47,6 @@
     "use-system-openssh": "Use system OpenSSH (recommended)"
   },
   "app": {
-    "adding-this-feature": "Adding this feature",
     "current-repository": "Current repository",
     "current-repository-darwin": "Current Repository",
     "no-repositories": "No repositories",
@@ -53,7 +57,7 @@
   "app-error": {
     "clone-failed": "Clone failed",
     "open-options": "Open options",
-    "open-options-darwin": "Open Preferences",
+    "open-settings-darwin": "Open Settings",
     "retry-clone": "Retry clone",
     "retry-clone-darwin": "Retry Clone"
   },
@@ -73,6 +77,14 @@
     "loading-system-theme": "Loading system theme",
     "system": "System",
     "theme": "Theme"
+  },
+  "authentication-form": {
+    "your-browser-will-redirect": "Your browser will redirect you back to GitHub Desktop once you've signed in. If your browser asks for your permission to launch GitHub Desktop please allow it to."
+  },
+  "base-multi-commit-operation": {
+    "abort-operation": "Abort {{0}}",
+    "continue-operation": "Continue {{0}}",
+    "resolve-conflicts-before-operation": "Resolve conflicts before {{0}}"
   },
   "binary-file": {
     "open-file-in-external-program": "Open file in external program.",
@@ -253,6 +265,8 @@
   "commit-list-item": {
     "amend-commit": "Amend commit…",
     "amend-commit-darwin": "Amend Commit…",
+    "checkout-commit": "Checkout commit",
+    "checkout-commit-darwin": "Checkout Commit",
     "cherry-pick-commit": "Cherry-pick commit…",
     "cherry-pick-commit-darwin": "Cherry-pick Commit…",
     "cherry-pick-commits": "Cherry-pick {{0}} commits…",
@@ -264,6 +278,16 @@
     "create-branch-from-commit-darwin": "Create Branch from Commit",
     "detele-tag": "Delete tag {{0}}",
     "empty-commit-message": "Empty commit message",
+    "reorder-choose-locate-1": "Use ",
+    "reorder-choose-locate-2": "to choose a new location.",
+    "reorder-comfirm-locate-1": "Press ",
+    "reorder-comfirm-locate-2": "to confirm.",
+    "reorder-commit": "Reorder commit",
+    "reorder-commit-darwin": "Reorder Commit",
+    "reorder-commits": "Reorder {{0}} commits…",
+    "reorder-commits-darwin": "Reorder {{0}} Commits…",
+    "reorder-commits-title": "Reorder commits",
+    "reorder-commits-title-darwin": "Reorder Commits",
     "reset-to-commit": "Reset to commit…",
     "reset-to-commit-darwin": "Reset to Commit…",
     "Revert-changes-in-commit": "Revert changes in commit",
@@ -351,6 +375,7 @@
     "continue": "Continue",
     "copy": "Copy",
     "create": "Create",
+    "cut": "Cut",
     "delete": "Delete",
     "description": "Description",
     "discard": "Discard",
@@ -381,19 +406,28 @@
     "other": "Other",
     "overwrite": "Overwrite",
     "password": "Password",
+    "paste": "Paste",
     "preferences": "Preferences",
     "pulling": "Pulling {{0}}",
+    "redo": "Redo",
     "remove": "Remove",
     "remove-alias": "Remove alias",
     "remove-alias-darwin": "Remove Alias",
     "repository-name": "repository name",
     "repository-path": "repository path",
     "save": "Save",
+    "select-all": "Select All",
     "settings": "Settings",
     "sign-in": "Sign in",
     "sign-in-darwin": "Sign In",
-    "sign-out": "Sign out",
-    "sign-out-darwin": "Sign Out",
+    "sign-into-1": "Sign into",
+    "sign-into-1-darwin": "Sign Into",
+    "sign-into-2": " ",
+    "sign-into-2-darwin": " ",
+    "sign-out-1": "Sign out of",
+    "sign-out-1-darwin": "Sign Out of",
+    "sign-out-2": " ",
+    "sign-out-2-darwin": " ",
     "undo": "Undo",
     "update": "Update",
     "username-or-email": "Username or email address",
@@ -459,6 +493,17 @@
     "you-want-to-remove-repository-1": "Are you sure you want to remove the repository \"",
     "you-want-to-remove-repository-2": "\" from GitHub Desktop?"
   },
+  "conflicts-dialog": {
+    "all-conflicted-files-have-been-resolved": "All conflicted files have been resolved. ",
+    "all-resolutions-have-been-undone": "All resolutions have been undone.",
+    "file-has": "file has",
+    "files-have": "files have",
+    "many-conflicted-files-have-been-resolved": "{{0}} conflicted {{1}} been resolved.",
+    "tooltip-resolve-all-changes-before-continuing": "Resolve all changes before continuing"
+  },
+  "copy-button": {
+    "copied": "Copied!"
+  },
   "core": {
     "error": {
       "authentication-failed": "Authentication failed. Some common reasons include:",
@@ -511,11 +556,30 @@
     "new-branch-will-be-based-on-1": "Your new branch will be based on ",
     "new-branch-will-be-based-on-2": "'s ",
     "new-branch-will-be-based-on-3": " (",
-    "new-branch-will-be-based-on-4": "){{0}}.",
+    "new-branch-will-be-based-on-4": ")",
+    "new-branch-will-be-based-on-5": ".",
     "new-branch-will-be-checked-out-branch-1": "Your new branch will be based on your currently checked out\n            branch (",
     "new-branch-will-be-checked-out-branch-2": ")",
     "new-branch-will-be-checked-out-branch-3": ". ",
-    "new-branch-will-be-checked-out-branch-4": "is the {{0}} for your repository."
+    "new-branch-will-be-checked-out-branch-4": "is the ",
+    "new-branch-will-be-checked-out-branch-5": " for your repository."
+  },
+  "create-fork-dialog": {
+    "do-you-want-to-fork-1": " Do you want to create a fork of this repository at ",
+    "do-you-want-to-fork-2": " to continue?",
+    "do-you-want-to-fork-title": "Do you want to fork this repository?",
+    "donot-have-write-access-1": "It looks like you don’t have write access to ",
+    "donot-have-write-access-2": ". If you should, please check with a repository administrator.",
+    "error": {
+      "create-fork-failed-1": "Creating your fork ",
+      "create-fork-failed-2": " failed. ",
+      "you-can-try-1": "You can try ",
+      "you-can-try-2": "creating the fork manually on GitHub",
+      "you-can-try-3": "."
+    },
+    "error-details": "Error details",
+    "fork-this-repository": "Fork this repository",
+    "fork-this-repository-darwin": "Fork This Repository"
   },
   "create-repository": {
     "add-this-repository": "add this repository",
@@ -583,7 +647,7 @@
     "delete-tag-darwin": "Delete Tag"
   },
   "diff-options": {
-    "caption-diff": "Diff ",
+    "caption-diff": "Diff {{0}}",
     "caption-options": "Options",
     "caption-options-darwin": "Settings",
     "diff-display": "Diff display",
@@ -634,14 +698,27 @@
     "open-in-browser-darwin": "Open in Browser",
     "work-on-an-existing-project": "Work on an existing project in GitHub Desktop",
     "you-re-done": "You're done!",
-    "you-ve-learned-the-basics": "You’ve learned the basics on how to use GitHub Desktop. Here\n                 are some suggestions for what to do next."
+    "you-ve-learned-the-basics": "You've learned the basics on how to use GitHub Desktop. Here\n                 are some suggestions for what to do next."
   },
   "editor-error": {
     "open-options": "Open options",
-    "open-options-darwin": "Open Preferences"
+    "open-settings-darwin": "Open Settings"
   },
   "enterprise-server-entry": {
     "enterprise-or-ae-address": "Enterprise or AE address"
+  },
+  "expandable-commit-summary": {
+    "added-lines": "{{0}} added lines",
+    "collapse": "Collapse",
+    "collapse-commit-details": "Collapse commit details",
+    "copy-the-full-sha": "Copy the full SHA",
+    "expand": "Expand",
+    "expand-commit-details": "Expand commit details",
+    "not-included": " not included.",
+    "number-unreachable-commits": "{{0}} unreachable {{1}}",
+    "removed-lines": "{{0}} removed lines",
+    "showing-changes-from-1": "Showing changes from ",
+    "showing-changes-from-2": "{{0}} {{1}}"
   },
   "fetch": {
     "fetching": "Fetching {{0}}"
@@ -684,12 +761,13 @@
   },
   "git": {
     "default-branch-name-for-new-repositories": "Default branch name for new repositories",
-    "edit-your-global-git-config": "These preferences will edit your global Git config.",
-    "invalid-branch-name-1": " ",
-    "invalid-branch-name-2": " is an invalid branch name.",
-    "radio-button-other": "Other…",
-    "save-sanitized-branch-name-1": "Will be saved as ",
-    "save-sanitized-branch-name-2": " "
+    "edit-your-global-git-config-1": "These preferences will ",
+    "edit-your-global-git-config-2": "edit your global Git config",
+    "edit-your-global-git-config-3": ".",
+    "gitHub-default-branch-description-1": "GitHub's default branch name is ",
+    "gitHub-default-branch-description-2": ". ",
+    "gitHub-default-branch-description-3": "You may want to\n          change it due to different workflows, or because your integrations\n          still require the historical default branch name of ",
+    "gitHub-default-branch-description-4": "."
   },
   "git-config": {
     "for-this-repository": "For this repository I wish to",
@@ -697,9 +775,13 @@
     "use-my-global-git-config": "Use my global Git config"
   },
   "git-email-not-found-warning": {
+    "does-not-match": "does not match",
     "edither-your-account": "either of your GitHub.com nor GitHub Enterprise accounts",
     "learn-more": "Learn more.",
     "learn-more-about": "Learn more about commit attribution",
+    "matchs": "matches",
+    "this-email-address": "This email address {{0}} {{1}}. {{2}}",
+    "wrongly-attributed": "Your commits will be wrongly attributed. ",
     "your-account": "your {{0}} account"
   },
   "git-ignore": {
@@ -748,6 +830,7 @@
     "branch-darwin": "Branch",
     "clone-repository": "Clo&ne repository…",
     "clone-repository-darwin": "Clone Repository…",
+    "close-darwin": "close Window",
     "collapse-expanded-lines": "Collapse expanded lines",
     "collapse-expanded-lines-darwin": "Collapse Expanded Lines",
     "compare-on-github": "Compare on &GitHub",
@@ -809,12 +892,17 @@
     "find-darwin": "Find",
     "force-push": "Force P&ush",
     "force-push-darwin": "Force Push",
+    "front-darwin": "Bring All to Front",
     "go-to-summary": "Go to &Summary",
     "go-to-summary-darwin": "Go to Summary",
     "help": "&Help",
+    "help-darwin": "Help",
+    "hide": "Hide GitHub Desktop",
+    "hide-others": "Hide Others",
     "install-command-line-tool": "Install Command Line Tool…",
     "merge-into-branch": "&Merge into current branch…",
     "merge-into-branch-darwin": "Merge into Current Branch…",
+    "minimize-darwin": "Minimize",
     "new-create-branch": "New &branch…",
     "new-create-branch-darwin": "New Branch…",
     "new-repository": "New &repository…",
@@ -837,9 +925,10 @@
     "preview-pull-request-darwin": "Preview Pull Request",
     "pull": "Pu&ll",
     "pull-darwin": "Pull",
-    "pull-request-check-run-failed": "Pull Request Check Run Failed",
+    "pull-request-check-run-failed": "Show App Error",
     "push": "P&ush",
     "push-darwin": "Push",
+    "quit": "Quit GitHub Desktop",
     "rebase-current-branch": "R&ebase current branch…",
     "rebase-current-branch-darwin": "Rebase Current Branch…",
     "recycle-bin": "Recycle Bin",
@@ -862,8 +951,10 @@
     "search": "Search",
     "select-all": "Select &all",
     "select-all-darwin": "Select All",
+    "services": "services",
     "shell": "Command Prompt",
     "shell-linux": "Terminal",
+    "show-all": "Show All",
     "show-branches-list": "&Branches list",
     "show-branches-list-darwin": "Show Branches List",
     "show-changes": "&Changes",
@@ -905,6 +996,8 @@
     "view-on-github-darwin": "View on GitHub",
     "view-pull-request": "View &pull request on GitHub",
     "view-pull-request-darwin": "View Pull Request on GitHub",
+    "window-darwin": "Window",
+    "zoom-darwin": "Zoom",
     "zoom-in": "Zoom in",
     "zoom-in-darwin": "Zoom In",
     "zoom-out": "Zoom out",
@@ -1066,7 +1159,10 @@
     "make-sure-notifications-2": ".",
     "notifications": "Notifications",
     "notifications-settings": "Notifications Settings",
-    "properly-configured": "properly configured"
+    "properly-configured": "properly configured",
+    "you-need-to-grant-permission-1": " You need to ",
+    "you-need-to-grant-permission-2": "grant permission",
+    "you-need-to-grant-permission-3": " to display these notifications from GitHub Desktop."
   },
   "open-file": {
     "unable-to-open-file": "Unable to open file {{0}} in an external program.\n         Please check you have a program associated with this file extension"
@@ -1187,7 +1283,7 @@
     "number-commit": " {{0}} {{1}}",
     "rebase-1": "Rebase ",
     "rebase-2": " ",
-    "there-are-no-commits": "There are no commits on the current branch to rebase",
+    "there-are-no-commits": "There are no commits on the current branch to rebase.",
     "this-branch-is-up-to-date-with-1": "This branch is up to date with ",
     "this-branch-is-up-to-date-with-2": " ",
     "this-will-update-1": "This will update ",
@@ -1195,11 +1291,14 @@
     "this-will-update-3": " on top of ",
     "this-will-update-4": " ",
     "unable-to-start-rebase": "Unable to start rebase. Check you have chosen a valid branch.",
-    "you-are-not-able-to-rebase": "You are not able to rebase this branch onto itself"
+    "you-are-not-able-to-rebase": "You are not able to rebase this branch onto itself."
   },
   "ref-name-text-box": {
+    "created": "created",
+    "get-warning-message-as-string": "Warning: Will be {{0}} as {{1}} (with spaces replaced by hyphens).",
     "is-not-a-valid-name": " is not a valid name.",
-    "will-be-created-as-1": "Will be created as ",
+    "warning-not-a-valid-name": "Warning: {{0}} is not a valid name.",
+    "will-be-created-as-1": "Will be {{0}} as ",
     "will-be-created-as-2": "."
   },
   "relative-time": {
@@ -1218,6 +1317,14 @@
     "reorder-of-commit-undone": "Reorder of {{0}} {{1}} undone.",
     "squash-of-commit-undone": "Squash of {{0}} {{1}} undone.",
     "successfully-reordered-commit": "Successfully reordered {{0}} {{1}}."
+  },
+  "render-functions": {
+    "all-conflicts-resolved": "All conflicts resolved",
+    "many-conflicted-files": "{{0}} conflicted files",
+    "one-conflicted-file": "1 conflicted file",
+    "open-in-command-line-1": " ",
+    "open-in-command-line-2": "Open in command line,",
+    "open-in-command-line-3": " your tool of choice, or close to resolve manually."
   },
   "repositories-list": {
     "add": "Add",
@@ -1279,12 +1386,13 @@
   },
   "shared": {
     "error": {
-      "could-not-find-executable": "Could not find executable for '{{0}' at path '{{1}}'.  Please open {{2}} and select an available shell."
+      "could-not-find-executable": "Could not find executable for '{{0}}' at path '{{1}}'.  Please open {{2}} and select an available shell.",
+      "could-not-find-terminal": "Could not find terminal applicaion. Please open {{0}} and select an available shell."
     }
   },
   "shell-error": {
     "unable-to-open-options": "Open options",
-    "unable-to-open-options-darwin": "Open Preferences",
+    "unable-to-open-settings-darwin": "Open Settings",
     "unable-to-open-shell": "Unable to open shell",
     "unable-to-open-shell-darwin": "Unable to Open Shell"
   },
@@ -1329,8 +1437,10 @@
   "start": {
     "by-creating-an-account-1": "By creating an account, you agree to the ",
     "by-creating-an-account-2": ".",
+    "create-your-free-account": "Create your free account.",
     "github-privacy-statement": "GitHub Privacy Statement",
     "learn-more-about": "Learn more about user metrics.",
+    "new-to-github": "New to GitHub? ",
     "privacy-practices-1": " For more information about GitHub's privacy practices, see the ",
     "privacy-practices-2": ".",
     "sign-in-github-com": "Sign in to GitHub.com",
@@ -1357,7 +1467,6 @@
     "discard": "Discard",
     "file-does-not-exist": "File does not exist on {{0}}.",
     "manual-conflict": "Manual conflict",
-    "no-conflicts-remaining": "No conflicts remaining",
     "no-editor-configured": "No editor configured in Options > Advanced",
     "no-editor-configured-darwin": "No editor configured in Preferences > Advanced",
     "number-onflicts": "{{0}} conflicts",
@@ -1375,6 +1484,33 @@
     "modified": "Modified",
     "new": "New",
     "renamed": "Renamed"
+  },
+  "submodule-diff": {
+    "modified": "modified",
+    "modified-and-untracked": "modified and untracked",
+    "open-repository": "Open repository",
+    "open-repository-darwin": "Open Repository",
+    "open-this-submodule-on-gitHub-desktop": "Open this submodule on GitHub Desktop",
+    "submodule-changes": "Submodule changes",
+    "this-is-a-submodule-based-on-the-repository-1": "This is a submodule based on the repository ",
+    "this-is-a-submodule-based-on-the-repository-2": ".",
+    "this-submodule-has-changes": "This submodule has {{0}} changes. Those changes must be committed\n          inside of the submodule before they can be part of the parent\n          repository.",
+    "untracked": "untracked",
+    "you-can-open-this-submodule-on-gitHub-desktop": "You can open this submodule on GitHub Desktop as a normal repository to manage and commit any changes in it."
+  },
+  "successful-merge": {
+    "successfully-merged-into-branch-1": "Successfully merged into ",
+    "successfully-merged-into-branch-2": " ",
+    "successfully-merged-srcbranch-into-distbranch-1": "Successfully merged ",
+    "successfully-merged-srcbranch-into-distbranch-2": " into ",
+    "successfully-merged-srcbranch-into-distbranch-3": " "
+  },
+  "successful-rebase": {
+    "successfully-rebased-branch-1": "Successfully rebased ",
+    "successfully-rebased-branch-2": " ",
+    "successfully-rebased-onto-branch-1": "Successfully rebased ",
+    "successfully-rebased-onto-branch-2": " onto ",
+    "successfully-rebased-onto-branch-3": " "
   },
   "successful-squash": {
     "successfully-squashed": "Successfully squashed {{0}} {{1}}."
@@ -1439,6 +1575,9 @@
     "your-default-editor-is-2": ". You can change your preferred editor in ",
     "your-default-editor-is-3": " "
   },
+  "unmerged-file": {
+    "no-conflicts-remaining": "No conflicts remaining"
+  },
   "unreachable-commits-dialog": {
     "about-unreachable-commits": "Learn more about unreachable commits.",
     "commit-reachability": "Commit reachability",
@@ -1485,6 +1624,7 @@
     "github-desktop-issue-linux": "https://github.com/shiftkey/desktop/issues/new/choose",
     "keyboard-shortcuts": "https://docs.github.com/en/desktop/installing-and-configuring-github-desktop/overview/keyboard-shortcuts",
     "show-user-guides": "https://docs.github.com/en/desktop",
+    "supported-operating-systems-for-github-desktop": "https://docs.github.com/en/desktop/installing-and-configuring-github-desktop/overview/supported-operating-systems",
     "why-are-my-commits-linked-to-the-wrong-user": "https://docs.github.com/en/github/committing-changes-to-your-project/why-are-my-commits-linked-to-the-wrong-user"
   },
   "warn-force-push-dialog": {

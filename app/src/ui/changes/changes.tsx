@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { ChangedFileDetails } from './changed-file-details'
+import { DiffHeader } from '../diff/diff-header'
 import {
   DiffSelection,
   IDiff,
@@ -22,13 +22,6 @@ interface IChangesProps {
   /** Whether a commit is in progress */
   readonly isCommitting: boolean
   readonly hideWhitespaceInDiff: boolean
-
-  /**
-   * Callback to open a selected file using the configured external editor
-   *
-   * @param fullPath The full path to the file on disk
-   */
-  readonly onOpenInExternalEditor: (fullPath: string) => void
 
   /**
    * Called when the user requests to open a binary file in an the
@@ -105,8 +98,8 @@ export class Changes extends React.Component<IChangesProps, {}> {
 
   public render() {
     return (
-      <div className="changed-file">
-        <ChangedFileDetails
+      <div className="diff-container">
+        <DiffHeader
           path={this.props.file.path}
           status={this.props.file.status}
           diff={this.props.diff}

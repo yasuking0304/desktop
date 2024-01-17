@@ -102,7 +102,8 @@ const possibleProtocols = new Set(['x-github-client'])
 if (__DEV__) {
   possibleProtocols.add('x-github-desktop-dev-auth')
 } else {
-  possibleProtocols.add('x-github-desktop-auth')
+  //possibleProtocols.add('x-github-desktop-auth')
+  possibleProtocols.add('x-github-desktop-dev-auth') /** if tesing, beta */
 }
 // Also support Desktop Classic's protocols.
 if (__DARWIN__) {

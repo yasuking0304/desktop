@@ -16,6 +16,7 @@ import { Account } from '../../models/account'
 import { API } from '../../lib/api'
 import { LinkButton } from '../lib/link-button'
 import { PopupType } from '../../models/popup'
+import { t } from 'i18next'
 
 interface ICreateForkDialogProps {
   readonly dispatcher: Dispatcher
@@ -52,7 +53,7 @@ export class CreateForkDialog extends React.Component<
         gitHubRepository.owner.login,
         gitHubRepository.name
       )
-      this.props.dispatcher.recordForkCreated()
+      this.props.dispatcher.incrementMetric('forksCreated')
       const updatedRepository =
         await this.props.dispatcher.convertRepositoryToFork(
           this.props.repository,
@@ -77,7 +78,10 @@ export class CreateForkDialog extends React.Component<
   public render() {
     return (
       <Dialog
-        title="Do you want to fork this repository?"
+        title={t(
+          'create-fork-dialog.do-you-want-to-fork-title',
+          'Do you want to fork this repository?'
+        )}
         onDismissed={this.props.onDismissed}
         onSubmit={this.state.error ? undefined : this.onSubmit}
         dismissable={!this.state.loading}
@@ -112,23 +116,40 @@ function renderCreateForkDialogContent(
     <>
       <DialogContent>
         <p>
-          {`It looks like you don’t have write access to `}
+          {t(
+            'create-fork-dialog.donot-have-write-access-1',
+            `It looks like you don’t have write access to `
+          )}
           <strong>{repository.gitHubRepository.fullName}</strong>
-          {`. If you should, please check with a repository administrator.`}
+          {t(
+            'create-fork-dialog.donot-have-write-access-2',
+            `. If you should, please check with a repository administrator.`
+          )}
         </p>
         <p>
-          {` Do you want to create a fork of this repository at `}
+          {t(
+            'create-fork-dialog.do-you-want-to-fork-1',
+            ` Do you want to create a fork of this repository at `
+          )}
           <strong>
             {`${account.login}/${repository.gitHubRepository.name}`}
           </strong>
-          {` to continue?`}
+          {t('create-fork-dialog.do-you-want-to-fork-2', ` to continue?`)}
         </p>
       </DialogContent>
       <DialogFooter>
         <OkCancelButtonGroup
           destructive={true}
           okButtonText={
-            __DARWIN__ ? 'Fork This Repository' : 'Fork this repository'
+            __DARWIN__
+              ? t(
+                  'create-fork-dialog.fork-this-repository-darwin',
+                  'Fork This Repository'
+                )
+              : t(
+                  'create-fork-dialog.fork-this-repository',
+                  'Fork this repository'
+                )
           }
           okButtonDisabled={loading}
           cancelButtonDisabled={loading}
@@ -147,26 +168,34 @@ function renderCreateForkDialogError(
   const suggestion =
     repository.gitHubRepository.htmlURL !== null ? (
       <>
-        {`You can try `}
+        {t('create-fork-dialog.error.you-can-try-1', `You can try `)}
         <LinkButton uri={repository.gitHubRepository.htmlURL}>
-          creating the fork manually on GitHub
+          {t(
+            'create-fork-dialog.error.you-can-try-2',
+            'creating the fork manually on GitHub'
+          )}
         </LinkButton>
-        .
+        {t('create-fork-dialog.error.you-can-try-3', '.')}
       </>
     ) : undefined
   return (
     <>
       <DialogContent>
         <div>
-          {`Creating your fork `}
+          {t(
+            'create-fork-dialog.error.create-fork-failed-1',
+            `Creating your fork `
+          )}
           <strong>
             {`${account.login}/${repository.gitHubRepository.name}`}
           </strong>
-          {` failed. `}
+          {t('create-fork-dialog.error.create-fork-failed-2', ` failed. `)}
           {suggestion}
         </div>
         <details>
-          <summary>Error details</summary>
+          <summary>
+            {t('create-fork-dialog.error-details', 'Error details')}
+          </summary>
           <pre className="error">{error.message}</pre>
         </details>
       </DialogContent>

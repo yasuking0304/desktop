@@ -244,6 +244,7 @@ export class RepositoriesList extends React.Component<
           ]
         : baseGroups
 
+    const getItemAriaLabel = (item: IRepositoryListItem) => item.repository.name
     const getGroupAriaLabel = (group: number) => groups[group].identifier
 
     const ListComponent = enableSectionList() ? SectionFilterList : FilterList
@@ -264,6 +265,7 @@ export class RepositoriesList extends React.Component<
       },
       onItemContextMenu: this.onItemContextMenu,
       getGroupAriaLabel,
+      getItemAriaLabel,
     }
 
     return (

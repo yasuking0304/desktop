@@ -39,10 +39,10 @@ import { t } from 'i18next'
 import { enableCommitDetailsHeaderExpansion } from '../../lib/feature-flag'
 import { ExpandableCommitSummary } from './expandable-commit-summary'
 import { DiffHeader } from '../diff/diff-header'
+import { Account } from '../../models/account'
 
 interface ISelectedCommitsProps {
   readonly repository: Repository
-  readonly isLocalRepository: boolean
   readonly dispatcher: Dispatcher
   readonly emoji: Map<string, string>
   readonly selectedCommits: ReadonlyArray<Commit>
@@ -91,6 +91,8 @@ interface ISelectedCommitsProps {
 
   /** Whether or not the selection of commits is contiguous */
   readonly isContiguous: boolean
+
+  readonly accounts: ReadonlyArray<Account>
 }
 
 interface ISelectedCommitsState {
@@ -218,9 +220,9 @@ export class SelectedCommits extends React.Component<
           onExpandChanged={this.onExpandChanged}
           isExpanded={this.state.isExpanded}
           onDescriptionBottomChanged={this.onDescriptionBottomChanged}
-          hideDescriptionBorder={this.state.hideDescriptionBorder}
           onHighlightShas={this.onHighlightShas}
           showUnreachableCommits={this.showUnreachableCommits}
+          accounts={this.props.accounts}
         />
       )
     }
@@ -242,6 +244,7 @@ export class SelectedCommits extends React.Component<
         onDiffOptionsOpened={this.props.onDiffOptionsOpened}
         onHighlightShas={this.onHighlightShas}
         showUnreachableCommits={this.showUnreachableCommits}
+        accounts={this.props.accounts}
       />
     )
   }
