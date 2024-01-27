@@ -166,7 +166,9 @@ function packageWindows() {
     })
 }
 
-function packageLinux() {
+async function packageLinux() {
+  const yaml_name = 'GitHub-Desktop.yml'
+  const out_name = `./out/GitHub_Desktop-${getVersion()}*.AppImage`
   const template =
     `app: github-desktop
 
@@ -188,7 +190,7 @@ script:
   - find . -name 512x512.png -exec cp {} usr/share/icons/hicolor/512x512/apps/github-desktop.png \\;
   - find . -name 1024x1024.png -exec cp {} usr/share/icons/hicolor/1024x1024/apps/github-desktop.png \\;
   - find . -name icon-logo.png -exec cp {} github-desktop.png \\;
-  - cat > ./usr/bin/github-desktop <<\\EOF
+  - cat > ./usr/bin/github <<\\EOF
   - #!/bin/bash
   - HERE="$(dirname "$(readlink -f "$\{0\}")")"
   - cd \${HERE}
@@ -203,15 +205,15 @@ script:
   - "\${ELECTRON}" "$\{CLI}" "$@"
   - exit $?
   - EOF
-  - chmod a+x ./usr/bin/github-desktop
+  - chmod a+x ./usr/bin/github
   - cat > github-desktop.desktop <<\\EOF
   - [Desktop Entry]
   - Name=GitHub Desktop
-  - Comment=Extend your GitHub workflow beyond your browser with GitHub Desktop
+  - Comment=Simple collaboration from your desktop.
   - Comment[es]=Trabaja con GitHub desde tu escritorio.
   - Comment[eu]=GitHub-ekin lan egin zure ordenagailutik.
   - Comment[ja]=GitHub Desktop で GitHub を拡張
-  - Exec=github-desktop %U
+  - Exec=github %U
   - Terminal=false
   - Type=Application
   - Icon=github-desktop
@@ -220,16 +222,48 @@ script:
   - EOF
   - echo "${getVersion()}" > ../VERSION
 `
+  const pkg2appimage_path = '../pkg2appimage/recipes'
+  const pkg2appimage_file = '../pkg2appimage/pkg2appimage'
   console.log('Create yaml file…')
   writeFileSync(
-    path.resolve(__dirname, 'GitHub-Desktop.yml'),
+    path.resolve(__dirname, yaml_name),
     template
   )
-  console.log(`usage:`)
-  console.log(``)
-  console.log(`1. pkg2appimage files is here.`)
-  console.log(`2. cp ${path.resolve(__dirname, 'GitHub-Desktop.yml')} <pkg2appimage/recipes>`)
-  console.log(`3. cd <pkg2appimage>`)
-  console.log(`4. ./pkg2appimage ./recipes/GitHub-Desktop.yml`)
-  console.log(``)
+  const exit_code = await new Promise((resolve, _reject) => {
+    if (existsSync(pkg2appimage_file) && existsSync(pkg2appimage_path)) {
+      console.log('Create .AppImage file…')
+      writeFileSync(
+        path.resolve(pkg2appimage_path, yaml_name),
+        template
+      )
+      console.log(`cd ../pkg2appimage`)
+      process.chdir(path.dirname(pkg2appimage_file))
+      const spawn = cp.spawn(`./pkg2appimage ./recipes/${yaml_name}`, { shell: true })
+      spawn.stdout.on('data', (data) => {
+        console.log(data.toString())
+      });
+      spawn.stderr.on('data', (data) => {
+        console.log(data.toString())
+      });
+      spawn.on('close', (code) => {
+        if (code == 0) {
+          console.log(`cp -f ${out_name} ${getDistRoot()}`)
+          cp.execSync(`cp -f ${out_name} ${getDistRoot()}`)
+          process.chdir(__dirname)
+
+        }
+        resolve(code)
+      });
+    } else {
+      console.log(`usage:`)
+      console.log(``)
+      console.log(`1. pkg2appimage files is here.`)
+      console.log(`2. cp ${path.resolve(__dirname, 'GitHub-Desktop.yml')} <pkg2appimage/recipes>`)
+      console.log(`3. cd <pkg2appimage>`)
+      console.log(`4. ./pkg2appimage ./recipes/GitHub-Desktop.yml`)
+      console.log(``)
+      resolve(0);
+    }
+  })
+  return exit_code
 }
