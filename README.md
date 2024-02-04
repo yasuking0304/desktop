@@ -1,99 +1,136 @@
-# [GitHub Desktop](https://desktop.github.com) Multilingal Platform
+# [GitHub Desktop](https://desktop.github.com) - The Linux Fork (Multilingal Platform)
 
-[GitHub Desktop](https://desktop.github.com/) is an open-source [Electron](https://www.electronjs.org/)-based
+[![CI](https://github.com/shiftkey/desktop/actions/workflows/ci.yml/badge.svg)](https://github.com/shiftkey/desktop/actions/workflows/ci.yml)
+
+[GitHub Desktop](https://desktop.github.com/) is an open source [Electron](https://www.electronjs.org/)-based
 GitHub app. It is written in [TypeScript](https://www.typescriptlang.org) and
 uses [React](https://reactjs.org/).
 
-[linux version is here](https://github.com/yasuking0304/desktop/tree/linux)
-
-[Click here for details (This site is only available in Japanese)](https://github.com/yasuking0304/desktop/wiki)
+[Click here for details (This site is only available in Japanese.)](https://github.com/yasuking0304/desktop/wiki)
 <picture>
   <source
-    srcset="https://user-images.githubusercontent.com/634063/202742848-63fa1488-6254-49b5-af7c-96a6b50ea8af.png"
+    srcset="https://user-images.githubusercontent.com/111163564/218298392-b719e5dc-74c3-4f03-acf2-72c975cf126f.png"
     media="(prefers-color-scheme: dark)"
   />
   <img
     width="1072"
-    src="https://user-images.githubusercontent.com/111163564/236433396-f33fc461-ab77-44b3-8612-58ca35d988b6.JPG"
+    src="https://user-images.githubusercontent.com/111163564/218299136-b5dda126-a4c8-4052-bcd6-5f586d4f4bf1.png"
     alt="A screenshot of the GitHub Desktop application showing changes being viewed and committed with two attributed co-authors"
   />
 </picture>
 
-## Where can I get it?
+## What is this repository for?
 
-Download the official installer for your operating system:
+This repository contains specific patches on top of the upstream
+`desktop/desktop` repository to support Linux usage.
 
- - [macOS](https://central.github.com/deployments/desktop/desktop/latest/darwin)
- - [macOS (Apple silicon)](https://central.github.com/deployments/desktop/desktop/latest/darwin-arm64)
- - [Windows](https://central.github.com/deployments/desktop/desktop/latest/win32)
- - [Windows machine-wide install](https://central.github.com/deployments/desktop/desktop/latest/win32?format=msi)
+It also publishes [releases](https://github.com/shiftkey/desktop/releases) for various Linux distributions:
 
-Linux is not officially supported; however, you can find installers created for Linux from a fork of GitHub Desktop in the [Community Releases](https://github.com/desktop/desktop#community-releases) section.
+ - AppImage (`.AppImage`)
+ - Debian (`.deb`)
+ - RPM (`.rpm`)
 
-### Beta Channel
+## Installation via package manager
 
-Want to test out new features and get fixes before everyone else? Install the
-beta channel to get access to early builds of Desktop:
+You can use your operating system's package manager to install `github-desktop` and
+keep it up to date on Debian and RPM-based distributions.
 
- - [macOS](https://central.github.com/deployments/desktop/desktop/latest/darwin?env=beta)
- - [macOS (Apple silicon)](https://central.github.com/deployments/desktop/desktop/latest/darwin-arm64?env=beta)
- - [Windows](https://central.github.com/deployments/desktop/desktop/latest/win32?env=beta)
- - [Windows (ARM64)](https://central.github.com/deployments/desktop/desktop/latest/win32-arm64?env=beta)
+### Debian/Ubuntu
 
-The release notes for the latest beta versions are available [here](https://desktop.github.com/release-notes/?env=beta).
+There are two APT package feeds available, both hosted in the US. You only need
+to add one or the other here, as both of these are generated based on the
+releases from this repository.
 
-### Community Releases
+#### [@shiftkey](https://github.com/shiftkey) package feed
 
-There are several community-supported package managers that can be used to
-install GitHub Desktop:
- - Windows users can install using [winget](https://docs.microsoft.com/en-us/windows/package-manager/winget/) `c:\> winget install github-desktop` or [Chocolatey](https://chocolatey.org/) `c:\> choco install github-desktop`
- - macOS users can install using [Homebrew](https://brew.sh/) package manager:
-      `$ brew install --cask github`
+```
+wget -qO - https://apt.packages.shiftkey.dev/gpg.key | gpg --dearmor | sudo tee /usr/share/keyrings/shiftkey-packages.gpg > /dev/null
+sudo sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/shiftkey-packages.gpg] https://apt.packages.shiftkey.dev/ubuntu/ any main" > /etc/apt/sources.list.d/shiftkey-packages.list'
+```
 
-Installers for various Linux distributions can be found on the
-[`shiftkey/desktop`](https://github.com/shiftkey/desktop) fork.
+#### [@mwt](https://github.com/mwt) package feed
 
-## Is GitHub Desktop right for me? What are the primary areas of focus?
+```sh
+wget -qO - https://mirror.mwt.me/shiftkey-desktop/gpgkey | gpg --dearmor | sudo tee /usr/share/keyrings/mwt-desktop.gpg > /dev/null
+sudo sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/mwt-desktop.gpg] https://mirror.mwt.me/shiftkey-desktop/deb/ any main" > /etc/apt/sources.list.d/mwt-desktop.list'
+```
 
-[This document](https://github.com/desktop/desktop/blob/development/docs/process/what-is-desktop.md) describes the focus of GitHub Desktop and who the product is most useful for.
+#### Installation
 
-## I have a problem with GitHub Desktop
+Once you have a feed configured, run this command to install the application:
 
-Note: The [GitHub Desktop Code of Conduct](https://github.com/desktop/desktop/blob/development/CODE_OF_CONDUCT.md) applies in all interactions relating to the GitHub Desktop project.
+```sh
+sudo apt update && sudo apt install github-desktop
+```
 
-First, please search the [open issues](https://github.com/desktop/desktop/issues?q=is%3Aopen)
-and [closed issues](https://github.com/desktop/desktop/issues?q=is%3Aclosed)
-to see if your issue hasn't already been reported (it may also be fixed).
+### Red Hat/CentOS/Fedora/OpenSUSE
 
-There is also a list of [known issues](https://github.com/desktop/desktop/blob/development/docs/known-issues.md)
-that are being tracked against Desktop, and some of these issues have workarounds.
+There are two RPM package feeds available, both hosted in the US. You only need
+to add one or the other here, as both of these are generated based on the
+releases from this repository.
 
-If you can't find an issue that matches what you're seeing, open a [new issue](https://github.com/desktop/desktop/issues/new/choose),
-choose the right template and provide us with enough information to investigate
-further.
+#### [@shiftkey](https://github.com/shiftkey) package feed
 
-## The issue I reported isn't fixed yet. What can I do?
+```
+sudo rpm --import https://rpm.packages.shiftkey.dev/gpg.key
+sudo sh -c 'echo -e "[shiftkey-packages]\nname=GitHub Desktop\nbaseurl=https://rpm.packages.shiftkey.dev/rpm/\nenabled=1\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=https://rpm.packages.shiftkey.dev/gpg.key" > /etc/yum.repos.d/shiftkey-packages.repo'
+```
 
-If nobody has responded to your issue in a few days, you're welcome to respond to it with a friendly ping in the issue. Please do not respond more than a second time if nobody has responded. The GitHub Desktop maintainers are constrained in time and resources, and diagnosing individual configurations can be difficult and time consuming. While we'll try to at least get you pointed in the right direction, we can't guarantee we'll be able to dig too deeply into any one person's issue.
+#### [@mwt](https://github.com/mwt) package feed
 
-## How can I contribute to GitHub Desktop?
+```sh
+sudo rpm --import https://mirror.mwt.me/shiftkey-desktop/gpgkey
+sudo sh -c 'echo -e "[mwt-packages]\nname=GitHub Desktop\nbaseurl=https://mirror.mwt.me/shiftkey-desktop/rpm\nenabled=1\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=https://mirror.mwt.me/shiftkey-desktop/gpgkey" > /etc/yum.repos.d/mwt-packages.repo'
+```
 
-The [CONTRIBUTING.md](./.github/CONTRIBUTING.md) document will help you get setup and
-familiar with the source. The [documentation](docs/) folder also contains more
-resources relevant to the project.
+#### Installation
 
-If you're looking for something to work on, check out the [help wanted](https://github.com/desktop/desktop/issues?q=is%3Aissue+is%3Aopen+label%3A%22help%20wanted%22) label.
+Once you have a feed configured, run this command to install the application:
 
-## Building Desktop
+```sh
+# if yum is your package manager
+sudo yum install github-desktop
 
-To setup your development environment for building Desktop, check out: [`setup.md`](./docs/contributing/setup.md).
+# if dnf is your package manager
+sudo dnf install github-desktop
 
-## More Resources
+# if zypper is your package manager
+sudo zypper ref && sudo zypper in github-desktop
+```
 
-See [desktop.github.com](https://desktop.github.com) for more product-oriented
+## Other Distributions
+
+### Arch Linux
+
+Arch Linux users can install GitHub Desktop from the [AUR](https://aur.archlinux.org/packages/github-desktop-bin/).
+
+`gnome-keyring` is required and the daemon must be launched either at login or when the X server is started. Normally this is handled by a display manager, but in other cases following the instructions found on the [Arch Wiki](https://wiki.archlinux.org/index.php/GNOME/Keyring#Using_the_keyring_outside_GNOME) will fix the issue of not being able to save login credentials.
+
+### Cross-Distribution Packages
+
+GitHub Desktop is also available cross-platform as a [Flatpak](https://github.com/flathub/io.github.shiftey.Desktop) and [AppImage](https://appimage.github.io/GitHubDesktop/).
+
+### deb-get
+
+Debian/Ubuntu users can also install directly from this repository using [`deb-get`](https://github.com/wimpysworld/deb-get): `deb-get install github-desktop`.
+
+## Known issues
+
+If you're having troubles with Desktop, please refer to the [Known issues](docs/known-issues.md#linux)
+document for guidance and workarounds for common limitations.
+
+If your package manager is still trying to reach PackageCloud, refer to the
+[cleanup instructions](docs/known-issues.md#the-packagecloud-package-feed-is-no-longer-working)
+for details about migrating away.
+
+## More information
+
+Please check out the [README](https://github.com/desktop/desktop#github-desktop)
+on the upstream [GitHub Desktop project](https://github.com/desktop/desktop) and
+[desktop.github.com](https://desktop.github.com) for more product-oriented
 information about GitHub Desktop.
 
-See our [getting started documentation](https://docs.github.com/en/desktop/overview/getting-started-with-github-desktop) for more information on how to set up, authenticate, and configure GitHub Desktop.
+See our [getting started documentation](https://docs.github.com/en/desktop/installing-and-configuring-github-desktop/overview/getting-started-with-github-desktop) for more information on how to set up, authenticate, and configure GitHub Desktop.
 
 ## License
 
