@@ -169,8 +169,7 @@ function packageWindows() {
 async function packageLinux() {
   const yaml_name = 'GitHub-Desktop.yml'
   const out_name = `./out/GitHub_Desktop-${getVersion()}*.AppImage`
-  const template =
-    `app: github-desktop
+  const template = `app: github-desktop
 
 ingredients:
   dist: trusty
@@ -225,44 +224,47 @@ script:
   const pkg2appimage_path = '../pkg2appimage/recipes'
   const pkg2appimage_file = '../pkg2appimage/pkg2appimage'
   console.log('Create yaml file…')
-  writeFileSync(
-    path.resolve(__dirname, yaml_name),
-    template
-  )
+  writeFileSync(path.resolve(__dirname, yaml_name), template)
   const exit_code = await new Promise((resolve, _reject) => {
     if (existsSync(pkg2appimage_file) && existsSync(pkg2appimage_path)) {
       console.log('Create .AppImage file…')
-      writeFileSync(
-        path.resolve(pkg2appimage_path, yaml_name),
-        template
-      )
+      writeFileSync(path.resolve(pkg2appimage_path, yaml_name), template)
       console.log(`cd ../pkg2appimage`)
       process.chdir(path.dirname(pkg2appimage_file))
-      const spawn = cp.spawn(`./pkg2appimage ./recipes/${yaml_name}`, { shell: true })
-      spawn.stdout.on('data', (data) => {
+      const spawn = cp.spawn(`./pkg2appimage ./recipes/${yaml_name}`, {
+        shell: true,
+      })
+      spawn.stdout.on('data', data => {
         console.log(data.toString())
-      });
-      spawn.stderr.on('data', (data) => {
+      })
+      spawn.stderr.on('data', data => {
         console.log(data.toString())
-      });
-      spawn.on('close', (code) => {
-        if (code == 0) {
+      })
+      spawn.on('close', code => {
+        if (code === 0) {
           console.log(`cp -f ${out_name} ${getDistRoot()}`)
           cp.execSync(`cp -f ${out_name} ${getDistRoot()}`)
           process.chdir(__dirname)
-
         }
         resolve(code)
-      });
+      })
     } else {
       console.log(`usage:`)
+      console.log(
+        `0. git clone https://github.com/AppImageCommunity/pkg2appimage.git pkg2appimage`
+      )
       console.log(``)
       console.log(`1. pkg2appimage files is here.`)
-      console.log(`2. cp ${path.resolve(__dirname, 'GitHub-Desktop.yml')} <pkg2appimage/recipes>`)
+      console.log(
+        `2. cp ${path.resolve(
+          __dirname,
+          'GitHub-Desktop.yml'
+        )} <pkg2appimage/recipes>`
+      )
       console.log(`3. cd <pkg2appimage>`)
       console.log(`4. ./pkg2appimage ./recipes/GitHub-Desktop.yml`)
       console.log(``)
-      resolve(0);
+      resolve(0)
     }
   })
   return exit_code
