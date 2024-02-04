@@ -4882,7 +4882,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
     )
 
     const gitStore = this.gitStoreCache.get(repository)
-    await gitStore.restoreCoAuthorsFromCommit(commit)
+    await gitStore.prepareToAmendCommit(commit)
 
     this.setRepositoryCommitToAmend(repository, commit)
 
