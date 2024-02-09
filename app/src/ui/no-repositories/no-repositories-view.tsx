@@ -438,11 +438,11 @@ export class NoRepositoriesView extends React.Component<
       __DARWIN__
         ? t(
             'no-repositories-view.create-a-new-repository-darwin',
-            'Create a New Repository on your Hard Drive…'
+            'Create a New Repository on your Local Drive…'
           )
         : t(
             'no-repositories-view.create-a-new-repository',
-            'Create a New Repository on your hard drive…'
+            'Create a New Repository on your local drive…'
           ),
       this.props.onCreate
     )
@@ -454,11 +454,11 @@ export class NoRepositoriesView extends React.Component<
       __DARWIN__
         ? t(
             'no-repositories-view.add-an-existing-repository-darwin',
-            'Add an Existing Repository from your Hard Drive…'
+            'Add an Existing Repository from your Local Drive…'
           )
         : t(
             'no-repositories-view.add-an-existing-repository',
-            'Add an Existing Repository from your hard drive…'
+            'Add an Existing Repository from your local drive…'
           ),
       this.props.onAdd
     )
