@@ -235,10 +235,10 @@ script:
         shell: true,
       })
       spawn.stdout.on('data', data => {
-        console.log(data.toString())
+        process.stdout.write(data.toString())
       })
       spawn.stderr.on('data', data => {
-        console.log(data.toString())
+        process.stdout.write(data.toString())
       })
       spawn.on('close', code => {
         if (code === 0) {
