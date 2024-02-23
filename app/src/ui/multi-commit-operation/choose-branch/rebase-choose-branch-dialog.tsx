@@ -97,14 +97,14 @@ export class RebaseChooseBranchDialog extends React.Component<
 
     return selectedBranchIsCurrentBranch
       ? t(
-        'rebase-choose-branch-dialog.you-are-not-able-to-rebase',
-        'You are not able to rebase this branch onto itself.'
-      )
-    : !areCommitsToRebase
+          'rebase-choose-branch-dialog.you-are-not-able-to-rebase',
+          'You are not able to rebase this branch onto itself.'
+        )
+      : !areCommitsToRebase
       ? t(
-        'rebase-choose-branch-dialog.there-are-no-commits',
-        'There are no commits on the current branch to rebase.'
-      )
+          'rebase-choose-branch-dialog.there-are-no-commits',
+          'There are no commits on the current branch to rebase.'
+        )
       : undefined
   }
 

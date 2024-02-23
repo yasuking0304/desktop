@@ -36,18 +36,17 @@ export function showUncaughtException(isLaunchError: boolean, error: Error) {
             'show-uncaught-exception.unrecoverable-error',
             'Unrecoverable error'
           ),
-      message:
-        t(
-          'show-uncaught-exception.message',
-          `GitHub Desktop has encountered an unrecoverable error and will need to restart.
+      message: t(
+        'show-uncaught-exception.message',
+        `GitHub Desktop has encountered an unrecoverable error and will need to restart.
 
           This has been reported to the team, but if you encounter this repeatedly please report 
           this issue to the GitHub Desktop issue tracker.
 
           {{0}}`,
-          {0: error.stack || error.message}
-        )
-      })
+        { 0: error.stack || error.message }
+      ),
+    })
     if (!__DEV__) {
       app.relaunch()
     }
