@@ -746,6 +746,10 @@
   "format-date": {
     "invalid-date": "Invalid date"
   },
+  "full-screen-info": {
+    "press-f11-to-exit-fullscreeen-1": "Press ",
+    "press-f11-to-exit-fullscreeen-2": " to exit fullscreen"
+  },
   "generic-git-auth": {
     "authentication-failed": "Authentication failed",
     "authentication-failed-darwin": "Authentication Failed",
@@ -1397,6 +1401,7 @@
     "unable-to-open-shell-darwin": "Unable to Open Shell"
   },
   "show-uncaught-exception": {
+    "message": "GitHub Desktop has encountered an unrecoverable error and will need to restart.\n\nThis has been reported to the team, but if you encounter this repeatedly please report this issue to the GitHub Desktop issue tracker.\n\n{{0}}",
     "unrecoverable-error": "Unrecoverable error",
     "unrecoverable-error-darwin": "Unrecoverable Error"
   },
