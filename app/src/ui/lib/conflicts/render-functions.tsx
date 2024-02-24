@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Octicon } from '../../octicons'
-import * as OcticonSymbol from '../../octicons/octicons.generated'
+import * as octicons from '../../octicons/octicons.generated'
 import { LinkButton } from '../link-button'
 import { t } from 'i18next'
 
@@ -19,7 +19,7 @@ export function renderAllResolved() {
   return (
     <div className="all-conflicts-resolved">
       <div className="green-circle">
-        <Octicon symbol={OcticonSymbol.check} />
+        <Octicon symbol={octicons.check} />
       </div>
       <div className="message">
         {t('render-functions.all-conflicts-resolved', 'All conflicts resolved')}

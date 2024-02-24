@@ -5,7 +5,7 @@ import { getDotComAPIEndpoint } from '../../lib/api'
 import { isAttributableEmailFor } from '../../lib/email'
 import { t } from 'i18next'
 import { Octicon } from '../octicons'
-import * as OcticonSymbol from '../octicons/octicons.generated'
+import * as octicons from '../octicons/octicons.generated'
 import { AriaLiveContainer } from '../accessibility/aria-live-container'
 
 interface IGitEmailNotFoundWarningProps {
@@ -26,7 +26,7 @@ export class GitEmailNotFoundWarning extends React.Component<IGitEmailNotFoundWa
       <span className="warning-icon">⚠️</span>
     ) : (
       <span className="green-circle">
-        <Octicon className="check-icon" symbol={OcticonSymbol.check} />
+        <Octicon className="check-icon" symbol={octicons.check} />
       </span>
     )
 

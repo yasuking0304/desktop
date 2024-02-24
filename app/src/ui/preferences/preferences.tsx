@@ -29,7 +29,7 @@ import {
   defaultUncommittedChangesStrategy,
 } from '../../models/uncommitted-changes-strategy'
 import { Octicon } from '../octicons'
-import * as OcticonSymbol from '../octicons/octicons.generated'
+import * as octicons from '../octicons/octicons.generated'
 import {
   isConfigFileLockError,
   parseConfigLockFilePathFromError,
@@ -241,31 +241,31 @@ export class Preferences extends React.Component<
             type={TabBarType.Vertical}
           >
             <span>
-              <Octicon className="icon" symbol={OcticonSymbol.home} />
+              <Octicon className="icon" symbol={octicons.home} />
               {t('preferences.accounts', 'Accounts')}
             </span>
             <span>
-              <Octicon className="icon" symbol={OcticonSymbol.person} />
+              <Octicon className="icon" symbol={octicons.person} />
               {t('preferences.integrations', 'Integrations')}
             </span>
             <span>
-              <Octicon className="icon" symbol={OcticonSymbol.gitCommit} />
+              <Octicon className="icon" symbol={octicons.gitCommit} />
               {t('preferences.git', 'Git')}
             </span>
             <span>
-              <Octicon className="icon" symbol={OcticonSymbol.paintbrush} />
+              <Octicon className="icon" symbol={octicons.paintbrush} />
               {t('preferences.appearance', 'Appearance')}
             </span>
             <span>
-              <Octicon className="icon" symbol={OcticonSymbol.bell} />
+              <Octicon className="icon" symbol={octicons.bell} />
               {t('preferences.notifications', 'Notifications')}
             </span>
             <span>
-              <Octicon className="icon" symbol={OcticonSymbol.question} />
+              <Octicon className="icon" symbol={octicons.question} />
               {t('preferences.prompts', 'Prompts')}
             </span>
             <span>
-              <Octicon className="icon" symbol={OcticonSymbol.settings} />
+              <Octicon className="icon" symbol={octicons.gear} />
               {t('preferences.advanced', 'Advanced')}
             </span>
           </TabBar>

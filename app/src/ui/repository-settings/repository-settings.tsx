@@ -31,7 +31,7 @@ import {
 import { Account } from '../../models/account'
 import { t } from 'i18next'
 import { Octicon } from '../octicons'
-import * as OcticonSymbol from '../octicons/octicons.generated'
+import * as octicons from '../octicons/octicons.generated'
 
 interface IRepositorySettingsProps {
   readonly initialSelectedTab?: RepositorySettingsTab
@@ -195,24 +195,24 @@ export class RepositorySettings extends React.Component<
             type={TabBarType.Vertical}
           >
             <span>
-              <Octicon className="icon" symbol={OcticonSymbol.server} />
+              <Octicon className="icon" symbol={octicons.server} />
               {t('repository-settings.remote', 'Remote')}
             </span>
             <span>
-              <Octicon className="icon" symbol={OcticonSymbol.file} />
+              <Octicon className="icon" symbol={octicons.file} />
               {__DARWIN__
                 ? t('repository-settings.ignored-files-darwin', 'Ignored Files')
                 : t('repository-settings.ignored-files', 'Ignored files')}
             </span>
             <span>
-              <Octicon className="icon" symbol={OcticonSymbol.gitCommit} />
+              <Octicon className="icon" symbol={octicons.gitCommit} />
               {__DARWIN__
                 ? t('repository-settings.git-config-darwin', 'Git Config')
                 : t('repository-settings.git-config', 'Git config')}
             </span>
             {showForkSettings && (
               <span>
-                <Octicon className="icon" symbol={OcticonSymbol.repoForked} />
+                <Octicon className="icon" symbol={octicons.repoForked} />
                 {__DARWIN__
                   ? t(
                       'repository-settings.fork-behavior-darwin',
