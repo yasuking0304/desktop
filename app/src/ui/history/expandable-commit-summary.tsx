@@ -2,7 +2,7 @@ import * as React from 'react'
 import classNames from 'classnames'
 
 import { Octicon } from '../octicons'
-import * as OcticonSymbol from '../octicons/octicons.generated'
+import * as octicons from '../octicons/octicons.generated'
 import { RichText } from '../lib/rich-text'
 import { Repository } from '../../models/repository'
 import { Commit } from '../../models/commit'
@@ -253,9 +253,7 @@ export class ExpandableCommitSummary extends React.Component<
         }
         ariaControls="expandable-commit-summary"
       >
-        <Octicon
-          symbol={isExpanded ? OcticonSymbol.fold : OcticonSymbol.unfold}
-        />
+        <Octicon symbol={isExpanded ? octicons.fold : octicons.unfold} />
       </Button>
     )
   }
@@ -398,7 +396,7 @@ export class ExpandableCommitSummary extends React.Component<
         onMouseOver={this.onHighlightShasNotInDiff}
         onMouseOut={this.onRemoveHighlightOfShas}
       >
-        <Octicon symbol={OcticonSymbol.info} />
+        <Octicon symbol={octicons.info} />
         <LinkButton onClick={this.showUnreachableCommits}>
           {t(
             'expandable-commit-summary.number-unreachable-commits',
@@ -479,7 +477,7 @@ export class ExpandableCommitSummary extends React.Component<
 
     return (
       <div className="ecs-meta-item commit-ref">
-        <Octicon symbol={OcticonSymbol.gitCommit} />
+        <Octicon symbol={octicons.gitCommit} />
         <div className="ref selectable">{isExpanded ? sha : shortSha}</div>
         <CopyButton
           ariaLabel={t(
@@ -609,7 +607,7 @@ export class ExpandableCommitSummary extends React.Component<
 
     return (
       <div className="ecs-meta-item lines-added-deleted">
-        {isExpanded ? <Octicon symbol={OcticonSymbol.diff} /> : null}
+        {isExpanded ? <Octicon symbol={octicons.diff} /> : null}
         <div className="lines-added">
           {!isExpanded ? (
             <>+{linesAdded}</>
@@ -652,7 +650,7 @@ export class ExpandableCommitSummary extends React.Component<
 
     return (
       <div className="ecs-meta-item tags selectable">
-        <Octicon symbol={OcticonSymbol.tag} />
+        <Octicon symbol={octicons.tag} />
         <span>{tags.join(', ')}</span>
       </div>
     )

@@ -3,7 +3,7 @@ import { parseRepositoryIdentifier } from '../../lib/remote-parsing'
 import { ISubmoduleDiff } from '../../models/diff'
 import { LinkButton } from '../lib/link-button'
 import { Octicon } from '../octicons'
-import * as OcticonSymbol from '../octicons/octicons.generated'
+import * as octicons from '../octicons/octicons.generated'
 import { SuggestedAction } from '../suggested-actions'
 import { t } from 'i18next'
 import { Ref } from '../lib/ref'
@@ -12,23 +12,23 @@ import { shortenSHA } from '../../models/commit'
 
 type SubmoduleItemIcon =
   | {
-      readonly octicon: typeof OcticonSymbol.info
+      readonly octicon: typeof octicons.info
       readonly className: 'info-icon'
     }
   | {
-      readonly octicon: typeof OcticonSymbol.diffModified
+      readonly octicon: typeof octicons.diffModified
       readonly className: 'modified-icon'
     }
   | {
-      readonly octicon: typeof OcticonSymbol.diffAdded
+      readonly octicon: typeof octicons.diffAdded
       readonly className: 'added-icon'
     }
   | {
-      readonly octicon: typeof OcticonSymbol.diffRemoved
+      readonly octicon: typeof octicons.diffRemoved
       readonly className: 'removed-icon'
     }
   | {
-      readonly octicon: typeof OcticonSymbol.fileDiff
+      readonly octicon: typeof octicons.fileDiff
       readonly className: 'untracked-icon'
     }
 
@@ -85,7 +85,7 @@ export class SubmoduleDiff extends React.Component<ISubmoduleDiffProps> {
         : ` (${repoIdentifier.hostname})`
 
     return this.renderSubmoduleDiffItem(
-      { octicon: OcticonSymbol.info, className: 'info-icon' },
+      { octicon: octicons.info, className: 'info-icon' },
       <>
         {t(
           'submodule-diff.this-is-a-submodule-based-on-the-repository-1',
@@ -113,7 +113,7 @@ export class SubmoduleDiff extends React.Component<ISubmoduleDiffProps> {
 
     if (oldSHA !== null && newSHA !== null) {
       return this.renderSubmoduleDiffItem(
-        { octicon: OcticonSymbol.diffModified, className: 'modified-icon' },
+        { octicon: octicons.diffModified, className: 'modified-icon' },
         <>
           This submodule changed its commit from{' '}
           {this.renderCommitSHA(oldSHA, 'previous')} to{' '}
@@ -122,7 +122,7 @@ export class SubmoduleDiff extends React.Component<ISubmoduleDiffProps> {
       )
     } else if (oldSHA === null && newSHA !== null) {
       return this.renderSubmoduleDiffItem(
-        { octicon: OcticonSymbol.diffAdded, className: 'added-icon' },
+        { octicon: octicons.diffAdded, className: 'added-icon' },
         <>
           This submodule {verb} added pointing at commit{' '}
           {this.renderCommitSHA(newSHA)}.{suffix}
@@ -130,7 +130,7 @@ export class SubmoduleDiff extends React.Component<ISubmoduleDiffProps> {
       )
     } else if (oldSHA !== null && newSHA === null) {
       return this.renderSubmoduleDiffItem(
-        { octicon: OcticonSymbol.diffRemoved, className: 'removed-icon' },
+        { octicon: octicons.diffRemoved, className: 'removed-icon' },
         <>
           This submodule {verb} removed while it was pointing at commit{' '}
           {this.renderCommitSHA(oldSHA)}.{suffix}
@@ -170,7 +170,7 @@ export class SubmoduleDiff extends React.Component<ISubmoduleDiffProps> {
         : t('submodule-diff.modified', 'modified')
 
     return this.renderSubmoduleDiffItem(
-      { octicon: OcticonSymbol.fileDiff, className: 'untracked-icon' },
+      { octicon: octicons.fileDiff, className: 'untracked-icon' },
       <>
         {t(
           'submodule-diff.this-submodule-has-changes',

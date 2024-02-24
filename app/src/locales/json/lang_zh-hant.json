@@ -781,7 +781,7 @@
   "git-email-not-found-warning": {
     "does-not-match": "does not match",
     "edither-your-account": "either of your GitHub.com nor GitHub Enterprise accounts",
-    "learn-more": "Learn more.",
+    "learn-more": "Learn more",
     "learn-more-about": "Learn more about commit attribution",
     "matchs": "matches",
     "this-email-address": "This email address {{0}} {{1}}. {{2}}",
