@@ -167,8 +167,7 @@ function packageWindows() {
 }
 
 function packageLinux() {
-  const template =
-    `app: github-desktop
+  const template = `app: github-desktop
 
 ingredients:
   dist: trusty
@@ -221,14 +220,16 @@ script:
   - echo "${getVersion()}" > ../VERSION
 `
   console.log('Create yaml file…')
-  writeFileSync(
-    path.resolve(__dirname, 'GitHub-Desktop.yml'),
-    template
-  )
+  writeFileSync(path.resolve(__dirname, 'GitHub-Desktop.yml'), template)
   console.log(`usage:`)
   console.log(``)
   console.log(`1. pkg2appimage files is here.`)
-  console.log(`2. cp ${path.resolve(__dirname, 'GitHub-Desktop.yml')} <pkg2appimage/recipes>`)
+  console.log(
+    `2. cp ${path.resolve(
+      __dirname,
+      'GitHub-Desktop.yml'
+    )} <pkg2appimage/recipes>`
+  )
   console.log(`3. cd <pkg2appimage>`)
   console.log(`4. ./pkg2appimage ./recipes/GitHub-Desktop.yml`)
   console.log(``)

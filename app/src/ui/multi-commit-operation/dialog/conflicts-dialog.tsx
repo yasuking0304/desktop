@@ -231,13 +231,11 @@ export class ConflictsDialog extends React.Component<
         : t('conflicts-dialog.files-have', 'files have')
     return (
       <DialogSuccess>
-        {
-          (t(
-            'conflicts-dialog.many-conflicted-files-have-been-resolved',
-            '{{0}} conflicted {{1}} been resolved.'
-          ),
-          { 0: countResolved, 1: conflictPluralized })
-        }
+        {t(
+          'conflicts-dialog.many-conflicted-files-have-been-resolved',
+          '{{0}} conflicted {{1}} been resolved.',
+          { 0: countResolved, 1: conflictPluralized }
+        )}
       </DialogSuccess>
     )
   }
