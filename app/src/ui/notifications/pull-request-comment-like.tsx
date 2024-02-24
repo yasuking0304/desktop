@@ -2,8 +2,9 @@ import * as React from 'react'
 import { Dialog, DialogContent, DialogFooter } from '../dialog'
 import { PullRequest } from '../../models/pull-request'
 import { Dispatcher } from '../dispatcher'
-import { Octicon, OcticonSymbol } from '../octicons'
-import * as octicons from '../octicons/octicons.generated'
+import { Octicon } from '../octicons'
+import * as OcticonSymbol from '../octicons/octicons.generated'
+import { OcticonSymbolType } from '../octicons/octicons.generated'
 import { RepositoryWithGitHubRepository } from '../../models/repository'
 import { SandboxedMarkdown } from '../lib/sandboxed-markdown'
 import { LinkButton } from '../lib/link-button'
@@ -21,7 +22,7 @@ interface IPullRequestCommentLikeProps {
   readonly pullRequest: PullRequest
   readonly eventDate: Date
   readonly eventVerb: string
-  readonly eventIconSymbol: OcticonSymbol
+  readonly eventIconSymbol: OcticonSymbolType
   readonly eventIconClass: string
   readonly externalURL: string
   readonly user: IAPIIdentity
@@ -189,8 +190,8 @@ export abstract class PullRequestCommentLike extends React.Component<IPullReques
         className={cls}
         symbol={
           pullRequest.draft
-            ? octicons.gitPullRequestDraft
-            : octicons.gitPullRequest
+            ? OcticonSymbol.gitPullRequestDraft
+            : OcticonSymbol.gitPullRequest
         }
       />
     )

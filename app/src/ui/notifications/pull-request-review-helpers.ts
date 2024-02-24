@@ -2,8 +2,8 @@ import {
   ValidNotificationPullRequestReview,
   ValidNotificationPullRequestReviewState,
 } from '../../lib/valid-notification-pull-request-review'
-import * as octicons from '../octicons/octicons.generated'
-import { OcticonSymbol } from '../octicons'
+import * as OcticonSymbol from '../octicons/octicons.generated'
+import { OcticonSymbolType } from '../octicons/octicons.generated'
 
 /** Returns the user-facing verb for a given review's state. */
 export function getVerbForPullRequestReview(
@@ -20,7 +20,7 @@ export function getVerbForPullRequestReview(
 }
 
 type ReviewStateIcon = {
-  symbol: OcticonSymbol
+  symbol: OcticonSymbolType
   className: string
 }
 
@@ -31,17 +31,17 @@ export function getPullRequestReviewStateIcon(
   switch (state) {
     case 'APPROVED':
       return {
-        symbol: octicons.check,
+        symbol: OcticonSymbol.check,
         className: 'pr-review-approved',
       }
     case 'CHANGES_REQUESTED':
       return {
-        symbol: octicons.fileDiff,
+        symbol: OcticonSymbol.fileDiff,
         className: 'pr-review-changes-requested',
       }
     case 'COMMENTED':
       return {
-        symbol: octicons.eye,
+        symbol: OcticonSymbol.eye,
         className: 'pr-review-commented',
       }
   }

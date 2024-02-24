@@ -10,7 +10,7 @@ import {
 import { IAvatarUser } from '../../models/avatar'
 import { Avatar } from '../lib/avatar'
 import { Octicon } from '../octicons'
-import * as octicons from '../octicons/octicons.generated'
+import * as OcticonSymbol from '../octicons/octicons.generated'
 import { LinkButton } from '../lib/link-button'
 import { t } from 'i18next'
 import { OkCancelButtonGroup } from '../dialog'
@@ -191,7 +191,7 @@ export class CommitMessageAvatar extends React.Component<
       error: isError,
       warning: !isError,
     })
-    const symbol = isError ? octicons.stop : octicons.alert
+    const symbol = isError ? OcticonSymbol.stop : OcticonSymbol.alert
 
     return (
       <div className={classes} ref={this.warningBadgeRef}>

@@ -3,8 +3,8 @@ import {
   AppFileStatus,
   isConflictWithMarkers,
 } from '../../models/status'
-import * as octicons from './octicons.generated'
-import { OcticonSymbol } from '../octicons'
+import * as OcticonSymbol from './octicons.generated'
+import { OcticonSymbolType } from '../octicons'
 import { assertNever } from '../../lib/fatal-error'
 
 /**
@@ -13,25 +13,25 @@ import { assertNever } from '../../lib/fatal-error'
  *
  * Used in file lists.
  */
-export function iconForStatus(status: AppFileStatus): OcticonSymbol {
+export function iconForStatus(status: AppFileStatus): OcticonSymbolType {
   switch (status.kind) {
     case AppFileStatusKind.New:
     case AppFileStatusKind.Untracked:
-      return octicons.diffAdded
+      return OcticonSymbol.diffAdded
     case AppFileStatusKind.Modified:
-      return octicons.diffModified
+      return OcticonSymbol.diffModified
     case AppFileStatusKind.Deleted:
-      return octicons.diffRemoved
+      return OcticonSymbol.diffRemoved
     case AppFileStatusKind.Renamed:
-      return octicons.diffRenamed
+      return OcticonSymbol.diffRenamed
     case AppFileStatusKind.Conflicted:
       if (isConflictWithMarkers(status)) {
         const conflictsCount = status.conflictMarkerCount
-        return conflictsCount > 0 ? octicons.alert : octicons.check
+        return conflictsCount > 0 ? OcticonSymbol.alert : OcticonSymbol.check
       }
-      return octicons.alert
+      return OcticonSymbol.alert
     case AppFileStatusKind.Copied:
-      return octicons.diffAdded
+      return OcticonSymbol.diffAdded
     default:
       return assertNever(status, `Unknown file status ${status}`)
   }

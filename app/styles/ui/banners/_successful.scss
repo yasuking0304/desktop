@@ -12,7 +12,11 @@
   }
 
   .green-circle {
-    color: var(--color-new);
+    background-color: var(--color-new);
+    color: var(--background-color);
+    border-radius: 50%;
+    height: 16px;
+    width: 16px;
     display: flex;
     justify-content: center;
     align-items: center;

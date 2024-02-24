@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Octicon } from '../octicons'
-import * as octicons from '../octicons/octicons.generated'
+import * as OcticonSymbol from '../octicons/octicons.generated'
 
 /**
  * A component used for displaying short success messages inline
@@ -17,7 +17,7 @@ export class DialogSuccess extends React.Component {
   public render() {
     return (
       <div className="dialog-banner dialog-success" role="alert">
-        <Octicon symbol={octicons.check} />
+        <Octicon symbol={OcticonSymbol.check} />
         <div>{this.props.children}</div>
       </div>
     )

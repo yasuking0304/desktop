@@ -6,7 +6,7 @@ import { Dispatcher } from './dispatcher'
 import { Button } from './lib/button'
 import { SandboxedMarkdown } from './lib/sandboxed-markdown'
 import { Octicon } from './octicons'
-import * as octicons from './octicons/octicons.generated'
+import * as OcticonSymbol from './octicons/octicons.generated'
 import classNames from 'classnames'
 
 /**
@@ -158,11 +158,11 @@ export class PullRequestQuickView extends React.Component<
   private renderHeader = (): JSX.Element => {
     return (
       <header className="header">
-        <Octicon symbol={octicons.listUnordered} />
+        <Octicon symbol={OcticonSymbol.listUnordered} />
         <div className="action-needed">Review requested</div>
         <Button className="button-with-icon" onClick={this.onViewOnGitHub}>
           View on GitHub
-          <Octicon symbol={octicons.linkExternal} />
+          <Octicon symbol={OcticonSymbol.linkExternal} />
         </Button>
       </header>
     )
@@ -174,7 +174,9 @@ export class PullRequestQuickView extends React.Component<
         <Octicon
           className="icon"
           symbol={
-            isDraft ? octicons.gitPullRequestDraft : octicons.gitPullRequest
+            isDraft
+              ? OcticonSymbol.gitPullRequestDraft
+              : OcticonSymbol.gitPullRequest
           }
         />
         <span className="state">{isDraft ? 'Draft' : 'Open'}</span>

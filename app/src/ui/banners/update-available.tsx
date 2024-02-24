@@ -7,7 +7,7 @@ import {
   updateStore,
 } from '../lib/update-store'
 import { Octicon } from '../octicons'
-import * as octicons from '../octicons/octicons.generated'
+import * as OcticonSymbol from '../octicons/octicons.generated'
 import { PopupType } from '../../models/popup'
 import { shell } from '../../lib/app-shell'
 
@@ -39,7 +39,7 @@ export class UpdateAvailable extends React.Component<
         {!this.props.isUpdateShowcaseVisible && (
           <Octicon
             className="download-icon"
-            symbol={octicons.desktopDownload}
+            symbol={OcticonSymbol.desktopDownload}
           />
         )}
 

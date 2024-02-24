@@ -7,12 +7,7 @@ import { TipState } from '../../models/tip'
 import { FetchType } from '../../models/fetch'
 
 import { Dispatcher } from '../dispatcher'
-import {
-  Octicon,
-  OcticonSymbol,
-  OcticonSymbolVariant,
-  syncClockwise,
-} from '../octicons'
+import { Octicon, syncClockwise } from '../octicons'
 import * as octicons from '../octicons/octicons.generated'
 import { RelativeTime } from '../relative-time'
 
@@ -121,7 +116,7 @@ export type DropdownItem = {
   readonly title: string
   readonly description: string | JSX.Element
   readonly action: () => void
-  readonly icon: OcticonSymbol
+  readonly icon: OcticonSymbol.OcticonSymbolType
 }
 
 function renderAheadBehind(aheadBehind: IAheadBehind, numTagsToPush: number) {
@@ -135,7 +130,7 @@ function renderAheadBehind(aheadBehind: IAheadBehind, numTagsToPush: number) {
     content.push(
       <span key="ahead">
         {ahead + numTagsToPush}
-        <Octicon symbol={octicons.arrowUp} />
+        <Octicon symbol={OcticonSymbol.arrowUp} />
       </span>
     )
   }
@@ -144,7 +139,7 @@ function renderAheadBehind(aheadBehind: IAheadBehind, numTagsToPush: number) {
     content.push(
       <span key="behind">
         {behind}
-        <Octicon symbol={octicons.arrowDown} />
+        <Octicon symbol={OcticonSymbol.arrowDown} />
       </span>
     )
   }
@@ -169,15 +164,15 @@ function renderLastFetched(lastFetched: Date | null): JSX.Element | string {
  * This represents the "double arrow" icon used to show a force-push, and is a
  * less complicated icon than the generated Octicon from the `octicons` package.
  */
-export const forcePushIcon: OcticonSymbolVariant = {
+export const forcePushIcon: OcticonSymbol.OcticonSymbolType = {
   w: 10,
   h: 16,
-  p: [
+  d:
     'M0 6a.75.75 0 0 0 .974.714L4.469 3.22a.75.75 0 0 1 1.06 0l3.478 3.478a.75.75 ' +
-      '0 0 0 .772-1.228L5.53 1.22a.75.75 0 0 0-1.06 0L.22 5.47A.75.75 0 0 0 0 6zm0 ' +
-      '3a.75.75 0 0 0 1.28.53l2.97-2.97V14a.75.75 0 1 0 1.5 0V6.56l2.97 2.97a.75.75 ' +
-      '0 0 0 1.06-1.06L5.53 4.22a.75.75 0 0 0-1.06 0L.22 8.47A.75.75 0 0 0 0 9z',
-  ],
+    '0 0 0 .772-1.228L5.53 1.22a.75.75 0 0 0-1.06 0L.22 5.47A.75.75 0 0 0 0 6zm0 ' +
+    '3a.75.75 0 0 0 1.28.53l2.97-2.97V14a.75.75 0 1 0 1.5 0V6.56l2.97 2.97a.75.75 ' +
+    '0 0 0 1.06-1.06L5.53 4.22a.75.75 0 0 0-1.06 0L.22 8.47A.75.75 0 0 0 0 9z',
+  fr: 'evenodd',
 }
 
 /**

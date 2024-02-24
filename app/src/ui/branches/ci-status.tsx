@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { Octicon, OcticonSymbol } from '../octicons'
-import * as octicons from '../octicons/octicons.generated'
+import { Octicon, OcticonSymbolType } from '../octicons'
+import * as OcticonSymbol from '../octicons/octicons.generated'
 import classNames from 'classnames'
 import { GitHubRepository } from '../../models/github-repository'
 import { DisposableLike } from 'event-kit'
@@ -123,28 +123,28 @@ export class CIStatus extends React.PureComponent<
 
 export function getSymbolForCheck(
   check: ICombinedRefCheck | IRefCheck | IAPIWorkflowJobStep
-): OcticonSymbol {
+): OcticonSymbolType {
   switch (check.conclusion) {
     case 'timed_out':
-      return octicons.x
+      return OcticonSymbol.x
     case 'failure':
-      return octicons.x
+      return OcticonSymbol.x
     case 'neutral':
-      return octicons.squareFill
+      return OcticonSymbol.squareFill
     case 'success':
-      return octicons.check
+      return OcticonSymbol.check
     case 'cancelled':
-      return octicons.stop
+      return OcticonSymbol.stop
     case 'action_required':
-      return octicons.alert
+      return OcticonSymbol.alert
     case 'skipped':
-      return octicons.skip
+      return OcticonSymbol.skip
     case 'stale':
-      return octicons.issueReopened
+      return OcticonSymbol.issueReopened
   }
 
   // Pending
-  return octicons.dotFill
+  return OcticonSymbol.dotFill
 }
 
 export function getClassNameForCheck(
@@ -170,12 +170,12 @@ export function getClassNameForCheck(
 
 export function getSymbolForLogStep(
   logStep: IAPIWorkflowJobStep
-): OcticonSymbol {
+): OcticonSymbolType {
   switch (logStep.conclusion) {
     case 'success':
-      return octicons.checkCircleFill
+      return OcticonSymbol.checkCircleFill
     case 'failure':
-      return octicons.xCircleFill
+      return OcticonSymbol.xCircleFill
   }
 
   return getSymbolForCheck(logStep)

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Checkbox, CheckboxValue } from '../lib/checkbox'
 import { Octicon } from '../octicons'
-import * as octicons from '../octicons/octicons.generated'
+import * as OcticonSymbol from '../octicons/octicons.generated'
 import { RadioButton } from '../lib/radio-button'
 import { t } from 'i18next'
 import {
@@ -104,9 +104,9 @@ export class DiffOptions extends React.Component<
             {buttonLabel}
           </Tooltip>
           <span ref={this.gearIconRef}>
-            <Octicon symbol={octicons.gear} />
+            <Octicon symbol={OcticonSymbol.gear} />
           </span>
-          <Octicon symbol={octicons.triangleDown} />
+          <Octicon symbol={OcticonSymbol.triangleDown} />
         </button>
         {this.state.isPopoverOpen && this.renderPopover()}
       </div>

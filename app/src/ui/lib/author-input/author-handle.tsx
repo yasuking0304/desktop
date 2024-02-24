@@ -2,7 +2,7 @@ import classNames from 'classnames'
 import React from 'react'
 import { Author, isKnownAuthor } from '../../../models/author'
 import { Octicon, syncClockwise } from '../../octicons'
-import * as octicons from '../../octicons/octicons.generated'
+import * as OcticonSymbol from '../../octicons/octicons.generated'
 import { getFullTextForAuthor, getDisplayTextForAuthor } from './author-text'
 
 interface IAuthorHandleProps {
@@ -132,11 +132,13 @@ export class AuthorHandle extends React.Component<IAuthorHandleProps> {
         {!isKnownAuthor(author) && (
           <Octicon
             className={classNames('icon', { spin: author.state !== 'error' })}
-            symbol={author.state === 'error' ? octicons.stop : syncClockwise}
+            symbol={
+              author.state === 'error' ? OcticonSymbol.stop : syncClockwise
+            }
           />
         )}
         <button onClick={this.onRemoveClick} tabIndex={-1}>
-          <Octicon className="delete" symbol={octicons.x} />
+          <Octicon className="delete" symbol={OcticonSymbol.x} />
         </button>
       </div>
     )

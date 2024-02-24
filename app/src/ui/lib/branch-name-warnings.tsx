@@ -3,7 +3,7 @@ import { Branch, BranchType } from '../../models/branch'
 
 import { Row } from './row'
 import { Octicon } from '../octicons'
-import * as octicons from '../octicons/octicons.generated'
+import * as OcticonSymbol from '../octicons/octicons.generated'
 import { Ref } from './ref'
 import { IStashEntry } from '../../models/stash-entry'
 import { t } from 'i18next'
@@ -13,7 +13,7 @@ export function renderBranchHasRemoteWarning(branch: Branch) {
   if (branch.upstream != null) {
     return (
       <Row className="warning-helper-text">
-        <Octicon symbol={octicons.alert} />
+        <Octicon symbol={OcticonSymbol.alert} />
         <p>
           {t(
             'branch-name-warnings.this-branch-is-tracking-1',
@@ -48,7 +48,7 @@ export function renderBranchNameExistsOnRemoteWarning(
 
   return (
     <Row className="warning-helper-text">
-      <Octicon symbol={octicons.alert} />
+      <Octicon symbol={OcticonSymbol.alert} />
       <p>
         {t(
           'branch-name-warnings.branch-name-already-exists-1',
@@ -70,7 +70,7 @@ export function renderStashWillBeLostWarning(stash: IStashEntry | null) {
   }
   return (
     <Row className="warning-helper-text">
-      <Octicon symbol={octicons.alert} />
+      <Octicon symbol={OcticonSymbol.alert} />
       <p>
         {t(
           'branch-name-warnings.current-stashed-changes',

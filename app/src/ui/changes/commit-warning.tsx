@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { assertNever } from '../../lib/fatal-error'
 import { Octicon } from '../octicons'
-import * as octicons from '../octicons/octicons.generated'
+import * as OcticonSymbol from '../octicons/octicons.generated'
 
 export enum CommitWarningIcon {
   Warning,
@@ -11,20 +11,20 @@ export enum CommitWarningIcon {
 
 const renderIcon = (icon: CommitWarningIcon) => {
   let className = ''
-  let symbol = octicons.alert
+  let symbol = OcticonSymbol.alert
 
   switch (icon) {
     case CommitWarningIcon.Warning:
       className = 'warning-icon'
-      symbol = octicons.alert
+      symbol = OcticonSymbol.alert
       break
     case CommitWarningIcon.Information:
       className = 'information-icon'
-      symbol = octicons.info
+      symbol = OcticonSymbol.info
       break
     case CommitWarningIcon.Error:
       className = 'error-icon'
-      symbol = octicons.stop
+      symbol = OcticonSymbol.stop
       break
     default:
       assertNever(icon, `Unexpected icon value ${icon}`)
