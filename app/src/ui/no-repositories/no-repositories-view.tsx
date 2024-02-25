@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { UiView } from '../ui-view'
 import { Button } from '../lib/button'
-import { Octicon, OcticonSymbolType } from '../octicons'
-import * as OcticonSymbol from '../octicons/octicons.generated'
+import { Octicon, OcticonSymbol } from '../octicons'
+import * as octicons from '../octicons/octicons.generated'
 import {
   WelcomeLeftTopImageUri,
   WelcomeLeftBottomImageUri,
@@ -359,7 +359,7 @@ export class NoRepositoriesView extends React.Component<
   private onShowClone = () => this.props.onClone()
 
   private renderButtonGroupButton(
-    symbol: OcticonSymbolType,
+    symbol: OcticonSymbol,
     title: string,
     onClick: () => void,
     type?: 'submit',
@@ -383,7 +383,7 @@ export class NoRepositoriesView extends React.Component<
 
     if (this.props.tutorialPaused) {
       return this.renderButtonGroupButton(
-        OcticonSymbol.mortarBoard,
+        octicons.mortarBoard,
         __DARWIN__
           ? t(
               'no-repositories-view.return-to-in-progress-tutorial-darwin',
@@ -398,7 +398,7 @@ export class NoRepositoriesView extends React.Component<
       )
     } else {
       return this.renderButtonGroupButton(
-        OcticonSymbol.mortarBoard,
+        octicons.mortarBoard,
         __DARWIN__
           ? t(
               'no-repositories-view.create-a-tutorial-repository-darwin',
@@ -416,7 +416,7 @@ export class NoRepositoriesView extends React.Component<
 
   private renderCloneButton() {
     return this.renderButtonGroupButton(
-      OcticonSymbol.repoClone,
+      octicons.repoClone,
       __DARWIN__
         ? t(
             'no-repositories-view.clone-a-repository-darwin',
@@ -434,15 +434,15 @@ export class NoRepositoriesView extends React.Component<
 
   private renderCreateRepositoryButton() {
     return this.renderButtonGroupButton(
-      OcticonSymbol.plus,
+      octicons.plus,
       __DARWIN__
         ? t(
             'no-repositories-view.create-a-new-repository-darwin',
-            'Create a New Repository on your Hard Drive…'
+            'Create a New Repository on your Local Drive…'
           )
         : t(
             'no-repositories-view.create-a-new-repository',
-            'Create a New Repository on your hard drive…'
+            'Create a New Repository on your local drive…'
           ),
       this.props.onCreate
     )
@@ -450,15 +450,15 @@ export class NoRepositoriesView extends React.Component<
 
   private renderAddExistingRepositoryButton() {
     return this.renderButtonGroupButton(
-      OcticonSymbol.fileDirectory,
+      octicons.fileDirectory,
       __DARWIN__
         ? t(
             'no-repositories-view.add-an-existing-repository-darwin',
-            'Add an Existing Repository from your Hard Drive…'
+            'Add an Existing Repository from your Local Drive…'
           )
         : t(
             'no-repositories-view.add-an-existing-repository',
-            'Add an Existing Repository from your hard drive…'
+            'Add an Existing Repository from your local drive…'
           ),
       this.props.onAdd
     )
@@ -475,7 +475,7 @@ export class NoRepositoriesView extends React.Component<
         </div>
 
         <div className="drag-drop-info">
-          <Octicon symbol={OcticonSymbol.lightBulb} />
+          <Octicon symbol={octicons.lightBulb} />
           <div>
             <strong>{t('no-repositories-view.protip', 'ProTip!')};</strong>
             {t(

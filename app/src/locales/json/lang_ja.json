@@ -746,6 +746,10 @@
   "format-date": {
     "invalid-date": "無効な日付"
   },
+  "full-screen-info": {
+    "press-f11-to-exit-fullscreeen-1": "全画面表示を終了するには ",
+    "press-f11-to-exit-fullscreeen-2": " を押します"
+  },
   "generic-git-auth": {
     "authentication-failed": "認証に失敗しました",
     "authentication-failed-darwin": "認証に失敗しました",
@@ -1397,8 +1401,9 @@
     "unable-to-open-shell-darwin": "シェルを開けません"
   },
   "show-uncaught-exception": {
-    "unrecoverable-error": "Unrecoverable error",
-    "unrecoverable-error-darwin": "Unrecoverable Error"
+    "message": "GitHub Desktop で回復不能なエラーが発生したため、再起動する必要があります。\n\nこの障害はチームに報告されていますが、繰り返し発生する場合は、この問題を GitHub Desktop Issue Tracker に報告してください。\n\n{{0}}",
+    "unrecoverable-error": "回復不能なエラー",
+    "unrecoverable-error-darwin": "回復不能なエラー"
   },
   "side-by-side-diff": {
     "added": "追加",

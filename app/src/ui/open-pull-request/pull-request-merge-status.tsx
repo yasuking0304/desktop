@@ -4,7 +4,7 @@ import { ComputedAction } from '../../models/computed-action'
 import { MergeTreeResult } from '../../models/merge'
 import { Octicon } from '../octicons'
 import { t } from 'i18next'
-import * as OcticonSymbol from '../octicons/octicons.generated'
+import * as octicons from '../octicons/octicons.generated'
 
 interface IPullRequestMergeStatusProps {
   /** The result of merging the pull request branch into the base branch */
@@ -51,7 +51,7 @@ export class PullRequestMergeStatus extends React.Component<IPullRequestMergeSta
         return (
           <span className="pr-merge-status-clean">
             <strong>
-              <Octicon symbol={OcticonSymbol.check} />{' '}
+              <Octicon symbol={octicons.check} />{' '}
               {t('pull-request-merge-status.able-to-merge', `Able to merge.`)}
             </strong>{' '}
             {t(
@@ -64,7 +64,7 @@ export class PullRequestMergeStatus extends React.Component<IPullRequestMergeSta
         return (
           <span className="pr-merge-status-conflicts">
             <strong>
-              <Octicon symbol={OcticonSymbol.x} />{' '}
+              <Octicon symbol={octicons.x} />{' '}
               {t(
                 'pull-request-merge-status.cannot-automatically-merge',
                 `Can't automatically merge.`

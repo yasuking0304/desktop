@@ -7,8 +7,13 @@ import { TipState } from '../../models/tip'
 import { FetchType } from '../../models/fetch'
 
 import { Dispatcher } from '../dispatcher'
-import { Octicon, syncClockwise } from '../octicons'
-import * as OcticonSymbol from '../octicons/octicons.generated'
+import {
+  Octicon,
+  OcticonSymbol,
+  OcticonSymbolVariant,
+  syncClockwise,
+} from '../octicons'
+import * as octicons from '../octicons/octicons.generated'
 import { RelativeTime } from '../relative-time'
 
 import { ToolbarButton, ToolbarButtonStyle } from './button'
@@ -22,7 +27,6 @@ import {
 import { FoldoutType } from '../../lib/app-state'
 import { ForcePushBranchState } from '../../lib/rebase'
 import { PushPullButtonDropDown } from './push-pull-button-dropdown'
-import { t } from 'i18next'
 import { AriaLiveContainer } from '../accessibility/aria-live-container'
 
 export const DropdownItemClassName = 'push-pull-dropdown-item'
@@ -116,7 +120,7 @@ export type DropdownItem = {
   readonly title: string
   readonly description: string | JSX.Element
   readonly action: () => void
-  readonly icon: OcticonSymbol.OcticonSymbolType
+  readonly icon: OcticonSymbol
 }
 
 function renderAheadBehind(aheadBehind: IAheadBehind, numTagsToPush: number) {
@@ -130,7 +134,7 @@ function renderAheadBehind(aheadBehind: IAheadBehind, numTagsToPush: number) {
     content.push(
       <span key="ahead">
         {ahead + numTagsToPush}
-        <Octicon symbol={OcticonSymbol.arrowUp} />
+        <Octicon symbol={octicons.arrowUp} />
       </span>
     )
   }
@@ -139,7 +143,7 @@ function renderAheadBehind(aheadBehind: IAheadBehind, numTagsToPush: number) {
     content.push(
       <span key="behind">
         {behind}
-        <Octicon symbol={OcticonSymbol.arrowDown} />
+        <Octicon symbol={octicons.arrowDown} />
       </span>
     )
   }
@@ -151,12 +155,11 @@ function renderLastFetched(lastFetched: Date | null): JSX.Element | string {
   if (lastFetched) {
     return (
       <span>
-        {t('push-pull-button.last-fetched', 'Last fetched')}
-        <RelativeTime date={lastFetched} />
+        Last fetched <RelativeTime date={lastFetched} />
       </span>
     )
   } else {
-    return t('push-pull-button.never-fetched', 'Never fetched')
+    return 'Never fetched'
   }
 }
 
@@ -164,15 +167,15 @@ function renderLastFetched(lastFetched: Date | null): JSX.Element | string {
  * This represents the "double arrow" icon used to show a force-push, and is a
  * less complicated icon than the generated Octicon from the `octicons` package.
  */
-export const forcePushIcon: OcticonSymbol.OcticonSymbolType = {
+export const forcePushIcon: OcticonSymbolVariant = {
   w: 10,
   h: 16,
-  d:
+  p: [
     'M0 6a.75.75 0 0 0 .974.714L4.469 3.22a.75.75 0 0 1 1.06 0l3.478 3.478a.75.75 ' +
-    '0 0 0 .772-1.228L5.53 1.22a.75.75 0 0 0-1.06 0L.22 5.47A.75.75 0 0 0 0 6zm0 ' +
-    '3a.75.75 0 0 0 1.28.53l2.97-2.97V14a.75.75 0 1 0 1.5 0V6.56l2.97 2.97a.75.75 ' +
-    '0 0 0 1.06-1.06L5.53 4.22a.75.75 0 0 0-1.06 0L.22 8.47A.75.75 0 0 0 0 9z',
-  fr: 'evenodd',
+      '0 0 0 .772-1.228L5.53 1.22a.75.75 0 0 0-1.06 0L.22 5.47A.75.75 0 0 0 0 6zm0 ' +
+      '3a.75.75 0 0 0 1.28.53l2.97-2.97V14a.75.75 0 1 0 1.5 0V6.56l2.97 2.97a.75.75 ' +
+      '0 0 0 1.06-1.06L5.53 4.22a.75.75 0 0 0-1.06 0L.22 8.47A.75.75 0 0 0 0 9z',
+  ],
 }
 
 /**
@@ -467,9 +470,7 @@ export class PushPullButton extends React.Component<
       <ToolbarButton
         {...this.defaultButtonProps()}
         title={progress.title}
-        description={
-          progress.description || t('push-pull-button.hang-on', 'Hang on…')
-        }
+        description={progress.description || 'Hang on…'}
         progressValue={progress.value}
         icon={syncClockwise}
         iconClassName={networkActionInProgress ? 'spin' : ''}
@@ -483,13 +484,10 @@ export class PushPullButton extends React.Component<
     return (
       <ToolbarButton
         {...this.defaultButtonProps()}
-        title={t('push-pull-button.publish-repository', 'Publish repository')}
-        description={t(
-          'push-pull-button.publish-this-repository',
-          'Publish this repository to GitHub'
-        )}
+        title="Publish repository"
+        description="Publish this repository to GitHub"
         className="push-pull-button"
-        icon={OcticonSymbol.upload}
+        icon={octicons.upload}
         style={ToolbarButtonStyle.Subtitle}
         onClick={onClick}
       />
@@ -500,12 +498,9 @@ export class PushPullButton extends React.Component<
     return (
       <ToolbarButton
         {...this.defaultButtonProps()}
-        title={t('push-pull-button.publish-branch', 'Publish branch')}
-        description={t(
-          'push-pull-button.cannot-publish-unborn-head',
-          'Cannot publish unborn HEAD'
-        )}
-        icon={OcticonSymbol.upload}
+        title="Publish branch"
+        description="Cannot publish unborn HEAD"
+        icon={octicons.upload}
         disabled={true}
       />
     )
@@ -513,18 +508,15 @@ export class PushPullButton extends React.Component<
 
   private detachedHeadButton(rebaseInProgress: boolean) {
     const description = rebaseInProgress
-      ? t('push-pull-button.rebase-in-progress', 'Rebase in progress')
-      : t(
-          'push-pull-button.cannot-publish-detached-head',
-          'Cannot publish detached HEAD'
-        )
+      ? 'Rebase in progress'
+      : 'Cannot publish detached HEAD'
 
     return (
       <ToolbarButton
         {...this.defaultButtonProps()}
-        title={t('push-pull-button.publish-branch', 'Publish branch')}
+        title="Publish branch"
         description={description}
-        icon={OcticonSymbol.upload}
+        icon={octicons.upload}
         disabled={true}
       />
     )
@@ -536,14 +528,8 @@ export class PushPullButton extends React.Component<
     shouldNudge: boolean
   ) {
     const description = isGitHub
-      ? t(
-          'push-pull-button.publish-branch-to-github',
-          'Publish this branch to GitHub'
-        )
-      : t(
-          'push-pull-button.publish-branch-to-remote',
-          'Publish this branch to the remote'
-        )
+      ? 'Publish this branch to GitHub'
+      : 'Publish this branch to the remote'
 
     const className = classNames(
       this.defaultDropdownProps().className,
@@ -556,9 +542,9 @@ export class PushPullButton extends React.Component<
     return (
       <ToolbarDropdown
         {...this.defaultDropdownProps()}
-        title={t('push-pull-button.publish-branch', 'Publish branch')}
+        title="Publish branch"
         description={description}
-        icon={OcticonSymbol.upload}
+        icon={octicons.upload}
         onClick={onClick}
         className={className}
         dropdownContentRenderer={this.getDropdownContentRenderer([
@@ -573,7 +559,7 @@ export class PushPullButton extends React.Component<
     lastFetched: Date | null,
     onClick: () => void
   ) {
-    const title = t('push-pull-button.fetch', `Fetch {{0}}`, { 0: remoteName })
+    const title = `Fetch ${remoteName}`
     return (
       <ToolbarButton
         {...this.defaultButtonProps()}
@@ -595,10 +581,8 @@ export class PushPullButton extends React.Component<
     onClick: () => void
   ) {
     const title = pullWithRebase
-      ? t('push-pull-button.pull-with-rebase', `Pull {{0}} with rebase`, {
-          0: remoteName,
-        })
-      : t('push-pull-button.pull', `Pull {{0}}`, { 0: remoteName })
+      ? `Pull ${remoteName} with rebase`
+      : `Pull ${remoteName}`
 
     const dropdownItemTypes = [DropdownItemType.Fetch]
 
@@ -611,7 +595,7 @@ export class PushPullButton extends React.Component<
         {...this.defaultDropdownProps()}
         title={title}
         description={renderLastFetched(lastFetched)}
-        icon={OcticonSymbol.arrowDown}
+        icon={octicons.arrowDown}
         onClick={onClick}
         dropdownContentRenderer={this.getDropdownContentRenderer(
           dropdownItemTypes
@@ -634,9 +618,9 @@ export class PushPullButton extends React.Component<
     return (
       <ToolbarDropdown
         {...this.defaultDropdownProps()}
-        title={t('push-pull-button.push', `Push {{0}}`, { 0: remoteName })}
+        title={`Push ${remoteName}`}
         description={renderLastFetched(lastFetched)}
-        icon={OcticonSymbol.arrowUp}
+        icon={octicons.arrowUp}
         onClick={onClick}
         dropdownContentRenderer={this.getDropdownContentRenderer([
           DropdownItemType.Fetch,

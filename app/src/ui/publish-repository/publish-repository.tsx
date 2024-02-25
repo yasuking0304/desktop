@@ -9,7 +9,7 @@ import { merge } from '../../lib/merge'
 import { caseInsensitiveCompare } from '../../lib/compare'
 import { sanitizedRepositoryName } from '../add-repository/sanitized-repository-name'
 import { Octicon } from '../octicons'
-import * as OcticonSymbol from '../octicons/octicons.generated'
+import * as octicons from '../octicons/octicons.generated'
 import { RepositoryPublicationSettings } from '../../models/publish-settings'
 import { t } from 'i18next'
 
@@ -188,7 +188,7 @@ export class PublishRepository extends React.Component<
 
     return (
       <Row className="warning-helper-text">
-        <Octicon symbol={OcticonSymbol.alert} />
+        <Octicon symbol={octicons.alert} />
         {t('publish-repository.will-be-create-as', 'Will be created as {{0}}', {
           0: sanitizedName,
         })}

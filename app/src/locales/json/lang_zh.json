@@ -746,6 +746,10 @@
   "format-date": {
     "invalid-date": "Invalid date"
   },
+  "full-screen-info": {
+    "press-f11-to-exit-fullscreeen-1": "Press ",
+    "press-f11-to-exit-fullscreeen-2": " to exit fullscreen"
+  },
   "generic-git-auth": {
     "authentication-failed": "Authentication failed",
     "authentication-failed-darwin": "Authentication Failed",
@@ -777,7 +781,7 @@
   "git-email-not-found-warning": {
     "does-not-match": "does not match",
     "edither-your-account": "either of your GitHub.com nor GitHub Enterprise accounts",
-    "learn-more": "Learn more.",
+    "learn-more": "Learn more",
     "learn-more-about": "Learn more about commit attribution",
     "matchs": "matches",
     "this-email-address": "This email address {{0}} {{1}}. {{2}}",
@@ -1134,13 +1138,13 @@
   },
   "no-repositories-view": {
     "add-a-repositry": "Add a repository to GitHub Desktop to start collaborating",
-    "add-an-existing-repository": "Add an Existing Repository from your hard drive…",
-    "add-an-existing-repository-darwin": "Add an Existing Repository from your Hard Drive…",
+    "add-an-existing-repository": "Add an Existing Repository from your local Drive…",
+    "add-an-existing-repository-darwin": "Add an Existing Repository from your Local Drive…",
     "clone": "Clone ",
     "clone-a-repository": "Clone a repository from the Internet…",
     "clone-a-repository-darwin": "Clone a Repository from the Internet…",
-    "create-a-new-repository": "Create a New Repository on your hard drive…",
-    "create-a-new-repository-darwin": "Create a New Repository on your Hard Drive…",
+    "create-a-new-repository": "Create a New Repository on your local Drive…",
+    "create-a-new-repository-darwin": "Create a New Repository on your Local Drive…",
     "create-a-tutorial-repository": "Create a tutorial repository…",
     "create-a-tutorial-repository-darwin": "Create a Tutorial Repository…",
     "lets-get-start": "Let's get started!",
@@ -1397,6 +1401,7 @@
     "unable-to-open-shell-darwin": "Unable to Open Shell"
   },
   "show-uncaught-exception": {
+    "message": "GitHub Desktop has encountered an unrecoverable error and will need to restart.\n\nThis has been reported to the team, but if you encounter this repeatedly please report this issue to the GitHub Desktop issue tracker.\n\n{{0}}",
     "unrecoverable-error": "Unrecoverable error",
     "unrecoverable-error-darwin": "Unrecoverable Error"
   },

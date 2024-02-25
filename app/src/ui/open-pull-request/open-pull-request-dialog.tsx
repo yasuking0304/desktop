@@ -8,7 +8,7 @@ import { DialogFooter, OkCancelButtonGroup, Dialog } from '../dialog'
 import { Dispatcher } from '../dispatcher'
 import { Ref } from '../lib/ref'
 import { Octicon } from '../octicons'
-import * as OcticonSymbol from '../octicons/octicons.generated'
+import * as octicons from '../octicons/octicons.generated'
 import { OpenPullRequestDialogHeader } from './open-pull-request-header'
 import { PullRequestFilesChanged } from './pull-request-files-changed'
 import { PullRequestMergeStatus } from './pull-request-merge-status'
@@ -213,7 +213,7 @@ export class OpenPullRequestDialog extends React.Component<IOpenPullRequestDialo
     return (
       <div className="open-pull-request-message">
         <div>
-          <Octicon symbol={OcticonSymbol.gitPullRequest} />
+          <Octicon symbol={octicons.gitPullRequest} />
           <h3>
             {t(
               'open-pull-request-dialog.there_are_no_changes',
@@ -236,7 +236,7 @@ export class OpenPullRequestDialog extends React.Component<IOpenPullRequestDialo
     return (
       <div className="open-pull-request-message">
         <div>
-          <Octicon symbol={OcticonSymbol.gitPullRequest} />
+          <Octicon symbol={octicons.gitPullRequest} />
           <h3>
             {t(
               'open-pull-request-dialog.could-not-find-a-default-branch',
@@ -278,7 +278,7 @@ export class OpenPullRequestDialog extends React.Component<IOpenPullRequestDialo
     const okButton = (
       <>
         {currentBranchHasPullRequest && (
-          <Octicon symbol={OcticonSymbol.linkExternal} />
+          <Octicon symbol={octicons.linkExternal} />
         )}
         {requestCaption}
       </>

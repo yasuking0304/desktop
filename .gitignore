@@ -17,3 +17,4 @@ junit*.xml
 *.swp
 tslint-rules/
 app/src/locales/json/lang_*_old.json
+script/GitHub-Desktop.yml
