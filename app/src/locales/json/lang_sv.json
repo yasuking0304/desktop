@@ -334,6 +334,8 @@
   },
   "commit-message-avatar": {
     "ignore": "Ignore",
+    "learn-more": "Learn more",
+    "learn-more-about": "Learn more about commit attribution",
     "repository-settings": "repository settings",
     "update-email": "Update email",
     "update-email-1": "The email in your global Git config (",
@@ -1192,6 +1194,12 @@
     "open-a-pull-request": "Open a pull request",
     "open-a-pull-request-darwin": "Open a Pull Request"
   },
+  "open-thank-you-card": {
+    "open-thank-you-1": "The Desktop team would like to thank you for your contributions.",
+    "open-thank-you-2": "or",
+    "open-your-card": "Open Your Card",
+    "throw-it-away": "Throw It Away"
+  },
   "oversized-files-warning": {
     "commit-anyway": "Commit anyway",
     "commit-anyway-darwin": "Commit Anyway",
@@ -1545,6 +1553,11 @@
     "modified-darwin": "Modified",
     "removed": "removed",
     "removed-darwin": "Removed"
+  },
+  "thank-you": {
+    "thank-you-message": "Thanks so much for all your hard work on GitHub Desktop{{0}}. We're\n        so grateful for your willingness to contribute and make the app better\n        for everyone!",
+    "thank-you-title": "Thank you {{0}}! 🎉",
+    "you-contributed": "You contributed:"
   },
   "tutorial-panel": {
     "a-branch-allows-you-to-work": "A branch allows you to work on different versions of a\n                 repository at one time. Create a branch by going into the\n                 branch menu in the top bar and clicking \"{{0}}\".",

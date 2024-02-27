@@ -27,6 +27,7 @@ import {
 import { FoldoutType } from '../../lib/app-state'
 import { ForcePushBranchState } from '../../lib/rebase'
 import { PushPullButtonDropDown } from './push-pull-button-dropdown'
+import { t } from 'i18next'
 import { AriaLiveContainer } from '../accessibility/aria-live-container'
 
 export const DropdownItemClassName = 'push-pull-dropdown-item'
@@ -155,11 +156,12 @@ function renderLastFetched(lastFetched: Date | null): JSX.Element | string {
   if (lastFetched) {
     return (
       <span>
-        Last fetched <RelativeTime date={lastFetched} />
+        {t('push-pull-button.last-fetched', 'Last fetched')}
+        <RelativeTime date={lastFetched} />
       </span>
     )
   } else {
-    return 'Never fetched'
+    return t('push-pull-button.never-fetched', 'Never fetched')
   }
 }
 
@@ -470,7 +472,9 @@ export class PushPullButton extends React.Component<
       <ToolbarButton
         {...this.defaultButtonProps()}
         title={progress.title}
-        description={progress.description || 'Hang on…'}
+        description={
+          progress.description || t('push-pull-button.hang-on', 'Hang on…')
+        }
         progressValue={progress.value}
         icon={syncClockwise}
         iconClassName={networkActionInProgress ? 'spin' : ''}
@@ -484,8 +488,11 @@ export class PushPullButton extends React.Component<
     return (
       <ToolbarButton
         {...this.defaultButtonProps()}
-        title="Publish repository"
-        description="Publish this repository to GitHub"
+        title={t('push-pull-button.publish-repository', 'Publish repository')}
+        description={t(
+          'push-pull-button.publish-this-repository',
+          'Publish this repository to GitHub'
+        )}
         className="push-pull-button"
         icon={octicons.upload}
         style={ToolbarButtonStyle.Subtitle}
@@ -498,8 +505,11 @@ export class PushPullButton extends React.Component<
     return (
       <ToolbarButton
         {...this.defaultButtonProps()}
-        title="Publish branch"
-        description="Cannot publish unborn HEAD"
+        title={t('push-pull-button.publish-branch', 'Publish branch')}
+        description={t(
+          'push-pull-button.cannot-publish-unborn-head',
+          'Cannot publish unborn HEAD'
+        )}
         icon={octicons.upload}
         disabled={true}
       />
@@ -508,13 +518,16 @@ export class PushPullButton extends React.Component<
 
   private detachedHeadButton(rebaseInProgress: boolean) {
     const description = rebaseInProgress
-      ? 'Rebase in progress'
-      : 'Cannot publish detached HEAD'
+      ? t('push-pull-button.rebase-in-progress', 'Rebase in progress')
+      : t(
+          'push-pull-button.cannot-publish-detached-head',
+          'Cannot publish detached HEAD'
+        )
 
     return (
       <ToolbarButton
         {...this.defaultButtonProps()}
-        title="Publish branch"
+        title={t('push-pull-button.publish-branch', 'Publish branch')}
         description={description}
         icon={octicons.upload}
         disabled={true}
@@ -528,8 +541,14 @@ export class PushPullButton extends React.Component<
     shouldNudge: boolean
   ) {
     const description = isGitHub
-      ? 'Publish this branch to GitHub'
-      : 'Publish this branch to the remote'
+      ? t(
+          'push-pull-button.publish-branch-to-github',
+          'Publish this branch to GitHub'
+        )
+      : t(
+          'push-pull-button.publish-branch-to-remote',
+          'Publish this branch to the remote'
+        )
 
     const className = classNames(
       this.defaultDropdownProps().className,
@@ -542,7 +561,7 @@ export class PushPullButton extends React.Component<
     return (
       <ToolbarDropdown
         {...this.defaultDropdownProps()}
-        title="Publish branch"
+        title={t('push-pull-button.publish-branch', 'Publish branch')}
         description={description}
         icon={octicons.upload}
         onClick={onClick}
@@ -559,7 +578,7 @@ export class PushPullButton extends React.Component<
     lastFetched: Date | null,
     onClick: () => void
   ) {
-    const title = `Fetch ${remoteName}`
+    const title = t('push-pull-button.fetch', `Fetch {{0}}`, { 0: remoteName })
     return (
       <ToolbarButton
         {...this.defaultButtonProps()}
@@ -581,8 +600,10 @@ export class PushPullButton extends React.Component<
     onClick: () => void
   ) {
     const title = pullWithRebase
-      ? `Pull ${remoteName} with rebase`
-      : `Pull ${remoteName}`
+      ? t('push-pull-button.pull-with-rebase', `Pull {{0}} with rebase`, {
+          0: remoteName,
+        })
+      : t('push-pull-button.pull', `Pull {{0}}`, { 0: remoteName })
 
     const dropdownItemTypes = [DropdownItemType.Fetch]
 
@@ -618,7 +639,7 @@ export class PushPullButton extends React.Component<
     return (
       <ToolbarDropdown
         {...this.defaultDropdownProps()}
-        title={`Push ${remoteName}`}
+        title={t('push-pull-button.push', `Push {{0}}`, { 0: remoteName })}
         description={renderLastFetched(lastFetched)}
         icon={octicons.arrowUp}
         onClick={onClick}
