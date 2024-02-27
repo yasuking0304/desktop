@@ -344,7 +344,7 @@ export class CommitMessageAvatar extends React.Component<
               account{userName}.{' '}
               <LinkButton
                 ariaLabel={t(
-                  'git-email-not-found-warning.learn-more-about',
+                  'commit-message-avatar.learn-more-about',
                   'Learn more about commit attribution'
                 )}
                 uri={t(
@@ -352,7 +352,7 @@ export class CommitMessageAvatar extends React.Component<
                   'https://docs.github.com/en/github/committing-changes-to-your-project/why-are-my-commits-linked-to-the-wrong-user'
                 )}
               >
-                {t('git-email-not-found-warning.learn-more', 'Learn more')}
+                {t('commit-message-avatar.learn-more', 'Learn more')}
               </LinkButton>
             </div>
           </Row>

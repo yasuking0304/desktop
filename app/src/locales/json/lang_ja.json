@@ -334,6 +334,8 @@
   },
   "commit-message-avatar": {
     "ignore": "無視",
+    "learn-more": "詳細情報",
+    "learn-more-about": "詳しくはコミットユーザーについてをご覧ください",
     "repository-settings": "リポジトリ設定",
     "update-email": "メールの更新",
     "update-email-1": "グローバル Git 設定 (",
@@ -1192,6 +1194,12 @@
     "open-a-pull-request": "プルリクエストを開く",
     "open-a-pull-request-darwin": "プルリクエストを開く"
   },
+  "open-thank-you-card": {
+    "open-thank-you-1": "Desktop チームは、皆様のご貢献に感謝いたします。",
+    "open-thank-you-2": "または",
+    "open-your-card": "カードを開く",
+    "throw-it-away": "非表示にする"
+  },
   "oversized-files-warning": {
     "commit-anyway": "とにかくコミットする",
     "commit-anyway-darwin": "とにかくコミットする",
@@ -1545,6 +1553,11 @@
     "modified-darwin": "修正",
     "removed": "削除",
     "removed-darwin": "削除"
+  },
+  "thank-you": {
+    "thank-you-message": "GitHub Desktop {{0}} リリースに多大なるご尽力をいただき、ありがとうございました。皆様の積極的な貢献とアプリをみんなにとってより良いものにすることに心から感謝します。",
+    "thank-you-title": "{{0}} さん、ありがとうございました! 🎉",
+    "you-contributed": "あなたの貢献:"
   },
   "tutorial-panel": {
     "a-branch-allows-you-to-work": "ブランチを使用すると、一度に異なるバージョンのリポジトリで作業できます。ブランチを作成するには、画面上部のツールバーのブランチメニューに移動し、\"{{0}}\"をクリックします。",
