@@ -55,6 +55,8 @@ interface IBranchesContainerProps {
 
   /** Map from the emoji shortcut (e.g., :+1:) to the image's local path. */
   readonly emoji: Map<string, string>
+
+  readonly underlineLinks: boolean
 }
 
 interface IBranchesContainerState {
@@ -139,6 +141,7 @@ export class BranchesContainer extends React.Component<
         pullRequestItemTop={prListItemTop}
         onMouseEnter={this.onMouseEnterPullRequestQuickView}
         onMouseLeave={this.onMouseLeavePullRequestQuickView}
+        underlineLinks={this.props.underlineLinks}
       />
     )
   }
