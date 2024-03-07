@@ -799,8 +799,8 @@
   "installing-update": {
     "installing-update": "アップデートのインストール中…",
     "installing-update-darwin": "アップデートのインストール中…",
-    "quit-anyway": "すぐ終了する",
-    "quit-anyway-darwin": "すぐ終了する",
+    "quit-anyway": "すぐに終了",
+    "quit-anyway-darwin": "すぐに終了",
     "update-is-in-progress": "更新中です。GitHub Desktop を終了させないでください。今、終了させるとインストールが中断される可能性があります。"
   },
   "integrations": {
