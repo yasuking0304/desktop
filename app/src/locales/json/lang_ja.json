@@ -796,6 +796,13 @@
     "gitignore-message-2": " を編集します。このファイルには、Git がコミット時に除外したいファイルとディレクトリを指定します。既にコミットされているファイルは影響を受けません。",
     "placeholder-ignored-files": "除外ファイル"
   },
+  "installing-update": {
+    "installing-update": "アップデートのインストール中…",
+    "installing-update-darwin": "アップデートのインストール中…",
+    "quit-anyway": "すぐ終了する",
+    "quit-anyway-darwin": "すぐ終了する",
+    "update-is-in-progress": "更新中です。GitHub Desktop を終了させないでください。今、終了させるとインストールが中断される可能性があります。"
+  },
   "integrations": {
     "applications": "アプリケーション",
     "external-editor": "外部エディター",
