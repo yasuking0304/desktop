@@ -19,6 +19,13 @@
     "you-have-the-latest-version-1": "最新バージョンがインストール済み (最終チェック ",
     "you-have-the-latest-version-2": ")"
   },
+  "accessibility": {
+    "accessibility": "アクセシビリティ",
+    "check-marks-will-be-displayed": "有効にすると、コミット時に差分の行番号と行番号のグループに沿ってチェックマークが表示されます。無効にすると、行番号コントロールは目立たなくなります。",
+    "this-is-an-example-link": "リンクのサンプル",
+    "underline-links": "アンダーライン",
+    "underline-links-in-commit-messages": "有効にすると、GitHub Desktop はコミットメッセージ、コメント、その他のテキストフィールドのリンクにアンダーラインを表示します。これにより、リンクを区別しやすくなります。 {{0}}"
+  },
   "acknowledgements": {
     "about-license-1": " ",
     "about-license-2": " は MIT ライセンスの下で公開されているオープンソースプロジェクトです。あなたは ",

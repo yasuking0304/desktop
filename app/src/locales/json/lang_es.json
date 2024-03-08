@@ -19,6 +19,13 @@
     "you-have-the-latest-version-1": "You have the latest version (last checked ",
     "you-have-the-latest-version-2": ")"
   },
+  "accessibility": {
+    "accessibility": "Accessibility",
+    "check-marks-will-be-displayed": "When enabled, check marks will be displayed along side the line\n              numbers and groups of line numbers in the diff when committing. When\n              disabled, the line number controls will be less prominent.",
+    "this-is-an-example-link": "This is an example link",
+    "underline-links": "Underline links",
+    "underline-links-in-commit-messages": "When enabled, GitHub Desktop will underline links in commit\n              messages, comments, and other text fields. This can help make links\n              easier to distinguish. {{0}}"
+  },
   "acknowledgements": {
     "about-license-1": " ",
     "about-license-2": " is an open\n            source project published under the MIT License. You can view the\n            source code and contribute to this project on ",
