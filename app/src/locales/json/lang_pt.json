@@ -796,6 +796,13 @@
     "gitignore-message-2": ". This file specifies intentionally\n          untracked files that Git should ignore. Files already tracked by Git\n          are not affected. ",
     "placeholder-ignored-files": "Ignored files"
   },
+  "installing-update": {
+    "installing-update": "Installing update…",
+    "installing-update-darwin": "Installing Update…",
+    "quit-anyway": "Quit anyway",
+    "quit-anyway-darwin": "Quit Anyway",
+    "update-is-in-progress": "Do not close GitHub Desktop while the update is in progress. Closing\n            now may break your installation."
+  },
   "integrations": {
     "applications": "Applications",
     "external-editor": "External editor",
