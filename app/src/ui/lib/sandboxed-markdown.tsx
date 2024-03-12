@@ -40,8 +40,6 @@ interface ISandboxedMarkdownProps {
 
   /** The context of which markdown resides - such as PullRequest, PullRequestComment, Commit */
   readonly markdownContext?: MarkdownContext
-
-  readonly underlineLinks: boolean
 }
 
 interface ISandboxedMarkdownState {
@@ -204,12 +202,7 @@ export class SandboxedMarkdown extends React.PureComponent<
         ${scrapeVariable('--text-color')}
         ${scrapeVariable('--background-color')}
       }
-
       ${css}
-
-      .markdown-body a {
-        text-decoration: ${this.props.underlineLinks ? 'underline' : 'inherit'};
-      }
     </style>`
   }
 

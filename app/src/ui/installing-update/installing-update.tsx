@@ -72,25 +72,34 @@ export class InstallingUpdate extends React.Component<IInstallingUpdateProps> {
         type="warning"
       >
         <DialogHeader
-          title={__DARWIN__ 
-            ? t('installing-update.installing-update-darwin','Installing Update…')
-            : t('installing-update.installing-update','Installing update…')}
+          title={
+            __DARWIN__
+              ? t(
+                  'installing-update.installing-update-darwin',
+                  'Installing Update…'
+                )
+              : t('installing-update.installing-update', 'Installing update…')
+          }
           loading={true}
           dismissable={true}
           onDismissed={this.props.onDismissed}
         />
         <DialogContent>
           <Row className="updating-message">
-            {t('installing-update.update-is-in-progress',
-            `Do not close GitHub Desktop while the update is in progress. Closing
-            now may break your installation.`)}
+            {t(
+              'installing-update.update-is-in-progress',
+              `Do not close GitHub Desktop while the update is in progress. Closing
+            now may break your installation.`
+            )}
           </Row>
         </DialogContent>
         <DialogFooter>
           <OkCancelButtonGroup
-            okButtonText={__DARWIN__
-              ? t('installing-update.quit-anyway-darwin', 'Quit Anyway')
-              : t('installing-update.quit-anyway', 'Quit anyway')}
+            okButtonText={
+              __DARWIN__
+                ? t('installing-update.quit-anyway-darwin', 'Quit Anyway')
+                : t('installing-update.quit-anyway', 'Quit anyway')
+            }
             onOkButtonClick={this.onQuitAnywayButtonClicked}
             onCancelButtonClick={this.props.onDismissed}
             destructive={true}

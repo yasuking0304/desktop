@@ -7,7 +7,6 @@ import {
   DiffLine,
   DiffSelection,
   DiffHunkExpansionType,
-  DiffSelectionType,
 } from '../../models/diff'
 import {
   getLineFilters,
@@ -30,12 +29,7 @@ import {
   OverscanIndicesGetterParams,
   defaultOverscanIndicesGetter,
 } from 'react-virtualized'
-import {
-  CheckBoxIdentifier,
-  IRowSelectableGroup,
-  IRowSelectableGroupStaticData,
-  SideBySideDiffRow,
-} from './side-by-side-diff-row'
+import { IRowSelectableGroup, SideBySideDiffRow } from './side-by-side-diff-row'
 import memoize from 'memoize-one'
 import {
   findInteractiveOriginalDiffRange,
@@ -56,7 +50,6 @@ import {
   MaxIntraLineDiffStringLength,
   getFirstAndLastClassesSideBySide,
   textDiffEquals,
-  isRowChanged,
 } from './diff-helpers'
 import { showContextualMenu } from '../../lib/menu-item'
 import { getTokens } from './diff-syntax-mode'
@@ -236,19 +229,7 @@ export class SideBySideDiff extends React.Component<
   private textSelectionStartRow: number | undefined = undefined
   private textSelectionEndRow: number | undefined = undefined
 
-  private renderedStartIndex: number = 0
-  private renderedStopIndex: number | undefined = undefined
-
   private readonly hunkExpansionRefs = new Map<string, HTMLButtonElement>()
-
-  /**
-   * Caches a group of selectable row's information that does not change on row
-   * rerender like line numbers using the row's hunkStartLline as the key.
-   */
-  private readonly rowSelectableGroupStaticDataCache = new Map<
-    number,
-    IRowSelectableGroupStaticData
-  >()
 
   public constructor(props: ISideBySideDiffProps) {
     super(props)
@@ -431,12 +412,6 @@ export class SideBySideDiff extends React.Component<
           selection.empty()
         }
       }
-
-      this.rowSelectableGroupStaticDataCache.clear()
-    }
-
-    if (prevProps.showSideBySideDiff !== this.props.showSideBySideDiff) {
-      this.rowSelectableGroupStaticDataCache.clear()
     }
 
     if (this.state.lastExpandedHunk !== prevState.lastExpandedHunk) {
@@ -554,14 +529,6 @@ export class SideBySideDiff extends React.Component<
     )
   }
 
-  private onRowsRendered = (info: {
-    startIndex: number
-    stopIndex: number
-  }) => {
-    this.renderedStartIndex = info.startIndex
-    this.renderedStopIndex = info.stopIndex
-  }
-
   public render() {
     const { diff } = this.state
 
@@ -601,7 +568,6 @@ export class SideBySideDiff extends React.Component<
                 rowCount={rows.length}
                 rowHeight={this.getRowHeight}
                 rowRenderer={this.renderRow}
-                onRowsRendered={this.onRowsRendered}
                 ref={this.virtualListRef}
                 overscanIndicesGetter={this.overscanIndicesGetter}
                 // The following properties are passed to the list
@@ -615,7 +581,6 @@ export class SideBySideDiff extends React.Component<
                 afterTokens={this.state.afterTokens}
                 temporarySelection={this.state.temporarySelection}
                 hoveredHunk={this.state.hoveredHunk}
-                showDiffCheckMarks={this.props.showDiffCheckMarks}
                 isSelectable={canSelect(this.props.file)}
                 fileSelection={this.getSelection()}
                 // rows are memoized and include things like the
@@ -654,170 +619,68 @@ export class SideBySideDiff extends React.Component<
    * more than one row.
    */
   private getRowSelectableGroupDetails(
-    rowIndex: number
+    row: SimplifiedDiffRow,
+    prev: SimplifiedDiffRow,
+    next: SimplifiedDiffRow
   ): IRowSelectableGroup | null {
-    const { diff, hoveredHunk } = this.state
-
-    const rows = getDiffRows(
-      diff,
-      this.props.showSideBySideDiff,
-      this.canExpandDiff()
-    )
-    const row = rows[rowIndex]
-
-    if (row === undefined || !isRowChanged(row)) {
+    if (!('hunkStartLine' in row)) {
+      // can't be a selection hunk without a hunkStartLine
       return null
     }
 
-    const { hunkStartLine } = row
-    const staticData = this.getRowSelectableGroupStaticData(hunkStartLine, rows)
-    const { diffRowStartIndex, diffRowStopIndex } = staticData
+    const { diff, hoveredHunk } = this.state
 
-    const isFirst = diffRowStartIndex === rowIndex
-    const isCheckAllRenderedInRow =
-      isFirst ||
-      (diffRowStartIndex < this.renderedStartIndex &&
-        rowIndex === this.renderedStartIndex)
+    const selectableType = [
+      DiffRowType.Added,
+      DiffRowType.Deleted,
+      DiffRowType.Modified,
+    ]
 
-    return {
-      isFirst,
-      isCheckAllRenderedInRow,
-      isHovered: hoveredHunk === hunkStartLine,
-      selectionState: this.getSelectableGroupSelectionState(
-        diff.hunks,
-        hunkStartLine
-      ),
-      height: this.getRowSelectableGroupHeight(
-        diffRowStartIndex,
-        diffRowStopIndex
-      ),
-      staticData,
+    if (!selectableType.includes(row.type)) {
+      // We only care about selectable rows
+      return null
     }
-  }
 
-  private getSelectableGroupSelectionState(
-    hunks: ReadonlyArray<DiffHunk>,
-    hunkStartLine: number
-  ): DiffSelectionType {
+    const range = findInteractiveOriginalDiffRange(
+      diff.hunks,
+      row.hunkStartLine
+    )
+    if (range === null) {
+      // We only care about ranges with more than one line
+      return null
+    }
+
     const selection = this.getSelection()
     if (selection === undefined) {
-      return DiffSelectionType.None
-    }
-
-    const range = findInteractiveOriginalDiffRange(hunks, hunkStartLine)
-    if (range === null) {
-      //Shouldn't happen, but if it does, we can't do anything with it
-      return DiffSelectionType.None
+      // We only care about selectable rows.. so if no selection, no selectable rows
+      return null
     }
 
     const { from, to } = range
 
-    return selection.isRangeSelected(from, to - from + 1)
-  }
-
-  private getRowSelectableGroupHeight = (from: number, to: number) => {
-    const start =
-      from > this.renderedStartIndex ? from : this.renderedStartIndex
-
-    const stop =
-      this.renderedStopIndex !== undefined && to > this.renderedStopIndex + 10
-        ? this.renderedStopIndex + 10
-        : to
-
-    let height = 0
-    for (let i = start; i <= stop; i++) {
-      height += this.getRowHeight({ index: i })
+    return {
+      isFirst: prev === undefined || !selectableType.includes(prev.type),
+      isLast: next === undefined || !selectableType.includes(next.type),
+      isHovered: hoveredHunk === row.hunkStartLine,
+      isFocused: true, // focusedHunk === row.hunkStartLine, - To be added in later PR
+      selectionState: selection.isRangeSelected(from, to - from + 1),
+      height: this.getRowSelectableGroupHeight(row.hunkStartLine),
     }
-
-    return height
   }
 
-  private getSelectableGroupRowIndexRange(
-    hunkStartLine: number,
-    rows: ReadonlyArray<SimplifiedDiffRow>
-  ) {
-    const diffRowStartIndex = rows.findIndex(
-      r => isRowChanged(r) && r.hunkStartLine === hunkStartLine
+  private getRowSelectableGroupHeight = (hunkStartLine: number) => {
+    const rows = getDiffRows(
+      this.state.diff,
+      this.props.showSideBySideDiff,
+      this.canExpandDiff()
     )
 
-    let diffRowStopIndex = diffRowStartIndex
-
-    while (
-      rows[diffRowStopIndex + 1] !== undefined &&
-      isRowChanged(rows[diffRowStopIndex + 1])
-    ) {
-      diffRowStopIndex++
-    }
-
-    return {
-      diffRowStartIndex,
-      diffRowStopIndex,
-    }
-  }
-
-  private getRowSelectableGroupStaticData = (
-    hunkStartLine: number,
-    rows: ReadonlyArray<SimplifiedDiffRow>
-  ): IRowSelectableGroupStaticData => {
-    const cachedStaticData =
-      this.rowSelectableGroupStaticDataCache.get(hunkStartLine)
-    if (cachedStaticData !== undefined) {
-      return cachedStaticData
-    }
-
-    const { diffRowStartIndex, diffRowStopIndex } =
-      this.getSelectableGroupRowIndexRange(hunkStartLine, rows)
-
-    const lineNumbers = new Set<number>()
-    let hasAfter = false
-    let hasBefore = false
-
-    const groupRows = rows.slice(diffRowStartIndex, diffRowStopIndex + 1)
-
-    const lineNumbersIdentifiers: Array<CheckBoxIdentifier> = []
-
-    for (const r of groupRows) {
-      if (r.type === DiffRowType.Added) {
-        lineNumbers.add(r.data.lineNumber)
-        hasAfter = true
-        lineNumbersIdentifiers.push(`${r.data.lineNumber}-after`)
+    return rows.reduce((acc, r, index) => {
+      if (!('hunkStartLine' in r) || r.hunkStartLine !== hunkStartLine) {
+        return acc
       }
-
-      if (r.type === DiffRowType.Deleted) {
-        lineNumbers.add(r.data.lineNumber)
-        hasBefore = true
-        lineNumbersIdentifiers.push(`${r.data.lineNumber}-before`)
-      }
-
-      if (r.type === DiffRowType.Modified) {
-        hasAfter = true
-        hasBefore = true
-        lineNumbers.add(r.beforeData.lineNumber)
-        lineNumbers.add(r.afterData.lineNumber)
-        lineNumbersIdentifiers.push(
-          `${r.beforeData.lineNumber}-before`,
-          `${r.afterData.lineNumber}-after`
-        )
-      }
-    }
-
-    const diffType =
-      hasAfter && hasBefore
-        ? DiffRowType.Modified
-        : hasAfter
-        ? DiffRowType.Added
-        : DiffRowType.Deleted
-
-    const data: IRowSelectableGroupStaticData = {
-      diffRowStartIndex,
-      diffRowStopIndex,
-      diffType,
-      lineNumbers: Array.from(lineNumbers).sort(),
-      lineNumbersIdentifiers,
-    }
-
-    this.rowSelectableGroupStaticDataCache.set(hunkStartLine, data)
-    return data
+      return acc + this.getRowHeight({ index })
+    }, 0)
   }
 
   private renderRow = ({ index, parent, style, key }: ListRowProps) => {
@@ -855,7 +718,14 @@ export class SideBySideDiff extends React.Component<
 
     const rowWithTokens = this.createFullRow(row, index)
 
-    const rowSelectableGroupDetails = this.getRowSelectableGroupDetails(index)
+    const rowSelectableGroupDetails = this.getRowSelectableGroupDetails(
+      row,
+      prev,
+      next
+    )
+
+    // Just temporary until pass the whole row group data down.
+    const isHunkHovered = !!rowSelectableGroupDetails?.isHovered
 
     return (
       <CellMeasurer
@@ -871,6 +741,7 @@ export class SideBySideDiff extends React.Component<
             lineNumberWidth={lineNumberWidth}
             numRow={index}
             isDiffSelectable={canSelect(this.props.file)}
+            isHunkHovered={isHunkHovered}
             rowSelectableGroup={rowSelectableGroupDetails}
             showSideBySideDiff={this.props.showSideBySideDiff}
             hideWhitespaceInDiff={this.props.hideWhitespaceInDiff}

@@ -34,8 +34,6 @@ interface IPullRequestQuickViewProps {
 
   /** Map from the emoji shortcut (e.g., :+1:) to the image's local path. */
   readonly emoji: Map<string, string>
-
-  readonly underlineLinks: boolean
 }
 
 interface IPullRequestQuickViewState {
@@ -162,11 +160,7 @@ export class PullRequestQuickView extends React.Component<
       <header className="header">
         <Octicon symbol={octicons.listUnordered} />
         <div className="action-needed">Review requested</div>
-        <Button
-          className="button-with-icon"
-          onClick={this.onViewOnGitHub}
-          role="link"
-        >
+        <Button className="button-with-icon" onClick={this.onViewOnGitHub}>
           View on GitHub
           <Octicon symbol={octicons.linkExternal} />
         </Button>
@@ -215,7 +209,6 @@ export class PullRequestQuickView extends React.Component<
           markdownContext={'PullRequest'}
           onMarkdownLinkClicked={this.onMarkdownLinkClicked}
           onMarkdownParsed={this.onMarkdownParsed}
-          underlineLinks={this.props.underlineLinks}
         />
       </div>
     )
