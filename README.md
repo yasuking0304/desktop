@@ -4,9 +4,13 @@
 GitHub app. It is written in [TypeScript](https://www.typescriptlang.org) and
 uses [React](https://reactjs.org/).
 
-[linux version is here](https://github.com/yasuking0304/desktop/tree/linux)
+## Where can I get it Multilingal Platform?
+ - [macOS(x64)](https://drive.google.com/file/d/1V1Fnx_JUs2z27wrSzfOOaouzEOSzXTj2/view?usp=drive_link)
+ - [Windows(x64)](https://drive.google.com/file/d/1EY6c2QdhyjasrxgBMgbdUwlNF2hN8aHE/view?usp=drive_link)
+ - [Linux(x64-AppImage)](https://drive.google.com/file/d/1I_0-SPXuSJNAJe4-J0xiYPIGjgYhL8U5/view?usp=drive_link)
 
 [Click here for details (This site is only available in Japanese)](https://github.com/yasuking0304/desktop/wiki)
+
 <picture>
   <source
     srcset="https://user-images.githubusercontent.com/634063/202742848-63fa1488-6254-49b5-af7c-96a6b50ea8af.png"
@@ -19,7 +23,7 @@ uses [React](https://reactjs.org/).
   />
 </picture>
 
-## Where can I get it?
+## Where can I get it Original?
 
 Download the official installer for your operating system:
 
