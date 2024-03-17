@@ -1663,7 +1663,7 @@
     "view-certificate-darwin": "証明書の追加"
   },
   "update-available": {
-    "an-optimized-arm-version-1": "あなたの{{0}} PCに最適化されたバージョンの GitHub Desktopが利用可能で次回の起動時にインストールされます。または今すぐ ",
+    "an-optimized-arm-version-1": "あなたの{{0}} PCに最適化されたバージョンの GitHub Desktop が利用可能で次回の起動時にインストールされます。または今すぐ ",
     "an-optimized-arm-version-2": " を選択してください。",
     "dismiss": "非表示",
     "exciting-new-features-1": "エキサイティングな新機能が{{0}}に追加されました。",
