@@ -282,7 +282,7 @@ export class Preferences extends React.Component<
             {enableLinkUnderlines() && (
               <span>
                 <Octicon className="icon" symbol={octicons.accessibility} />
-                Accessibility
+                {t('preferences.accessibility', 'Accessibility')}
               </span>
             )}
           </TabBar>

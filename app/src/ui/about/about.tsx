@@ -357,10 +357,14 @@ export class About extends React.Component<IAboutProps, IAboutState> {
     const name = this.props.applicationName
     const version = this.props.applicationVersion
     const releaseNotesLink = (
-      <LinkButton uri={ReleaseNotesUri}>release notes</LinkButton>
+      <LinkButton uri={ReleaseNotesUri}>
+        {t('about.release-notes', 'release notes')}
+      </LinkButton>
     )
 
-    const versionText = __DEV__ ? `Build ${version}` : `Version ${version}`
+    const versionText = __DEV__
+      ? t('about.build', `Build {{0}}`, { 0: version })
+      : t('about.version', `Version {{0}}`, { 0: version })
 
     return (
       <Dialog

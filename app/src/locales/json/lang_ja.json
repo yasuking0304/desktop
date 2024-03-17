@@ -1,5 +1,6 @@
 {
   "about": {
+    "build": "ビルド {{0}}",
     "check-for-updates": "更新の確認",
     "check-out-the-beta-channel-1": " ",
     "check-out-the-beta-channel-2": "Beta Channel",
@@ -13,18 +14,21 @@
     "looking-for-the-latest-features": "最新の機能をお探しですか?",
     "no-longer-supported-operating-systems": "このオペレーティング システムはサポートされなくなりました。 ソフトウェアのアップデートが無効になっています。",
     "quit-and-install-update": "終了して更新プログラムをインストールする",
+    "release-notes": "リリースノート",
     "supported-operating-systems": "サポートされているオペレーティング システム",
     "terms-and-conditions": "利用条件",
     "update-has-been-downloaded-and-is-ready": "更新プログラムがダウンロードされ、インストールの準備が整いました。",
+    "version": "バージョン {{0}}",
     "you-have-the-latest-version-1": "最新バージョンがインストール済み (最終チェック ",
     "you-have-the-latest-version-2": ")"
   },
   "accessibility": {
     "accessibility": "アクセシビリティ",
     "check-marks-will-be-displayed": "有効にすると、コミット時に差分の行番号と行番号のグループに沿ってチェックマークが表示されます。無効にすると、行番号コントロールは目立たなくなります。",
+    "show-check-marks-in-the-diff": "変更点にチェックマークを表示",
     "this-is-an-example-link": "リンクのサンプル",
     "underline-links": "アンダーライン",
-    "underline-links-in-commit-messages": "有効にすると、GitHub Desktop はコミットメッセージ、コメント、その他のテキストフィールドのリンクにアンダーラインを表示します。これにより、リンクを区別しやすくなります。 {{0}}"
+    "underline-links-in-commit-messages": "有効にすると、GitHub Desktop はコミットメッセージ、コメント、その他のテキストフィールドのリンクにアンダーラインを表示します。これにより、リンクを区別しやすくなります。"
   },
   "acknowledgements": {
     "about-license-1": " ",
@@ -160,7 +164,7 @@
     "stash-all-changes-darwin": "すべての変更を一時退避する",
     "stashed-changes": "一時退避した変更",
     "summary-required": "概要 (必須入力)",
-    "update-filename": "更新 {{0}}"
+    "update-filename": "Update {{0}}"
   },
   "checkout": {
     "checking-out-branch": "ブランチ {{0}} のチェックアウト",
@@ -168,6 +172,10 @@
     "checking-out-commit-darwin": "コミットのチェックアウト",
     "switching-to-branch": "ブランチの切り替え",
     "switching-to-branch-darwin": "ブランチの切り替え"
+  },
+  "cherry-pick-conflicts-banner": {
+    "resolve-conflicts-to-continue-1": "競合を解決して、",
+    "resolve-conflicts-to-continue-2": " へのチェリーピックを続行します。"
   },
   "cherry-pick-undone": {
     "cherry-pick-undone-1": "チェリーピックを元に戻します。コピーされた {{0}}個のコミットを ",
@@ -399,6 +407,8 @@
     "github-desktop": "GitHub Desktop",
     "history": "変更履歴",
     "ignore": "無視",
+    "install-and-restart": "インストールして再起動",
+    "install-and-restart-darwin": "インストールして再起動",
     "line": "行",
     "lines": "行",
     "local-path": "ローカルパス",
@@ -440,6 +450,7 @@
     "undo": "元に戻す",
     "update": "更新",
     "username-or-email": "ユーザー名 または メールアドレス",
+    "view-conflicts": "コンフリクトの表示",
     "view-on-github": "GitHub で確認",
     "your-email": "あなたのメールアドレス@example.com",
     "your-name": "あなたの名前"
@@ -509,6 +520,10 @@
     "files-have": "files have",
     "many-conflicted-files-have-been-resolved": "{{0}}ファイルの競合が解決されました。",
     "tooltip-resolve-all-changes-before-continuing": "続行する前にすべての変更を解決する"
+  },
+  "conflicts-found-banner": {
+    "resolve-conflicts-to-continue-1": " ",
+    "resolve-conflicts-to-continue-2": " の競合を解決して続行します。"
   },
   "copy-button": {
     "copied": "コピーしました"
@@ -975,6 +990,7 @@
     "shell": "コマンドプロンプト",
     "shell-linux": "ターミナル",
     "show-all": "すべて表示",
+    "show-banner": "バナー表示",
     "show-branches-list": "ブランチリスト(&B)",
     "show-branches-list-darwin": "ブランチリストを表示",
     "show-changes": "変更点(&C)",
@@ -1050,6 +1066,10 @@
     "this-will-merge-2": " from ",
     "this-will-merge-3": " ",
     "unable-to-merge-unrelated-histories": "このリポジトリ内の無関係な履歴をマージできません"
+  },
+  "merge-conflicts-banner": {
+    "resolve-conflicts-and-commit-1": "競合を解決して、",
+    "resolve-conflicts-and-commit-2": " へのマージを続行します。"
   },
   "missing-repository": {
     "cannot-find": "\"{{0}}\" が見つかりません",
@@ -1231,6 +1251,7 @@
     "overwrite-stash-darwin": "退避ファイルを上書きしますか?"
   },
   "preferences": {
+    "accessibility": "アクセシビリティ",
     "accounts": "アカウント",
     "advanced": "詳細設定",
     "appearance": "外観テーマ",
@@ -1319,6 +1340,10 @@
     "unable-to-start-rebase": "リベースを開始できません。有効なブランチを選択していることを確認してください。",
     "you-are-not-able-to-rebase": "このブランチをそれ自体にリベースすることはできません。"
   },
+  "rebase-conflicts-banner": {
+    "resolve-conflicts-to-continue-1": "競合を解決して、",
+    "resolve-conflicts-to-continue-2": " へのリベースを続行します。"
+  },
   "ref-name-text-box": {
     "created": "作成",
     "get-warning-message-as-string": "警告: {{1}} として{{0}}されます。(スペースは'-'に置き換えられます).",
@@ -1329,6 +1354,13 @@
   },
   "relative-time": {
     "just-now": "たった今"
+  },
+  "release-notes-dialog": {
+    "bugfixes": "バグ修正",
+    "enhancements": "機能強化",
+    "other": "その他",
+    "title": "バージョン {{0}}",
+    "view-all-release-notes": "全てのリリースノートの表示"
   },
   "remote": {
     "placeholder-remote-url": "リモートURL",
@@ -1629,6 +1661,19 @@
     "untrusted-server-darwin": "信頼できないサーバー",
     "view-certificate-": "証明書の追加",
     "view-certificate-darwin": "証明書の追加"
+  },
+  "update-available": {
+    "an-optimized-arm-version-1": "あなたの{{0}} PCに最適化されたバージョンの GitHub Desktopが利用可能で次回の起動時にインストールされます。または今すぐ ",
+    "an-optimized-arm-version-2": " を選択してください。",
+    "dismiss": "非表示",
+    "exciting-new-features-1": "エキサイティングな新機能が{{0}}に追加されました。",
+    "exciting-new-features-2": " を確認するか ",
+    "exciting-new-features-3": " を選択してください。",
+    "restart-gitHub-desktop": "GitHub Desktopの再起動",
+    "updated version-is-available-1": "GitHub Desktop の更新バージョンが利用可能で、次回のリリース時にインストールされる予定です。",
+    "updated version-is-available-2": " を確認するか ",
+    "updated version-is-available-3": " を選択してください。",
+    "whats-new": "新着情報"
   },
   "update-branch": {
     "create-a-merge-commit": "マージコミットの作成",

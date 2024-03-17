@@ -3,6 +3,7 @@ import { Octicon } from '../octicons'
 import * as octicons from '../octicons/octicons.generated'
 import { Banner } from './banner'
 import { LinkButton } from '../lib/link-button'
+import { t } from 'i18next'
 
 interface IConflictsFoundBannerProps {
   /**
@@ -44,9 +45,16 @@ export class ConflictsFoundBanner extends React.Component<
         <Octicon className="alert-icon" symbol={octicons.alert} />
         <div className="banner-message">
           <span>
-            Resolve conflicts to continue {this.props.operationDescription}.
+            {t(
+              'conflicts-found-banner.resolve-conflicts-to-continue-1',
+              'Resolve conflicts to continue'
+            )}
+            {this.props.operationDescription}
+            {t('conflicts-found-banner.resolve-conflicts-to-continue-2', '.')}
           </span>
-          <LinkButton onClick={this.openDialog}>View conflicts</LinkButton>
+          <LinkButton onClick={this.openDialog}>
+            {t('common.view-conflicts', 'View conflicts')}
+          </LinkButton>
         </div>
       </Banner>
     )

@@ -1,5 +1,6 @@
 {
   "about": {
+    "build": "Build {{0}}",
     "check-for-updates": "Check for Updates",
     "check-out-the-beta-channel-1": "Check out the ",
     "check-out-the-beta-channel-2": "Beta Channel",
@@ -13,18 +14,21 @@
     "looking-for-the-latest-features": "Looking for the latest features?",
     "no-longer-supported-operating-systems": "This operating system is no longer supported. Software updates have\n              been disabled. ",
     "quit-and-install-update": "Quit and Install Update",
+    "release-notes": "release notes",
     "supported-operating-systems": "Supported operating systems",
     "terms-and-conditions": "Terms and Conditions",
     "update-has-been-downloaded-and-is-ready": "An update has been downloaded and is ready to be installed.",
+    "version": "Version {{0}}",
     "you-have-the-latest-version-1": "You have the latest version (last checked ",
     "you-have-the-latest-version-2": ")"
   },
   "accessibility": {
     "accessibility": "Accessibility",
     "check-marks-will-be-displayed": "When enabled, check marks will be displayed along side the line\n              numbers and groups of line numbers in the diff when committing. When\n              disabled, the line number controls will be less prominent.",
+    "show-check-marks-in-the-diff": "Show check marks in the diff",
     "this-is-an-example-link": "This is an example link",
     "underline-links": "Underline links",
-    "underline-links-in-commit-messages": "When enabled, GitHub Desktop will underline links in commit\n              messages, comments, and other text fields. This can help make links\n              easier to distinguish. {{0}}"
+    "underline-links-in-commit-messages": "When enabled, GitHub Desktop will underline links in commit\n              messages, comments, and other text fields. This can help make links\n              easier to distinguish."
   },
   "acknowledgements": {
     "about-license-1": " ",
@@ -168,6 +172,10 @@
     "checking-out-commit-darwin": "Checking out Commit",
     "switching-to-branch": "Switching to branch",
     "switching-to-branch-darwin": "Switching to Branch"
+  },
+  "cherry-pick-conflicts-banner": {
+    "resolve-conflicts-to-continue-1": "Resolve conflicts to continue cherry-picking onto ",
+    "resolve-conflicts-to-continue-2": "."
   },
   "cherry-pick-undone": {
     "cherry-pick-undone-1": "Cherry-pick undone. Successfully removed the {{0}}\n          copied {{1}} from ",
@@ -399,6 +407,8 @@
     "github-desktop": "GitHub Desktop",
     "history": "History",
     "ignore": "Ignore",
+    "install-and-restart": "Install and restart",
+    "install-and-restart-darwin": "Install and Restart",
     "line": "line",
     "lines": "lines",
     "local-path": "Local path",
@@ -440,6 +450,7 @@
     "undo": "Undo",
     "update": "Update",
     "username-or-email": "Username or email address",
+    "view-conflicts": "View conflicts",
     "view-on-github": "View on GitHub",
     "your-email": "common.your-email@example.com",
     "your-name": "Your Name"
@@ -509,6 +520,10 @@
     "files-have": "files have",
     "many-conflicted-files-have-been-resolved": "{{0}} conflicted {{1}} been resolved.",
     "tooltip-resolve-all-changes-before-continuing": "Resolve all changes before continuing"
+  },
+  "conflicts-found-banner": {
+    "resolve-conflicts-to-continue-1": "Resolve conflicts to continue",
+    "resolve-conflicts-to-continue-2": "."
   },
   "copy-button": {
     "copied": "Copied!"
@@ -975,6 +990,7 @@
     "shell": "Command Prompt",
     "shell-linux": "Terminal",
     "show-all": "Show All",
+    "show-banner": "Show banner",
     "show-branches-list": "&Branches list",
     "show-branches-list-darwin": "Show Branches List",
     "show-changes": "&Changes",
@@ -1050,6 +1066,10 @@
     "this-will-merge-2": " from ",
     "this-will-merge-3": " ",
     "unable-to-merge-unrelated-histories": "Unable to merge unrelated histories in this repository"
+  },
+  "merge-conflicts-banner": {
+    "resolve-conflicts-and-commit-1": "Resolve conflicts and commit to merge into ",
+    "resolve-conflicts-and-commit-2": "."
   },
   "missing-repository": {
     "cannot-find": "Can't find \"{{0}}\"",
@@ -1231,6 +1251,7 @@
     "overwrite-stash-darwin": "Overwrite Stash?"
   },
   "preferences": {
+    "accessibility": "Accessibility",
     "accounts": "Accounts",
     "advanced": "Advanced",
     "appearance": "Appearance",
@@ -1319,6 +1340,10 @@
     "unable-to-start-rebase": "Unable to start rebase. Check you have chosen a valid branch.",
     "you-are-not-able-to-rebase": "You are not able to rebase this branch onto itself."
   },
+  "rebase-conflicts-banner": {
+    "resolve-conflicts-to-continue-1": "Resolve conflicts to continue rebasing ",
+    "resolve-conflicts-to-continue-2": "."
+  },
   "ref-name-text-box": {
     "created": "created",
     "get-warning-message-as-string": "Warning: Will be {{0}} as {{1}} (with spaces replaced by hyphens).",
@@ -1329,6 +1354,13 @@
   },
   "relative-time": {
     "just-now": "just now"
+  },
+  "release-notes-dialog": {
+    "bugfixes": "Bugfixes",
+    "enhancements": "Enhancements",
+    "other": "Other",
+    "title": "Version {{0}}",
+    "view-all-release-notes": "View all release notes"
   },
   "remote": {
     "placeholder-remote-url": "Remote URL",
@@ -1629,6 +1661,19 @@
     "untrusted-server-darwin": "Untrusted Server",
     "view-certificate-": "Add certificate",
     "view-certificate-darwin": "View Certificate"
+  },
+  "update-available": {
+    "an-optimized-arm-version-1": "An optimized version of GitHub Desktop is available for your \n            {{0}} machine and will be installed\n            at the next launch or ",
+    "an-optimized-arm-version-2": " now.",
+    "dismiss": "dismiss",
+    "exciting-new-features-1": "Exciting new features have been added{{0}}. See ",
+    "exciting-new-features-2": " or ",
+    "exciting-new-features-3": ".",
+    "restart-gitHub-desktop": "restart GitHub Desktop",
+    "updated version-is-available-1": "An updated version of GitHub Desktop is available and will be\n           installed at the next launch. See ",
+    "updated version-is-available-2": "or ",
+    "updated version-is-available-3": ".",
+    "whats-new": "what's new"
   },
   "update-branch": {
     "create-a-merge-commit": "Create a merge commit",

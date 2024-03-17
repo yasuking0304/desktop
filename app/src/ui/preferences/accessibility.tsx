@@ -40,13 +40,16 @@ export class Accessibility extends React.Component<
               'accessibility.underline-links-in-commit-messages',
               `When enabled, GitHub Desktop will underline links in commit
               messages, comments, and other text fields. This can help make links
-              easier to distinguish. {{0}}`,
-              { 0: this.renderExampleLink() }
+              easier to distinguish.`
             )}
+            {this.renderExampleLink()}
           </p>
 
           <Checkbox
-            label="Show check marks in the diff"
+            label={t(
+              'accessibility.show-check-marks-in-the-diff',
+              'Show check marks in the diff'
+            )}
             value={
               this.props.showDiffCheckMarks
                 ? CheckboxValue.On

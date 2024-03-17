@@ -15,6 +15,7 @@ import { ReleaseSummary } from '../../models/release-notes'
 import { Banner } from './banner'
 import { ReleaseNotesUri } from '../lib/releases'
 import { RichText } from '../lib/rich-text'
+import { t } from 'i18next'
 
 interface IUpdateAvailableProps {
   readonly dispatcher: Dispatcher
@@ -52,13 +53,20 @@ export class UpdateAvailable extends React.Component<
     if (this.props.isX64ToARM64ImmediateAutoUpdate) {
       return (
         <span onSubmit={this.updateNow}>
-          An optimized version of GitHub Desktop is available for your{' '}
-          {__DARWIN__ ? 'Apple silicon' : 'Arm64'} machine and will be installed
-          at the next launch or{' '}
+          {t(
+            'update-available.an-optimized-arm-version-1',
+            `An optimized version of GitHub Desktop is available for your 
+            {{0}} machine and will be installed
+            at the next launch or `,
+            { 0: __DARWIN__ ? 'Apple silicon' : 'Arm64' }
+          )}
           <LinkButton onClick={this.updateNow}>
-            restart GitHub Desktop
-          </LinkButton>{' '}
-          now.
+            {t(
+              'update-available.restart-gitHub-desktop',
+              'restart GitHub Desktop'
+            )}
+          </LinkButton>
+          {t('update-available.an-optimized-arm-version-2', ' now.')}
         </span>
       )
     }
@@ -76,23 +84,41 @@ export class UpdateAvailable extends React.Component<
             text={':tada:'}
             emoji={this.props.emoji}
           />
-          Exciting new features have been added{version}. See{' '}
-          <LinkButton onClick={this.showReleaseNotes}>what's new</LinkButton> or{' '}
-          <LinkButton onClick={this.dismissUpdateShowCaseVisibility}>
-            dismiss
+          {t(
+            'update-available.exciting-new-features-1',
+            'Exciting new features have been added{{0}}. See ',
+            { 0: version }
+          )}
+          <LinkButton onClick={this.showReleaseNotes}>
+            {t('update-available.whats-new', `what's new`)}
           </LinkButton>
-          .
+          {t('update-available.exciting-new-features-2', ' or ')}
+          <LinkButton onClick={this.dismissUpdateShowCaseVisibility}>
+            {t('update-available.dismiss', 'dismiss')}
+          </LinkButton>
+          {t('update-available.exciting-new-features-3', '.')}
         </span>
       )
     }
 
     return (
       <span onSubmit={this.updateNow}>
-        An updated version of GitHub Desktop is available and will be installed
-        at the next launch. See{' '}
-        <LinkButton onClick={this.showReleaseNotes}>what's new</LinkButton> or{' '}
-        <LinkButton onClick={this.updateNow}>restart GitHub Desktop</LinkButton>
-        .
+        {t(
+          'update-available.updated version-is-available-1',
+          `An updated version of GitHub Desktop is available and will be
+           installed at the next launch. See `
+        )}
+        <LinkButton onClick={this.showReleaseNotes}>
+          {t('update-available.whats-new', `what's new`)}
+        </LinkButton>
+        {t('update-available.updated version-is-available-2', 'or ')}
+        <LinkButton onClick={this.updateNow}>
+          {t(
+            'update-available.restart-gitHub-desktop',
+            'restart GitHub Desktop'
+          )}
+        </LinkButton>
+        {t('update-available.updated version-is-available-3', '.')}
       </span>
     )
   }

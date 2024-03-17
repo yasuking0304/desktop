@@ -750,7 +750,7 @@ export function buildDefaultMenu({
         click: emit('test-show-notification'),
       },
       {
-        label: 'Show banner',
+        label: t('menu.show-banner', 'Show banner'),
         submenu: [
           {
             label: 'Update banner',

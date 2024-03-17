@@ -242,8 +242,12 @@ script:
       })
       spawn.on('close', code => {
         if (code === 0) {
-          console.log(`cp -f ${out_name} ${getDistRoot()}/GitHub_Desktopx86_64.AppImage`)
-          cp.execSync(`cp -f ${out_name} ${getDistRoot()}/GitHub_Desktopx86_64.AppImage`)
+          console.log(
+            `cp -f ${out_name} ${getDistRoot()}/GitHub_Desktopx86_64.AppImage`
+          )
+          cp.execSync(
+            `cp -f ${out_name} ${getDistRoot()}/GitHub_Desktopx86_64.AppImage`
+          )
           process.chdir(__dirname)
         }
         resolve(code)
