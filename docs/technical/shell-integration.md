@@ -243,6 +243,9 @@ These shells are currently supported:
  - [Terminology](https://www.enlightenment.org/docs/apps/terminology.md)
  - [Deepin Terminal](https://www.deepin.org/en/original/deepin-terminal/)
  - [Elementary Terminal](https://github.com/elementary/terminal)
+ - [XFCE Terminal](https://docs.xfce.org/apps/terminal)
+ - [Alacritty](https://github.com/alacritty/alacritty)
+ - [Kitty](https://sw.kovidgoyal.net/kitty/)
 
 These are defined in an enum at the top of the file:
 
@@ -258,6 +261,9 @@ export enum Shell {
   Terminology = 'Terminology',
   Deepin = 'Deepin Terminal',
   Elementary = 'Elementary Terminal',
+  XFCE = 'XFCE Terminal',
+  Alacritty = 'Alacritty',
+  Kitty = 'Kitty',
 }
 ```
 
@@ -294,6 +300,9 @@ export async function getAvailableShells(): Promise<
     terminologyPath,
     deepinPath,
     elementaryPath,
+    xfcePath,
+    alacrittyPath,
+    kittyPath,
   ] = await Promise.all([
     getShellPath(Shell.Gnome),
     getShellPath(Shell.Mate),
@@ -305,6 +314,9 @@ export async function getAvailableShells(): Promise<
     getShellPath(Shell.Terminology),
     getShellPath(Shell.Deepin),
     getShellPath(Shell.Elementary),
+    getShellPath(Shell.XFCE),
+    getShellPath(Shell.Alacritty),
+    getShellPath(Shell.Kitty),
   ])
 
   ...
@@ -345,6 +357,8 @@ export function launch(
       return spawn(foundShell.path, ['-w', path])
     case Shell.Elementary:
       return spawn(foundShell.path, ['-w', path])
+    case Shell.Kitty:
+      return spawn(foundShell.path, ['--single-instance', '--directory', path])
     default:
       return assertNever(shell, `Unknown shell: ${shell}`)
   }
