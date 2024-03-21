@@ -17,11 +17,7 @@ import { AppWindow } from './app-window'
 import { buildDefaultMenu, getAllMenuItems } from './menu'
 import { shellNeedsPatching, updateEnvironmentForProcess } from '../lib/shell'
 import { parseAppURL } from '../lib/parse-app-url'
-import {
-  handleSquirrelEvent,
-  installWindowsCLI,
-  uninstallWindowsCLI,
-} from './squirrel-updater'
+import { handleSquirrelEvent } from './squirrel-updater'
 import { fatalError } from '../lib/fatal-error'
 
 import { log as writeLog } from './log'
@@ -108,8 +104,7 @@ if (__DEV__) {
 } else if (__LINUX__) {
   possibleProtocols.add('x-github-desktop-auth')
 } else {
-  //possibleProtocols.add('x-github-desktop-auth')
-  possibleProtocols.add('x-github-desktop-dev-auth') /** if tesing, beta */
+  possibleProtocols.add('x-github-desktop-auth')
 }
 // Also support Desktop Classic's protocols.
 if (__DARWIN__) {
@@ -543,11 +538,6 @@ app.on('ready', () => {
   ipcMain.on('set-window-zoom-factor', (_, zoomFactor: number) =>
     mainWindow?.setWindowZoomFactor(zoomFactor)
   )
-
-  if (__WIN32__) {
-    ipcMain.on('install-windows-cli', installWindowsCLI)
-    ipcMain.on('uninstall-windows-cli', uninstallWindowsCLI)
-  }
 
   /**
    * An event sent by the renderer asking for a copy of the current

@@ -208,12 +208,7 @@ export class SandboxedMarkdown extends React.PureComponent<
         ${scrapeVariable('--text-color')}
         ${scrapeVariable('--background-color')}
       }
-
       ${css}
-
-      .markdown-body a {
-        text-decoration: ${this.props.underlineLinks ? 'underline' : 'inherit'};
-      }
     </style>`
   }
 

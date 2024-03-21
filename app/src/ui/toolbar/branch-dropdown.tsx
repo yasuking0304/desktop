@@ -73,8 +73,6 @@ interface IBranchDropdownProps {
    * using the dialog focus management.
    */
   readonly enableFocusTrap: boolean
-
-  readonly underlineLinks: boolean
 }
 
 /**
@@ -104,7 +102,6 @@ export class BranchDropdown extends React.Component<IBranchDropdownProps> {
         emoji={this.props.emoji}
         onDeleteBranch={this.onDeleteBranch}
         onRenameBranch={this.onRenameBranch}
-        underlineLinks={this.props.underlineLinks}
       />
     )
   }

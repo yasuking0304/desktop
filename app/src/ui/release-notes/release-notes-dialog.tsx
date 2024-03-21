@@ -16,7 +16,6 @@ interface IReleaseNotesProps {
   readonly onDismissed: () => void
   readonly emoji: Map<string, string>
   readonly newReleases: ReadonlyArray<ReleaseSummary>
-  readonly underlineLinks: boolean
 }
 
 /**

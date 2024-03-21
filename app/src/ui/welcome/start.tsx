@@ -59,7 +59,6 @@ export class Start extends React.Component<IStartProps, {}> {
             disabled={this.props.loadingBrowserAuth}
             onClick={this.signInWithBrowser}
             autoFocus={true}
-            role="link"
           >
             {this.props.loadingBrowserAuth && <Loading />}
             {t('start.sign-in-github-com', 'Sign in to GitHub.com')}

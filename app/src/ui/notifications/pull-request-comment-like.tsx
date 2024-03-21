@@ -32,8 +32,6 @@ interface IPullRequestCommentLikeProps {
 
   readonly switchingToPullRequest: boolean
 
-  readonly underlineLinks: boolean
-
   readonly renderFooterContent: () => JSX.Element
 
   readonly onSubmit: () => void

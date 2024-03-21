@@ -199,7 +199,6 @@ export class AuthenticationForm extends React.Component<
         className="button-with-icon"
         onClick={this.signInWithBrowser}
         autoFocus={true}
-        role="link"
       >
         Sign in using your browser
         <Octicon symbol={octicons.linkExternal} />

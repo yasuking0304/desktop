@@ -6,5 +6,4 @@ export enum PreferencesTab {
   Notifications,
   Prompts,
   Advanced,
-  Accessibility,
 }
