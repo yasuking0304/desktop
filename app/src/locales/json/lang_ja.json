@@ -1538,11 +1538,19 @@
   "status": {
     "conflicted": "競合中",
     "copied": "コピー",
+    "delete-suffix-on-branch": " on {{0}}",
     "deleted": "削除",
-    "eesolved": "解決済み",
+    "do-not-include-this-file": "ファイルをインクルードしない{{0}}",
     "modified": "変更",
     "new": "追加",
-    "renamed": "リネーム"
+    "renamed": "リネーム",
+    "resolved": "解決済み",
+    "suffix-from-branch": " from {{0}}",
+    "use-the-added-file": "ファイルを追加する{{0}}",
+    "use-the-modified-file": "ファイルを更新する{{0}}",
+    "using-the-added-file": "追加したファイルを使用する{{0}}",
+    "using-the-deleted-file": "削除したファイルを使用する{{0}}",
+    "using-the-modified-file": "更新したファイルを使用する{{0}}"
   },
   "submodule-diff": {
     "modified": "変更が加えられています",

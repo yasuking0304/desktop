@@ -1538,11 +1538,19 @@
   "status": {
     "conflicted": "Conflicted",
     "copied": "Copied",
+    "delete-suffix-on-branch": " on {{0}}",
     "deleted": "Deleted",
-    "eesolved": "Resolved",
+    "do-not-include-this-file": "Do not include this file{{0}}",
     "modified": "Modified",
     "new": "New",
-    "renamed": "Renamed"
+    "renamed": "Renamed",
+    "resolved": "Resolved",
+    "suffix-from-branch": " from {{0}}",
+    "use-the-added-file": "Use the added file{{0}}",
+    "use-the-modified-file": "Use the modified file{{0}}",
+    "using-the-added-file": "Using the added file{{0}}",
+    "using-the-deleted-file": "Using the deleted file{{0}}",
+    "using-the-modified-file": "Using the modified file{{0}}"
   },
   "submodule-diff": {
     "modified": "modified",
