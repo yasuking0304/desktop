@@ -461,7 +461,7 @@ export class SideBySideDiffRow extends React.Component<
     return (
       (showSideBySideDiff ? lineNumberWidth : lineNumberWidth * 2) +
       (isDiffSelectable && showDiffCheckMarks && enableDiffCheckMarks()
-        ? 14
+        ? 20
         : 0)
     )
   }

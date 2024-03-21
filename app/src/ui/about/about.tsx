@@ -18,7 +18,10 @@ import { ReleaseNotesUri } from '../lib/releases'
 import { encodePathAsUrl } from '../../lib/path'
 import { isTopMostDialog } from '../dialog/is-top-most'
 import { t } from 'i18next'
-import { isWindowsAndNoLongerSupportedByElectron } from '../../lib/get-os'
+import {
+  isMacOSAndNoLongerSupportedByElectron,
+  isWindowsAndNoLongerSupportedByElectron,
+} from '../../lib/get-os'
 
 const logoPath = __DARWIN__
   ? 'static/logo-64x64@2x.png'
@@ -157,7 +160,9 @@ export class About extends React.Component<IAboutProps, IAboutState> {
           ![
             UpdateStatus.UpdateNotChecked,
             UpdateStatus.UpdateNotAvailable,
-          ].includes(updateStatus) || isWindowsAndNoLongerSupportedByElectron()
+          ].includes(updateStatus) ||
+          isWindowsAndNoLongerSupportedByElectron() ||
+          isMacOSAndNoLongerSupportedByElectron()
 
         const onClick = this.state.altKeyPressed
           ? this.props.onCheckForNonStaggeredUpdates
@@ -290,7 +295,10 @@ export class About extends React.Component<IAboutProps, IAboutState> {
       return null
     }
 
-    if (isWindowsAndNoLongerSupportedByElectron()) {
+    if (
+      isWindowsAndNoLongerSupportedByElectron() ||
+      isMacOSAndNoLongerSupportedByElectron()
+    ) {
       return (
         <DialogError>
           {t(
@@ -357,10 +365,14 @@ export class About extends React.Component<IAboutProps, IAboutState> {
     const name = this.props.applicationName
     const version = this.props.applicationVersion
     const releaseNotesLink = (
-      <LinkButton uri={ReleaseNotesUri}>release notes</LinkButton>
+      <LinkButton uri={ReleaseNotesUri}>
+        {t('about.release-notes', 'release notes')}
+      </LinkButton>
     )
 
-    const versionText = __DEV__ ? `Build ${version}` : `Version ${version}`
+    const versionText = __DEV__
+      ? t('about.build', `Build {{0}}`, { 0: version })
+      : t('about.version', `Version {{0}}`, { 0: version })
 
     return (
       <Dialog

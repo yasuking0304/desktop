@@ -268,6 +268,12 @@ export class Preferences extends React.Component<
               <Octicon className="icon" symbol={octicons.gear} />
               {t('preferences.advanced', 'Advanced')}
             </span>
+            {enableLinkUnderlines() && (
+              <span>
+                <Octicon className="icon" symbol={octicons.accessibility} />
+                {t('preferences.accessibility', 'Accessibility')}
+              </span>
+            )}
           </TabBar>
 
           {this.renderActiveTab()}
