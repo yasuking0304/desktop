@@ -1649,13 +1649,6 @@
     "reachable": "Reachable",
     "unreachable": "Unreachable"
   },
-  "unreachable-commits-dialog": {
-    "about-unreachable-commits": "Learn more about unreachable commits.",
-    "commit-reachability": "Commit reachability",
-    "commit-reachability-darwin": "Commit Reachability",
-    "reachable": "Reachable",
-    "unreachable": "Unreachable"
-  },
   "untrusted-certificate": {
     "gitHub-desktop-cannot-verify-1": "GitHub Desktop cannot verify the identity of {{0}}. The \n            certificate ({{1}}) is invalid or untrusted. ",
     "gitHub-desktop-cannot-verify-2": " ",

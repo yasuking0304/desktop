@@ -318,7 +318,7 @@ export class TutorialPanel extends React.Component<
               )}
             </p>
             <div className="action">
-              <Button onClick={this.openPullRequest}>
+              <Button onClick={this.openPullRequest} role="link">
                 {__DARWIN__
                   ? t(
                       'tutorial-panel.open-pull-request-darwin',
