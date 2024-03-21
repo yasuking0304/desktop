@@ -18,7 +18,6 @@ import { ReleaseNotesUri } from '../lib/releases'
 import { encodePathAsUrl } from '../../lib/path'
 import { isTopMostDialog } from '../dialog/is-top-most'
 import { t } from 'i18next'
-import { isWindowsAndNoLongerSupportedByElectron } from '../../lib/get-os'
 import {
   isMacOSAndNoLongerSupportedByElectron,
   isWindowsAndNoLongerSupportedByElectron,
