@@ -232,13 +232,7 @@ script:
       console.log(`cd ../pkg2appimage`)
       process.chdir(path.dirname(pkg2appimage_file))
       const spawn = cp.spawn(`./pkg2appimage ./recipes/${yaml_name}`, {
-        shell: true,
-      })
-      spawn.stdout.on('data', data => {
-        process.stdout.write(data.toString())
-      })
-      spawn.stderr.on('data', data => {
-        process.stdout.write(data.toString())
+        shell: true, stdio: 'inherit'
       })
       spawn.on('close', code => {
         if (code === 0) {
