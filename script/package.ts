@@ -168,7 +168,7 @@ function packageWindows() {
 
 async function packageLinux() {
   const yaml_name = 'GitHub-Desktop.yml'
-  const out_name = `./out/GitHub_Desktop-${getVersion()}*.AppImage`
+  const out_name = `./out/GitHub_Desktop-${getVersion()}.*.AppImage`
   const template = `app: github-desktop
 
 ingredients:
