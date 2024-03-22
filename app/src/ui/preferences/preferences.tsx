@@ -43,6 +43,8 @@ import { Prompts } from './prompts'
 import { Repository } from '../../models/repository'
 import { t } from 'i18next'
 import { Notifications } from './notifications'
+import { Accessibility } from './accessibility'
+import { enableLinkUnderlines } from '../../lib/feature-flag'
 
 interface IPreferencesProps {
   readonly dispatcher: Dispatcher
@@ -68,6 +70,8 @@ interface IPreferencesProps {
   readonly selectedTheme: ApplicationTheme
   readonly repositoryIndicatorsEnabled: boolean
   readonly onOpenFileInExternalEditor: (path: string) => void
+  readonly underlineLinks: boolean
+  readonly showDiffCheckMarks: boolean
 }
 
 interface IPreferencesState {
@@ -95,6 +99,7 @@ interface IPreferencesState {
   readonly selectedExternalEditor: string | null
   readonly availableShells: ReadonlyArray<Shell>
   readonly selectedShell: Shell
+
   /**
    * If unable to save Git configuration values (name, email)
    * due to an existing configuration lock file this property
@@ -109,6 +114,10 @@ interface IPreferencesState {
 
   readonly isLoadingGitConfig: boolean
   readonly globalGitConfigPath: string | null
+
+  readonly underlineLinks: boolean
+
+  readonly showDiffCheckMarks: boolean
 }
 
 /** The app-level preferences component. */
@@ -148,6 +157,8 @@ export class Preferences extends React.Component<
       initiallySelectedTheme: this.props.selectedTheme,
       isLoadingGitConfig: true,
       globalGitConfigPath: null,
+      underlineLinks: this.props.underlineLinks,
+      showDiffCheckMarks: this.props.showDiffCheckMarks,
     }
   }
 
@@ -434,6 +445,16 @@ export class Preferences extends React.Component<
         )
         break
       }
+      case PreferencesTab.Accessibility:
+        View = (
+          <Accessibility
+            underlineLinks={this.state.underlineLinks}
+            showDiffCheckMarks={this.state.showDiffCheckMarks}
+            onShowDiffCheckMarksChanged={this.onShowDiffCheckMarksChanged}
+            onUnderlineLinksChanged={this.onUnderlineLinksChanged}
+          />
+        )
+        break
       default:
         return assertNever(index, `Unknown tab index: ${index}`)
     }
@@ -534,6 +555,14 @@ export class Preferences extends React.Component<
 
   private onSelectedThemeChanged = (theme: ApplicationTheme) => {
     this.props.dispatcher.setSelectedTheme(theme)
+  }
+
+  private onUnderlineLinksChanged = (underlineLinks: boolean) => {
+    this.setState({ underlineLinks })
+  }
+
+  private onShowDiffCheckMarksChanged = (showDiffCheckMarks: boolean) => {
+    this.setState({ showDiffCheckMarks })
   }
 
   private renderFooter() {
@@ -654,6 +683,12 @@ export class Preferences extends React.Component<
 
     await this.props.dispatcher.setUncommittedChangesStrategySetting(
       this.state.uncommittedChangesStrategy
+    )
+
+    this.props.dispatcher.setUnderlineLinksSetting(this.state.underlineLinks)
+
+    this.props.dispatcher.setDiffCheckMarksSetting(
+      this.state.showDiffCheckMarks
     )
 
     this.props.onDismissed()

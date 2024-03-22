@@ -238,7 +238,11 @@ import {
 } from './updates/changes-state'
 import { ManualConflictResolution } from '../../models/manual-conflict-resolution'
 import { BranchPruner } from './helpers/branch-pruner'
-import { enableMoveStash } from '../feature-flag'
+import {
+  enableDiffCheckMarks,
+  enableLinkUnderlines,
+  enableMoveStash,
+} from '../feature-flag'
 import { Banner, BannerType } from '../../models/banner'
 import { ComputedAction } from '../../models/computed-action'
 import {
@@ -408,6 +412,9 @@ const lastThankYouKey = 'version-and-users-of-last-thank-you'
 const pullRequestSuggestedNextActionKey =
   'pull-request-suggested-next-action-key'
 
+const underlineLinksKey = 'underline-links'
+const underlineLinksDefault = true
+
 const showDiffCheckMarksDefault = true
 const showDiffCheckMarksKey = 'diff-check-marks-visible'
 
@@ -544,6 +551,8 @@ export class AppStore extends TypedBaseStore<IAppState> {
   private showDiffCheckMarks: boolean = showDiffCheckMarksDefault
 
   private cachedRepoRulesets = new Map<number, IAPIRepoRuleset>()
+
+  private underlineLinks: boolean = underlineLinksDefault
 
   public constructor(
     private readonly gitHubUserStore: GitHubUserStore,
@@ -1024,6 +1033,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
       pullRequestSuggestedNextAction: this.pullRequestSuggestedNextAction,
       resizablePaneActive: this.resizablePaneActive,
       cachedRepoRulesets: this.cachedRepoRulesets,
+      underlineLinks: this.underlineLinks,
       showDiffCheckMarks: this.showDiffCheckMarks,
     }
   }
@@ -2224,10 +2234,14 @@ export class AppStore extends TypedBaseStore<IAppState> {
         PullRequestSuggestedNextAction
       ) ?? defaultPullRequestSuggestedNextAction
 
-    this.showDiffCheckMarks = getBoolean(
-      showDiffCheckMarksKey,
-      showDiffCheckMarksDefault
-    )
+    // Always false if the feature flag is disabled.
+    this.underlineLinks = enableLinkUnderlines()
+      ? getBoolean(underlineLinksKey, underlineLinksDefault)
+      : false
+
+    this.showDiffCheckMarks = enableDiffCheckMarks()
+      ? getBoolean(showDiffCheckMarksKey, showDiffCheckMarksDefault)
+      : false
 
     this.emitUpdateNow()
 
@@ -7951,6 +7965,22 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
     if (resizablePaneActive !== this.resizablePaneActive) {
       this.resizablePaneActive = resizablePaneActive
+      this.emitUpdate()
+    }
+  }
+
+  public _updateUnderlineLinks(underlineLinks: boolean) {
+    if (underlineLinks !== this.underlineLinks) {
+      this.underlineLinks = underlineLinks
+      setBoolean(underlineLinksKey, underlineLinks)
+      this.emitUpdate()
+    }
+  }
+
+  public _updateShowDiffCheckMarks(showDiffCheckMarks: boolean) {
+    if (showDiffCheckMarks !== this.showDiffCheckMarks) {
+      this.showDiffCheckMarks = showDiffCheckMarks
+      setBoolean(showDiffCheckMarksKey, showDiffCheckMarks)
       this.emitUpdate()
     }
   }
