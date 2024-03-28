@@ -84,7 +84,7 @@ export class CreateForkDialog extends React.Component<
         )}
         onDismissed={this.props.onDismissed}
         onSubmit={this.state.error ? undefined : this.onSubmit}
-        dismissable={!this.state.loading}
+        dismissDisabled={this.state.loading}
         loading={this.state.loading}
         type={this.state.error ? 'error' : 'normal'}
         key={this.props.repository.name}

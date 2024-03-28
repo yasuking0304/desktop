@@ -266,7 +266,7 @@ export class ConflictsDialog extends React.Component<
     return (
       <Dialog
         id="conflicts-dialog"
-        dismissable={!this.state.isCommitting}
+        dismissDisabled={this.state.isCommitting}
         onDismissed={this.props.onDismissed}
         onSubmit={this.onSubmit}
         title={headerTitle}

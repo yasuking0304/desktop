@@ -69,7 +69,7 @@ export class ConfirmRemoveRepository extends React.Component<
                 'Remove repository'
               )
         }
-        dismissable={isRemovingRepository ? false : true}
+        dismissDisabled={isRemovingRepository}
         loading={isRemovingRepository}
         disabled={isRemovingRepository}
         onDismissed={this.props.onDismissed}
