@@ -155,6 +155,8 @@
     "ignore-all-file-add-to-gitignore-darwin": "Ignore All {{0}} Files (Add to .gitignore)",
     "ignore-file-add-to-gitignore": "Ignore file (add to .gitignore)",
     "ignore-file-add-to-gitignore-darwin": "Ignore File (Add to .gitignore)",
+    "ignore-folder-add-to-gitignore": "Ignore folder (add to .gitignore)",
+    "ignore-folder-add-to-gitignore-darwin": "Ignore Folder (Add to .gitignore)",
     "ignore-selected-file-add-to-gitignore": "Ignore {{0}} selected files (add to .gitignore)",
     "ignore-selected-file-add-to-gitignore-darwin": "Ignore {{0}} Selected Files (Add to .gitignore)",
     "include-selected-files": "Include selected files",
@@ -819,8 +821,6 @@
     "placeholder-ignored-files": "Ignored files"
   },
   "installing-update": {
-    "installing-update": "Installing update…",
-    "installing-update-darwin": "Installing Update…",
     "quit-anyway": "Quit anyway",
     "quit-anyway-darwin": "Quit Anyway",
     "update-is-in-progress": "Do not close GitHub Desktop while the update is in progress. Closing\n            now may break your installation."

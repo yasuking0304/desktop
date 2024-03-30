@@ -612,8 +612,14 @@ export class ChangesList extends React.Component<
 
         items.push({
           label: __DARWIN__
-            ? 'Ignore Folder (Add to .gitignore)'
-            : 'Ignore folder (add to .gitignore)',
+            ? t(
+                'changes-list.ignore-folder-add-to-gitignore-darwin',
+                'Ignore Folder (Add to .gitignore)'
+              )
+            : t(
+                'changes-list.ignore-folder-add-to-gitignore',
+                'Ignore folder (add to .gitignore)'
+              ),
           submenu,
           enabled,
         })
