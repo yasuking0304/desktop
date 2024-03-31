@@ -611,11 +611,11 @@ export function buildDefaultMenu({
           __LINUX__
             ? t(
                 'url.github-desktop-issue-linux',
-                'https://github.com/shiftkey/desktop/issues/new/choose'
+                'https://github.com/yasuking0304/desktop/issues/new/choose'
               )
             : t(
                 'url.github-desktop-issue',
-                'https://github.com/desktop/desktop/issues/new/choose'
+                'https://github.com/yasuking0304/desktop/issues/new/choose'
               )
         )
         .catch(err => log.error('Failed opening issue creation page', err))

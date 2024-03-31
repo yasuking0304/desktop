@@ -39,7 +39,7 @@
     "draft-release:format": "prettier --check --write changelog.json app/package.json && yarn validate-changelog",
     "draft-release:pr": "ts-node -P script/tsconfig.json script/draft-release/draft-pull-request.ts",
     "validate-changelog": "ts-node -P script/tsconfig.json script/validate-changelog.ts",
-    "i18next-extract": "i18next 'app/src/**/*.{tsx,ts}'"
+    "i18next-extract": "i18next -c script/i18next-parser.config.js"
   },
   "author": {
     "name": "GitHub, Inc.",
@@ -82,8 +82,7 @@
     "fs-extra": "^9.0.1",
     "glob": "^7.1.2",
     "html-webpack-plugin": "^5.5.0",
-    "i18next": "21.9.1",
-    "i18next-parser": "^7.6.0",
+    "i18next": "^23.10.1",
     "jest": "^29.7.0",
     "jest-diff": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
@@ -164,6 +163,7 @@
     "electron-packager": "^17.1.1",
     "electron-winstaller": "^5.0.0",
     "eslint-plugin-github": "^4.10.1",
+    "i18next-parser": "^8.13.0",
     "markdownlint-cli": "^0.32.2",
     "reserved-words": "^0.1.2",
     "tsconfig-paths": "^3.9.0"
