@@ -807,7 +807,7 @@
   "git-email-not-found-warning": {
     "does-not-match": "does not match",
     "edither-your-account": "either of your GitHub.com nor GitHub Enterprise accounts",
-    "learn-more": "Learn more",
+    "learn-more": "Learn more.",
     "learn-more-about": "Learn more about commit attribution",
     "matchs": "matches",
     "this-email-address": "This email address {{0}} {{1}}. {{2}}",
@@ -1705,7 +1705,7 @@
     "would-you-like-to-update": "Would you like to update the remote to use the expected URL?"
   },
   "url": {
-    "github-desktop-issue": "https://github.com/desktop/desktop/issues/new/choose",
+    "github-desktop-issue": "https://github.com/yasuking0304/desktop/issues/new/choose",
     "github-desktop-issue-linux": "https://github.com/yasuking0304/desktop/issues/new/choose",
     "keyboard-shortcuts": "https://docs.github.com/zh/desktop/installing-and-configuring-github-desktop/overview/keyboard-shortcuts",
     "show-user-guides": "https://docs.github.com/zh/desktop",
