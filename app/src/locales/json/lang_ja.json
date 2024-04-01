@@ -1325,6 +1325,14 @@
     "push": "{{0}} にプッシュ",
     "rebase-in-progress": "リベース中"
   },
+  "push-pull-button-dropdown": {
+    "fetch": "{{0}} のフェッチ",
+    "fetch-the-latest-changes": "{{0}} から最新の変更を取得します",
+    "force-push": "{{0}} の強制プッシュ",
+    "overwrite-any-changes": "{{0}} の変更をローカルの変更で上書きします",
+    "warning-description": " 強制的プッシュを行うと、リモートの履歴が書き換えられます。このブランチで作業しているコラボレーターは、リモートの履歴と一致するように自分のローカル ブランチをリセットする必要があります。",
+    "warning-title": "警告:"
+  },
   "rebase-choose-branch-dialog": {
     "checking-for-ability-to-rebase": "自動的にリベースする機能のチェック…",
     "number-commit": " {{0}}{{1}}",
@@ -1564,6 +1572,10 @@
     "this-submodule-has-changes": "このサブモジュールには{{0}}。 これらの変更は、上位リポジトリの一部となる以前に、サブモジュール内でコミットする必要があります。",
     "untracked": "追跡されていない変更があります",
     "you-can-open-this-submodule-on-gitHub-desktop": "このサブモジュールを GitHub Desktop 上で通常のリポジトリとして開き、そのサブモジュール内の変更を管理およびコミットできます。"
+  },
+  "successful-cherry-pick": {
+    "successfully-copied-1": "{{0}}個のコミットを ",
+    "successfully-copied-2": " に正常にコピーしました。"
   },
   "successful-merge": {
     "successfully-merged-into-branch-1": " ",

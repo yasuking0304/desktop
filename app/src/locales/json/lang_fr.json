@@ -1325,6 +1325,14 @@
     "push": "Push {{0}}",
     "rebase-in-progress": "Rebase in progress"
   },
+  "push-pull-button-dropdown": {
+    "fetch": "Fetch {{0}}}",
+    "fetch-the-latest-changes": "Fetch the latest changes from {{0}}",
+    "force-push": "Force push {{0}}",
+    "overwrite-any-changes": "Overwrite any changes on {{0}} with your local changes",
+    "warning-description": "A force push will\n                rewrite history on the remote. Any collaborators working on this\n                branch will need to reset their own local branch to match the\n                history of the remote.",
+    "warning-title": "Warning:"
+  },
   "rebase-choose-branch-dialog": {
     "checking-for-ability-to-rebase": "Checking for ability to rebase automatically…",
     "number-commit": " {{0}} {{1}}",
@@ -1564,6 +1572,10 @@
     "this-submodule-has-changes": "This submodule has {{0}} changes. Those changes must be committed\n          inside of the submodule before they can be part of the parent\n          repository.",
     "untracked": "untracked",
     "you-can-open-this-submodule-on-gitHub-desktop": "You can open this submodule on GitHub Desktop as a normal repository to manage and commit any changes in it."
+  },
+  "successful-cherry-pick": {
+    "successfully-copied-1": "Successfully copied {{0}} {{1}} to",
+    "successfully-copied-2": "."
   },
   "successful-merge": {
     "successfully-merged-into-branch-1": "Successfully merged into ",
