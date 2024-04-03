@@ -80,7 +80,7 @@ export class CreateTutorialRepositoryDialog extends React.Component<ICreateTutor
         )}
         onDismissed={this.props.onDismissed}
         onSubmit={this.onSubmit}
-        dismissable={!loading}
+        dismissDisabled={loading}
         loading={loading}
         disabled={loading}
       >

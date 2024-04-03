@@ -107,8 +107,10 @@ Other things to note about the Windows packaging process:
 
 ### Linux
 
-Refer to the [`shiftkey/desktop`](https://github.com/shiftkey/desktop) fork
-for packaging details about Linux.
+Desktop uses `dpkg` and `pkg2appimage` to generate installers:
+
+  - See [pkg2appimage](https://github.com/AppImageCommunity/pkg2appimage).
+
 
 ## `script/publish.ts`
 

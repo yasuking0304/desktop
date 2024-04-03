@@ -6,6 +6,7 @@ import { FoundShell } from './shared'
 
 export enum Shell {
   Gnome = 'GNOME Terminal',
+  GnomeConsole = 'GNOME Console',
   Mate = 'MATE Terminal',
   Tilix = 'Tilix',
   Terminator = 'Terminator',
@@ -18,6 +19,8 @@ export enum Shell {
   XFCE = 'XFCE Terminal',
   Alacritty = 'Alacritty',
   Kitty = 'Kitty',
+  LXTerminal = 'LXTerminal',
+  WezTerm = 'WezTerm',
 }
 
 export const Default = Shell.Gnome
@@ -34,6 +37,8 @@ function getShellPath(shell: Shell): Promise<string | null> {
   switch (shell) {
     case Shell.Gnome:
       return getPathIfAvailable('/usr/bin/gnome-terminal')
+    case Shell.GnomeConsole:
+      return getPathIfAvailable('/usr/bin/kgx')
     case Shell.Mate:
       return getPathIfAvailable('/usr/bin/mate-terminal')
     case Shell.Tilix:
@@ -58,6 +63,10 @@ function getShellPath(shell: Shell): Promise<string | null> {
       return getPathIfAvailable('/usr/bin/alacritty')
     case Shell.Kitty:
       return getPathIfAvailable('/usr/bin/kitty')
+    case Shell.LXTerminal:
+      return getPathIfAvailable('/usr/bin/lxterminal')
+    case Shell.WezTerm:
+      return getPathIfAvailable('/usr/bin/wezterm')
     default:
       return assertNever(shell, `Unknown shell: ${shell}`)
   }
@@ -68,6 +77,7 @@ export async function getAvailableShells(): Promise<
 > {
   const [
     gnomeTerminalPath,
+    gnomeConsolePath,
     mateTerminalPath,
     tilixPath,
     terminatorPath,
@@ -80,8 +90,11 @@ export async function getAvailableShells(): Promise<
     xfcePath,
     alacrittyPath,
     kittyPath,
+    lxterminalPath,
+    weztermPath,
   ] = await Promise.all([
     getShellPath(Shell.Gnome),
+    getShellPath(Shell.GnomeConsole),
     getShellPath(Shell.Mate),
     getShellPath(Shell.Tilix),
     getShellPath(Shell.Terminator),
@@ -94,11 +107,17 @@ export async function getAvailableShells(): Promise<
     getShellPath(Shell.XFCE),
     getShellPath(Shell.Alacritty),
     getShellPath(Shell.Kitty),
+    getShellPath(Shell.LXTerminal),
+    getShellPath(Shell.WezTerm),
   ])
 
   const shells: Array<FoundShell<Shell>> = []
   if (gnomeTerminalPath) {
     shells.push({ shell: Shell.Gnome, path: gnomeTerminalPath })
+  }
+
+  if (gnomeConsolePath) {
+    shells.push({ shell: Shell.GnomeConsole, path: gnomeConsolePath })
   }
 
   if (mateTerminalPath) {
@@ -149,6 +168,13 @@ export async function getAvailableShells(): Promise<
     shells.push({ shell: Shell.Kitty, path: kittyPath })
   }
 
+  if (lxterminalPath) {
+    shells.push({ shell: Shell.LXTerminal, path: lxterminalPath })
+  }
+
+  if (weztermPath) {
+    shells.push({ shell: Shell.WezTerm, path: weztermPath })
+  }
   return shells
 }
 
@@ -159,11 +185,13 @@ export function launch(
   const shell = foundShell.shell
   switch (shell) {
     case Shell.Gnome:
+    case Shell.GnomeConsole:
     case Shell.Mate:
     case Shell.Tilix:
     case Shell.Terminator:
     case Shell.XFCE:
     case Shell.Alacritty:
+    case Shell.LXTerminal:
       return spawn(foundShell.path, ['--working-directory', path])
     case Shell.Urxvt:
       return spawn(foundShell.path, ['-cd', path])
@@ -179,6 +207,8 @@ export function launch(
       return spawn(foundShell.path, ['-w', path])
     case Shell.Kitty:
       return spawn(foundShell.path, ['--single-instance', '--directory', path])
+    case Shell.WezTerm:
+      return spawn(foundShell.path, ['start', '--cwd', path])
     default:
       return assertNever(shell, `Unknown shell: ${shell}`)
   }

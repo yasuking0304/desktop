@@ -33,6 +33,7 @@ These shells are currently supported:
  - [Windows Terminal](https://github.com/microsoft/terminal)
  - [Alacritty](https://github.com/alacritty/alacritty)
  - [Fluent Terminal](https://github.com/felixse/FluentTerminal)
+ - [WezTerm](https://github.com/wez/wezterm)
 
 These are defined in an enum at the top of the file:
 
@@ -47,6 +48,7 @@ export enum Shell {
   WSL = 'WSL',
   WindowTerminal = 'Windows Terminal',
   Alacritty = 'Alacritty',
+  WezTerm = "WezTerm",
 }
 ```
 
@@ -234,6 +236,7 @@ The source for the Linux shell integration is found in [`app/src/lib/shells/linu
 These shells are currently supported:
 
  - [GNOME Terminal](https://help.gnome.org/users/gnome-terminal/stable/)
+ - [GNOME Console](https://gitlab.gnome.org/GNOME/console)
  - [MATE Terminal](https://github.com/mate-desktop/mate-terminal)
  - [Tilix](https://github.com/gnunn1/tilix)
  - [Terminator](https://gnometerminator.blogspot.com)
@@ -246,12 +249,15 @@ These shells are currently supported:
  - [XFCE Terminal](https://docs.xfce.org/apps/terminal)
  - [Alacritty](https://github.com/alacritty/alacritty)
  - [Kitty](https://sw.kovidgoyal.net/kitty/)
+ - [LXTerminal](https://github.com/lxde/lxterminal)
+ - [WezTerm](https://github.com/wez/wezterm)
 
 These are defined in an enum at the top of the file:
 
 ```ts
 export enum Shell {
   Gnome = 'GNOME Terminal',
+  GnomeConsole = 'GNOME Console',
   Mate  = 'MATE Terminal',
   Tilix = 'Tilix',
   Terminator = 'Terminator',
@@ -264,6 +270,8 @@ export enum Shell {
   XFCE = 'XFCE Terminal',
   Alacritty = 'Alacritty',
   Kitty = 'Kitty',
+  LXTerminal = 'LXTerminal',
+  WezTerm = "WezTerm",
 }
 ```
 
@@ -291,6 +299,7 @@ export async function getAvailableShells(): Promise<
 > {
   const [
     gnomeTerminalPath,
+    gnomeConsolePath,
     mateTerminalPath,
     tilixPath,
     terminatorPath,
@@ -303,8 +312,11 @@ export async function getAvailableShells(): Promise<
     xfcePath,
     alacrittyPath,
     kittyPath,
+    lxterminalPath,
+    weztermPath,
   ] = await Promise.all([
     getShellPath(Shell.Gnome),
+    getShellPath(Shell.GnomeConsole),
     getShellPath(Shell.Mate),
     getShellPath(Shell.Tilix),
     getShellPath(Shell.Terminator),
@@ -317,6 +329,8 @@ export async function getAvailableShells(): Promise<
     getShellPath(Shell.XFCE),
     getShellPath(Shell.Alacritty),
     getShellPath(Shell.Kitty),
+    getShellPath(Shell.LXTerminal),
+    getShellPath(Shell.WezTerm),
   ])
 
   ...
@@ -341,9 +355,13 @@ export function launch(
   const shell = foundShell.shell
   switch (shell) {
     case Shell.Gnome:
+    case Shell.GnomeConsole:
     case Shell.Mate:
     case Shell.Tilix:
     case Shell.Terminator:
+    case Shell.XFCE:
+    case Shell.Alacritty:
+    case Shell.LXTerminal:
       return spawn(foundShell.path, ['--working-directory', path])
     case Shell.Urxvt:
       return spawn(foundShell.path, ['-cd', path])
@@ -359,6 +377,8 @@ export function launch(
       return spawn(foundShell.path, ['-w', path])
     case Shell.Kitty:
       return spawn(foundShell.path, ['--single-instance', '--directory', path])
+    case Shell.WezTerm:
+      return spawn(foundShell.path, ['start', '--cwd', path])
     default:
       return assertNever(shell, `Unknown shell: ${shell}`)
   }

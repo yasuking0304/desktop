@@ -19,6 +19,7 @@ export enum Shell {
   WindowTerminal = 'Windows Terminal',
   FluentTerminal = 'Fluent Terminal',
   Alacritty = 'Alacritty',
+  WezTerm = 'WezTerm',
 }
 
 export const Default = Shell.Cmd
@@ -114,6 +115,15 @@ export async function getAvailableShells(): Promise<
       path: fluentTerminal,
     })
   }
+
+  const wezTermPath = await findWezTerm()
+  if (wezTermPath != null) {
+    shells.push({
+      shell: Shell.WezTerm,
+      path: wezTermPath,
+    })
+  }
+
   return shells
 }
 
@@ -391,6 +401,30 @@ async function findFluentTerminal(): Promise<string | null> {
   return null
 }
 
+async function findWezTerm(): Promise<string | null> {
+  const registryPath = enumerateValues(
+    HKEY.HKEY_CLASSES_ROOT,
+    'Directory\\Background\\shell\\Open WezTerm here'
+  )
+
+  if (registryPath.length === 0) {
+    return null
+  }
+
+  const wezterm = registryPath.find(e => e.name === 'icon')
+  if (wezterm && wezterm.type === RegistryValueType.REG_SZ) {
+    const path = wezterm.data
+    if (await pathExists(path)) {
+      return path
+    } else {
+      log.debug(
+        `[WezTerm] registry entry found but does not exist at '${path}'`
+      )
+    }
+  }
+  return null
+}
+
 export function launch(
   foundShell: FoundShell<Shell>,
   path: string
@@ -471,6 +505,10 @@ export function launch(
       const fluentTerminalPath = `"${foundShell.path}"`
       log.info(`launching ${shell} at path: ${fluentTerminalPath}`)
       return spawn(fluentTerminalPath, ['new'], { shell: true, cwd: path })
+    case Shell.WezTerm:
+      const wezTermPath = `"${foundShell.path}"`
+      log.info(`launching ${shell} at path: ${wezTermPath}`)
+      return spawn(wezTermPath, [`start --cwd "${path}"`], { shell: true })
     default:
       return assertNever(shell, `Unknown shell: ${shell}`)
   }

@@ -30,7 +30,7 @@ export class ProgressDialog extends React.Component<IProgressDialogProps> {
     const progressValue = formatRebaseValue(value)
     return (
       <Dialog
-        dismissable={false}
+        dismissDisabled={true}
         id="multi-commit-progress"
         title={t('progress-dialog.in-progress', '{{0}} in progress', {
           0: operation,

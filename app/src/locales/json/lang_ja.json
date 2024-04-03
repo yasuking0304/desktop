@@ -155,6 +155,8 @@
     "ignore-all-file-add-to-gitignore-darwin": "すべての {{0}} ファイルを除外する (gitignore に追加)",
     "ignore-file-add-to-gitignore": "ファイルを除外する (.gitignore に追加)",
     "ignore-file-add-to-gitignore-darwin": "ファイルを除外する (.gitignore に追加)",
+    "ignore-folder-add-to-gitignore": "ディレクトリを除外する (.gitignore に追加)",
+    "ignore-folder-add-to-gitignore-darwin": "ディレクトリを除外する (.gitignore に追加)",
     "ignore-selected-file-add-to-gitignore": "選択した {{0}}ファイルを無視する (.gitignore に追加)",
     "ignore-selected-file-add-to-gitignore-darwin": "選択した {{0}}ファイルを無視する (.gitignore に追加)",
     "include-selected-files": "選択したファイルを含める",
@@ -223,9 +225,9 @@
     "clone-a-repository-darwin": "リポジトリのクローン",
     "clone-as": "クローン :",
     "error": {
-      "already-a-file-with-this-name": "この名前のファイルが既に存在します。Gitはフォルダにしか複製できません。",
+      "already-a-file-with-this-name": "この名前のファイルが既に存在します。Gitはディレクトリにしか複製できません。",
       "directory-could-not-be-created": "このパスにディレクトリを作成できませんでした。",
-      "this-folder-contains-files": "このフォルダにはファイルが含まれています。Gitは空のフォルダにのみ複製できます。",
+      "this-folder-contains-files": "このディレクトリにはファイルが含まれています。Gitは空のディレクトリにのみ複製できます。",
       "unable-to-read-path-on-disk": "ディスク上のパスを読み取れません。パスを確認して、もう一度やり直してください。",
       "we-could-not-find-that-repository": "そのリポジトリが見つかりませんでした。ログインしていること、ネットワークにアクセスできること、URL またはリポジトリのエイリアスの綴りが正しいことを確認してください。"
     },
@@ -819,8 +821,6 @@
     "placeholder-ignored-files": "除外ファイル"
   },
   "installing-update": {
-    "installing-update": "アップデートのインストール中…",
-    "installing-update-darwin": "アップデートのインストール中…",
     "quit-anyway": "すぐに終了",
     "quit-anyway-darwin": "すぐに終了",
     "update-is-in-progress": "更新中です。GitHub Desktop を終了させないでください。今、終了させるとインストールが中断される可能性があります。"
@@ -1187,7 +1187,7 @@
     "protip": "ヒント! ",
     "return-to-in-progress-tutorial": "修正中のチュートリアルに戻る",
     "return-to-in-progress-tutorial-darwin": "修正中のチュートリアルに戻る",
-    "tips": "既存のリポジトリフォルダをここにドラッグ&ドロップして Desktop に追加できます"
+    "tips": "既存のリポジトリディレクトリをここにドラッグ&ドロップして Desktop に追加できます"
   },
   "notifications": {
     "allows-the-display-of-notifications": "現在のリポジトリで緊急のイベントが発生したときに通知を表示できるようにします。",
@@ -1324,6 +1324,14 @@
     "pull-with-rebase": "リベース後に {{0}} にプル",
     "push": "{{0}} にプッシュ",
     "rebase-in-progress": "リベース中"
+  },
+  "push-pull-button-dropdown": {
+    "fetch": "{{0}} のフェッチ",
+    "fetch-the-latest-changes": "{{0}} から最新の変更を取得します",
+    "force-push": "{{0}} の強制プッシュ",
+    "overwrite-any-changes": "{{0}} の変更をローカルの変更で上書きします",
+    "warning-description": " 強制的プッシュを行うと、リモートの履歴が書き換えられます。このブランチで作業しているコラボレーターは、リモートの履歴と一致するように自分のローカル ブランチをリセットする必要があります。",
+    "warning-title": "警告:"
   },
   "rebase-choose-branch-dialog": {
     "checking-for-ability-to-rebase": "自動的にリベースする機能のチェック…",
@@ -1564,6 +1572,10 @@
     "this-submodule-has-changes": "このサブモジュールには{{0}}。 これらの変更は、上位リポジトリの一部となる以前に、サブモジュール内でコミットする必要があります。",
     "untracked": "追跡されていない変更があります",
     "you-can-open-this-submodule-on-gitHub-desktop": "このサブモジュールを GitHub Desktop 上で通常のリポジトリとして開き、そのサブモジュール内の変更を管理およびコミットできます。"
+  },
+  "successful-cherry-pick": {
+    "successfully-copied-1": "{{0}}個のコミットを ",
+    "successfully-copied-2": " に正常にコピーしました。"
   },
   "successful-merge": {
     "successfully-merged-into-branch-1": " ",

@@ -18,10 +18,7 @@ import { ReleaseNotesUri } from '../lib/releases'
 import { encodePathAsUrl } from '../../lib/path'
 import { isTopMostDialog } from '../dialog/is-top-most'
 import { t } from 'i18next'
-import {
-  isMacOSAndNoLongerSupportedByElectron,
-  isWindowsAndNoLongerSupportedByElectron,
-} from '../../lib/get-os'
+import { isOSNoLongerSupportedByElectron } from '../../lib/get-os'
 
 const logoPath = __DARWIN__
   ? 'static/logo-64x64@2x.png'
@@ -31,7 +28,7 @@ const DesktopLogo = encodePathAsUrl(__dirname, logoPath)
 interface IAboutProps {
   /**
    * Event triggered when the dialog is dismissed by the user in the
-   * ways described in the Dialog component's dismissable prop.
+   * ways described in the Dialog component's dismissible prop.
    */
   readonly onDismissed: () => void
 
@@ -160,9 +157,7 @@ export class About extends React.Component<IAboutProps, IAboutState> {
           ![
             UpdateStatus.UpdateNotChecked,
             UpdateStatus.UpdateNotAvailable,
-          ].includes(updateStatus) ||
-          isWindowsAndNoLongerSupportedByElectron() ||
-          isMacOSAndNoLongerSupportedByElectron()
+          ].includes(updateStatus) || isOSNoLongerSupportedByElectron()
 
         const onClick = this.state.altKeyPressed
           ? this.props.onCheckForNonStaggeredUpdates
@@ -295,10 +290,7 @@ export class About extends React.Component<IAboutProps, IAboutState> {
       return null
     }
 
-    if (
-      isWindowsAndNoLongerSupportedByElectron() ||
-      isMacOSAndNoLongerSupportedByElectron()
-    ) {
+    if (isOSNoLongerSupportedByElectron()) {
       return (
         <DialogError>
           {t(

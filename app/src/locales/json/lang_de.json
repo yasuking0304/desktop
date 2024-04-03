@@ -155,6 +155,8 @@
     "ignore-all-file-add-to-gitignore-darwin": "Ignore All {{0}} Files (Add to .gitignore)",
     "ignore-file-add-to-gitignore": "Ignore file (add to .gitignore)",
     "ignore-file-add-to-gitignore-darwin": "Ignore File (Add to .gitignore)",
+    "ignore-folder-add-to-gitignore": "Ignore folder (add to .gitignore)",
+    "ignore-folder-add-to-gitignore-darwin": "Ignore Folder (Add to .gitignore)",
     "ignore-selected-file-add-to-gitignore": "Ignore {{0}} selected files (add to .gitignore)",
     "ignore-selected-file-add-to-gitignore-darwin": "Ignore {{0}} Selected Files (Add to .gitignore)",
     "include-selected-files": "Include selected files",
@@ -805,7 +807,7 @@
   "git-email-not-found-warning": {
     "does-not-match": "does not match",
     "edither-your-account": "either of your GitHub.com nor GitHub Enterprise accounts",
-    "learn-more": "Learn more",
+    "learn-more": "Learn more.",
     "learn-more-about": "Learn more about commit attribution",
     "matchs": "matches",
     "this-email-address": "This email address {{0}} {{1}}. {{2}}",
@@ -819,8 +821,6 @@
     "placeholder-ignored-files": "Ignored files"
   },
   "installing-update": {
-    "installing-update": "Installing update…",
-    "installing-update-darwin": "Installing Update…",
     "quit-anyway": "Quit anyway",
     "quit-anyway-darwin": "Quit Anyway",
     "update-is-in-progress": "Do not close GitHub Desktop while the update is in progress. Closing\n            now may break your installation."
@@ -1325,6 +1325,14 @@
     "push": "Push {{0}}",
     "rebase-in-progress": "Rebase in progress"
   },
+  "push-pull-button-dropdown": {
+    "fetch": "Fetch {{0}}}",
+    "fetch-the-latest-changes": "Fetch the latest changes from {{0}}",
+    "force-push": "Force push {{0}}",
+    "overwrite-any-changes": "Overwrite any changes on {{0}} with your local changes",
+    "warning-description": "A force push will\n                rewrite history on the remote. Any collaborators working on this\n                branch will need to reset their own local branch to match the\n                history of the remote.",
+    "warning-title": "Warning:"
+  },
   "rebase-choose-branch-dialog": {
     "checking-for-ability-to-rebase": "Checking for ability to rebase automatically…",
     "number-commit": " {{0}} {{1}}",
@@ -1565,6 +1573,10 @@
     "untracked": "untracked",
     "you-can-open-this-submodule-on-gitHub-desktop": "You can open this submodule on GitHub Desktop as a normal repository to manage and commit any changes in it."
   },
+  "successful-cherry-pick": {
+    "successfully-copied-1": "Successfully copied {{0}} {{1}} to",
+    "successfully-copied-2": "."
+  },
   "successful-merge": {
     "successfully-merged-into-branch-1": "Successfully merged into ",
     "successfully-merged-into-branch-2": " ",
@@ -1705,8 +1717,8 @@
     "would-you-like-to-update": "Would you like to update the remote to use the expected URL?"
   },
   "url": {
-    "github-desktop-issue": "https://github.com/desktop/desktop/issues/new/choose",
-    "github-desktop-issue-linux": "https://github.com/shiftkey/desktop/issues/new/choose",
+    "github-desktop-issue": "https://github.com/yasuking0304/desktop/issues/new/choose",
+    "github-desktop-issue-linux": "https://github.com/yasuking0304/desktop/issues/new/choose",
     "keyboard-shortcuts": "https://docs.github.com/de/desktop/installing-and-configuring-github-desktop/overview/keyboard-shortcuts",
     "show-user-guides": "https://docs.github.com/de/desktop",
     "supported-operating-systems-for-github-desktop": "https://docs.github.com/de/desktop/installing-and-configuring-github-desktop/overview/supported-operating-systems",

@@ -84,7 +84,7 @@ export class DiscardSelection extends React.Component<
         }
         onDismissed={this.props.onDismissed}
         onSubmit={this.discard}
-        dismissable={isDiscardingChanges ? false : true}
+        dismissDisabled={isDiscardingChanges}
         loading={isDiscardingChanges}
         disabled={isDiscardingChanges}
         type="warning"
@@ -121,6 +121,8 @@ export class DiscardSelection extends React.Component<
           <OkCancelButtonGroup
             destructive={true}
             okButtonText={this.getOkButtonLabel()}
+            okButtonDisabled={isDiscardingChanges}
+            cancelButtonDisabled={isDiscardingChanges}
           />
         </DialogFooter>
       </Dialog>

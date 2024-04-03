@@ -200,7 +200,6 @@ export class ChooseTargetBranchDialog extends React.Component<
         id="cherry-pick"
         onDismissed={this.props.onDismissed}
         onSubmit={this.onSubmit}
-        dismissable={true}
         title={
           <strong>
             {t(

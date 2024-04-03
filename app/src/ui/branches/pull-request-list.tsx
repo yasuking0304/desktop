@@ -1,6 +1,5 @@
 import * as React from 'react'
 import {
-  FilterList,
   IFilterListGroup,
   IFilterListItem,
   SelectionSource,
@@ -23,6 +22,7 @@ import { dragAndDropManager } from '../../lib/drag-and-drop-manager'
 import { formatRelative } from '../../lib/format-relative'
 import { t } from 'i18next'
 import { AriaLiveContainer } from '../accessibility/aria-live-container'
+import { SectionFilterList } from '../lib/section-filter-list'
 
 interface IPullRequestListItem extends IFilterListItem {
   readonly id: string
@@ -146,7 +146,7 @@ export class PullRequestList extends React.Component<
   public render() {
     return (
       <>
-        <FilterList<IPullRequestListItem>
+        <SectionFilterList<IPullRequestListItem>
           className="pull-request-list"
           rowHeight={RowHeight}
           groups={this.state.groupedItems}
