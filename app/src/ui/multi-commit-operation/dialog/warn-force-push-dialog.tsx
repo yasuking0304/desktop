@@ -60,16 +60,18 @@ export class WarnForcePushDialog extends React.Component<
         onSubmit={this.onBegin}
         backdropDismissable={false}
         type="warning"
+        role="alertdialog"
+        ariaDescribedBy="warn-force-push-confirmation-title warn-force-push-confirmation-message"
       >
         <DialogContent>
-          <p>
+          <p id="warn-force-push-confirmation-title">
             {t(
               'warn-force-push-dialog.are-you-sure-operation',
               'Are you sure you want to {{0}}?',
               { 0: operation.toLowerCase() }
             )}
           </p>
-          <p>
+          <p id="warn-force-push-confirmation-message">
             {t(
               'warn-force-push-dialog.end-of-the-operation-flow',
               `At the end of the {{0}} flow, GitHub Desktop
