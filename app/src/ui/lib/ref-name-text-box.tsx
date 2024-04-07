@@ -5,6 +5,7 @@ import { TextBox } from './text-box'
 import { Ref } from './ref'
 import { t } from 'i18next'
 import { InputWarning } from './input-description/input-warning'
+import { InputError } from './input-description/input-error'
 
 interface IRefNameProps {
   /**
@@ -97,12 +98,16 @@ export class RefNameTextBox extends React.Component<
           value={this.state.proposedValue}
           ref={this.textBoxRef}
           ariaLabelledBy={this.props.ariaLabelledBy}
-          ariaDescribedBy={this.props.ariaDescribedBy}
+          ariaDescribedBy={
+            this.props.ariaDescribedBy +
+            ` branch-name-warning` +
+            ` branch-name-error`
+          }
           onValueChanged={this.onValueChange}
           onBlur={this.onBlur}
         />
 
-        {this.renderRefValueWarning()}
+        {this.renderRefValueWarningError()}
       </div>
     )
   }
@@ -144,11 +149,27 @@ export class RefNameTextBox extends React.Component<
     }
   }
 
-  private renderRefValueWarning() {
+  private renderRefValueWarningError() {
     const { proposedValue, sanitizedValue } = this.state
 
     if (proposedValue === sanitizedValue) {
       return null
+    }
+
+    // If the proposed value ends up being sanitized as
+    // an empty string we show a message saying that the
+    // proposed value is invalid.
+    if (sanitizedValue.length === 0) {
+      return (
+        <InputError
+          id="branch-name-error"
+          className="warning-helper-text"
+          trackedUserInput={proposedValue}
+          ariaLiveMessage={`Error: ${proposedValue} is not a valid name.`}
+        >
+          <Ref>{proposedValue}</Ref> is not a valid name.
+        </InputError>
+      )
     }
 
     return (
@@ -156,63 +177,45 @@ export class RefNameTextBox extends React.Component<
         id="branch-name-warning"
         className="warning-helper-text"
         trackedUserInput={proposedValue}
-        ariaLiveMessage={this.getWarningMessageAsString(
-          sanitizedValue,
-          proposedValue
-        )}
+        ariaLiveMessage={this.getWarningMessageAsString(sanitizedValue)}
       >
-        <p>{this.renderWarningMessage(sanitizedValue, proposedValue)}</p>
+        <p>{this.renderWarningMessage(sanitizedValue)}</p>
       </InputWarning>
     )
   }
 
-  private getWarningMessageAsString(
-    sanitizedValue: string,
-    proposedValue: string
-  ): string {
-    // If the proposed value ends up being sanitized as
-    // an empty string we show a message saying that the
-    // proposed value is invalid.
-    if (sanitizedValue.length === 0) {
-      return t(
-        'ref-name-text-box.warning-not-a-valid-name',
-        'Warning: {{0}} is not a valid name.',
-        { 0: proposedValue }
-      )
-    }
 
+  private getWarningMessageAsString(sanitizedValue: string): string {
     const warningMessage =
       this.props.warningMessageVerb ?? t('ref-name-text-box.created', 'created')
     return t(
-      'ref-name-text-box.get-warning-message-as-string',
-      'Warning: Will be {{0}} as {{1}} (with spaces replaced by hyphens).',
+      'ref-name-text-box.get-warning-message-as-string-1',
+      'Warning: Will be {{0}} as {{1}}. Spaces and invalid characters have been replaced by hyphens.',
       { 0: warningMessage, 1: sanitizedValue }
     )
   }
 
-  private renderWarningMessage(sanitizedValue: string, proposedValue: string) {
-    // If the proposed value ends up being sanitized as
-    // an empty string we show a message saying that the
-    // proposed value is invalid.
-    if (sanitizedValue.length === 0) {
-      return (
-        <>
-          <Ref>{proposedValue}</Ref>
-          {t('ref-name-text-box.is-not-a-valid-name', ' is not a valid name.')}
-        </>
-      )
-    }
+  private renderWarningMessage(sanitizedValue: string) {
     const warningMessage =
       this.props.warningMessageVerb ?? t('ref-name-text-box.created', 'created')
     return (
       <>
-        {t('ref-name-text-box.will-be-created-as-1', 'Will be {{0}} as ', {
-          0: warningMessage,
-        })}
+        {t(
+          'ref-name-text-box.render-warning-message-1',
+          'Will be {{0}}',
+          { 0: warningMessage}
+        )}
         <Ref>{sanitizedValue}</Ref>
-        {t('ref-name-text-box.will-be-created-as-2', '.', {
-          0: warningMessage,
-        })}
+        {t(
+            'ref-name-text-box.render-warning-message-2',
+            '. '
+          )}
+        <span className="sr-only">
+          {t(
+            'ref-name-text-box.render-warning-message-3',
+            'Spaces and invalid characters have been replaced by hyphens.'
+          )}
+        </span>
       </>
     )
   }
