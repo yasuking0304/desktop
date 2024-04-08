@@ -445,20 +445,31 @@ export class CreateRepository extends React.Component<
         id="repo-sanitized-name-warning"
         trackedUserInput={this.state.name}
         ariaLiveMessage={
-          t('create-repository.repo-sanitized-name-warning',
-            `Will be created as {{0}}. Spaces and invalid characters have been replaced by hyphens.`,
-            {0: sanitizedName})
+          t(
+            'create-repository.repo-sanitized-name-warning',
+            'Will be created as {{0}}. ',
+            { 0: sanitizedName }
+          ) &&
+          t(
+            'create-repository.spaces-and-invalid-characters',
+            'Spaces and invalid characters have been replaced by hyphens.'
+          )
         }
       >
         <p>
-          {t('create-repository.will-be-created-as', 'Will be created as {{0}}', {
-            0: sanitizedName,
-          })}
+          {t(
+            'create-repository.will-be-created-as',
+            'Will be created as {{0}}',
+            {
+              0: sanitizedName,
+            }
+          )}
         </p>
         <span className="sr-only">
-        {t('create-repository.spaces-and-invalid-characters',
-          'Spaces and invalid characters have been replaced by hyphens.'
-        )}
+          {t(
+            'create-repository.spaces-and-invalid-characters',
+            'Spaces and invalid characters have been replaced by hyphens.'
+          )}
         </span>
       </InputWarning>
     )

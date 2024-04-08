@@ -622,6 +622,8 @@
     "render-invalid-path-error": "このパスにディレクトリを作成できませんでした。ここにディレクトリを作成する権限がない可能性があります。",
     "render-readme-overwrite-warning-1": "このディレクトリには、",
     "render-readme-overwrite-warning-2": "ファイルが既に含まれています。このチェックボックスをオンにすると、既存のファイルが上書きされます。",
+    "repo-sanitized-name-warning": "{{0}} として作成されます",
+    "spaces-and-invalid-characters": "半角スペースと無効な文字は \"ハイフン\" に置き換えられます。",
     "will-be-created-as": "{{0}} として作成されます"
   },
   "create-tag-dialog": {
@@ -1354,11 +1356,11 @@
   },
   "ref-name-text-box": {
     "created": "作成",
-    "get-warning-message-as-string": "警告: {{1}} として{{0}}されます。(スペースは'-'に置き換えられます).",
+    "get-warning-message-as-string": "警告: {{1}} として{{0}}されます。",
     "is-not-a-valid-name": " は有効な名前ではありません。",
-    "warning-not-a-valid-name": "警告: {{0}} は有効な名前ではありません。",
-    "will-be-created-as-1": " ",
-    "will-be-created-as-2": " として{{0}}されます。"
+    "render-warning-message-1": " ",
+    "render-warning-message-2": " として{{0}}されます。",
+    "spaces-and-invalid-characters": "半角スペースと無効な文字は \"ハイフン\" に置き換えられます。"
   },
   "relative-time": {
     "just-now": "たった今"

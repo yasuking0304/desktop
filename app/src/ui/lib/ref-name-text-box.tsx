@@ -167,7 +167,8 @@ export class RefNameTextBox extends React.Component<
           trackedUserInput={proposedValue}
           ariaLiveMessage={`Error: ${proposedValue} is not a valid name.`}
         >
-          <Ref>{proposedValue}</Ref> is not a valid name.
+          <Ref>{proposedValue}</Ref>
+          {t('ref-name-text-box.is-not-a-valid-name', 'is not a valid name.')}
         </InputError>
       )
     }
@@ -184,14 +185,19 @@ export class RefNameTextBox extends React.Component<
     )
   }
 
-
   private getWarningMessageAsString(sanitizedValue: string): string {
     const warningMessage =
       this.props.warningMessageVerb ?? t('ref-name-text-box.created', 'created')
-    return t(
-      'ref-name-text-box.get-warning-message-as-string-1',
-      'Warning: Will be {{0}} as {{1}}. Spaces and invalid characters have been replaced by hyphens.',
-      { 0: warningMessage, 1: sanitizedValue }
+    return (
+      t(
+        'ref-name-text-box.get-warning-message-as-string',
+        'Warning: Will be {{0}} as {{1}}. ',
+        { 0: warningMessage, 1: sanitizedValue }
+      ) &&
+      t(
+        'ref-name-text-box.spaces-and-invalid-characters',
+        'Spaces and invalid characters have been replaced by hyphens.'
+      )
     )
   }
 
@@ -200,19 +206,16 @@ export class RefNameTextBox extends React.Component<
       this.props.warningMessageVerb ?? t('ref-name-text-box.created', 'created')
     return (
       <>
-        {t(
-          'ref-name-text-box.render-warning-message-1',
-          'Will be {{0}}',
-          { 0: warningMessage}
-        )}
+        {t('ref-name-text-box.render-warning-message-1', 'Will be {{0}} as ', {
+          0: warningMessage,
+        })}
         <Ref>{sanitizedValue}</Ref>
-        {t(
-            'ref-name-text-box.render-warning-message-2',
-            '. '
-          )}
+        {t('ref-name-text-box.render-warning-message-2', '. ', {
+          0: warningMessage,
+        })}
         <span className="sr-only">
           {t(
-            'ref-name-text-box.render-warning-message-3',
+            'ref-name-text-box.spaces-and-invalid-characters',
             'Spaces and invalid characters have been replaced by hyphens.'
           )}
         </span>

@@ -622,6 +622,8 @@
     "render-invalid-path-error": "Directory could not be created at this path. You may not have\n        permissions to create a directory here.",
     "render-readme-overwrite-warning-1": "This directory contains a ",
     "render-readme-overwrite-warning-2": " file already. Checking\n            this box will result in the existing file being overwritten.",
+    "repo-sanitized-name-warning": "Will be created as {{0}}. ",
+    "spaces-and-invalid-characters": "Spaces and invalid characters have been replaced by hyphens.",
     "will-be-created-as": "Will be created as {{0}}"
   },
   "create-tag-dialog": {
@@ -1354,11 +1356,11 @@
   },
   "ref-name-text-box": {
     "created": "created",
-    "get-warning-message-as-string": "Warning: Will be {{0}} as {{1}} (with spaces replaced by hyphens).",
+    "get-warning-message-as-string": "Warning: Will be {{0}} as {{1}}. ",
     "is-not-a-valid-name": " is not a valid name.",
-    "warning-not-a-valid-name": "Warning: {{0}} is not a valid name.",
-    "will-be-created-as-1": "Will be {{0}} as ",
-    "will-be-created-as-2": "."
+    "render-warning-message-1": "Will be {{0}} as ",
+    "render-warning-message-2": ". ",
+    "spaces-and-invalid-characters": "Spaces and invalid characters have been replaced by hyphens."
   },
   "relative-time": {
     "just-now": "just now"
