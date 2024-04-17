@@ -5,10 +5,9 @@ GitHub app. It is written in [TypeScript](https://www.typescriptlang.org) and
 uses [React](https://reactjs.org/).
 
 ## Where can I get it Multilingal Platform?
-**The MacOS version has been suspended for a while due to repeated reports from Google of content that may violate the [Malware and Similar Malicious Content Policy]. It is currently under review.**
- - <del>[macOS(x64)](https://drive.google.com/file/d/1Ca73oW6JLq4LAPHUtnQ95gy_wFVbHa3O/view?usp=drive_link)  
+ - [macOS(x64)](https://1drv.ms/u/s!AvUs1OPxtUH6gaMk9C6QRZZFMEihXw?e=SGXRjZ)  
     For the MacOS version, please execute the included "setenv_lang_macos.sh" after installation.
-You only need to run it once.</del>
+You only need to run it once.
 
  - [Windows(x64)](https://drive.google.com/file/d/1EY6c2QdhyjasrxgBMgbdUwlNF2hN8aHE/view?usp=drive_link)
  - [Linux(x64-AppImage)](https://drive.google.com/file/d/1I_0-SPXuSJNAJe4-J0xiYPIGjgYhL8U5/view?usp=drive_link)
