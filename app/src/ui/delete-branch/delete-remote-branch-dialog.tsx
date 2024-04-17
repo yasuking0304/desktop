@@ -65,7 +65,8 @@ export class DeleteRemoteBranch extends React.Component<
                 'delete-remote-branch-dialog.delete-remote-branch-content-2',
                 '?'
               )}
-              <br />
+            </p>
+            <p>
               {t(
                 'delete-remote-branch-dialog.this-action-cannot-be-undone',
                 'This action cannot be undone.'

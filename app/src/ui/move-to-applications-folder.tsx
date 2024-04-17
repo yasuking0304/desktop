@@ -54,8 +54,8 @@ export class MoveToApplicationsFolder extends React.Component<
               Applications folder of your machine. This could cause problems
               with the app, including impacting your ability to sign in.`
             )}
-            <br />
-            <br />
+          </p>
+          <p>
             {t(
               'move-to-applications-folder.do-you-want-to-move',
               `Do you want to move GitHub Desktop to the Applications folder
