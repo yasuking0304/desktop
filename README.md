@@ -5,7 +5,7 @@ GitHub app. It is written in [TypeScript](https://www.typescriptlang.org) and
 uses [React](https://reactjs.org/).
 
 ## Where can I get it Multilingal Platform?
- - [macOS(x64)](https://1drv.ms/u/s!AvUs1OPxtUH6gaMk9C6QRZZFMEihXw?e=SGXRjZ)  
+ - [macOS(x64)](https://1drv.ms/u/s!AvUs1OPxtUH6gaMk9C6QRZZFMEihXw)  
     For the MacOS version, please execute the included "setenv_lang_macos.sh" after installation.
 You only need to run it once.
 
