@@ -101,9 +101,7 @@ export class WarnLocalChangesBeforeUndo extends React.Component<
     if (this.props.isWorkingDirectoryClean) {
       return (
         <DialogContent>
-          <p>
-            {this.getMergeCommitUndoWarningText()}
-          </p>
+          <p>{this.getMergeCommitUndoWarningText()}</p>
           <p>
             {t(
               'warn-local-changes-before-undo.do-you-want-to-continue-anyway',
@@ -122,9 +120,7 @@ export class WarnLocalChangesBeforeUndo extends React.Component<
             result in some of these changes being lost.`
           )}
         </p>
-        <p>
-          {this.getMergeCommitUndoWarningText()}
-        </p>
+        <p>{this.getMergeCommitUndoWarningText()}</p>
         <p>
           {t(
             'warn-local-changes-before-undo.do-you-want-to-continue-anyway',

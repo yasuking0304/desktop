@@ -96,7 +96,7 @@ export class ConfirmRemoveRepository extends React.Component<
             </p>
             <p>
               <Ref>{this.props.repository.path}</Ref>
-           </p>
+            </p>
           </div>
 
           <div>
