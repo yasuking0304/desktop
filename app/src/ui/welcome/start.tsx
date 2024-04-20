@@ -90,33 +90,35 @@ export class Start extends React.Component<IStartProps, {}> {
           </LinkButton>
         </div>
         <div className="welcome-start-disclaimer-container">
-          {t(
-            'start.by-creating-an-account-1',
-            'By creating an account, you agree to the '
-          )}
-          <LinkButton uri={'https://github.com/site/terms'}>
-            {t('start.terms-of-service', 'Terms of Service')}
-          </LinkButton>
-          {t('start.by-creating-an-account-2', '.')}
-          {t(
-            'start.privacy-practices-1',
-            ` For more information about GitHub's privacy practices, see the `
-          )}
-          <LinkButton uri={'https://github.com/site/privacy'}>
-            {t('start.github-privacy-statement', 'GitHub Privacy Statement')}
-          </LinkButton>
-          {t('start.privacy-practices-2', '.')}
-          <br />
-          <br />
-          {t(
-            'start.welcome-sends-usage-1',
-            `GitHub Desktop sends usage metrics to improve the product and inform
-            feature decisions. `
-          )}
-          <LinkButton uri={SamplesURL}>
-            {t('start.learn-more-about', 'Learn more about user metrics.')}
-          </LinkButton>
-          {t('start.welcome-sends-usage-2', ' ')}
+          <p>
+            {t(
+              'start.by-creating-an-account-1',
+              'By creating an account, you agree to the '
+            )}
+            <LinkButton uri={'https://github.com/site/terms'}>
+              {t('start.terms-of-service', 'Terms of Service')}
+            </LinkButton>
+            {t('start.by-creating-an-account-2', '.')}
+            {t(
+              'start.privacy-practices-1',
+              ` For more information about GitHub's privacy practices, see the `
+            )}
+            <LinkButton uri={'https://github.com/site/privacy'}>
+              {t('start.github-privacy-statement', 'GitHub Privacy Statement')}
+            </LinkButton>
+            {t('start.privacy-practices-2', '.')}
+          </p>
+          <p>
+            {t(
+              'start.welcome-sends-usage-1',
+              `GitHub Desktop sends usage metrics to improve the product and inform
+              feature decisions. `
+            )}
+            <LinkButton uri={SamplesURL}>
+              {t('start.learn-more-about', 'Learn more about user metrics.')}
+            </LinkButton>
+            {t('start.welcome-sends-usage-2', ' ')}
+          </p>
         </div>
       </section>
     )
