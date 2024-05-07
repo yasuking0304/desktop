@@ -101,6 +101,7 @@ import {
   IAPIFullRepository,
   IAPIComment,
   IAPIRepoRuleset,
+  deleteToken,
 } from '../api'
 import { shell } from '../app-shell'
 import {
@@ -689,17 +690,19 @@ export class AppStore extends TypedBaseStore<IAppState> {
     return zoomFactor
   }
 
-  private onTokenInvalidated = (endpoint: string) => {
+  private onTokenInvalidated = (endpoint: string, token: string) => {
     const account = getAccountForEndpoint(this.accounts, endpoint)
 
     if (account === null) {
       return
     }
 
-    // If there is a currently open popup, don't do anything here. Since the
-    // app can only show one popup at a time, we don't want to close the current
-    // one in favor of the error we're about to show.
-    if (this.popupManager.isAPopupOpen) {
+    // If we have a token for the account but it doesn't match the token that
+    // was invalidated that likely means that someone held onto an account for
+    // longer than they should have which is bad but what's even worse is if we
+    // invalidate an active account.
+    if (account.token && account.token !== token) {
+      log.error(`Token for ${endpoint} invalidated but token mismatch`)
       return
     }
 
@@ -2068,11 +2071,6 @@ export class AppStore extends TypedBaseStore<IAppState> {
       )
     }
 
-    const account = getAccountForRepository(this.accounts, repository)
-    if (!account) {
-      return
-    }
-
     if (!repository.gitHubRepository) {
       return
     }
@@ -2081,8 +2079,8 @@ export class AppStore extends TypedBaseStore<IAppState> {
     // similar to what's being done in `refreshAllIndicators`
     const fetcher = new BackgroundFetcher(
       repository,
-      account,
-      r => this.performFetch(r, account, FetchType.BackgroundTask),
+      this.accountsStore,
+      r => this._fetch(r, FetchType.BackgroundTask),
       r => this.shouldBackgroundFetch(r, null)
     )
     fetcher.start(withInitialSkew)
@@ -5851,11 +5849,12 @@ export class AppStore extends TypedBaseStore<IAppState> {
     return this.repositoriesStore.updateRepositoryPath(repository, path)
   }
 
-  public _removeAccount(account: Account): Promise<void> {
+  public async _removeAccount(account: Account) {
     log.info(
       `[AppStore] removing account ${account.login} (${account.name}) from store`
     )
-    return this.accountsStore.removeAccount(account)
+    await this.accountsStore.removeAccount(account)
+    await deleteToken(account)
   }
 
   private async _addAccount(account: Account): Promise<void> {
