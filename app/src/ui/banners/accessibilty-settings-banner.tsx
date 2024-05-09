@@ -4,6 +4,7 @@ import * as octicons from '../octicons/octicons.generated'
 import { Banner } from './banner'
 import { LinkButton } from '../lib/link-button'
 import { setBoolean } from '../../lib/local-storage'
+import { t } from 'i18next'
 
 export const accessibilityBannerDismissed = 'accessibility-banner-dismissed'
 
@@ -32,11 +33,17 @@ export class AccessibilitySettingsBanner extends React.Component<IAccessibilityS
       >
         <Octicon symbol={octicons.accessibilityInset} />
         <div className="banner-message">
-          Check out the new{' '}
+          {t('accessibility-settings-banner.check-out-1', 'Check out the new')}{' '}
           <LinkButton onClick={this.onOpenAccessibilitySettings}>
-            accessibility settings
+            {t(
+              'accessibility-settings-banner.accessibility-settings',
+              'accessibility settings'
+            )}
           </LinkButton>{' '}
-          to control the visibility of the link underlines and diff check marks.
+          {t(
+            'accessibility-settings-banner.check-out-2',
+            'to control the visibility of the link underlines and diff check marks.'
+          )}
         </div>
       </Banner>
     )

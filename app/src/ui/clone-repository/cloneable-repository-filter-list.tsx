@@ -186,7 +186,10 @@ export class CloneableRepositoryFilterList extends React.PureComponent<ICloneabl
         renderNoItems={this.renderNoItems}
         renderPostFilter={this.renderPostFilter}
         onItemClick={this.props.onItemClicked ? this.onItemClick : undefined}
-        placeholderText={'Filter your repositories'}
+        placeholderText={t(
+          'cloneable-repository-filter-list.placeholder-filter-repositories',
+          'Filter your repositories'
+        )}
         getGroupAriaLabel={this.getGroupAriaLabelGetter(groups)}
       />
     )
