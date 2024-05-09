@@ -30,6 +30,11 @@
     "underline-links": "Underline links",
     "underline-links-in-commit-messages": "When enabled, GitHub Desktop will underline links in commit\n              messages, comments, and other text fields. This can help make links\n              easier to distinguish."
   },
+  "accessibility-settings-banner": {
+    "accessibility-settings": "accessibility settings",
+    "check-out-1": "Check out the new",
+    "check-out-2": "to control the visibility of the link underlines and diff check marks."
+  },
   "acknowledgements": {
     "about-license-1": " ",
     "about-license-2": " is an open\n            source project published under the MIT License. You can view the\n            source code and contribute to this project on ",
@@ -785,8 +790,6 @@
     "depending-on-your-repository-s-2": ".",
     "integration-docs": "integration docs",
     "password": "Password",
-    "save-and-retry": "Save and retry",
-    "save-and-retry-darwin": "Save and Retry",
     "username": "Username",
     "we-were-unable-to-authenticate-1": "We were unable to authenticate with ",
     "we-were-unable-to-authenticate-2": ". Please enter your username and password to try again."

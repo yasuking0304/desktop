@@ -87,14 +87,17 @@ export class ConfirmRemoveRepository extends React.Component<
               '" from GitHub Desktop?'
             )}
           </p>
-          <p className="description">
-            {t(
-              'confirm-remove-repository.the-repository-will-be-removed',
-              'The repository will be removed from GitHub Desktop:'
-            )}
-            <br />
-            <Ref>{this.props.repository.path}</Ref>
-          </p>
+          <div className="description">
+            <p>
+              {t(
+                'confirm-remove-repository.the-repository-will-be-removed',
+                'The repository will be removed from GitHub Desktop:'
+              )}
+            </p>
+            <p>
+              <Ref>{this.props.repository.path}</Ref>
+            </p>
+          </div>
 
           <div>
             <Checkbox

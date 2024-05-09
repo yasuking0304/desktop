@@ -38,6 +38,12 @@ export interface IGitExecutionOptions extends DugiteExecutionOptions {
 
   /** Should it track & report LFS progress? */
   readonly trackLFSProgress?: boolean
+
+  /**
+   * Whether the command about to run is part of a background task or not.
+   * This affects error handling and UI such as credential prompts.
+   */
+  readonly isBackgroundTask?: boolean
 }
 
 /**
@@ -245,7 +251,7 @@ export async function git(
     }
 
     throw new GitError(gitResult, args)
-  })
+  }, options?.isBackgroundTask ?? false)
 }
 
 /**

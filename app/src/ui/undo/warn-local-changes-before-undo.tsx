@@ -101,36 +101,32 @@ export class WarnLocalChangesBeforeUndo extends React.Component<
     if (this.props.isWorkingDirectoryClean) {
       return (
         <DialogContent>
-          <Row>
-            {this.getMergeCommitUndoWarningText()}
-            <br />
-            <br />
+          <p>{this.getMergeCommitUndoWarningText()}</p>
+          <p>
             {t(
               'warn-local-changes-before-undo.do-you-want-to-continue-anyway',
               'Do you want to continue anyway?'
             )}
-          </Row>
+          </p>
         </DialogContent>
       )
     }
     return (
       <DialogContent>
-        <Row>
+        <p>
           {t(
             'warn-local-changes-before-undo.changes-in-progress-undo-merge',
             `You have changes in progress. Undoing the merge commit might
             result in some of these changes being lost.`
           )}
-          <br />
-          <br />
-          {this.getMergeCommitUndoWarningText()}
-          <br />
-          <br />
+        </p>
+        <p>{this.getMergeCommitUndoWarningText()}</p>
+        <p>
           {t(
             'warn-local-changes-before-undo.do-you-want-to-continue-anyway',
             'Do you want to continue anyway?'
           )}
-        </Row>
+        </p>
       </DialogContent>
     )
   }

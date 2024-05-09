@@ -9,7 +9,7 @@ import {
   KnownRepositoryGroup,
   makeRecentRepositoriesGroup,
 } from './group-repositories'
-import { FilterList, IFilterListGroup } from '../lib/filter-list'
+import { IFilterListGroup } from '../lib/filter-list'
 import { IMatches } from '../../lib/fuzzy-find'
 import { ILocalRepositoryState, Repository } from '../../models/repository'
 import { Dispatcher } from '../dispatcher'
@@ -26,7 +26,6 @@ import { t } from 'i18next'
 import { KeyboardShortcut } from '../keyboard-shortcut/keyboard-shortcut'
 import { generateRepositoryListContextMenu } from '../repositories-list/repository-list-item-context-menu'
 import { SectionFilterList } from '../lib/section-filter-list'
-import { enableSectionList } from '../../lib/feature-flag'
 
 const BlankSlateImage = encodePathAsUrl(__dirname, 'static/empty-no-repo.svg')
 
@@ -221,6 +220,12 @@ export class RepositoriesList extends React.Component<
     showContextualMenu(items)
   }
 
+  private getItemAriaLabel = (item: IRepositoryListItem) => item.repository.name
+  private getGroupAriaLabelGetter =
+    (groups: ReadonlyArray<IFilterListGroup<IRepositoryListItem>>) =>
+    (group: number) =>
+      groups[group].identifier
+
   public render() {
     const baseGroups = this.getRepositoryGroups(
       this.props.repositories,
@@ -244,33 +249,27 @@ export class RepositoriesList extends React.Component<
           ]
         : baseGroups
 
-    const getItemAriaLabel = (item: IRepositoryListItem) => item.repository.name
-    const getGroupAriaLabel = (group: number) => groups[group].identifier
-
-    const ListComponent = enableSectionList() ? SectionFilterList : FilterList
-    const filterListProps: typeof ListComponent['prototype']['props'] = {
-      rowHeight: RowHeight,
-      selectedItem: selectedItem,
-      filterText: this.props.filterText,
-      onFilterTextChanged: this.props.onFilterTextChanged,
-      renderItem: this.renderItem,
-      renderGroupHeader: this.renderGroupHeader,
-      onItemClick: this.onItemClick,
-      renderPostFilter: this.renderPostFilter,
-      renderNoItems: this.renderNoItems,
-      groups: groups,
-      invalidationProps: {
-        repositories: this.props.repositories,
-        filterText: this.props.filterText,
-      },
-      onItemContextMenu: this.onItemContextMenu,
-      getGroupAriaLabel,
-      getItemAriaLabel,
-    }
-
     return (
       <div className="repository-list">
-        <ListComponent {...filterListProps} />
+        <SectionFilterList<IRepositoryListItem>
+          rowHeight={RowHeight}
+          selectedItem={selectedItem}
+          filterText={this.props.filterText}
+          onFilterTextChanged={this.props.onFilterTextChanged}
+          renderItem={this.renderItem}
+          renderGroupHeader={this.renderGroupHeader}
+          onItemClick={this.onItemClick}
+          renderPostFilter={this.renderPostFilter}
+          renderNoItems={this.renderNoItems}
+          groups={groups}
+          invalidationProps={{
+            repositories: this.props.repositories,
+            filterText: this.props.filterText,
+          }}
+          onItemContextMenu={this.onItemContextMenu}
+          getGroupAriaLabel={this.getGroupAriaLabelGetter(groups)}
+          getItemAriaLabel={this.getItemAriaLabel}
+        />
       </div>
     )
   }

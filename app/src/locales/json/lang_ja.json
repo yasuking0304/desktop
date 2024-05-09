@@ -30,6 +30,11 @@
     "underline-links": "アンダーライン",
     "underline-links-in-commit-messages": "有効にすると、GitHub Desktop はコミットメッセージ、コメント、その他のテキストフィールドのリンクにアンダーラインを表示します。これにより、リンクを区別しやすくなります。"
   },
+  "accessibility-settings-banner": {
+    "accessibility-settings": "アクセシビリティの設定",
+    "check-out-1": "リンクの下線と差分チェックマークの表示を制御するため新しい",
+    "check-out-2": "を確認してください。"
+  },
   "acknowledgements": {
     "about-license-1": " ",
     "about-license-2": " は MIT ライセンスの下で公開されているオープンソースプロジェクトです。あなたは ",
@@ -785,8 +790,6 @@
     "depending-on-your-repository-s-2": " を参照してください。",
     "integration-docs": "統合ドキュメント",
     "password": "パスワード",
-    "save-and-retry": "保存して再試行します",
-    "save-and-retry-darwin": "保存して再試行します",
     "username": "ユーザー名",
     "we-were-unable-to-authenticate-1": " ",
     "we-were-unable-to-authenticate-2": " で認証できませんでした。ユーザー名とパスワードを入力して、もう一度やり直してください。"

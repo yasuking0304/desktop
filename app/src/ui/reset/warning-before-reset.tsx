@@ -45,9 +45,11 @@ export class WarningBeforeReset extends React.Component<
         disabled={this.state.isLoading}
         onSubmit={this.onSubmit}
         onDismissed={this.props.onDismissed}
+        role="alertdialog"
+        ariaDescribedBy="reset-warning-message"
       >
         <DialogContent>
-          <Row>
+          <Row id="reset-warning-message">
             {t(
               'warning-before-reset.you-have-changes-in-progress',
               `You have changes in progress. Resetting to a previous commit

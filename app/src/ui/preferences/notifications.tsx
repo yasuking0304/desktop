@@ -133,9 +133,7 @@ export class Notifications extends React.Component<
 
     if (warnNotificationsDenied) {
       return (
-        <>
-          <br />
-          <br />
+        <div className="setting-hint-warning">
           <span className="warning-icon">⚠️</span>
           {t(
             'notifications.has-no-permission-to-display-notifications-1',
@@ -149,7 +147,7 @@ export class Notifications extends React.Component<
             )}
           </LinkButton>
           {t('notifications.has-no-permission-to-display-notifications-2', '.')}
-        </>
+        </div>
       )
     }
 
