@@ -5,7 +5,7 @@ import { lookupPreferredEmail } from '../../lib/email'
 import { assertNever } from '../../lib/fatal-error'
 import { Button } from '../lib/button'
 import { Row } from '../lib/row'
-import { DialogContent } from '../dialog'
+import { DialogContent, DialogPreferredFocusClassName } from '../dialog'
 import { Avatar } from '../lib/avatar'
 import { CallToAction } from '../lib/call-to-action'
 import { t } from 'i18next'
@@ -60,6 +60,11 @@ export class Accounts extends React.Component<IAccountsProps, {}> {
       ...(this.props.enterpriseAccount ? [this.props.enterpriseAccount] : []),
     ]
 
+    // The DotCom account is shown first, so its sign in/out button should be
+    // focused initially when the dialog is opened.
+    const className =
+      type === SignInType.DotCom ? DialogPreferredFocusClassName : undefined
+
     return (
       <Row className="account-info">
         <div className="user-info-container">
@@ -69,7 +74,7 @@ export class Accounts extends React.Component<IAccountsProps, {}> {
             <div className="login">@{account.login}</div>
           </div>
         </div>
-        <Button onClick={this.logout(account)}>
+        <Button onClick={this.logout(account)} className={className}>
           {__DARWIN__
             ? t('common.sign-out-1-darwin', 'Sign Out of')
             : t('common.sign-out-1', 'Sign out of')}{' '}
@@ -103,6 +108,9 @@ export class Accounts extends React.Component<IAccountsProps, {}> {
           <CallToAction
             actionTitle={signInTitle + ' GitHub.com' + signInTitle2}
             onAction={this.onDotComSignIn}
+            // The DotCom account is shown first, so its sign in/out button should be
+            // focused initially when the dialog is opened.
+            buttonClassName={DialogPreferredFocusClassName}
           >
             <div>
               {t(
