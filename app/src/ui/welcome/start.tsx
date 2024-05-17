@@ -32,64 +32,67 @@ export class Start extends React.Component<IStartProps, {}> {
         aria-label="Welcome to GitHub Desktop"
         aria-describedby="start-description"
       >
-        <h1 className="welcome-title">
-          {t('start.welcome-to-1', 'Welcome to ')}
-          GitHub&nbsp;Desktop
-          {t('start.welcome-to-2', ' ')}
-        </h1>
-        {!this.props.loadingBrowserAuth ? (
-          <>
-            <p id="start-description" className="welcome-text">
-              {t(
-                'start.welcome-text',
-                `GitHub Desktop is a seamless way to contribute to projects on
-              GitHub and GitHub Enterprise. Sign in below to get started with
-              your existing projects.`
-              )}
-            </p>
-          </>
-        ) : (
-          <p>{BrowserRedirectMessage}</p>
-        )}
-
-        <div className="welcome-main-buttons">
-          <Button
-            type="submit"
-            className="button-with-icon"
-            disabled={this.props.loadingBrowserAuth}
-            onClick={this.signInWithBrowser}
-            autoFocus={true}
-            role="link"
-          >
-            {this.props.loadingBrowserAuth && <Loading />}
-            {t('start.sign-in-github-com', 'Sign in to GitHub.com')}
-            <Octicon symbol={octicons.linkExternal} />
-          </Button>
-          {this.props.loadingBrowserAuth ? (
-            <Button onClick={this.cancelBrowserAuth}>
-              {t('common.cancel', 'Cancel')}
-            </Button>
+        <div className="start-content">
+          <h1 className="welcome-title">
+            {t('start.welcome-to-1', 'Welcome to ')}
+            <span>GitHub Desktop</span>
+            {t('start.welcome-to-2', ' ')}
+          </h1>
+          {!this.props.loadingBrowserAuth ? (
+            <>
+              <p id="start-description" className="welcome-text">
+                {t(
+                  'start.welcome-text',
+                  `GitHub Desktop is a seamless way to contribute to projects on
+                GitHub and GitHub Enterprise. Sign in below to get started with
+                your existing projects.`
+                )}
+              </p>
+            </>
           ) : (
-            <Button onClick={this.signInToEnterprise}>
-              {t(
-                'start.sign-in-github-enterprise',
-                'Sign in to GitHub Enterprise'
-              )}
-            </Button>
+            <p>{BrowserRedirectMessage}</p>
           )}
-        </div>
-        <div className="skip-action-container">
-          <p className="welcome-text">
-            {t('start.new-to-github', 'New to GitHub? ')}
-            <LinkButton uri={CreateAccountURL} className="create-account-link">
-              {t('start.create-your-free-account', 'Create your free account.')}
+
+          <div className="welcome-main-buttons">
+            <Button
+              type="submit"
+              className="button-with-icon"
+              disabled={this.props.loadingBrowserAuth}
+              onClick={this.signInWithBrowser}
+              autoFocus={true}
+              role="link"
+            >
+              {this.props.loadingBrowserAuth && <Loading />}
+              {t('start.sign-in-github-com', 'Sign in to GitHub.com')}
+              <Octicon symbol={octicons.linkExternal} />
+            </Button>
+            {this.props.loadingBrowserAuth ? (
+              <Button onClick={this.cancelBrowserAuth}>
+                {t('common.cancel', 'Cancel')}
+              </Button>
+            ) : (
+              <Button onClick={this.signInToEnterprise}>
+                {t(
+                  'start.sign-in-github-enterprise',
+                  'Sign in to GitHub Enterprise'
+                )}
+              </Button>
+            )}
+          </div>
+          <div className="skip-action-container">
+            <p className="welcome-text">
+              {t('start.new-to-github', 'New to GitHub? ')}
+              <LinkButton uri={CreateAccountURL} className="create-account-link">
+                {t('start.create-your-free-account', 'Create your free account.')}
+              </LinkButton>
+            </p>
+            <LinkButton className="skip-button" onClick={this.skip}>
+              {t('start.skip-this-step', 'Skip this step')}
             </LinkButton>
-          </p>
-          <LinkButton className="skip-button" onClick={this.skip}>
-            {t('start.skip-this-step', 'Skip this step')}
-          </LinkButton>
+          </div>
         </div>
-        <div className="welcome-start-disclaimer-container">
+
+        <div className="start-footer">
           <p>
             {t(
               'start.by-creating-an-account-1',
