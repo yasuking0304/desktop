@@ -7,7 +7,6 @@ import {
 } from './core'
 import { Repository } from '../../models/repository'
 import { IPullProgress } from '../../models/progress'
-import { IGitAccount } from '../../models/git-account'
 import { PullProgressParser, executionOptionsWithProgress } from '../progress'
 import { AuthenticationErrors } from './authentication'
 import { enableRecurseSubmodulesFlag } from '../feature-flag'
@@ -19,7 +18,6 @@ import { t } from 'i18next'
 async function getPullArgs(
   repository: Repository,
   remote: string,
-  account: IGitAccount | null,
   progressCallback?: (progress: IPullProgress) => void
 ) {
   const divergentPathArgs = await getDefaultPullDivergentBranchArguments(
@@ -61,12 +59,11 @@ async function getPullArgs(
  */
 export async function pull(
   repository: Repository,
-  account: IGitAccount | null,
   remote: IRemote,
   progressCallback?: (progress: IPullProgress) => void
 ): Promise<void> {
   let opts: IGitExecutionOptions = {
-    env: await envForRemoteOperation(account, remote.url),
+    env: await envForRemoteOperation(remote.url),
     expectedErrors: AuthenticationErrors,
   }
 
@@ -107,12 +104,7 @@ export async function pull(
     progressCallback({ kind, title, value: 0, remote: remote.name })
   }
 
-  const args = await getPullArgs(
-    repository,
-    remote.name,
-    account,
-    progressCallback
-  )
+  const args = await getPullArgs(repository, remote.name, progressCallback)
   const result = await git(args, repository.path, 'pull', opts)
 
   if (result.gitErrorDescription) {
