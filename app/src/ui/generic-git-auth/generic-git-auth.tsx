@@ -71,25 +71,26 @@ export class GenericGitAuthentication extends React.Component<
             )}
             <Ref>{this.props.remoteUrl}</Ref>
             {t(
-              'generic-git-auth.we-were-unable-to-authenticate-2+',
+              'generic-git-auth.we-were-unable-to-authenticate-2',
               '. Please enter '
             )}
             {this.props.username ? (
               <>
-                t(
+                {t(
                   'generic-git-auth.we-were-unable-to-authenticate-3',
                   'the password for the user '
-                )
+                )}
                 <Ref>{this.props.username}</Ref>
+                {t('generic-git-auth.we-were-unable-to-authenticate-4', ' ')}
               </>
             ) : (
               t(
-                'generic-git-auth.we-were-unable-to-authenticate-4',
+                'generic-git-auth.we-were-unable-to-authenticate-5',
                 'your username and password'
               )
             )}{' '}
             {t(
-              'generic-git-auth.we-were-unable-to-authenticate-5',
+              'generic-git-auth.we-were-unable-to-authenticate-6',
               'to try again.'
             )}
           </p>

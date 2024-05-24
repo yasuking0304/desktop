@@ -790,9 +790,12 @@
     "depending-on-your-repository-s-2": " を参照してください。",
     "integration-docs": "統合ドキュメント",
     "password": "パスワード",
-    "username": "ユーザー名",
     "we-were-unable-to-authenticate-1": " ",
-    "we-were-unable-to-authenticate-2": " で認証できませんでした。ユーザー名とパスワードを入力して、もう一度やり直してください。"
+    "we-were-unable-to-authenticate-2": " が認証できませんでした。 ",
+    "we-were-unable-to-authenticate-3": " ",
+    "we-were-unable-to-authenticate-4": " のパスワードを入力して",
+    "we-were-unable-to-authenticate-5": "ユーザー名とパスワードを入力して",
+    "we-were-unable-to-authenticate-6": "、もう一度やり直してください。"
   },
   "git": {
     "default-branch-name-for-new-repositories": "新しいリポジトリのデフォルトのブランチ名",

@@ -790,9 +790,12 @@
     "depending-on-your-repository-s-2": ".",
     "integration-docs": "integration docs",
     "password": "Password",
-    "username": "Username",
     "we-were-unable-to-authenticate-1": "We were unable to authenticate with ",
-    "we-were-unable-to-authenticate-2": ". Please enter your username and password to try again."
+    "we-were-unable-to-authenticate-2": ". Please enter ",
+    "we-were-unable-to-authenticate-3": "the password for the user ",
+    "we-were-unable-to-authenticate-4": " ",
+    "we-were-unable-to-authenticate-5": "your username and password",
+    "we-were-unable-to-authenticate-6": "to try again."
   },
   "git": {
     "default-branch-name-for-new-repositories": "Default branch name for new repositories",
