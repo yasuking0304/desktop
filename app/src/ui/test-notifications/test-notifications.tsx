@@ -30,6 +30,7 @@ import {
   supportsNotificationsPermissionRequest,
 } from 'desktop-notifications'
 import { LinkButton } from '../lib/link-button'
+import { t } from 'i18next'
 
 enum TestNotificationType {
   PullRequestReview,
@@ -744,7 +745,7 @@ export class TestNotifications extends React.Component<
         </DialogContent>
         <DialogFooter>
           <OkCancelButtonGroup
-            okButtonText="Close"
+            okButtonText={t('common.close', 'Close')}
             okButtonDisabled={false}
             cancelButtonDisabled={false}
             cancelButtonVisible={this.state.selectedFlow !== null}

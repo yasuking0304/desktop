@@ -63,7 +63,7 @@ export class EditorError extends React.Component<IEditorErrorProps, {}> {
       return (
         <DialogFooter>
           <OkCancelButtonGroup
-            okButtonText="Close"
+            okButtonText={t('common.close', 'Close')}
             cancelButtonText={
               __DARWIN__
                 ? t('editor-error.open-settings-darwin', 'Open Settings')
@@ -77,7 +77,7 @@ export class EditorError extends React.Component<IEditorErrorProps, {}> {
       return (
         <DialogFooter>
           <OkCancelButtonGroup
-            okButtonText="Close"
+            okButtonText={t('common.close', 'Close')}
             cancelButtonText={`Download ${suggestedExternalEditor.name}`}
             onCancelButtonClick={this.onExternalLink}
           />

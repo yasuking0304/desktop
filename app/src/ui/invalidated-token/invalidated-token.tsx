@@ -5,6 +5,7 @@ import { Row } from '../lib/row'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
 import { Account } from '../../models/account'
 import { getDotComAPIEndpoint } from '../../lib/api'
+import { t } from 'i18next'
 
 interface IInvalidatedTokenProps {
   readonly dispatcher: Dispatcher
@@ -24,7 +25,7 @@ export class InvalidatedToken extends React.Component<IInvalidatedTokenProps> {
       <Dialog
         id="invalidated-token"
         type="warning"
-        title="Warning"
+        title={t('common.warning', 'Warning')}
         onSubmit={this.onSubmit}
         onDismissed={this.props.onDismissed}
       >
@@ -36,7 +37,10 @@ export class InvalidatedToken extends React.Component<IInvalidatedTokenProps> {
           </Row>
         </DialogContent>
         <DialogFooter>
-          <OkCancelButtonGroup okButtonText="Yes" cancelButtonText="No" />
+          <OkCancelButtonGroup
+            okButtonText={t('common.yes', 'Yes')}
+            cancelButtonText={t('common.no', 'No')}
+          />
         </DialogFooter>
       </Dialog>
     )
