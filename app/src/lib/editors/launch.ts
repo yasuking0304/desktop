@@ -15,10 +15,8 @@ export async function launchExternalEditor(
 ): Promise<void> {
   const editorPath = editor.path
   const exists = await pathExists(editorPath)
+  const label = __DARWIN__ ? 'Settings' : 'Options'
   if (!exists) {
-    const label = __DARWIN__
-      ? t('common.settings', 'Settings')
-      : t('common.options', 'Options')
     throw new ExternalEditorError(
       t(
         'launch.error.could-not-find-executable',
@@ -37,13 +35,28 @@ export async function launchExternalEditor(
     detached: true,
   }
 
-  if (editor.usesShell) {
-    spawn(`"${editorPath}"`, [`"${fullPath}"`], { ...opts, shell: true })
-  } else if (__DARWIN__) {
-    // In macOS we can use `open`, which will open the right executable file
-    // for us, we only need the path to the editor .app folder.
-    spawn('open', ['-a', editorPath, fullPath], opts)
-  } else {
-    spawn(editorPath, [fullPath], opts)
+  try {
+    if (editor.usesShell) {
+      spawn(`"${editorPath}"`, [`"${fullPath}"`], { ...opts, shell: true })
+    } else if (__DARWIN__) {
+      // In macOS we can use `open`, which will open the right executable file
+      // for us, we only need the path to the editor .app folder.
+      spawn('open', ['-a', editorPath, fullPath], opts)
+    } else {
+      spawn(editorPath, [fullPath], opts)
+    }
+  } catch (error) {
+    log.error(`Error while launching ${editor.editor}`, error)
+    if (error?.code === 'EACCES') {
+      throw new ExternalEditorError(
+        `GitHub Desktop doesn't have the proper permissions to start '${editor.editor}'. Please open ${label} and try another editor.`,
+        { openPreferences: true }
+      )
+    } else {
+      throw new ExternalEditorError(
+        `Something went wrong while trying to start '${editor.editor}'. Please open ${label} and try another editor.`,
+        { openPreferences: true }
+      )
+    }
   }
 }
