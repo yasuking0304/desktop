@@ -105,8 +105,6 @@ const protocolLauncherArg = '--protocol-launcher'
 const possibleProtocols = new Set(['x-github-client'])
 if (__DEV__) {
   possibleProtocols.add('x-github-desktop-dev-auth')
-} else if (__LINUX__) {
-  possibleProtocols.add('x-github-desktop-auth')
 } else {
   //possibleProtocols.add('x-github-desktop-auth')
   possibleProtocols.add('x-github-desktop-dev-auth') /** if tesing, beta */
@@ -440,7 +438,7 @@ app.on('ready', () => {
     const menuItem = currentMenu.getMenuItemById(id)
     if (menuItem) {
       const window = BrowserWindow.fromWebContents(event.sender) || undefined
-      const fakeEvent = { preventDefault: () => {}, sender: event.sender }
+      const fakeEvent = { preventDefault: () => { }, sender: event.sender }
       menuItem.click(fakeEvent, window, event.sender)
     }
   })
@@ -771,7 +769,7 @@ function createWindow() {
         installExtension(extension, {
           loadExtensionOptions: { allowFileAccess: true },
         })
-      } catch (e) {}
+      } catch (e) { }
     }
   }
 
