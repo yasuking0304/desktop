@@ -422,6 +422,7 @@
     "local-path-darwin": "Local Path",
     "multiple-commits": "commits",
     "name": "Name",
+    "no": "No",
     "ok": "Ok",
     "one-commit": "commit",
     "one-or-less-commit": "commit",
@@ -459,6 +460,8 @@
     "username-or-email": "Username or email address",
     "view-conflicts": "View conflicts",
     "view-on-github": "View on GitHub",
+    "warning": "Warning",
+    "yes": "Yes",
     "your-email": "common.your-email@example.com",
     "your-name": "Your Name"
   },
@@ -653,7 +656,6 @@
     "branch-also-exists-on-the-remote": "The branch also exists on the remote, do you wish to delete it\n                there as well?",
     "confirm-delete-branch-1": "Delete branch ",
     "confirm-delete-branch-2": "?",
-    "confirm-delete-branch-3": "This action cannot be undone.",
     "delete-branch": "Delete branch",
     "delete-branch-darwin": "Delete Branch",
     "yes-delete-this-branch": "Yes, delete this branch on the remote"
@@ -790,9 +792,12 @@
     "depending-on-your-repository-s-2": ".",
     "integration-docs": "integration docs",
     "password": "Password",
-    "username": "Username",
     "we-were-unable-to-authenticate-1": "We were unable to authenticate with ",
-    "we-were-unable-to-authenticate-2": ". Please enter your username and password to try again."
+    "we-were-unable-to-authenticate-2": ". Please enter ",
+    "we-were-unable-to-authenticate-3": "the password for the user ",
+    "we-were-unable-to-authenticate-4": " ",
+    "we-were-unable-to-authenticate-5": "your username and password",
+    "we-were-unable-to-authenticate-6": "to try again."
   },
   "git": {
     "default-branch-name-for-new-repositories": "Default branch name for new repositories",
@@ -1755,6 +1760,10 @@
     "definitions-github-desktop": " helps you work with GitHub locally.",
     "use-this-tutorial": "Use this tutorial to get comfortable with Git, GitHub, and GitHub\n            Desktop.",
     "welcome": "Welcome to GitHub Desktop"
+  },
+  "whitespace-hint-popover": {
+    "selecting-lines": "Selecting lines is disabled when hiding whitespace changes.",
+    "show-whitespace-changes": "Show whitespace changes?"
   },
   "workflow-push-rejected": {
     "continue-in-browser": "Continue in browser",

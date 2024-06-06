@@ -62,11 +62,6 @@ export class DeleteBranch extends React.Component<
               )}
               <Ref>{this.props.branch.name}</Ref>
               {t('delete-branch-dialog.confirm-delete-branch-2', '?')}
-              <br />
-              {t(
-                'delete-branch-dialog.confirm-delete-branch-3',
-                'This action cannot be undone.'
-              )}
             </p>
             {this.renderDeleteOnRemote()}
           </div>

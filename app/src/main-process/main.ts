@@ -105,8 +105,6 @@ const protocolLauncherArg = '--protocol-launcher'
 const possibleProtocols = new Set(['x-github-client'])
 if (__DEV__) {
   possibleProtocols.add('x-github-desktop-dev-auth')
-} else if (__LINUX__) {
-  possibleProtocols.add('x-github-desktop-auth')
 } else {
   //possibleProtocols.add('x-github-desktop-auth')
   possibleProtocols.add('x-github-desktop-dev-auth') /** if tesing, beta */
@@ -634,6 +632,9 @@ app.on('ready', () => {
   ipcMain.on('select-all-window-contents', () =>
     mainWindow?.selectAllWindowContents()
   )
+
+  /** An event sent by the renderer indicating a modal dialog is opened */
+  ipcMain.on('dialog-did-open', () => mainWindow?.dialogDidOpen())
 
   /**
    * An event sent by the renderer asking whether the Desktop is in the

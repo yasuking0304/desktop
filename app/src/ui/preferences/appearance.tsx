@@ -8,15 +8,20 @@ import { Row } from '../lib/row'
 import { DialogContent } from '../dialog'
 import { t } from 'i18next'
 import { RadioGroup } from '../lib/radio-group'
+import { Select } from '../lib/select'
 import { encodePathAsUrl } from '../../lib/path'
+import { tabSizeDefault } from '../../lib/stores/app-store'
 
 interface IAppearanceProps {
   readonly selectedTheme: ApplicationTheme
   readonly onSelectedThemeChanged: (theme: ApplicationTheme) => void
+  readonly selectedTabSize: number
+  readonly onSelectedTabSizeChanged: (tabSize: number) => void
 }
 
 interface IAppearanceState {
   readonly selectedTheme: ApplicationTheme | null
+  readonly selectedTabSize: number
 }
 
 export class Appearance extends React.Component<
@@ -30,7 +35,10 @@ export class Appearance extends React.Component<
       props.selectedTheme !== ApplicationTheme.System ||
       supportsSystemThemeChanges()
 
-    this.state = { selectedTheme: usePropTheme ? props.selectedTheme : null }
+    this.state = {
+      selectedTheme: usePropTheme ? props.selectedTheme : null,
+      selectedTabSize: props.selectedTabSize,
+    }
 
     if (!usePropTheme) {
       this.initializeSelectedTheme()
@@ -38,7 +46,7 @@ export class Appearance extends React.Component<
   }
 
   public async componentDidUpdate(prevProps: IAppearanceProps) {
-    if (prevProps.selectedTheme === this.props.selectedTheme) {
+    if (prevProps === this.props) {
       return
     }
 
@@ -50,16 +58,25 @@ export class Appearance extends React.Component<
       ? this.props.selectedTheme
       : await getCurrentlyAppliedTheme()
 
-    this.setState({ selectedTheme })
+    const selectedTabSize = this.props.selectedTabSize
+
+    this.setState({ selectedTheme, selectedTabSize })
   }
 
   private initializeSelectedTheme = async () => {
     const selectedTheme = await getCurrentlyAppliedTheme()
-    this.setState({ selectedTheme })
+    const selectedTabSize = this.props.selectedTabSize
+    this.setState({ selectedTheme, selectedTabSize })
   }
 
   private onSelectedThemeChanged = (theme: ApplicationTheme) => {
     this.props.onSelectedThemeChanged(theme)
+  }
+
+  private onSelectedTabSizeChanged = (
+    event: React.FormEvent<HTMLSelectElement>
+  ) => {
+    this.props.onSelectedTabSizeChanged(parseInt(event.currentTarget.value))
   }
 
   public renderThemeSwatch = (theme: ApplicationTheme) => {
@@ -105,16 +122,14 @@ export class Appearance extends React.Component<
     }
   }
 
-  public render() {
-    const { selectedTheme } = this.state
+  private renderSelectedTheme() {
+    const selectedTheme = this.state.selectedTheme
 
     if (selectedTheme == null) {
       return (
-        <DialogContent>
-          <Row>
-            {t('appearance.loading-system-theme', 'Loading system theme')}
-          </Row>
-        </DialogContent>
+        <Row>
+          {t('appearance.loading-system-theme', 'Loading system theme')}
+        </Row>
       )
     }
 
@@ -125,7 +140,7 @@ export class Appearance extends React.Component<
     ]
 
     return (
-      <DialogContent>
+      <div className="appearance-section">
         <h2 id="theme-heading">{t('appearance.theme', 'Theme')}</h2>
 
         <RadioGroup<ApplicationTheme>
@@ -136,6 +151,37 @@ export class Appearance extends React.Component<
           onSelectionChanged={this.onSelectedThemeChanged}
           renderRadioButtonLabelContents={this.renderThemeSwatch}
         />
+      </div>
+    )
+  }
+
+  private renderSelectedTabSize() {
+    const availableTabSizes: number[] = [1, 2, 3, 4, 5, 6, 8, 10, 12]
+
+    return (
+      <div className="appearance-section">
+        <h2 id="diff-heading">{'Diff'}</h2>
+
+        <Select
+          value={this.state.selectedTabSize.toString()}
+          label={__DARWIN__ ? 'Tab Size' : 'Tab size'}
+          onChange={this.onSelectedTabSizeChanged}
+        >
+          {availableTabSizes.map(n => (
+            <option key={n} value={n}>
+              {n === tabSizeDefault ? `${n} (default)` : n}
+            </option>
+          ))}
+        </Select>
+      </div>
+    )
+  }
+
+  public render() {
+    return (
+      <DialogContent>
+        {this.renderSelectedTheme()}
+        {this.renderSelectedTabSize()}
       </DialogContent>
     )
   }

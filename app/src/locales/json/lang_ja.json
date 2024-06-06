@@ -422,6 +422,7 @@
     "local-path-darwin": "ローカルパス",
     "multiple-commits": "個のコミット",
     "name": "名前",
+    "no": "いいえ",
     "ok": "Ok",
     "one-commit": "個のコミット",
     "one-or-less-commit": "個のコミット",
@@ -459,6 +460,8 @@
     "username-or-email": "ユーザー名 または メールアドレス",
     "view-conflicts": "コンフリクトの表示",
     "view-on-github": "GitHub で確認",
+    "warning": "警告",
+    "yes": "はい",
     "your-email": "あなたのメールアドレス@example.com",
     "your-name": "あなたの名前"
   },
@@ -653,7 +656,6 @@
     "branch-also-exists-on-the-remote": "ブランチはリモートにも存在しますが、そちらも削除しますか?",
     "confirm-delete-branch-1": "ブランチ ",
     "confirm-delete-branch-2": " を削除しますか?",
-    "confirm-delete-branch-3": "この操作は元に戻せません。",
     "delete-branch": "ブランチの削除",
     "delete-branch-darwin": "ブランチの削除",
     "yes-delete-this-branch": "はい、リモート上のこのブランチを削除します。"
@@ -790,9 +792,12 @@
     "depending-on-your-repository-s-2": " を参照してください。",
     "integration-docs": "統合ドキュメント",
     "password": "パスワード",
-    "username": "ユーザー名",
     "we-were-unable-to-authenticate-1": " ",
-    "we-were-unable-to-authenticate-2": " で認証できませんでした。ユーザー名とパスワードを入力して、もう一度やり直してください。"
+    "we-were-unable-to-authenticate-2": " が認証できませんでした。 ",
+    "we-were-unable-to-authenticate-3": " ",
+    "we-were-unable-to-authenticate-4": " のパスワードを入力して",
+    "we-were-unable-to-authenticate-5": "ユーザー名とパスワードを入力して",
+    "we-were-unable-to-authenticate-6": "、もう一度やり直してください。"
   },
   "git": {
     "default-branch-name-for-new-repositories": "新しいリポジトリのデフォルトのブランチ名",
@@ -1755,6 +1760,10 @@
     "definitions-github-desktop": " は GitHub をローカルで操作するのに役立ちます。",
     "use-this-tutorial": "このチュートリアルを使用して、Git、GitHub、および GitHub Desktop の操作に慣れてください。",
     "welcome": "GitHub Desktop にようこそ"
+  },
+  "whitespace-hint-popover": {
+    "selecting-lines": "行の選択は、空白の変更を非表示にすると無効になります。",
+    "show-whitespace-changes": "空白の変更を表示しますか?"
   },
   "workflow-push-rejected": {
     "continue-in-browser": "ブラウザーで続行",

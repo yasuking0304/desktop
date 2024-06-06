@@ -10,14 +10,20 @@ import { t } from 'i18next'
 import { PasswordTextBox } from '../lib/password-text-box'
 
 interface IGenericGitAuthenticationProps {
-  /** The hostname with which the user tried to authenticate. */
-  readonly hostname: string
+  /** The remote url with which the user tried to authenticate. */
+  readonly remoteUrl: string
 
   /** The function to call when the user saves their credentials. */
   readonly onSave: (username: string, password: string) => void
 
   /** The function to call when the user dismisses the dialog. */
   readonly onDismiss: () => void
+
+  /**
+   * In case the username is predetermined. Setting this will prevent
+   * the popup from allowing the user to change the username.
+   */
+  readonly username?: string
 }
 
 interface IGenericGitAuthenticationState {
@@ -33,7 +39,7 @@ export class GenericGitAuthentication extends React.Component<
   public constructor(props: IGenericGitAuthenticationProps) {
     super(props)
 
-    this.state = { username: '', password: '' }
+    this.state = { username: this.props.username ?? '', password: '' }
   }
 
   public render() {
@@ -54,40 +60,63 @@ export class GenericGitAuthentication extends React.Component<
         }
         onDismissed={this.props.onDismiss}
         onSubmit={this.save}
+        role="alertdialog"
+        ariaDescribedBy="generic-git-auth-error"
       >
         <DialogContent>
-          <p>
+          <p id="generic-git-auth-error">
             {t(
               'generic-git-auth.we-were-unable-to-authenticate-1',
               'We were unable to authenticate with '
             )}
-            <Ref>{this.props.hostname}</Ref>
+            <Ref>{this.props.remoteUrl}</Ref>
             {t(
               'generic-git-auth.we-were-unable-to-authenticate-2',
-              '. Please enter your username and password to try again.'
+              '. Please enter '
+            )}
+            {this.props.username ? (
+              <>
+                {t(
+                  'generic-git-auth.we-were-unable-to-authenticate-3',
+                  'the password for the user '
+                )}
+                <Ref>{this.props.username}</Ref>
+                {t('generic-git-auth.we-were-unable-to-authenticate-4', ' ')}
+              </>
+            ) : (
+              t(
+                'generic-git-auth.we-were-unable-to-authenticate-5',
+                'your username and password'
+              )
+            )}{' '}
+            {t(
+              'generic-git-auth.we-were-unable-to-authenticate-6',
+              'to try again.'
             )}
           </p>
 
-          <Row>
-            <TextBox
-              label={t('generic-git-auth.username', 'Username')}
-              // eslint-disable-next-line jsx-a11y/no-autofocus
-              autoFocus={true}
-              value={this.state.username}
-              onValueChanged={this.onUsernameChange}
-            />
-          </Row>
+          {this.props.username === undefined && (
+            <Row>
+              <TextBox
+                label="Username"
+                autoFocus={true}
+                value={this.state.username}
+                onValueChanged={this.onUsernameChange}
+              />
+            </Row>
+          )}
 
           <Row>
             <PasswordTextBox
               label={t('generic-git-auth.password', 'Password')}
               value={this.state.password}
               onValueChanged={this.onPasswordChange}
+              ariaDescribedBy="generic-git-auth-password-description"
             />
           </Row>
 
           <Row>
-            <div>
+            <div id="generic-git-auth-password-description">
               {t(
                 'generic-git-auth.depending-on-your-repository-s-1',
                 `Depending on your repository's hosting service, you might need
@@ -118,7 +147,10 @@ export class GenericGitAuthentication extends React.Component<
   }
 
   private save = () => {
-    this.props.onSave(this.state.username, this.state.password)
+    this.props.onSave(
+      this.props.username ?? this.state.username,
+      this.state.password
+    )
     this.props.onDismiss()
   }
 }

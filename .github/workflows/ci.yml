@@ -9,9 +9,40 @@ on:
     tags:
       - 'release-*.*.*-linux*'
   pull_request:
-    branches:
-      - linux
-      - 'linux-release-*'
+  workflow_call:
+    inputs:
+      repository:
+        default: desktop/desktop
+        required: false
+        type: string
+      ref:
+        required: true
+        type: string
+      upload-artifacts:
+        default: false
+        required: false
+        type: boolean
+      environment:
+        type: string
+        required: true
+      sign:
+        type: boolean
+        default: true
+        required: false
+    secrets:
+      AZURE_CODE_SIGNING_TENANT_ID:
+      AZURE_CODE_SIGNING_CLIENT_ID:
+      AZURE_CODE_SIGNING_CLIENT_SECRET:
+      DESKTOP_OAUTH_CLIENT_ID:
+      DESKTOP_OAUTH_CLIENT_SECRET:
+      APPLE_ID:
+      APPLE_ID_PASSWORD:
+      APPLE_TEAM_ID:
+      APPLE_APPLICATION_CERT:
+      APPLE_APPLICATION_CERT_PASSWORD:
+
+env:
+  NODE_VERSION: 20.11.1
 
 jobs:
   build:
@@ -45,13 +76,6 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
           cache: yarn
-
-      # This step can be removed as soon as official Windows arm64 builds are published:
-      # https://github.com/nodejs/build/issues/2450#issuecomment-705853342
-      - name: Get NodeJS node-gyp lib for Windows arm64
-        if: ${{ matrix.os == 'windows-2019' && matrix.arch == 'arm64' }}
-        run: .\script\download-nodejs-win-arm64.ps1 ${{ matrix.node }}
-
       - name: Install and build dependencies
         run: yarn
         env:
