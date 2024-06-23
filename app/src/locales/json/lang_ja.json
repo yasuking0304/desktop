@@ -55,7 +55,6 @@
     "help-github-desktop-improve-by-submitting-1": "GitHub Desktop が ",
     "help-github-desktop-improve-by-submitting-2": " を送信することで改善に貢献する",
     "show-status-icons-in-the-repository-list": "リポジトリ リストにステータス アイコンを表示",
-    "ssh": "SSH",
     "these-icons-indicate": "これらのアイコンは、どのリポジトリにローカルまたはリモートの変更があるかを示し、現在選択されていないリポジトリの定期的な取得が必要であることを示します。",
     "turning-this-off-will-not-stop": "これをオフにしても現在選択されているリポジトリの定期的な取得は停止されませんが、多くのリポジトリを持つユーザーでが全体的にアプリのパフォーマンスが向上する可能性があります。",
     "usage": "使われ方",
@@ -1504,9 +1503,7 @@
     "continue-with-browser-darwin": "ブラウザーで続行",
     "sign-in-browser": "ブラウザーを使用してサインインする",
     "sign-in-browser-darwin": "ブラウザーを使用してサインインする",
-    "to-improve-the-security-of-your-account": "アカウントのセキュリティを強化するために、GitHub ではブラウザーからサインインする必要があります。",
-    "your-browser-will-redirect-you-back": "サインインすると、ブラウザーは GitHub Desktop にリダイレクトします。ブラウザーから GitHub Desktop の起動許可を求められた場合は、許可を選択してください。",
-    "your-gitHub-enterprise-instance-requires": "GitHub Enterprise インスタンスでは、ブラウザーでサインインする必要があります。"
+    "your-browser-will-redirect-you-back": "サインインすると、ブラウザーは GitHub Desktop にリダイレクトします。ブラウザーから GitHub Desktop の起動許可を求められた場合は、許可を選択してください。"
   },
   "sign-in-enterprise": {
     "sign-in": "GitHub Enterprise にサインイン"

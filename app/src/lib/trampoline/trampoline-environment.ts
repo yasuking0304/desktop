@@ -216,7 +216,7 @@ export async function withTrampolineEnv<T>(
 
 const isAuthFailure = (e: unknown): e is GitError =>
   e instanceof GitError &&
-e.result.gitError === DugiteError.HTTPSAuthenticationFailed
+  e.result.gitError === DugiteError.HTTPSAuthenticationFailed
 
 function deleteMostRecentGenericCredential(token: string) {
   const cred = mostRecentGenericGitCredential.get(token)
