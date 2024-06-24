@@ -144,7 +144,9 @@ export class Advanced extends React.Component<
           />
         </div>
         {(this.state.canUseWindowsSSH || enableExternalCredentialHelper()) && (
-          <h2>Network and credentials</h2>
+          <h2>
+            {t('advanced.network-and-credentials', 'Network and credentials')}
+          </h2>
         )}
         {this.renderSSHSettings()}
         {enableExternalCredentialHelper() && (

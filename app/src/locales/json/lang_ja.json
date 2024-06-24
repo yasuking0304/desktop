@@ -54,6 +54,7 @@
     "background-updates": "バックグラウンド更新",
     "help-github-desktop-improve-by-submitting-1": "GitHub Desktop が ",
     "help-github-desktop-improve-by-submitting-2": " を送信することで改善に貢献する",
+    "network-and-credentials": "ネットワークと資格情報",
     "show-status-icons-in-the-repository-list": "リポジトリ リストにステータス アイコンを表示",
     "these-icons-indicate": "これらのアイコンは、どのリポジトリにローカルまたはリモートの変更があるかを示し、現在選択されていないリポジトリの定期的な取得が必要であることを示します。",
     "turning-this-off-will-not-stop": "これをオフにしても現在選択されているリポジトリの定期的な取得は停止されませんが、多くのリポジトリを持つユーザーでが全体的にアプリのパフォーマンスが向上する可能性があります。",
@@ -88,9 +89,13 @@
   },
   "appearance": {
     "dark": "Dark",
+    "diff": "差分",
     "light": "Light",
     "loading-system-theme": "システムテーマのロード中",
     "system": "システムの規定",
+    "tab_size_default": "{{0}} (デフォルト)",
+    "tab-size": "タブサイズ",
+    "tab-size-darwn": "タブサイズ",
     "theme": "外観テーマ"
   },
   "authentication-form": {
