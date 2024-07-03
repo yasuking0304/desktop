@@ -160,16 +160,22 @@ export class Appearance extends React.Component<
 
     return (
       <div className="appearance-section">
-        <h2 id="diff-heading">{'Diff'}</h2>
+        <h2 id="diff-heading">{t('appearance.diff', 'Diff')}</h2>
 
         <Select
           value={this.state.selectedTabSize.toString()}
-          label={__DARWIN__ ? 'Tab Size' : 'Tab size'}
+          label={
+            __DARWIN__
+              ? t('appearance.tab-size-darwn', 'Tab Size')
+              : t('appearance.tab-size', 'Tab size')
+          }
           onChange={this.onSelectedTabSizeChanged}
         >
           {availableTabSizes.map(n => (
             <option key={n} value={n}>
-              {n === tabSizeDefault ? `${n} (default)` : n}
+              {n === tabSizeDefault
+                ? t('appearance.tab_size_default', `{{0}} (default)`, { 0: n })
+                : n}
             </option>
           ))}
         </Select>

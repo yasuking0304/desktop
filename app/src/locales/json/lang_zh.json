@@ -54,8 +54,8 @@
     "background-updates": "Background updates",
     "help-github-desktop-improve-by-submitting-1": "Help GitHub Desktop improve by submitting ",
     "help-github-desktop-improve-by-submitting-2": " ",
+    "network-and-credentials": "Network and credentials",
     "show-status-icons-in-the-repository-list": "Show status icons in the repository list",
-    "ssh": "SSH",
     "these-icons-indicate": "These icons indicate which repositories have local or remote\n                changes, and require the periodic fetching of repositories that\n                are not currently selected.",
     "turning-this-off-will-not-stop": "Turning this off will not stop the periodic fetching of your\n                currently selected repository, but may improve overall app\n                performance for users with many repositories.",
     "usage": "Usage",
@@ -89,9 +89,13 @@
   },
   "appearance": {
     "dark": "Dark",
+    "diff": "Diff",
     "light": "Light",
     "loading-system-theme": "Loading system theme",
     "system": "System",
+    "tab_size_default": "{{0}} (default)",
+    "tab-size": "Tab size",
+    "tab-size-darwn": "Tab Size",
     "theme": "Theme"
   },
   "authentication-form": {
@@ -1504,9 +1508,7 @@
     "continue-with-browser-darwin": "Continue With Browser",
     "sign-in-browser": "Sign in using your browser",
     "sign-in-browser-darwin": "Sign in Using Your Browser",
-    "to-improve-the-security-of-your-account": "To improve the security of your account, GitHub now requires you\n              to sign in through your browser.",
-    "your-browser-will-redirect-you-back": "Your browser will redirect you back to GitHub Desktop once\n              you've signed in. If your browser asks for your permission to\n              launch GitHub Desktop please allow it to.",
-    "your-gitHub-enterprise-instance-requires": "Your GitHub Enterprise instance requires you to sign in with\n                your browser."
+    "your-browser-will-redirect-you-back": "Your browser will redirect you back to GitHub Desktop once\n              you've signed in. If your browser asks for your permission to\n              launch GitHub Desktop please allow it to."
   },
   "sign-in-enterprise": {
     "sign-in": "Sign in to your GitHub Enterprise"

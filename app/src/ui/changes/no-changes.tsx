@@ -339,7 +339,7 @@ export class NoChanges extends React.Component<
         {t('no-changes.select-your-editor', 'Select your editor in ')}
         <LinkButton onClick={this.openIntegrationPreferences}>
           {__DARWIN__
-            ? t('common.preferences', 'Preferences')
+            ? t('common.preferences', 'Settings')
             : t('common.options', 'Options')}
         </LinkButton>
       </>
