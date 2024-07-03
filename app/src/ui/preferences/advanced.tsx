@@ -152,7 +152,10 @@ export class Advanced extends React.Component<
         {enableExternalCredentialHelper() && (
           <div className="advanced-section">
             <Checkbox
-              label={'Use Git Credential Manager'}
+              label={t(
+                'advanced.use-git-credential-manager',
+                'Use Git Credential Manager'
+              )}
               value={
                 this.state.useExternalCredentialHelper
                   ? CheckboxValue.On
@@ -166,12 +169,18 @@ export class Advanced extends React.Component<
               className="git-settings-description"
             >
               <p>
-                Use{' '}
+                {t('advanced.use-git-credential-manager-1', 'Use ')}
                 <LinkButton uri="https://gh.io/gcm">
-                  Git Credential Manager{' '}
-                </LinkButton>{' '}
-                for private repositories outside of GitHub.com. This feature is
-                experimental and subject to change.
+                  {t(
+                    'advanced.use-git-credential-manager-2',
+                    'Git Credential Manager'
+                  )}
+                </LinkButton>
+                {t(
+                  'advanced.use-git-credential-manager-3',
+                  ` for private repositories outside of GitHub.com. This feature is
+                experimental and subject to change.`
+                )}
               </p>
             </div>
           </div>

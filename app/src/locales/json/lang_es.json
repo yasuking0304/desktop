@@ -60,6 +60,10 @@
     "turning-this-off-will-not-stop": "Turning this off will not stop the periodic fetching of your\n                currently selected repository, but may improve overall app\n                performance for users with many repositories.",
     "usage": "Usage",
     "usage-stats": "usage stats",
+    "use-git-credential-manager": "Use Git Credential Manager",
+    "use-git-credential-manager-1": "Use ",
+    "use-git-credential-manager-2": "Git Credential Manager",
+    "use-git-credential-manager-3": " for private repositories outside of GitHub.com. This feature is\n                experimental and subject to change.",
     "use-system-openssh": "Use system OpenSSH (recommended)"
   },
   "app": {
