@@ -58,6 +58,7 @@ import { t } from 'i18next'
 import { TooltippedContent } from '../lib/tooltipped-content'
 import { RepoRulesInfo } from '../../models/repo-rules'
 import { IAheadBehind } from '../../models/branch'
+import { StashDiffViewerId } from '../stashing'
 
 const RowHeight = 29
 const StashIcon: OcticonSymbolVariant = {
@@ -999,6 +1000,10 @@ export class ChangesList extends React.Component<
         className={className}
         onClick={this.onStashEntryClicked}
         tabIndex={0}
+        aria-expanded={this.props.isShowingStashEntry}
+        aria-controls={
+          this.props.isShowingStashEntry ? StashDiffViewerId : undefined
+        }
       >
         <Octicon className="stack-icon" symbol={StashIcon} />
         <div className="text">
