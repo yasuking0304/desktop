@@ -280,6 +280,20 @@ export class SideBySideDiff extends React.Component<
     document.addEventListener('copy', this.onCutOrCopy)
 
     document.addEventListener('selectionchange', this.onDocumentSelectionChange)
+
+    this.addContextMenuListenerToDiff()
+  }
+
+  private addContextMenuListenerToDiff = () => {
+    const diffNode = findDOMNode(this.virtualListRef.current)
+    const diff = diffNode instanceof HTMLElement ? diffNode : null
+    diff?.addEventListener('contextmenu', this.onContextMenuText)
+  }
+
+  private removeContextMenuListenerFromDiff = () => {
+    const diffNode = findDOMNode(this.virtualListRef.current)
+    const diff = diffNode instanceof HTMLElement ? diffNode : null
+    diff?.removeEventListener('contextmenu', this.onContextMenuText)
   }
 
   private onCutOrCopy = (ev: ClipboardEvent) => {
@@ -401,6 +415,7 @@ export class SideBySideDiff extends React.Component<
       this.onDocumentSelectionChange
     )
     document.removeEventListener('mousemove', this.onUpdateSelection)
+    this.removeContextMenuListenerFromDiff()
   }
 
   public componentDidUpdate(
@@ -892,7 +907,6 @@ export class SideBySideDiff extends React.Component<
             onContextMenuLine={this.onContextMenuLine}
             onContextMenuHunk={this.onContextMenuHunk}
             onContextMenuExpandHunk={this.onContextMenuExpandHunk}
-            onContextMenuText={this.onContextMenuText}
             onHideWhitespaceInDiffChanged={
               this.props.onHideWhitespaceInDiffChanged
             }
@@ -1370,8 +1384,18 @@ export class SideBySideDiff extends React.Component<
   /**
    * Handler to show a context menu when the user right-clicks on the diff text.
    */
-  private onContextMenuText = () => {
+  private onContextMenuText = (evt: React.MouseEvent | MouseEvent) => {
     const selectionLength = window.getSelection()?.toString().length ?? 0
+
+    if (
+      evt.target instanceof HTMLElement &&
+      (evt.target.closest('.line-number') !== null ||
+        evt.target.closest('.hunk-handle') !== null || // Windows uses the label element
+        evt.target.closest('.hunk-expansion-handle') !== null ||
+        evt.target instanceof HTMLInputElement) // macOS users the input element which is adjacent to the .hunk-handle
+    ) {
+      return
+    }
 
     const items: IMenuItem[] = [
       {

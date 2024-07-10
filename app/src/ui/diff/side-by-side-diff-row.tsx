@@ -223,11 +223,6 @@ interface ISideBySideDiffRowProps {
   readonly onContextMenuExpandHunk: () => void
 
   /**
-   * Called when the user right-clicks text on the diff.
-   */
-  readonly onContextMenuText: () => void
-
-  /**
    * Array of classes applied to the after section of a row
    */
   readonly afterClassNames: ReadonlyArray<string>
@@ -288,7 +283,7 @@ export class SideBySideDiffRow extends React.Component<
           'expandable-both': row.expansionType === DiffHunkExpansionType.Both,
         })
         return (
-          <div className={rowClasses}>
+          <div className={rowClasses} role="cell">
             {this.renderHunkHeaderGutter(row.hunkIndex, row.expansionType)}
             {this.renderContentFromString(row.content)}
           </div>
@@ -299,7 +294,7 @@ export class SideBySideDiffRow extends React.Component<
         const { beforeLineNumber, afterLineNumber } = row
         if (!showSideBySideDiff) {
           return (
-            <div className={rowClasses}>
+            <div className={rowClasses} role="cell">
               <div className="before">
                 {this.renderLineNumbers(
                   [beforeLineNumber, afterLineNumber],
@@ -312,7 +307,7 @@ export class SideBySideDiffRow extends React.Component<
         }
 
         return (
-          <div className={rowClasses}>
+          <div className={rowClasses} role="cell">
             <div className="before">
               {this.renderLineNumber(beforeLineNumber, DiffColumn.Before)}
               {this.renderContentFromString(row.content, row.beforeTokens)}
@@ -329,7 +324,7 @@ export class SideBySideDiffRow extends React.Component<
         const rowClasses = classNames('added', baseRowClasses)
         if (!showSideBySideDiff) {
           return (
-            <div className={rowClasses}>
+            <div className={rowClasses} role="cell">
               {this.renderHunkHandle()}
               <div className={afterClasses}>
                 {this.renderLineNumbers(
@@ -345,7 +340,7 @@ export class SideBySideDiffRow extends React.Component<
         }
 
         return (
-          <div className={rowClasses}>
+          <div className={rowClasses} role="cell">
             <div className={beforeClasses}>
               {this.renderLineNumber(undefined, DiffColumn.Before)}
               {this.renderContentFromString('')}
@@ -365,7 +360,7 @@ export class SideBySideDiffRow extends React.Component<
         const rowClasses = classNames('deleted', baseRowClasses)
         if (!showSideBySideDiff) {
           return (
-            <div className={rowClasses}>
+            <div className={rowClasses} role="cell">
               {this.renderHunkHandle()}
               <div className={beforeClasses}>
                 {this.renderLineNumbers(
@@ -381,7 +376,7 @@ export class SideBySideDiffRow extends React.Component<
         }
 
         return (
-          <div className={rowClasses}>
+          <div className={rowClasses} role="cell">
             <div className={beforeClasses}>
               {this.renderLineNumber(lineNumber, DiffColumn.Before, isSelected)}
               {this.renderContent(row.data, DiffRowPrefix.Deleted)}
@@ -400,7 +395,7 @@ export class SideBySideDiffRow extends React.Component<
         const { beforeData: before, afterData: after } = row
         const rowClasses = classNames('modified', baseRowClasses)
         return (
-          <div className={rowClasses}>
+          <div className={rowClasses} role="cell">
             <div className={beforeClasses}>
               {this.renderLineNumber(
                 before.lineNumber,
@@ -457,7 +452,7 @@ export class SideBySideDiffRow extends React.Component<
     prefix: DiffRowPrefix = DiffRowPrefix.Nothing
   ) {
     return (
-      <div className="content" onContextMenu={this.props.onContextMenuText}>
+      <div className="content">
         <div className="prefix">&nbsp;&nbsp;{prefix}&nbsp;&nbsp;</div>
         <div className="content-wrapper">
           {/* Copy to clipboard will ignore empty "lines" unless we add br */}
@@ -687,6 +682,7 @@ export class SideBySideDiffRow extends React.Component<
         onChange={this.onClickHunk}
         onFocus={this.onHunkFocus}
         onBlur={this.onHunkBlur}
+        onContextMenu={this.onContextMenuHunk}
       />
     )
 
@@ -788,17 +784,19 @@ export class SideBySideDiffRow extends React.Component<
         className={classes}
         style={{ width: this.lineGutterWidth }}
         onMouseDown={this.onMouseDownLineNumber}
-        onContextMenu={this.onContextMenuLineNumber}
       >
         {isSelectable &&
           this.renderLineNumberCheckbox(checkboxId, isSelected === true)}
-        <label htmlFor={checkboxId}>
+        <label
+          htmlFor={checkboxId}
+          onContextMenu={this.onContextMenuLineNumber}
+        >
           {this.renderLineNumberCheck(isSelected)}
           {lineNumbers.map((lineNumber, index) => (
             <span key={index}>
               {lineNumber && <span className="sr-only">Line </span>}
               {lineNumber}
-              {lineNumber && (
+              {lineNumber && isSelected !== undefined && (
                 <span className="sr-only">
                   {column === DiffColumn.After ? ' added' : ' deleted'}
                 </span>
@@ -832,6 +830,7 @@ export class SideBySideDiffRow extends React.Component<
   ) {
     return (
       <input
+        onContextMenu={this.onContextMenuLineNumber}
         className="sr-only"
         id={checkboxId}
         type="checkbox"
