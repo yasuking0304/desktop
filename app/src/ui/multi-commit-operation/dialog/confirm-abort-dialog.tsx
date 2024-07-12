@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { Dialog, DialogContent, DialogFooter } from '../../dialog'
 import { OkCancelButtonGroup } from '../../dialog/ok-cancel-button-group'
+import { t } from 'i18next'
 
 interface IConfirmAbortDialogProps {
   /**
@@ -54,8 +55,14 @@ export class ConfirmAbortDialog extends React.Component<
         id="abort-warning"
         title={
           __DARWIN__
-            ? `Confirm Abort ${operation}`
-            : `Confirm abort ${operation.toLowerCase()}`
+            ? t(
+                'confirm-abort-dialog.confirm-abort-darwin',
+                `Confirm Abort {{0}}`,
+                { 0: operation }
+              )
+            : t('confirm-abort-dialog.confirm-abort', `Confirm abort {{0}}`, {
+                0: operation.toLowerCase(),
+              })
         }
         onDismissed={this.onCancel}
         onSubmit={this.onSubmit}
@@ -67,11 +74,18 @@ export class ConfirmAbortDialog extends React.Component<
         <DialogContent>
           <div className="column-left" id="abort-operation-confirmation">
             <p>
-              Are you sure you want to abort this {operation.toLowerCase()}?
+              {t(
+                'confirm-abort-dialog.are-you-sure-you-want-to-abort',
+                `Are you sure you want to abort this {{0}}?`,
+                { 0: operation.toLowerCase() }
+              )}
             </p>
             <p>
-              This will take you back to the original branch state and the
-              conflicts you have already resolved will be discarded.
+              {t(
+                'confirm-abort-dialog.this-will-take-you-back',
+                `This will take you back to the original branch state and the
+                conflicts you have already resolved will be discarded.`
+              )}
             </p>
           </div>
         </DialogContent>
@@ -80,8 +94,12 @@ export class ConfirmAbortDialog extends React.Component<
             destructive={true}
             okButtonText={
               __DARWIN__
-                ? `Abort ${operation}`
-                : `Abort ${operation.toLowerCase()}`
+                ? t('confirm-abort-dialog.abort-darwin', `Abort {{0}}`, {
+                    0: operation,
+                  })
+                : t('confirm-abort-dialog.abort', `Abort {{0}}`, {
+                    0: operation.toLowerCase(),
+                  })
             }
           />
         </DialogFooter>
