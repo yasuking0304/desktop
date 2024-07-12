@@ -500,6 +500,14 @@
     "example-commit": "コミット例",
     "use-github-account": "既存の GitHub{{0}} アカウント名、メールアドレスを使用します"
   },
+  "confirm-abort-dialog": {
+    "abort": "{{0}} を中止",
+    "abort-darwin": "{{0}} を中止",
+    "are-you-sure-you-want-to-abort": "{{0}} を中止してもよろしいですか?",
+    "confirm-abort": "{{0}} の中止を確認",
+    "confirm-abort-darwin": "{{0}} の中止を確認",
+    "this-will-take-you-back": "中止することで元のブランチ状態に戻り、既に解決した競合は破棄されます。"
+  },
   "confirm-checkout-commit": {
     "checking-out-a-commit": "コミットをチェックアウトすると分離された HEAD が作成され、どのブランチにも存在しなくなります。 このコミットをチェックアウトしてもよろしいですか?",
     "checkout": "チェックアウト",
@@ -884,8 +892,6 @@
     "clone-repository": "リポジトリのクローン(&N)…",
     "clone-repository-darwin": "リポジトリのクローン…",
     "close-darwin": "ウィンドウを閉じる",
-    "collapse-expanded-lines": "展開された行を折りたたむ",
-    "collapse-expanded-lines-darwin": "展開された行を折りたたむ",
     "compare-on-github": "&GitHub で比較",
     "compare-on-github-darwin": "GitHub で比較",
     "compare-to-branch": "ブランチと比較(&C)",
@@ -935,8 +941,6 @@
     "exit": "終了(&X)",
     "expand-active-resizable": "アクティブ要素の幅を広げる",
     "expand-active-resizable-darwin": "アクティブ要素の幅を広げる",
-    "expand-whole-file": "ファイル全体を展開する",
-    "expand-whole-file-darwin": "ファイル全体を展開する",
     "fetch": "フェッチ(&F)",
     "fetch-darwin": "フェッチ",
     "file": "ファイル(&F)",
@@ -960,7 +964,6 @@
     "new-create-branch-darwin": "新規ブランチ…",
     "new-repository": "新規リポジトリ(&R)…",
     "new-repository-darwin": "新規リポジトリ…",
-    "no-newline-at-end-of-file": "ファイルの末尾に改行がありません",
     "open-default-program": "デフォルトプログラムで開く",
     "open-default-program-darwin": "デフォルトプログラムで開く",
     "open-in-external-editor": "{{0}} で開く(&O)",
@@ -1001,7 +1004,6 @@
     "repository-settings-darwin": "リポジトリの設定…",
     "reset-zoom": "ズーム(100%)",
     "reset-zoom-darwin": "ズーム(100%)",
-    "search": "検索",
     "select-all": "全てを選択(&A)",
     "select-all-darwin": "全てを選択",
     "services": "サービス",
@@ -1620,21 +1622,6 @@
     "open-source-licenses-and-notices": "オープンソースライセンスと通知",
     "privacy": "プライバシー",
     "terms-and-conditions": "GitHub オープンソースアプリケーションの利用規約"
-  },
-  "text-diff": {
-    "added": "追加",
-    "added-darwin": "追加",
-    "discard-line-type": "{{0}}行の破棄{{1}}{{2}}",
-    "discard-line-type-darwin": "{{0}}行の破棄{{2}}",
-    "expand-all": "すべて展開",
-    "expand-down": "下に展開",
-    "expand-up": "上に展開",
-    "expand-whole": "全体を展開",
-    "invalid-range-type": "無効な範囲タイプ: {{0}}",
-    "modified": "修正",
-    "modified-darwin": "修正",
-    "removed": "削除",
-    "removed-darwin": "削除"
   },
   "thank-you": {
     "thank-you-message": "GitHub Desktop {{0}} リリースに多大なるご尽力をいただき、ありがとうございました。皆様の積極的な貢献とアプリをみんなにとってより良いものにすることに心から感謝します。",
