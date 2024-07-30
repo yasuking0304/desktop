@@ -21,6 +21,8 @@ export const DefaultEditorLabel = __DARWIN__
   ? t('menu.context-open-in-external-editor-darwin', 'Open in External Editor')
   : t('menu.context-open-in-external-editor', 'Open in external editor')
 
+export const DefaultShellLabel = __DARWIN__ ? 'Open in Shell' : 'Open in shell'
+
 export const RevealInFileManagerLabel = __DARWIN__
   ? t('menu.show-in-finger', 'Reveal in Finder')
   : __WIN32__

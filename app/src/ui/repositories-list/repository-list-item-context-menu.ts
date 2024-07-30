@@ -5,12 +5,13 @@ import { clipboard } from 'electron'
 import {
   RevealInFileManagerLabel,
   DefaultEditorLabel,
+  DefaultShellLabel,
 } from '../lib/context-menu'
 import { t } from 'i18next'
 
 interface IRepositoryListItemContextMenuConfig {
   repository: Repositoryish
-  shellLabel: string
+  shellLabel: string | undefined
   externalEditorLabel: string | undefined
   askForConfirmationOnRemoveRepository: boolean
   onViewOnGitHub: (repository: Repositoryish) => void
@@ -34,6 +35,13 @@ export const generateRepositoryListContextMenu = (
         0: config.externalEditorLabel,
       })
     : DefaultEditorLabel
+  const openInShell = config.shellLabel
+    ? t(
+      'repository-list-item-context-menu.open-in-shell',
+      `Open in {{0}}`,
+      { 0: config.shellLabel }
+      )
+    : DefaultShellLabel
 
   const items: ReadonlyArray<IMenuItem> = [
     ...buildAliasMenuItems(config),
@@ -68,11 +76,7 @@ export const generateRepositoryListContextMenu = (
       enabled: github,
     },
     {
-      label: t(
-        'repository-list-item-context-menu.open-in-shell',
-        `Open in {{0}}`,
-        { 0: config.shellLabel }
-      ),
+      label: openInShell,
       action: () => config.onOpenInShell(repository),
       enabled: !missing,
     },

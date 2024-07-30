@@ -1759,6 +1759,10 @@ export class App extends React.Component<IAppProps, IAppState> {
             selectedShell={this.state.selectedShell}
             selectedTheme={this.state.selectedTheme}
             selectedTabSize={this.state.selectedTabSize}
+            useCustomEditor={this.state.useCustomEditor}
+            customEditor={this.state.customEditor}
+            useCustomShell={this.state.useCustomShell}
+            customShell={this.state.customShell}
             repositoryIndicatorsEnabled={this.state.repositoryIndicatorsEnabled}
             onOpenFileInExternalEditor={this.openFileInExternalEditor}
             underlineLinks={this.state.underlineLinks}
@@ -2880,7 +2884,7 @@ export class App extends React.Component<IAppProps, IAppState> {
     const externalEditorLabel = this.state.selectedExternalEditor
       ? this.state.selectedExternalEditor
       : undefined
-    const shellLabel = this.state.selectedShell
+    const { useCustomShell, selectedShell } = this.state
     const filterText = this.state.repositoryFilterText
     return (
       <RepositoriesList
@@ -2900,7 +2904,7 @@ export class App extends React.Component<IAppProps, IAppState> {
         onShowRepository={this.showRepository}
         onOpenInExternalEditor={this.openInExternalEditor}
         externalEditorLabel={externalEditorLabel}
-        shellLabel={shellLabel}
+        shellLabel={useCustomShell ? undefined : selectedShell}
         dispatcher={this.props.dispatcher}
       />
     )
@@ -3082,7 +3086,9 @@ export class App extends React.Component<IAppProps, IAppState> {
       onRemoveRepositoryAlias: onRemoveRepositoryAlias,
       onViewOnGitHub: this.viewOnGitHub,
       repository: repository,
-      shellLabel: this.state.selectedShell,
+      shellLabel: this.state.useCustomShell
+        ? undefined
+        : this.state.selectedShell,
     })
 
     showContextualMenu(items)
@@ -3381,9 +3387,9 @@ export class App extends React.Component<IAppProps, IAppState> {
     }
 
     if (selectedState.type === SelectionType.Repository) {
-      const externalEditorLabel = state.selectedExternalEditor
-        ? state.selectedExternalEditor
-        : undefined
+      const externalEditorLabel = state.useCustomEditor
+        ? undefined
+        : state.selectedExternalEditor ?? undefined
 
       return (
         <RepositoryView
@@ -3417,6 +3423,9 @@ export class App extends React.Component<IAppProps, IAppState> {
             state.askForConfirmationOnCheckoutCommit
           }
           accounts={state.accounts}
+          isExternalEditorAvailable={
+            state.useCustomEditor || state.selectedExternalEditor !== null
+          }
           externalEditorLabel={externalEditorLabel}
           resolvedExternalEditor={state.resolvedExternalEditor}
           onOpenInExternalEditor={this.onOpenInExternalEditor}
