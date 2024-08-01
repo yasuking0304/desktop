@@ -673,6 +673,15 @@
     "will-create-a-repository-2": " で ",
     "will-create-a-repository-3": "に プッシュされます。このリポジトリはあなただけに表示され、パブリックには表示されません。"
   },
+  "custom-integration-form": {
+    "arguments": "引数",
+    "arguments-must-include-the-target-path": "引数に対象パスのプレースホルダ {{0}} を含める必要があります。",
+    "command-line-arguments": "コマンドラインの引数",
+    "path": "パス",
+    "path-to-executable": "実行可能ファイルのパス",
+    "these-arguments-are-not-valid": "これらの引数は無効です。",
+    "This-path0does-not-appear": "このパスは有効な実行可能ファイルではないようです。"
+  },
   "delete-branch-dialog": {
     "branch-also-exists-on-the-remote": "ブランチはリモートにも存在しますが、そちらも削除しますか?",
     "confirm-delete-branch-1": "ブランチ ",
@@ -857,7 +866,10 @@
     "update-is-in-progress": "更新中です。GitHub Desktop を終了させないでください。今、終了させるとインストールが中断される可能性があります。"
   },
   "integrations": {
-    "applications": "アプリケーション",
+    "configure-custom-editor": "エディターのカスタマイズ…",
+    "configure-custom-editor-darwin": "エディターのカスタマイズ…",
+    "configure-custom-shell": "シェルのカスタマイズ…",
+    "configure-custom-shell-darwin": "シェルのカスタマイズ…",
     "external-editor": "外部エディター",
     "external-editor-darwin": "外部エディター",
     "install-editor-name": "{{0}} をインストールしますか?",
@@ -1012,8 +1024,6 @@
     "select-all": "全てを選択(&A)",
     "select-all-darwin": "全てを選択",
     "services": "サービス",
-    "shell": "コマンドプロンプト",
-    "shell-linux": "ターミナル",
     "show-all": "すべて表示",
     "show-banner": "バナー表示",
     "show-branches-list": "ブランチリスト(&B)",

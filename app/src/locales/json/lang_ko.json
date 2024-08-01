@@ -673,6 +673,15 @@
     "will-create-a-repository-2": " on ",
     "will-create-a-repository-3": ". This repository will only be visible to you, and not visible\n            publicly."
   },
+  "custom-integration-form": {
+    "arguments": "Arguments",
+    "arguments-must-include-the-target-path": "Arguments must include the target path placeholder ({0}}.",
+    "command-line-arguments": "Command line arguments",
+    "path": "Path",
+    "path-to-executable": "Path to executable",
+    "these-arguments-are-not-valid": "These arguments are not valid.",
+    "This-path0does-not-appear": "This path does not appear to be a valid executable."
+  },
   "delete-branch-dialog": {
     "branch-also-exists-on-the-remote": "The branch also exists on the remote, do you wish to delete it\n                there as well?",
     "confirm-delete-branch-1": "Delete branch ",
@@ -857,7 +866,10 @@
     "update-is-in-progress": "Do not close GitHub Desktop while the update is in progress. Closing\n            now may break your installation."
   },
   "integrations": {
-    "applications": "Applications",
+    "configure-custom-editor": "Configure custom editor…",
+    "configure-custom-editor-darwin": "Configure Custom Editor…",
+    "configure-custom-shell": "Configure custom shell…",
+    "configure-custom-shell-darwin": "Configure Custom Shell…",
     "external-editor": "External editor",
     "external-editor-darwin": "External Editor",
     "install-editor-name": "Install {{0}}?",
@@ -1012,8 +1024,6 @@
     "select-all": "Select &all",
     "select-all-darwin": "Select All",
     "services": "services",
-    "shell": "Command Prompt",
-    "shell-linux": "Terminal",
     "show-all": "Show All",
     "show-banner": "Show banner",
     "show-branches-list": "&Branches list",

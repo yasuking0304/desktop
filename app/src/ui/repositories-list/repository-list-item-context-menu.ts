@@ -36,11 +36,9 @@ export const generateRepositoryListContextMenu = (
       })
     : DefaultEditorLabel
   const openInShell = config.shellLabel
-    ? t(
-      'repository-list-item-context-menu.open-in-shell',
-      `Open in {{0}}`,
-      { 0: config.shellLabel }
-      )
+    ? t('repository-list-item-context-menu.open-in-shell', `Open in {{0}}`, {
+        0: config.shellLabel,
+      })
     : DefaultShellLabel
 
   const items: ReadonlyArray<IMenuItem> = [
