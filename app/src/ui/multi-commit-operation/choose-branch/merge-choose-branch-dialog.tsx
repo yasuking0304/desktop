@@ -172,7 +172,14 @@ export class MergeChooseBranchDialog extends React.Component<
   }
 
   private renderLoadingMergeMessage() {
-    return <>Checking for ability to merge automatically...</>
+    return (
+      <>
+        {t(
+          'merge-choose-branch-dialog.checking-for-ability',
+          'Checking for ability to merge automatically...'
+        )}
+      </>
+    )
   }
 
   private renderCleanMergeMessage(
@@ -211,9 +218,9 @@ export class MergeChooseBranchDialog extends React.Component<
         </strong>
         {t('merge-choose-branch-dialog.this-will-merge-2', ` from `)}
         <strong>{branch.name}</strong>
-        {t('merge-choose-branch-dialog.into', ` into `)}
+        {t('merge-choose-branch-dialog.this-will-merge-3', ` into `)}
         <strong>{currentBranch.name}</strong>
-        {t('merge-choose-branch-dialog.this-will-merge-3', ` `)}
+        {t('merge-choose-branch-dialog.this-will-merge-4', ` `)}
       </React.Fragment>
     )
   }

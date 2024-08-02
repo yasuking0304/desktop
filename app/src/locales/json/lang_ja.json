@@ -114,6 +114,11 @@
     "open-file-in-external-program": "外部プログラムを開きます。",
     "this-binary-file-has-changed": "バイナリファイルが変更されました。"
   },
+  "branch-already-up-to-date-banner": {
+    "is-already-up-to-date": " はすでに最新状態です",
+    "is-already-up-to-date-with-1": " はすでに ",
+    "is-already-up-to-date-with-2": " によって最新状態です"
+  },
   "branch-dropdown": {
     "current-branch": "現在のブランチ",
     "current-branch-darwin": "現在のブランチ"
@@ -500,6 +505,14 @@
     "example-commit": "コミット例",
     "use-github-account": "既存の GitHub{{0}} アカウント名、メールアドレスを使用します"
   },
+  "confirm-abort-dialog": {
+    "abort": "{{0}} を中止",
+    "abort-darwin": "{{0}} を中止",
+    "are-you-sure-you-want-to-abort": "{{0}} を中止してもよろしいですか?",
+    "confirm-abort": "{{0}} の中止を確認",
+    "confirm-abort-darwin": "{{0}} の中止を確認",
+    "this-will-take-you-back": "中止することで元のブランチ状態に戻り、既に解決した競合は破棄されます。"
+  },
   "confirm-checkout-commit": {
     "checking-out-a-commit": "コミットをチェックアウトすると分離された HEAD が作成され、どのブランチにも存在しなくなります。 このコミットをチェックアウトしてもよろしいですか?",
     "checkout": "チェックアウト",
@@ -659,6 +672,15 @@
     "will-create-a-repository-1": "ローカルマシンにリポジトリが作成され、アカウント ",
     "will-create-a-repository-2": " で ",
     "will-create-a-repository-3": "に プッシュされます。このリポジトリはあなただけに表示され、パブリックには表示されません。"
+  },
+  "custom-integration-form": {
+    "arguments": "引数",
+    "arguments-must-include-the-target-path": "引数に対象パスのプレースホルダ {{0}} を含める必要があります。",
+    "command-line-arguments": "コマンドラインの引数",
+    "path": "パス",
+    "path-to-executable": "実行可能ファイルのパス",
+    "these-arguments-are-not-valid": "これらの引数は無効です。",
+    "This-path0does-not-appear": "このパスは有効な実行可能ファイルではないようです。"
   },
   "delete-branch-dialog": {
     "branch-also-exists-on-the-remote": "ブランチはリモートにも存在しますが、そちらも削除しますか?",
@@ -844,7 +866,10 @@
     "update-is-in-progress": "更新中です。GitHub Desktop を終了させないでください。今、終了させるとインストールが中断される可能性があります。"
   },
   "integrations": {
-    "applications": "アプリケーション",
+    "configure-custom-editor": "エディターのカスタマイズ…",
+    "configure-custom-editor-darwin": "エディターのカスタマイズ…",
+    "configure-custom-shell": "シェルのカスタマイズ…",
+    "configure-custom-shell-darwin": "シェルのカスタマイズ…",
     "external-editor": "外部エディター",
     "external-editor-darwin": "外部エディター",
     "install-editor-name": "{{0}} をインストールしますか?",
@@ -884,8 +909,6 @@
     "clone-repository": "リポジトリのクローン(&N)…",
     "clone-repository-darwin": "リポジトリのクローン…",
     "close-darwin": "ウィンドウを閉じる",
-    "collapse-expanded-lines": "展開された行を折りたたむ",
-    "collapse-expanded-lines-darwin": "展開された行を折りたたむ",
     "compare-on-github": "&GitHub で比較",
     "compare-on-github-darwin": "GitHub で比較",
     "compare-to-branch": "ブランチと比較(&C)",
@@ -935,8 +958,6 @@
     "exit": "終了(&X)",
     "expand-active-resizable": "アクティブ要素の幅を広げる",
     "expand-active-resizable-darwin": "アクティブ要素の幅を広げる",
-    "expand-whole-file": "ファイル全体を展開する",
-    "expand-whole-file-darwin": "ファイル全体を展開する",
     "fetch": "フェッチ(&F)",
     "fetch-darwin": "フェッチ",
     "file": "ファイル(&F)",
@@ -960,7 +981,6 @@
     "new-create-branch-darwin": "新規ブランチ…",
     "new-repository": "新規リポジトリ(&R)…",
     "new-repository-darwin": "新規リポジトリ…",
-    "no-newline-at-end-of-file": "ファイルの末尾に改行がありません",
     "open-default-program": "デフォルトプログラムで開く",
     "open-default-program-darwin": "デフォルトプログラムで開く",
     "open-in-external-editor": "{{0}} で開く(&O)",
@@ -1001,12 +1021,9 @@
     "repository-settings-darwin": "リポジトリの設定…",
     "reset-zoom": "ズーム(100%)",
     "reset-zoom-darwin": "ズーム(100%)",
-    "search": "検索",
     "select-all": "全てを選択(&A)",
     "select-all-darwin": "全てを選択",
     "services": "サービス",
-    "shell": "コマンドプロンプト",
-    "shell-linux": "ターミナル",
     "show-all": "すべて表示",
     "show-banner": "バナー表示",
     "show-branches-list": "ブランチリスト(&B)",
@@ -1066,23 +1083,24 @@
     "this-will-merge-into-4": " "
   },
   "merge-choose-branch-dialog": {
-    "file": "個が",
-    "files": "個が",
-    "into": " into ",
-    "merge-into-1": "{{0}}Merge を ",
+    "checking-for-ability": "自動的にマージ可能かチェックしています…",
+    "file": "個のファイル",
+    "files": "個のファイル",
+    "merge-into-1": "{{0}}マージを ",
     "merge-into-2": " に行う",
     "number-commit": "{{0}}{{1}}",
-    "number-conflicted-file": "{{0}}{{1}} が競合しています",
-    "squash-and": "Squash の後で ",
-    "there-will-be-number-conflicted-1": "There will be ",
-    "there-will-be-number-conflicted-2": " when merging ",
-    "there-will-be-number-conflicted-3": " into ",
-    "there-will-be-number-conflicted-4": " ",
+    "number-conflicted-file": "{{0}}{{1}}が競合しています",
+    "squash-and": "スカッシュ(結合) と ",
+    "there-will-be-number-conflicted-1": " ",
+    "there-will-be-number-conflicted-2": "。",
+    "there-will-be-number-conflicted-3": " を ",
+    "there-will-be-number-conflicted-4": " にマージする場合は解決してください",
     "this-branch-is-up-to-date-with-1": "このブランチは ",
-    "this-branch-is-up-to-date-with-2": " で最新です",
-    "this-will-merge-1": "This will merge ",
-    "this-will-merge-2": " from ",
-    "this-will-merge-3": " ",
+    "this-branch-is-up-to-date-with-2": " によって最新状態です",
+    "this-will-merge-1": " ",
+    "this-will-merge-2": "(",
+    "this-will-merge-3": ")を ",
+    "this-will-merge-4": " にマージします",
     "unable-to-merge-unrelated-histories": "このリポジトリ内の無関係な履歴をマージできません"
   },
   "merge-conflicts-banner": {
@@ -1352,17 +1370,17 @@
     "warning-title": "警告:"
   },
   "rebase-choose-branch-dialog": {
-    "checking-for-ability-to-rebase": "自動的にリベースする機能のチェック…",
+    "checking-for-ability-to-rebase": "自動的にリベース可能かチェックしています…",
     "number-commit": " {{0}}{{1}}",
     "rebase-1": "リベースを ",
     "rebase-2": " に行う",
     "there-are-no-commits": "現在のブランチにリベースするコミットはありません。",
     "this-branch-is-up-to-date-with-1": "このブランチは ",
-    "this-branch-is-up-to-date-with-2": " で最新です",
-    "this-will-update-1": "This will update ",
-    "this-will-update-2": " by applying its ",
-    "this-will-update-3": " on top of ",
-    "this-will-update-4": " ",
+    "this-branch-is-up-to-date-with-2": "によって最新状態です",
+    "this-will-update-1": " ",
+    "this-will-update-2": " に",
+    "this-will-update-3": "(",
+    "this-will-update-4": " )を適用して更新します",
     "unable-to-start-rebase": "リベースを開始できません。有効なブランチを選択していることを確認してください。",
     "you-are-not-able-to-rebase": "このブランチをそれ自体にリベースすることはできません。"
   },
@@ -1620,21 +1638,6 @@
     "open-source-licenses-and-notices": "オープンソースライセンスと通知",
     "privacy": "プライバシー",
     "terms-and-conditions": "GitHub オープンソースアプリケーションの利用規約"
-  },
-  "text-diff": {
-    "added": "追加",
-    "added-darwin": "追加",
-    "discard-line-type": "{{0}}行の破棄{{1}}{{2}}",
-    "discard-line-type-darwin": "{{0}}行の破棄{{2}}",
-    "expand-all": "すべて展開",
-    "expand-down": "下に展開",
-    "expand-up": "上に展開",
-    "expand-whole": "全体を展開",
-    "invalid-range-type": "無効な範囲タイプ: {{0}}",
-    "modified": "修正",
-    "modified-darwin": "修正",
-    "removed": "削除",
-    "removed-darwin": "削除"
   },
   "thank-you": {
     "thank-you-message": "GitHub Desktop {{0}} リリースに多大なるご尽力をいただき、ありがとうございました。皆様の積極的な貢献とアプリをみんなにとってより良いものにすることに心から感謝します。",

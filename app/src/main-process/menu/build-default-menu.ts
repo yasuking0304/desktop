@@ -9,9 +9,6 @@ import * as ipcWebContents from '../ipc-webcontents'
 import { mkdir } from 'fs/promises'
 import { t } from 'i18next'
 
-const platformDefaultShell = __WIN32__
-  ? t('menu.shell', 'Command Prompt')
-  : t('menu.shell-linux', 'Terminal')
 const createPullRequestLabel = __DARWIN__
   ? t('menu.create-pull-request-darwin', 'Create Pull Request')
   : t('menu.create-pull-request', 'Create &pull request')
@@ -400,10 +397,10 @@ export function buildDefaultMenu({
       {
         label: __DARWIN__
           ? t('menu.open-in-shell-darwin', 'Open in {{0}}', {
-              0: selectedShell ?? platformDefaultShell,
+              0: selectedShell ?? 'Shell',
             })
           : t('menu.open-in-shell', 'O&pen in {{0}}', {
-              0: selectedShell ?? platformDefaultShell,
+              0: selectedShell ?? 'shell',
             }),
         id: 'open-in-shell',
         accelerator: 'Ctrl+`',

@@ -6,13 +6,14 @@ import * as Linux from './linux'
 import { ShellError } from './error'
 import { pathExists } from '../../ui/lib/path-exists'
 import { t } from 'i18next'
+import { ICustomIntegration } from '../custom-integration'
 
 export type Shell = Darwin.Shell | Win32.Shell | Linux.Shell
 
 export type FoundShell<T extends Shell> = {
   readonly shell: T
   readonly path: string
-  readonly extraArgs?: string[]
+  readonly extraArgs?: ReadonlyArray<string>
 } & (T extends Darwin.Shell
   ? {
       readonly bundleID: string
@@ -136,8 +137,45 @@ export async function launchShell(
   }
 }
 
+/** Launch custom shell at the path. */
+export async function launchCustomShell(
+  customShell: ICustomIntegration,
+  path: string,
+  onError: (error: Error) => void
+): Promise<void> {
+  // We have to manually cast the wider `Shell` type into the platform-specific
+  // type. This is less than ideal, but maybe the best we can do without
+  // platform-specific build targets.
+  const exists = await pathExists(customShell.path)
+  if (!exists) {
+    const label = __DARWIN__ ? 'Settings' : 'Options'
+    throw new ShellError(
+      `Could not find executable for custom shell at path '${customShell.path}'.  Please open ${label} and select an available shell.`
+    )
+  }
+
+  let cp: ChildProcess | null = null
+
+  if (__DARWIN__) {
+    cp = Darwin.launchCustomShell(customShell, path)
+  } else if (__WIN32__) {
+    cp = Win32.launchCustomShell(customShell, path)
+  } else if (__LINUX__) {
+    cp = Linux.launchCustomShell(customShell, path)
+  }
+
+  if (cp != null) {
+    addErrorTracing('Custom Shell', cp, onError)
+    return Promise.resolve()
+  } else {
+    return Promise.reject(
+      `Platform not currently supported for launching shells: ${process.platform}`
+    )
+  }
+}
+
 function addErrorTracing(
-  shell: Shell,
+  shell: Shell | 'Custom Shell',
   cp: ChildProcess,
   onError: (error: Error) => void
 ) {

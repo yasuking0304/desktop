@@ -43,13 +43,6 @@ export function enableWSLDetection(): boolean {
 }
 
 /**
- * Should we use the new diff viewer for unified diffs?
- */
-export function enableExperimentalDiffViewer(): boolean {
-  return true
-}
-
-/**
  * Should we allow reporting unhandled rejections as if they were crashes?
  */
 export function enableUnhandledRejectionReporting(): boolean {
@@ -105,3 +98,5 @@ export const enableLinkUnderlines = enableDiffCheckMarksAndLinkUnderlines
 
 export const enableExternalCredentialHelper = () => true
 export const enableCredentialHelperTrampoline = () => true
+
+export const enableCustomIntegration = enableDevelopmentFeatures
