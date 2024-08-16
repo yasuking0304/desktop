@@ -6,6 +6,7 @@ import { Octicon } from '../../octicons'
 import * as octicons from '../../octicons/octicons.generated'
 import { IMultiCommitOperationProgress } from '../../../models/progress'
 import { t } from 'i18next'
+import { Emoji } from '../../../lib/emoji'
 
 interface IProgressDialogProps {
   /**
@@ -19,7 +20,7 @@ interface IProgressDialogProps {
    */
   readonly operation: string
   readonly progress: IMultiCommitOperationProgress
-  readonly emoji: Map<string, string>
+  readonly emoji: Map<string, Emoji>
 }
 
 export class ProgressDialog extends React.Component<IProgressDialogProps> {

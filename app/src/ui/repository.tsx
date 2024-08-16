@@ -34,12 +34,13 @@ import { DragType } from '../models/drag-drop'
 import { t } from 'i18next'
 import { PullRequestSuggestedNextAction } from '../models/pull-request'
 import { clamp } from '../lib/clamp'
+import { Emoji } from '../lib/emoji'
 
 interface IRepositoryViewProps {
   readonly repository: Repository
   readonly state: IRepositoryState
   readonly dispatcher: Dispatcher
-  readonly emoji: Map<string, string>
+  readonly emoji: Map<string, Emoji>
   readonly sidebarWidth: IConstrainedValue
   readonly commitSummaryWidth: IConstrainedValue
   readonly stashedFilesWidth: IConstrainedValue

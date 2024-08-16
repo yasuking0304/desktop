@@ -5,10 +5,11 @@ import { Dialog, DialogContent } from '../dialog'
 import { RichText } from '../lib/rich-text'
 import Confetti from 'react-confetti'
 import { t } from 'i18next'
+import { Emoji } from '../../lib/emoji'
 
 interface IThankYouProps {
   readonly onDismissed: () => void
-  readonly emoji: Map<string, string>
+  readonly emoji: Map<string, Emoji>
   readonly userContributions: ReadonlyArray<ReleaseNote>
   readonly friendlyName: string
   readonly latestVersion: string | null

@@ -5,6 +5,7 @@ import { RichText } from '../lib/rich-text'
 import { RelativeTime } from '../relative-time'
 import { Button } from '../lib/button'
 import { t } from 'i18next'
+import { Emoji } from '../../lib/emoji'
 
 interface IUndoCommitProps {
   /** The function to call when the Undo button is clicked. */
@@ -14,7 +15,7 @@ interface IUndoCommitProps {
   readonly commit: Commit
 
   /** The emoji cache to use when rendering the commit message */
-  readonly emoji: Map<string, string>
+  readonly emoji: Map<string, Emoji>
 
   /** whether a push, pull or fetch is in progress */
   readonly isPushPullFetchInProgress: boolean
