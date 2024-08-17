@@ -1457,10 +1457,7 @@ export class CommitMessage extends React.Component<
             className={descriptionClassName}
             screenReaderLabel={
               this.props.showInputLabels !== true
-                ? t(
-                'commit-message.commit-description',
-                'Commit description'
-                )
+                ? t('commit-message.commit-description', 'Commit description')
                 : undefined
             }
             placeholder={t('commit-message.description-field', 'Description')}
