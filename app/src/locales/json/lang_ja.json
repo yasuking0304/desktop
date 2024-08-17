@@ -1,5 +1,6 @@
 {
   "about": {
+    "about-name": "{{0}} について",
     "build": "ビルド {{0}}",
     "check-for-updates": "更新の確認",
     "check-out-the-beta-channel-1": " ",
@@ -1337,6 +1338,26 @@
     "donot-worry": "プルリクエストを作成することはできますので、ご安心ください。",
     "error-checking-merge-status": "マージ状態のチェックでエラーが発生しました。",
     "unable-to-merge-unrelated-histories": "リポジトリ内の関連のない履歴をマージできません"
+  },
+  "push-branch-commits": {
+    "create-without-pushing": "プッシュせずに作成",
+    "create-without-pushing-darwin": "プッシュせずに作成",
+    "local-commit": "{{0}}つのローカル コミット",
+    "local-commits": "{{0}}つのローカル コミット",
+    "publish-branch": "ブランチの公開",
+    "publish-branch-darwin": "ブランチの公開",
+    "publish-branch-q": "ブランチを公開しますか?",
+    "publish-branch-q-darwin": "ブランチを公開しますか?",
+    "push-commits": "プッシュ コミット",
+    "push-commits-darwin": "プッシュ コミット",
+    "push-local-changes-q": "ローカルの変更をプッシュしますか?",
+    "push-local-changes-q-darwin": "ローカルの変更をプッシュしますか?",
+    "would-you-like-to-publish-1": "Would you like to publish ",
+    "would-you-like-to-publish-2": " now and open a pull request?",
+    "would-you-like-to-push-1": "Would you like to push your changes to ",
+    "would-you-like-to-push-2": " before creating your pull request?",
+    "you-have-local-commits-that": "You have {{0}} that haven't been pushed to the remote yet.",
+    "your-branch-must-be-published": "Your branch must be published before opening a pull request."
   },
   "push-needs-pull-warning": {
     "desktop-is-unable-to-push-commits": "Desktop is unable to push commits to this branch because there are\n            commits on the remote that are not present on your local branch.\n            Fetch these new commits before pushing in order to reconcile them\n            with your local commits.",

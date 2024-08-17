@@ -5,6 +5,7 @@ import { Dialog, DialogContent, DialogFooter } from '../dialog'
 import { Repository } from '../../models/repository'
 import { Ref } from '../lib/ref'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
+import { t } from 'i18next'
 
 interface IPushBranchCommitsProps {
   readonly dispatcher: Dispatcher
@@ -35,16 +36,15 @@ interface IPushBranchCommitsState {
  * that will be pushed to the user.
  *
  * @param numberOfCommits The number of commits that will be pushed
- * @param unit            A string written in such a way that without
- *                        modification it can be paired with the digit 1
- *                        such as 'commit' and which, when a 's' is appended
- *                        to it can be paired with a zero digit or a number
- *                        greater than one.
  */
-function pluralize(numberOfCommits: number, unit: string) {
+function pluralizeLocalCommits(numberOfCommits: number) {
   return numberOfCommits === 1
-    ? `${numberOfCommits} ${unit}`
-    : `${numberOfCommits} ${unit}s`
+    ? t('push-branch-commits.local-commit', `{{0}} local commit`, {
+        0: numberOfCommits,
+      })
+    : t('push-branch-commits.local-commits', `{{0}} local commits`, {
+        0: numberOfCommits,
+      })
 }
 
 /**
@@ -101,26 +101,47 @@ export class PushBranchCommits extends React.Component<
       return (
         <DialogContent>
           <p id="push-branch-commits-title">
-            Your branch must be published before opening a pull request.
+            {t(
+              'push-branch-commits.your-branch-must-be-published',
+              'Your branch must be published before opening a pull request.'
+            )}
           </p>
           <p id="push-branch-commits-message">
-            Would you like to publish <Ref>{this.props.branch.name}</Ref> now
-            and open a pull request?
+            {t(
+              'push-branch-commits.would-you-like-to-publish-1',
+              'Would you like to publish '
+            )}
+            <Ref>{this.props.branch.name}</Ref>
+            {t(
+              'push-branch-commits.would-you-like-to-publish-2',
+              ' now and open a pull request?'
+            )}
           </p>
         </DialogContent>
       )
     }
 
-    const localCommits = pluralize(this.props.unPushedCommits, 'local commit')
+    const localCommits = pluralizeLocalCommits(this.props.unPushedCommits)
 
     return (
       <DialogContent>
         <p id="push-branch-commits-title">
-          You have {localCommits} that haven't been pushed to the remote yet.
+          {t(
+            'push-branch-commits.you-have-local-commits-that',
+            `You have {{0}} that haven't been pushed to the remote yet.`,
+            { 0: localCommits }
+          )}
         </p>
         <p id="push-branch-commits-message">
-          Would you like to push your changes to{' '}
-          <Ref>{this.props.branch.name}</Ref> before creating your pull request?
+          {t(
+            'push-branch-commits.would-you-like-to-push-1',
+            'Would you like to push your changes to '
+          )}
+          <Ref>{this.props.branch.name}</Ref>
+          {t(
+            'push-branch-commits.would-you-like-to-push-2',
+            ' before creating your pull request?'
+          )}
         </p>
       </DialogContent>
     )
@@ -128,26 +149,49 @@ export class PushBranchCommits extends React.Component<
 
   private renderDialogTitle() {
     if (renderPublishView(this.props.unPushedCommits)) {
-      return __DARWIN__ ? 'Publish Branch?' : 'Publish branch?'
+      return __DARWIN__
+        ? t('push-branch-commits.publish-branch-q-darwin', 'Publish Branch?')
+        : t('push-branch-commits.publish-branch-q', 'Publish branch?')
     }
 
-    return __DARWIN__ ? `Push Local Changes?` : `Push local changes?`
+    return __DARWIN__
+      ? t(
+          'push-branch-commits.push-local-changes-q-darwin',
+          `Push Local Changes?`
+        )
+      : t('push-branch-commits.push-local-changes-q', `Push local changes?`)
   }
 
   private renderButtonGroup() {
     if (renderPublishView(this.props.unPushedCommits)) {
       return (
         <OkCancelButtonGroup
-          okButtonText={__DARWIN__ ? 'Publish Branch' : 'Publish branch'}
+          okButtonText={
+            __DARWIN__
+              ? t('push-branch-commits.publish-branch-darwin', 'Publish Branch')
+              : t('push-branch-commits.publish-branch', 'Publish branch')
+          }
         />
       )
     }
 
     return (
       <OkCancelButtonGroup
-        okButtonText={__DARWIN__ ? 'Push Commits' : 'Push commits'}
+        okButtonText={
+          __DARWIN__
+            ? t('push-branch-commits.push-commits-darwin', 'Push Commits')
+            : t('push-branch-commits.push-commits', 'Push commits')
+        }
         cancelButtonText={
-          __DARWIN__ ? 'Create Without Pushing' : 'Create without pushing'
+          __DARWIN__
+            ? t(
+                'push-branch-commits.create-without-pushing-darwin',
+                'Create Without Pushing'
+              )
+            : t(
+                'push-branch-commits.create-without-pushing',
+                'Create without pushing'
+              )
         }
         onCancelButtonClick={this.onCreateWithoutPushButtonClick}
       />

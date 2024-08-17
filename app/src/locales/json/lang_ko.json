@@ -1,5 +1,6 @@
 {
   "about": {
+    "about-name": "About {{0}}",
     "build": "Build {{0}}",
     "check-for-updates": "Check for Updates",
     "check-out-the-beta-channel-1": "Check out the ",
@@ -1337,6 +1338,26 @@
     "donot-worry": "Don’t worry, you can still create the pull request.",
     "error-checking-merge-status": "Error checking merge status.",
     "unable-to-merge-unrelated-histories": "Unable to merge unrelated histories in this repository"
+  },
+  "push-branch-commits": {
+    "create-without-pushing": "Create without pushing",
+    "create-without-pushing-darwin": "Create Without Pushing",
+    "local-commit": "{{0}} local commit",
+    "local-commits": "{{0}} local commits",
+    "publish-branch": "Publish branch",
+    "publish-branch-darwin": "Publish Branch",
+    "publish-branch-q": "Publish branch?",
+    "publish-branch-q-darwin": "Publish Branch?",
+    "push-commits": "Push commits",
+    "push-commits-darwin": "Push Commits",
+    "push-local-changes-q": "Push local changes?",
+    "push-local-changes-q-darwin": "Push Local Changes?",
+    "would-you-like-to-publish-1": "Would you like to publish ",
+    "would-you-like-to-publish-2": " now and open a pull request?",
+    "would-you-like-to-push-1": "Would you like to push your changes to ",
+    "would-you-like-to-push-2": " before creating your pull request?",
+    "you-have-local-commits-that": "You have {{0}} that haven't been pushed to the remote yet.",
+    "your-branch-must-be-published": "Your branch must be published before opening a pull request."
   },
   "push-needs-pull-warning": {
     "desktop-is-unable-to-push-commits": "Desktop is unable to push commits to this branch because there are\n            commits on the remote that are not present on your local branch.\n            Fetch these new commits before pushing in order to reconcile them\n            with your local commits.",
