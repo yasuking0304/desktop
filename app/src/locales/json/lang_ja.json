@@ -1,5 +1,6 @@
 {
   "about": {
+    "about-name": "{{0}} について",
     "build": "ビルド {{0}}",
     "check-for-updates": "更新の確認",
     "check-out-the-beta-channel-1": " ",
@@ -83,8 +84,8 @@
   },
   "app-store": {
     "error": {
-      "pruner-is-already-active": "A branch pruner is already active and cannot start updating\n           on {{0}}",
-      "should-only-have-on-background-fetcher-active": "We should only have on background fetcher active at once,\n         but we're trying to start background fetching on {{0}}\n         while another background fetcher is still active!"
+      "pruner-is-already-active": "A branch pruner is already active and cannot start updating on {{0}}",
+      "should-only-have-on-background-fetcher-active": "We should only have on background fetcher active at once, but we're trying to start background fetching on {{0}} while another background fetcher is still active!"
     },
     "pushing-to": "{{0}} にプッシュ",
     "refreshing-repository": "リポジトリのリフレッシュ",
@@ -113,6 +114,11 @@
   "binary-file": {
     "open-file-in-external-program": "外部プログラムを開きます。",
     "this-binary-file-has-changed": "バイナリファイルが変更されました。"
+  },
+  "branch-already-up-to-date-banner": {
+    "is-already-up-to-date": " はすでに最新状態です",
+    "is-already-up-to-date-with-1": " はすでに ",
+    "is-already-up-to-date-with-2": " によって最新状態です"
   },
   "branch-dropdown": {
     "current-branch": "現在のブランチ",
@@ -668,6 +674,15 @@
     "will-create-a-repository-2": " で ",
     "will-create-a-repository-3": "に プッシュされます。このリポジトリはあなただけに表示され、パブリックには表示されません。"
   },
+  "custom-integration-form": {
+    "arguments": "引数",
+    "arguments-must-include-the-target-path": "引数に対象パスのプレースホルダ {{0}} を含める必要があります。",
+    "command-line-arguments": "コマンドラインの引数",
+    "path": "パス",
+    "path-to-executable": "実行可能ファイルのパス",
+    "these-arguments-are-not-valid": "これらの引数は無効です。",
+    "This-path0does-not-appear": "このパスは有効な実行可能ファイルではないようです。"
+  },
   "delete-branch-dialog": {
     "branch-also-exists-on-the-remote": "ブランチはリモートにも存在しますが、そちらも削除しますか?",
     "confirm-delete-branch-1": "ブランチ ",
@@ -693,9 +708,14 @@
   },
   "delete-tag-dialog": {
     "are-you-sure-you-want-to-delete-the-tag-1": "タグ ",
-    "are-you-sure-you-want-to-delete-the-tag-2": " を削除してもよろしいですか ?",
+    "are-you-sure-you-want-to-delete-the-tag-2": " を削除してもよろしいですか? ",
     "delete-tag": "タグの削除",
     "delete-tag-darwin": "タグの削除"
+  },
+  "diff-contents-warning": {
+    "learn-more-about-bidirectional-unicode": "双方向Unicode文字についての詳細",
+    "this-diff-contains-a-change": "この差分には、改行コードが '{{0}}' から '{{1}}' に変更されたものが含まれています。",
+    "this-diff-contains-bidirectional-unicode": "この差分には双方向のUnicodeテキストが含まれており、以下に表示されるものとは異なって解釈またはコンパイルされる可能性があります。確認するには、非表示対象のUnicode文字を表示可能なエディターでファイルを開いてください。"
   },
   "diff-options": {
     "caption-diff": "差異検出の{{0}}",
@@ -852,7 +872,10 @@
     "update-is-in-progress": "更新中です。GitHub Desktop を終了させないでください。今、終了させるとインストールが中断される可能性があります。"
   },
   "integrations": {
-    "applications": "アプリケーション",
+    "configure-custom-editor": "エディターのカスタマイズ…",
+    "configure-custom-editor-darwin": "エディターのカスタマイズ…",
+    "configure-custom-shell": "シェルのカスタマイズ…",
+    "configure-custom-shell-darwin": "シェルのカスタマイズ…",
     "external-editor": "外部エディター",
     "external-editor-darwin": "外部エディター",
     "install-editor-name": "{{0}} をインストールしますか?",
@@ -1007,8 +1030,6 @@
     "select-all": "全てを選択(&A)",
     "select-all-darwin": "全てを選択",
     "services": "サービス",
-    "shell": "コマンドプロンプト",
-    "shell-linux": "ターミナル",
     "show-all": "すべて表示",
     "show-banner": "バナー表示",
     "show-branches-list": "ブランチリスト(&B)",
@@ -1068,23 +1089,24 @@
     "this-will-merge-into-4": " "
   },
   "merge-choose-branch-dialog": {
-    "file": "個が",
-    "files": "個が",
-    "into": " into ",
-    "merge-into-1": "{{0}}Merge を ",
+    "checking-for-ability": "自動的にマージ可能かチェックしています…",
+    "file": "個のファイル",
+    "files": "個のファイル",
+    "merge-into-1": "{{0}}マージを ",
     "merge-into-2": " に行う",
     "number-commit": "{{0}}{{1}}",
-    "number-conflicted-file": "{{0}}{{1}} が競合しています",
-    "squash-and": "Squash の後で ",
-    "there-will-be-number-conflicted-1": "There will be ",
-    "there-will-be-number-conflicted-2": " when merging ",
-    "there-will-be-number-conflicted-3": " into ",
-    "there-will-be-number-conflicted-4": " ",
+    "number-conflicted-file": "{{0}}{{1}}が競合しています",
+    "squash-and": "スカッシュ(結合) と ",
+    "there-will-be-number-conflicted-1": " ",
+    "there-will-be-number-conflicted-2": "。",
+    "there-will-be-number-conflicted-3": " を ",
+    "there-will-be-number-conflicted-4": " にマージする場合は解決してください",
     "this-branch-is-up-to-date-with-1": "このブランチは ",
-    "this-branch-is-up-to-date-with-2": " で最新です",
-    "this-will-merge-1": "This will merge ",
-    "this-will-merge-2": " from ",
-    "this-will-merge-3": " ",
+    "this-branch-is-up-to-date-with-2": " によって最新状態です",
+    "this-will-merge-1": " ",
+    "this-will-merge-2": "(",
+    "this-will-merge-3": ")を ",
+    "this-will-merge-4": " にマージします",
     "unable-to-merge-unrelated-histories": "このリポジトリ内の無関係な履歴をマージできません"
   },
   "merge-conflicts-banner": {
@@ -1164,7 +1186,7 @@
     "push-to-the-remote": "{{0}}を {{1}} にプッシュします",
     "select-your-editor": "エディターの設定はこちら ",
     "the-current-branch-1": "現在のブランチ (",
-    "the-current-branch-2": ") はまだリモートに公開されていないようです。 By publishing it {{0}} you\n        can share it, {{1}}\n        and collaborate with others.",
+    "the-current-branch-2": ") はまだリモートに公開されていないようです。 By publishing it {{0}} you can share it, {{1}} and collaborate with others.",
     "the-current-branch-us-already-published-1": "現在のブランチ (",
     "the-current-branch-us-already-published-2": ") は既に GitHub に公開されています。プルリクエストを作成して、変更の提案・共同作業を行います。",
     "the-remote": "リモート",
@@ -1191,6 +1213,11 @@
     "would-you-like-creat-a-pull-request-1": "現在のブランチから ",
     "would-you-like-creat-a-pull-request-2": " を行いますか?",
     "you-are-all-set": "準備完了です!"
+  },
+  "no-remote": {
+    "learn-more-about": "リモートリポジトリについての詳細",
+    "publish": "公開",
+    "publish-your-repository-to-github": "リポジトリを GitHub に公開します。ヘルプが必要ですか? "
   },
   "no-repositories-view": {
     "add-a-repositry": "リポジトリを GitHub Desktop に追加して共同作業を開始する",
@@ -1300,8 +1327,12 @@
     "show-commit-length-warning": "コミット概要の長さの警告を表示",
     "undo-commit": "コミットの取り消し"
   },
+  "publish": {
+    "publish-repository": "リポジトリの公開",
+    "publish-repository-darwin": "リポジトリの公開"
+  },
   "publish-repository": {
-    "keep-this-code-private": "このコードを非公開にする",
+    "keep-this-code-private": "リポジトリをプライベートで公開する",
     "will-be-create-as": "{{0}} として作成されます"
   },
   "pull-request-files-changed": {
@@ -1322,8 +1353,28 @@
     "error-checking-merge-status": "マージ状態のチェックでエラーが発生しました。",
     "unable-to-merge-unrelated-histories": "リポジトリ内の関連のない履歴をマージできません"
   },
+  "push-branch-commits": {
+    "create-without-pushing": "プッシュせずに作成",
+    "create-without-pushing-darwin": "プッシュせずに作成",
+    "local-commit": "{{0}}つのローカル コミット",
+    "local-commits": "{{0}}つのローカル コミット",
+    "publish-branch": "ブランチの公開",
+    "publish-branch-darwin": "ブランチの公開",
+    "publish-branch-q": "ブランチを公開しますか?",
+    "publish-branch-q-darwin": "ブランチを公開しますか?",
+    "push-commits": "プッシュ コミット",
+    "push-commits-darwin": "プッシュ コミット",
+    "push-local-changes-q": "ローカルの変更をプッシュしますか?",
+    "push-local-changes-q-darwin": "ローカルの変更をプッシュしますか?",
+    "would-you-like-to-publish-1": "Would you like to publish ",
+    "would-you-like-to-publish-2": " now and open a pull request?",
+    "would-you-like-to-push-1": "Would you like to push your changes to ",
+    "would-you-like-to-push-2": " before creating your pull request?",
+    "you-have-local-commits-that": "You have {{0}} that haven't been pushed to the remote yet.",
+    "your-branch-must-be-published": "Your branch must be published before opening a pull request."
+  },
   "push-needs-pull-warning": {
-    "desktop-is-unable-to-push-commits": "Desktop is unable to push commits to this branch because there are\n            commits on the remote that are not present on your local branch.\n            Fetch these new commits before pushing in order to reconcile them\n            with your local commits.",
+    "desktop-is-unable-to-push-commits": "Desktop is unable to push commits to this branch because there are commits on the remote that are not present on your local branch. Fetch these new commits before pushing in order to reconcile them with your local commits.",
     "fetch": "フェッチ",
     "newer-commits-on-remote": "リモートに新しいコミットがあります",
     "newer-commits-on-remote-darwin": "リモートに新しいコミットがあります"
@@ -1354,17 +1405,17 @@
     "warning-title": "警告:"
   },
   "rebase-choose-branch-dialog": {
-    "checking-for-ability-to-rebase": "自動的にリベースする機能のチェック…",
+    "checking-for-ability-to-rebase": "自動的にリベース可能かチェックしています…",
     "number-commit": " {{0}}{{1}}",
     "rebase-1": "リベースを ",
     "rebase-2": " に行う",
     "there-are-no-commits": "現在のブランチにリベースするコミットはありません。",
     "this-branch-is-up-to-date-with-1": "このブランチは ",
-    "this-branch-is-up-to-date-with-2": " で最新です",
-    "this-will-update-1": "This will update ",
-    "this-will-update-2": " by applying its ",
-    "this-will-update-3": " on top of ",
-    "this-will-update-4": " ",
+    "this-branch-is-up-to-date-with-2": "によって最新状態です",
+    "this-will-update-1": " ",
+    "this-will-update-2": " に",
+    "this-will-update-3": "(",
+    "this-will-update-4": " )を適用して更新します",
     "unable-to-start-rebase": "リベースを開始できません。有効なブランチを選択していることを確認してください。",
     "you-are-not-able-to-rebase": "このブランチをそれ自体にリベースすることはできません。"
   },

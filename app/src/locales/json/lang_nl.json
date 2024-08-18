@@ -1,18 +1,19 @@
 {
   "about": {
+    "about-name": "About {{0}}",
     "build": "Build {{0}}",
     "check-for-updates": "Check for Updates",
     "check-out-the-beta-channel-1": "Check out the ",
     "check-out-the-beta-channel-2": "Beta Channel",
     "check-out-the-beta-channel-3": " ",
     "checking-for-updates": "Checking for updates…",
-    "could-not-determine-the-last-time-update-check": "Couldn't determine the last time an update check was performed.\n            You may be running an old version. Please try manually checking for\n            updates and contact GitHub Support if the problem persists",
+    "could-not-determine-the-last-time-update-check": "Couldn't determine the last time an update check was performed. You may be running an old version. Please try manually checking for updates and contact GitHub Support if the problem persists",
     "downloading-updates": "Downloading update…",
     "ensure-latest-version": "Ensure Latest Version",
-    "github-desktop-may-release-updates": "GitHub Desktop may release updates to our user base gradually to\n               ensure we catch any problems early. This lets you bypass the\n               gradual rollout and jump straight to the latest version\n               if there's one available.",
+    "github-desktop-may-release-updates": "GitHub Desktop may release updates to our user base gradually to ensure we catch any problems early. This lets you bypass the gradual rollout and jump straight to the latest version if there's one available.",
     "license-and-open-source-notices": "License and Open Source Notices",
     "looking-for-the-latest-features": "Looking for the latest features?",
-    "no-longer-supported-operating-systems": "This operating system is no longer supported. Software updates have\n              been disabled. ",
+    "no-longer-supported-operating-systems": "This operating system is no longer supported. Software updates have been disabled. ",
     "quit-and-install-update": "Quit and Install Update",
     "release-notes": "release notes",
     "supported-operating-systems": "Supported operating systems",
@@ -24,11 +25,11 @@
   },
   "accessibility": {
     "accessibility": "Accessibility",
-    "check-marks-will-be-displayed": "When enabled, check marks will be displayed along side the line\n              numbers and groups of line numbers in the diff when committing. When\n              disabled, the line number controls will be less prominent.",
+    "check-marks-will-be-displayed": "When enabled, check marks will be displayed along side the line numbers and groups of line numbers in the diff when committing. When disabled, the line number controls will be less prominent.",
     "show-check-marks-in-the-diff": "Show check marks in the diff",
     "this-is-an-example-link": "This is an example link",
     "underline-links": "Underline links",
-    "underline-links-in-commit-messages": "When enabled, GitHub Desktop will underline links in commit\n              messages, comments, and other text fields. This can help make links\n              easier to distinguish."
+    "underline-links-in-commit-messages": "When enabled, GitHub Desktop will underline links in commit messages, comments, and other text fields. This can help make links easier to distinguish."
   },
   "accessibility-settings-banner": {
     "accessibility-settings": "accessibility settings",
@@ -37,7 +38,7 @@
   },
   "acknowledgements": {
     "about-license-1": " ",
-    "about-license-2": " is an open\n            source project published under the MIT License. You can view the\n            source code and contribute to this project on ",
+    "about-license-2": " is an open source project published under the MIT License. You can view the source code and contribute to this project on ",
     "about-license-3": ".",
     "also-distributes-these-libraries": "GitHub Desktop also distributes these libraries:",
     "license-and-open-source-notices": "License and Open Source Notices",
@@ -56,14 +57,14 @@
     "help-github-desktop-improve-by-submitting-2": " ",
     "network-and-credentials": "Network and credentials",
     "show-status-icons-in-the-repository-list": "Show status icons in the repository list",
-    "these-icons-indicate": "These icons indicate which repositories have local or remote\n                changes, and require the periodic fetching of repositories that\n                are not currently selected.",
-    "turning-this-off-will-not-stop": "Turning this off will not stop the periodic fetching of your\n                currently selected repository, but may improve overall app\n                performance for users with many repositories.",
+    "these-icons-indicate": "These icons indicate which repositories have local or remote changes, and require the periodic fetching of repositories that are not currently selected.",
+    "turning-this-off-will-not-stop": "Turning this off will not stop the periodic fetching of your currently selected repository, but may improve overall app performance for users with many repositories.",
     "usage": "Usage",
     "usage-stats": "usage stats",
     "use-git-credential-manager": "Use Git Credential Manager",
     "use-git-credential-manager-1": "Use ",
     "use-git-credential-manager-2": "Git Credential Manager",
-    "use-git-credential-manager-3": " for private repositories outside of GitHub.com. This feature is\n                experimental and subject to change.",
+    "use-git-credential-manager-3": " for private repositories outside of GitHub.com. This feature is experimental and subject to change.",
     "use-system-openssh": "Use system OpenSSH (recommended)"
   },
   "app": {
@@ -83,8 +84,8 @@
   },
   "app-store": {
     "error": {
-      "pruner-is-already-active": "A branch pruner is already active and cannot start updating\n           on {{0}}",
-      "should-only-have-on-background-fetcher-active": "We should only have on background fetcher active at once,\n         but we're trying to start background fetching on {{0}}\n         while another background fetcher is still active!"
+      "pruner-is-already-active": "A branch pruner is already active and cannot start updating on {{0}}",
+      "should-only-have-on-background-fetcher-active": "We should only have on background fetcher active at once, but we're trying to start background fetching on {{0}} while another background fetcher is still active!"
     },
     "pushing-to": "Pushing to {{0}}",
     "refreshing-repository": "Refreshing repository",
@@ -114,6 +115,11 @@
     "open-file-in-external-program": "Open file in external program.",
     "this-binary-file-has-changed": "This binary file has changed."
   },
+  "branch-already-up-to-date-banner": {
+    "is-already-up-to-date": " is already up to date",
+    "is-already-up-to-date-with-1": " is already up to date with ",
+    "is-already-up-to-date-with-2": " "
+  },
   "branch-dropdown": {
     "current-branch": "Current branch",
     "current-branch-darwin": "Current Branch"
@@ -131,9 +137,9 @@
   "branch-name-warnings": {
     "branch-name-already-exists-1": "A branch named ",
     "branch-name-already-exists-2": " already exists on the remote.",
-    "current-stashed-changes": "Your current stashed changes on this branch will no longer be visible in\n          GitHub Desktop if the branch is renamed.",
+    "current-stashed-changes": "Your current stashed changes on this branch will no longer be visible in GitHub Desktop if the branch is renamed.",
     "this-branch-is-tracking-1": "This branch is tracking ",
-    "this-branch-is-tracking-2": " and renaming this\n            branch will not change the branch name on the remote."
+    "this-branch-is-tracking-2": " and renaming this branch will not change the branch name on the remote."
   },
   "branch-select": {
     "choose-a-base-branch": "Choose a base branch"
@@ -193,7 +199,7 @@
     "resolve-conflicts-to-continue-2": "."
   },
   "cherry-pick-undone": {
-    "cherry-pick-undone-1": "Cherry-pick undone. Successfully removed the {{0}}\n          copied {{1}} from ",
+    "cherry-pick-undone-1": "Cherry-pick undone. Successfully removed the {{0}} copied {{1}} from ",
     "cherry-pick-undone-2": ".",
     "multiple-commits": "commits",
     "one-commit": "commit"
@@ -238,14 +244,14 @@
     "clone-a-repository-darwin": "Clone a Repository",
     "clone-as": "Clone As:",
     "error": {
-      "already-a-file-with-this-name": "There is already a file with this name.\n          Git can only clone to a folder.",
+      "already-a-file-with-this-name": "There is already a file with this name. Git can only clone to a folder.",
       "directory-could-not-be-created": "Directory could not be created at this path.",
       "this-folder-contains-files": "This folder contains files. Git can only clone to empty folders.",
       "unable-to-read-path-on-disk": "Unable to read path on disk. Please check the path and try again.",
-      "we-could-not-find-that-repository": "We couldn't find that repository. Check that you are logged in,\n          the network is accessible, and the URL or repository alias\n          are spelled correctly."
+      "we-could-not-find-that-repository": "We couldn't find that repository. Check that you are logged in, the network is accessible, and the URL or repository alias are spelled correctly."
     },
-    "render-sign-in": "Sign in to your GitHub.com account to\n                 access your repositories.",
-    "render-sign-in-enterprise": "If you have a GitHub Enterprise or AE account at work,\n                 sign in to it to get access to your repositories.",
+    "render-sign-in": "Sign in to your GitHub.com account to access your repositories.",
+    "render-sign-in-enterprise": "If you have a GitHub Enterprise or AE account at work, sign in to it to get access to your repositories.",
     "select": "Select"
   },
   "cloneable-repository-filter-list": {
@@ -275,7 +281,7 @@
   "commit-conflicts-warning": {
     "are-you-sure-you-want-to-commit": "Are you sure you want to commit these conflicted files?",
     "confirm-committing-conflicted": "Confirm committing conflicted files",
-    "if-you-choose-to-commit": "If you choose to commit, you’ll be committing the following\n            conflicted files into your repository:",
+    "if-you-choose-to-commit": "If you choose to commit, you’ll be committing the following conflicted files into your repository:",
     "yes-commit-files": "Yes, commit files",
     "yes-commit-files-darwin": "Yes, Commit Files"
   },
@@ -477,8 +483,8 @@
     "ahead": "Ahead ({{0}})",
     "behind": "Behind ({{0}})",
     "error": {
-      "unable-to-reorder": "Unable to reorder. Reordering replays all commits up to the last\n           one required for the reorder. A merge commit cannot exist among\n           those commits.",
-      "unable-to-squash": "Unable to squash. Squashing replays all commits up to the last one\n           required for the squash. A merge commit cannot exist among those\n           commits."
+      "unable-to-reorder": "Unable to reorder. Reordering replays all commits up to the last one required for the reorder. A merge commit cannot exist among those commits.",
+      "unable-to-squash": "Unable to squash. Squashing replays all commits up to the last one required for the squash. A merge commit cannot exist among those commits."
     },
     "no-branch-to-compare": "No branches to compare",
     "no-branch-to-compare-darwin": "No Branches to Compare",
@@ -493,7 +499,7 @@
   },
   "configure-git": {
     "configure-git": "Configure Git",
-    "welcome-text": "This is used to identify the commits you create. Anyone will be able\n          to see this information if you publish commits."
+    "welcome-text": "This is used to identify the commits you create. Anyone will be able to see this information if you publish commits."
   },
   "configure-git-user": {
     "configure-manually": "Configure manually",
@@ -509,7 +515,7 @@
     "this-will-take-you-back": "This will take you back to the original branch state and the conflicts you have already resolved will be discarded."
   },
   "confirm-checkout-commit": {
-    "checking-out-a-commit": "Checking out a commit will create a detached HEAD, and you will\n              no longer be on any branch. Are you sure you want to checkout\n              this commit?",
+    "checking-out-a-commit": "Checking out a commit will create a detached HEAD, and you will no longer be on any branch. Are you sure you want to checkout this commit?",
     "checkout": "Checkout",
     "checkout-commit": "Checkout commit?",
     "checkout-commit-darwin": "Checkout Commit?",
@@ -521,13 +527,13 @@
     "discard-darwin": "Discard Stash?"
   },
   "confirm-exit-tutorial": {
-    "are-you-sure-you-want-to-leave": "Are you sure you want to leave the tutorial? This will bring you\n            back to the home screen.",
+    "are-you-sure-you-want-to-leave": "Are you sure you want to leave the tutorial? This will bring you back to the home screen.",
     "confirm-exit-tutorial": "Exit tutorial",
     "confirm-exit-tutorial-darwin": "Exit Tutorial"
   },
   "confirm-force-push": {
     "force-push will-rewrite-history-1": "A force push will rewrite history on ",
-    "force-push will-rewrite-history-2": ". Any collaborators working on\n              this branch will need to reset their own local branch to match\n              the history of the remote.",
+    "force-push will-rewrite-history-2": ". Any collaborators working on this branch will need to reset their own local branch to match the history of the remote.",
     "i-am-sure": "I'm sure",
     "want-to-force-push": "Are you sure you want to force push?"
   },
@@ -572,10 +578,10 @@
     "exit": "Exit",
     "exit-and-restart": "Exit and restart",
     "gitHub-desktop-encountered": "GitHub Desktop encountered an error",
-    "gitHub-desktop-encountered-a-catastrophic-1": "GitHub Desktop encountered a catastrophic error that prevents it from\n             launching. This has been reported to the team, but if you encounter\n             this repeatedly please report this issue to the GitHub Desktop ",
+    "gitHub-desktop-encountered-a-catastrophic-1": "GitHub Desktop encountered a catastrophic error that prevents it from launching. This has been reported to the team, but if you encounter this repeatedly please report this issue to the GitHub Desktop ",
     "gitHub-desktop-encountered-a-catastrophic-2": ".",
     "github-desktop-failed": "GitHub Desktop failed to launch",
-    "gitHub-desktop-has-encountered-an-unrecoverable-1": "GitHub Desktop has encountered an unrecoverable error and will need to\n             restart. This has been reported to the team, but if you encounter this\n             repeatedly please report this issue to the GitHub Desktop ",
+    "gitHub-desktop-has-encountered-an-unrecoverable-1": "GitHub Desktop has encountered an unrecoverable error and will need to restart. This has been reported to the team, but if you encounter this repeatedly please report this issue to the GitHub Desktop ",
     "gitHub-desktop-has-encountered-an-unrecoverable-2": ".",
     "issue-tracker": "issue tracker",
     "quit": "Quit",
@@ -584,21 +590,21 @@
   "create-branch-dialog": {
     "as-determined-by-your-1": "as determined by your ",
     "as-determined-by-your-2": " ",
-    "branch-will-be-based-on-the-commit": "Your new branch will be based on the commit {{0}} (\n          {{1}}) from your repository.",
+    "branch-will-be-based-on-the-commit": "Your new branch will be based on the commit {{0}} ( {{1}}) from your repository.",
     "confirm-create-branch-based-on": "Create branch based on…",
     "create-a-branch": "Create a branch",
     "create-a-branch-darwin": "Create a Branch",
     "create-branch": "Create branch",
     "create-branch-darwin": "Create Branch",
-    "current-branch-is-unborn": "Your current branch is unborn (does not contain any commits). Creating\n          a new branch will rename the current branch.",
-    "currently-checked-out-branch": "The currently checked out branch. Pick this if you need to\n             build on work done on this branch.",
+    "current-branch-is-unborn": "Your current branch is unborn (does not contain any commits). Creating a new branch will rename the current branch.",
+    "currently-checked-out-branch": "The currently checked out branch. Pick this if you need to build on work done on this branch.",
     "default-branch": "default branch",
-    "default-branch-in-your-repository": "The default branch in your repository. Pick this to start on\n             something new that's not dependent on your current branch.",
-    "default-branch-of-the-upstream-repository": "The default branch of the upstream repository. Pick this to\n               start on something new that's not dependent on your\n               current branch.",
+    "default-branch-in-your-repository": "The default branch in your repository. Pick this to start on something new that's not dependent on your current branch.",
+    "default-branch-of-the-upstream-repository": "The default branch of the upstream repository. Pick this to start on something new that's not dependent on your current branch.",
     "default-branch-source-is-determined-1": "Your default branch source is determined by your ",
     "default-branch-source-is-determined-2": "fork behavior settings",
     "default-branch-source-is-determined-3": ".",
-    "do-not-have-any-branch-checked-out": "You do not currently have any branch checked out (your HEAD reference\n          is detached). As such your new branch will be based on your currently\n          checked out commit ({{0}}\n          ).",
+    "do-not-have-any-branch-checked-out": "You do not currently have any branch checked out (your HEAD reference is detached). As such your new branch will be based on your currently checked out commit ({{0}} ).",
     "error": {
       "unknown-tip-kind": "Unknown tip kind {{0}}"
     },
@@ -608,7 +614,7 @@
     "new-branch-will-be-based-on-3": " (",
     "new-branch-will-be-based-on-4": ")",
     "new-branch-will-be-based-on-5": ".",
-    "new-branch-will-be-checked-out-branch-1": "Your new branch will be based on your currently checked out\n            branch (",
+    "new-branch-will-be-checked-out-branch-1": "Your new branch will be based on your currently checked out branch (",
     "new-branch-will-be-checked-out-branch-2": ")",
     "new-branch-will-be-checked-out-branch-3": ". ",
     "new-branch-will-be-checked-out-branch-4": "is the ",
@@ -643,9 +649,9 @@
     "license": "License",
     "render-git-repository-warning-1": "This directory appears to be a Git repository. Would you like to ",
     "render-git-repository-warning-2": " instead?",
-    "render-invalid-path-error": "Directory could not be created at this path. You may not have\n        permissions to create a directory here.",
+    "render-invalid-path-error": "Directory could not be created at this path. You may not have permissions to create a directory here.",
     "render-readme-overwrite-warning-1": "This directory contains a ",
-    "render-readme-overwrite-warning-2": " file already. Checking\n            this box will result in the existing file being overwritten.",
+    "render-readme-overwrite-warning-2": " file already. Checking this box will result in the existing file being overwritten.",
     "repo-sanitized-name-warning": "Will be created as {{0}}. ",
     "spaces-and-invalid-characters": "Spaces and invalid characters have been replaced by hyphens.",
     "will-be-created-as": "Will be created as {{0}}"
@@ -664,12 +670,21 @@
   },
   "create-tutorial-repository-dialog": {
     "start-tutorial": "Start tutorial",
-    "will-create-a-repository-1": "This will create a repository on your local machine, and push it\n              to your account ",
+    "will-create-a-repository-1": "This will create a repository on your local machine, and push it to your account ",
     "will-create-a-repository-2": " on ",
-    "will-create-a-repository-3": ". This repository will only be visible to you, and not visible\n            publicly."
+    "will-create-a-repository-3": ". This repository will only be visible to you, and not visible publicly."
+  },
+  "custom-integration-form": {
+    "arguments": "Arguments",
+    "arguments-must-include-the-target-path": "Arguments must include the target path placeholder ({0}}.",
+    "command-line-arguments": "Command line arguments",
+    "path": "Path",
+    "path-to-executable": "Path to executable",
+    "these-arguments-are-not-valid": "These arguments are not valid.",
+    "This-path0does-not-appear": "This path does not appear to be a valid executable."
   },
   "delete-branch-dialog": {
-    "branch-also-exists-on-the-remote": "The branch also exists on the remote, do you wish to delete it\n                there as well?",
+    "branch-also-exists-on-the-remote": "The branch also exists on the remote, do you wish to delete it there as well?",
     "confirm-delete-branch-1": "Delete branch ",
     "confirm-delete-branch-2": "?",
     "delete-branch": "Delete branch",
@@ -681,7 +696,7 @@
     "delete-branch-darwin": "Delete Branch",
     "this-branch-may-have-an-open-1": "This branch may have an open pull request associated with it.",
     "this-branch-may-have-an-open-2": "If ",
-    "this-branch-may-have-an-open-3": " has been merged, you can also go to GitHub to delete the remote\n            branch."
+    "this-branch-may-have-an-open-3": " has been merged, you can also go to GitHub to delete the remote branch."
   },
   "delete-remote-branch-dialog": {
     "delete-remote-branch": "Delete remote branch",
@@ -689,13 +704,18 @@
     "delete-remote-branch-content-2": "?",
     "delete-remote-branch-darwin": "Delete Remote Branch",
     "this-action-cannot-be-undone": "This action cannot be undone.",
-    "this-branch-does-not-exist-locally": "This branch does not exist locally. Deleting it may impact\n                others collaborating on this branch."
+    "this-branch-does-not-exist-locally": "This branch does not exist locally. Deleting it may impact others collaborating on this branch."
   },
   "delete-tag-dialog": {
     "are-you-sure-you-want-to-delete-the-tag-1": "Are you sure you want to delete the tag ",
     "are-you-sure-you-want-to-delete-the-tag-2": "?",
     "delete-tag": "Delete tag",
     "delete-tag-darwin": "Delete Tag"
+  },
+  "diff-contents-warning": {
+    "learn-more-about-bidirectional-unicode": "Learn more about bidirectional Unicode characters",
+    "this-diff-contains-a-change": "This diff contains a change in line endings from '{{0}}' to '{{1}}.",
+    "this-diff-contains-bidirectional-unicode": "This diff contains bidirectional Unicode text that may be interpreted or compiled differently than what appears below. To review, open the file in an editor that reveals hidden Unicode characters. "
   },
   "diff-options": {
     "caption-diff": "Diff {{0}}",
@@ -704,7 +724,7 @@
     "diff-display": "Diff display",
     "hide-whitespace-changes": "Hide whitespace changes",
     "hide-whitespace-changes-darwin": "Hide Whitespace Changes",
-    "interacting-with-individual-lines": "Interacting with individual lines or hunks will be disabled while\n            hiding whitespace.",
+    "interacting-with-individual-lines": "Interacting with individual lines or hunks will be disabled while hiding whitespace.",
     "split": "Split",
     "unified": "Unified",
     "whitespace": "Whitespace"
@@ -749,7 +769,7 @@
     "open-in-browser-darwin": "Open in Browser",
     "work-on-an-existing-project": "Work on an existing project in GitHub Desktop",
     "you-re-done": "You're done!",
-    "you-ve-learned-the-basics": "You've learned the basics on how to use GitHub Desktop. Here\n                 are some suggestions for what to do next."
+    "you-ve-learned-the-basics": "You've learned the basics on how to use GitHub Desktop. Here are some suggestions for what to do next."
   },
   "editor-error": {
     "open-options": "Open options",
@@ -804,7 +824,7 @@
   "generic-git-auth": {
     "authentication-failed": "Authentication failed",
     "authentication-failed-darwin": "Authentication Failed",
-    "depending-on-your-repository-s-1": "Depending on your repository's hosting service, you might need\n                 to use a Personal Access Token (PAT) as your password. Learn\n                 more about creating a PAT in our ",
+    "depending-on-your-repository-s-1": "Depending on your repository's hosting service, you might need to use a Personal Access Token (PAT) as your password. Learn more about creating a PAT in our ",
     "depending-on-your-repository-s-2": ".",
     "integration-docs": "integration docs",
     "password": "Password",
@@ -822,7 +842,7 @@
     "edit-your-global-git-config-3": ".",
     "gitHub-default-branch-description-1": "GitHub's default branch name is ",
     "gitHub-default-branch-description-2": ". ",
-    "gitHub-default-branch-description-3": "You may want to\n          change it due to different workflows, or because your integrations\n          still require the historical default branch name of ",
+    "gitHub-default-branch-description-3": "You may want to change it due to different workflows, or because your integrations still require the historical default branch name of ",
     "gitHub-default-branch-description-4": "."
   },
   "git-config": {
@@ -843,16 +863,19 @@
   "git-ignore": {
     "gitignore-learn-more": "Learn more",
     "gitignore-message-1": "Editing ",
-    "gitignore-message-2": ". This file specifies intentionally\n          untracked files that Git should ignore. Files already tracked by Git\n          are not affected. ",
+    "gitignore-message-2": ". This file specifies intentionally untracked files that Git should ignore. Files already tracked by Git are not affected. ",
     "placeholder-ignored-files": "Ignored files"
   },
   "installing-update": {
     "quit-anyway": "Quit anyway",
     "quit-anyway-darwin": "Quit Anyway",
-    "update-is-in-progress": "Do not close GitHub Desktop while the update is in progress. Closing\n            now may break your installation."
+    "update-is-in-progress": "Do not close GitHub Desktop while the update is in progress. Closing now may break your installation."
   },
   "integrations": {
-    "applications": "Applications",
+    "configure-custom-editor": "Configure custom editor…",
+    "configure-custom-editor-darwin": "Configure Custom Editor…",
+    "configure-custom-shell": "Configure custom shell…",
+    "configure-custom-shell-darwin": "Configure Custom Shell…",
     "external-editor": "External editor",
     "external-editor-darwin": "External Editor",
     "install-editor-name": "Install {{0}}?",
@@ -868,20 +891,20 @@
   },
   "launch": {
     "error": {
-      "could-not-find-executable": "Could not find executable for '{{0}}' at path '{{1}}'.\n       Please open {{2}} and select an available editor."
+      "could-not-find-executable": "Could not find executable for '{{0}}' at path '{{1}}'. Please open {{2}} and select an available editor."
     }
   },
   "local-changes-overwritten-dialog": {
     "Stash-Changes": "Stash changes and continue",
     "Stash-Changes-darwin": "Stash Changes and Continue",
     "the-following-files-would-be-overwritten": "The following files would be overwritten:",
-    "this-will-create-a-stash": "This will create a stash with your current changes.\n             You can recover them by restoring the stash afterwards.",
-    "unable-to-action": "Unable to {{0}} when changes are present on\n                your branch. {{1}}",
+    "this-will-create-a-stash": "This will create a stash with your current changes. You can recover them by restoring the stash afterwards.",
+    "unable-to-action": "Unable to {{0}} when changes are present on your branch. {{1}}",
     "you-can-stash-your-changes": "You can stash your changes now and recover them afterwards."
   },
   "lookup": {
     "error": {
-      "the-editor-could-not-be-found": "The editor '{{0}}' could not be found. Please open {{1}} and\n         choose an available editor."
+      "the-editor-could-not-be-found": "The editor '{{0}}' could not be found. Please open {{1}} and choose an available editor."
     }
   },
   "menu": {
@@ -1007,8 +1030,6 @@
     "select-all": "Select &all",
     "select-all-darwin": "Select All",
     "services": "services",
-    "shell": "Command Prompt",
-    "shell-linux": "Terminal",
     "show-all": "Show All",
     "show-banner": "Show banner",
     "show-branches-list": "&Branches list",
@@ -1068,9 +1089,9 @@
     "this-will-merge-into-4": " "
   },
   "merge-choose-branch-dialog": {
+    "checking-for-ability": "Checking for ability to merge automatically...",
     "file": "file",
     "files": "files",
-    "into": " into ",
     "merge-into-1": "{{0}}Merge into ",
     "merge-into-2": " ",
     "number-commit": "{{0}} {{1}}",
@@ -1084,7 +1105,8 @@
     "this-branch-is-up-to-date-with-2": " ",
     "this-will-merge-1": "This will merge ",
     "this-will-merge-2": " from ",
-    "this-will-merge-3": " ",
+    "this-will-merge-3": " into ",
+    "this-will-merge-4": " ",
     "unable-to-merge-unrelated-histories": "Unable to merge unrelated histories in this repository"
   },
   "merge-conflicts-banner": {
@@ -1101,12 +1123,12 @@
     "remove": "Remove"
   },
   "move-to-applications-folder": {
-    "detected-that-youre-not-running": "We've detected that you're not running GitHub Desktop from the\n              Applications folder of your machine. This could cause problems\n              with the app, including impacting your ability to sign in.",
-    "do-you-want-to-move": "Do you want to move GitHub Desktop to the Applications folder\n              now? This will also restart the app.",
+    "detected-that-youre-not-running": "We've detected that you're not running GitHub Desktop from the Applications folder of your machine. This could cause problems with the app, including impacting your ability to sign in.",
+    "do-you-want-to-move": "Do you want to move GitHub Desktop to the Applications folder now? This will also restart the app.",
     "move-and-restart": "Move and Restart",
     "move-to-the-applications-folder": "Move GitHub Desktop to the Applications folder?",
     "not-now": "Not Now",
-    "this-will-move-github-desktop": "This will move GitHub Desktop to the Applications folder in your\n            machine and restart the app."
+    "this-will-move-github-desktop": "This will move GitHub Desktop to the Applications folder in your machine and restart the app."
   },
   "multiple-selection": {
     "number-files-seletced": "{{0}} files selected"
@@ -1117,10 +1139,10 @@
     "create-new-branch-darwin": "Create New Branch",
     "i-can-not-find-that-branch": "Sorry, I can't find that branch",
     "protip-1": "ProTip! Press ",
-    "protip-2": " to quickly create a new branch\n              from anywhere within the app"
+    "protip-2": " to quickly create a new branch from anywhere within the app"
   },
   "no-changes": {
-    "always-available-in-the-toolbar-local-commits-1": "Always available in the toolbar when there are local commits\n           waiting to be pushed or ",
+    "always-available-in-the-toolbar-local-commits-1": "Always available in the toolbar when there are local commits waiting to be pushed or ",
     "always-available-in-the-toolbar-local-commits-2": " ",
     "always-available-in-the-toolbar-local-repositories-1": "Always available in the toolbar for local repositories or ",
     "always-available-in-the-toolbar-local-repositories-2": " ",
@@ -1152,7 +1174,7 @@
     "open-the-repository-page-on-github-in-your-browser": "Open the repository page on GitHub in your browser",
     "preview-pull-request": "Preview Pull Request",
     "preview-pull-request-1": "The current branch (",
-    "preview-pull-request-2": ") is already\n          published to GitHub. Preview the changes this pull request will have\n          before proposing your changes.",
+    "preview-pull-request-2": ") is already published to GitHub. Preview the changes this pull request will have before proposing your changes.",
     "preview-pull-request-title": "Preview the Pull Request from your current branch",
     "publish-branch": "Publish branch",
     "publish-repository": "Publish repository",
@@ -1164,18 +1186,18 @@
     "push-to-the-remote": "Push {{0}} to the {{1}} remote",
     "select-your-editor": "Select your editor in ",
     "the-current-branch-1": "The current branch (",
-    "the-current-branch-2": ") hasn't been published to the remote yet. By publishing it {{0}}\n          you can share it, {{1}} and collaborate with others.",
+    "the-current-branch-2": ") hasn't been published to the remote yet. By publishing it {{0}} you can share it, {{1}} and collaborate with others.",
     "the-current-branch-us-already-published-1": "The current branch (",
-    "the-current-branch-us-already-published-2": ") is already published\n          to GitHub. Create a pull request to propose and collaborate on your\n          changes.",
+    "the-current-branch-us-already-published-2": ") is already published to GitHub. Create a pull request to propose and collaborate on your changes.",
     "the-remote": "the remote",
-    "there-are-no-uncommitted-changes": "There are no uncommitted changes in this repository. Here are\n                  some friendly suggestions for what to do next.",
-    "this-repository-is-currently-only": "This repository is currently only available on your local machine.\n          By publishing it on GitHub you can share it, and collaborate\n          with others.",
+    "there-are-no-uncommitted-changes": "There are no uncommitted changes in this repository. Here are some friendly suggestions for what to do next.",
+    "this-repository-is-currently-only": "This repository is currently only available on your local machine. By publishing it on GitHub you can share it, and collaborate with others.",
     "to-github": "to GitHub",
     "view-stash": "View stash",
     "view-the-files-of-your-repository": "View the files of your repository in {{0}}",
     "view-your-stashed-changes": "View your stashed changes",
-    "when-a-stash-exists-access-it-at-the-bottom": "When a stash exists, access it at the bottom of the Changes tab to the\n        left.",
-    "you-have-number-change-in-progress": "You have {{0}} {{1}} in\n          progress that you have not yet committed.",
+    "when-a-stash-exists-access-it-at-the-bottom": "When a stash exists, access it at the bottom of the Changes tab to the left.",
+    "you-have-number-change-in-progress": "You have {{0}} {{1}} in progress that you have not yet committed.",
     "you-have-operation": "You have {{0}} waiting to be pushed to {{1}}."
   },
   "no-pull-requests": {
@@ -1192,6 +1214,11 @@
     "would-you-like-creat-a-pull-request-2": " from the current branch?",
     "you-are-all-set": "You're all set!"
   },
+  "no-remote": {
+    "learn-more-about": "Learn more about remote repositories.",
+    "publish": "Publish",
+    "publish-your-repository-to-github": "Publish your repository to GitHub. Need help? "
+  },
   "no-repositories-view": {
     "add-a-repositry": "Add a repository to GitHub Desktop to start collaborating",
     "add-an-existing-repository": "Add an Existing Repository from your local Drive…",
@@ -1207,13 +1234,13 @@
     "protip": "ProTip!",
     "return-to-in-progress-tutorial": "Return to in progress tutorial",
     "return-to-in-progress-tutorial-darwin": "Return to In Progress Tutorial",
-    "tips": "You can drag & drop an existing\n              repository folder here to add it to Desktop"
+    "tips": "You can drag & drop an existing repository folder here to add it to Desktop"
   },
   "notifications": {
-    "allows-the-display-of-notifications": "Allows the display of notifications when high-signal events take\n                place in the current repository.",
+    "allows-the-display-of-notifications": "Allows the display of notifications when high-signal events take place in the current repository.",
     "enable-notifications": "Enable notifications",
     "enabled": "enabled",
-    "has-no-permission-to-display-notifications-1": " GitHub Desktop has no permission to display notifications. \n                Please, enable them in the ",
+    "has-no-permission-to-display-notifications-1": " GitHub Desktop has no permission to display notifications.  Please, enable them in the ",
     "has-no-permission-to-display-notifications-2": ".",
     "make-sure-notifications-1": " Make sure notifications are {{0}} for GitHub Desktop in the ",
     "make-sure-notifications-2": ".",
@@ -1225,7 +1252,7 @@
     "you-need-to-grant-permission-3": " to display these notifications from GitHub Desktop."
   },
   "open-file": {
-    "unable-to-open-file": "Unable to open file {{0}} in an external program.\n         Please check you have a program associated with this file extension"
+    "unable-to-open-file": "Unable to open file {{0}} in an external program. Please check you have a program associated with this file extension"
   },
   "open-pull-request-dialog": {
     "button_title": "{{0}} pull request on GitHub{{1}}.",
@@ -1260,13 +1287,13 @@
     "file-too-large": "Files too large",
     "file-too-large-darwin": "Files Too Large",
     "git-lfs": "Git LFS",
-    "if-you-commit-these-files": "If you commit these files, you will no longer be able to push\n                 this repository to GitHub.com.",
+    "if-you-commit-these-files": "If you commit these files, you will no longer be able to push this repository to GitHub.com.",
     "the-following-files": "The following files are over 100MB. ",
     "we-recommend-you-avoid-committing-1": "We recommend you avoid committing these files or use ",
     "we-recommend-you-avoid-committing-2": " to store large files on GitHub."
   },
   "overwrite-stashed-changes-dialog": {
-    "are-you-sure-you-want-to-proceed": "Are you sure you want to proceed? This will overwrite your\n               existing stash with your current changes.",
+    "are-you-sure-you-want-to-proceed": "Are you sure you want to proceed? This will overwrite your existing stash with your current changes.",
     "overwrite-stash": "Overwrite stash?",
     "overwrite-stash-darwin": "Overwrite Stash?"
   },
@@ -1300,6 +1327,10 @@
     "show-commit-length-warning": "Show commit length warning",
     "undo-commit": "Undo commit"
   },
+  "publish": {
+    "publish-repository": "Publish repository",
+    "publish-repository-darwin": "Publish Repository"
+  },
   "publish-repository": {
     "keep-this-code-private": "Keep this code private",
     "will-be-create-as": "Will be created as {{0}}"
@@ -1322,8 +1353,28 @@
     "error-checking-merge-status": "Error checking merge status.",
     "unable-to-merge-unrelated-histories": "Unable to merge unrelated histories in this repository"
   },
+  "push-branch-commits": {
+    "create-without-pushing": "Create without pushing",
+    "create-without-pushing-darwin": "Create Without Pushing",
+    "local-commit": "{{0}} local commit",
+    "local-commits": "{{0}} local commits",
+    "publish-branch": "Publish branch",
+    "publish-branch-darwin": "Publish Branch",
+    "publish-branch-q": "Publish branch?",
+    "publish-branch-q-darwin": "Publish Branch?",
+    "push-commits": "Push commits",
+    "push-commits-darwin": "Push Commits",
+    "push-local-changes-q": "Push local changes?",
+    "push-local-changes-q-darwin": "Push Local Changes?",
+    "would-you-like-to-publish-1": "Would you like to publish ",
+    "would-you-like-to-publish-2": " now and open a pull request?",
+    "would-you-like-to-push-1": "Would you like to push your changes to ",
+    "would-you-like-to-push-2": " before creating your pull request?",
+    "you-have-local-commits-that": "You have {{0}} that haven't been pushed to the remote yet.",
+    "your-branch-must-be-published": "Your branch must be published before opening a pull request."
+  },
   "push-needs-pull-warning": {
-    "desktop-is-unable-to-push-commits": "Desktop is unable to push commits to this branch because there are\n            commits on the remote that are not present on your local branch.\n            Fetch these new commits before pushing in order to reconcile them\n            with your local commits.",
+    "desktop-is-unable-to-push-commits": "Desktop is unable to push commits to this branch because there are commits on the remote that are not present on your local branch. Fetch these new commits before pushing in order to reconcile them with your local commits.",
     "fetch": "Fetch",
     "newer-commits-on-remote": "Newer commits on remote",
     "newer-commits-on-remote-darwin": "Newer Commits on Remote"
@@ -1350,7 +1401,7 @@
     "fetch-the-latest-changes": "Fetch the latest changes from {{0}}",
     "force-push": "Force push {{0}}",
     "overwrite-any-changes": "Overwrite any changes on {{0}} with your local changes",
-    "warning-description": "A force push will\n                rewrite history on the remote. Any collaborators working on this\n                branch will need to reset their own local branch to match the\n                history of the remote.",
+    "warning-description": "A force push will rewrite history on the remote. Any collaborators working on this branch will need to reset their own local branch to match the history of the remote.",
     "warning-title": "Warning:"
   },
   "rebase-choose-branch-dialog": {
@@ -1465,7 +1516,7 @@
     "number-files-changed": "{{0}} changed {{1}}",
     "open-in-external-editor": "Open in {{0}}",
     "select-a-single-commit": "Select a single commit or a range of consecutive commits to view a diff.",
-    "unable-to-display-diff": "Unable to display diff when multiple\n                non-consecutive selected.",
+    "unable-to-display-diff": "Unable to display diff when multiple non-consecutive selected.",
     "view-on-github": "View on GitHub",
     "view-on-github-enteprise": "View on GitHub Enterprise",
     "you-can": "You can:"
@@ -1514,7 +1565,7 @@
     "continue-with-browser-darwin": "Continue With Browser",
     "sign-in-browser": "Sign in using your browser",
     "sign-in-browser-darwin": "Sign in Using Your Browser",
-    "your-browser-will-redirect-you-back": "Your browser will redirect you back to GitHub Desktop once\n              you've signed in. If your browser asks for your permission to\n              launch GitHub Desktop please allow it to."
+    "your-browser-will-redirect-you-back": "Your browser will redirect you back to GitHub Desktop once you've signed in. If your browser asks for your permission to launch GitHub Desktop please allow it to."
   },
   "sign-in-enterprise": {
     "sign-in": "Sign in to your GitHub Enterprise"
@@ -1532,21 +1583,21 @@
     "sign-in-github-enterprise": "Sign in to GitHub Enterprise",
     "skip-this-step": "Skip this step",
     "terms-of-service": "Terms of Service",
-    "welcome-sends-usage-1": "GitHub Desktop sends usage metrics to improve the product and inform\n            feature decisions. ",
+    "welcome-sends-usage-1": "GitHub Desktop sends usage metrics to improve the product and inform feature decisions. ",
     "welcome-sends-usage-2": " ",
-    "welcome-text": "GitHub Desktop is a seamless way to contribute to projects on\n              GitHub and GitHub Enterprise. Sign in below to get started with\n              your existing projects.",
+    "welcome-text": "GitHub Desktop is a seamless way to contribute to projects on GitHub and GitHub Enterprise. Sign in below to get started with your existing projects.",
     "welcome-to-1": "Welcome to ",
     "welcome-to-2": " "
   },
   "stash-and-switch-branch-dialog": {
     "bring-my-changes-to-branch-name": "Bring my changes to {{0}}",
-    "in-progress-work-will-be-stashed": "Your in-progress work will be stashed on this branch\n             for you to return to later",
+    "in-progress-work-will-be-stashed": "Your in-progress work will be stashed on this branch for you to return to later",
     "in-progress-work-will-follow-you": "Your in-progress work will follow you to the new branch",
     "leave-my-changes-on-branch-name": "Leave my changes on {{0}}",
     "stash-will-be-overwritten-creating": " Your current stash will be overwritten by creating a new stash",
     "switch-branch": "Switch branch",
     "switch-branch-darwin": "Switch Branch",
-    "you-have-changes-on-this-branch": "You have changes on this branch. What would you like to\n               do with them?"
+    "you-have-changes-on-this-branch": "You have changes on this branch. What would you like to do with them?"
   },
   "stash-diff-header": {
     "discard": "Discard",
@@ -1587,7 +1638,7 @@
     "submodule-changes": "Submodule changes",
     "this-is-a-submodule-based-on-the-repository-1": "This is a submodule based on the repository ",
     "this-is-a-submodule-based-on-the-repository-2": ".",
-    "this-submodule-has-changes": "This submodule has {{0}} changes. Those changes must be committed\n          inside of the submodule before they can be part of the parent\n          repository.",
+    "this-submodule-has-changes": "This submodule has {{0}} changes. Those changes must be committed inside of the submodule before they can be part of the parent repository.",
     "untracked": "untracked",
     "you-can-open-this-submodule-on-gitHub-desktop": "You can open this submodule on GitHub Desktop as a normal repository to manage and commit any changes in it."
   },
@@ -1624,17 +1675,17 @@
     "terms-and-conditions": "GitHub Open Source Applications Terms and Conditions"
   },
   "thank-you": {
-    "thank-you-message": "Thanks so much for all your hard work on GitHub Desktop{{0}}. We're\n        so grateful for your willingness to contribute and make the app better\n        for everyone!",
+    "thank-you-message": "Thanks so much for all your hard work on GitHub Desktop{{0}}. We're so grateful for your willingness to contribute and make the app better for everyone!",
     "thank-you-title": "Thank you {{0}}! 🎉",
     "you-contributed": "You contributed:"
   },
   "tutorial-panel": {
-    "a-branch-allows-you-to-work": "A branch allows you to work on different versions of a\n                 repository at one time. Create a branch by going into the\n                 branch menu in the top bar and clicking \"{{0}}\".",
-    "a-commit-allows-you-to-save-sets": "A commit allows you to save sets of changes. In the “summary”\n                field in the bottom left, write a short message that describes\n                the changes you made. When you’re done, click the blue Commit\n                button to finish.",
-    "a-pull-request-allows-you-to-propose": "A pull request allows you to propose changes to the code. By\n                opening one, you’re requesting that someone review and merge\n                them. Since this is a demo repository, this pull request will\n                be private.",
+    "a-branch-allows-you-to-work": "A branch allows you to work on different versions of a repository at one time. Create a branch by going into the branch menu in the top bar and clicking \"{{0}}\".",
+    "a-commit-allows-you-to-save-sets": "A commit allows you to save sets of changes. In the “summary” field in the bottom left, write a short message that describes the changes you made. When you’re done, click the blue Commit button to finish.",
+    "a-pull-request-allows-you-to-propose": "A pull request allows you to propose changes to the code. By opening one, you’re requesting that someone review and merge them. Since this is a demo repository, this pull request will be private.",
     "atom-editor": "Atom",
     "create-a-branch": "Create a branch",
-    "does-not-look-like-you-have-editor-1": "It doesn’t look like you have a text editor installed. \n                    We can recommend ",
+    "does-not-look-like-you-have-editor-1": "It doesn’t look like you have a text editor installed.  We can recommend ",
     "does-not-look-like-you-have-editor-2": " or ",
     "does-not-look-like-you-have-editor-3": ", but feel free to use any.",
     "edit-a-file": "Edit a file",
@@ -1653,11 +1704,11 @@
     "open-pull-request-darwin": "Open Pull Request",
     "open-the-atom-website": "Open the Atom website",
     "open-the-editor-name-website": "Open the {{0}} website",
-    "open-this-repository-in-your-preferred-1": "Open this repository in your preferred text editor.\n                 Edit the ",
+    "open-this-repository-in-your-preferred-1": "Open this repository in your preferred text editor. Edit the ",
     "open-this-repository-in-your-preferred-2": " file, save it, and come back.",
     "partially-checked-check-list": "Partially checked check list",
     "publish-to-github": "Publish to GitHub",
-    "publishing-will-push-or-upload": "Publishing will “push”, or upload, your commits to this branch\n               of your repository on GitHub. Publish using the third button in\n               the top bar.",
+    "publishing-will-push-or-upload": "Publishing will “push”, or upload, your commits to this branch of your repository on GitHub. Publish using the third button in the top bar.",
     "your-default-editor-is-1": "Your default editor is ",
     "your-default-editor-is-2": ". You can change your preferred editor in ",
     "your-default-editor-is-3": " "
@@ -1673,11 +1724,11 @@
     "unreachable": "Unreachable"
   },
   "untrusted-certificate": {
-    "gitHub-desktop-cannot-verify-1": "GitHub Desktop cannot verify the identity of {{0}}. The \n            certificate ({{1}}) is invalid or untrusted. ",
+    "gitHub-desktop-cannot-verify-1": "GitHub Desktop cannot verify the identity of {{0}}. The  certificate ({{1}}) is invalid or untrusted. ",
     "gitHub-desktop-cannot-verify-2": " ",
     "if-this-is-a-github-enterprise-trial": "If this is a GitHub Enterprise trial.",
-    "if-you-are-unsure-of-what-to-do": "If you are unsure of what to do, cancel and contact your system\n              administrator.",
-    "if-your-github-enterprise-instance": "If your GitHub Enterprise instance is run on an unusual\n                top-level domain.",
+    "if-you-are-unsure-of-what-to-do": "If you are unsure of what to do, cancel and contact your system administrator.",
+    "if-your-github-enterprise-instance": "If your GitHub Enterprise instance is run on an unusual top-level domain.",
     "in-some-cases": "In some cases, this may be expected. For example:",
     "this-may-indicate-attackers": "This may indicate attackers are trying to steal your data.",
     "untrusted-server": "Untrusted server",
@@ -1686,23 +1737,23 @@
     "view-certificate-darwin": "View Certificate"
   },
   "update-available": {
-    "an-optimized-arm-version-1": "An optimized version of GitHub Desktop is available for your \n            {{0}} machine and will be installed\n            at the next launch or ",
+    "an-optimized-arm-version-1": "An optimized version of GitHub Desktop is available for your  {{0}} machine and will be installed at the next launch or ",
     "an-optimized-arm-version-2": " now.",
     "dismiss": "dismiss",
     "exciting-new-features-1": "Exciting new features have been added{{0}}. See ",
     "exciting-new-features-2": " or ",
     "exciting-new-features-3": ".",
     "restart-gitHub-desktop": "restart GitHub Desktop",
-    "updated version-is-available-1": "An updated version of GitHub Desktop is available and will be\n           installed at the next launch. See ",
+    "updated version-is-available-1": "An updated version of GitHub Desktop is available and will be installed at the next launch. See ",
     "updated version-is-available-2": "or ",
     "updated version-is-available-3": ".",
     "whats-new": "what's new"
   },
   "update-branch": {
     "create-a-merge-commit": "Create a merge commit",
-    "description-create-a-merge-commit": "The commits from the selected branch will be added to the\n           current branch via a merge commit.",
-    "description-rebase": "The commits from the selected branch will be rebased and added to the\n         current branch.",
-    "description-squash-and-merge": "The commits in the selected branch will be combined into one commit\n          in the current branch.",
+    "description-create-a-merge-commit": "The commits from the selected branch will be added to the current branch via a merge commit.",
+    "description-rebase": "The commits from the selected branch will be rebased and added to the current branch.",
+    "description-squash-and-merge": "The commits in the selected branch will be combined into one commit in the current branch.",
     "rebase": "Rebase",
     "squash-and-merge": "Squash and merge"
   },
@@ -1730,28 +1781,28 @@
   "warn-force-push-dialog": {
     "are-you-sure-operation": "Are you sure you want to {{0}}?",
     "begin-operation": "Begin {0}",
-    "end-of-the-operation-flow": "At the end of the {{0}} flow, GitHub Desktop\n              will enable you to force push the branch to update the upstream\n              branch. Force pushing will alter the history on the remote and\n              potentially cause problems for others collaborating on this\n              branch.",
+    "end-of-the-operation-flow": "At the end of the {{0}} flow, GitHub Desktop will enable you to force push the branch to update the upstream branch. Force pushing will alter the history on the remote and potentially cause problems for others collaborating on this branch.",
     "require-force-push": "{{0}} will require force push",
     "require-force-push-darwin": "{{0}} Will Require Force Push"
   },
   "warn-local-changes-before-undo": {
-    "changes-in-progress-undo-commit": "You have changes in progress. Undoing the commit might result in\n            some of these changes being lost. Do you want to continue anyway?",
-    "changes-in-progress-undo-merge": "You have changes in progress. Undoing the merge commit might\n            result in some of these changes being lost.",
+    "changes-in-progress-undo-commit": "You have changes in progress. Undoing the commit might result in some of these changes being lost. Do you want to continue anyway?",
+    "changes-in-progress-undo-merge": "You have changes in progress. Undoing the merge commit might result in some of these changes being lost.",
     "do-you-want-to-continue-anyway": "Do you want to continue anyway?",
     "undo-commit": "Undo commit",
     "undo-commit-darwin": "Undo Commit",
-    "undoing-a merge-commit": "Undoing a merge commit will apply the changes from the merge into\n      your working directory, and committing again will create an entirely new\n      commit. This means you will lose the merge commit and, as a result, commits\n      from the merged branch could disappear from this branch."
+    "undoing-a merge-commit": "Undoing a merge commit will apply the changes from the merge into your working directory, and committing again will create an entirely new commit. This means you will lose the merge commit and, as a result, commits from the merged branch could disappear from this branch."
   },
   "warning-before-reset": {
     "reset-to-commit": "Reset to commit",
     "reset-to-commit-darwin": "Reset to Commit",
-    "you-have-changes-in-progress": "You have changes in progress. Resetting to a previous commit\n                might result in some of these changes being lost. Do you want\n                to continue anyway?"
+    "you-have-changes-in-progress": "You have changes in progress. Resetting to a previous commit might result in some of these changes being lost. Do you want to continue anyway?"
   },
   "welcome": {
     "definitions-git": " is the version control system.",
     "definitions-github": " is where you store your code and collaborate with others.",
     "definitions-github-desktop": " helps you work with GitHub locally.",
-    "use-this-tutorial": "Use this tutorial to get comfortable with Git, GitHub, and GitHub\n            Desktop.",
+    "use-this-tutorial": "Use this tutorial to get comfortable with Git, GitHub, and GitHub Desktop.",
     "welcome": "Welcome to GitHub Desktop"
   },
   "whitespace-hint-popover": {
@@ -1763,8 +1814,8 @@
     "continue-in-browser-darwin": "Continue in Browser",
     "push-rejected": "Push rejected",
     "push-rejected-darwin": "Push Rejected",
-    "the-push-was-rejected-by-the-server-1": "The push was rejected by the server for containing a modification\n               to the workflow file ",
-    "the-push-was-rejected-by-the-server-2": ". In order to be able to push to workflow files GitHub Desktop\n               needs to request additional permissions.",
-    "would-you-like-to-open-a-browser": "Would you like to open a browser to grant GitHub Desktop\n               permission to update workflow files?"
+    "the-push-was-rejected-by-the-server-1": "The push was rejected by the server for containing a modification to the workflow file ",
+    "the-push-was-rejected-by-the-server-2": ". In order to be able to push to workflow files GitHub Desktop needs to request additional permissions.",
+    "would-you-like-to-open-a-browser": "Would you like to open a browser to grant GitHub Desktop permission to update workflow files?"
   }
 }

