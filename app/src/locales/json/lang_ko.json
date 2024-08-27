@@ -1383,6 +1383,7 @@
     "cannot-publish-detached-head": "Cannot publish detached HEAD",
     "cannot-publish-unborn-head": "Cannot publish unborn HEAD",
     "fetch": "Fetch {{0}}",
+    "force-push": "Force push {{0}}",
     "hang-on": "Hang on…",
     "last-fetched": "Last fetched",
     "never-fetched": "Never fetched",

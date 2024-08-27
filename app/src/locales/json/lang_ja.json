@@ -1383,6 +1383,7 @@
     "cannot-publish-detached-head": "detached HEAD を公開できません",
     "cannot-publish-unborn-head": "unborn HEAD を公開できません",
     "fetch": "{{0}} にフェッチ",
+    "force-push": "{{0}} の強制プッシュ",
     "hang-on": "お待ちください…",
     "last-fetched": "最新フェッチ ",
     "never-fetched": "まだフェッチ実行していません",

@@ -662,7 +662,9 @@ export class PushPullButton extends React.Component<
     return (
       <ToolbarDropdown
         {...this.defaultDropdownProps()}
-        title={`Force push ${remoteName}`}
+        title={t('push-pull-button.force-push', `Force push {{0}}`, {
+          0: remoteName,
+        })}
         description={renderLastFetched(lastFetched)}
         icon={forcePushIcon}
         onClick={onClick}
