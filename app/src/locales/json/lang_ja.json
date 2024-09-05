@@ -647,7 +647,8 @@
     "git-ignore-darwin": "Git 無視",
     "initialze-checkbox": "このリポジトリを README で初期化する",
     "license": "ライセンス",
-    "render-git-repository-warning-1": "このディレクトリはGitリポジトリのようです。代わりに",
+    "render-git-repository-warning-1-1": "このディレクトリ ",
+    "render-git-repository-warning-1-2": "はGitリポジトリのようです。代わりに ",
     "render-git-repository-warning-2": " しますか?",
     "render-invalid-path-error": "このパスにディレクトリを作成できませんでした。ここにディレクトリを作成する権限がない可能性があります。",
     "render-readme-overwrite-warning-1": "このディレクトリには、",
@@ -880,6 +881,7 @@
     "external-editor-darwin": "外部エディター",
     "install-editor-name": "{{0}} をインストールしますか?",
     "no-editors-found": "エディターが見つかりませんでした。 ",
+    "no-other-editors-found": "他のエディターは見つかりませんでした。 ",
     "shell": "シェル"
   },
   "label": {

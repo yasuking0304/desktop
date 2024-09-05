@@ -250,7 +250,10 @@ export class Integrations extends React.Component<
       <Row>
         <div className="no-options-found">
           <span>
-            {t('integrations.no-other-editors-found', 'No other editors found. ')}
+            {t(
+              'integrations.no-other-editors-found',
+              'No other editors found. '
+            )}
             <LinkButton uri={suggestedExternalEditor.url}>
               {t('integrations.install-editor-name', 'Install {{0}}?', {
                 0: suggestedExternalEditor.name,

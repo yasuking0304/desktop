@@ -647,7 +647,8 @@
     "git-ignore-darwin": "Git Ignore",
     "initialze-checkbox": "Initialize this repository with a README",
     "license": "License",
-    "render-git-repository-warning-1": "This directory appears to be a Git repository. Would you like to ",
+    "render-git-repository-warning-1-1": "This directory ",
+    "render-git-repository-warning-1-2": "appears to be a Git repository. Would you like to ",
     "render-git-repository-warning-2": " instead?",
     "render-invalid-path-error": "Directory could not be created at this path. You may not have permissions to create a directory here.",
     "render-readme-overwrite-warning-1": "This directory contains a ",
@@ -880,6 +881,7 @@
     "external-editor-darwin": "External Editor",
     "install-editor-name": "Install {{0}}?",
     "no-editors-found": "No editors found. ",
+    "no-other-editors-found": "No other editors found. ",
     "shell": "Shell"
   },
   "label": {
