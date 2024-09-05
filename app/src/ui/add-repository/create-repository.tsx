@@ -569,24 +569,29 @@ export class CreateRepository extends React.Component<
   }
 
   private renderGitRepositoryError() {
-    const isRepo = this.state.isRepository
+    const { isRepository, path, name } = this.state
 
-    if (!this.state.path || this.state.path.length === 0 || !isRepo) {
+    if (!path || path.length === 0 || !isRepository) {
       return null
     }
+
+    const fullPath = Path.join(path, sanitizedRepositoryName(name))
 
     return (
       <Row className="warning-helper-text">
         <InputError
           id="existing-repository-path-error"
           trackedUserInput={this.state.path + this.state.name}
-          ariaLiveMessage={
-            'This directory appears to be a Git repository. Would you like to add this repository instead?'
-          }
+          ariaLiveMessage={`The directory ${fullPath} appears to be a Git repository. Would you like to add this repository instead?`}
         >
           {t(
-            'create-repository.render-git-repository-warning-1',
-            'This directory appears to be a Git repository. Would you like to '
+            'create-repository.render-git-repository-warning-1-1',
+            'This directory '
+          )}
+          <Ref>{fullPath}</Ref>
+          {t(
+            'create-repository.render-git-repository-warning-1-2',
+            'appears to be a Git repository. Would you like to '
           )}
           <LinkButton onClick={this.onAddRepositoryClicked}>
             {t('create-repository.add-this-repository', 'add this repository')}
@@ -629,6 +634,22 @@ export class CreateRepository extends React.Component<
           )}
         </InputWarning>
       </Row>
+    )
+  }
+
+  private renderPathMessage = () => {
+    const { path, name, isRepository } = this.state
+
+    if (path === null || path === '' || name === '' || isRepository) {
+      return null
+    }
+
+    const fullPath = Path.join(path, sanitizedRepositoryName(name))
+
+    return (
+      <div id="create-repo-path-msg">
+        The repository will be created at <Ref>{fullPath}</Ref>.
+      </div>
     )
   }
 
@@ -743,6 +764,7 @@ export class CreateRepository extends React.Component<
         </DialogContent>
 
         <DialogFooter>
+          {this.renderPathMessage()}
           <OkCancelButtonGroup
             okButtonText={
               __DARWIN__
@@ -753,6 +775,7 @@ export class CreateRepository extends React.Component<
                 : t('create-repository.create-repository', 'Create repository')
             }
             okButtonDisabled={disabled || loadingDefaultDir}
+            okButtonAriaDescribedBy="create-repo-path-msg"
           />
         </DialogFooter>
       </Dialog>
