@@ -343,7 +343,10 @@ import {
   useExternalCredentialHelperDefault,
 } from '../trampoline/use-external-credential-helper'
 import { IOAuthAction } from '../parse-app-url'
-import { ICustomIntegration } from '../custom-integration'
+import {
+  ICustomIntegration,
+  migratedCustomIntegration,
+} from '../custom-integration'
 
 const LastSelectedRepositoryIDKey = 'last-selected-repository-id'
 
@@ -365,6 +368,12 @@ const stashedFilesWidthConfigKey: string = 'stashed-files-width'
 
 const defaultPullRequestFileListWidth: number = 250
 const pullRequestFileListConfigKey: string = 'pull-request-files-width'
+
+const defaultBranchDropdownWidth: number = 230
+const branchDropdownWidthConfigKey: string = 'branch-dropdown-width'
+
+const defaultPushPullButtonWidth: number = 230
+const pushPullButtonWidthConfigKey: string = 'push-pull-button-width'
 
 const askToMoveToApplicationsFolderDefault: boolean = true
 const confirmRepoRemovalDefault: boolean = true
@@ -492,6 +501,8 @@ export class AppStore extends TypedBaseStore<IAppState> {
   private commitSummaryWidth = constrain(defaultCommitSummaryWidth)
   private stashedFilesWidth = constrain(defaultStashedFilesWidth)
   private pullRequestFileListWidth = constrain(defaultPullRequestFileListWidth)
+  private branchDropdownWidth = constrain(defaultBranchDropdownWidth)
+  private pushPullButtonWidth = constrain(defaultPushPullButtonWidth)
 
   private windowState: WindowState | null = null
   private windowZoomFactor: number = 1
@@ -1019,6 +1030,8 @@ export class AppStore extends TypedBaseStore<IAppState> {
       focusCommitMessage: this.focusCommitMessage,
       emoji: this.emoji,
       sidebarWidth: this.sidebarWidth,
+      branchDropdownWidth: this.branchDropdownWidth,
+      pushPullButtonWidth: this.pushPullButtonWidth,
       commitSummaryWidth: this.commitSummaryWidth,
       stashedFilesWidth: this.stashedFilesWidth,
       pullRequestFilesListWidth: this.pullRequestFileListWidth,
@@ -2154,6 +2167,12 @@ export class AppStore extends TypedBaseStore<IAppState> {
     this.pullRequestFileListWidth = constrain(
       getNumber(pullRequestFileListConfigKey, defaultPullRequestFileListWidth)
     )
+    this.branchDropdownWidth = constrain(
+      getNumber(branchDropdownWidthConfigKey, defaultBranchDropdownWidth)
+    )
+    this.pushPullButtonWidth = constrain(
+      getNumber(pushPullButtonWidthConfigKey, defaultPushPullButtonWidth)
+    )
 
     this.updateResizableConstraints()
     // TODO: Initiliaze here for now... maybe move to dialog mounting
@@ -2274,6 +2293,18 @@ export class AppStore extends TypedBaseStore<IAppState> {
       enableCustomIntegration() && getBoolean(useCustomShellKey, false)
     this.customShell = getObject<ICustomIntegration>(customShellKey) ?? null
 
+    // Migrate custom editor and shell to the new format if needed. This
+    // will persist the new format to local storage.
+    // Hopefully we can remove this migration in the future.
+    const migratedCustomEditor = migratedCustomIntegration(this.customEditor)
+    if (migratedCustomEditor !== null) {
+      this._setCustomEditor(migratedCustomEditor)
+    }
+    const migratedCustomShell = migratedCustomIntegration(this.customShell)
+    if (migratedCustomShell !== null) {
+      this._setCustomShell(migratedCustomShell)
+    }
+
     this.pullRequestSuggestedNextAction =
       getEnum(
         pullRequestSuggestedNextActionKey,
@@ -2301,11 +2332,12 @@ export class AppStore extends TypedBaseStore<IAppState> {
    * dimensions change.
    */
   private updateResizableConstraints() {
-    // The combined width of the branch dropdown and the push pull fetch button
+    // The combined width of the branch dropdown and the push/pull/fetch button
     // Since the repository list toolbar button width is tied to the width of
-    // the sidebar we can't let it push the branch, and push/pull/fetch buttons
+    // the sidebar we can't let it push the branch, and push/pull/fetch button
     // off screen.
-    const toolbarButtonsWidth = 460
+    const toolbarButtonsMinWidth =
+      defaultPushPullButtonWidth + defaultBranchDropdownWidth
 
     // Start with all the available width
     let available = window.innerWidth
@@ -2316,7 +2348,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
     // 220 was determined as the minimum value since it is the smallest width
     // that will still fit the placeholder text in the branch selector textbox
     // of the history tab
-    const maxSidebarWidth = available - toolbarButtonsWidth
+    const maxSidebarWidth = available - toolbarButtonsMinWidth
     this.sidebarWidth = constrain(this.sidebarWidth, 220, maxSidebarWidth)
 
     // Now calculate the width we have left to distribute for the other panes
@@ -2332,6 +2364,34 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
     this.commitSummaryWidth = constrain(this.commitSummaryWidth, 100, filesMax)
     this.stashedFilesWidth = constrain(this.stashedFilesWidth, 100, filesMax)
+
+    // Update the maximum width available for the branch dropdown resizable.
+    // The branch dropdown can only be as wide as the available space after
+    // taking the sidebar and pull/push/fetch button widths. If the room
+    // available is less than the default width, we will split the difference
+    // between the branch dropdown and the push/pull/fetch button so they stay
+    // visible on the most zoomed view.
+    const branchDropdownMax = available - defaultPushPullButtonWidth
+    const minimumBranchDropdownWidth =
+      defaultBranchDropdownWidth > available / 2
+        ? available / 2 - 10 // 10 is to give a little bit of space to see the fetch dropdown button
+        : defaultBranchDropdownWidth
+    this.branchDropdownWidth = constrain(
+      this.branchDropdownWidth,
+      minimumBranchDropdownWidth,
+      branchDropdownMax
+    )
+
+    const pushPullButtonMaxWidth = available - this.branchDropdownWidth.value
+    const minimumPushPullToolBarWidth =
+      defaultPushPullButtonWidth > available / 2
+        ? available / 2 + 30 // 30 to clip the fetch dropdown button in favor of seeing more of the words on the toolbar buttons
+        : defaultPushPullButtonWidth
+    this.pushPullButtonWidth = constrain(
+      this.pushPullButtonWidth,
+      minimumPushPullToolBarWidth,
+      pushPullButtonMaxWidth
+    )
   }
 
   /**
@@ -4433,6 +4493,33 @@ export class AppStore extends TypedBaseStore<IAppState> {
     })
   }
 
+  private getBranchToPush(
+    repository: Repository,
+    options?: PushOptions
+  ): Branch | undefined {
+    if (options?.branch !== undefined) {
+      return options?.branch
+    }
+
+    const state = this.repositoryStateCache.get(repository)
+
+    const { tip } = state.branchesState
+
+    if (tip.kind === TipState.Unborn) {
+      throw new Error('The current branch is unborn.')
+    }
+
+    if (tip.kind === TipState.Detached) {
+      throw new Error('The current repository is in a detached HEAD state.')
+    }
+
+    if (tip.kind === TipState.Valid) {
+      return tip.branch
+    }
+
+    return
+  }
+
   private async performPush(
     repository: Repository,
     options?: PushOptions
@@ -4449,164 +4536,151 @@ export class AppStore extends TypedBaseStore<IAppState> {
     }
 
     return this.withPushPullFetch(repository, async () => {
-      const { tip } = state.branchesState
+      const branch = this.getBranchToPush(repository, options)
 
-      if (tip.kind === TipState.Unborn) {
-        throw new Error('The current branch is unborn.')
+      if (branch === undefined) {
+        return
       }
 
-      if (tip.kind === TipState.Detached) {
-        throw new Error('The current repository is in a detached HEAD state.')
+      const remoteName = branch.upstreamRemoteName || remote.name
+
+      const pushTitle = `Pushing to ${remoteName}`
+
+      // Emit an initial progress even before our push begins
+      // since we're doing some work to get remotes up front.
+      this.updatePushPullFetchProgress(repository, {
+        kind: 'push',
+        title: pushTitle,
+        value: 0,
+        remote: remoteName,
+        branch: branch.name,
+      })
+
+      // Let's say that a push takes roughly twice as long as a fetch,
+      // this is of course highly inaccurate.
+      let pushWeight = 2.5
+      let fetchWeight = 1
+
+      // Let's leave 10% at the end for refreshing
+      const refreshWeight = 0.1
+
+      // Scale pull and fetch weights to be between 0 and 0.9.
+      const scale = (1 / (pushWeight + fetchWeight)) * (1 - refreshWeight)
+
+      pushWeight *= scale
+      fetchWeight *= scale
+
+      const retryAction: RetryAction = {
+        type: RetryActionType.Push,
+        repository,
       }
 
-      if (tip.kind === TipState.Valid) {
-        const { branch } = tip
+      // This is most likely not necessary and is only here out of
+      // an abundance of caution. We're introducing support for
+      // automatically configuring Git proxies based on system
+      // proxy settings and therefore need to pass along the remote
+      // url to functions such as push, pull, fetch etc.
+      //
+      // Prior to this we relied primarily on the `branch.remote`
+      // property and used the `remote.name` as a fallback in case the
+      // branch object didn't have a remote name (i.e. if it's not
+      // published yet).
+      //
+      // The remote.name is derived from the current tip first and falls
+      // back to using the defaultRemote if the current tip isn't valid
+      // or if the current branch isn't published. There's however no
+      // guarantee that they'll be refreshed at the exact same time so
+      // there's a theoretical possibility that `branch.remote` and
+      // `remote.name` could be out of sync. I have no reason to suspect
+      // that's the case and if it is then we already have problems as
+      // the `fetchRemotes` call after the push already relies on the
+      // `remote` and not the `branch.remote`. All that said this is
+      // a critical path in the app and somehow breaking pushing would
+      // be near unforgivable so I'm introducing this `safeRemote`
+      // temporarily to ensure that there's no risk of us using an
+      // out of sync remote name while still providing envForRemoteOperation
+      // with an url to use when resolving proxies.
+      //
+      // I'm also adding a non fatal exception if this ever happens
+      // so that we can confidently remove this safeguard in a future
+      // release.
+      const safeRemote: IRemote = { name: remoteName, url: remote.url }
 
-        const remoteName = branch.upstreamRemoteName || remote.name
+      if (safeRemote.name !== remote.name) {
+        sendNonFatalException(
+          'remoteNameMismatch',
+          new Error('The current remote name differs from the branch remote')
+        )
+      }
 
-        const pushTitle = t('app-store.pushing-to', `Pushing to {{0}}`, {
-          0: remoteName,
-        })
-
-        // Emit an initial progress even before our push begins
-        // since we're doing some work to get remotes up front.
-        this.updatePushPullFetchProgress(repository, {
-          kind: 'push',
-          title: pushTitle,
-          value: 0,
-          remote: remoteName,
-          branch: branch.name,
-        })
-
-        // Let's say that a push takes roughly twice as long as a fetch,
-        // this is of course highly inaccurate.
-        let pushWeight = 2.5
-        let fetchWeight = 1
-
-        // Let's leave 10% at the end for refreshing
-        const refreshWeight = 0.1
-
-        // Scale pull and fetch weights to be between 0 and 0.9.
-        const scale = (1 / (pushWeight + fetchWeight)) * (1 - refreshWeight)
-
-        pushWeight *= scale
-        fetchWeight *= scale
-
-        const retryAction: RetryAction = {
-          type: RetryActionType.Push,
-          repository,
-        }
-
-        // This is most likely not necessary and is only here out of
-        // an abundance of caution. We're introducing support for
-        // automatically configuring Git proxies based on system
-        // proxy settings and therefore need to pass along the remote
-        // url to functions such as push, pull, fetch etc.
-        //
-        // Prior to this we relied primarily on the `branch.remote`
-        // property and used the `remote.name` as a fallback in case the
-        // branch object didn't have a remote name (i.e. if it's not
-        // published yet).
-        //
-        // The remote.name is derived from the current tip first and falls
-        // back to using the defaultRemote if the current tip isn't valid
-        // or if the current branch isn't published. There's however no
-        // guarantee that they'll be refreshed at the exact same time so
-        // there's a theoretical possibility that `branch.remote` and
-        // `remote.name` could be out of sync. I have no reason to suspect
-        // that's the case and if it is then we already have problems as
-        // the `fetchRemotes` call after the push already relies on the
-        // `remote` and not the `branch.remote`. All that said this is
-        // a critical path in the app and somehow breaking pushing would
-        // be near unforgivable so I'm introducing this `safeRemote`
-        // temporarily to ensure that there's no risk of us using an
-        // out of sync remote name while still providing envForRemoteOperation
-        // with an url to use when resolving proxies.
-        //
-        // I'm also adding a non fatal exception if this ever happens
-        // so that we can confidently remove this safeguard in a future
-        // release.
-        const safeRemote: IRemote = { name: remoteName, url: remote.url }
-
-        if (safeRemote.name !== remote.name) {
-          sendNonFatalException(
-            'remoteNameMismatch',
-            new Error('The current remote name differs from the branch remote')
-          )
-        }
-
-        const gitStore = this.gitStoreCache.get(repository)
-        await gitStore.performFailableOperation(
-          async () => {
-            await pushRepo(
-              repository,
-              safeRemote,
-              branch.name,
-              branch.upstreamWithoutRemote,
-              gitStore.tagsToPush,
-              options,
-              progress => {
-                this.updatePushPullFetchProgress(repository, {
-                  ...progress,
-                  title: pushTitle,
-                  value: pushWeight * progress.value,
-                })
-              }
-            )
-            gitStore.clearTagsToPush()
-
-            await gitStore.fetchRemotes([safeRemote], false, fetchProgress => {
+      const gitStore = this.gitStoreCache.get(repository)
+      await gitStore.performFailableOperation(
+        async () => {
+          await pushRepo(
+            repository,
+            safeRemote,
+            branch.name,
+            branch.upstreamWithoutRemote,
+            gitStore.tagsToPush,
+            options,
+            progress => {
               this.updatePushPullFetchProgress(repository, {
-                ...fetchProgress,
-                value: pushWeight + fetchProgress.value * fetchWeight,
+                ...progress,
+                title: pushTitle,
+                value: pushWeight * progress.value,
               })
-            })
+            }
+          )
+          gitStore.clearTagsToPush()
 
-            const refreshTitle = __DARWIN__
-              ? t(
-                  'app-store.refreshing-repository-darwin',
-                  'Refreshing Repository'
-                )
-              : t('app-store.refreshing-repository', 'Refreshing repository')
-            const refreshStartProgress = pushWeight + fetchWeight
-
+          await gitStore.fetchRemotes([safeRemote], false, fetchProgress => {
             this.updatePushPullFetchProgress(repository, {
-              kind: 'generic',
-              title: refreshTitle,
-              description: 'Fast-forwarding branches',
-              value: refreshStartProgress,
+              ...fetchProgress,
+              value: pushWeight + fetchProgress.value * fetchWeight,
             })
+          })
 
-            await this.fastForwardBranches(repository)
+          const refreshTitle = __DARWIN__
+            ? 'Refreshing Repository'
+            : 'Refreshing repository'
+          const refreshStartProgress = pushWeight + fetchWeight
 
-            this.updatePushPullFetchProgress(repository, {
-              kind: 'generic',
-              title: refreshTitle,
-              value: refreshStartProgress + refreshWeight * 0.5,
-            })
+          this.updatePushPullFetchProgress(repository, {
+            kind: 'generic',
+            title: refreshTitle,
+            description: 'Fast-forwarding branches',
+            value: refreshStartProgress,
+          })
 
-            // manually refresh branch protections after the push, to ensure
-            // any new branch will immediately report as protected
-            await this.refreshBranchProtectionState(repository)
+          await this.fastForwardBranches(repository)
 
-            await this._refreshRepository(repository)
-          },
-          { retryAction }
-        )
+          this.updatePushPullFetchProgress(repository, {
+            kind: 'generic',
+            title: refreshTitle,
+            value: refreshStartProgress + refreshWeight * 0.5,
+          })
 
-        this.updatePushPullFetchProgress(repository, null)
+          // manually refresh branch protections after the push, to ensure
+          // any new branch will immediately report as protected
+          await this.refreshBranchProtectionState(repository)
 
-        this.updateMenuLabelsForSelectedRepository()
+          await this._refreshRepository(repository)
+        },
+        { retryAction }
+      )
 
-        // Note that we're using `getAccountForRepository` here instead
-        // of the `account` instance we've got and that's because recordPush
-        // needs to be able to differentiate between a GHES account and a
-        // generic account and it can't do that only based on the endpoint.
-        this.statsStore.recordPush(
-          getAccountForRepository(this.accounts, repository),
-          options
-        )
-      }
+      this.updatePushPullFetchProgress(repository, null)
+
+      this.updateMenuLabelsForSelectedRepository()
+
+      // Note that we're using `getAccountForRepository` here instead
+      // of the `account` instance we've got and that's because recordPush
+      // needs to be able to differentiate between a GHES account and a
+      // generic account and it can't do that only based on the endpoint.
+      this.statsStore.recordPush(
+        getAccountForRepository(this.accounts, repository),
+        options
+      )
     })
   }
 
@@ -4844,6 +4918,15 @@ export class AppStore extends TypedBaseStore<IAppState> {
     // skip pushing if the current branch is a detached HEAD or the repository
     // is unborn
     if (gitStore.tip.kind === TipState.Valid) {
+      if (
+        gitStore.defaultBranch !== null &&
+        gitStore.tip.branch.name !== gitStore.defaultBranch.name
+      ) {
+        await this.performPush(repository, {
+          branch: gitStore.defaultBranch,
+          forceWithLease: false,
+        })
+      }
       await this.performPush(repository)
     }
 
@@ -5203,6 +5286,48 @@ export class AppStore extends TypedBaseStore<IAppState> {
   public _resetSidebarWidth(): Promise<void> {
     this.sidebarWidth = { ...this.sidebarWidth, value: defaultSidebarWidth }
     localStorage.removeItem(sidebarWidthConfigKey)
+    this.updateResizableConstraints()
+    this.emitUpdate()
+
+    return Promise.resolve()
+  }
+
+  public _setBranchDropdownWidth(width: number): Promise<void> {
+    this.branchDropdownWidth = { ...this.branchDropdownWidth, value: width }
+    setNumber(branchDropdownWidthConfigKey, width)
+    this.updateResizableConstraints()
+    this.emitUpdate()
+
+    return Promise.resolve()
+  }
+
+  public _resetBranchDropdownWidth(): Promise<void> {
+    this.branchDropdownWidth = {
+      ...this.branchDropdownWidth,
+      value: defaultBranchDropdownWidth,
+    }
+    localStorage.removeItem(branchDropdownWidthConfigKey)
+    this.updateResizableConstraints()
+    this.emitUpdate()
+
+    return Promise.resolve()
+  }
+
+  public _setPushPullButtonWidth(width: number): Promise<void> {
+    this.pushPullButtonWidth = { ...this.pushPullButtonWidth, value: width }
+    setNumber(pushPullButtonWidthConfigKey, width)
+    this.updateResizableConstraints()
+    this.emitUpdate()
+
+    return Promise.resolve()
+  }
+
+  public _resetPushPullButtonWidth(): Promise<void> {
+    this.pushPullButtonWidth = {
+      ...this.pushPullButtonWidth,
+      value: defaultPushPullButtonWidth,
+    }
+    localStorage.removeItem(pushPullButtonWidthConfigKey)
     this.updateResizableConstraints()
     this.emitUpdate()
 
