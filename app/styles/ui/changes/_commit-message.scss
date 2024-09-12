@@ -82,6 +82,18 @@
     }
   }
 
+  .copilot-button {
+    color: var(--text-secondary-color);
+
+    &:hover {
+      color: var(--text-color);
+    }
+
+    &:focus {
+      outline-offset: 2px;
+    }
+  }
+
   .co-authors-toggle {
     color: var(--text-secondary-color);
 
@@ -182,7 +194,8 @@
       }
     }
 
-    .co-authors-toggle {
+    .co-authors-toggle,
+    .copilot-button {
       // button reset styles
       border: none;
       border-radius: 0px;

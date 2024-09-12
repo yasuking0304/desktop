@@ -21,6 +21,7 @@ import {
   clearCertificateErrorSuppressionFor,
   suppressCertificateErrorFor,
 } from './suppress-certificate-error'
+import OpenAI from 'openai'
 
 const envEndpoint = process.env['DESKTOP_GITHUB_DOTCOM_API_ENDPOINT']
 const envHTMLURL = process.env['DESKTOP_GITHUB_DOTCOM_HTML_URL']
@@ -273,6 +274,11 @@ export interface IAPIMentionableUser {
    * a real name for their public profile.
    */
   readonly name: string | null
+}
+
+export interface ICopilotCommitDetails {
+  readonly title: string
+  readonly description: string
 }
 
 /**
@@ -1857,6 +1863,73 @@ export class API {
       log.warn(`fetchUser: failed with endpoint ${this.endpoint}`, e)
       throw e
     }
+  }
+
+  public async getDiffChangesCommitDetails(
+    diff: string
+  ): Promise<ICopilotCommitDetails | null> {
+    const endpoint = 'https://models.inference.ai.azure.com'
+    const modelName = 'gpt-4o'
+
+    const client = new OpenAI({
+      baseURL: endpoint,
+      apiKey: this.token,
+      dangerouslyAllowBrowser: true,
+    })
+
+    const response = await client.chat.completions.create({
+      messages: [
+        {
+          role: 'system',
+          content: `
+          You are a software developer who gets a code changeset (in the git
+          diff output format) affecting one or multiple files and writes a
+          commit title and commit description. The commit title should be no
+          longer than 50 characters, and should summarize the contents of the
+          changeset for fellow developers reading the commit history. The commit
+          description can be larger, and should provide more context about the
+          changeset, including why the changeset is being made, and any other
+          relevant information. The commit description is optional if the
+          changeset is small enought that it can be described in the commit
+          title. Be brief and concise. Do not sound like ChatGPT. Do NOT include
+          a description of changes in "lock" files from dependency managers like
+          npm, yarn, or pip, unless those are the only changes in the commit.
+          Your response must be a JSON object with the attributes "title"
+          and "description" containing the commit title and commit description.
+          `,
+        },
+        {
+          role: 'user',
+          content: diff,
+        },
+      ],
+      model: modelName,
+      temperature: 1,
+      max_tokens: 1000,
+      top_p: 1,
+    })
+
+    const bestChoice = response.choices.find(
+      choice => choice.finish_reason === 'stop'
+    )
+
+    if (!bestChoice) {
+      return null
+    }
+
+    const message = bestChoice.message.content
+    if (
+      !message ||
+      !message.startsWith('```json\n') ||
+      !message.endsWith('\n```')
+    ) {
+      return null
+    }
+
+    // The message starts with ""```json\n" and then the JSON object, and ends with "\n```"
+    // We want to extract the JSON object itself
+    const jsonString = message.slice(8, message.length - 4)
+    return JSON.parse(jsonString)
   }
 }
 

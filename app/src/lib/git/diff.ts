@@ -395,6 +395,34 @@ export async function getWorkingDirectoryDiff(
   return buildDiff(stdout, repository, file, 'HEAD', lineEndingsChange)
 }
 
+/**
+ * Render the diff for a file within the repository working directory. The file will be
+ * compared against HEAD if it's tracked, if not it'll be compared to an empty file meaning
+ * that all content in the file will be treated as additions.
+ */
+export async function getWholeWorkingDirectoryDiffText(
+  repository: Repository
+): Promise<string> {
+  // `--no-ext-diff` should be provided wherever we invoke `git diff` so that any
+  // diff.external program configured by the user is ignored
+  const args = ['diff', '--no-ext-diff', '--patch-with-raw', '--no-color']
+  const successExitCodes = new Set([0])
+
+  const { output } = await spawnAndComplete(
+    args,
+    repository.path,
+    'getWorkingDirectoryDiff',
+    successExitCodes
+  )
+
+  // No more than 10MB
+  if (output.length > 10 * 1024 * 1024) {
+    throw new Error('Diff is too large to render')
+  }
+
+  return output.toString('utf-8')
+}
+
 async function getImageDiff(
   repository: Repository,
   file: FileChange,

@@ -29,7 +29,7 @@ import {
   CommitMessageAvatar,
   CommitMessageAvatarWarningType,
 } from './commit-message-avatar'
-import { getDotComAPIEndpoint } from '../../lib/api'
+import { API, getDotComAPIEndpoint } from '../../lib/api'
 import { isAttributableEmailFor, lookupPreferredEmail } from '../../lib/email'
 import { setGlobalConfigValue } from '../../lib/git/config'
 import { Popup, PopupType } from '../../models/popup'
@@ -55,6 +55,7 @@ import { RepoRulesetsForBranchLink } from '../repository-rules/repo-rulesets-for
 import { RepoRulesMetadataFailureList } from '../repository-rules/repo-rules-failure-list'
 import { formatCommitMessage } from '../../lib/format-commit-message'
 import { useRepoRulesLogic } from '../../lib/helpers/repo-rules'
+import { getWholeWorkingDirectoryDiffText } from '../../lib/git'
 
 const addAuthorIcon: OcticonSymbolVariant = {
   w: 18,
@@ -795,11 +796,58 @@ export class CommitMessage extends React.Component<
     }
   }
 
-  private onCoAuthorToggleButtonClick = (
+  private onCopilotButtonClick = async (
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
     e.preventDefault()
+
+    const account = this.props.accounts.find(
+      account => account.endpoint === getDotComAPIEndpoint()
+    )
+    if (!account) {
+      return
+    }
+
+    const diff = await getWholeWorkingDirectoryDiffText(this.props.repository)
+    if (!diff) {
+      return
+    }
+
+    const api = API.fromAccount(account)
+    const response = await api.getDiffChangesCommitDetails(diff)
+    if (!response) {
+      return
+    }
+
+    this.setState({
+      summary: response.title,
+      description: response.description,
+    })
+  }
+
+  private onCoAuthorToggleButtonClick = async (
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    e.preventDefault()
+
     this.onToggleCoAuthors()
+  }
+
+  private renderCopilotButton() {
+    if (this.props.repository.gitHubRepository === null) {
+      return null
+    }
+
+    return (
+      <button
+        className="copilot-button"
+        onClick={this.onCopilotButtonClick}
+        aria-label="Generate commit message with Copilot"
+        disabled={this.props.isCommitting === true} // TODO: check "is generating" too
+      >
+        <Octicon symbol={octicons.copilot} />
+      </button>
+    )
   }
 
   private renderCoAuthorToggleButton() {
@@ -882,7 +930,12 @@ export class CommitMessage extends React.Component<
       disabled: this.props.isCommitting === true,
     })
 
-    return <div className={className}>{this.renderCoAuthorToggleButton()}</div>
+    return (
+      <div className={className}>
+        {this.renderCopilotButton()}
+        {this.renderCoAuthorToggleButton()}
+      </div>
+    )
   }
 
   private renderAmendCommitNotice() {
