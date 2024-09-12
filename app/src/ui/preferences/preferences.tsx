@@ -147,7 +147,7 @@ interface IPreferencesState {
 const DefaultCustomIntegration: ICustomIntegration = {
   path: '',
   bundleID: undefined,
-  arguments: [TargetPathArgument],
+  arguments: TargetPathArgument,
 }
 
 /** The app-level preferences component. */

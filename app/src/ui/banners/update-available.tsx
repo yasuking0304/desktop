@@ -16,13 +16,14 @@ import { Banner } from './banner'
 import { ReleaseNotesUri } from '../lib/releases'
 import { RichText } from '../lib/rich-text'
 import { t } from 'i18next'
+import { Emoji } from '../../lib/emoji'
 
 interface IUpdateAvailableProps {
   readonly dispatcher: Dispatcher
   readonly newReleases: ReadonlyArray<ReleaseSummary> | null
   readonly isX64ToARM64ImmediateAutoUpdate: boolean
   readonly isUpdateShowcaseVisible: boolean
-  readonly emoji: Map<string, string>
+  readonly emoji: Map<string, Emoji>
   readonly onDismissed: () => void
 }
 

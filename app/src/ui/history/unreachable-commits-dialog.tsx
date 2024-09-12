@@ -7,6 +7,7 @@ import { CommitList } from './commit-list'
 import { LinkButton } from '../lib/link-button'
 import { t } from 'i18next'
 import { Account } from '../../models/account'
+import { Emoji } from '../../lib/emoji'
 
 export enum UnreachableCommitsTab {
   Unreachable,
@@ -27,7 +28,7 @@ interface IUnreachableCommitsDialogProps {
   readonly selectedTab: UnreachableCommitsTab
 
   /** The emoji lookup to render images inline */
-  readonly emoji: Map<string, string>
+  readonly emoji: Map<string, Emoji>
 
   /** Called to dismiss the  */
   readonly onDismissed: () => void

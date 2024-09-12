@@ -28,6 +28,7 @@ import {
 } from '../lib/popover'
 import { KeyboardShortcut } from '../keyboard-shortcut/keyboard-shortcut'
 import { Account } from '../../models/account'
+import { Emoji } from '../../lib/emoji'
 
 const RowHeight = 50
 
@@ -54,7 +55,7 @@ interface ICommitListProps {
   readonly canResetToCommits?: boolean
 
   /** The emoji lookup to render images inline */
-  readonly emoji: Map<string, string>
+  readonly emoji: Map<string, Emoji>
 
   /** The list of known local commits for the current branch */
   readonly localCommitSHAs: ReadonlyArray<string>

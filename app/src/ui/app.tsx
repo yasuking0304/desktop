@@ -3161,6 +3161,7 @@ export class App extends React.Component<IAppProps, IAppState> {
         askForConfirmationOnForcePush={this.state.askForConfirmationOnForcePush}
         onDropdownStateChanged={this.onPushPullDropdownStateChanged}
         enableFocusTrap={enableFocusTrap}
+        pushPullButtonWidth={this.state.pushPullButtonWidth}
       />
     )
   }
@@ -3264,6 +3265,7 @@ export class App extends React.Component<IAppProps, IAppState> {
       <BranchDropdown
         dispatcher={this.props.dispatcher}
         isOpen={isOpen}
+        branchDropdownWidth={this.state.branchDropdownWidth}
         onDropDownStateChanged={this.onBranchDropdownStateChanged}
         repository={repository}
         repositoryState={selection.state}

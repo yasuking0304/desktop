@@ -1,9 +1,65 @@
 {
   "releases": {
+    "3.4.5-beta2": [
+      "[Fixed] Quotes are preserved in custom integration arguments - #19218",
+      "[Fixed] Symbolic links on Windows can be used as custom editor and shell - #19217"
+    ],
+    "3.4.5": [
+      "[Fixed] Quotes are preserved in custom integration arguments - #19218",
+      "[Fixed] Symbolic links on Windows can be used as custom editor and shell - #19217"
+    ],
+    "3.4.5-beta1": [
+      "[Added] Add Cursor integration for Windows - #19158. Thanks @colinabear!",
+      "[Fixed] Users can clone wiki's - #19152",
+      "[Improved] Inform users when attempting to create a repository out of an existing subdirectory of another repository - #19148",
+      "[Improved] When publishing a new repository, publish the default branch first as opposed to the currently checked out branch - #19151",
+      "[Improved] The \"Create a New Repository\" dialog informs the user of the path to be created - #19147"
+    ],
+    "3.4.4": [
+      "[New] Add support for custom editors and shells - #18954",
+      "[Added] Add Cursor support on macOS - #17462. Thanks @bjorntechCarl!",
+      "[Added] Add JetBrains RustRover support - #18802. Thanks @Radd-Sma!",
+      "[Fixed] The \"Create a New Repository\" dialog allows creation of repositories in repository subfolders - #19137",
+      "[Fixed] Stop improper announcement of \"dialog\" role on the autocompletion suggestions popover - #19114",
+      "[Fixed] The \"Open a Pull Request\" and \"About\" dialog's headings are announced via NVDA - #19107",
+      "[Fixed] The branch selection popover in the \"Open a Pull Request\" dialog does not close on filter clearing - #19106",
+      "[Fixed] The contrast ratio of icon in the diff file warnings is at least 3:1 - #19097",
+      "[Fixed] The \"Push Local Changes\" confirmation dialog users \"alertdialog\" role such that screen readers announce entire dialog contents - #19098",
+      "[Fixed] Emoji's provide descriptions for screen readers - #19101",
+      "[Fixed] Only ask for SSH credentials for the selected repository and only delete them after an authentication error - #19019",
+      "[Improved] Screen readers will announce when users expand context in a diff - #19128",
+      "[Improved] The squash dialog provides visual input labels - #19100",
+      "[Improved] The search inputs across the app provide visual labeling in the form of a search icon - #19103",
+      "[Improved] Use CmdOrCtrl+Q for Exit shortcut on Linux - #19093. Thanks @shiftkey!",
+      "[Improved] Add support for Gnome Console, LXTerminal and Warp shells on Linux - #19092. Thanks @shiftkey!"
+    ],
+    "3.4.4-beta3": [
+      "[Fixed] The custom editor and shell integrations handles when there are no predefined editors or shells - #19160",
+      "[Fixed] The \"Create a New Repository\" dialog allows creation of repositories in repository subfolders - #19137",
+      "[Fixed] Stop improper announcement of \"dialog\" role on the autocompletion suggestions popover - #19114",
+      "[Improved] Screen readers will announce when users expand context in a diff - #19128"
+    ],
+    "3.4.4-beta2": [
+      "[Fixed] The \"Open a Pull Request\" and \"About\" dialog's headings are announced via NVDA - #19107",
+      "[Fixed] The branch selection popover in the \"Open a Pull Request\" dialog does not close on filter clearing - #19106",
+      "[Fixed] Increased contrast ratio of icon in the diff file warnings - #19097",
+      "[Fixed] Use \"alertdialog\" role for \"Push Local Changes\" dialog - #19098",
+      "[Fixed] Add emoji descriptions for screen readers - #19101",
+      "[Improved] The squash dialog provides input labels - #19100",
+      "[Improved] Added search input visual labeling in the form of a search icon - #19103",
+      "[Improved] Use CmdOrCtrl+Q for Exit shortcut on Linux - #19093. Thanks @shiftkey!",
+      "[Improved] Add support for Gnome Console, LXTerminal and Warp shells on Linux - #19092. Thanks @shiftkey!"
+    ],
+    "3.4.4-beta1": [
+      "[New] Add support for custom editors and shells - #18954",
+      "[Added] Add Cursor support on macOS - #17462. Thanks @bjorntechCarl!",
+      "[Added] Add JetBrains RustRover support - #18802. Thanks @Radd-Sma!",
+      "[Fixed] Only ask for SSH credentials for the selected repository and only delete them after an authentication error - #19019"
+    ],
     "3.4.3": [
       "[Added] Add Zed as an external editor option for Linux - #18962. Thanks @adil192!",
-      "[Fixed] Allow pushing to gists - #19009",
       "[Added] Shift + F10 opens context menu's on macOS",
+      "[Fixed] Allow pushing to gists - #19009",
       "[Fixed] The copy button announces when clicked in VoiceOver.",
       "[Fixed] Context menu actions in the diff are accessible via keyboard - #18946",
       "[Fixed] Add/Remove Co-authors hint text is positioned correctly when scrolling through the changes list - #18929",
@@ -30,7 +86,7 @@
     ],
     "3.4.2": [
       "[New] Option to use Git Credential Manager for repositories hosted outside of GitHub.com - #18700",
-      "[New] Allow customizing tab character width in spaces - #15561",
+      "[New] Allow customizing tab character width in spaces - #15561. Thanks @Repiteo",
       "[Fixed] Remote urls containing spaces are now displayed in their entirety in the remote settings screen - #18876",
       "[Fixed] Newly uploaded images are rendered in Pull Request comments and reviews - #18830"
     ],
@@ -45,7 +101,7 @@
       "[New] Option to use Git Credential Manager for repositories hosted outside of GitHub.com - #18700"
     ],
     "3.4.2-beta1": [
-      "[New] Allow customizing tab character width in spaces - #15561",
+      "[New] Allow customizing tab character width in spaces - #15561. Thanks @Repiteo",
       "[Fixed] Using hooks on Windows no longer results in a \"command not found\" error - #18739"
     ],
     "3.4.1": [

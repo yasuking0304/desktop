@@ -6,6 +6,7 @@ import { FoundShell } from './shared'
 import {
   expandTargetPathArgument,
   ICustomIntegration,
+  parseCustomIntegrationArguments,
 } from '../custom-integration'
 
 export enum Shell {
@@ -23,8 +24,9 @@ export enum Shell {
   XFCE = 'XFCE Terminal',
   Alacritty = 'Alacritty',
   Kitty = 'Kitty',
-  LXTerminal = 'LXTerminal',
+  LXTerminal = 'LXDE Terminal',
   WezTerm = 'WezTerm',
+  Warp = 'Warp',
 }
 
 export const Default = Shell.Gnome
@@ -71,6 +73,8 @@ function getShellPath(shell: Shell): Promise<string | null> {
       return getPathIfAvailable('/usr/bin/lxterminal')
     case Shell.WezTerm:
       return getPathIfAvailable('/usr/bin/wezterm')
+    case Shell.Warp:
+      return getPathIfAvailable('/usr/bin/warp-terminal')
     default:
       return assertNever(shell, `Unknown shell: ${shell}`)
   }
@@ -96,6 +100,7 @@ export async function getAvailableShells(): Promise<
     kittyPath,
     lxterminalPath,
     weztermPath,
+    warpPath,
   ] = await Promise.all([
     getShellPath(Shell.Gnome),
     getShellPath(Shell.GnomeConsole),
@@ -113,6 +118,7 @@ export async function getAvailableShells(): Promise<
     getShellPath(Shell.Kitty),
     getShellPath(Shell.LXTerminal),
     getShellPath(Shell.WezTerm),
+    getShellPath(Shell.Warp),
   ])
 
   const shells: Array<FoundShell<Shell>> = []
@@ -179,6 +185,11 @@ export async function getAvailableShells(): Promise<
   if (weztermPath) {
     shells.push({ shell: Shell.WezTerm, path: weztermPath })
   }
+
+  if (warpPath) {
+    shells.push({ shell: Shell.Warp, path: warpPath })
+  }
+
   return shells
 }
 
@@ -213,6 +224,10 @@ export function launch(
       return spawn(foundShell.path, ['--single-instance', '--directory', path])
     case Shell.WezTerm:
       return spawn(foundShell.path, ['start', '--cwd', path])
+    case Shell.LXTerminal:
+      return spawn(foundShell.path, ['--working-directory=' + path])
+    case Shell.Warp:
+      return spawn(foundShell.path, [], { cwd: path })
     default:
       return assertNever(shell, `Unknown shell: ${shell}`)
   }
@@ -222,6 +237,7 @@ export function launchCustomShell(
   customShell: ICustomIntegration,
   path: string
 ): ChildProcess {
-  const args = expandTargetPathArgument(customShell.arguments, path)
+  const argv = parseCustomIntegrationArguments(customShell.arguments)
+  const args = expandTargetPathArgument(argv, path)
   return spawn(customShell.path, args)
 }

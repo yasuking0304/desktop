@@ -49,6 +49,7 @@ import { Popup } from '../models/popup'
 import { RepoRulesInfo } from '../models/repo-rules'
 import { IAPIRepoRuleset } from './api'
 import { ICustomIntegration } from './custom-integration'
+import { Emoji } from './emoji'
 
 export enum SelectionType {
   Repository,
@@ -161,7 +162,7 @@ export interface IAppState {
   readonly errorCount: number
 
   /** Map from the emoji shortcut (e.g., :+1:) to the image's local path. */
-  readonly emoji: Map<string, string>
+  readonly emoji: Map<string, Emoji>
 
   /**
    * The width of the repository sidebar.
@@ -185,6 +186,12 @@ export interface IAppState {
 
   /** The width of the files list in the pull request files changed view */
   readonly pullRequestFilesListWidth: IConstrainedValue
+
+  /** The width of the resizable branch drop down button in the toolbar. */
+  readonly branchDropdownWidth: IConstrainedValue
+
+  /** The width of the resizable push/pull button in the toolbar. */
+  readonly pushPullButtonWidth: IConstrainedValue
 
   /**
    * Used to highlight access keys throughout the app when the

@@ -15,6 +15,7 @@ import { PopupType } from '../../models/popup'
 import { Account } from '../../models/account'
 import { IAPIRepoRuleset } from '../../lib/api'
 import { t } from 'i18next'
+import { Emoji } from '../../lib/emoji'
 
 export interface IMultiCommitOperationProps {
   readonly repository: Repository
@@ -27,7 +28,7 @@ export interface IMultiCommitOperationProps {
   readonly conflictState: ConflictState | null
 
   /** The emoji map for showing commit emoji's */
-  readonly emoji: Map<string, string>
+  readonly emoji: Map<string, Emoji>
 
   /** The current state of the working directory */
   readonly workingDirectory: WorkingDirectoryStatus
