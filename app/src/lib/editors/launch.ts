@@ -6,6 +6,7 @@ import {
   expandTargetPathArgument,
   ICustomIntegration,
   parseCustomIntegrationArguments,
+  spawnCustomIntegration,
 } from '../custom-integration'
 
 /**
@@ -102,7 +103,7 @@ export async function launchCustomExternalEditor(
     // This logic around `usesShell` is also used in Windows `getAvailableEditors` implementation
     const usesShell = editorPath.endsWith('.cmd')
     if (usesShell) {
-      spawn(`"${editorPath}"`, args, {
+      spawnCustomIntegration(editorPath, args, {
         ...opts,
         shell: true,
       })
@@ -110,9 +111,9 @@ export async function launchCustomExternalEditor(
       // In macOS we can use `open` if it's an app (i.e. if we have a bundleID),
       // which will open the right executable file for us, we only need the path
       // to the editor .app folder.
-      spawn('open', ['-a', editorPath, ...args], opts)
+      spawnCustomIntegration('open', ['-a', editorPath, ...args], opts)
     } else {
-      spawn(editorPath, args, opts)
+      spawnCustomIntegration(editorPath, args, opts)
     }
   } catch (error) {
     log.error(

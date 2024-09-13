@@ -27,6 +27,7 @@ import { generateBranchContextMenuItems } from '../branches/branch-list-item-con
 import { showContextualMenu } from '../../lib/menu-item'
 import { t } from 'i18next'
 import { Emoji } from '../../lib/emoji'
+import { enableResizingToolbarButtons } from '../../lib/feature-flag'
 
 interface IBranchDropdownProps {
   readonly dispatcher: Dispatcher
@@ -196,6 +197,36 @@ export class BranchDropdown extends React.Component<IBranchDropdownProps> {
     const buttonClassName = classNames('branch-toolbar-button', 'nudge-arrow', {
       'nudge-arrow-up': this.props.shouldNudge,
     })
+
+    if (!enableResizingToolbarButtons()) {
+      return (
+        <>
+          <ToolbarDropdown
+            className="branch-button"
+            icon={icon}
+            iconClassName={iconClassName}
+            title={title}
+            description={description}
+            onContextMenu={this.onBranchToolbarButtonContextMenu}
+            tooltip={isOpen ? undefined : tooltip}
+            onDropdownStateChanged={this.onDropDownStateChanged}
+            dropdownContentRenderer={this.renderBranchFoldout}
+            dropdownState={currentState}
+            disabled={disabled}
+            showDisclosureArrow={canOpen}
+            progressValue={progressValue}
+            buttonClassName={buttonClassName}
+            onMouseEnter={this.onMouseEnter}
+            onlyShowTooltipWhenOverflowed={true}
+            isOverflowed={isDescriptionOverflowed}
+            enableFocusTrap={enableFocusTrap}
+          >
+            {this.renderPullRequestInfo()}
+          </ToolbarDropdown>
+          {this.props.showCIStatusPopover && this.renderPopover()}
+        </>
+      )
+    }
 
     // Properties to override the default foldout style for the branch dropdown.
     // The min width of the foldout is different from `branchDropdownWidth.min`
