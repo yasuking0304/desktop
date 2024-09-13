@@ -180,6 +180,8 @@ interface ICommitMessageState {
   readonly summary: string
   readonly description: string | null
 
+  readonly isGeneratingCommitDetails: boolean
+
   readonly commitMessageAutocompletionProviders: ReadonlyArray<
     IAutocompletionProvider<any>
   >
@@ -245,6 +247,7 @@ export class CommitMessage extends React.Component<
     this.state = {
       summary: commitMessage ? commitMessage.summary : '',
       description: commitMessage ? commitMessage.description : null,
+      isGeneratingCommitDetails: false,
       commitMessageAutocompletionProviders:
         findCommitMessageAutoCompleteProvider(props.autocompletionProviders),
       coAuthorAutocompletionProvider: findCoAuthorAutoCompleteProvider(
@@ -801,27 +804,41 @@ export class CommitMessage extends React.Component<
   ) => {
     e.preventDefault()
 
+    this.setState({
+      isGeneratingCommitDetails: true,
+    })
+
+    const notGeneratingCommitDetails = () => {
+      this.setState({
+        isGeneratingCommitDetails: false,
+      })
+    }
+
     const account = this.props.accounts.find(
       account => account.endpoint === getDotComAPIEndpoint()
     )
     if (!account) {
+      notGeneratingCommitDetails()
       return
     }
 
     const diff = await getWholeWorkingDirectoryDiffText(this.props.repository)
     if (!diff) {
+      notGeneratingCommitDetails()
       return
     }
 
     const api = API.fromAccount(account)
     const response = await api.getDiffChangesCommitDetails(diff)
     if (!response) {
+      notGeneratingCommitDetails()
       return
     }
 
     this.setState({
       summary: response.title,
       description: response.description,
+      isGeneratingCommitDetails: false,
     })
   }
 
@@ -843,7 +860,10 @@ export class CommitMessage extends React.Component<
         className="copilot-button"
         onClick={this.onCopilotButtonClick}
         aria-label="Generate commit message with Copilot"
-        disabled={this.props.isCommitting === true} // TODO: check "is generating" too
+        disabled={
+          this.props.isCommitting === true ||
+          this.state.isGeneratingCommitDetails
+        }
       >
         <Octicon symbol={octicons.copilot} />
       </button>
@@ -861,7 +881,10 @@ export class CommitMessage extends React.Component<
         onClick={this.onCoAuthorToggleButtonClick}
         ariaLabel={this.toggleCoAuthorsText}
         tooltip={this.toggleCoAuthorsText}
-        disabled={this.props.isCommitting === true}
+        disabled={
+          this.props.isCommitting === true ||
+          this.state.isGeneratingCommitDetails
+        }
       >
         <Octicon symbol={addAuthorIcon} />
       </Button>
@@ -1278,12 +1301,21 @@ export class CommitMessage extends React.Component<
 
   private renderSubmitButton() {
     const { isCommitting } = this.props
+    const { isGeneratingCommitDetails } = this.state
     const isSummaryBlank = isEmptyOrWhitespace(this.summaryOrPlaceholder)
     const buttonEnabled =
-      (this.canCommit() || this.canAmend()) && !isCommitting && !isSummaryBlank
-    const loading = isCommitting ? <Loading /> : undefined
-    const tooltip = this.getButtonTooltip(buttonEnabled)
-    const commitButton = this.getButtonText()
+      (this.canCommit() || this.canAmend()) &&
+      !isCommitting &&
+      !isSummaryBlank &&
+      !isGeneratingCommitDetails
+    const loading =
+      isCommitting || isGeneratingCommitDetails ? <Loading /> : undefined
+    const generatingCommitDetailsMessage = isGeneratingCommitDetails
+      ? 'Generating commit details…'
+      : null
+    const tooltip =
+      generatingCommitDetailsMessage ?? this.getButtonTooltip(buttonEnabled)
+    const commitButton = generatingCommitDetailsMessage ?? this.getButtonText()
 
     return (
       <Button
