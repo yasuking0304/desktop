@@ -22,6 +22,7 @@ import {
   suppressCertificateErrorFor,
 } from './suppress-certificate-error'
 import OpenAI from 'openai'
+import { ChatCompletion } from 'openai/resources'
 
 const envEndpoint = process.env['DESKTOP_GITHUB_DOTCOM_API_ENDPOINT']
 const envHTMLURL = process.env['DESKTOP_GITHUB_DOTCOM_HTML_URL']
@@ -1865,9 +1866,10 @@ export class API {
     }
   }
 
-  public async getDiffChangesCommitDetails(
-    diff: string
-  ): Promise<ICopilotCommitDetails | null> {
+  private openAIRequest(
+    prompt: string,
+    content: string
+  ): Promise<ChatCompletion> {
     const endpoint = 'https://models.inference.ai.azure.com'
     const modelName = 'gpt-4o'
 
@@ -1877,11 +1879,54 @@ export class API {
       dangerouslyAllowBrowser: true,
     })
 
-    const response = await client.chat.completions.create({
+    return client.chat.completions.create({
       messages: [
         {
           role: 'system',
-          content: `
+          content: prompt,
+        },
+        {
+          role: 'user',
+          content: content,
+        },
+      ],
+      model: modelName,
+      temperature: 1,
+      max_tokens: 1000,
+      top_p: 1,
+    })
+  }
+
+  public async getCommitRangeExplanation(diff: string): Promise<string | null> {
+    const response = await this.openAIRequest(
+      `
+      You are a software developer who gets a code changeset (in the git
+      diff output format) across one or multiple commits, affecting one or
+      multiple files, and must explain what that changeset does to the project.
+      You should explain why the changeset was made and any other relevant
+      information. Be brief and concise. Do not sound like ChatGPT. Do NOT
+      include a description of changes in "lock" files from dependency managers
+      like npm, yarn, or pip, unless those are the only changes.
+      `,
+      diff
+    )
+
+    const bestChoice = response.choices.find(
+      choice => choice.finish_reason === 'stop'
+    )
+
+    if (!bestChoice) {
+      return null
+    }
+
+    return bestChoice.message.content
+  }
+
+  public async getDiffChangesCommitDetails(
+    diff: string
+  ): Promise<ICopilotCommitDetails | null> {
+    const response = await this.openAIRequest(
+      `
           You are a software developer who gets a code changeset (in the git
           diff output format) affecting one or multiple files and writes a
           commit title and commit description. The commit title should be no
@@ -1897,17 +1942,8 @@ export class API {
           Your response must be a JSON object with the attributes "title"
           and "description" containing the commit title and commit description.
           `,
-        },
-        {
-          role: 'user',
-          content: diff,
-        },
-      ],
-      model: modelName,
-      temperature: 1,
-      max_tokens: 1000,
-      top_p: 1,
-    })
+      diff
+    )
 
     const bestChoice = response.choices.find(
       choice => choice.finish_reason === 'stop'
