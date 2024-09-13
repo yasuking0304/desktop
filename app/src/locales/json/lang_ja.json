@@ -1596,7 +1596,7 @@
     "bring-my-changes-to-branch-name": "変更内容を {{0}} に反映させる",
     "in-progress-work-will-be-stashed": "変更中の作業はブランチに一時退避され新しいブランチには残しません(あとで戻すことができます)",
     "in-progress-work-will-follow-you": "変更中の作業は、新しいブランチに引き継がれます",
-    "leave-my-changes-on-branch-name": "変更をブランチに一時退避して {{0}} に切り替える",
+    "leave-my-changes-on-branch-name": "変更を {{0}} に残して切り替える",
     "stash-will-be-overwritten-creating": " 新しいスタッシュを作成すると、現在のスタッシュが上書きされます",
     "switch-branch": "ブランチ切り替え",
     "switch-branch-darwin": "ブランチ切り替え",
