@@ -680,10 +680,11 @@ export class CompareSidebar extends React.Component<
       return
     }
 
-    // this.props.dispatcher.showPopup({
-    //   type: PopupType.ExplainCommits,
-    //   explanation,
-    // })
+    this.props.dispatcher.showPopup({
+      type: PopupType.MarkdownMessage,
+      title: 'Commit explanation',
+      markdownBody: explanation,
+    })
   }
 
   private onSquash = async (

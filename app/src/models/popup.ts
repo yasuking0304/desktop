@@ -96,6 +96,7 @@ export enum PopupType {
   UnknownAuthors = 'UnknownAuthors',
   TestIcons = 'TestIcons',
   ConfirmCommitFilteredChanges = 'ConfirmCommitFilteredChanges',
+  MarkdownMessage = 'MarkdownMessage',
 }
 
 interface IBasePopup {
@@ -428,6 +429,11 @@ export type PopupDetail =
       type: PopupType.ConfirmCommitFilteredChanges
       onCommitAnyway: () => void
       onClearFilter: () => void
+    }
+  | {
+      type: PopupType.MarkdownMessage
+      title: string
+      markdownBody: string
     }
 
 export type Popup = IBasePopup & PopupDetail
