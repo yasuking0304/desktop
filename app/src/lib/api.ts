@@ -1922,6 +1922,37 @@ export class API {
     return bestChoice.message.content
   }
 
+  public async getCommitRangeFeedback(diff: string): Promise<string | null> {
+    const response = await this.openAIRequest(
+      `
+      You are a software developer who gets a code changeset (in the git
+      diff output format) across one or multiple commits, affecting one or
+      multiple files, and must look for mistakes in those changes. Mistakes
+      could be typos, logic bugs, security vulnerabilities, secret leaks, or
+      anything else that could be a problem.
+      You should explain briefly why each of the issues you find is actually an
+      issue. Be brief and concise. Do not sound like ChatGPT. Do NOT
+      include a description of changes in "lock" files from dependency managers
+      like npm, yarn, or pip, unless those are the only changes.
+      Use markdown for your output and, for each issue, quote the specific part
+      of the diff that is affected by it.
+      If you cannot find issues, just reply with
+      "This code looks perfect to me, :shipit: !".
+      `,
+      diff
+    )
+
+    const bestChoice = response.choices.find(
+      choice => choice.finish_reason === 'stop'
+    )
+
+    if (!bestChoice) {
+      return null
+    }
+
+    return bestChoice.message.content
+  }
+
   public async getDiffChangesCommitDetails(
     diff: string
   ): Promise<ICopilotCommitDetails | null> {

@@ -275,6 +275,7 @@ export class CompareSidebar extends React.Component<
         onDropCommitInsertion={this.onDropCommitInsertion}
         onKeyboardReorder={this.onKeyboardReorder}
         onExplainCommits={this.onExplainCommits}
+        onFindCommitsMistakes={this.onFindCommitsMistakes}
         onCancelKeyboardReorder={this.onCancelKeyboardReorder}
         onSquash={this.onSquash}
         emptyListMessage={emptyListMessage}
@@ -683,6 +684,28 @@ export class CompareSidebar extends React.Component<
     this.props.dispatcher.showPopup({
       type: PopupType.MarkdownMessage,
       title: 'Commit explanation',
+      markdownBody: explanation,
+    })
+  }
+
+  private onFindCommitsMistakes = async (commits: ReadonlyArray<Commit>) => {
+    const commitShas = commits.map(c => c.sha)
+    const diff = await getCommitRangeRawDiff(this.props.repository, commitShas)
+
+    if (!diff) {
+      return
+    }
+
+    const api = API.fromAccount(this.props.accounts[0])
+    const explanation = await api.getCommitRangeFeedback(diff)
+
+    if (!explanation) {
+      return
+    }
+
+    this.props.dispatcher.showPopup({
+      type: PopupType.MarkdownMessage,
+      title: 'Commit feedback',
       markdownBody: explanation,
     })
   }
