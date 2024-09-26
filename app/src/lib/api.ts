@@ -1998,6 +1998,67 @@ export class API {
     const jsonString = message.slice(8, message.length - 4)
     return JSON.parse(jsonString)
   }
+
+  public async getDiffCommitsSuggestion(
+    diff: string
+  ): Promise<ICopilotCommitDetails | null> {
+    const response = await this.openAIRequest(
+      `
+          You are a software developer who gets a code changeset (in the git
+          diff output format) affecting one or multiple files and must split
+          those changes in 1 or more commits to keep the git history clean and
+          logical. If there aren't many changes or they are cohesive enough, you
+          will reply "[]" (an empty array). Otherwise, you will try to find a good
+          criteria to split the changes in 2 or more commits, and reply with an
+          array of JSON objects with the following attributes:
+          - "title": the commit title, which should be no longer than 50 characters,
+            and should summarize the contents of the changeset for fellow developers
+            reading the commit history.
+          - "description": the commit description, which can be larger, and should
+            provide more context about the changeset, including why the changeset is
+            being made, and any other relevant information. The commit description
+            is optional if the changeset is small enought that it can be described in
+            the commit title. Be brief and concise. Do not sound like ChatGPT. Do NOT
+            include a description of changes in "lock" files from dependency managers
+            like npm, yarn, or pip, unless those are the only changes in the commit.
+          - "files": an array of JSON objects with the following attributes:
+            - "path": the path of the file in the repository that is affected by the
+              commit.
+            - "lines": array of lines that are affected by the commit. Only added
+              or removed lines should be included, not unchanged lines.
+
+          Try to split the changes in a way that makes sense, and that the commits
+          are small enough that they can be reviewed and understood by other
+          developers. Try that every commit is self-contained and does not depend
+          on changes in other commits. For example: don't include in a commit
+          code that invokes a function that hasn't been committed yet (or that
+          won't be committed in the same commit).
+          `,
+      diff
+    )
+
+    const bestChoice = response.choices.find(
+      choice => choice.finish_reason === 'stop'
+    )
+
+    if (!bestChoice) {
+      return null
+    }
+
+    const message = bestChoice.message.content
+    if (
+      !message ||
+      !message.startsWith('```json\n') ||
+      !message.endsWith('\n```')
+    ) {
+      return null
+    }
+
+    // The message starts with ""```json\n" and then the JSON object, and ends with "\n```"
+    // We want to extract the JSON object itself
+    const jsonString = message.slice(8, message.length - 4)
+    return JSON.parse(jsonString)
+  }
 }
 
 export async function deleteToken(account: Account) {
