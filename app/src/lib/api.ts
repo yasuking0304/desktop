@@ -2024,8 +2024,8 @@ export class API {
           - "files": an array of JSON objects with the following attributes:
             - "path": the path of the file in the repository that is affected by the
               commit.
-            - "lines": array of lines that are affected by the commit. Only added
-              or removed lines should be included, not unchanged lines.
+            - "lines": array of line numbers that are affected by the commit. Only
+              added or removed lines should be included, not unchanged lines.
 
           Try to split the changes in a way that makes sense, and that the commits
           are small enough that they can be reviewed and understood by other
@@ -2033,6 +2033,10 @@ export class API {
           on changes in other commits. For example: don't include in a commit
           code that invokes a function that hasn't been committed yet (or that
           won't be committed in the same commit).
+          The resulting list of commits should include all the changes in the
+          original diff, and should not miss any change. The commits cannot include
+          the same lines, there must be no overlap.
+          Think slowly, step by step.
           `,
       diff
     )
