@@ -321,8 +321,8 @@ export function buildDefaultMenu({
         // chorded shortcuts, but this menu item is not a user-facing feature
         // so we are going to keep this one around.
         accelerator: 'CmdOrCtrl+Alt+R',
-        click(item: any, focusedWindow: Electron.BrowserWindow | undefined) {
-          if (focusedWindow) {
+        click(item: any, focusedWindow: Electron.BaseWindow | undefined) {
+          if (focusedWindow instanceof BrowserWindow) {
             focusedWindow.reload()
           }
         },
@@ -336,8 +336,8 @@ export function buildDefaultMenu({
         accelerator: (() => {
           return __DARWIN__ ? 'Alt+Command+I' : 'Ctrl+Shift+I'
         })(),
-        click(item: any, focusedWindow: Electron.BrowserWindow | undefined) {
-          if (focusedWindow) {
+        click(item: any, focusedWindow: Electron.BaseWindow | undefined) {
+          if (focusedWindow instanceof BrowserWindow) {
             focusedWindow.webContents.toggleDevTools()
           }
         },
@@ -846,7 +846,7 @@ function getStashedChangesLabel(isStashedChangesVisible: boolean): string {
 
 type ClickHandler = (
   menuItem: Electron.MenuItem,
-  browserWindow: Electron.BrowserWindow | undefined,
+  browserWindow: Electron.BaseWindow | undefined,
   event: Electron.KeyboardEvent
 ) => void
 
@@ -861,7 +861,10 @@ function emit(name: MenuEvent): ClickHandler {
     // while in DevTools. Since Desktop only supports one window at a time we
     // can be fairly certain that the first BrowserWindow we find is the one we
     // want.
-    const window = focusedWindow ?? BrowserWindow.getAllWindows()[0]
+    const window =
+      focusedWindow instanceof BrowserWindow
+        ? focusedWindow
+        : BrowserWindow.getAllWindows()[0]
     if (window !== undefined) {
       ipcWebContents.send(window.webContents, 'menu-event', name)
     }
@@ -890,7 +893,7 @@ function findClosestValue(arr: Array<number>, value: number) {
  */
 function zoom(direction: ZoomDirection): ClickHandler {
   return (menuItem, window) => {
-    if (!window) {
+    if (!(window instanceof BrowserWindow)) {
       return
     }
 

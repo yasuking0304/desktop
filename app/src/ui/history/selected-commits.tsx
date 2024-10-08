@@ -25,7 +25,6 @@ import { Dispatcher } from '../dispatcher'
 import { Resizable } from '../resizable'
 import { showContextualMenu } from '../../lib/menu-item'
 
-import { CommitSummary } from './commit-summary'
 import { FileList } from './file-list'
 import { SeamlessDiffSwitcher } from '../diff/seamless-diff-switcher'
 import { getDotComAPIEndpoint } from '../../lib/api'
@@ -36,7 +35,6 @@ import { clamp } from '../../lib/clamp'
 import { pathExists } from '../lib/path-exists'
 import { UnreachableCommitsTab } from './unreachable-commits-dialog'
 import { t } from 'i18next'
-import { enableCommitDetailsHeaderExpansion } from '../../lib/feature-flag'
 import { ExpandableCommitSummary } from './expandable-commit-summary'
 import { DiffHeader } from '../diff/diff-header'
 import { Account } from '../../models/account'
@@ -98,7 +96,6 @@ interface ISelectedCommitsProps {
 
 interface ISelectedCommitsState {
   readonly isExpanded: boolean
-  readonly hideDescriptionBorder: boolean
 }
 
 /** The History component. Contains the commit list, commit summary, and diff. */
@@ -107,14 +104,12 @@ export class SelectedCommits extends React.Component<
   ISelectedCommitsState
 > {
   private readonly loadChangedFilesScheduler = new ThrottledScheduler(200)
-  private historyRef: HTMLDivElement | null = null
 
   public constructor(props: ISelectedCommitsProps) {
     super(props)
 
     this.state = {
       isExpanded: false,
-      hideDescriptionBorder: false,
     }
   }
 
@@ -127,10 +122,6 @@ export class SelectedCommits extends React.Component<
     const file = files[row]
 
     this.props.onOpenInExternalEditor(file.path)
-  }
-
-  private onHistoryRef = (ref: HTMLDivElement | null) => {
-    this.historyRef = ref
   }
 
   public componentWillUpdate(nextProps: ISelectedCommitsProps) {
@@ -190,7 +181,7 @@ export class SelectedCommits extends React.Component<
 
   private renderDiffHeader() {
     const { selectedFile } = this.props
-    if (selectedFile === null || !enableCommitDetailsHeaderExpansion()) {
+    if (selectedFile === null) {
       return null
     }
 
@@ -211,25 +202,8 @@ export class SelectedCommits extends React.Component<
   }
 
   private renderCommitSummary(commits: ReadonlyArray<Commit>) {
-    if (enableCommitDetailsHeaderExpansion()) {
-      return (
-        <ExpandableCommitSummary
-          selectedCommits={commits}
-          shasInDiff={this.props.shasInDiff}
-          changesetData={this.props.changesetData}
-          emoji={this.props.emoji}
-          repository={this.props.repository}
-          onExpandChanged={this.onExpandChanged}
-          isExpanded={this.state.isExpanded}
-          onDescriptionBottomChanged={this.onDescriptionBottomChanged}
-          onHighlightShas={this.onHighlightShas}
-          showUnreachableCommits={this.showUnreachableCommits}
-          accounts={this.props.accounts}
-        />
-      )
-    }
     return (
-      <CommitSummary
+      <ExpandableCommitSummary
         selectedCommits={commits}
         shasInDiff={this.props.shasInDiff}
         changesetData={this.props.changesetData}
@@ -237,13 +211,6 @@ export class SelectedCommits extends React.Component<
         repository={this.props.repository}
         onExpandChanged={this.onExpandChanged}
         isExpanded={this.state.isExpanded}
-        onDescriptionBottomChanged={this.onDescriptionBottomChanged}
-        hideDescriptionBorder={this.state.hideDescriptionBorder}
-        hideWhitespaceInDiff={this.props.hideWhitespaceInDiff}
-        showSideBySideDiff={this.props.showSideBySideDiff}
-        onHideWhitespaceInDiffChanged={this.onHideWhitespaceInDiffChanged}
-        onShowSideBySideDiffChanged={this.onShowSideBySideDiffChanged}
-        onDiffOptionsOpened={this.props.onDiffOptionsOpened}
         onHighlightShas={this.onHighlightShas}
         showUnreachableCommits={this.showUnreachableCommits}
         accounts={this.props.accounts}
@@ -264,15 +231,6 @@ export class SelectedCommits extends React.Component<
 
   private onExpandChanged = (isExpanded: boolean) => {
     this.setState({ isExpanded })
-  }
-
-  private onDescriptionBottomChanged = (descriptionBottom: number) => {
-    if (this.historyRef) {
-      const historyBottom = this.historyRef.getBoundingClientRect().bottom
-      this.setState({
-        hideDescriptionBorder: descriptionBottom >= historyBottom,
-      })
-    }
   }
 
   private onHideWhitespaceInDiffChanged = (hideWhitespaceInDiff: boolean) => {
@@ -320,10 +278,6 @@ export class SelectedCommits extends React.Component<
   }
 
   private renderFileHeader() {
-    if (!enableCommitDetailsHeaderExpansion()) {
-      return null
-    }
-
     const fileCount = this.props.changesetData.files.length
     const filesPlural =
       fileCount === 1 ? t('common.file', 'file') : t('common.files', 'files')
@@ -362,7 +316,7 @@ export class SelectedCommits extends React.Component<
     const { commitSummaryWidth } = this.props
 
     return (
-      <div id="history" ref={this.onHistoryRef} className={className}>
+      <div id="history" className={className}>
         {this.renderCommitSummary(selectedCommits)}
         <div className="commit-details">
           <Resizable
