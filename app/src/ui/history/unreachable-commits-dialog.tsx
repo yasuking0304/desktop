@@ -119,6 +119,7 @@ export class UnreachableCommitsDialog extends React.Component<
             emoji={emoji}
             onCommitsSelected={this.onCommitsSelected}
             accounts={this.props.accounts}
+            isInformationalView={true}
           />
         </div>
       </>

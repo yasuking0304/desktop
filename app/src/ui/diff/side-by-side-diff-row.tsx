@@ -20,10 +20,6 @@ import { TooltipDirection } from '../lib/tooltip'
 import { t } from 'i18next'
 import { Button } from '../lib/button'
 import { diffCheck, diffDash } from '../octicons/diff'
-import {
-  enableDiffCheckMarks,
-  enableGroupDiffCheckmarks,
-} from '../../lib/feature-flag'
 
 // This is a custom version of the no-newline octicon that's exactly as
 // tall as it needs to be (8px) which helps with aligning it on the line.
@@ -271,9 +267,7 @@ export class SideBySideDiffRow extends React.Component<
     } = this.props
     const baseRowClasses = classNames('row', {
       'has-check-all-control':
-        enableGroupDiffCheckmarks() &&
-        this.props.showDiffCheckMarks &&
-        isDiffSelectable,
+        this.props.showDiffCheckMarks && isDiffSelectable,
     })
     const beforeClasses = classNames('before', ...beforeClassNames)
     const afterClasses = classNames('after', ...afterClassNames)
@@ -515,9 +509,7 @@ export class SideBySideDiffRow extends React.Component<
     } = this.props
     return (
       (showSideBySideDiff ? lineNumberWidth : lineNumberWidth * 2) +
-      (isDiffSelectable && showDiffCheckMarks && enableDiffCheckMarks()
-        ? 20
-        : 0)
+      (isDiffSelectable && showDiffCheckMarks ? 20 : 0)
     )
   }
 
@@ -646,7 +638,7 @@ export class SideBySideDiffRow extends React.Component<
         style={style}
       >
         <span className="focus-handle">
-          {(!enableGroupDiffCheckmarks() || !this.props.showDiffCheckMarks) && (
+          {!this.props.showDiffCheckMarks && (
             <div className="increased-hover-surface" style={{ height }} />
           )}
           {!isOnlyOneCheckInRow &&
@@ -716,11 +708,7 @@ export class SideBySideDiffRow extends React.Component<
     selectionState: DiffSelectionType,
     isFirst: boolean
   ) => {
-    if (
-      !enableGroupDiffCheckmarks() ||
-      !isFirst ||
-      !this.props.showDiffCheckMarks
-    ) {
+    if (!isFirst || !this.props.showDiffCheckMarks) {
       return null
     }
 
@@ -809,11 +797,7 @@ export class SideBySideDiffRow extends React.Component<
   }
 
   private renderLineNumberCheck(isSelected?: boolean) {
-    if (
-      !this.props.isDiffSelectable ||
-      !enableDiffCheckMarks() ||
-      !this.props.showDiffCheckMarks
-    ) {
+    if (!this.props.isDiffSelectable || !this.props.showDiffCheckMarks) {
       return null
     }
 

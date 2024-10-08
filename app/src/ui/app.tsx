@@ -179,10 +179,9 @@ import { UnknownAuthors } from './unknown-authors/unknown-authors-dialog'
 import { UnsupportedOSBannerDismissedAtKey } from './banners/os-version-no-longer-supported-banner'
 import { offsetFromNow } from '../lib/offset-from'
 import { getBoolean, getNumber } from '../lib/local-storage'
-import { RepoRulesBypassConfirmation } from './repository-rules/repo-rules-bypass-confirmation'
 import { IconPreviewDialog } from './octicons/icon-preview-dialog'
 import { accessibilityBannerDismissed } from './banners/accessibilty-settings-banner'
-import { enableDiffCheckMarksAndLinkUnderlines } from '../lib/feature-flag'
+import { isCertificateErrorSuppressedFor } from '../lib/suppress-certificate-error'
 
 const MinuteInMilliseconds = 1000 * 60
 const HourInMilliseconds = MinuteInMilliseconds * 60
@@ -316,6 +315,10 @@ export class App extends React.Component<IAppProps, IAppState> {
     })
 
     ipcRenderer.on('certificate-error', (_, certificate, error, url) => {
+      if (isCertificateErrorSuppressedFor(url)) {
+        return
+      }
+
       this.props.dispatcher.showPopup({
         type: PopupType.UntrustedCertificate,
         certificate,
@@ -403,10 +406,7 @@ export class App extends React.Component<IAppProps, IAppState> {
       }
     }
 
-    if (
-      enableDiffCheckMarksAndLinkUnderlines() &&
-      getBoolean(accessibilityBannerDismissed) !== true
-    ) {
+    if (getBoolean(accessibilityBannerDismissed) !== true) {
       this.setBanner({
         type: BannerType.AccessibilitySettingsBanner,
         onOpenAccessibilitySettings: this.onOpenAccessibilitySettings,
@@ -1643,18 +1643,12 @@ export class App extends React.Component<IAppProps, IAppState> {
 
     switch (popup.type) {
       case PopupType.RenameBranch:
-        const stash =
-          this.state.selectedState !== null &&
-          this.state.selectedState.type === SelectionType.Repository
-            ? this.state.selectedState.state.changesState.stashEntry
-            : null
         return (
           <RenameBranch
             key="rename-branch"
             dispatcher={this.props.dispatcher}
             repository={popup.repository}
             branch={popup.branch}
-            stash={stash}
             onDismissed={onPopupDismissedFn}
           />
         )
@@ -1891,11 +1885,9 @@ export class App extends React.Component<IAppProps, IAppState> {
             applicationName={getName()}
             applicationVersion={version}
             applicationArchitecture={process.arch}
-            onCheckForUpdates={this.onCheckForUpdates}
             onCheckForNonStaggeredUpdates={this.onCheckForNonStaggeredUpdates}
             onShowAcknowledgements={this.showAcknowledgements}
             onShowTermsAndConditions={this.showTermsAndConditions}
-            isTopMost={isTopMost}
           />
         )
       case PopupType.PublishRepository:
@@ -2664,17 +2656,6 @@ export class App extends React.Component<IAppProps, IAppState> {
           />
         )
       }
-      case PopupType.ConfirmRepoRulesBypass: {
-        return (
-          <RepoRulesBypassConfirmation
-            key="repo-rules-bypass-confirmation"
-            repository={popup.repository}
-            branch={popup.branch}
-            onConfirm={popup.onConfirm}
-            onDismissed={onPopupDismissedFn}
-          />
-        )
-      }
       case PopupType.TestIcons: {
         return (
           <IconPreviewDialog
@@ -2766,7 +2747,6 @@ export class App extends React.Component<IAppProps, IAppState> {
     this.props.dispatcher.openShell(path, true)
   }
 
-  private onCheckForUpdates = () => this.checkForUpdates(false)
   private onCheckForNonStaggeredUpdates = () =>
     this.checkForUpdates(false, true)
 
