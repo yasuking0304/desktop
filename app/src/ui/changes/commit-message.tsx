@@ -856,7 +856,7 @@ export class CommitMessage extends React.Component<
     }
 
     return (
-      <button
+      <Button
         className="copilot-button"
         onClick={this.onCopilotButtonClick}
         aria-label="Generate commit message with Copilot"
@@ -866,7 +866,7 @@ export class CommitMessage extends React.Component<
         }
       >
         <Octicon symbol={octicons.copilot} />
-      </button>
+      </Button>
     )
   }
 
@@ -955,8 +955,8 @@ export class CommitMessage extends React.Component<
 
     return (
       <div className={className}>
-        {this.renderCopilotButton()}
         {this.renderCoAuthorToggleButton()}
+        {this.renderCopilotButton()}
       </div>
     )
   }
