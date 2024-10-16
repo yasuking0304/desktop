@@ -176,7 +176,7 @@
     .action-bar {
       display: flex;
 
-      padding: var(--spacing-half);
+      padding: var(--spacing);
       background: var(--box-background-color);
 
       border-bottom-left-radius: var(--border-radius);
@@ -193,6 +193,15 @@
 
       &.disabled {
         background: var(--box-alt-background-color);
+      }
+
+      .separator {
+        width: 1px;
+        margin-left: var(--spacing-half);
+        margin-right: var(--spacing-half);
+        margin-top: 1px;
+        margin-bottom: 1px;
+        background: var(--box-border-color);
       }
     }
 
