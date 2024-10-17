@@ -5,7 +5,6 @@ import { LinkButton } from '../lib/link-button'
 import { SamplesURL } from '../../lib/stats'
 import { isWindowsOpenSSHAvailable } from '../../lib/ssh/ssh'
 import { t } from 'i18next'
-import { enableExternalCredentialHelper } from '../../lib/feature-flag'
 
 interface IAdvancedPreferencesProps {
   readonly useWindowsOpenSSH: boolean
@@ -143,48 +142,43 @@ export class Advanced extends React.Component<
             onChange={this.onReportingOptOutChanged}
           />
         </div>
-        {(this.state.canUseWindowsSSH || enableExternalCredentialHelper()) && (
-          <h2>
-            {t('advanced.network-and-credentials', 'Network and credentials')}
-          </h2>
-        )}
+        <h2>Network and credentials</h2>
         {this.renderSSHSettings()}
-        {enableExternalCredentialHelper() && (
-          <div className="advanced-section">
-            <Checkbox
-              label={t(
-                'advanced.use-git-credential-manager',
-                'Use Git Credential Manager'
-              )}
-              value={
-                this.state.useExternalCredentialHelper
-                  ? CheckboxValue.On
-                  : CheckboxValue.Off
-              }
-              onChange={this.onUseExternalCredentialHelperChanged}
-              ariaDescribedBy="use-external-credential-helper-description"
-            />
-            <div
-              id="use-external-credential-helper-description"
-              className="git-settings-description"
-            >
-              <p>
-                {t('advanced.use-git-credential-manager-1', 'Use ')}
-                <LinkButton uri="https://gh.io/gcm">
-                  {t(
+        <div className="advanced-section">
+          <Checkbox
+            label={t(
+              'advanced.use-git-credential-manager',
+              'Use Git Credential Manager'
+            )}
+            value={
+              this.state.useExternalCredentialHelper
+                ? CheckboxValue.On
+                : CheckboxValue.Off
+            }
+            onChange={this.onUseExternalCredentialHelperChanged}
+            ariaDescribedBy="use-external-credential-helper-description"
+          />
+          <div
+            id="use-external-credential-helper-description"
+            className="git-settings-description"
+          >
+            <p>
+              {t('advanced.use-git-credential-manager-1', 'Use ')}
+              <LinkButton uri="https://gh.io/gcm">
+                {t(
                     'advanced.use-git-credential-manager-2',
                     'Git Credential Manager'
-                  )}
-                </LinkButton>
-                {t(
-                  'advanced.use-git-credential-manager-3',
-                  ` for private repositories outside of GitHub.com. This feature is
-                experimental and subject to change.`
                 )}
-              </p>
-            </div>
+                {' '}
+              </LinkButton>
+              {t(
+                'advanced.use-git-credential-manager-3',
+                ` for private repositories outside of GitHub.com. This feature is
+                experimental and subject to change.`
+              )}
+            </p>
           </div>
-        )}
+        </div>
       </DialogContent>
     )
   }

@@ -20,7 +20,7 @@ import { RowIndexPath } from '../lib/list/list-row-index-path'
 import { assertNever } from '../../lib/fatal-error'
 import { CommitDragElement } from '../drag-elements/commit-drag-element'
 import { AriaLiveContainer } from '../accessibility/aria-live-container'
-import { debounce } from 'lodash'
+import debounce from 'lodash/debounce'
 import {
   Popover,
   PopoverAnchorPosition,
@@ -398,7 +398,7 @@ export class CommitList extends React.Component<
       return true
     }
 
-    const sorted = [...indexes].sort((a, b) => b - a)
+    const sorted = indexes.toSorted((a, b) => b - a)
 
     for (let i = 0; i < sorted.length; i++) {
       const current = sorted[i]

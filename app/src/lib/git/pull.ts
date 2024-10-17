@@ -1,10 +1,4 @@
-import {
-  git,
-  GitError,
-  IGitExecutionOptions,
-  gitNetworkArguments,
-  gitRebaseArguments,
-} from './core'
+import { git, GitError, IGitExecutionOptions, gitRebaseArguments } from './core'
 import { Repository } from '../../models/repository'
 import { IPullProgress } from '../../models/progress'
 import { PullProgressParser, executionOptionsWithProgress } from '../progress'
@@ -21,7 +15,6 @@ async function getPullArgs(
   progressCallback?: (progress: IPullProgress) => void
 ) {
   return [
-    ...gitNetworkArguments(),
     ...gitRebaseArguments(),
     'pull',
     ...(await getDefaultPullDivergentBranchArguments(repository)),

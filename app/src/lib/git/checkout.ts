@@ -1,4 +1,4 @@
-import { git, IGitExecutionOptions, gitNetworkArguments } from './core'
+import { git, IGitExecutionOptions } from './core'
 import { Repository } from '../../models/repository'
 import { Branch, BranchType } from '../../models/branch'
 import { ICheckoutProgress } from '../../models/progress'
@@ -21,11 +21,7 @@ import { IRemote } from '../../models/remote'
 export type ProgressCallback = (progress: ICheckoutProgress) => void
 
 function getCheckoutArgs(progressCallback?: ProgressCallback) {
-  return [
-    ...gitNetworkArguments(),
-    'checkout',
-    ...(progressCallback ? ['--progress'] : []),
-  ]
+  return ['checkout', ...(progressCallback ? ['--progress'] : [])]
 }
 
 async function getBranchCheckoutArgs(branch: Branch) {
