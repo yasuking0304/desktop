@@ -9,8 +9,6 @@
     "checking-for-updates": "Checking for updates…",
     "could-not-determine-the-last-time-update-check": "Couldn't determine the last time an update check was performed. You may be running an old version. Please try manually checking for updates and contact GitHub Support if the problem persists",
     "downloading-updates": "Downloading update…",
-    "ensure-latest-version": "Ensure Latest Version",
-    "github-desktop-may-release-updates": "GitHub Desktop may release updates to our user base gradually to ensure we catch any problems early. This lets you bypass the gradual rollout and jump straight to the latest version if there's one available.",
     "license-and-open-source-notices": "License and Open Source Notices",
     "looking-for-the-latest-features": "Looking for the latest features?",
     "no-longer-supported-operating-systems": "This operating system is no longer supported. Software updates have been disabled. ",
@@ -104,6 +102,7 @@
     "theme": "Theme"
   },
   "authentication-form": {
+    "sign-in-using-your-browser": "Sign in using your browser",
     "your-browser-will-redirect": "Your browser will redirect you back to GitHub Desktop once you've signed in. If your browser asks for your permission to launch GitHub Desktop please allow it to."
   },
   "base-multi-commit-operation": {
@@ -137,7 +136,6 @@
   "branch-name-warnings": {
     "branch-name-already-exists-1": "A branch named ",
     "branch-name-already-exists-2": " already exists on the remote.",
-    "current-stashed-changes": "Your current stashed changes on this branch will no longer be visible in GitHub Desktop if the branch is renamed.",
     "this-branch-is-tracking-1": "This branch is tracking ",
     "this-branch-is-tracking-2": " and renaming this branch will not change the branch name on the remote."
   },
@@ -251,7 +249,7 @@
       "we-could-not-find-that-repository": "We couldn't find that repository. Check that you are logged in, the network is accessible, and the URL or repository alias are spelled correctly."
     },
     "render-sign-in": "Sign in to your GitHub.com account to access your repositories.",
-    "render-sign-in-enterprise": "If you have a GitHub Enterprise or AE account at work, sign in to it to get access to your repositories.",
+    "render-sign-in-enterprise": "If you are using GitHub Enterprise at work. sign in to it to get access to your repositories.",
     "select": "Select"
   },
   "cloneable-repository-filter-list": {
@@ -400,7 +398,6 @@
   },
   "common": {
     "about-github-desktop": "About GitHub Desktop",
-    "authentication-code": "Authentication code",
     "branch-name": "Branch name",
     "branch-name-darwin": "Branch Name",
     "cancel": "Cancel",
@@ -424,7 +421,6 @@
     "file": "file",
     "files": "files",
     "finish": "Finish",
-    "forgot-password": "Forgot password?",
     "github-desktop": "GitHub Desktop",
     "history": "History",
     "ignore": "Ignore",
@@ -446,7 +442,6 @@
     "organization": "Organization",
     "other": "Other",
     "overwrite": "Overwrite",
-    "password": "Password",
     "paste": "Paste",
     "preferences": "Preferences",
     "pulling": "Pulling {{0}}",
@@ -471,7 +466,6 @@
     "sign-out-2-darwin": " ",
     "undo": "Undo",
     "update": "Update",
-    "username-or-email": "Username or email address",
     "view-conflicts": "View conflicts",
     "view-on-github": "View on GitHub",
     "warning": "Warning",

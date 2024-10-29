@@ -868,13 +868,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
     this.cloningRepositoriesStore.onDidError(e => this.emitError(e))
 
-    this.signInStore.onDidAuthenticate((account, method) => {
-      this._addAccount(account)
-
-      if (this.showWelcomeFlow) {
-        this.statsStore.recordWelcomeWizardSignInMethod(method)
-      }
-    })
+    this.signInStore.onDidAuthenticate(account => this._addAccount(account))
     this.signInStore.onDidUpdate(() => this.emitUpdate())
     this.signInStore.onDidError(error => this.emitError(error))
 
@@ -4536,7 +4530,9 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
       const remoteName = branch.upstreamRemoteName || remote.name
 
-      const pushTitle = `Pushing to ${remoteName}`
+      const pushTitle = t('app-store.pushing-to', `Pushing to {{0}}`, {
+        0: remoteName,
+      })
 
       // Emit an initial progress even before our push begins
       // since we're doing some work to get remotes up front.
@@ -5954,19 +5950,8 @@ export class AppStore extends TypedBaseStore<IAppState> {
     return this.signInStore.setEndpoint(url)
   }
 
-  public _setSignInCredentials(
-    username: string,
-    password: string
-  ): Promise<void> {
-    return this.signInStore.authenticateWithBasicAuth(username, password)
-  }
-
   public _requestBrowserAuthentication() {
     this.signInStore.authenticateWithBrowser()
-  }
-
-  public _setSignInOTP(otp: string): Promise<void> {
-    return this.signInStore.setTwoFactorOTP(otp)
   }
 
   public async _setAppFocusState(isFocused: boolean): Promise<void> {
@@ -7066,7 +7051,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
     const { commitSHAs } = compareState
     const commitIndexBySha = new Map(commitSHAs.map((sha, i) => [sha, i]))
 
-    return [...commits].sort((a, b) =>
+    return commits.toSorted((a, b) =>
       compare(commitIndexBySha.get(b.sha), commitIndexBySha.get(a.sha))
     )
   }
@@ -7086,7 +7071,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
     const { commitSHAs } = compareState
     const commitIndexBySha = new Map(commitSHAs.map((sha, i) => [sha, i]))
 
-    return [...commits].sort((a, b) =>
+    return commits.toSorted((a, b) =>
       compare(commitIndexBySha.get(b), commitIndexBySha.get(a))
     )
   }
