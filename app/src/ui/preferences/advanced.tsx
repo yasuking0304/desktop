@@ -142,7 +142,9 @@ export class Advanced extends React.Component<
             onChange={this.onReportingOptOutChanged}
           />
         </div>
-        <h2>Network and credentials</h2>
+        <h2>
+          {t('advanced.network-and-credentials', 'Network and credentials')}
+        </h2>
         {this.renderSSHSettings()}
         <div className="advanced-section">
           <Checkbox
@@ -166,10 +168,9 @@ export class Advanced extends React.Component<
               {t('advanced.use-git-credential-manager-1', 'Use ')}
               <LinkButton uri="https://gh.io/gcm">
                 {t(
-                    'advanced.use-git-credential-manager-2',
-                    'Git Credential Manager'
-                )}
-                {' '}
+                  'advanced.use-git-credential-manager-2',
+                  'Git Credential Manager'
+                )}{' '}
               </LinkButton>
               {t(
                 'advanced.use-git-credential-manager-3',

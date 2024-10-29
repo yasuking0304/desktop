@@ -37,9 +37,12 @@ const DefaultTitle = t('common.sign-in', 'Sign in')
 
 const browserSignInInfoContent = (
   <p>
-    Your browser will redirect you back to GitHub Desktop once you've signed in.
-    If your browser asks for your permission to launch GitHub Desktop, please
-    allow it.
+    {t(
+      'sign-in.your-browser-will-redirect-you-back',
+      `Your browser will redirect you back to GitHub Desktop once
+       you've signed in. If your browser asks for your permission to
+       launch GitHub Desktop, please allow it.`
+    )}
   </p>
 )
 
@@ -122,8 +125,8 @@ export class SignIn extends React.Component<ISignInProps, ISignInState> {
     let primaryButtonText: string
     const stepKind = state.kind
     const continueWithBrowserLabel = __DARWIN__
-      ? 'Continue With Browser'
-      : 'Continue with browser'
+      ? t('sign-in.continue-with-browser-darwin', 'Continue With Browser')
+      : t('sign-in.continue-with-browser', 'Continue with browser')
 
     switch (state.kind) {
       case SignInStep.EndpointEntry:

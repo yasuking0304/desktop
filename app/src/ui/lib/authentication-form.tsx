@@ -50,7 +50,10 @@ export class AuthenticationForm extends React.Component<IAuthenticationFormProps
           autoFocus={true}
           role="link"
         >
-          Sign in using your browser
+          {t(
+            'authentication-form.sign-in-using-your-browser',
+            'Sign in using your browser'
+          )}
           <Octicon symbol={octicons.linkExternal} />
         </Button>
         {this.props.additionalButtons}

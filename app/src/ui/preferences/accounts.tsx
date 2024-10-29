@@ -131,7 +131,7 @@ export class Accounts extends React.Component<IAccountsProps, {}> {
             <div>
               {t(
                 'clone-repository.render-sign-in-enterprise',
-                `If you are using GitHub Enterprise at work,
+                `If you are using GitHub Enterprise at work.
                  sign in to it to get access to your repositories.`
               )}
             </div>

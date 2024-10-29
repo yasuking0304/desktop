@@ -154,7 +154,7 @@
     "electron-packager": "^17.1.1",
     "electron-winstaller": "^5.0.0",
     "eslint-plugin-github": "^4.10.1",
-    "i18next-parser": "^8.13.0",
+    "i18next-parser": "^9.0.2",
     "markdownlint-cli": "^0.32.2",
     "reserved-words": "^0.1.2",
     "tsconfig-paths": "^3.9.0"
