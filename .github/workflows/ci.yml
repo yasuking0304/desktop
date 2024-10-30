@@ -67,6 +67,9 @@ jobs:
           - os: ubuntu-18.04
             arch: arm64
     timeout-minutes: 60
+    environment: ${{ inputs.environment }}
+    env:
+      RELEASE_CHANNEL: ${{ inputs.environment }}
     steps:
       - uses: actions/checkout@v3
         with:
