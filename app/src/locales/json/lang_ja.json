@@ -81,6 +81,7 @@
     "retry-clone-darwin": "クローンの再試行"
   },
   "app-store": {
+    "checking-out": "Checking out",
     "error": {
       "pruner-is-already-active": "A branch pruner is already active and cannot start updating on {{0}}",
       "should-only-have-on-background-fetcher-active": "We should only have on background fetcher active at once, but we're trying to start background fetching on {{0}} while another background fetcher is still active!"
@@ -120,8 +121,15 @@
     "is-already-up-to-date-with-2": " によって最新状態です"
   },
   "branch-dropdown": {
+    "checking-out": "Checking out {{0}}",
     "current-branch": "現在のブランチ",
-    "current-branch-darwin": "現在のブランチ"
+    "current-branch-darwin": "現在のブランチ",
+    "current-branch-is": "Current branch is {{0}}",
+    "currently-on-a-detached-head": "Currently on a detached HEAD",
+    "detached-head": "Detached HEAD",
+    "on-sha": "On {{0}}",
+    "rebasing-branch": "Rebasing branch",
+    "rebasing-target-branch": "Rebasing {{0}}"
   },
   "branch-list": {
     "default-branch": "既定のブランチ",
