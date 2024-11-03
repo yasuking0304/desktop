@@ -272,12 +272,25 @@ function handlePossibleProtocolLauncherArgs(args: ReadonlyArray<string>) {
 
     if (args.includes(protocolLauncherArg) && matchingUrls.length === 1) {
       handleAppURL(matchingUrls[0])
+      return true
     } else {
       log.error(`Malformed launch arguments received: ${args}`)
     }
-  } else if (args.length > 1) {
-    handleAppURL(args[1])
+    return false
   }
+  // for Mac, Linux
+  for (const arg of args) {
+    if (
+      arg.includes('auth://oauth') &&
+      arg.includes('code=') &&
+      arg.includes('state=')
+    ) {
+      handleAppURL(arg)
+      return true
+    }
+  }
+  log.error(`Malformed launch arguments received: ${args}`)
+  return false
 }
 
 /**

@@ -152,15 +152,24 @@ export class BranchDropdown extends React.Component<IBranchDropdownProps> {
       return null
     } else if (tip.kind === TipState.Unborn) {
       title = tip.ref
-      tooltip = `Current branch is ${tip.ref}`
+      tooltip = t(
+        'branch-dropdown.current-branch-is',
+        `Current branch is {{0}}`,
+        { 0: tip.ref }
+      )
       canOpen = branchesState.allBranches.some(
         b => !b.isDesktopForkRemoteBranch
       )
     } else if (tip.kind === TipState.Detached) {
-      title = `On ${tip.currentSha.substring(0, 7)}`
-      tooltip = 'Currently on a detached HEAD'
+      title = t('branch-dropdown.on-sha', `On {{0}}`, {
+        0: tip.currentSha.substring(0, 7),
+      })
+      tooltip = t(
+        'branch-dropdown.currently-on-a-detached-head',
+        'Currently on a detached HEAD'
+      )
       icon = octicons.gitCommit
-      description = 'Detached HEAD'
+      description = t('branch-dropdown.detached-head', 'Detached HEAD')
     } else if (tip.kind === TipState.Valid) {
       title = tooltip = tip.branch.name
     } else {
@@ -178,18 +187,22 @@ export class BranchDropdown extends React.Component<IBranchDropdownProps> {
         description = `${description} (${friendlyProgress}%)`
       }
 
-      tooltip = `Checking out ${checkoutProgress.target}`
+      tooltip = t('branch-dropdown.checking-out', `Checking out {{0}}`, {
+        0: checkoutProgress.target,
+      })
       progressValue = checkoutProgress.value
       icon = syncClockwise
       iconClassName = 'spin'
       canOpen = false
     } else if (conflictState !== null && isRebaseConflictState(conflictState)) {
       title = conflictState.targetBranch
-      description = 'Rebasing branch'
+      description = t('branch-dropdown.rebasing-branch', 'Rebasing branch')
       icon = octicons.gitBranch
       canOpen = false
       disabled = true
-      tooltip = `Rebasing ${conflictState.targetBranch}`
+      tooltip = t('branch-dropdown.rebasing-target-branch', `Rebasing {{0}}`, {
+        0: conflictState.targetBranch,
+      })
     }
 
     const isOpen = this.props.isOpen

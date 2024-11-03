@@ -4106,7 +4106,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
       title: __DARWIN__
         ? t('app-store.refreshing-repository-darwin', 'Refreshing Repository')
         : t('app-store.refreshing-repository', 'Refreshing repository'),
-      description: 'Checking out',
+      description: t('app-store.checking-out', 'Checking out'),
       value: 1,
       target: commitish,
     })
