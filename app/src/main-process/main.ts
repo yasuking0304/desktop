@@ -105,8 +105,6 @@ const protocolLauncherArg = '--protocol-launcher'
 const possibleProtocols = new Set(['x-github-client'])
 if (__DEV__) {
   possibleProtocols.add('x-github-desktop-dev-auth')
-} else if (__LINUX__) {
-  possibleProtocols.add('x-github-desktop-auth')
 } else {
   //possibleProtocols.add('x-github-desktop-auth')
   possibleProtocols.add('x-github-desktop-dev-auth') /** if tesing, beta */
@@ -274,12 +272,25 @@ function handlePossibleProtocolLauncherArgs(args: ReadonlyArray<string>) {
 
     if (args.includes(protocolLauncherArg) && matchingUrls.length === 1) {
       handleAppURL(matchingUrls[0])
+      return true
     } else {
       log.error(`Malformed launch arguments received: ${args}`)
     }
-  } else if (args.length > 1) {
-    handleAppURL(args[1])
+    return false
   }
+  // for Mac, Linux
+  for (const arg of args) {
+    if (
+      arg.includes('auth://oauth') &&
+      arg.includes('code=') &&
+      arg.includes('state=')
+    ) {
+      handleAppURL(arg)
+      return true
+    }
+  }
+  log.error(`Malformed launch arguments received: ${args}`)
+  return false
 }
 
 /**
