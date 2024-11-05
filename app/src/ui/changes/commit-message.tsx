@@ -55,7 +55,8 @@ import { RepoRulesetsForBranchLink } from '../repository-rules/repo-rulesets-for
 import { RepoRulesMetadataFailureList } from '../repository-rules/repo-rules-failure-list'
 import { formatCommitMessage } from '../../lib/format-commit-message'
 import { useRepoRulesLogic } from '../../lib/helpers/repo-rules'
-import { getWholeWorkingDirectoryDiffText } from '../../lib/git'
+import { getSelectedFilesDiffText } from '../../lib/git'
+import { WorkingDirectoryFileChange } from '../../models/status'
 
 const addAuthorIcon: OcticonSymbolVariant = {
   w: 18,
@@ -92,6 +93,7 @@ interface ICommitMessageProps {
    * when commit button is disabled
    */
   readonly anyFilesAvailable: boolean
+  readonly selectedFiles: ReadonlyArray<WorkingDirectoryFileChange>
   readonly focusCommitMessage: boolean
   readonly commitMessage: ICommitMessage | null
   readonly repository: Repository
@@ -822,7 +824,10 @@ export class CommitMessage extends React.Component<
       return
     }
 
-    const diff = await getWholeWorkingDirectoryDiffText(this.props.repository)
+    const diff = await getSelectedFilesDiffText(
+      this.props.repository,
+      this.props.selectedFiles
+    )
     if (!diff) {
       notGeneratingCommitDetails()
       return
