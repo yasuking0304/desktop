@@ -11,7 +11,6 @@ import {
   nativeTheme,
 } from 'electron'
 import * as Fs from 'fs'
-import * as URL from 'url'
 
 import { AppWindow } from './app-window'
 import { buildDefaultMenu, getAllMenuItems } from './menu'
@@ -249,36 +248,6 @@ if (__DARWIN__) {
 function handlePossibleProtocolLauncherArgs(args: ReadonlyArray<string>) {
   log.info(`Received possible protocol arguments: ${args.length}`)
 
-  if (__WIN32__) {
-    // Desktop registers it's protocol handler callback on Windows as
-    // `[executable path] --protocol-launcher "%1"`. Note that extra command
-    // line arguments might be added by Chromium
-    // (https://electronjs.org/docs/api/app#event-second-instance).
-    // At launch Desktop checks for that exact scenario here before doing any
-    // processing. If there's more than one matching url argument because of a
-    // malformed or untrusted url then we bail out.
-
-    const matchingUrls = args.filter(arg => {
-      // sometimes `URL.parse` throws an error
-      try {
-        const url = URL.parse(arg)
-        // i think this `slice` is just removing a trailing `:`
-        return url.protocol && possibleProtocols.has(url.protocol.slice(0, -1))
-      } catch (e) {
-        log.error(`Unable to parse argument as URL: ${arg}`)
-        return false
-      }
-    })
-
-    if (args.includes(protocolLauncherArg) && matchingUrls.length === 1) {
-      handleAppURL(matchingUrls[0])
-      return true
-    } else {
-      log.error(`Malformed launch arguments received: ${args}`)
-    }
-    return false
-  }
-  // for Mac, Linux
   for (const arg of args) {
     if (
       arg.includes('auth://oauth') &&
