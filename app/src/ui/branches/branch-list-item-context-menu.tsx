@@ -6,13 +6,20 @@ interface IBranchContextMenuConfig {
   name: string
   isLocal: boolean
   onRenameBranch?: (branchName: string) => void
+  onViewPullRequestOnGitHub?: () => void
   onDeleteBranch?: (branchName: string) => void
 }
 
 export function generateBranchContextMenuItems(
   config: IBranchContextMenuConfig
 ): IMenuItem[] {
-  const { name, isLocal, onRenameBranch, onDeleteBranch } = config
+  const {
+    name,
+    isLocal,
+    onRenameBranch,
+    onViewPullRequestOnGitHub,
+    onDeleteBranch,
+  } = config
   const items = new Array<IMenuItem>()
 
   if (onRenameBranch !== undefined) {
@@ -29,6 +36,13 @@ export function generateBranchContextMenuItems(
       : t('menu.copy-branch-name', 'Copy branch name'),
     action: () => clipboard.writeText(name),
   })
+
+  if (onViewPullRequestOnGitHub !== undefined) {
+    items.push({
+      label: 'View Pull Request on GitHub',
+      action: () => onViewPullRequestOnGitHub(),
+    })
+  }
 
   items.push({ type: 'separator' })
 
