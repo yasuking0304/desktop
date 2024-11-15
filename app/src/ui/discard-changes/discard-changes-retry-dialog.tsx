@@ -33,7 +33,17 @@ export class DiscardChangesRetryDialog extends React.Component<
 
     return (
       <Dialog
-        title={t('common.error', 'Error')}
+        title={
+          __DARWIN__
+            ? t(
+                'discard-changes-retry-dialog.discarded-Changes-darwin',
+                'Discarded Changes Will Be Unrecoverable'
+              )
+            : t(
+                'discard-changes-retry-dialog.discarded-Changes',
+                'Discarded changes will be unrecoverable'
+              )
+        }
         id="discard-changes-retry"
         loading={retrying}
         disabled={retrying}
