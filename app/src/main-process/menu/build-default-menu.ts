@@ -7,6 +7,7 @@ import { UNSAFE_openDirectory } from '../shell'
 import { MenuLabelsEvent } from '../../models/menu-labels'
 import * as ipcWebContents from '../ipc-webcontents'
 import { mkdir } from 'fs/promises'
+import { t } from 'i18next'
 import { buildTestMenu } from './build-test-menu'
 
 const createPullRequestLabel = __DARWIN__

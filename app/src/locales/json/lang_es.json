@@ -476,7 +476,6 @@
     "update": "Update",
     "view-conflicts": "View conflicts",
     "view-on-github": "View on GitHub",
-    "warning": "Warning",
     "yes": "Yes",
     "your-email": "common.your-email@example.com",
     "your-name": "Your Name"
@@ -752,6 +751,8 @@
     "discard-changes": "Permanently discard changes",
     "discard-changes-darwin": "Permanently Discard Changes",
     "discard-changes-ok": "This will discard changes and they will be unrecoverable.",
+    "discarded-Changes": "Discarded changes will be unrecoverable",
+    "discarded-Changes-darwin": "Discarded Changes Will Be Unrecoverable",
     "fail-to-discard-changes": "Failed to discard changes to {{0}}.",
     "restricted-access": "Restricted access to move the file(s)."
   },
@@ -886,6 +887,11 @@
     "no-other-editors-found": "No other editors found. ",
     "shell": "Shell"
   },
+  "invalidated-token": {
+    "invalidated-account-token": "Invalidated account token",
+    "invalidated-account-token-darwin": "Invalidated Account Token",
+    "token-has-been-invalidated": "Your account token has been invalidated and you have been signed out from your GitHub{{0}} account. Do you want to sign in again?"
+  },
   "label": {
     "about-github-desktop": "&About GitHub Desktop",
     "hide-stashed-changes": "H&ide stashed changes",
@@ -919,6 +925,7 @@
     "clone-repository": "Clo&ne repository…",
     "clone-repository-darwin": "Clone Repository…",
     "close-darwin": "close Window",
+    "command-line-tool": "Command Line Tool",
     "compare-on-github": "Compare on &GitHub",
     "compare-on-github-darwin": "Compare on GitHub",
     "compare-to-branch": "&Compare to branch",
@@ -983,6 +990,7 @@
     "help-darwin": "Help",
     "hide": "Hide GitHub Desktop",
     "hide-others": "Hide Others",
+    "install": "Install",
     "install-command-line-tool": "Install Command Line Tool…",
     "merge-into-branch": "&Merge into current branch…",
     "merge-into-branch-darwin": "Merge into Current Branch…",
@@ -1067,6 +1075,7 @@
     "trash": "Trash",
     "undo": "&Undo",
     "undo-darwin": "Undo",
+    "uninstall": "Uninstall",
     "update-branch-from": "&Update from {{0}}",
     "update-branch-from-darwin": "Update from {{0}}",
     "view": "&View",
@@ -1568,8 +1577,13 @@
   "sign-in": {
     "continue-with-browser": "Continue with browser",
     "continue-with-browser-darwin": "Continue With Browser",
+    "git-requesting-credentials-1": "Git requesting credentials to access ",
+    "git-requesting-credentials-2": ".",
     "sign-in-browser": "Sign in using your browser",
     "sign-in-browser-darwin": "Sign in Using Your Browser",
+    "you-are-already-signed-1": "You're already signed in to ",
+    "you-are-already-signed-2": " with the account ",
+    "you-are-already-signed-3": ". If you continue, you will first be signed out.",
     "your-browser-will-redirect-you-back": "Your browser will redirect you back to GitHub Desktop once you've signed in. If your browser asks for your permission to launch GitHub Desktop please allow it to."
   },
   "sign-in-enterprise": {

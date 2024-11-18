@@ -476,7 +476,6 @@
     "update": "更新",
     "view-conflicts": "コンフリクトの表示",
     "view-on-github": "GitHub で確認",
-    "warning": "警告",
     "yes": "はい",
     "your-email": "あなたのメールアドレス@example.com",
     "your-name": "あなたの名前"
@@ -752,6 +751,8 @@
     "discard-changes": "これにより、変更は破棄され、復元できなくなります。",
     "discard-changes-darwin": "変更を完全に破棄します",
     "discard-changes-ok": "これにより、変更は破棄され、復元できなくなります。",
+    "discarded-Changes": "破棄された変更は回復できません",
+    "discarded-Changes-darwin": "破棄された変更は回復できません",
     "fail-to-discard-changes": "{{0}} の変更を破棄できませんでした。",
     "restricted-access": "ファイルの移動が制限されています。"
   },
@@ -886,6 +887,11 @@
     "no-other-editors-found": "他のエディターは見つかりませんでした。 ",
     "shell": "シェル"
   },
+  "invalidated-token": {
+    "invalidated-account-token": "アカウント トークンが無効になりました",
+    "invalidated-account-token-darwin": "アカウント トークンが無効になりました",
+    "token-has-been-invalidated": "アカウント トークンが無効になり、GitHub{{0}} アカウントからサインアウトされました。もう一度サインインしますか?"
+  },
   "label": {
     "about-github-desktop": "GitHub Desktop について(&A)",
     "hide-stashed-changes": "一時退避した変更の非表示(&H)",
@@ -919,6 +925,7 @@
     "clone-repository": "リポジトリのクローン(&N)…",
     "clone-repository-darwin": "リポジトリのクローン…",
     "close-darwin": "ウィンドウを閉じる",
+    "command-line-tool": "コマンドラインツール",
     "compare-on-github": "&GitHub で比較",
     "compare-on-github-darwin": "GitHub で比較",
     "compare-to-branch": "ブランチと比較(&C)",
@@ -983,6 +990,7 @@
     "help-darwin": "ヘルプ",
     "hide": "GitHub Desktop を非表示にする",
     "hide-others": "その他を非表示にする",
+    "install": "インストール",
     "install-command-line-tool": "コマンドラインツール追加…",
     "merge-into-branch": "現在のブランチにマージ(&M)…",
     "merge-into-branch-darwin": "現在のブランチにマージ…",
@@ -1067,6 +1075,7 @@
     "trash": "ゴミ箱",
     "undo": "元に戻す(&U)",
     "undo-darwin": "元に戻す",
+    "uninstall": "アンインストール",
     "update-branch-from": "{{0}} の更新(&U)",
     "update-branch-from-darwin": "{{0}} の更新",
     "view": "ビュー(&V)",
@@ -1568,8 +1577,13 @@
   "sign-in": {
     "continue-with-browser": "ブラウザーで続行",
     "continue-with-browser-darwin": "ブラウザーで続行",
+    "git-requesting-credentials-1": "Gitがアクセスするための資格情報を要求しています ",
+    "git-requesting-credentials-2": "。",
     "sign-in-browser": "ブラウザーを使用してサインインする",
     "sign-in-browser-darwin": "ブラウザーを使用してサインインする",
+    "you-are-already-signed-1": "すでに ",
+    "you-are-already-signed-2": " にサインインしています(アカウント: ",
+    "you-are-already-signed-3": " )。続行すると、まずサインアウトされます。",
     "your-browser-will-redirect-you-back": "サインインすると、ブラウザーは GitHub Desktop にリダイレクトします。ブラウザーから GitHub Desktop の起動許可を求められた場合は、許可を選択してください。"
   },
   "sign-in-enterprise": {

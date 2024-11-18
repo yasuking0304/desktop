@@ -27,23 +27,27 @@ export class InvalidatedToken extends React.Component<IInvalidatedTokenProps> {
         type="warning"
         title={
           __DARWIN__
-           ? t(
-              'invalidated-token.invalidated-account-token-darwin',
-              'Invalidated Account Token'
-            )
-           : t(
-              'invalidated-token.invalidated-account-token',
-              'Invalidated account token'
-            )
+            ? t(
+                'invalidated-token.invalidated-account-token-darwin',
+                'Invalidated Account Token'
+              )
+            : t(
+                'invalidated-token.invalidated-account-token',
+                'Invalidated account token'
+              )
         }
         onSubmit={this.onSubmit}
         onDismissed={this.props.onDismissed}
       >
         <DialogContent>
           <Row>
-            Your account token has been invalidated and you have been signed out
-            from your GitHub{accountTypeSuffix} account. Do you want to sign in
-            again?
+            {t(
+              'invalidated-token.token-has-been-invalidated',
+              `Your account token has been invalidated and you have been
+                 signed out from your GitHub{{0}} account. Do you want to
+                 sign in again?`,
+              { 0: accountTypeSuffix }
+            )}
           </Row>
         </DialogContent>
         <DialogFooter>

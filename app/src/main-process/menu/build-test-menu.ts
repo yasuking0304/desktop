@@ -1,6 +1,7 @@
 import { MenuItemConstructorOptions } from 'electron'
 import { enableTestMenuItems } from '../../lib/feature-flag'
 import { emit, separator } from './build-default-menu'
+import { t } from 'i18next'
 
 export function buildTestMenu() {
   if (!enableTestMenuItems()) {
@@ -11,14 +12,14 @@ export function buildTestMenu() {
 
   if (__WIN32__) {
     testMenuItems.push(separator, {
-      label: 'Command Line Tool',
+      label: t('menu.command-line-tool', 'Command Line Tool'),
       submenu: [
         {
-          label: 'Install',
+          label: t('menu.install', 'Install'),
           click: emit('install-windows-cli'),
         },
         {
-          label: 'Uninstall',
+          label: t('menu.uninstall', 'Uninstall'),
           click: emit('uninstall-windows-cli'),
         },
       ],
@@ -101,13 +102,13 @@ export function buildTestMenu() {
   testMenuItems.push(
     separator,
     {
-      label: 'Crash main process…',
+      label: t('menu.crash-main-process', 'Crash main process…'),
       click() {
         throw new Error('Boomtown!')
       },
     },
     {
-      label: 'Crash renderer process…',
+      label: t('menu.crash-renderer-process', 'Crash renderer process…'),
       click: emit('boomtown'),
     },
     {
@@ -115,22 +116,22 @@ export function buildTestMenu() {
       click: emit('test-prune-branches'),
     },
     {
-      label: 'Show notification',
+      label: t('menu.show-notification', 'Show notification'),
       click: emit('test-notification'),
     },
     {
-      label: 'Show popup',
+      label: t('menu.show-popup', 'Show popup'),
       submenu: [
         {
-          label: 'Release notes',
+          label: t('menu.release-notes', 'Release notes'),
           click: emit('test-release-notes-popup'),
         },
         {
-          label: 'Thank you',
+          label: t('menu.thank-you', 'Thank you'),
           click: emit('test-thank-you-popup'),
         },
         {
-          label: 'Show App Error',
+          label: t('menu.pull-request-check-run-failed', 'Show App Error'),
           click: emit('test-app-error'),
         },
         {
@@ -140,7 +141,7 @@ export function buildTestMenu() {
       ],
     },
     {
-      label: 'Show banner',
+      label: t('menu.show-banner', 'Show banner'),
       submenu: [
         {
           label: 'Update banner',
