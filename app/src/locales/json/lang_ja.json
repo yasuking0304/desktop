@@ -842,7 +842,7 @@
   "git": {
     "default-branch-name-for-new-repositories": "新しいリポジトリのデフォルトのブランチ名",
     "edit-your-global-git-config-1": "これらの設定は、",
-    "edit-your-global-git-config-2": "あなたのグローバルの Git 構成を編集",
+    "edit-your-global-git-config-2": "あなたのグローバルの Git 構成ファイルを編集",
     "edit-your-global-git-config-3": "することになります。",
     "gitHub-default-branch-description-1": "GitHub のデフォルトのブランチ名は ",
     "gitHub-default-branch-description-2": "です。 ",

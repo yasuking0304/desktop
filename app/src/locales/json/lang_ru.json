@@ -842,7 +842,7 @@
   "git": {
     "default-branch-name-for-new-repositories": "Default branch name for new repositories",
     "edit-your-global-git-config-1": "These preferences will ",
-    "edit-your-global-git-config-2": "edit your global Git config",
+    "edit-your-global-git-config-2": " edit your global Git config file",
     "edit-your-global-git-config-3": ".",
     "gitHub-default-branch-description-1": "GitHub's default branch name is ",
     "gitHub-default-branch-description-2": ". ",
