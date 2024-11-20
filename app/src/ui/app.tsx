@@ -1576,7 +1576,7 @@ export class App extends React.Component<IAppProps, IAppState> {
             useCustomShell={this.state.useCustomShell}
             customShell={this.state.customShell}
             repositoryIndicatorsEnabled={this.state.repositoryIndicatorsEnabled}
-            onOpenFileInExternalEditor={this.openFileInExternalEditor}
+            onEditGlobalGitConfig={this.editGlobalGitConfig}
             underlineLinks={this.state.underlineLinks}
             showDiffCheckMarks={this.state.showDiffCheckMarks}
           />
@@ -1822,6 +1822,7 @@ export class App extends React.Component<IAppProps, IAppState> {
             key="lsf-attribute-mismatch"
             onDismissed={onPopupDismissedFn}
             onUpdateExistingFilters={this.updateExistingLFSFilters}
+            onEditGlobalGitConfig={this.editGlobalGitConfig}
           />
         )
       case PopupType.UpstreamAlreadyExists:
@@ -2534,6 +2535,9 @@ export class App extends React.Component<IAppProps, IAppState> {
   private updateExistingLFSFilters = () => {
     this.props.dispatcher.installGlobalLFSFilters(true)
   }
+
+  private editGlobalGitConfig = () =>
+    this.props.dispatcher.editGlobalGitConfig()
 
   private initializeLFS = (repositories: ReadonlyArray<Repository>) => {
     this.props.dispatcher.installLFSHooks(repositories)
