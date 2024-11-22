@@ -75,10 +75,17 @@
   },
   "app-error": {
     "clone-failed": "Clone failed",
+    "failed-to-push": "Failed to push",
+    "file-size-limit-exceeded": "File size limit exceeded",
+    "files-that-exceed": "Files that exceed the limit",
+    "for-more-information-1": "See ",
+    "for-more-information-2": " for more information on managing large files on GitHub",
     "open-options": "Open options",
     "open-settings-darwin": "Open Settings",
     "retry-clone": "Retry clone",
-    "retry-clone-darwin": "Retry Clone"
+    "retry-clone-darwin": "Retry Clone",
+    "would-you-like-1": "Would you like to retry cloning ",
+    "would-you-like-2": "?"
   },
   "app-store": {
     "checking-out": "Checking out",

@@ -75,10 +75,17 @@
   },
   "app-error": {
     "clone-failed": "クローンの失敗",
+    "failed-to-push": "Failed to push",
+    "file-size-limit-exceeded": "File size limit exceeded",
+    "files-that-exceed": "Files that exceed the limit",
+    "for-more-information-1": "See ",
+    "for-more-information-2": " for more information on managing large files on GitHub",
     "open-options": "オプションを開く",
     "open-settings-darwin": "オプションを開く",
     "retry-clone": "クローンの再試行",
-    "retry-clone-darwin": "クローンの再試行"
+    "retry-clone-darwin": "クローンの再試行",
+    "would-you-like-1": "Would you like to retry cloning ",
+    "would-you-like-2": "?"
   },
   "app-store": {
     "checking-out": "Checking out",

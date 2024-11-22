@@ -86,9 +86,9 @@ export class Git extends React.Component<IGitProps> {
           {t('git.edit-your-global-git-config-1', 'These preferences will ')}
           <LinkButton onClick={this.props.onEditGlobalGitConfig}>
             {t(
-                'git.edit-your-global-git-config-2',
-                'edit your global Git config file'
-              )}
+              'git.edit-your-global-git-config-2',
+              'edit your global Git config file'
+            )}
           </LinkButton>
           {t('git.edit-your-global-git-config-3', '.')}
         </p>
