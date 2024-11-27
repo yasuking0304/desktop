@@ -15,8 +15,10 @@ import {
 import { ClickSource } from '../../lib/list'
 import { t } from 'i18next'
 import { getDefaultAriaLabelForBranch } from '../../branches/branch-renderer'
+import { Repository } from '../../../models/repository'
 
 interface IChooseTargetBranchDialogProps {
+  readonly repository: Repository
   /**
    * See IBranchesState.defaultBranch
    */
@@ -94,12 +96,24 @@ export class ChooseTargetBranchDialog extends React.Component<
     this.setState({ selectedBranch })
   }
 
-  private renderBranch = (item: IBranchListItem, matches: IMatches) => {
-    return renderDefaultBranch(item, matches, this.props.currentBranch)
+  private renderBranch = (
+    item: IBranchListItem,
+    matches: IMatches,
+    authorDate: Date | undefined
+  ) => {
+    return renderDefaultBranch(
+      item,
+      matches,
+      this.props.currentBranch,
+      authorDate
+    )
   }
 
-  private getBranchAriaLabel = (item: IBranchListItem): string => {
-    return getDefaultAriaLabelForBranch(item)
+  private getBranchAriaLabel = (
+    item: IBranchListItem,
+    authorDate: Date | undefined
+  ): string => {
+    return getDefaultAriaLabelForBranch(item, authorDate)
   }
 
   private onEnterPressed = (branch: Branch, source: ClickSource) => {
@@ -212,6 +226,7 @@ export class ChooseTargetBranchDialog extends React.Component<
       >
         <DialogContent>
           <BranchList
+            repository={this.props.repository}
             allBranches={this.props.allBranches}
             currentBranch={this.props.currentBranch}
             defaultBranch={this.props.defaultBranch}
