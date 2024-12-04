@@ -250,9 +250,10 @@ function handlePossibleProtocolLauncherArgs(args: ReadonlyArray<string>) {
 
   for (const arg of args) {
     if (
-      arg.includes('auth://oauth') &&
-      arg.includes('code=') &&
-      arg.includes('state=')
+      arg.match(/^x-github-desktop/) &&
+      arg.match('auth://oauth') &&
+      arg.match('code=') &&
+      arg.match('state=')
     ) {
       handleAppURL(arg)
       return true

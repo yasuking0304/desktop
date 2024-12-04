@@ -90,7 +90,7 @@ export class DiffContentsWarning extends React.Component<IDiffContentsWarningPro
           <>
             {t(
               'diff-contents-warning.this-diff-contains-a-change',
-              `This diff contains a change in line endings from 
+              `This diff contains a change in line endings from
               '{{0}}' to '{{1}}.`,
               { 0: lineEndingsChange.from, 1: lineEndingsChange.to }
             )}
