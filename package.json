@@ -39,7 +39,7 @@
     "draft-release:format": "prettier --check --write changelog.json app/package.json && yarn validate-changelog",
     "draft-release:pr": "ts-node -P script/tsconfig.json script/draft-release/draft-pull-request.ts",
     "validate-changelog": "ts-node -P script/tsconfig.json script/validate-changelog.ts",
-    "i18next-extract": "i18next -c script/i18next-parser.config.js"
+    "i18next-extract": "ts-node -P script/tsconfig.json script/i18next-extract.ts"
   },
   "author": {
     "name": "GitHub, Inc.",

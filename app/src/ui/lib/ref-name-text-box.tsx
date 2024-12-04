@@ -168,7 +168,7 @@ export class RefNameTextBox extends React.Component<
           ariaLiveMessage={`Error: ${proposedValue} is not a valid name.`}
         >
           <Ref>{proposedValue}</Ref>
-          {t('ref-name-text-box.is-not-a-valid-name', 'is not a valid name.')}
+          {t('ref-name-text-box.is-not-a-valid-name', ' is not a valid name.')}
         </InputError>
       )
     }
