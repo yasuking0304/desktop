@@ -3,6 +3,8 @@
 import * as cp from 'child_process'
 import fs from 'fs'
 
+const I18NEXT_CONFIG = "i18next-parser.config.js"
+
 function convertJsonFile(filepath: string, filename: string) {
   const data = fs.readFileSync(filepath + filename, 'utf8')
   const pattern = /\\n[ ]{2,}/g
@@ -15,8 +17,8 @@ function convertJsonFile(filepath: string, filename: string) {
   }
 }
 
-function checkJson() {
-  const i18config = require('./i18next-parser.config.js')
+function checkLangJsonFile() {
+  const i18config = require(`./${I18NEXT_CONFIG}`)
   const i18_dir = i18config.output.replace(/lang_\$LOCALE.json/, '')
   const files = fs.readdirSync(i18_dir, { withFileTypes: true })
   for (const dirent of files) {
@@ -31,13 +33,16 @@ function checkJson() {
   }
 }
 
-const spawn = cp.spawn(`i18next -c script/i18next-parser.config.js`, {
-  shell: true,
-  stdio: 'inherit',
-})
-spawn.on('close', code => {
-  if (code === 0) {
-    checkJson()
-    console.log('end')
-  }
-})
+function i18nextCreate() {
+  const spawn = cp.spawn(`i18next -c script/${I18NEXT_CONFIG}`, {
+    shell: true,
+    stdio: 'inherit',
+  })
+  spawn.on('close', code => {
+    if (code === 0) {
+      checkLangJsonFile()
+    }
+  })
+}
+
+i18nextCreate()
