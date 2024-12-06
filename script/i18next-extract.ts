@@ -3,7 +3,7 @@
 import * as cp from 'child_process'
 import fs from 'fs'
 
-const I18NEXT_CONFIG = "i18next-parser.config.js"
+const I18NEXT_CONFIG = 'i18next-parser.config.js'
 
 function convertJsonFile(filepath: string, filename: string) {
   const data = fs.readFileSync(filepath + filename, 'utf8')

@@ -1464,7 +1464,8 @@
   },
   "remote": {
     "placeholder-remote-url": "Remote URL",
-    "primary-remote-repository": "Primary remote repository ({{0}})"
+    "primary-remote-repository": "Primary remote repository ({{0}})",
+    "primary-remote-repository-darwin": "Primary Remote Repository ({{0}})"
   },
   "rename-branch-dialog": {
     "rename-branch": "Rename branch",
@@ -1518,6 +1519,7 @@
   },
   "revert-progress": {
     "hang-on": "Hang on…",
+    "revert-progress-button": "Revert progress button",
     "reverting": "Reverting…"
   },
   "saml-reauth-required": {
@@ -1769,7 +1771,11 @@
     "exciting-new-features-1": "Exciting new features have been added{{0}}. See ",
     "exciting-new-features-2": " or ",
     "exciting-new-features-3": ".",
+    "important-updates": "important updates",
     "restart-gitHub-desktop": "restart GitHub Desktop",
+    "this-version-is-missing-1": "This version of GitHub Desktop is missing ",
+    "this-version-is-missing-2": ". Please ",
+    "this-version-is-missing-3": " now to install pending updates.",
     "updated version-is-available-1": "An updated version of GitHub Desktop is available and will be installed at the next launch. See ",
     "updated version-is-available-2": "or ",
     "updated version-is-available-3": ".",

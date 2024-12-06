@@ -1464,7 +1464,8 @@
   },
   "remote": {
     "placeholder-remote-url": "リモートURL",
-    "primary-remote-repository": "主要リモート リポジトリ ({{0}})"
+    "primary-remote-repository": "主要リモート リポジトリ ({{0}})",
+    "primary-remote-repository-darwin": "主要リモート リポジトリ ({{0}})"
   },
   "rename-branch-dialog": {
     "rename-branch": "ブランチ名の変更",
@@ -1518,6 +1519,7 @@
   },
   "revert-progress": {
     "hang-on": "待つ…",
+    "revert-progress-button": "Revert progress button",
     "reverting": "戻す…"
   },
   "saml-reauth-required": {
@@ -1769,7 +1771,11 @@
     "exciting-new-features-1": "エキサイティングな新機能が{{0}}に追加されました。",
     "exciting-new-features-2": " を確認するか ",
     "exciting-new-features-3": " を選択してください。",
+    "important-updates": "重要な更新",
     "restart-gitHub-desktop": "GitHub Desktopの再起動",
+    "this-version-is-missing-1": "This version of GitHub Desktop is missing ",
+    "this-version-is-missing-2": ". Please ",
+    "this-version-is-missing-3": " now to install pending updates.",
     "updated version-is-available-1": "GitHub Desktop の更新バージョンが利用可能で、次回のリリース時にインストールされる予定です。",
     "updated version-is-available-2": " を確認するか ",
     "updated version-is-available-3": " を選択してください。",
