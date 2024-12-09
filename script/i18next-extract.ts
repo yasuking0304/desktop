@@ -5,7 +5,7 @@ import fs from 'fs'
 
 const I18NEXT_CONFIG = 'i18next-parser.config.js'
 
-function convertJsonFile(filepath: string, filename: string) {
+function convertLangJsonFile(filepath: string, filename: string) {
   const data = fs.readFileSync(filepath + filename, 'utf8')
   const pattern = /\\n[ ]{2,}/g
   const data2 = data.replace(pattern, ' ')
@@ -28,7 +28,7 @@ function checkLangJsonFile() {
       !dirent.name.match('_old') &&
       dirent.name.match(/.json$/)
     ) {
-      convertJsonFile(dirent.parentPath, dirent.name)
+      convertLangJsonFile(dirent.parentPath, dirent.name)
     }
   }
 }
