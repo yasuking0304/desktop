@@ -42,6 +42,16 @@ type AffiliationFilter =
   | 'collaborator,organization_member'
   | 'owner,collaborator,organization_member'
 
+type CopilotEndpointsResponse = {
+  readonly data: {
+    readonly viewer: {
+      readonly copilotEndpoints: {
+        readonly api: string
+      }
+    }
+  }
+}
+
 /**
  * Optional set of configurable settings for the fetchAll method
  */
@@ -1863,6 +1873,33 @@ export class API {
     } catch (e) {
       log.warn(`fetchUser: failed with endpoint ${this.endpoint}`, e)
       throw e
+    }
+  }
+
+  public async fetchCopilotAPIEndpoint(): Promise<string | null> {
+    const graphql = `
+    {
+      viewer {
+        copilotEndpoints {
+          api
+        }
+      }
+    }
+    `
+
+    const response = await this.request('POST', '/graphql', {
+      body: { query: graphql },
+    })
+    if (response === null) {
+      return null
+    }
+
+    try {
+      const json: CopilotEndpointsResponse =
+        (await response.json()) as CopilotEndpointsResponse
+      return json.data.viewer.copilotEndpoints.api
+    } catch (e) {
+      return null
     }
   }
 
