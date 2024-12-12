@@ -16,7 +16,7 @@ export class GitIgnore extends React.Component<IGitIgnoreProps, {}> {
   public render() {
     return (
       <DialogContent>
-        <p>
+        <p id="ignored-files-description">
           {t('git-ignore.gitignore-message-1', 'Editing ')}
           <Ref>.gitignore</Ref>
           {t(
@@ -31,6 +31,8 @@ export class GitIgnore extends React.Component<IGitIgnoreProps, {}> {
         </p>
 
         <TextArea
+          ariaLabel="Ignored files"
+          ariaDescribedBy="ignored-files-description"
           placeholder={t(
             'git-ignore.placeholder-ignored-files',
             'Ignored files'
