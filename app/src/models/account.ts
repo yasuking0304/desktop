@@ -33,6 +33,8 @@ export class Account {
    * @param avatarURL The profile URL to render for this account
    * @param id The GitHub.com or GitHub Enterprise database id for this account.
    * @param name The friendly name associated with this account
+   * @param plan The plan associated with this account
+   * @param copilotEndpoint The endpoint for the Copilot API
    */
   public constructor(
     public readonly login: string,
@@ -42,7 +44,8 @@ export class Account {
     public readonly avatarURL: string,
     public readonly id: number,
     public readonly name: string,
-    public readonly plan?: string
+    public readonly plan?: string,
+    public readonly copilotEndpoint?: string
   ) {}
 
   public withToken(token: string): Account {
@@ -54,7 +57,8 @@ export class Account {
       this.avatarURL,
       this.id,
       this.name,
-      this.plan
+      this.plan,
+      this.copilotEndpoint
     )
   }
 

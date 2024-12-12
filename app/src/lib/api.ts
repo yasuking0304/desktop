@@ -52,6 +52,19 @@ type CopilotEndpointsResponse = {
   }
 }
 
+type CopilotChatCompletionResponse = {
+  readonly choices: ReadonlyArray<{
+    readonly index: number
+    readonly message: {
+      readonly content: string
+      readonly name: string
+      readonly padding: string
+      readonly role: string
+    }
+  }>
+  readonly id: string
+}
+
 /**
  * Optional set of configurable settings for the fetchAll method
  */
@@ -814,16 +827,22 @@ export class API {
 
   /** Create a new API client from the given account. */
   public static fromAccount(account: Account): API {
-    return new API(account.endpoint, account.token)
+    return new API(account.endpoint, account.token, account.copilotEndpoint)
   }
 
   private endpoint: string
   private token: string
+  private copilotEndpoint?: string
 
   /** Create a new API client for the endpoint, authenticated with the token. */
-  public constructor(endpoint: string, token: string) {
+  public constructor(
+    endpoint: string,
+    token: string,
+    copilotEndpoint?: string
+  ) {
     this.endpoint = endpoint
     this.token = token
+    this.copilotEndpoint = copilotEndpoint
   }
 
   /**
@@ -832,7 +851,7 @@ export class API {
    */
   public async getAliveDesktopChannel(): Promise<IAPIAliveSignedChannel | null> {
     try {
-      const res = await this.request('GET', '/desktop_internal/alive-channel')
+      const res = await this.ghRequest('GET', '/desktop_internal/alive-channel')
       const signedChannel = await parsedResponse<IAPIAliveSignedChannel>(res)
       return signedChannel
     } catch (e) {
@@ -852,7 +871,7 @@ export class API {
    */
   public async getAliveWebSocketURL(): Promise<string | null> {
     try {
-      const res = await this.request('GET', '/alive_internal/websocket-url')
+      const res = await this.ghRequest('GET', '/alive_internal/websocket-url')
       if (res.status === HttpStatusCode.NotFound) {
         return null
       }
@@ -880,7 +899,7 @@ export class API {
     commentId: string
   ): Promise<IAPIComment | null> {
     try {
-      const response = await this.request(
+      const response = await this.ghRequest(
         'GET',
         `repos/${owner}/${name}/issues/comments/${commentId}`
       )
@@ -917,7 +936,7 @@ export class API {
     commentId: string
   ): Promise<IAPIComment | null> {
     try {
-      const response = await this.request(
+      const response = await this.ghRequest(
         'GET',
         `repos/${owner}/${name}/pulls/comments/${commentId}`
       )
@@ -943,7 +962,7 @@ export class API {
     name: string
   ): Promise<IAPIFullRepository | null> {
     try {
-      const response = await this.request('GET', `repos/${owner}/${name}`)
+      const response = await this.ghRequest('GET', `repos/${owner}/${name}`)
       if (response.status === HttpStatusCode.NotFound) {
         log.warn(`fetchRepository: '${owner}/${name}' returned a 404`)
         return null
@@ -980,7 +999,7 @@ export class API {
     name: string,
     protocol: GitProtocol | undefined
   ): Promise<IAPIRepositoryCloneInfo | null> {
-    const response = await this.request('GET', `repos/${owner}/${name}`, {
+    const response = await this.ghRequest('GET', `repos/${owner}/${name}`, {
       // Make sure we don't run into cache issues when fetching the repositories,
       // specially after repositories have been renamed.
       reloadCache: true,
@@ -1036,7 +1055,7 @@ export class API {
   /** Fetch the logged in account. */
   public async fetchAccount(): Promise<IAPIFullIdentity> {
     try {
-      const response = await this.request('GET', 'user')
+      const response = await this.ghRequest('GET', 'user')
       const result = await parsedResponse<IAPIFullIdentity>(response)
       return result
     } catch (e) {
@@ -1048,7 +1067,7 @@ export class API {
   /** Fetch the current user's emails. */
   public async fetchEmails(): Promise<ReadonlyArray<IAPIEmail>> {
     try {
-      const response = await this.request('GET', 'user/emails')
+      const response = await this.ghRequest('GET', 'user/emails')
       const result = await parsedResponse<ReadonlyArray<IAPIEmail>>(response)
 
       return Array.isArray(result) ? result : []
@@ -1077,7 +1096,7 @@ export class API {
   ): Promise<IAPIFullRepository> {
     try {
       const apiPath = org ? `orgs/${org.login}/repos` : 'user/repos'
-      const response = await this.request('POST', apiPath, {
+      const response = await this.ghRequest('POST', apiPath, {
         body: {
           name,
           description,
@@ -1110,7 +1129,7 @@ export class API {
   ): Promise<IAPIFullRepository> {
     try {
       const apiPath = `/repos/${owner}/${name}/forks`
-      const response = await this.request('POST', apiPath)
+      const response = await this.ghRequest('POST', apiPath)
       return await parsedResponse<IAPIFullRepository>(response)
     } catch (e) {
       log.error(
@@ -1238,7 +1257,7 @@ export class API {
   public async fetchPullRequest(owner: string, name: string, prNumber: string) {
     try {
       const path = `/repos/${owner}/${name}/pulls/${prNumber}`
-      const response = await this.request('GET', path)
+      const response = await this.ghRequest('GET', path)
       return await parsedResponse<IAPIPullRequest>(response)
     } catch (e) {
       log.warn(`failed fetching PR for ${owner}/${name}/pulls/${prNumber}`, e)
@@ -1257,7 +1276,7 @@ export class API {
   ) {
     try {
       const path = `/repos/${owner}/${name}/pulls/${prNumber}/reviews/${reviewId}`
-      const response = await this.request('GET', path)
+      const response = await this.ghRequest('GET', path)
       return await parsedResponse<IAPIPullRequestReview>(response)
     } catch (e) {
       log.debug(
@@ -1276,7 +1295,7 @@ export class API {
   ) {
     try {
       const path = `/repos/${owner}/${name}/pulls/${prNumber}/reviews`
-      const response = await this.request('GET', path)
+      const response = await this.ghRequest('GET', path)
       return await parsedResponse<IAPIPullRequestReview[]>(response)
     } catch (e) {
       log.debug(
@@ -1296,7 +1315,7 @@ export class API {
   ) {
     try {
       const path = `/repos/${owner}/${name}/pulls/${prNumber}/reviews/${reviewId}/comments`
-      const response = await this.request('GET', path)
+      const response = await this.ghRequest('GET', path)
       return await parsedResponse<IAPIComment[]>(response)
     } catch (e) {
       log.debug(
@@ -1315,7 +1334,7 @@ export class API {
   ) {
     try {
       const path = `/repos/${owner}/${name}/pulls/${prNumber}/comments`
-      const response = await this.request('GET', path)
+      const response = await this.ghRequest('GET', path)
       return await parsedResponse<IAPIComment[]>(response)
     } catch (e) {
       log.debug(
@@ -1334,7 +1353,7 @@ export class API {
   ) {
     try {
       const path = `/repos/${owner}/${name}/issues/${issueNumber}/comments`
-      const response = await this.request('GET', path)
+      const response = await this.ghRequest('GET', path)
       return await parsedResponse<IAPIComment[]>(response)
     } catch (e) {
       log.debug(
@@ -1356,7 +1375,7 @@ export class API {
   ): Promise<IAPIRefStatus | null> {
     const safeRef = encodeURIComponent(ref)
     const path = `repos/${owner}/${name}/commits/${safeRef}/status?per_page=100`
-    const response = await this.request('GET', path, {
+    const response = await this.ghRequest('GET', path, {
       reloadCache,
     })
 
@@ -1386,7 +1405,7 @@ export class API {
       Accept: 'application/vnd.github.antiope-preview+json',
     }
 
-    const response = await this.request('GET', path, {
+    const response = await this.ghRequest('GET', path, {
       customHeaders: headers,
       reloadCache,
     })
@@ -1417,7 +1436,7 @@ export class API {
     const customHeaders = {
       Accept: 'application/vnd.github.antiope-preview+json',
     }
-    const response = await this.request('GET', path, { customHeaders })
+    const response = await this.ghRequest('GET', path, { customHeaders })
     try {
       return await parsedResponse<IAPIWorkflowRuns>(response)
     } catch (err) {
@@ -1450,7 +1469,7 @@ export class API {
     const customHeaders = {
       Accept: 'application/vnd.github.antiope-preview+json',
     }
-    const response = await this.request('GET', path, { customHeaders })
+    const response = await this.ghRequest('GET', path, { customHeaders })
     try {
       const apiWorkflowRuns = await parsedResponse<IAPIWorkflowRuns>(response)
 
@@ -1477,7 +1496,7 @@ export class API {
     const customHeaders = {
       Accept: 'application/vnd.github.antiope-preview+json',
     }
-    const response = await this.request('GET', path, {
+    const response = await this.ghRequest('GET', path, {
       customHeaders,
     })
     try {
@@ -1501,7 +1520,7 @@ export class API {
   ): Promise<boolean> {
     const path = `/repos/${owner}/${name}/check-suites/${checkSuiteId}/rerequest`
 
-    return this.request('POST', path)
+    return this.ghRequest('POST', path)
       .then(x => x.ok)
       .catch(err => {
         log.debug(
@@ -1523,7 +1542,7 @@ export class API {
   ): Promise<boolean> {
     const path = `/repos/${owner}/${name}/actions/runs/${workflowRunId}/rerun-failed-jobs`
 
-    return this.request('POST', path)
+    return this.ghRequest('POST', path)
       .then(x => x.ok)
       .catch(err => {
         log.debug(
@@ -1544,7 +1563,7 @@ export class API {
   ): Promise<boolean> {
     const path = `/repos/${owner}/${name}/actions/jobs/${jobId}/rerun`
 
-    return this.request('POST', path)
+    return this.ghRequest('POST', path)
       .then(x => x.ok)
       .catch(err => {
         log.debug(
@@ -1556,7 +1575,7 @@ export class API {
   }
 
   public async getAvatarToken() {
-    return this.request('GET', `/desktop/avatar-token`)
+    return this.ghRequest('GET', `/desktop/avatar-token`)
       .then(x => x.json())
       .then((x: unknown) =>
         x &&
@@ -1581,7 +1600,7 @@ export class API {
     checkSuiteId: number
   ): Promise<IAPICheckSuite | null> {
     const path = `/repos/${owner}/${name}/check-suites/${checkSuiteId}`
-    const response = await this.request('GET', path)
+    const response = await this.ghRequest('GET', path)
 
     try {
       return await parsedResponse<IAPICheckSuite>(response)
@@ -1613,7 +1632,7 @@ export class API {
     }
 
     try {
-      const response = await this.request('GET', path, {
+      const response = await this.ghRequest('GET', path, {
         customHeaders: headers,
       })
       return await parsedResponse<IAPIPushControl>(response)
@@ -1641,7 +1660,7 @@ export class API {
   ): Promise<ReadonlyArray<IAPIBranch>> {
     const path = `repos/${owner}/${name}/branches?protected=true`
     try {
-      const response = await this.request('GET', path)
+      const response = await this.ghRequest('GET', path)
       return await parsedResponse<IAPIBranch[]>(response)
     } catch (err) {
       log.info(
@@ -1664,7 +1683,7 @@ export class API {
       branch
     )}`
     try {
-      const response = await this.request('GET', path)
+      const response = await this.ghRequest('GET', path)
       return await parsedResponse<IAPIRepoRule[]>(response)
     } catch (err) {
       log.info(
@@ -1685,7 +1704,7 @@ export class API {
   ): Promise<ReadonlyArray<IAPISlimRepoRuleset> | null> {
     const path = `repos/${owner}/${name}/rulesets`
     try {
-      const response = await this.request('GET', path)
+      const response = await this.ghRequest('GET', path)
       return await parsedResponse<ReadonlyArray<IAPISlimRepoRuleset>>(response)
     } catch (err) {
       log.info(
@@ -1707,7 +1726,7 @@ export class API {
   ): Promise<IAPIRepoRuleset | null> {
     const path = `repos/${owner}/${name}/rulesets/${id}`
     try {
-      const response = await this.request('GET', path)
+      const response = await this.ghRequest('GET', path)
       return await parsedResponse<IAPIRepoRuleset>(response)
     } catch (err) {
       log.info(
@@ -1733,7 +1752,7 @@ export class API {
     let nextPath: string | null = urlWithQueryString(path, params)
     let page: ReadonlyArray<T> = []
     do {
-      const response: Response = await this.request('GET', nextPath)
+      const response: Response = await this.ghRequest('GET', nextPath)
       if (opts.suppressErrors !== false && !response.ok) {
         log.warn(`fetchAll: '${path}' returned a ${response.status}`)
         return buf
@@ -1755,6 +1774,7 @@ export class API {
 
   /** Make an authenticated request to the client's endpoint with its token. */
   private async request(
+    endpoint: string,
     method: HTTPMethod,
     path: string,
     options: {
@@ -1763,8 +1783,8 @@ export class API {
       reloadCache?: boolean
     } = {}
   ): Promise<Response> {
-    const response = await request(
-      this.endpoint,
+    return await request(
+      endpoint,
       this.token,
       method,
       path,
@@ -1772,6 +1792,19 @@ export class API {
       options.customHeaders,
       options.reloadCache
     )
+  }
+
+  /** Make an authenticated request to the client's endpoint with its token. */
+  private async ghRequest(
+    method: HTTPMethod,
+    path: string,
+    options: {
+      body?: Object
+      customHeaders?: Object
+      reloadCache?: boolean
+    } = {}
+  ): Promise<Response> {
+    const response = await this.request(this.endpoint, method, path, options)
 
     // Only consider invalid token when the status is 401 and the response has
     // the X-GitHub-Request-Id header, meaning it comes from GH(E) and not from
@@ -1791,6 +1824,49 @@ export class API {
     return response
   }
 
+  private async copilotRequest(
+    path: string,
+    message: string
+  ): Promise<Response> {
+    if (!this.copilotEndpoint) {
+      throw new Error('No Copilot endpoint available')
+    }
+
+    return await this.request(this.copilotEndpoint, 'POST', path, {
+      body: {
+        model: 'gpt-4o',
+        messages: [
+          {
+            role: 'user',
+            content: message,
+          },
+        ],
+        stream: false,
+        response_format: {
+          type: 'json_object',
+        },
+      },
+    })
+  }
+
+  private async copilotChatCompletionRequest(
+    path: string,
+    message: string
+  ): Promise<CopilotChatCompletionResponse> {
+    const response = await this.copilotRequest(path, message)
+    const text = await response.text()
+    const lines = text.split('\n')
+    const DataLinePrefix = 'data: '
+    for (const line of lines) {
+      if (line.startsWith(DataLinePrefix)) {
+        const json = JSON.parse(line.substring(DataLinePrefix.length))
+        return json as CopilotChatCompletionResponse
+      }
+    }
+
+    throw new Error('No data line found in response')
+  }
+
   /**
    * Get the allowed poll interval for fetching. If an error occurs it will
    * return null.
@@ -1801,7 +1877,7 @@ export class API {
   ): Promise<number | null> {
     const path = `repos/${owner}/${name}/git`
     try {
-      const response = await this.request('HEAD', path)
+      const response = await this.ghRequest('HEAD', path)
       const interval = response.headers.get('x-poll-interval')
       if (interval) {
         const parsed = parseInt(interval, 10)
@@ -1831,7 +1907,7 @@ export class API {
 
     try {
       const path = `repos/${owner}/${name}/mentionables/users`
-      const response = await this.request('GET', path, {
+      const response = await this.ghRequest('GET', path, {
         customHeaders: headers,
       })
 
@@ -1860,7 +1936,7 @@ export class API {
    */
   public async fetchUser(login: string): Promise<IAPIFullIdentity | null> {
     try {
-      const response = await this.request(
+      const response = await this.ghRequest(
         'GET',
         `users/${encodeURIComponent(login)}`
       )
@@ -1876,7 +1952,7 @@ export class API {
     }
   }
 
-  public async fetchCopilotAPIEndpoint(): Promise<string | null> {
+  public async fetchCopilotAPIEndpoint(): Promise<string | undefined> {
     const graphql = `
     {
       viewer {
@@ -1887,19 +1963,23 @@ export class API {
     }
     `
 
-    const response = await this.request('POST', '/graphql', {
-      body: { query: graphql },
-    })
-    if (response === null) {
-      return null
-    }
-
     try {
+      const response = await this.ghRequest('POST', '/graphql', {
+        body: { query: graphql },
+      })
+      if (response === null) {
+        return undefined
+      }
+
       const json: CopilotEndpointsResponse =
         (await response.json()) as CopilotEndpointsResponse
       return json.data.viewer.copilotEndpoints.api
     } catch (e) {
-      return null
+      log.warn(
+        `fetchCopilotAPIEndpoint: failed with endpoint ${this.endpoint}`,
+        e
+      )
+      return undefined
     }
   }
 
@@ -1993,47 +2073,31 @@ export class API {
   public async getDiffChangesCommitDetails(
     diff: string
   ): Promise<ICopilotCommitDetails | null> {
-    const response = await this.openAIRequest(
-      `
-          You are a software developer who gets a code changeset (in the git
-          diff output format) affecting one or multiple files and writes a
-          commit title and commit description. The commit title should be no
-          longer than 50 characters, and should summarize the contents of the
-          changeset for fellow developers reading the commit history. The commit
-          description can be larger, and should provide more context about the
-          changeset, including why the changeset is being made, and any other
-          relevant information. The commit description is optional if the
-          changeset is small enought that it can be described in the commit
-          title. Be brief and concise. Do not sound like ChatGPT. Do NOT include
-          a description of changes in "lock" files from dependency managers like
-          npm, yarn, or pip, unless those are the only changes in the commit.
-          Your response must be a JSON object with the attributes "title"
-          and "description" containing the commit title and commit description.
-          `,
-      diff
-    )
+    try {
+      const response = await this.copilotChatCompletionRequest(
+        '/agents/github-desktop-commit-message-generation',
+        diff
+      )
 
-    const bestChoice = response.choices.find(
-      choice => choice.finish_reason === 'stop'
-    )
+      const choice = response.choices.at(0)
 
-    if (!bestChoice) {
+      if (!choice) {
+        return null
+      }
+
+      const message = choice.message.content
+      if (!message) {
+        return null
+      }
+
+      return JSON.parse(message)
+    } catch (e) {
+      log.warn(
+        `getDiffChangesCommitDetails: failed with endpoint ${this.endpoint}`,
+        e
+      )
       return null
     }
-
-    const message = bestChoice.message.content
-    if (
-      !message ||
-      !message.startsWith('```json\n') ||
-      !message.endsWith('\n```')
-    ) {
-      return null
-    }
-
-    // The message starts with ""```json\n" and then the JSON object, and ends with "\n```"
-    // We want to extract the JSON object itself
-    const jsonString = message.slice(8, message.length - 4)
-    return JSON.parse(jsonString)
   }
 
   public async getDiffCommitsSuggestion(
@@ -2130,6 +2194,7 @@ export async function fetchUser(
   try {
     const user = await api.fetchAccount()
     const emails = await api.fetchEmails()
+    const copilotEndpoint = await api.fetchCopilotAPIEndpoint()
 
     return new Account(
       user.login,
@@ -2139,7 +2204,8 @@ export async function fetchUser(
       user.avatar_url,
       user.id,
       user.name || user.login,
-      user.plan?.name
+      user.plan?.name,
+      copilotEndpoint
     )
   } catch (e) {
     log.warn(`fetchUser: failed with endpoint ${endpoint}`, e)
