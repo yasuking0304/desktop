@@ -42,6 +42,7 @@ type AffiliationFilter =
   | 'collaborator,organization_member'
   | 'owner,collaborator,organization_member'
 
+/** Response type of GraphQL query of Copilot endpoints */
 type CopilotEndpointsResponse = {
   readonly data: {
     readonly viewer: {
@@ -52,17 +53,14 @@ type CopilotEndpointsResponse = {
   }
 }
 
+/** Response type Copilot chat completions response API */
 type CopilotChatCompletionResponse = {
   readonly choices: ReadonlyArray<{
     readonly index: number
     readonly message: {
       readonly content: string
-      readonly name: string
-      readonly padding: string
-      readonly role: string
     }
   }>
-  readonly id: string
 }
 
 /**
@@ -1794,7 +1792,10 @@ export class API {
     )
   }
 
-  /** Make an authenticated request to the client's endpoint with its token. */
+  /**
+   * Make an authenticated request to the client's endpoint with its token.
+   * Used for GitHub API requests.
+   */
   private async ghRequest(
     method: HTTPMethod,
     path: string,
@@ -1824,15 +1825,19 @@ export class API {
     return response
   }
 
+  /**
+   * Make an authenticated request to the client's Copilot endpoint with its
+   * token. Used for Copilot API requests.
+   */
   private async copilotRequest(
     path: string,
     message: string
-  ): Promise<Response> {
+  ): Promise<CopilotChatCompletionResponse> {
     if (!this.copilotEndpoint) {
       throw new Error('No Copilot endpoint available')
     }
 
-    return await this.request(this.copilotEndpoint, 'POST', path, {
+    const response = await this.request(this.copilotEndpoint, 'POST', path, {
       body: {
         model: 'gpt-4o',
         messages: [
@@ -1847,16 +1852,13 @@ export class API {
         },
       },
     })
-  }
 
-  private async copilotChatCompletionRequest(
-    path: string,
-    message: string
-  ): Promise<CopilotChatCompletionResponse> {
-    const response = await this.copilotRequest(path, message)
     const text = await response.text()
+    // Responses include multiple lines starting with "data: " followed by
+    // a JSON object. We're only interested in the JSON object of the first line.
     const lines = text.split('\n')
     const DataLinePrefix = 'data: '
+
     for (const line of lines) {
       if (line.startsWith(DataLinePrefix)) {
         const json = JSON.parse(line.substring(DataLinePrefix.length))
@@ -2074,7 +2076,7 @@ export class API {
     diff: string
   ): Promise<ICopilotCommitDetails | null> {
     try {
-      const response = await this.copilotChatCompletionRequest(
+      const response = await this.copilotRequest(
         '/agents/github-desktop-commit-message-generation',
         diff
       )
