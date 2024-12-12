@@ -29,14 +29,10 @@ import { DragType } from '../../models/drag-drop'
 import { PopupType } from '../../models/popup'
 import { getUniqueCoauthorsAsAuthors } from '../../lib/unique-coauthors-as-authors'
 import { getSquashedCommitDescription } from '../../lib/squash/squashed-commit-description'
-import {
-  doMergeCommitsExistAfterCommit,
-  getCommitRangeRawDiff,
-} from '../../lib/git'
+import { doMergeCommitsExistAfterCommit } from '../../lib/git'
 import { KeyboardInsertionData } from '../lib/list'
 import { Account } from '../../models/account'
 import { Emoji } from '../../lib/emoji'
-import { API } from '../../lib/api'
 
 interface ICompareSidebarProps {
   readonly repository: Repository
@@ -274,8 +270,6 @@ export class CompareSidebar extends React.Component<
         onCherryPick={this.onCherryPick}
         onDropCommitInsertion={this.onDropCommitInsertion}
         onKeyboardReorder={this.onKeyboardReorder}
-        onExplainCommits={this.onExplainCommits}
-        onFindCommitsMistakes={this.onFindCommitsMistakes}
         onCancelKeyboardReorder={this.onCancelKeyboardReorder}
         onSquash={this.onSquash}
         emptyListMessage={emptyListMessage}
@@ -663,50 +657,6 @@ export class CompareSidebar extends React.Component<
         commits: toReorder,
         itemIndices: toReorder.map(c => commitSHAs.indexOf(c.sha)),
       },
-    })
-  }
-
-  private onExplainCommits = async (commits: ReadonlyArray<Commit>) => {
-    const commitShas = commits.map(c => c.sha)
-    const diff = await getCommitRangeRawDiff(this.props.repository, commitShas)
-
-    if (!diff) {
-      return
-    }
-
-    const api = API.fromAccount(this.props.accounts[0])
-    const explanation = await api.getCommitRangeExplanation(diff)
-
-    if (!explanation) {
-      return
-    }
-
-    this.props.dispatcher.showPopup({
-      type: PopupType.MarkdownMessage,
-      title: 'Commit explanation',
-      markdownBody: explanation,
-    })
-  }
-
-  private onFindCommitsMistakes = async (commits: ReadonlyArray<Commit>) => {
-    const commitShas = commits.map(c => c.sha)
-    const diff = await getCommitRangeRawDiff(this.props.repository, commitShas)
-
-    if (!diff) {
-      return
-    }
-
-    const api = API.fromAccount(this.props.accounts[0])
-    const explanation = await api.getCommitRangeFeedback(diff)
-
-    if (!explanation) {
-      return
-    }
-
-    this.props.dispatcher.showPopup({
-      type: PopupType.MarkdownMessage,
-      title: 'Commit feedback',
-      markdownBody: explanation,
     })
   }
 

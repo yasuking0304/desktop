@@ -243,50 +243,6 @@ export async function getCommitRangeDiff(
 }
 
 /**
- * Render the difference between two commits for a file
- *
- */
-export async function getCommitRangeRawDiff(
-  repository: Repository,
-  commits: ReadonlyArray<string>,
-  useNullTreeSHA: boolean = false
-): Promise<string | null> {
-  if (commits.length === 0) {
-    throw new Error('No commits to diff...')
-  }
-
-  const oldestCommitRef = useNullTreeSHA ? NullTreeSHA : `${commits[0]}^`
-  const latestCommit = commits.at(-1) ?? '' // can't be undefined since commits.length > 0
-  const args = [
-    'diff',
-    oldestCommitRef,
-    latestCommit,
-    '--patch-with-raw',
-    '-z',
-    '--no-color',
-  ]
-
-  const result = await git(args, repository.path, 'getCommitRangeRawDiff', {
-    maxBuffer: Infinity,
-    expectedErrors: new Set([GitError.BadRevision]),
-  })
-
-  // This should only happen if the oldest commit does not have a parent (ex:
-  // initial commit of a branch) and therefore `SHA^` is not a valid reference.
-  // In which case, we will retry with the null tree sha.
-  if (result.gitError === GitError.BadRevision && useNullTreeSHA === false) {
-    return getCommitRangeRawDiff(repository, commits, true)
-  }
-
-  // No more than 10MB
-  if (result.stdout.length > 10 * 1024 * 1024) {
-    throw new Error('Diff is too large to render')
-  }
-
-  return result.stdout
-}
-
-/**
  * Get the files that were changed for the merge base comparison of two branches.
  * (What would be the result of a merge)
  */

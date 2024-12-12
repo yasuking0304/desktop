@@ -21,8 +21,6 @@ import {
   clearCertificateErrorSuppressionFor,
   suppressCertificateErrorFor,
 } from './suppress-certificate-error'
-import OpenAI from 'openai'
-import { ChatCompletion } from 'openai/resources'
 
 const envEndpoint = process.env['DESKTOP_GITHUB_DOTCOM_API_ENDPOINT']
 const envHTMLURL = process.env['DESKTOP_GITHUB_DOTCOM_HTML_URL']
@@ -1985,93 +1983,6 @@ export class API {
     }
   }
 
-  private openAIRequest(
-    prompt: string,
-    content: string
-  ): Promise<ChatCompletion> {
-    const endpoint = 'https://models.inference.ai.azure.com'
-    const modelName = 'gpt-4o'
-
-    const client = new OpenAI({
-      baseURL: endpoint,
-      apiKey: this.token,
-      dangerouslyAllowBrowser: true,
-    })
-
-    return client.chat.completions.create({
-      messages: [
-        {
-          role: 'system',
-          content: prompt,
-        },
-        {
-          role: 'user',
-          content: content,
-        },
-      ],
-      model: modelName,
-      temperature: 1,
-      max_tokens: 1000,
-      top_p: 1,
-    })
-  }
-
-  public async getCommitRangeExplanation(diff: string): Promise<string | null> {
-    const response = await this.openAIRequest(
-      `
-      You are a software developer who gets a code changeset (in the git
-      diff output format) across one or multiple commits, affecting one or
-      multiple files, and must explain what that changeset does to the project.
-      You should explain why the changeset was made and any other relevant
-      information. Be brief and concise. Do not sound like ChatGPT. Do NOT
-      include a description of changes in "lock" files from dependency managers
-      like npm, yarn, or pip, unless those are the only changes.
-      `,
-      diff
-    )
-
-    const bestChoice = response.choices.find(
-      choice => choice.finish_reason === 'stop'
-    )
-
-    if (!bestChoice) {
-      return null
-    }
-
-    return bestChoice.message.content
-  }
-
-  public async getCommitRangeFeedback(diff: string): Promise<string | null> {
-    const response = await this.openAIRequest(
-      `
-      You are a software developer who gets a code changeset (in the git
-      diff output format) across one or multiple commits, affecting one or
-      multiple files, and must look for mistakes in those changes. Mistakes
-      could be typos, logic bugs, security vulnerabilities, secret leaks, or
-      anything else that could be a problem.
-      You should explain briefly why each of the issues you find is actually an
-      issue. Be brief and concise. Do not sound like ChatGPT. Do NOT
-      include a description of changes in "lock" files from dependency managers
-      like npm, yarn, or pip, unless those are the only changes.
-      Use markdown for your output and, for each issue, quote the specific part
-      of the diff that is affected by it.
-      If you cannot find issues, just reply with
-      "This code looks perfect to me, :shipit: !".
-      `,
-      diff
-    )
-
-    const bestChoice = response.choices.find(
-      choice => choice.finish_reason === 'stop'
-    )
-
-    if (!bestChoice) {
-      return null
-    }
-
-    return bestChoice.message.content
-  }
-
   public async getDiffChangesCommitDetails(
     diff: string
   ): Promise<ICopilotCommitDetails | null> {
@@ -2100,71 +2011,6 @@ export class API {
       )
       return null
     }
-  }
-
-  public async getDiffCommitsSuggestion(
-    diff: string
-  ): Promise<ICopilotCommitDetails | null> {
-    const response = await this.openAIRequest(
-      `
-          You are a software developer who gets a code changeset (in the git
-          diff output format) affecting one or multiple files and must split
-          those changes in 1 or more commits to keep the git history clean and
-          logical. If there aren't many changes or they are cohesive enough, you
-          will reply "[]" (an empty array). Otherwise, you will try to find a good
-          criteria to split the changes in 2 or more commits, and reply with an
-          array of JSON objects with the following attributes:
-          - "title": the commit title, which should be no longer than 50 characters,
-            and should summarize the contents of the changeset for fellow developers
-            reading the commit history.
-          - "description": the commit description, which can be larger, and should
-            provide more context about the changeset, including why the changeset is
-            being made, and any other relevant information. The commit description
-            is optional if the changeset is small enought that it can be described in
-            the commit title. Be brief and concise. Do not sound like ChatGPT. Do NOT
-            include a description of changes in "lock" files from dependency managers
-            like npm, yarn, or pip, unless those are the only changes in the commit.
-          - "files": an array of JSON objects with the following attributes:
-            - "path": the path of the file in the repository that is affected by the
-              commit.
-            - "lines": array of line numbers that are affected by the commit. Only
-              added or removed lines should be included, not unchanged lines.
-
-          Try to split the changes in a way that makes sense, and that the commits
-          are small enough that they can be reviewed and understood by other
-          developers. Try that every commit is self-contained and does not depend
-          on changes in other commits. For example: don't include in a commit
-          code that invokes a function that hasn't been committed yet (or that
-          won't be committed in the same commit).
-          The resulting list of commits should include all the changes in the
-          original diff, and should not miss any change. The commits cannot include
-          the same lines, there must be no overlap.
-          Think slowly, step by step.
-          `,
-      diff
-    )
-
-    const bestChoice = response.choices.find(
-      choice => choice.finish_reason === 'stop'
-    )
-
-    if (!bestChoice) {
-      return null
-    }
-
-    const message = bestChoice.message.content
-    if (
-      !message ||
-      !message.startsWith('```json\n') ||
-      !message.endsWith('\n```')
-    ) {
-      return null
-    }
-
-    // The message starts with ""```json\n" and then the JSON object, and ends with "\n```"
-    // We want to extract the JSON object itself
-    const jsonString = message.slice(8, message.length - 4)
-    return JSON.parse(jsonString)
   }
 }
 

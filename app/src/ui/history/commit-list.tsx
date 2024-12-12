@@ -129,9 +129,6 @@ interface ICommitListProps {
   /** Callback to fire to start reordering commits with the keyboard */
   readonly onKeyboardReorder?: (toReorder: ReadonlyArray<Commit>) => void
 
-  readonly onExplainCommits?: (commits: ReadonlyArray<Commit>) => void
-  readonly onFindCommitsMistakes?: (commits: ReadonlyArray<Commit>) => void
-
   /** Callback to fire to squashing commits  */
   readonly onSquash?: (
     toSquash: ReadonlyArray<Commit>,
@@ -741,20 +738,6 @@ export class CommitList extends React.Component<
         label: 'Create Tag…',
         action: () => this.props.onCreateTag?.(commit.sha),
         enabled: this.props.onCreateTag !== undefined,
-      },
-      {
-        label: __DARWIN__
-          ? `Explain Changes in Commit`
-          : `Explain changes in commit`,
-        action: () => this.props.onExplainCommits?.([commit]),
-        enabled: true,
-      },
-      {
-        label: __DARWIN__
-          ? `Look for Mistakes in Commit`
-          : `Look for mistakes in commit`,
-        action: () => this.props.onFindCommitsMistakes?.([commit]),
-        enabled: true,
       }
     )
 
@@ -879,20 +862,6 @@ export class CommitList extends React.Component<
           : `Reorder ${count} commits…`,
         action: () => this.props.onKeyboardReorder?.(this.selectedCommits),
         enabled: this.canReorder(),
-      },
-      {
-        label: __DARWIN__
-          ? `Explain Changes in ${count} Commits`
-          : `Explain changes in ${count} commits`,
-        action: () => this.props.onExplainCommits?.(this.selectedCommits),
-        enabled: true,
-      },
-      {
-        label: __DARWIN__
-          ? `Look for Mistakes in ${count} Commits`
-          : `Look for mistakes in ${count} commits`,
-        action: () => this.props.onFindCommitsMistakes?.(this.selectedCommits),
-        enabled: true,
       },
     ]
   }
