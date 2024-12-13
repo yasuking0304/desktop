@@ -129,7 +129,10 @@ const oauthScopes = ['repo', 'user', 'workflow']
 
 enum HttpStatusCode {
   NotModified = 304,
+  BadRequest = 400,
+  Unauthorized = 401,
   NotFound = 404,
+  TooManyRequests = 429,
 }
 
 /**
@@ -1811,7 +1814,7 @@ export class API {
     // We're also not considering a token has been invalidated when the reason
     // behind a 401 is the fact that any kind of 2 factor auth is required.
     if (
-      response.status === 401 &&
+      response.status === HttpStatusCode.Unauthorized &&
       response.headers.has('X-GitHub-Request-Id') &&
       !response.headers.has('X-GitHub-OTP')
     ) {
@@ -1851,7 +1854,41 @@ export class API {
       },
     })
 
+    if (response.status === HttpStatusCode.TooManyRequests) {
+      const retryAfter = response.headers.get('Retry-After')
+      if (retryAfter) {
+        throw new Error(`Rate limited, retry after ${retryAfter} seconds`)
+      }
+    } else if (response.status === HttpStatusCode.Unauthorized) {
+      const body = await response.text()
+      if (body.includes('unauthorized: not licensed to use Copilot')) {
+        throw new Error('Unauthorized: not licensed to use Copilot')
+      } else if (
+        body.includes(
+          'unauthorized: not authorized to use this Copilot feature'
+        )
+      ) {
+        throw new Error(
+          'Unauthorized: not authorized to use this Copilot feature'
+        )
+      } else if (
+        body.includes('integration does not have GitHub chat enabled')
+      ) {
+        throw new Error('Integration does not have GitHub chat enabled')
+      } else {
+        throw new Error('Unauthorized: unknown')
+      }
+    } else if (response.status === 466) {
+      throw new Error('Client issue: unsupported API version')
+    } else if (response.status >= HttpStatusCode.BadRequest) {
+      const internalError = `Internal server error, code: ${
+        response.status
+      }, request ID: ${response.headers.get('X-Github-Request-Id')}`
+      throw new Error(internalError)
+    }
+
     const text = await response.text()
+
     // Responses include multiple lines starting with "data: " followed by
     // a JSON object. We're only interested in the JSON object of the first line.
     const lines = text.split('\n')
@@ -1941,7 +1978,7 @@ export class API {
         `users/${encodeURIComponent(login)}`
       )
 
-      if (response.status === 404) {
+      if (response.status === HttpStatusCode.NotFound) {
         return null
       }
 
