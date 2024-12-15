@@ -158,10 +158,17 @@ export class SignIn extends React.Component<ISignInProps, ISignInState> {
     return (
       <DialogContent>
         <p className="existing-account-warning">
-          You're already signed in to{' '}
-          <Ref>{new URL(getHTMLURL(state.endpoint)).host}</Ref> with the account{' '}
-          <Ref>{state.existingAccount.login}</Ref>. If you continue, you will
-          first be signed out.
+          {t(
+            'sign-in.you-are-already-signed-1',
+            `You're already signed in to `
+          )}
+          <Ref>{new URL(getHTMLURL(state.endpoint)).host}</Ref>
+          {t('sign-in.you-are-already-signed-2', ' with the account ')}
+          <Ref>{state.existingAccount.login}</Ref>
+          {t(
+            'sign-in.you-are-already-signed-3.',
+            '. If you continue, you will first be signed out.'
+          )}
         </p>
         {browserSignInInfoContent}
       </DialogContent>
@@ -187,8 +194,12 @@ export class SignIn extends React.Component<ISignInProps, ISignInState> {
     const credentialHelperInfo =
       this.props.isCredentialHelperSignIn && this.props.credentialHelperUrl ? (
         <p>
-          Git requesting credentials to access{' '}
-          <Ref>{this.props.credentialHelperUrl}</Ref>.
+          {t(
+            'sign-in.git-requesting-credentials-1',
+            'Git requesting credentials to access '
+          )}
+          <Ref>{this.props.credentialHelperUrl}</Ref>
+          {t('sign-in.git-requesting-credentials-2', '.')}
         </p>
       ) : undefined
 

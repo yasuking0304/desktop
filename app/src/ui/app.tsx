@@ -26,7 +26,7 @@ import {
   isMacOSAndNoLongerSupportedByElectron,
   isWindowsAndNoLongerSupportedByElectron,
 } from '../lib/get-os'
-import { MenuEvent } from '../main-process/menu'
+import { MenuEvent, isTestMenuEvent } from '../main-process/menu'
 import {
   Repository,
   getGitHubHtmlUrl,
@@ -159,7 +159,6 @@ import { clamp } from '../lib/clamp'
 import { generateRepositoryListContextMenu } from './repositories-list/repository-list-item-context-menu'
 import * as ipcRenderer from '../lib/ipc-renderer'
 import { DiscardChangesRetryDialog } from './discard-changes/discard-changes-retry-dialog'
-import { generateDevReleaseSummary } from '../lib/release-notes'
 import { PullRequestReview } from './notifications/pull-request-review'
 import { getRepositoryType } from '../lib/git'
 import { SSHUserPassword } from './ssh/ssh-user-password'
@@ -168,7 +167,6 @@ import { UnreachableCommitsDialog } from './history/unreachable-commits-dialog'
 import { OpenPullRequestDialog } from './open-pull-request/open-pull-request-dialog'
 import { sendNonFatalException } from '../lib/helpers/non-fatal-exception'
 import { createCommitURL } from '../lib/commit-url'
-import { uuid } from '../lib/uuid'
 import { InstallingUpdate } from './installing-update/installing-update'
 import { DialogStackContext } from './dialog'
 import { t } from 'i18next'
@@ -183,6 +181,7 @@ import { IconPreviewDialog } from './octicons/icon-preview-dialog'
 import { accessibilityBannerDismissed } from './banners/accessibilty-settings-banner'
 import { isCertificateErrorSuppressedFor } from '../lib/suppress-certificate-error'
 import { webUtils } from 'electron'
+import { showTestUI } from './lib/test-ui-components/test-ui-components'
 
 const MinuteInMilliseconds = 1000 * 60
 const HourInMilliseconds = MinuteInMilliseconds * 60
@@ -420,7 +419,7 @@ export class App extends React.Component<IAppProps, IAppState> {
 
   private onMenuEvent(name: MenuEvent): any {
     // Don't react to menu events when an error dialog is shown.
-    if (name !== 'show-app-error' && this.state.errorCount > 1) {
+    if (name !== 'test-app-error' && this.state.errorCount > 1) {
       return
     }
 
@@ -493,8 +492,6 @@ export class App extends React.Component<IAppProps, IAppState> {
         return this.showCloneRepo()
       case 'show-about':
         return this.showAbout()
-      case 'boomtown':
-        return this.boomtown()
       case 'go-to-commit-message':
         return this.goToCommitMessage()
       case 'open-pull-request':
@@ -511,201 +508,27 @@ export class App extends React.Component<IAppProps, IAppState> {
         return this.openCurrentRepositoryInExternalEditor()
       case 'select-all':
         return this.selectAll()
-      case 'show-release-notes-popup':
-        return this.showFakeReleaseNotesPopup()
-      case 'show-thank-you-popup':
-        return this.showFakeThankYouPopup()
       case 'show-stashed-changes':
         return this.showStashedChanges()
       case 'hide-stashed-changes':
         return this.hideStashedChanges()
-      case 'test-show-notification':
-        return this.testShowNotification()
-      case 'test-prune-branches':
-        return this.testPruneBranches()
       case 'find-text':
         return this.findText()
-      case 'show-app-error':
-        return this.props.dispatcher.postError(
-          new Error('Test Error - to use default error handler' + uuid())
-        )
       case 'increase-active-resizable-width':
         return this.resizeActiveResizable('increase-active-resizable-width')
       case 'decrease-active-resizable-width':
         return this.resizeActiveResizable('decrease-active-resizable-width')
-      case 'show-update-banner':
-        return this.showFakeUpdateBanner({})
-      case 'show-arm64-banner':
-        return this.showFakeUpdateBanner({ isArm64: true })
-      case 'show-showcase-update-banner':
-        return this.showFakeUpdateBanner({ isShowcase: true })
-      case 'show-thank-you-banner':
-        return this.showFakeThankYouBanner()
-      case 'show-test-reorder-banner':
-        return this.showFakeReorderBanner()
-      case 'show-test-undone-banner':
-        return this.showFakeUndoneBanner()
-      case 'show-test-cherry-pick-conflicts-banner':
-        return this.showFakeCherryPickConflictBanner()
-      case 'show-test-merge-successful-banner':
-        return this.showFakeMergeSuccessfulBanner()
-      case 'show-icon-test-dialog':
-        return this.showIconTestDialog()
       default:
+        if (isTestMenuEvent(name)) {
+          return showTestUI(
+            name,
+            this.getRepository(),
+            this.props.dispatcher,
+            this.state.emoji
+          )
+        }
         return assertNever(name, `Unknown menu event name: ${name}`)
     }
-  }
-
-  private showFakeUpdateBanner(options: {
-    isArm64?: boolean
-    isShowcase?: boolean
-  }) {
-    updateStore.setIsx64ToARM64ImmediateAutoUpdate(options.isArm64 === true)
-
-    if (options.isShowcase) {
-      this.props.dispatcher.setUpdateShowCaseVisibility(true)
-      return
-    }
-
-    this.props.dispatcher.setUpdateBannerVisibility(true)
-  }
-
-  private showFakeThankYouBanner() {
-    const userContributions: ReadonlyArray<ReleaseNote> = [
-      {
-        kind: 'fixed',
-        message: 'A totally awesome fix that fixes something - #123. Thanks!',
-      },
-      {
-        kind: 'added',
-        message:
-          'You can now do this new thing that was added here - #456. Thanks!',
-      },
-    ]
-
-    const banner: Banner = {
-      type: BannerType.OpenThankYouCard,
-      // Grab emoji's by reference because we could still be loading emoji's
-      emoji: this.state.emoji,
-      onOpenCard: () => this.openThankYouCard(userContributions, getVersion()),
-      onThrowCardAway: () => {
-        console.log('Thrown away :(....')
-      },
-    }
-    this.setBanner(banner)
-  }
-
-  /**
-   * Show a release notes popup for a fake release, intended only to
-   * make it easier to verify changes to the popup. Has no meaning
-   * about a new release being available.
-   */
-  private async showFakeReleaseNotesPopup() {
-    if (__DEV__) {
-      this.props.dispatcher.showPopup({
-        type: PopupType.ReleaseNotes,
-        newReleases: await generateDevReleaseSummary(),
-      })
-    }
-  }
-
-  private showFakeThankYouPopup() {
-    if (__DEV__) {
-      this.props.dispatcher.showPopup({
-        type: PopupType.ThankYou,
-        userContributions: [
-          {
-            kind: 'new',
-            message: '[New] Added fake thank you dialog',
-          },
-        ],
-        friendlyName: 'kind contributor',
-        latestVersion: '3.0.0',
-      })
-    }
-  }
-
-  private async showFakeReorderBanner() {
-    if (__DEV__) {
-      this.props.dispatcher.setBanner({
-        type: BannerType.SuccessfulReorder,
-        count: 1,
-        onUndo: () => {
-          this.props.dispatcher.setBanner({
-            type: BannerType.ReorderUndone,
-            commitsCount: 1,
-          })
-        },
-      })
-    }
-  }
-
-  private async showFakeUndoneBanner() {
-    if (__DEV__) {
-      this.props.dispatcher.setBanner({
-        type: BannerType.ReorderUndone,
-        commitsCount: 1,
-      })
-    }
-  }
-
-  private async showFakeCherryPickConflictBanner() {
-    if (__DEV__) {
-      this.props.dispatcher.setBanner({
-        type: BannerType.CherryPickConflictsFound,
-        targetBranchName: 'fake-branch',
-        onOpenConflictsDialog: () => {},
-      })
-    }
-  }
-
-  private async showFakeMergeSuccessfulBanner() {
-    if (__DEV__) {
-      this.props.dispatcher.setBanner({
-        type: BannerType.SuccessfulMerge,
-        ourBranch: 'fake-branch',
-      })
-    }
-  }
-
-  private async showIconTestDialog() {
-    if (__DEV__) {
-      this.props.dispatcher.showPopup({
-        type: PopupType.TestIcons,
-      })
-    }
-  }
-
-  private testShowNotification() {
-    if (
-      __RELEASE_CHANNEL__ !== 'development' &&
-      __RELEASE_CHANNEL__ !== 'test'
-    ) {
-      return
-    }
-
-    // if current repository is not repository with github repository, return
-    const repository = this.getRepository()
-    if (
-      repository == null ||
-      repository instanceof CloningRepository ||
-      !isRepositoryWithGitHubRepository(repository)
-    ) {
-      return
-    }
-
-    this.props.dispatcher.showPopup({
-      type: PopupType.TestNotifications,
-      repository,
-    })
-  }
-
-  private testPruneBranches() {
-    if (!__DEV__) {
-      return
-    }
-
-    this.props.appStore._testPruneBranches()
   }
 
   /**
@@ -768,12 +591,6 @@ export class App extends React.Component<IAppProps, IAppState> {
     } else {
       document.dispatchEvent(event)
     }
-  }
-
-  private boomtown() {
-    setImmediate(() => {
-      throw new Error('Boomtown!')
-    })
   }
 
   private async goToCommitMessage() {
@@ -1759,7 +1576,7 @@ export class App extends React.Component<IAppProps, IAppState> {
             useCustomShell={this.state.useCustomShell}
             customShell={this.state.customShell}
             repositoryIndicatorsEnabled={this.state.repositoryIndicatorsEnabled}
-            onOpenFileInExternalEditor={this.openFileInExternalEditor}
+            onEditGlobalGitConfig={this.editGlobalGitConfig}
             underlineLinks={this.state.underlineLinks}
             showDiffCheckMarks={this.state.showDiffCheckMarks}
           />
@@ -2005,6 +1822,7 @@ export class App extends React.Component<IAppProps, IAppState> {
             key="lsf-attribute-mismatch"
             onDismissed={onPopupDismissedFn}
             onUpdateExistingFilters={this.updateExistingLFSFilters}
+            onEditGlobalGitConfig={this.editGlobalGitConfig}
           />
         )
       case PopupType.UpstreamAlreadyExists:
@@ -2718,6 +2536,9 @@ export class App extends React.Component<IAppProps, IAppState> {
     this.props.dispatcher.installGlobalLFSFilters(true)
   }
 
+  private editGlobalGitConfig = () =>
+    this.props.dispatcher.editGlobalGitConfig()
+
   private initializeLFS = (repositories: ReadonlyArray<Repository>) => {
     this.props.dispatcher.installLFSHooks(repositories)
   }
@@ -3318,6 +3139,8 @@ export class App extends React.Component<IAppProps, IAppState> {
         isX64ToARM64ImmediateAutoUpdate={
           updateStore.state.isX64ToARM64ImmediateAutoUpdate
         }
+        prioritizeUpdate={updateStore.state.prioritizeUpdate}
+        prioritizeUpdateInfoUrl={updateStore.state.prioritizeUpdateInfoUrl}
         onDismissed={this.onUpdateAvailableDismissed}
         isUpdateShowcaseVisible={this.state.isUpdateShowcaseVisible}
         emoji={this.state.emoji}

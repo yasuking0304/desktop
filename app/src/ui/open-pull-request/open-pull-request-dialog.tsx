@@ -120,6 +120,7 @@ export class OpenPullRequestDialog extends React.Component<IOpenPullRequestDialo
     const { baseBranch, commitSHAs } = pullRequestState
     return (
       <OpenPullRequestDialogHeader
+        repository={this.props.repository}
         baseBranch={baseBranch}
         currentBranch={currentBranch}
         defaultBranch={defaultBranch}

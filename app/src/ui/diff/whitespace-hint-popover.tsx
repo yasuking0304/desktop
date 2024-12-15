@@ -27,6 +27,7 @@ export class WhitespaceHintPopover extends React.Component<IWhitespaceHintPopove
         className={'whitespace-hint'}
         appearEffect={PopoverAppearEffect.Shake}
         ariaLabelledby="whitespace-hint-header"
+        ariaDescribedBy="whitespace-hint-message"
       >
         <h3 id="whitespace-hint-header">
           {t(
@@ -34,7 +35,7 @@ export class WhitespaceHintPopover extends React.Component<IWhitespaceHintPopove
             'Show whitespace changes?'
           )}
         </h3>
-        <p className="byline">
+        <p id="whitespace-hint-message" className="byline">
           {t(
             'whitespace-hint-popover.selecting-lines',
             'Selecting lines is disabled when hiding whitespace changes.'

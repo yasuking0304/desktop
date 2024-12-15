@@ -67,6 +67,10 @@ export class RevertProgress extends React.Component<IRevertProgressProps, {}> {
         onResize={this.onResize}
         maximumWidth={this.props.width.max}
         minimumWidth={this.props.width.min}
+        description={t(
+          'revert-progress.revert-progress-button',
+          'Revert progress button'
+        )}
       >
         <ToolbarButton
           title={t('revert-progress.reverting', 'Reverting…')}

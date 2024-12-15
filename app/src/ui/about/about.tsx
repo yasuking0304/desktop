@@ -343,12 +343,12 @@ export class About extends React.Component<IAboutProps, IAboutState> {
             </span>{' '}
             ({releaseNotesLink})
           </p>
-          <p className="no-padding">
+          <p className="no-padding terms-and-license">
             <LinkButton onClick={this.props.onShowTermsAndConditions}>
               {t('about.terms-and-conditions', 'Terms and Conditions')}
             </LinkButton>
           </p>
-          <p>
+          <p className="terms-and-license">
             <LinkButton onClick={this.props.onShowAcknowledgements}>
               {t(
                 'about.license-and-open-source-notices',

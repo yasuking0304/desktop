@@ -75,10 +75,17 @@
   },
   "app-error": {
     "clone-failed": "クローンの失敗",
+    "failed-to-push": "Failed to push",
+    "file-size-limit-exceeded": "File size limit exceeded",
+    "files-that-exceed": "Files that exceed the limit",
+    "for-more-information-1": "See ",
+    "for-more-information-2": " for more information on managing large files on GitHub",
     "open-options": "オプションを開く",
     "open-settings-darwin": "オプションを開く",
     "retry-clone": "クローンの再試行",
-    "retry-clone-darwin": "クローンの再試行"
+    "retry-clone-darwin": "クローンの再試行",
+    "would-you-like-1": "Would you like to retry cloning ",
+    "would-you-like-2": "?"
   },
   "app-store": {
     "checking-out": "Checking out",
@@ -476,7 +483,6 @@
     "update": "更新",
     "view-conflicts": "コンフリクトの表示",
     "view-on-github": "GitHub で確認",
-    "warning": "警告",
     "yes": "はい",
     "your-email": "あなたのメールアドレス@example.com",
     "your-name": "あなたの名前"
@@ -752,6 +758,8 @@
     "discard-changes": "これにより、変更は破棄され、復元できなくなります。",
     "discard-changes-darwin": "変更を完全に破棄します",
     "discard-changes-ok": "これにより、変更は破棄され、復元できなくなります。",
+    "discarded-Changes": "破棄された変更は回復できません",
+    "discarded-Changes-darwin": "破棄された変更は回復できません",
     "fail-to-discard-changes": "{{0}} の変更を破棄できませんでした。",
     "restricted-access": "ファイルの移動が制限されています。"
   },
@@ -841,7 +849,7 @@
   "git": {
     "default-branch-name-for-new-repositories": "新しいリポジトリのデフォルトのブランチ名",
     "edit-your-global-git-config-1": "これらの設定は、",
-    "edit-your-global-git-config-2": "あなたのグローバルの Git 構成を編集",
+    "edit-your-global-git-config-2": "あなたのグローバルの Git 構成ファイルを編集",
     "edit-your-global-git-config-3": "することになります。",
     "gitHub-default-branch-description-1": "GitHub のデフォルトのブランチ名は ",
     "gitHub-default-branch-description-2": "です。 ",
@@ -886,6 +894,11 @@
     "no-other-editors-found": "他のエディターは見つかりませんでした。 ",
     "shell": "シェル"
   },
+  "invalidated-token": {
+    "invalidated-account-token": "アカウント トークンが無効になりました",
+    "invalidated-account-token-darwin": "アカウント トークンが無効になりました",
+    "token-has-been-invalidated": "アカウント トークンが無効になり、GitHub{{0}} アカウントからサインアウトされました。もう一度サインインしますか?"
+  },
   "label": {
     "about-github-desktop": "GitHub Desktop について(&A)",
     "hide-stashed-changes": "一時退避した変更の非表示(&H)",
@@ -919,6 +932,7 @@
     "clone-repository": "リポジトリのクローン(&N)…",
     "clone-repository-darwin": "リポジトリのクローン…",
     "close-darwin": "ウィンドウを閉じる",
+    "command-line-tool": "コマンドラインツール",
     "compare-on-github": "&GitHub で比較",
     "compare-on-github-darwin": "GitHub で比較",
     "compare-to-branch": "ブランチと比較(&C)",
@@ -983,6 +997,7 @@
     "help-darwin": "ヘルプ",
     "hide": "GitHub Desktop を非表示にする",
     "hide-others": "その他を非表示にする",
+    "install": "インストール",
     "install-command-line-tool": "コマンドラインツール追加…",
     "merge-into-branch": "現在のブランチにマージ(&M)…",
     "merge-into-branch-darwin": "現在のブランチにマージ…",
@@ -1067,6 +1082,7 @@
     "trash": "ゴミ箱",
     "undo": "元に戻す(&U)",
     "undo-darwin": "元に戻す",
+    "uninstall": "アンインストール",
     "update-branch-from": "{{0}} の更新(&U)",
     "update-branch-from-darwin": "{{0}} の更新",
     "view": "ビュー(&V)",
@@ -1448,7 +1464,8 @@
   },
   "remote": {
     "placeholder-remote-url": "リモートURL",
-    "primary-remote-repository": "主要リモート リポジトリ ({{0}})"
+    "primary-remote-repository": "主要リモート リポジトリ ({{0}})",
+    "primary-remote-repository-darwin": "主要リモート リポジトリ ({{0}})"
   },
   "rename-branch-dialog": {
     "rename-branch": "ブランチ名の変更",
@@ -1502,6 +1519,7 @@
   },
   "revert-progress": {
     "hang-on": "待つ…",
+    "revert-progress-button": "Revert progress button",
     "reverting": "戻す…"
   },
   "saml-reauth-required": {
@@ -1568,8 +1586,13 @@
   "sign-in": {
     "continue-with-browser": "ブラウザーで続行",
     "continue-with-browser-darwin": "ブラウザーで続行",
+    "git-requesting-credentials-1": "Gitがアクセスするための資格情報を要求しています ",
+    "git-requesting-credentials-2": "。",
     "sign-in-browser": "ブラウザーを使用してサインインする",
     "sign-in-browser-darwin": "ブラウザーを使用してサインインする",
+    "you-are-already-signed-1": "すでに ",
+    "you-are-already-signed-2": " にサインインしています(アカウント: ",
+    "you-are-already-signed-3": " )。続行すると、まずサインアウトされます。",
     "your-browser-will-redirect-you-back": "サインインすると、ブラウザーは GitHub Desktop にリダイレクトします。ブラウザーから GitHub Desktop の起動許可を求められた場合は、許可を選択してください。"
   },
   "sign-in-enterprise": {
@@ -1748,7 +1771,11 @@
     "exciting-new-features-1": "エキサイティングな新機能が{{0}}に追加されました。",
     "exciting-new-features-2": " を確認するか ",
     "exciting-new-features-3": " を選択してください。",
+    "important-updates": "重要な更新",
     "restart-gitHub-desktop": "GitHub Desktopの再起動",
+    "this-version-is-missing-1": "This version of GitHub Desktop is missing ",
+    "this-version-is-missing-2": ". Please ",
+    "this-version-is-missing-3": " now to install pending updates.",
     "updated version-is-available-1": "GitHub Desktop の更新バージョンが利用可能で、次回のリリース時にインストールされる予定です。",
     "updated version-is-available-2": " を確認するか ",
     "updated version-is-available-3": " を選択してください。",

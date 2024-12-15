@@ -25,28 +25,40 @@ interface IUpdateAvailableProps {
   readonly isUpdateShowcaseVisible: boolean
   readonly emoji: Map<string, Emoji>
   readonly onDismissed: () => void
+  readonly prioritizeUpdate: boolean
+  readonly prioritizeUpdateInfoUrl: string | undefined
 }
 
 /**
  * A component which tells the user an update is available and gives them the
  * option of moving into the future or being a luddite.
  */
-export class UpdateAvailable extends React.Component<
-  IUpdateAvailableProps,
-  {}
-> {
+export class UpdateAvailable extends React.Component<IUpdateAvailableProps> {
   public render() {
     return (
-      <Banner id="update-available" onDismissed={this.props.onDismissed}>
-        {!this.props.isUpdateShowcaseVisible && (
-          <Octicon
-            className="download-icon"
-            symbol={octicons.desktopDownload}
-          />
-        )}
-
+      <Banner
+        id="update-available"
+        className={this.props.prioritizeUpdate ? 'priority' : undefined}
+        dismissable={!this.props.prioritizeUpdate}
+        onDismissed={this.props.onDismissed}
+      >
+        {this.renderIcon()}
         {this.renderMessage()}
       </Banner>
+    )
+  }
+
+  private renderIcon() {
+    if (this.props.isUpdateShowcaseVisible) {
+      return null
+    }
+
+    if (this.props.prioritizeUpdate) {
+      return <Octicon className="warning-icon" symbol={octicons.alert} />
+    }
+
+    return (
+      <Octicon className="download-icon" symbol={octicons.desktopDownload} />
     )
   }
 
@@ -98,6 +110,35 @@ export class UpdateAvailable extends React.Component<
             {t('update-available.dismiss', 'dismiss')}
           </LinkButton>
           {t('update-available.exciting-new-features-3', '.')}
+        </span>
+      )
+    }
+
+    if (this.props.prioritizeUpdate) {
+      return (
+        <span onSubmit={this.updateNow}>
+          {t(
+            'update-available.this-version-is-missing-1',
+            'This version of GitHub Desktop is missing '
+          )}
+          {this.props.prioritizeUpdateInfoUrl ? (
+            <LinkButton uri={this.props.prioritizeUpdateInfoUrl}>
+              {t('update-available.important-updates', 'important updates')}
+            </LinkButton>
+          ) : (
+            t('update-available.important-updates', 'important updates')
+          )}
+          {t('update-available.this-version-is-missing-2', '. Please ')}
+          <LinkButton onClick={this.updateNow}>
+            {t(
+              'update-available.restart-gitHub-desktop',
+              'restart GitHub Desktop'
+            )}
+          </LinkButton>
+          {t(
+            'update-available.this-version-is-missing-3',
+            ' now to install pending updates.'
+          )}
         </span>
       )
     }

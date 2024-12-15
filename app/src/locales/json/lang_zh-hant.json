@@ -75,10 +75,17 @@
   },
   "app-error": {
     "clone-failed": "Clone failed",
+    "failed-to-push": "Failed to push",
+    "file-size-limit-exceeded": "File size limit exceeded",
+    "files-that-exceed": "Files that exceed the limit",
+    "for-more-information-1": "See ",
+    "for-more-information-2": " for more information on managing large files on GitHub",
     "open-options": "Open options",
     "open-settings-darwin": "Open Settings",
     "retry-clone": "Retry clone",
-    "retry-clone-darwin": "Retry Clone"
+    "retry-clone-darwin": "Retry Clone",
+    "would-you-like-1": "Would you like to retry cloning ",
+    "would-you-like-2": "?"
   },
   "app-store": {
     "checking-out": "Checking out",
@@ -451,7 +458,7 @@
     "other": "Other",
     "overwrite": "Overwrite",
     "paste": "Paste",
-    "preferences": "Preferences",
+    "preferences": "Settings",
     "pulling": "Pulling {{0}}",
     "redo": "Redo",
     "remove": "Remove",
@@ -476,7 +483,6 @@
     "update": "Update",
     "view-conflicts": "View conflicts",
     "view-on-github": "View on GitHub",
-    "warning": "Warning",
     "yes": "Yes",
     "your-email": "common.your-email@example.com",
     "your-name": "Your Name"
@@ -752,6 +758,8 @@
     "discard-changes": "Permanently discard changes",
     "discard-changes-darwin": "Permanently Discard Changes",
     "discard-changes-ok": "This will discard changes and they will be unrecoverable.",
+    "discarded-Changes": "Discarded changes will be unrecoverable",
+    "discarded-Changes-darwin": "Discarded Changes Will Be Unrecoverable",
     "fail-to-discard-changes": "Failed to discard changes to {{0}}.",
     "restricted-access": "Restricted access to move the file(s)."
   },
@@ -841,7 +849,7 @@
   "git": {
     "default-branch-name-for-new-repositories": "Default branch name for new repositories",
     "edit-your-global-git-config-1": "These preferences will ",
-    "edit-your-global-git-config-2": "edit your global Git config",
+    "edit-your-global-git-config-2": " edit your global Git config file",
     "edit-your-global-git-config-3": ".",
     "gitHub-default-branch-description-1": "GitHub's default branch name is ",
     "gitHub-default-branch-description-2": ". ",
@@ -886,6 +894,11 @@
     "no-other-editors-found": "No other editors found. ",
     "shell": "Shell"
   },
+  "invalidated-token": {
+    "invalidated-account-token": "Invalidated account token",
+    "invalidated-account-token-darwin": "Invalidated Account Token",
+    "token-has-been-invalidated": "Your account token has been invalidated and you have been signed out from your GitHub{{0}} account. Do you want to sign in again?"
+  },
   "label": {
     "about-github-desktop": "&About GitHub Desktop",
     "hide-stashed-changes": "H&ide stashed changes",
@@ -919,6 +932,7 @@
     "clone-repository": "Clo&ne repository…",
     "clone-repository-darwin": "Clone Repository…",
     "close-darwin": "close Window",
+    "command-line-tool": "Command Line Tool",
     "compare-on-github": "Compare on &GitHub",
     "compare-on-github-darwin": "Compare on GitHub",
     "compare-to-branch": "&Compare to branch",
@@ -983,6 +997,7 @@
     "help-darwin": "Help",
     "hide": "Hide GitHub Desktop",
     "hide-others": "Hide Others",
+    "install": "Install",
     "install-command-line-tool": "Install Command Line Tool…",
     "merge-into-branch": "&Merge into current branch…",
     "merge-into-branch-darwin": "Merge into Current Branch…",
@@ -1067,6 +1082,7 @@
     "trash": "Trash",
     "undo": "&Undo",
     "undo-darwin": "Undo",
+    "uninstall": "Uninstall",
     "update-branch-from": "&Update from {{0}}",
     "update-branch-from-darwin": "Update from {{0}}",
     "view": "&View",
@@ -1448,7 +1464,8 @@
   },
   "remote": {
     "placeholder-remote-url": "Remote URL",
-    "primary-remote-repository": "Primary remote repository ({{0}})"
+    "primary-remote-repository": "Primary remote repository ({{0}})",
+    "primary-remote-repository-darwin": "Primary Remote Repository ({{0}})"
   },
   "rename-branch-dialog": {
     "rename-branch": "Rename branch",
@@ -1502,6 +1519,7 @@
   },
   "revert-progress": {
     "hang-on": "Hang on…",
+    "revert-progress-button": "Revert progress button",
     "reverting": "Reverting…"
   },
   "saml-reauth-required": {
@@ -1568,8 +1586,13 @@
   "sign-in": {
     "continue-with-browser": "Continue with browser",
     "continue-with-browser-darwin": "Continue With Browser",
+    "git-requesting-credentials-1": "Git requesting credentials to access ",
+    "git-requesting-credentials-2": ".",
     "sign-in-browser": "Sign in using your browser",
     "sign-in-browser-darwin": "Sign in Using Your Browser",
+    "you-are-already-signed-1": "You're already signed in to ",
+    "you-are-already-signed-2": " with the account ",
+    "you-are-already-signed-3": ". If you continue, you will first be signed out.",
     "your-browser-will-redirect-you-back": "Your browser will redirect you back to GitHub Desktop once you've signed in. If your browser asks for your permission to launch GitHub Desktop please allow it to."
   },
   "sign-in-enterprise": {
@@ -1748,7 +1771,11 @@
     "exciting-new-features-1": "Exciting new features have been added{{0}}. See ",
     "exciting-new-features-2": " or ",
     "exciting-new-features-3": ".",
+    "important-updates": "important updates",
     "restart-gitHub-desktop": "restart GitHub Desktop",
+    "this-version-is-missing-1": "This version of GitHub Desktop is missing ",
+    "this-version-is-missing-2": ". Please ",
+    "this-version-is-missing-3": " now to install pending updates.",
     "updated version-is-available-1": "An updated version of GitHub Desktop is available and will be installed at the next launch. See ",
     "updated version-is-available-2": "or ",
     "updated version-is-available-3": ".",
