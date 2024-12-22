@@ -33,6 +33,7 @@ import {
   getCommitsBetweenCommits,
   getBranches,
   getRebaseSnapshot,
+  getRepositoryType,
 } from '../../lib/git'
 import { isGitOnPath } from '../../lib/is-git-on-path'
 import {
