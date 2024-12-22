@@ -22,31 +22,28 @@ export class OpenThankYouCard extends React.Component<
   public render() {
     return (
       <Banner id="open-thank-you-card" onDismissed={this.props.onDismissed}>
-        <span onSubmit={this.props.onOpenCard}>
-          {t(
+        {t(
             'open-thank-you-card.open-thank-you-1',
             'The Desktop team would like to thank you for your contributions.'
           )}{' '}
-          <LinkButton onClick={this.props.onOpenCard}>
-            {t('open-thank-you-card.open-your-card', 'Open Your Card')}
-          </LinkButton>{' '}
-          <RichText
-            className="thank-you-banner-emoji"
-            text={':tada:'}
-            emoji={this.props.emoji}
-            renderUrlsAsLinks={true}
-          />
-          {t('open-thank-you-card.open-thank-you-2', 'or')}{' '}
-          <LinkButton onClick={this.onThrowCardAway}>
-            {t('open-thank-you-card.throw-it-away', 'Throw It Away')}
-          </LinkButton>{' '}
-          <RichText
-            className="thank-you-banner-emoji"
-            text={':sob:'}
-            emoji={this.props.emoji}
-            renderUrlsAsLinks={true}
-          />
-        </span>
+        <LinkButton onClick={this.props.onOpenCard}>
+          {t('open-thank-you-card.open-your-card', 'Open Your Card')}
+        </LinkButton>{' '}
+        <RichText
+          className="thank-you-banner-emoji"
+          text={':tada:'}
+          emoji={this.props.emoji}
+          renderUrlsAsLinks={true}
+        />
+        or <LinkButton onClick={this.onThrowCardAway}>
+          {t('open-thank-you-card.throw-it-away', 'Throw It Away')}
+        </LinkButton>{' '}
+        <RichText
+          className="thank-you-banner-emoji"
+          text={':sob:'}
+          emoji={this.props.emoji}
+          renderUrlsAsLinks={true}
+        />
       </Banner>
     )
   }

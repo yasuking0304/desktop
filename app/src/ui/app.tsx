@@ -182,6 +182,7 @@ import { accessibilityBannerDismissed } from './banners/accessibilty-settings-ba
 import { isCertificateErrorSuppressedFor } from '../lib/suppress-certificate-error'
 import { webUtils } from 'electron'
 import { showTestUI } from './lib/test-ui-components/test-ui-components'
+import { ConfirmCommitFilteredChanges } from './changes/confirm-commit-filtered-changes-dialog'
 
 const MinuteInMilliseconds = 1000 * 60
 const HourInMilliseconds = MinuteInMilliseconds * 60
@@ -1558,6 +1559,9 @@ export class App extends React.Component<IAppProps, IAppState> {
             }
             confirmForcePush={this.state.askForConfirmationOnForcePush}
             confirmUndoCommit={this.state.askForConfirmationOnUndoCommit}
+            askForConfirmationOnCommitFilteredChanges={
+              this.state.askForConfirmationOnCommitFilteredChanges
+            }
             uncommittedChangesStrategy={this.state.uncommittedChangesStrategy}
             selectedExternalEditor={this.state.selectedExternalEditor}
             useWindowsOpenSSH={this.state.useWindowsOpenSSH}
@@ -2483,9 +2487,25 @@ export class App extends React.Component<IAppProps, IAppState> {
           />
         )
       }
+      case PopupType.ConfirmCommitFilteredChanges: {
+        return (
+          <ConfirmCommitFilteredChanges
+            onCommitAnyway={popup.onCommitAnyway}
+            onDismissed={onPopupDismissedFn}
+            onClearFilter={popup.onClearFilter}
+            setConfirmCommitFilteredChanges={
+              this.setConfirmCommitFilteredChanges
+            }
+          />
+        )
+      }
       default:
         return assertNever(popup, `Unknown popup type: ${popup}`)
     }
+  }
+
+  private setConfirmCommitFilteredChanges = (value: boolean) => {
+    this.props.dispatcher.setConfirmCommitFilteredChanges(value)
   }
 
   private getPullRequestState() {
@@ -3233,6 +3253,9 @@ export class App extends React.Component<IAppProps, IAppState> {
           }
           askForConfirmationOnCheckoutCommit={
             state.askForConfirmationOnCheckoutCommit
+          }
+          askForConfirmationOnCommitFilteredChanges={
+            state.askForConfirmationOnCommitFilteredChanges
           }
           accounts={state.accounts}
           isExternalEditorAvailable={

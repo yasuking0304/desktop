@@ -3,7 +3,7 @@
   "productName": "GitHub Desktop",
   "bundleID": "com.github.GitHubClient",
   "companyName": "GitHub, Inc.",
-  "version": "3.4.10",
+  "version": "3.4.13-beta1",
   "main": "./main.js",
   "repository": {
     "type": "git",
@@ -45,6 +45,7 @@
     "marked": "^4.0.10",
     "mem": "^4.3.0",
     "memoize-one": "^4.0.3",
+    "minimist": "^1.2.8",
     "mri": "^1.1.0",
     "p-limit": "^2.2.0",
     "p-memoize": "^7.1.1",
