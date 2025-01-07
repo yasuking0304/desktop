@@ -863,18 +863,21 @@ export class CommitMessage extends React.Component<
     const ariaLabel = 'Generate commit message with Copilot'
 
     return (
-      <Button
-        className="copilot-button"
-        onClick={this.onCopilotButtonClick}
-        ariaLabel={ariaLabel}
-        tooltip={ariaLabel}
-        disabled={
-          this.props.isCommitting === true ||
-          this.state.isGeneratingCommitDetails
-        }
-      >
-        <Octicon symbol={octicons.copilot} />
-      </Button>
+      <>
+        <div className="separator" />
+        <Button
+          className="copilot-button"
+          onClick={this.onCopilotButtonClick}
+          ariaLabel={ariaLabel}
+          tooltip={ariaLabel}
+          disabled={
+            this.props.isCommitting === true ||
+            this.state.isGeneratingCommitDetails
+          }
+        >
+          <Octicon symbol={octicons.copilot} />
+        </Button>
+      </>
     )
   }
 
@@ -964,7 +967,6 @@ export class CommitMessage extends React.Component<
     return (
       <div className={className}>
         {this.renderCoAuthorToggleButton()}
-        <div className="separator" />
         {this.renderCopilotButton()}
       </div>
     )
