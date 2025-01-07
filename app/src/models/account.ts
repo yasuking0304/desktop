@@ -35,6 +35,7 @@ export class Account {
    * @param name The friendly name associated with this account
    * @param plan The plan associated with this account
    * @param copilotEndpoint The endpoint for the Copilot API
+   * @param features The features available to this account
    */
   public constructor(
     public readonly login: string,
@@ -45,7 +46,8 @@ export class Account {
     public readonly id: number,
     public readonly name: string,
     public readonly plan?: string,
-    public readonly copilotEndpoint?: string
+    public readonly copilotEndpoint?: string,
+    public readonly features?: ReadonlyArray<string>
   ) {}
 
   public withToken(token: string): Account {
@@ -58,7 +60,8 @@ export class Account {
       this.id,
       this.name,
       this.plan,
-      this.copilotEndpoint
+      this.copilotEndpoint,
+      this.features
     )
   }
 

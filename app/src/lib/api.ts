@@ -1989,6 +1989,16 @@ export class API {
     }
   }
 
+  public async fetchFeatureFlags(): Promise<ReadonlyArray<string> | undefined> {
+    try {
+      const response = await this.ghRequest('GET', '/desktop_internal/features')
+      return parsedResponse<ReadonlyArray<string>>(response)
+    } catch (e) {
+      log.warn(`fetchFeatureFlags: failed with endpoint ${this.endpoint}`, e)
+      return undefined
+    }
+  }
+
   public async fetchCopilotAPIEndpoint(): Promise<string | undefined> {
     const graphql = `
     {
@@ -2080,6 +2090,7 @@ export async function fetchUser(
     const user = await api.fetchAccount()
     const emails = await api.fetchEmails()
     const copilotEndpoint = await api.fetchCopilotAPIEndpoint()
+    const features = await api.fetchFeatureFlags()
 
     return new Account(
       user.login,
@@ -2090,7 +2101,8 @@ export async function fetchUser(
       user.id,
       user.name || user.login,
       user.plan?.name,
-      copilotEndpoint
+      copilotEndpoint,
+      features
     )
   } catch (e) {
     log.warn(`fetchUser: failed with endpoint ${endpoint}`, e)
