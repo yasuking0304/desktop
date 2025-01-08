@@ -57,6 +57,7 @@ import { formatCommitMessage } from '../../lib/format-commit-message'
 import { useRepoRulesLogic } from '../../lib/helpers/repo-rules'
 import { getSelectedFilesDiffText } from '../../lib/git'
 import { WorkingDirectoryFileChange } from '../../models/status'
+import { enableCommitMessageGeneration } from '../../lib/feature-flag'
 
 const addAuthorIcon: OcticonSymbolVariant = {
   w: 18,
@@ -856,7 +857,10 @@ export class CommitMessage extends React.Component<
   }
 
   private renderCopilotButton() {
-    if (this.props.repository.gitHubRepository === null) {
+    if (
+      this.props.repository.gitHubRepository === null ||
+      !enableCommitMessageGeneration(this.props.accounts)
+    ) {
       return null
     }
 

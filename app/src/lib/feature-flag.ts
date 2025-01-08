@@ -1,3 +1,5 @@
+import { Account } from '../models/account'
+
 const Disable = false
 
 /**
@@ -103,3 +105,14 @@ export const enableResizingToolbarButtons = () => true
 export const enableGitConfigParameters = enableBetaFeatures
 
 export const enableFilteredChangesList = enableDevelopmentFeatures
+
+export const enableCommitMessageGeneration = (
+  accounts: ReadonlyArray<Account>
+) => {
+  return (
+    enableBetaFeatures() &&
+    accounts.some(a =>
+      a.features?.includes('desktop_copilot_commit_message_generation')
+    )
+  )
+}
