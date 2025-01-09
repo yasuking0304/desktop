@@ -40,15 +40,30 @@ type AffiliationFilter =
   | 'collaborator,organization_member'
   | 'owner,collaborator,organization_member'
 
-/** Response type of GraphQL query of Copilot endpoints */
-type CopilotEndpointsResponse = {
+/// Indicates the type of access a user has to GitHub Copilot
+export enum CopilotLicenseType {
+  Business = 'COPILOT_BUSINESS',
+  Enterprise = 'COPILOT_ENTERPRISE',
+  Free = 'COPILOT_FREE',
+  Individual = 'COPILOT_INDIVIDUAL',
+  NoAccess = 'NO_ACCESS',
+}
+
+/** Response type of GraphQL query of Copilot-related info */
+type ViewerCopilotResponse = {
   readonly data: {
     readonly viewer: {
       readonly copilotEndpoints: {
         readonly api: string
       }
+      readonly copilotLicenseType: CopilotLicenseType
     }
   }
+}
+
+type UserCopilotInfo = {
+  readonly copilotLicenseType: CopilotLicenseType
+  readonly copilotEndpoint: string
 }
 
 /** Response type Copilot chat completions response API */
@@ -1992,20 +2007,22 @@ export class API {
   public async fetchFeatureFlags(): Promise<ReadonlyArray<string> | undefined> {
     try {
       const response = await this.ghRequest('GET', '/desktop_internal/features')
-      return parsedResponse<ReadonlyArray<string>>(response)
+      return await parsedResponse<ReadonlyArray<string>>(response)
     } catch (e) {
       log.warn(`fetchFeatureFlags: failed with endpoint ${this.endpoint}`, e)
       return undefined
     }
   }
 
-  public async fetchCopilotAPIEndpoint(): Promise<string | undefined> {
+  public async fetchUserCopilotInfo(): Promise<UserCopilotInfo | undefined> {
     const graphql = `
     {
       viewer {
         copilotEndpoints {
           api
         }
+
+        copilotLicenseType
       }
     }
     `
@@ -2018,9 +2035,13 @@ export class API {
         return undefined
       }
 
-      const json: CopilotEndpointsResponse =
-        (await response.json()) as CopilotEndpointsResponse
-      return json.data.viewer.copilotEndpoints.api
+      const json: ViewerCopilotResponse =
+        (await response.json()) as ViewerCopilotResponse
+      const { viewer } = json.data
+      return {
+        copilotEndpoint: viewer.copilotEndpoints.api,
+        copilotLicenseType: viewer.copilotLicenseType,
+      }
     } catch (e) {
       log.warn(
         `fetchCopilotAPIEndpoint: failed with endpoint ${this.endpoint}`,
@@ -2089,7 +2110,7 @@ export async function fetchUser(
   try {
     const user = await api.fetchAccount()
     const emails = await api.fetchEmails()
-    const copilotEndpoint = await api.fetchCopilotAPIEndpoint()
+    const copilotInfo = await api.fetchUserCopilotInfo()
     const features = await api.fetchFeatureFlags()
 
     return new Account(
@@ -2101,7 +2122,8 @@ export async function fetchUser(
       user.id,
       user.name || user.login,
       user.plan?.name,
-      copilotEndpoint,
+      copilotInfo?.copilotEndpoint,
+      copilotInfo?.copilotLicenseType,
       features
     )
   } catch (e) {
