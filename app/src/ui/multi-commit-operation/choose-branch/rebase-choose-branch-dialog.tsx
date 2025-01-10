@@ -192,7 +192,8 @@ export class RebaseChooseBranchDialog extends React.Component<
     // Condition: commitsBehindCount <= 0 && commitsAheadCount >= 0
     return (
       <>
-        <strong>{currentBranch.name}</strong>{` `}
+        <strong>{currentBranch.name}</strong>
+        {` `}
         is already up to date with <strong>{baseBranch.name}</strong>.
       </>
     )

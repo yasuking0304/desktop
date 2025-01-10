@@ -270,6 +270,7 @@ export class MergeCallToActionWithConflicts extends React.Component<
           <strong>{`${this.commitCount} ${pluralized}`}</strong>
           {` on top of `}
           <strong>{branch.name}</strong>
+          {`.`}
         </div>
       )
     }
@@ -282,6 +283,7 @@ export class MergeCallToActionWithConflicts extends React.Component<
         <strong>{branch.name}</strong>
         {` into `}
         <strong>{currentBranch.name}</strong>
+        {`.`}
       </div>
     )
   }
@@ -297,7 +299,7 @@ export class MergeCallToActionWithConflicts extends React.Component<
 
     return (
       <div className="merge-message">
-        Unable to merge unrelated histories in this repository
+        Unable to merge unrelated histories in this repository.
       </div>
     )
   }
@@ -316,6 +318,7 @@ export class MergeCallToActionWithConflicts extends React.Component<
         <strong>{branch.name}</strong>
         {` into `}
         <strong>{currentBranch.name}</strong>
+        {`.`}
       </div>
     )
   }
