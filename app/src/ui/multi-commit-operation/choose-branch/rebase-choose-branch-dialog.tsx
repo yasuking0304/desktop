@@ -89,15 +89,15 @@ export class RebaseChooseBranchDialog extends React.Component<
       currentBranch !== null &&
       selectedBranch.name === currentBranch.name
 
-    const areCommitsToBringFromOtherBranch =
+    const currentBranchIsBehindSelectedBranch =
       rebasePreview?.kind === ComputedAction.Clean
         ? rebasePreview.commitsBehind.length > 0
         : false
 
     return selectedBranchIsCurrentBranch
       ? 'You are not able to rebase this branch onto itself.'
-      : !areCommitsToBringFromOtherBranch
-      ? 'There are no new commits on the other branch.'
+      : !currentBranchIsBehindSelectedBranch
+      ? 'The current branch is already up to date with the selected branch.'
       : undefined
   }
 
@@ -158,26 +158,42 @@ export class RebaseChooseBranchDialog extends React.Component<
   private renderCleanRebaseMessage(
     currentBranch: Branch,
     baseBranch: Branch,
-    commitsToRebase: number,
-    commitsFromOtherBranch: number
+    commitsAheadCount: number,
+    commitsBehindCount: number
   ) {
-    if (commitsFromOtherBranch <= 0) {
+    // The current branch is behind the base branch
+    if (commitsBehindCount > 0 && commitsAheadCount <= 0) {
+      const pluralized = commitsBehindCount === 1 ? 'commit' : 'commits'
       return (
         <>
-          This branch is up to date with{` `}
-          <strong>{currentBranch.name}</strong>
+          This will fast-forward <strong>{currentBranch.name}</strong>
+          {` to `}
+          <strong>{baseBranch.name}</strong> by applying
+          <strong>{` ${commitsBehindCount} ${pluralized}`}</strong>.
         </>
       )
     }
 
-    const pluralized = commitsToRebase === 1 ? 'commit' : 'commits'
+    // The current branch is behind and ahead of the base branch
+    if (commitsBehindCount > 0 && commitsAheadCount > 0) {
+      const pluralized = commitsAheadCount === 1 ? 'commit' : 'commits'
+      return (
+        <>
+          This will update <strong>{currentBranch.name}</strong>
+          {` by applying its `}
+          <strong>{` ${commitsAheadCount} ${pluralized}`}</strong>
+          {` on top of `}
+          <strong>{baseBranch.name}</strong>.
+        </>
+      )
+    }
+
+    // The current branch is a direct child of the base branch
+    // Condition: commitsBehindCount <= 0 && commitsAheadCount >= 0
     return (
       <>
-        This will update <strong>{currentBranch.name}</strong>
-        {` by applying its `}
-        <strong>{` ${commitsToRebase} ${pluralized}`}</strong>
-        {` on top of `}
-        <strong>{baseBranch.name}</strong>
+        <strong>{currentBranch.name}</strong>{` `}
+        is already up to date with <strong>{baseBranch.name}</strong>.
       </>
     )
   }
