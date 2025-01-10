@@ -90,8 +90,14 @@ export class EditorError extends React.Component<IEditorErrorProps, {}> {
 
   public render() {
     const title = __DARWIN__
-      ? 'Unable to Open External Editor'
-      : 'Unable to open external editor'
+      ? t(
+          'editor-error.unable-to-open-external-editor-darwin',
+          'Unable to Open External Editor'
+        )
+      : t(
+          'editor-error.unable-to-open-external-editor',
+          'Unable to open external editor'
+        )
 
     return (
       <Dialog

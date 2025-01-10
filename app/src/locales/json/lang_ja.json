@@ -468,6 +468,7 @@
     "repository-path": "リポジトリの存在するパス",
     "save": "保存",
     "select-all": "すべて選択",
+    "setting": "Settings",
     "settings": "設定",
     "sign-in": "サインイン",
     "sign-in-darwin": "サインイン",
@@ -783,8 +784,10 @@
     "you-ve-learned-the-basics": "GitHub Desktop の使用方法に関する基本を学習しました。次に何をするべきか、提案をいくつか紹介します。"
   },
   "editor-error": {
-    "open-options": "設定を開く",
-    "open-settings-darwin": "設定を開く"
+    "open-options": "オプションを開く",
+    "open-settings-darwin": "設定を開く",
+    "unable-to-open-external-editor": "外部エディタをオープンできません",
+    "unable-to-open-external-editor-darwin": "外部エディタをオープンできません"
   },
   "enterprise-server-entry": {
     "enterprise-or-ae-address": "Enterprise または AEアドレス"
@@ -908,7 +911,12 @@
   },
   "launch": {
     "error": {
-      "could-not-find-executable": "パス '{{0}}' で '{{1}}' の実行可能ファイルが見つかりませんでした。{{2}} を開き、使用可能なエディターを選択してください。"
+      "could-not-find-executable": "パス '{{0}}' で '{{1}}' の実行可能ファイルが見つかりませんでした。{{2}}を開き、使用可能なエディターを選択してください。",
+      "could-not-find-executable-for-custom-editor": "パス '{{0}}' の外部エディタは実行可能ではありません。 {{1}}を開き、使用可能なエディターを選択してください。",
+      "donot-have-the-permission-to-start": "GitHub Desktop には、'{{0}}' を開始する適切な権限がありません。 {{1}}を開き、別のエディタをお試しください。",
+      "donot-have-the-permission-to-start-custom-editor": "GitHub Desktop には、パス {{0}} で外部エディタを起動する適切な権限がありません。 {{1}}を開き、別のエディタをお試しください。",
+      "something-went-wrong-to-start": "'{{0}}'を起動しようとして問題が発生しました。 {{1}}を開き、別のエディタをお試しください。",
+      "something-went-wrong-to-start-custom-editor": "パス '{{0}}' の外部エディタを起動しようとして問題が発生しました。 {{1}}を開き、別のエディタをお試しください。"
     }
   },
   "local-changes-overwritten-dialog": {
