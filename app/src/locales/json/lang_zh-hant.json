@@ -468,6 +468,7 @@
     "repository-path": "repository path",
     "save": "Save",
     "select-all": "Select All",
+    "setting": "Settings",
     "settings": "Settings",
     "sign-in": "Sign in",
     "sign-in-darwin": "Sign In",
@@ -784,7 +785,9 @@
   },
   "editor-error": {
     "open-options": "Open options",
-    "open-settings-darwin": "Open Settings"
+    "open-settings-darwin": "Open Settings",
+    "unable-to-open-external-editor": "Unable to open external editor",
+    "unable-to-open-external-editor-darwin": "Unable to Open External Editor"
   },
   "enterprise-server-entry": {
     "enterprise-or-ae-address": "Enterprise or AE address"
@@ -908,7 +911,12 @@
   },
   "launch": {
     "error": {
-      "could-not-find-executable": "Could not find executable for '{{0}}' at path '{{1}}'. Please open {{2}} and select an available editor."
+      "could-not-find-executable": "Could not find executable for '{{0}}' at path '{{1}}'. Please open {{2}} and select an available editor.",
+      "could-not-find-executable-for-custom-editor": "Could not find executable for custom editor at path '{{0}}'. Please open {{1}} and select an available editor.",
+      "donot-have-the-permission-to-start": "GitHub Desktop doesn't have the proper permissions to start '{{0}}'. Please open {{1}} and try another editor.",
+      "donot-have-the-permission-to-start-custom-editor": "GitHub Desktop doesn't have the proper permissions to start custom editor at path {{0}}. Please open {{1}} and try another editor.",
+      "something-went-wrong-to-start": "Something went wrong while trying to start '{{0}}'. Please open {{1}} and try another editor.",
+      "something-went-wrong-to-start-custom-editor": "Something went wrong while trying to start custom editor at path {{0}}. Please open {{1}} and try another editor."
     }
   },
   "local-changes-overwritten-dialog": {
