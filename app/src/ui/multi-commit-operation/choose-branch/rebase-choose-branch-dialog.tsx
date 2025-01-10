@@ -50,7 +50,7 @@ export class RebaseChooseBranchDialog extends React.Component<
       repository,
       selectedBranch,
       currentBranch,
-      rebasePreview.commits
+      rebasePreview.commitsAhead
     )
   }
 
@@ -59,7 +59,7 @@ export class RebaseChooseBranchDialog extends React.Component<
     const { selectedBranch, rebasePreview } = this.state
     const commitCount =
       rebasePreview?.kind === ComputedAction.Clean
-        ? rebasePreview.commitsFromOtherBranch.length
+        ? rebasePreview.commitsBehind.length
         : undefined
     return canStartOperation(
       selectedBranch,
@@ -91,7 +91,7 @@ export class RebaseChooseBranchDialog extends React.Component<
 
     const areCommitsToBringFromOtherBranch =
       rebasePreview?.kind === ComputedAction.Clean
-        ? rebasePreview.commitsFromOtherBranch.length > 0
+        ? rebasePreview.commitsBehind.length > 0
         : false
 
     return selectedBranchIsCurrentBranch
@@ -135,8 +135,8 @@ export class RebaseChooseBranchDialog extends React.Component<
       return this.renderCleanRebaseMessage(
         currentBranch,
         baseBranch,
-        rebasePreview.commits.length,
-        rebasePreview.commitsFromOtherBranch.length
+        rebasePreview.commitsAhead.length,
+        rebasePreview.commitsBehind.length
       )
     }
 
