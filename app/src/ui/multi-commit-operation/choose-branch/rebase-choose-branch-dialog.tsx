@@ -169,7 +169,7 @@ export class RebaseChooseBranchDialog extends React.Component<
           This will fast-forward <strong>{currentBranch.name}</strong>
           {` to `}
           <strong>{baseBranch.name}</strong> by applying
-          <strong>{` ${commitsBehindCount} ${pluralized}`}</strong>.
+          <strong>{` ${commitsBehindCount} ${pluralized}`}</strong>
         </>
       )
     }
@@ -183,7 +183,7 @@ export class RebaseChooseBranchDialog extends React.Component<
           {` by applying its `}
           <strong>{` ${commitsAheadCount} ${pluralized}`}</strong>
           {` on top of `}
-          <strong>{baseBranch.name}</strong>.
+          <strong>{baseBranch.name}</strong>
         </>
       )
     }
@@ -194,7 +194,7 @@ export class RebaseChooseBranchDialog extends React.Component<
       <>
         <strong>{currentBranch.name}</strong>
         {` `}
-        is already up to date with <strong>{baseBranch.name}</strong>.
+        is already up to date with <strong>{baseBranch.name}</strong>
       </>
     )
   }
