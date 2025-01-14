@@ -864,7 +864,13 @@ export class CommitMessage extends React.Component<
       return null
     }
 
-    const ariaLabel = 'Generate commit message with Copilot'
+    const noSelectedFiles = this.props.selectedFiles.length === 0
+
+    const ariaLabel =
+      'Generate commit message with Copilot' +
+      (noSelectedFiles
+        ? '. Files must be selected to generate a commit message.'
+        : '')
 
     return (
       <>
@@ -876,7 +882,8 @@ export class CommitMessage extends React.Component<
           tooltip={ariaLabel}
           disabled={
             this.props.isCommitting === true ||
-            this.state.isGeneratingCommitDetails
+            this.state.isGeneratingCommitDetails ||
+            noSelectedFiles
           }
         >
           <Octicon symbol={octicons.copilot} />
