@@ -182,6 +182,7 @@ import { webUtils } from 'electron'
 import { showTestUI } from './lib/test-ui-components/test-ui-components'
 import { ConfirmCommitFilteredChanges } from './changes/confirm-commit-filtered-changes-dialog'
 import { MarkdownMessageDialog } from './markdown-message/markdown-message'
+import { GenerateCommitMessageOverrideWarning } from './generate-commit-message/GenerateCommitMessageOverrideWarning'
 
 const MinuteInMilliseconds = 1000 * 60
 const HourInMilliseconds = MinuteInMilliseconds * 60
@@ -2491,6 +2492,17 @@ export class App extends React.Component<IAppProps, IAppState> {
             emoji={this.state.emoji}
             title={popup.title}
             markdownBody={popup.markdownBody}
+            onDismissed={onPopupDismissedFn}
+          />
+        )
+      }
+      case PopupType.GenerateCommitMessageOverrideWarning: {
+        return (
+          <GenerateCommitMessageOverrideWarning
+            key="generate-commit-message-override-warning"
+            dispatcher={this.props.dispatcher}
+            repository={popup.repository}
+            selectedFiles={popup.selectedFiles}
             onDismissed={onPopupDismissedFn}
           />
         )

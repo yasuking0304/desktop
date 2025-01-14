@@ -1073,9 +1073,14 @@ export class Dispatcher {
 
   public generateCommitMessage(
     repository: Repository,
-    selectedFiles: ReadonlyArray<WorkingDirectoryFileChange>
+    selectedFiles: ReadonlyArray<WorkingDirectoryFileChange>,
+    skipOverrideWarning: boolean = false
   ) {
-    return this.appStore._generateCommitMessage(repository, selectedFiles)
+    return this.appStore._generateCommitMessage(
+      repository,
+      selectedFiles,
+      skipOverrideWarning
+    )
   }
 
   /** Remove the given account from the app. */

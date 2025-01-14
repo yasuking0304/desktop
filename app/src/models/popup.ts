@@ -97,6 +97,7 @@ export enum PopupType {
   TestIcons = 'TestIcons',
   ConfirmCommitFilteredChanges = 'ConfirmCommitFilteredChanges',
   MarkdownMessage = 'MarkdownMessage',
+  GenerateCommitMessageOverrideWarning = 'GenerateCommitMessageOverrideWarning',
 }
 
 interface IBasePopup {
@@ -434,6 +435,11 @@ export type PopupDetail =
       type: PopupType.MarkdownMessage
       title: string
       markdownBody: string
+    }
+  | {
+      type: PopupType.GenerateCommitMessageOverrideWarning
+      repository: Repository
+      selectedFiles: ReadonlyArray<WorkingDirectoryFileChange>
     }
 
 export type Popup = IBasePopup & PopupDetail

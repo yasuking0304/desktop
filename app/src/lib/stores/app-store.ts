@@ -5387,7 +5387,8 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
   public async _generateCommitMessage(
     repository: Repository,
-    selectedFiles: ReadonlyArray<WorkingDirectoryFileChange>
+    selectedFiles: ReadonlyArray<WorkingDirectoryFileChange>,
+    skipOverrideWarning: boolean
   ): Promise<boolean> {
     const account = this.getState().accounts.find(account =>
       enableCommitMessageGeneration([account])
@@ -5395,6 +5396,19 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
     if (!account) {
       return false
+    }
+
+    if (!skipOverrideWarning) {
+      const { commitMessage } = this.gitStoreCache.get(repository)
+      if (commitMessage.summary || commitMessage.description) {
+        await this._showPopup({
+          type: PopupType.GenerateCommitMessageOverrideWarning,
+          repository,
+          selectedFiles,
+        })
+
+        return false
+      }
     }
 
     return this.withIsGeneratingCommitMessage(repository, async () => {
