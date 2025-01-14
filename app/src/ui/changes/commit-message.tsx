@@ -935,8 +935,10 @@ export class CommitMessage extends React.Component<
       return null
     }
 
+    const { isCommitting, isGeneratingCommitMessage } = this.props
+
     const className = classNames('action-bar', {
-      disabled: this.props.isCommitting === true,
+      disabled: isCommitting === true || isGeneratingCommitMessage === true,
     })
 
     return (
@@ -1414,7 +1416,12 @@ export class CommitMessage extends React.Component<
       ? this.COMMIT_MSG_ERROR_BTN_ID
       : undefined
 
-    const { placeholder, isCommitting, commitSpellcheckEnabled } = this.props
+    const {
+      placeholder,
+      isCommitting,
+      isGeneratingCommitMessage,
+      commitSpellcheckEnabled,
+    } = this.props
 
     return (
       // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
@@ -1442,7 +1449,9 @@ export class CommitMessage extends React.Component<
             }
             aria-describedby={ariaDescribedBy}
             onContextMenu={this.onAutocompletingInputContextMenu}
-            readOnly={isCommitting === true}
+            readOnly={
+              isCommitting === true || isGeneratingCommitMessage === true
+            }
             spellcheck={commitSpellcheckEnabled}
           />
           {showRepoRuleCommitMessageFailureHint &&
@@ -1477,7 +1486,9 @@ export class CommitMessage extends React.Component<
             ref={this.onDescriptionFieldRef}
             onElementRef={this.onDescriptionTextAreaRef}
             onContextMenu={this.onAutocompletingInputContextMenu}
-            readOnly={isCommitting === true}
+            readOnly={
+              isCommitting === true || isGeneratingCommitMessage === true
+            }
             spellcheck={commitSpellcheckEnabled}
           />
           {this.renderActionBar()}
