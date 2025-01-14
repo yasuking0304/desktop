@@ -112,7 +112,7 @@ export const enableCommitMessageGeneration = (
   return (
     enableBetaFeatures() &&
     accounts.some(a =>
-      a.features?.includes('desktop_copilot_commit_message_generation')
+      (a.features ?? []).includes('desktop_copilot_commit_message_generation')
     )
   )
 }

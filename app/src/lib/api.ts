@@ -319,6 +319,10 @@ export interface ICopilotCommitDetails {
   readonly description: string
 }
 
+interface IUserFeaturesResponse {
+  readonly features: ReadonlyArray<string>
+}
+
 /**
  * Error thrown by `fetchUpdatedPullRequests` when receiving more results than
  * what the `maxResults` parameter allows for.
@@ -2007,7 +2011,10 @@ export class API {
   public async fetchFeatureFlags(): Promise<ReadonlyArray<string> | undefined> {
     try {
       const response = await this.ghRequest('GET', '/desktop_internal/features')
-      return await parsedResponse<ReadonlyArray<string>>(response)
+      const featuresResponse = await parsedResponse<IUserFeaturesResponse>(
+        response
+      )
+      return featuresResponse.features
     } catch (e) {
       log.warn(`fetchFeatureFlags: failed with endpoint ${this.endpoint}`, e)
       return undefined
