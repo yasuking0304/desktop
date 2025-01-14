@@ -1071,6 +1071,13 @@ export class Dispatcher {
     return this.appStore._setCommitMessage(repository, message)
   }
 
+  public generateCommitMessage(
+    repository: Repository,
+    selectedFiles: ReadonlyArray<WorkingDirectoryFileChange>
+  ) {
+    return this.appStore._generateCommitMessage(repository, selectedFiles)
+  }
+
   /** Remove the given account from the app. */
   public removeAccount(account: Account): Promise<void> {
     return this.appStore._removeAccount(account)

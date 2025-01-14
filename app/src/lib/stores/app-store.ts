@@ -185,6 +185,7 @@ import {
   checkoutCommit,
   getRemoteURL,
   getGlobalConfigPath,
+  getSelectedFilesDiffText,
 } from '../git'
 import {
   installGlobalLFSFilters,
@@ -243,7 +244,10 @@ import {
 } from './updates/changes-state'
 import { ManualConflictResolution } from '../../models/manual-conflict-resolution'
 import { BranchPruner } from './helpers/branch-pruner'
-import { enableCustomIntegration } from '../feature-flag'
+import {
+  enableCommitMessageGeneration,
+  enableCustomIntegration,
+} from '../feature-flag'
 import { Banner, BannerType } from '../../models/banner'
 import { ComputedAction } from '../../models/computed-action'
 import {
@@ -4705,6 +4709,31 @@ export class AppStore extends TypedBaseStore<IAppState> {
     }
   }
 
+  private async withIsGeneratingCommitMessage(
+    repository: Repository,
+    fn: () => Promise<boolean>
+  ): Promise<boolean> {
+    const state = this.repositoryStateCache.get(repository)
+    // ensure the user doesn't try and commit again
+    if (state.isGeneratingCommitMessage) {
+      return false
+    }
+
+    this.repositoryStateCache.update(repository, () => ({
+      isGeneratingCommitMessage: true,
+    }))
+    this.emitUpdate()
+
+    try {
+      return await fn()
+    } finally {
+      this.repositoryStateCache.update(repository, () => ({
+        isGeneratingCommitMessage: false,
+      }))
+      this.emitUpdate()
+    }
+  }
+
   private async withPushPullFetch(
     repository: Repository,
     fn: () => Promise<void>
@@ -5354,6 +5383,39 @@ export class AppStore extends TypedBaseStore<IAppState> {
   ): Promise<void> {
     const gitStore = this.gitStoreCache.get(repository)
     return gitStore.setCommitMessage(message)
+  }
+
+  public async _generateCommitMessage(
+    repository: Repository,
+    selectedFiles: ReadonlyArray<WorkingDirectoryFileChange>
+  ): Promise<boolean> {
+    const account = this.getState().accounts.find(account =>
+      enableCommitMessageGeneration([account])
+    )
+
+    if (!account) {
+      return false
+    }
+
+    return this.withIsGeneratingCommitMessage(repository, async () => {
+      const diff = await getSelectedFilesDiffText(repository, selectedFiles)
+      if (!diff) {
+        return false
+      }
+
+      const api = API.fromAccount(account)
+      const response = await api.getDiffChangesCommitDetails(diff)
+      if (!response) {
+        return false
+      }
+
+      this._setCommitMessage(repository, {
+        summary: response.title,
+        description: response.description,
+      })
+
+      return true
+    })
   }
 
   /**

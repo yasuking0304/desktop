@@ -29,7 +29,7 @@ import {
   CommitMessageAvatar,
   CommitMessageAvatarWarningType,
 } from './commit-message-avatar'
-import { API, getDotComAPIEndpoint } from '../../lib/api'
+import { getDotComAPIEndpoint } from '../../lib/api'
 import { isAttributableEmailFor, lookupPreferredEmail } from '../../lib/email'
 import { setGlobalConfigValue } from '../../lib/git/config'
 import { Popup, PopupType } from '../../models/popup'
@@ -55,7 +55,6 @@ import { RepoRulesetsForBranchLink } from '../repository-rules/repo-rulesets-for
 import { RepoRulesMetadataFailureList } from '../repository-rules/repo-rules-failure-list'
 import { formatCommitMessage } from '../../lib/format-commit-message'
 import { useRepoRulesLogic } from '../../lib/helpers/repo-rules'
-import { getSelectedFilesDiffText } from '../../lib/git'
 import { WorkingDirectoryFileChange } from '../../models/status'
 import { enableCommitMessageGeneration } from '../../lib/feature-flag'
 
@@ -101,6 +100,7 @@ interface ICommitMessageProps {
   readonly repositoryAccount: Account | null
   readonly autocompletionProviders: ReadonlyArray<IAutocompletionProvider<any>>
   readonly isCommitting?: boolean
+  readonly isGeneratingCommitMessage?: boolean
   readonly commitToAmend: Commit | null
   readonly placeholder: string
   readonly prepopulateCommitSummary: boolean
@@ -156,6 +156,10 @@ interface ICommitMessageProps {
    */
   readonly onPersistCommitMessage?: (message: ICommitMessage) => void
 
+  readonly onGenerateCommitMessage?: (
+    selectedFiles: ReadonlyArray<WorkingDirectoryFileChange>
+  ) => void
+
   /**
    * Called when the component has given the commit message focus due to
    * `focusCommitMessage` being set. Used to reset the `focusCommitMessage`
@@ -182,8 +186,6 @@ interface ICommitMessageProps {
 interface ICommitMessageState {
   readonly summary: string
   readonly description: string | null
-
-  readonly isGeneratingCommitDetails: boolean
 
   readonly commitMessageAutocompletionProviders: ReadonlyArray<
     IAutocompletionProvider<any>
@@ -250,7 +252,6 @@ export class CommitMessage extends React.Component<
     this.state = {
       summary: commitMessage ? commitMessage.summary : '',
       description: commitMessage ? commitMessage.description : null,
-      isGeneratingCommitDetails: false,
       commitMessageAutocompletionProviders:
         findCommitMessageAutoCompleteProvider(props.autocompletionProviders),
       coAuthorAutocompletionProvider: findCoAuthorAutoCompleteProvider(
@@ -807,45 +808,7 @@ export class CommitMessage extends React.Component<
   ) => {
     e.preventDefault()
 
-    this.setState({
-      isGeneratingCommitDetails: true,
-    })
-
-    const notGeneratingCommitDetails = () => {
-      this.setState({
-        isGeneratingCommitDetails: false,
-      })
-    }
-
-    const account = this.props.accounts.find(account =>
-      enableCommitMessageGeneration([account])
-    )
-    if (!account) {
-      notGeneratingCommitDetails()
-      return
-    }
-
-    const diff = await getSelectedFilesDiffText(
-      this.props.repository,
-      this.props.selectedFiles
-    )
-    if (!diff) {
-      notGeneratingCommitDetails()
-      return
-    }
-
-    const api = API.fromAccount(account)
-    const response = await api.getDiffChangesCommitDetails(diff)
-    if (!response) {
-      notGeneratingCommitDetails()
-      return
-    }
-
-    this.setState({
-      summary: response.title,
-      description: response.description,
-      isGeneratingCommitDetails: false,
-    })
+    this.props.onGenerateCommitMessage?.(this.props.selectedFiles)
   }
 
   private onCoAuthorToggleButtonClick = async (
@@ -859,7 +822,8 @@ export class CommitMessage extends React.Component<
   private renderCopilotButton() {
     if (
       this.props.repository.gitHubRepository === null ||
-      !enableCommitMessageGeneration(this.props.accounts)
+      !enableCommitMessageGeneration(this.props.accounts) ||
+      this.props.onGenerateCommitMessage === undefined
     ) {
       return null
     }
@@ -882,7 +846,7 @@ export class CommitMessage extends React.Component<
           tooltip={ariaLabel}
           disabled={
             this.props.isCommitting === true ||
-            this.state.isGeneratingCommitDetails ||
+            this.props.isGeneratingCommitMessage ||
             noSelectedFiles
           }
         >
@@ -905,7 +869,7 @@ export class CommitMessage extends React.Component<
         tooltip={this.toggleCoAuthorsText}
         disabled={
           this.props.isCommitting === true ||
-          this.state.isGeneratingCommitDetails
+          this.props.isGeneratingCommitMessage
         }
       >
         <Octicon symbol={addAuthorIcon} />
@@ -1322,17 +1286,16 @@ export class CommitMessage extends React.Component<
   }
 
   private renderSubmitButton() {
-    const { isCommitting } = this.props
-    const { isGeneratingCommitDetails } = this.state
+    const { isCommitting, isGeneratingCommitMessage } = this.props
     const isSummaryBlank = isEmptyOrWhitespace(this.summaryOrPlaceholder)
     const buttonEnabled =
       (this.canCommit() || this.canAmend()) &&
       !isCommitting &&
       !isSummaryBlank &&
-      !isGeneratingCommitDetails
+      !isGeneratingCommitMessage
     const loading =
-      isCommitting || isGeneratingCommitDetails ? <Loading /> : undefined
-    const generatingCommitDetailsMessage = isGeneratingCommitDetails
+      isCommitting || isGeneratingCommitMessage ? <Loading /> : undefined
+    const generatingCommitDetailsMessage = isGeneratingCommitMessage
       ? 'Generating commit details…'
       : null
     const tooltip =
