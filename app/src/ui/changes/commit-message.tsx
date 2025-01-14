@@ -159,7 +159,8 @@ interface ICommitMessageProps {
   readonly onPersistCommitMessage?: (message: ICommitMessage) => void
 
   readonly onGenerateCommitMessage?: (
-    selectedFiles: ReadonlyArray<WorkingDirectoryFileChange>
+    selectedFiles: ReadonlyArray<WorkingDirectoryFileChange>,
+    mustOverrideExistingMessage: boolean
   ) => void
 
   /**
@@ -816,8 +817,12 @@ export class CommitMessage extends React.Component<
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
     e.preventDefault()
+    const { commitMessage } = this.state
 
-    this.props.onGenerateCommitMessage?.(this.props.selectedFiles)
+    this.props.onGenerateCommitMessage?.(
+      this.props.selectedFiles,
+      !!commitMessage.summary || !!commitMessage.description
+    )
   }
 
   private onCoAuthorToggleButtonClick = async (

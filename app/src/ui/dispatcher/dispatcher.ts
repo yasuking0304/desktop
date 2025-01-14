@@ -1071,16 +1071,21 @@ export class Dispatcher {
     return this.appStore._setCommitMessage(repository, message)
   }
 
+  public promptOverrideWithGeneratedCommitMessage(
+    repository: Repository,
+    selectedFiles: ReadonlyArray<WorkingDirectoryFileChange>
+  ) {
+    return this.appStore._promptOverrideWithGeneratedCommitMessage(
+      repository,
+      selectedFiles
+    )
+  }
+
   public generateCommitMessage(
     repository: Repository,
-    selectedFiles: ReadonlyArray<WorkingDirectoryFileChange>,
-    skipOverrideWarning: boolean = false
+    selectedFiles: ReadonlyArray<WorkingDirectoryFileChange>
   ) {
-    return this.appStore._generateCommitMessage(
-      repository,
-      selectedFiles,
-      skipOverrideWarning
-    )
+    return this.appStore._generateCommitMessage(repository, selectedFiles)
   }
 
   /** Remove the given account from the app. */

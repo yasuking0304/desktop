@@ -5385,10 +5385,20 @@ export class AppStore extends TypedBaseStore<IAppState> {
     return gitStore.setCommitMessage(message)
   }
 
+  public async _promptOverrideWithGeneratedCommitMessage(
+    repository: Repository,
+    selectedFiles: ReadonlyArray<WorkingDirectoryFileChange>
+  ): Promise<void> {
+    return this._showPopup({
+      type: PopupType.GenerateCommitMessageOverrideWarning,
+      repository,
+      selectedFiles,
+    })
+  }
+
   public async _generateCommitMessage(
     repository: Repository,
-    selectedFiles: ReadonlyArray<WorkingDirectoryFileChange>,
-    skipOverrideWarning: boolean
+    selectedFiles: ReadonlyArray<WorkingDirectoryFileChange>
   ): Promise<boolean> {
     const account = this.getState().accounts.find(account =>
       enableCommitMessageGeneration([account])
@@ -5396,19 +5406,6 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
     if (!account) {
       return false
-    }
-
-    if (!skipOverrideWarning) {
-      const { commitMessage } = this.gitStoreCache.get(repository)
-      if (commitMessage.summary || commitMessage.description) {
-        await this._showPopup({
-          type: PopupType.GenerateCommitMessageOverrideWarning,
-          repository,
-          selectedFiles,
-        })
-
-        return false
-      }
     }
 
     return this.withIsGeneratingCommitMessage(repository, async () => {

@@ -51,8 +51,7 @@ export class GenerateCommitMessageOverrideWarning extends React.Component<IGener
   private onOverride = async () => {
     this.props.dispatcher.generateCommitMessage(
       this.props.repository,
-      this.props.selectedFiles,
-      true
+      this.props.selectedFiles
     )
     this.props.onDismissed()
   }
