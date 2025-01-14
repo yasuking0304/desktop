@@ -817,8 +817,8 @@ export class CommitMessage extends React.Component<
       })
     }
 
-    const account = this.props.accounts.find(
-      account => account.endpoint === getDotComAPIEndpoint()
+    const account = this.props.accounts.find(account =>
+      enableCommitMessageGeneration([account])
     )
     if (!account) {
       notGeneratingCommitDetails()
