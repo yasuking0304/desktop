@@ -5426,6 +5426,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
       this._setCommitMessage(repository, {
         summary: response.title,
         description: response.description,
+        timestamp: Date.now(),
       })
 
       return true

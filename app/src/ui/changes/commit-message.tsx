@@ -7,7 +7,10 @@ import {
   CoAuthorAutocompletionProvider,
 } from '../autocompletion'
 import { CommitIdentity } from '../../models/commit-identity'
-import { ICommitMessage } from '../../models/commit-message'
+import {
+  DefaultCommitMessage,
+  ICommitMessage,
+} from '../../models/commit-message'
 import { Repository } from '../../models/repository'
 import { Button } from '../lib/button'
 import { Loading } from '../lib/loading'
@@ -37,7 +40,6 @@ import { RepositorySettingsTab } from '../repository-settings/repository-setting
 import { IdealSummaryLength } from '../../lib/wrap-rich-text-commit-message'
 import { isEmptyOrWhitespace } from '../../lib/is-empty-or-whitespace'
 import { TooltipDirection } from '../lib/tooltip'
-import { pick } from '../../lib/pick'
 import { ToggledtippedContent } from '../lib/toggletipped-content'
 import { PreferencesTab } from '../../models/preferences'
 import {
@@ -184,8 +186,7 @@ interface ICommitMessageProps {
 }
 
 interface ICommitMessageState {
-  readonly summary: string
-  readonly description: string | null
+  readonly commitMessage: ICommitMessage
 
   readonly commitMessageAutocompletionProviders: ReadonlyArray<
     IAutocompletionProvider<any>
@@ -250,8 +251,7 @@ export class CommitMessage extends React.Component<
     const { commitMessage } = this.props
 
     this.state = {
-      summary: commitMessage ? commitMessage.summary : '',
-      description: commitMessage ? commitMessage.description : null,
+      commitMessage: commitMessage ?? DefaultCommitMessage,
       commitMessageAutocompletionProviders:
         findCommitMessageAutoCompleteProvider(props.autocompletionProviders),
       coAuthorAutocompletionProvider: findCoAuthorAutoCompleteProvider(
@@ -270,7 +270,7 @@ export class CommitMessage extends React.Component<
   // Persist our current commit message if the caller wants to
   public componentWillUnmount() {
     const { props, state } = this
-    props.onPersistCommitMessage?.(pick(state, 'summary', 'description'))
+    props.onPersistCommitMessage?.(state.commitMessage)
     window.removeEventListener('keydown', this.onKeyDown)
   }
 
@@ -295,14 +295,8 @@ export class CommitMessage extends React.Component<
       return
     }
 
-    if (
-      (this.state.summary === '' && !this.state.description) ||
-      (this.props.commitToAmend === null && nextProps.commitToAmend)
-    ) {
-      this.setState({
-        summary: commitMessage.summary,
-        description: commitMessage.description,
-      })
+    if (commitMessage.timestamp > this.state.commitMessage.timestamp) {
+      this.setState({ commitMessage })
     }
   }
 
@@ -399,22 +393,23 @@ export class CommitMessage extends React.Component<
   ) {
     if (
       forceUpdate ||
-      prevState?.summary !== this.state.summary ||
-      prevState?.description !== this.state.description ||
+      prevState?.commitMessage.summary !== this.state.commitMessage.summary ||
+      prevState?.commitMessage.description !==
+        this.state.commitMessage.description ||
       prevProps?.coAuthors !== this.props.coAuthors ||
       prevProps?.commitToAmend !== this.props.commitToAmend ||
       prevProps?.repository !== this.props.repository ||
       prevProps?.repoRulesInfo.commitMessagePatterns !==
         this.props.repoRulesInfo.commitMessagePatterns
     ) {
-      let summary = this.state.summary
-      if (!summary && !this.state.description) {
+      let summary = this.state.commitMessage.summary
+      if (!summary && !this.state.commitMessage.description) {
         summary = this.summaryOrPlaceholder
       }
 
       const context: ICommitContext = {
         summary,
-        description: this.state.description,
+        description: this.state.commitMessage.description,
         trailers: this.getCoAuthorTrailers(),
         amend: this.props.commitToAmend !== null,
       }
@@ -478,7 +473,7 @@ export class CommitMessage extends React.Component<
   }
 
   private clearCommitMessage() {
-    this.setState({ summary: '', description: null })
+    this.setState({ commitMessage: DefaultCommitMessage })
   }
 
   private focusSummary() {
@@ -489,11 +484,23 @@ export class CommitMessage extends React.Component<
   }
 
   private onSummaryChanged = (summary: string) => {
-    this.setState({ summary })
+    this.setState({
+      commitMessage: {
+        ...this.state.commitMessage,
+        summary,
+        timestamp: Date.now(),
+      },
+    })
   }
 
   private onDescriptionChanged = (description: string) => {
-    this.setState({ description })
+    this.setState({
+      commitMessage: {
+        ...this.state.commitMessage,
+        description,
+        timestamp: Date.now(),
+      },
+    })
   }
 
   private onSubmit = () => {
@@ -511,13 +518,14 @@ export class CommitMessage extends React.Component<
   }
 
   private get summaryOrPlaceholder() {
-    return this.props.prepopulateCommitSummary && !this.state.summary
+    return this.props.prepopulateCommitSummary &&
+      !this.state.commitMessage.summary
       ? this.props.placeholder
-      : this.state.summary
+      : this.state.commitMessage.summary
   }
 
   private async createCommit(options?: ICreateCommitOptions) {
-    const { description } = this.state
+    const { description } = this.state.commitMessage
 
     if (!this.canCommit() && !this.canAmend()) {
       return
@@ -575,7 +583,7 @@ export class CommitMessage extends React.Component<
   private canCommit(): boolean {
     return (
       ((this.props.anyFilesSelected === true &&
-        this.state.summary.length > 0) ||
+        this.state.commitMessage.summary.length > 0) ||
         this.props.prepopulateCommitSummary) &&
       !this.hasRepoRuleFailure()
     )
@@ -584,7 +592,8 @@ export class CommitMessage extends React.Component<
   private canAmend(): boolean {
     return (
       this.props.commitToAmend !== null &&
-      (this.state.summary.length > 0 || this.props.prepopulateCommitSummary) &&
+      (this.state.commitMessage.summary.length > 0 ||
+        this.props.prepopulateCommitSummary) &&
       !this.hasRepoRuleFailure()
     )
   }
@@ -1402,7 +1411,7 @@ export class CommitMessage extends React.Component<
     const showSummaryLengthHint =
       this.props.showCommitLengthWarning &&
       !showRepoRuleCommitMessageFailureHint &&
-      this.state.summary.length > IdealSummaryLength
+      this.state.commitMessage.summary.length > IdealSummaryLength
 
     const summaryClassName = classNames('summary', {
       'with-trailing-icon':
@@ -1441,7 +1450,7 @@ export class CommitMessage extends React.Component<
             screenReaderLabel="Commit summary"
             className={summaryInputClassName}
             placeholder={placeholder}
-            value={this.state.summary}
+            value={this.state.commitMessage.summary}
             onValueChanged={this.onSummaryChanged}
             onElementRef={this.onSummaryInputRef}
             autocompletionProviders={
@@ -1477,7 +1486,7 @@ export class CommitMessage extends React.Component<
                 : undefined
             }
             placeholder="Description"
-            value={this.state.description || ''}
+            value={this.state.commitMessage.description || ''}
             onValueChanged={this.onDescriptionChanged}
             autocompletionProviders={
               this.state.commitMessageAutocompletionProviders
