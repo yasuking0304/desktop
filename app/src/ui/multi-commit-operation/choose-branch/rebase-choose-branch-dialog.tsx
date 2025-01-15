@@ -166,10 +166,10 @@ export class RebaseChooseBranchDialog extends React.Component<
       const pluralized = commitsBehindCount === 1 ? 'commit' : 'commits'
       return (
         <>
-          This will fast-forward <strong>{currentBranch.name}</strong>
-          {` to `}
-          <strong>{baseBranch.name}</strong> by applying
+          This will fast-forward <strong>{currentBranch.name}</strong> by
           <strong>{` ${commitsBehindCount} ${pluralized}`}</strong>
+          {` to match `}
+          <strong>{baseBranch.name}</strong>
         </>
       )
     }
