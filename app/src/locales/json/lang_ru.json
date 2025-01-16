@@ -352,9 +352,10 @@
     "amend": "Amend",
     "amending": "Amending",
     "commit": "Commit",
+    "commit-count-files": "{{0}} {{1}} ",
     "commit-description": "Commit description",
     "commit-summaries-length-over": "Great commit summaries contain fewer than 50 characters",
-    "commit-title": "{{0}} to {{1}}",
+    "commit-title2": "{{0}} {{2}} to {{1}}",
     "committing": "Committing",
     "committing-changes": "Committing changes…",
     "description-field": "Description",
@@ -468,6 +469,7 @@
     "repository-path": "repository path",
     "save": "Save",
     "select-all": "Select All",
+    "setting": "Settings",
     "settings": "Settings",
     "sign-in": "Sign in",
     "sign-in-darwin": "Sign In",
@@ -908,7 +910,12 @@
   },
   "launch": {
     "error": {
-      "could-not-find-executable": "Could not find executable for '{{0}}' at path '{{1}}'. Please open {{2}} and select an available editor."
+      "could-not-find-executable": "Could not find executable for '{{0}}' at path '{{1}}'. Please open {{2}} and select an available editor.",
+      "could-not-find-executable-for-custom-editor": "Could not find executable for custom editor at path '{{0}}'. Please open {{1}} and select an available editor.",
+      "donot-have-the-permission-to-start": "GitHub Desktop doesn't have the proper permissions to start '{{0}}'. Please open {{1}} and try another editor.",
+      "donot-have-the-permission-to-start-custom-editor": "GitHub Desktop doesn't have the proper permissions to start custom editor at path {{0}}. Please open {{1}} and try another editor.",
+      "something-went-wrong-to-start": "Something went wrong while trying to start '{{0}}'. Please open {{1}} and try another editor.",
+      "something-went-wrong-to-start-custom-editor": "Something went wrong while trying to start custom editor at path {{0}}. Please open {{1}} and try another editor."
     }
   },
   "local-changes-overwritten-dialog": {

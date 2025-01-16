@@ -21,7 +21,9 @@ export async function launchExternalEditor(
 ): Promise<void> {
   const editorPath = editor.path
   const exists = await pathExists(editorPath)
-  const label = __DARWIN__ ? 'Settings' : 'Options'
+  const label = __DARWIN__
+    ? t('common.setting', 'Settings')
+    : t('common.options', 'Options')
   if (!exists) {
     throw new ExternalEditorError(
       t(
@@ -53,12 +55,20 @@ export async function launchExternalEditor(
     log.error(`Error while launching ${editor.editor}`, error)
     if (error?.code === 'EACCES') {
       throw new ExternalEditorError(
-        `GitHub Desktop doesn't have the proper permissions to start '${editor.editor}'. Please open ${label} and try another editor.`,
+        t(
+          'launch.error.donot-have-the-permission-to-start',
+          `GitHub Desktop doesn't have the proper permissions to start '{{0}}'. Please open {{1}} and try another editor.`,
+          { 0: editor.editor, 1: label }
+        ),
         { openPreferences: true }
       )
     } else {
       throw new ExternalEditorError(
-        `Something went wrong while trying to start '${editor.editor}'. Please open ${label} and try another editor.`,
+        t(
+          'launch.error.something-went-wrong-to-start',
+          `Something went wrong while trying to start '{{0}}'. Please open {{1}} and try another editor.`,
+          { 0: editor.editor, 1: label }
+        ),
         { openPreferences: true }
       )
     }
@@ -77,10 +87,16 @@ export async function launchCustomExternalEditor(
 ): Promise<void> {
   const editorPath = customEditor.path
   const exists = await pathExists(editorPath)
-  const label = __DARWIN__ ? 'Settings' : 'Options'
+  const label = __DARWIN__
+    ? t('common.setting', 'Settings')
+    : t('common.options', 'Options')
   if (!exists) {
     throw new ExternalEditorError(
-      `Could not find executable for custom editor at path '${customEditor.path}'.  Please open ${label} and select an available editor.`,
+      t(
+        'launch.error.could-not-find-executable-for-custom-editor',
+        `Could not find executable for custom editor at path '{{0}}'. Please open {{1}} and select an available editor.`,
+        { 0: customEditor.path, 1: label }
+      ),
       { openPreferences: true }
     )
   }
@@ -113,12 +129,20 @@ export async function launchCustomExternalEditor(
     )
     if (error?.code === 'EACCES') {
       throw new ExternalEditorError(
-        `GitHub Desktop doesn't have the proper permissions to start custom editor at path ${customEditor.path}. Please open ${label} and try another editor.`,
+        t(
+          'launch.error.donot-have-the-permission-to-start-custom-editor',
+          `GitHub Desktop doesn't have the proper permissions to start custom editor at path {{0}}. Please open {{1}} and try another editor.`,
+          { 0: customEditor.path, 1: label }
+        ),
         { openPreferences: true }
       )
     } else {
       throw new ExternalEditorError(
-        `Something went wrong while trying to start custom editor at path ${customEditor.path}. Please open ${label} and try another editor.`,
+        t(
+          'launch.error.something-went-wrong-to-start-custom-editor',
+          `Something went wrong while trying to start custom editor at path {{0}}. Please open {{1}} and try another editor.`,
+          { 0: customEditor.path, 1: label }
+        ),
         { openPreferences: true }
       )
     }
