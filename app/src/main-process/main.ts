@@ -238,8 +238,8 @@ if (__DARWIN__) {
 }
 
 async function handleCommandLineArguments(argv: string[]) {
+  log.error(`command line arguments: ${JSON.stringify(argv)}`)
   const args = parseCommandLineArgs(argv)
-
   // Desktop registers it's protocol handler callback on Windows as
   // `[executable path] --protocol-launcher "%1"`. Note that extra command
   // line arguments might be added by Chromium

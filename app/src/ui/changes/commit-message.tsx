@@ -1204,12 +1204,15 @@ export class CommitMessage extends React.Component<
       return ''
     }
 
-    const pluralizedFile = filesToBeCommittedCount > 1
-      ? t('common.files', 'files')
-      : t('common.file', 'file')
+    const pluralizedFile =
+      filesToBeCommittedCount > 1
+        ? t('common.files', 'files')
+        : t('common.file', 'file')
 
-    return t('commit-message.commit-count-files', `{{0}} {{1}} `,
-        {0: filesToBeCommittedCount, 1: pluralizedFile})
+    return t('commit-message.commit-count-files', `{{0}} {{1}} `, {
+      0: filesToBeCommittedCount,
+      1: pluralizedFile,
+    })
   }
 
   private getCommittingButtonTitle() {
