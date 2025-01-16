@@ -50,7 +50,6 @@ import {
   showNotification,
 } from 'desktop-notifications'
 import { initializeDesktopNotifications } from './notifications'
-import parseCommandLineArgs from 'minimist'
 import { CLIAction } from '../lib/cli-action'
 
 app.setAppLogsPath()
@@ -238,28 +237,25 @@ if (__DARWIN__) {
 }
 
 async function handleCommandLineArguments(argv: string[]) {
-  log.error(`command line arguments: ${JSON.stringify(argv)}`)
-  const args = parseCommandLineArgs(argv)
-  // Desktop registers it's protocol handler callback on Windows as
-  // `[executable path] --protocol-launcher "%1"`. Note that extra command
-  // line arguments might be added by Chromium
-  // (https://electronjs.org/docs/api/app#event-second-instance).
-  if (__WIN32__ && typeof args['protocol-launcher'] === 'string') {
-    handleAppURL(args['protocol-launcher'])
-    return
+  for (const arg of argv) {
+    if (
+      arg.match(/^x-github-desktop/) &&
+      arg.match('auth://oauth') &&
+      arg.match('code=') &&
+      arg.match('state=')
+    ) {
+      handleAppURL(arg)
+      return
+    }
+    if (
+      arg.match(/^x-github-client/) &&
+      arg.match('openRepo') &&
+      arg.match('branch=')
+    ) {
+      handleAppURL(arg)
+      return
+    }
   }
-
-  if (typeof args['cli-open'] === 'string') {
-    handleCLIAction({ kind: 'open-repository', path: args['cli-open'] })
-  } else if (typeof args['cli-clone'] === 'string') {
-    handleCLIAction({
-      kind: 'clone-url',
-      url: args['cli-clone'],
-      branch:
-        typeof args['cli-branch'] === 'string' ? args['cli-branch'] : undefined,
-    })
-  }
-
   return
 }
 
