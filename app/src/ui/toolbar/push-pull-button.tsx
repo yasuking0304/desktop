@@ -551,7 +551,7 @@ export class PushPullButton extends React.Component<
         title={t('push-pull-button.publish-branch', 'Publish branch')}
         description={t(
           'push-pull-button.cannot-publish-unborn-head',
-          'Cannot publish unborn HEAD'
+          'Cannot publish: no commits'
         )}
         icon={octicons.upload}
         disabled={true}

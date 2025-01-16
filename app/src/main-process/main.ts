@@ -50,6 +50,7 @@ import {
   showNotification,
 } from 'desktop-notifications'
 import { initializeDesktopNotifications } from './notifications'
+import { CLIAction } from '../lib/cli-action'
 
 app.setAppLogsPath()
 enableSourceMaps()
@@ -140,20 +141,18 @@ process.on('uncaughtException', (error: Error) => {
 let handlingSquirrelEvent = false
 if (__WIN32__ && process.argv.length > 1) {
   const arg = process.argv[1]
-
   const promise = handleSquirrelEvent(arg)
+
   if (promise) {
     handlingSquirrelEvent = true
     promise
-      .catch(e => {
-        log.error(`Failed handling Squirrel event: ${arg}`, e)
-      })
-      .then(() => {
-        app.quit()
-      })
-  } else {
-    handlePossibleProtocolLauncherArgs(process.argv)
+      .catch(e => log.error(`Failed handling Squirrel event: ${arg}`, e))
+      .then(() => app.quit())
   }
+}
+
+if (!handlingSquirrelEvent) {
+  handleCommandLineArguments(process.argv)
 }
 
 initializeDesktopNotifications()
@@ -191,7 +190,7 @@ if (!handlingSquirrelEvent) {
       mainWindow.focus()
     }
 
-    handlePossibleProtocolLauncherArgs(args)
+    handleCommandLineArguments(args)
   })
 
   if (isDuplicateInstance) {
@@ -230,25 +229,15 @@ if (__DARWIN__) {
         return
       }
 
-      handleAppURL(
-        `x-github-client://openLocalRepo/${encodeURIComponent(path)}`
-      )
+      // Yeah this isn't technically a CLI action we use it here to indicate
+      // that it's more trusted than a URL action.
+      handleCLIAction({ kind: 'open-repository', path })
     })
   })
 }
 
-/**
- * Attempt to detect and handle any protocol handler arguments passed
- * either via the command line directly to the current process or through
- * IPC from a duplicate instance (see makeSingleInstance)
- *
- * @param args Essentially process.argv, i.e. the first element is the exec
- *             path
- */
-function handlePossibleProtocolLauncherArgs(args: ReadonlyArray<string>) {
-  log.info(`Received possible protocol arguments: ${args.length}`)
-
-  for (const arg of args) {
+async function handleCommandLineArguments(argv: string[]) {
+  for (const arg of argv) {
     if (
       arg.match(/^x-github-desktop/) &&
       arg.match('auth://oauth') &&
@@ -256,11 +245,27 @@ function handlePossibleProtocolLauncherArgs(args: ReadonlyArray<string>) {
       arg.match('state=')
     ) {
       handleAppURL(arg)
-      return true
+      return
+    }
+    if (
+      arg.match(/^x-github-client/) &&
+      arg.match('openRepo') &&
+      arg.match('branch=')
+    ) {
+      handleAppURL(arg)
+      return
     }
   }
-  log.error(`Malformed launch arguments received: ${args}`)
-  return false
+  return
+}
+
+function handleCLIAction(action: CLIAction) {
+  onDidLoad(window => {
+    // This manual focus call _shouldn't_ be necessary, but is for Chrome on
+    // macOS. See https://github.com/desktop/desktop/issues/973.
+    window.focus()
+    window.sendCLIAction(action)
+  })
 }
 
 /**
@@ -720,18 +725,13 @@ function createWindow() {
       REACT_DEVELOPER_TOOLS,
     } = require('electron-devtools-installer')
 
-    const ChromeLens = {
-      id: 'idikgljglpfilbhaboonnpnnincjhjkd',
-      electron: '>=1.2.1',
-    }
-
     const axeDevTools = {
       id: 'lhdoppojpmngadmnindnejefpokejbdd',
       electron: '>=1.2.1',
       Permissions: ['tabs', 'debugger'],
     }
 
-    const extensions = [REACT_DEVELOPER_TOOLS, ChromeLens, axeDevTools]
+    const extensions = [REACT_DEVELOPER_TOOLS, axeDevTools]
 
     for (const extension of extensions) {
       try {

@@ -28,6 +28,7 @@ export enum Shell {
   LXTerminal = 'LXDE Terminal',
   WezTerm = 'WezTerm',
   Warp = 'Warp',
+  Ghostty = 'Ghostty',
 }
 
 export const Default = Shell.Gnome
@@ -76,6 +77,8 @@ function getShellPath(shell: Shell): Promise<string | null> {
       return getPathIfAvailable('/usr/bin/wezterm')
     case Shell.Warp:
       return getPathIfAvailable('/usr/bin/warp-terminal')
+    case Shell.Ghostty:
+      return getPathIfAvailable('/usr/bin/ghostty')
     default:
       return assertNever(shell, `Unknown shell: ${shell}`)
   }
@@ -102,6 +105,7 @@ export async function getAvailableShells(): Promise<
     lxterminalPath,
     weztermPath,
     warpPath,
+    ghosttyPath,
   ] = await Promise.all([
     getShellPath(Shell.Gnome),
     getShellPath(Shell.GnomeConsole),
@@ -120,6 +124,7 @@ export async function getAvailableShells(): Promise<
     getShellPath(Shell.LXTerminal),
     getShellPath(Shell.WezTerm),
     getShellPath(Shell.Warp),
+    getShellPath(Shell.Ghostty),
   ])
 
   const shells: Array<FoundShell<Shell>> = []
@@ -191,6 +196,10 @@ export async function getAvailableShells(): Promise<
     shells.push({ shell: Shell.Warp, path: warpPath })
   }
 
+  if (ghosttyPath) {
+    shells.push({ shell: Shell.Ghostty, path: ghosttyPath })
+  }
+
   return shells
 }
 
@@ -226,6 +235,7 @@ export function launch(
     case Shell.WezTerm:
       return spawn(foundShell.path, ['start', '--cwd', path])
     case Shell.LXTerminal:
+    case Shell.Ghostty:
       return spawn(foundShell.path, ['--working-directory=' + path])
     case Shell.Warp:
       return spawn(foundShell.path, [], { cwd: path })

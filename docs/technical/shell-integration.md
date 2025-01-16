@@ -153,6 +153,7 @@ These shells are currently supported:
  - [Alacritty](https://github.com/alacritty/alacritty)
  - [Tabby](https://tabby.sh/)
  - [WezTerm](https://github.com/wez/wezterm)
+ - [Ghostty](https://ghostty.org/)
 
 These are defined in an enum at the top of the file:
 
@@ -251,6 +252,7 @@ These shells are currently supported:
  - [Kitty](https://sw.kovidgoyal.net/kitty/)
  - [LXTerminal](https://github.com/lxde/lxterminal)
  - [WezTerm](https://github.com/wez/wezterm)
+ - [Ghostty](https://ghostty.org/)
 
 These are defined in an enum at the top of the file:
 

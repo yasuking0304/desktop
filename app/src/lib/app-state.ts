@@ -232,6 +232,9 @@ export interface IAppState {
   /** Should the app prompt the user to confirm an undo commit? */
   readonly askForConfirmationOnUndoCommit: boolean
 
+  /** Should the app prompt the user to confirm they want to commit with changes are hidden by filter? */
+  readonly askForConfirmationOnCommitFilteredChanges: boolean
+
   /** How the app should handle uncommitted changes when switching branches */
   readonly uncommittedChangesStrategy: UncommittedChangesStrategy
 
@@ -368,6 +371,8 @@ export interface IAppState {
   readonly cachedRepoRulesets: ReadonlyMap<number, IAPIRepoRuleset>
 
   readonly underlineLinks: boolean
+
+  readonly canFilterChanges: boolean
 }
 
 export enum FoldoutType {
