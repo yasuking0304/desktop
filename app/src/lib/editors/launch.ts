@@ -48,6 +48,8 @@ export async function launchExternalEditor(
       // In macOS we can use `open`, which will open the right executable file
       // for us, we only need the path to the editor .app folder.
       spawn('open', ['-a', editorPath, fullPath], opts)
+    } else if (__WIN32__) {
+      spawn(`"${editorPath}"`, [`"${fullPath}"`], { ...opts, shell: true })
     } else {
       spawn(editorPath, [fullPath], opts)
     }

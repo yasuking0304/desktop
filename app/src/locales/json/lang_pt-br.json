@@ -786,7 +786,9 @@
   },
   "editor-error": {
     "open-options": "Open options",
-    "open-settings-darwin": "Open Settings"
+    "open-settings-darwin": "Open Settings",
+    "unable-to-open-external-editor": "Unable to open external editor",
+    "unable-to-open-external-editor-darwin": "Unable to Open External Editor"
   },
   "enterprise-server-entry": {
     "enterprise-or-ae-address": "Enterprise or AE address"
