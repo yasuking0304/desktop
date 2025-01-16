@@ -110,6 +110,8 @@ interface IRepositoryViewProps {
 
   /** The user's preference of pull request suggested next action to use **/
   readonly pullRequestSuggestedNextAction?: PullRequestSuggestedNextAction
+
+  readonly canFilterChanges: boolean
 }
 
 interface IRepositoryViewState {
@@ -267,6 +269,7 @@ export class RepositoryView extends React.Component<
         }
         commitSpellcheckEnabled={this.props.commitSpellcheckEnabled}
         showCommitLengthWarning={this.props.showCommitLengthWarning}
+        canFilterChanges={this.props.canFilterChanges}
       />
     )
   }

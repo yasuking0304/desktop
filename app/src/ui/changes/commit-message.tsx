@@ -80,6 +80,7 @@ interface ICommitMessageProps {
   readonly branch: string | null
   readonly commitAuthor: CommitIdentity | null
   readonly anyFilesSelected: boolean
+  readonly filesToBeCommittedCount?: number
   /** Whether the user can see all the files to commit in the changes list. They
    * may not be able to if the list is filtered */
   readonly showPromptForCommittingFileHiddenByFilter?: boolean
@@ -1184,12 +1185,31 @@ export class CommitMessage extends React.Component<
 
     return (
       <>
-        {t('commit-message.commit-title', `{{0}} to {{1}}`, {
+        {t('commit-message.commit-title2', `{{0}} {{2}} to {{1}}`, {
           0: verb,
           1: branch,
+          2: this.getFilesToBeCommittedButtonText(),
         })}
       </>
     )
+  }
+
+  private getFilesToBeCommittedButtonText() {
+    const { filesToBeCommittedCount } = this.props
+
+    if (
+      filesToBeCommittedCount === undefined ||
+      filesToBeCommittedCount === 0
+    ) {
+      return ''
+    }
+
+    const pluralizedFile = filesToBeCommittedCount > 1
+      ? t('common.files', 'files')
+      : t('common.file', 'file')
+
+    return t('commit-message.commit-count-files', `{{0}} {{1}} `,
+        {0: filesToBeCommittedCount, 1: pluralizedFile})
   }
 
   private getCommittingButtonTitle() {

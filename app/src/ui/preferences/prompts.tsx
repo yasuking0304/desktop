@@ -5,6 +5,7 @@ import { Checkbox, CheckboxValue } from '../lib/checkbox'
 import { t } from 'i18next'
 import { RadioGroup } from '../lib/radio-group'
 import { assertNever } from '../../lib/fatal-error'
+import { enableFilteredChangesList } from '../../lib/feature-flag'
 
 interface IPromptsPreferencesProps {
   readonly confirmRepositoryRemoval: boolean
@@ -203,6 +204,24 @@ export class Prompts extends React.Component<
     )
   }
 
+  private renderCommittingFilteredChangesPrompt = () => {
+    if (!enableFilteredChangesList()) {
+      return
+    }
+
+    return (
+      <Checkbox
+        label="Committing changes hidden by filter"
+        value={
+          this.state.askForConfirmationOnCommitFilteredChanges
+            ? CheckboxValue.On
+            : CheckboxValue.Off
+        }
+        onChange={this.onAskForConfirmationOnCommitFilteredChanges}
+      />
+    )
+  }
+
   public render() {
     return (
       <DialogContent>
@@ -286,15 +305,7 @@ export class Prompts extends React.Component<
               }
               onChange={this.onConfirmUndoCommitChanged}
             />
-            <Checkbox
-              label="Committing changes hidden by filter"
-              value={
-                this.state.askForConfirmationOnCommitFilteredChanges
-                  ? CheckboxValue.On
-                  : CheckboxValue.Off
-              }
-              onChange={this.onAskForConfirmationOnCommitFilteredChanges}
-            />
+            {this.renderCommittingFilteredChangesPrompt()}
           </div>
         </div>
         {this.renderSwitchBranchOptions()}
