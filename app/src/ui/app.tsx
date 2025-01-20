@@ -181,7 +181,6 @@ import { isCertificateErrorSuppressedFor } from '../lib/suppress-certificate-err
 import { webUtils } from 'electron'
 import { showTestUI } from './lib/test-ui-components/test-ui-components'
 import { ConfirmCommitFilteredChanges } from './changes/confirm-commit-filtered-changes-dialog'
-import { MarkdownMessageDialog } from './markdown-message/markdown-message'
 import { GenerateCommitMessageOverrideWarning } from './generate-commit-message/GenerateCommitMessageOverrideWarning'
 
 const MinuteInMilliseconds = 1000 * 60
@@ -2482,17 +2481,6 @@ export class App extends React.Component<IAppProps, IAppState> {
             setConfirmCommitFilteredChanges={
               this.setConfirmCommitFilteredChanges
             }
-          />
-        )
-      }
-      case PopupType.MarkdownMessage: {
-        return (
-          <MarkdownMessageDialog
-            key="markdown-message"
-            emoji={this.state.emoji}
-            title={popup.title}
-            markdownBody={popup.markdownBody}
-            onDismissed={onPopupDismissedFn}
           />
         )
       }

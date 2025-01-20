@@ -96,7 +96,6 @@ export enum PopupType {
   UnknownAuthors = 'UnknownAuthors',
   TestIcons = 'TestIcons',
   ConfirmCommitFilteredChanges = 'ConfirmCommitFilteredChanges',
-  MarkdownMessage = 'MarkdownMessage',
   GenerateCommitMessageOverrideWarning = 'GenerateCommitMessageOverrideWarning',
 }
 
@@ -430,11 +429,6 @@ export type PopupDetail =
       type: PopupType.ConfirmCommitFilteredChanges
       onCommitAnyway: () => void
       onClearFilter: () => void
-    }
-  | {
-      type: PopupType.MarkdownMessage
-      title: string
-      markdownBody: string
     }
   | {
       type: PopupType.GenerateCommitMessageOverrideWarning
