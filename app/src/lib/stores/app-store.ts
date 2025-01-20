@@ -5415,7 +5415,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
       }
 
       const api = API.fromAccount(account)
-      const response = await api.getDiffChangesCommitDetails(diff)
+      const response = await api.getDiffChangesCommitMessage(diff)
       if (!response) {
         return false
       }
