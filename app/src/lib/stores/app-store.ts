@@ -185,7 +185,7 @@ import {
   checkoutCommit,
   getRemoteURL,
   getGlobalConfigPath,
-  getSelectedFilesDiffText,
+  getFilesDiffText,
 } from '../git'
 import {
   installGlobalLFSFilters,
@@ -5409,7 +5409,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
     }
 
     return this.withIsGeneratingCommitMessage(repository, async () => {
-      const diff = await getSelectedFilesDiffText(repository, selectedFiles)
+      const diff = await getFilesDiffText(repository, selectedFiles)
       if (!diff) {
         return false
       }

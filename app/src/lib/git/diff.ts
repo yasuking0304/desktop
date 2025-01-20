@@ -398,11 +398,12 @@ export async function getWorkingDirectoryDiff(
 }
 
 /**
- * Render the diff for a file within the repository working directory. The file will be
- * compared against HEAD if it's tracked, if not it'll be compared to an empty file meaning
- * that all content in the file will be treated as additions.
+ * Render the diff for a list of files within the repository working directory.
+ * The files will be compared against HEAD if it's tracked, if not it'll be
+ * compared to an empty file meaning that all content in the file will be
+ * treated as additions.
  */
-export async function getSelectedFilesDiffText(
+export async function getFilesDiffText(
   repository: Repository,
   files: ReadonlyArray<WorkingDirectoryFileChange>
 ): Promise<string> {
@@ -424,12 +425,10 @@ export async function getSelectedFilesDiffText(
   ]
   const successExitCodes = new Set([0])
 
-  const { stdout } = await git(
-    args,
-    repository.path,
-    'getSelectedFilesDiffText',
-    { successExitCodes, encoding: 'buffer' }
-  )
+  const { stdout } = await git(args, repository.path, 'getFilesDiffText', {
+    successExitCodes,
+    encoding: 'buffer',
+  })
 
   await unstageAll(repository)
 
