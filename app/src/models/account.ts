@@ -36,7 +36,7 @@ export class Account {
    * @param plan The plan associated with this account
    * @param copilotEndpoint The endpoint for the Copilot API
    * @param copilotLicenseType The Copilot license type
-   * @param features The features available to this account
+   * @param features The Desktop-specific features available to this account
    */
   public constructor(
     public readonly login: string,
