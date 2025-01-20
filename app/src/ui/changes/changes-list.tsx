@@ -800,7 +800,7 @@ export class ChangesList extends React.Component<
     const anyFilesSelected =
       fileCount > 0 && includeAllValue !== CheckboxValue.Off
 
-    const selectedFiles = workingDirectory.files.filter(
+    const filesSelected = workingDirectory.files.filter(
       f => f.selection.getSelectionType() !== DiffSelectionType.None
     )
 
@@ -809,7 +809,7 @@ export class ChangesList extends React.Component<
     // However, for onboarding tutorial repositories, we don't want to do this.
     // See https://github.com/desktop/desktop/issues/8354
     const prepopulateCommitSummary =
-      selectedFiles.length === 1 && !repository.isTutorialRepository
+      filesSelected.length === 1 && !repository.isTutorialRepository
 
     // if this is not a github repo, we don't want to
     // restrict what the user can do at all
@@ -827,7 +827,7 @@ export class ChangesList extends React.Component<
         isShowingFoldout={this.props.isShowingFoldout}
         anyFilesSelected={anyFilesSelected}
         anyFilesAvailable={fileCount > 0}
-        selectedFiles={selectedFiles}
+        filesSelected={filesSelected}
         repository={repository}
         repositoryAccount={repositoryAccount}
         commitMessage={this.props.commitMessage}
@@ -839,7 +839,7 @@ export class ChangesList extends React.Component<
         showCoAuthoredBy={this.props.showCoAuthoredBy}
         coAuthors={this.props.coAuthors}
         placeholder={this.getPlaceholderMessage(
-          selectedFiles,
+          filesSelected,
           prepopulateCommitSummary
         )}
         prepopulateCommitSummary={prepopulateCommitSummary}

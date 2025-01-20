@@ -95,7 +95,7 @@ interface ICommitMessageProps {
    * when commit button is disabled
    */
   readonly anyFilesAvailable: boolean
-  readonly selectedFiles: ReadonlyArray<WorkingDirectoryFileChange>
+  readonly filesSelected: ReadonlyArray<WorkingDirectoryFileChange>
   readonly focusCommitMessage: boolean
   readonly commitMessage: ICommitMessage | null
   readonly repository: Repository
@@ -820,7 +820,7 @@ export class CommitMessage extends React.Component<
     const { commitMessage } = this.state
 
     this.props.onGenerateCommitMessage?.(
-      this.props.selectedFiles,
+      this.props.filesSelected,
       !!commitMessage.summary || !!commitMessage.description
     )
   }
@@ -842,11 +842,11 @@ export class CommitMessage extends React.Component<
       return null
     }
 
-    const noSelectedFiles = this.props.selectedFiles.length === 0
+    const noFilesSelected = this.props.filesSelected.length === 0
 
     const ariaLabel =
       'Generate commit message with Copilot' +
-      (noSelectedFiles
+      (noFilesSelected
         ? '. Files must be selected to generate a commit message.'
         : '')
 
@@ -861,7 +861,7 @@ export class CommitMessage extends React.Component<
           disabled={
             this.props.isCommitting === true ||
             this.props.isGeneratingCommitMessage ||
-            noSelectedFiles
+            noFilesSelected
           }
         >
           <Octicon symbol={octicons.copilot} />

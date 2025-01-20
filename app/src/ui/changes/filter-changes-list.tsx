@@ -931,7 +931,7 @@ export class FilterChangesList extends React.Component<
           showPromptForCommittingFileHiddenByFilter
         }
         anyFilesAvailable={fileCount > 0}
-        selectedFiles={filesSelected}
+        filesSelected={filesSelected}
         filesToBeCommittedCount={filesSelected.length}
         repository={repository}
         repositoryAccount={repositoryAccount}
