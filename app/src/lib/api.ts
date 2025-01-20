@@ -2135,10 +2135,12 @@ export async function fetchUser(
 ): Promise<Account> {
   const api = new API(endpoint, token)
   try {
-    const user = await api.fetchAccount()
-    const emails = await api.fetchEmails()
-    const copilotInfo = await api.fetchUserCopilotInfo()
-    const features = await api.fetchFeatureFlags()
+    const [user, emails, copilotInfo, features] = await Promise.all([
+      api.fetchAccount(),
+      api.fetchEmails(),
+      api.fetchUserCopilotInfo(),
+      api.fetchFeatureFlags(),
+    ])
 
     return new Account(
       user.login,
