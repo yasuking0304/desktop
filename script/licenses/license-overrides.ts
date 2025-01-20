@@ -39,7 +39,7 @@ export const licenseOverrides: LicenseLookup = {
   },
 
   'tslib@2.0.0': tslibLicenseOverride,
-  'tslib@2.3.1': tslibLicenseOverride,
+  'tslib@2.8.1': tslibLicenseOverride,
   'jackspeak@3.4.0': tslibLicenseOverride,
   'path-scurry@1.11.1': tslibLicenseOverride,
 }
