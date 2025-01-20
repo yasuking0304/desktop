@@ -5387,18 +5387,18 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
   public async _promptOverrideWithGeneratedCommitMessage(
     repository: Repository,
-    selectedFiles: ReadonlyArray<WorkingDirectoryFileChange>
+    filesSelected: ReadonlyArray<WorkingDirectoryFileChange>
   ): Promise<void> {
     return this._showPopup({
       type: PopupType.GenerateCommitMessageOverrideWarning,
       repository,
-      selectedFiles,
+      filesSelected,
     })
   }
 
   public async _generateCommitMessage(
     repository: Repository,
-    selectedFiles: ReadonlyArray<WorkingDirectoryFileChange>
+    filesSelected: ReadonlyArray<WorkingDirectoryFileChange>
   ): Promise<boolean> {
     const account = this.getState().accounts.find(account =>
       enableCommitMessageGeneration([account])
@@ -5409,7 +5409,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
     }
 
     return this.withIsGeneratingCommitMessage(repository, async () => {
-      const diff = await getFilesDiffText(repository, selectedFiles)
+      const diff = await getFilesDiffText(repository, filesSelected)
       if (!diff) {
         return false
       }

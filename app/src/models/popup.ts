@@ -439,7 +439,7 @@ export type PopupDetail =
   | {
       type: PopupType.GenerateCommitMessageOverrideWarning
       repository: Repository
-      selectedFiles: ReadonlyArray<WorkingDirectoryFileChange>
+      filesSelected: ReadonlyArray<WorkingDirectoryFileChange>
     }
 
 export type Popup = IBasePopup & PopupDetail

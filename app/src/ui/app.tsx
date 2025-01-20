@@ -2502,7 +2502,7 @@ export class App extends React.Component<IAppProps, IAppState> {
             key="generate-commit-message-override-warning"
             dispatcher={this.props.dispatcher}
             repository={popup.repository}
-            selectedFiles={popup.selectedFiles}
+            filesSelected={popup.filesSelected}
             onDismissed={onPopupDismissedFn}
           />
         )

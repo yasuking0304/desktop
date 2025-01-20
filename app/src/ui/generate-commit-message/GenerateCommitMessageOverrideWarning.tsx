@@ -12,7 +12,7 @@ import { WorkingDirectoryFileChange } from '../../models/status'
 interface IGenerateCommitMessageOverrideWarningProps {
   readonly dispatcher: Dispatcher
   readonly repository: Repository
-  readonly selectedFiles: ReadonlyArray<WorkingDirectoryFileChange>
+  readonly filesSelected: ReadonlyArray<WorkingDirectoryFileChange>
 
   /**
    * Callback to use when the dialog gets closed.
@@ -51,7 +51,7 @@ export class GenerateCommitMessageOverrideWarning extends React.Component<IGener
   private onOverride = async () => {
     this.props.dispatcher.generateCommitMessage(
       this.props.repository,
-      this.props.selectedFiles
+      this.props.filesSelected
     )
     this.props.onDismissed()
   }
