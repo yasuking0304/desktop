@@ -159,7 +159,7 @@ interface ICommitMessageProps {
   readonly onPersistCommitMessage?: (message: ICommitMessage) => void
 
   readonly onGenerateCommitMessage?: (
-    selectedFiles: ReadonlyArray<WorkingDirectoryFileChange>,
+    filesSelected: ReadonlyArray<WorkingDirectoryFileChange>,
     mustOverrideExistingMessage: boolean
   ) => void
 
