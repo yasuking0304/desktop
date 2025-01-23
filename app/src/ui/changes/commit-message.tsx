@@ -835,7 +835,6 @@ export class CommitMessage extends React.Component<
 
   private renderCopilotButton() {
     if (
-      this.props.repository.gitHubRepository === null ||
       !enableCommitMessageGeneration(this.props.accounts) ||
       this.props.onGenerateCommitMessage === undefined
     ) {
