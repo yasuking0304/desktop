@@ -74,8 +74,8 @@ export class CreateTag extends React.Component<
             label={t('common.name', 'Name')}
             placeholder={
               __DARWIN__
-                ? t('common.branch-name-darwin', 'Branch Name')
-                : t('common.branch-name', 'Branch name')
+                ? t('common.tag-name-darwin', 'Tag Name')
+                : t('common.tag-name', 'Tag name')
             }
             initialValue={this.props.initialName}
             onValueChange={this.updateTagName}
