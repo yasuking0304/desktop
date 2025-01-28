@@ -2080,7 +2080,7 @@ export class API {
    */
   public async getDiffChangesCommitMessage(
     diff: string
-  ): Promise<ICopilotCommitMessage | null> {
+  ): Promise<ICopilotCommitMessage> {
     try {
       const response = await this.copilotRequest(
         '/agents/github-desktop-commit-message-generation',
@@ -2090,12 +2090,12 @@ export class API {
       const choice = response.choices.at(0)
 
       if (!choice) {
-        return null
+        throw new Error('No choice found in response')
       }
 
       const message = choice.message.content
       if (!message) {
-        return null
+        throw new Error('No message found in response')
       }
 
       return JSON.parse(message)
@@ -2104,7 +2104,7 @@ export class API {
         `getDiffChangesCommitDetails: failed with endpoint ${this.endpoint}`,
         e
       )
-      return null
+      throw e
     }
   }
 }

@@ -5415,16 +5415,22 @@ export class AppStore extends TypedBaseStore<IAppState> {
       }
 
       const api = API.fromAccount(account)
-      const response = await api.getDiffChangesCommitMessage(diff)
-      if (!response) {
+      try {
+        const response = await api.getDiffChangesCommitMessage(diff)
+
+        this._setCommitMessage(repository, {
+          summary: response.title,
+          description: response.description,
+          timestamp: Date.now(),
+        })
+      } catch (e) {
+        this.emitError(
+          new ErrorWithMetadata(e, {
+            repository,
+          })
+        )
         return false
       }
-
-      this._setCommitMessage(repository, {
-        summary: response.title,
-        description: response.description,
-        timestamp: Date.now(),
-      })
 
       return true
     })
