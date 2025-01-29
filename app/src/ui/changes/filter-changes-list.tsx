@@ -1168,46 +1168,44 @@ export class FilterChangesList extends React.Component<
       : 'Only show files to be included in the commit'
 
     return (
-      <>
-        <div
-          className="header filter-field-row"
-          onContextMenu={this.onContextMenu}
-          ref={this.headerRef}
+      <div
+        className="header filter-field-row"
+        onContextMenu={this.onContextMenu}
+        ref={this.headerRef}
+      >
+        <Checkbox
+          ref={this.includeAllCheckBoxRef}
+          value={includeAllValue}
+          onChange={this.onIncludeAllChanged}
+          disabled={disableAllCheckbox}
+          ariaLabelledBy="changes-list-check-all-label"
+        />
+
+        <label id="changes-list-check-all-label"> {filesDescription}</label>
+
+        <TextBox
+          ref={this.onTextBoxRef}
+          displayClearButton={true}
+          prefixedIcon={octicons.search}
+          autoFocus={true}
+          placeholder={'Filter'}
+          className="filter-list-filter-field"
+          onValueChanged={this.onFilterTextChanged}
+          onKeyDown={this.onFilterKeyDown}
+          value={this.state.filterText}
+        />
+
+        <Button
+          onClick={this.onFilterToIncludedInCommit}
+          className={classNames({
+            'included-in-commit-filter-on': this.state.filterToIncludedCommit,
+          })}
+          ariaLabel={toBeCommittedFilterText}
+          tooltip={toBeCommittedFilterText}
         >
-          <Checkbox
-            ref={this.includeAllCheckBoxRef}
-            value={includeAllValue}
-            onChange={this.onIncludeAllChanged}
-            disabled={disableAllCheckbox}
-            ariaLabelledBy="changes-list-check-all-label"
-          />
-
-          <label id="changes-list-check-all-label"> {filesDescription}</label>
-
-          <TextBox
-            ref={this.onTextBoxRef}
-            displayClearButton={true}
-            prefixedIcon={octicons.search}
-            autoFocus={true}
-            placeholder={'Filter'}
-            className="filter-list-filter-field"
-            onValueChanged={this.onFilterTextChanged}
-            onKeyDown={this.onFilterKeyDown}
-            value={this.state.filterText}
-          />
-
-          <Button
-            onClick={this.onFilterToIncludedInCommit}
-            className={classNames({
-              'included-in-commit-filter-on': this.state.filterToIncludedCommit,
-            })}
-            ariaLabel={toBeCommittedFilterText}
-            tooltip={toBeCommittedFilterText}
-          >
-            <Octicon symbol={octicons.filter} />
-          </Button>
-        </div>
-      </>
+          <Octicon symbol={octicons.filter} />
+        </Button>
+      </div>
     )
   }
 
