@@ -61,6 +61,8 @@ import { ClickSource } from '../lib/list'
 import memoizeOne from 'memoize-one'
 import { IMatches } from '../../lib/fuzzy-find'
 import { Button } from '../lib/button'
+import { Row } from '../lib/row'
+import { TextBox } from '../lib/text-box'
 
 interface IChangesListItem extends IFilterListItem {
   readonly id: string
@@ -246,6 +248,8 @@ export class FilterChangesList extends React.Component<
   IFilterChangesListProps,
   IFilterChangesListState
 > {
+  private filterTextBox: TextBox | undefined = undefined
+
   private isCommittingFileHiddenByFilter = memoizeOne(
     (
       filterText: string,
@@ -319,6 +323,8 @@ export class FilterChangesList extends React.Component<
 
   private headerRef = createObservableRef<HTMLDivElement>()
   private includeAllCheckBoxRef = React.createRef<Checkbox>()
+  private filterListRef =
+    React.createRef<AugmentedSectionFilterList<IChangesListItem>>()
 
   public constructor(props: IFilterChangesListProps) {
     super(props)
@@ -1132,7 +1138,17 @@ export class FilterChangesList extends React.Component<
     this.setState({ filterText: '', filterToIncludedCommit: true })
   }
 
-  private renderFilterResultsHeader = () => {
+  private onTextBoxRef = (component: TextBox | null) => {
+    this.filterTextBox = component ?? undefined
+  }
+
+  private onFilterKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (this.filterListRef.current) {
+      this.filterListRef.current.onKeyDown(event)
+    }
+  }
+
+  private renderFilterRow = () => {
     const { workingDirectory, rebaseConflictState, isCommitting } = this.props
     const { files } = workingDirectory
 
@@ -1154,31 +1170,47 @@ export class FilterChangesList extends React.Component<
       : 'Only show files to be included in the commit'
 
     return (
-      <div
-        className="header"
-        onContextMenu={this.onContextMenu}
-        ref={this.headerRef}
-      >
-        <Checkbox
-          ref={this.includeAllCheckBoxRef}
-          value={includeAllValue}
-          onChange={this.onIncludeAllChanged}
-          disabled={disableAllCheckbox}
-          ariaLabelledBy="changes-list-check-all-label"
-        />
+      <>
+        <Row className="filter-field-row">
+          <TextBox
+            ref={this.onTextBoxRef}
+            displayClearButton={true}
+            prefixedIcon={octicons.search}
+            autoFocus={true}
+            placeholder={'Filter'}
+            className="filter-list-filter-field"
+            onValueChanged={this.onFilterTextChanged}
+            onKeyDown={this.onFilterKeyDown}
+            value={this.state.filterText}
+          />
+        </Row>
 
-        <Button
-          onClick={this.onFilterToIncludedInCommit}
-          className={classNames({
-            'included-in-commit-filter-on': this.state.filterToIncludedCommit,
-          })}
-          ariaLabel={toBeCommittedFilterText}
-          tooltip={toBeCommittedFilterText}
+        <div
+          className="header"
+          onContextMenu={this.onContextMenu}
+          ref={this.headerRef}
         >
-          <Octicon symbol={octicons.filter} />
-        </Button>
-        <label id="changes-list-check-all-label"> {filesDescription}</label>
-      </div>
+          <Checkbox
+            ref={this.includeAllCheckBoxRef}
+            value={includeAllValue}
+            onChange={this.onIncludeAllChanged}
+            disabled={disableAllCheckbox}
+            ariaLabelledBy="changes-list-check-all-label"
+          />
+
+          <Button
+            onClick={this.onFilterToIncludedInCommit}
+            className={classNames({
+              'included-in-commit-filter-on': this.state.filterToIncludedCommit,
+            })}
+            ariaLabel={toBeCommittedFilterText}
+            tooltip={toBeCommittedFilterText}
+          >
+            <Octicon symbol={octicons.filter} />
+          </Button>
+          <label id="changes-list-check-all-label"> {filesDescription}</label>
+        </div>
+      </>
     )
   }
 
@@ -1197,10 +1229,11 @@ export class FilterChangesList extends React.Component<
       <>
         <div className="changes-list-container file-list filtered-changes-list">
           <AugmentedSectionFilterList<IChangesListItem>
+            ref={this.filterListRef}
             id="changes-list"
             rowHeight={RowHeight}
             filterText={this.state.filterText}
-            onFilterTextChanged={this.onFilterTextChanged}
+            filterTextBox={this.filterTextBox}
             onFilterListResultsChanged={this.onFilterListResultsChanged}
             selectedItems={this.state.selectedItems}
             selectionMode="multi"
@@ -1226,7 +1259,7 @@ export class FilterChangesList extends React.Component<
             }}
             onItemContextMenu={this.onItemContextMenu}
             ariaLabel={filesDescription}
-            renderPostFilterRow={this.renderFilterResultsHeader}
+            renderCustomFilterRow={this.renderFilterRow}
             renderNoItems={this.renderNoChanges}
             postNoResultsMessage={this.getNoResultsMessage()}
           />
