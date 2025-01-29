@@ -61,7 +61,6 @@ import { ClickSource } from '../lib/list'
 import memoizeOne from 'memoize-one'
 import { IMatches } from '../../lib/fuzzy-find'
 import { Button } from '../lib/button'
-import { Row } from '../lib/row'
 import { TextBox } from '../lib/text-box'
 
 interface IChangesListItem extends IFilterListItem {
@@ -1153,8 +1152,7 @@ export class FilterChangesList extends React.Component<
     const { files } = workingDirectory
 
     const visibleFiles = this.state.filteredItems.size
-    const filesPlural = files.length === 1 ? 'file' : 'files'
-    const filesDescription = `${visibleFiles}/${files.length} changed ${filesPlural}`
+    const filesDescription = `${visibleFiles}/${files.length}`
 
     const includeAllValue = this.getCheckAllValue(
       workingDirectory,
@@ -1171,7 +1169,21 @@ export class FilterChangesList extends React.Component<
 
     return (
       <>
-        <Row className="filter-field-row">
+        <div
+          className="header filter-field-row"
+          onContextMenu={this.onContextMenu}
+          ref={this.headerRef}
+        >
+          <Checkbox
+            ref={this.includeAllCheckBoxRef}
+            value={includeAllValue}
+            onChange={this.onIncludeAllChanged}
+            disabled={disableAllCheckbox}
+            ariaLabelledBy="changes-list-check-all-label"
+          />
+
+          <label id="changes-list-check-all-label"> {filesDescription}</label>
+
           <TextBox
             ref={this.onTextBoxRef}
             displayClearButton={true}
@@ -1182,20 +1194,6 @@ export class FilterChangesList extends React.Component<
             onValueChanged={this.onFilterTextChanged}
             onKeyDown={this.onFilterKeyDown}
             value={this.state.filterText}
-          />
-        </Row>
-
-        <div
-          className="header"
-          onContextMenu={this.onContextMenu}
-          ref={this.headerRef}
-        >
-          <Checkbox
-            ref={this.includeAllCheckBoxRef}
-            value={includeAllValue}
-            onChange={this.onIncludeAllChanged}
-            disabled={disableAllCheckbox}
-            ariaLabelledBy="changes-list-check-all-label"
           />
 
           <Button
@@ -1208,7 +1206,6 @@ export class FilterChangesList extends React.Component<
           >
             <Octicon symbol={octicons.filter} />
           </Button>
-          <label id="changes-list-check-all-label"> {filesDescription}</label>
         </div>
       </>
     )
