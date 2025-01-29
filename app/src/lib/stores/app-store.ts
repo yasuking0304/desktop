@@ -5422,6 +5422,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
           summary: response.title,
           description: response.description,
           timestamp: Date.now(),
+          generatedByCopilot: true,
         })
       } catch (e) {
         this.emitError(

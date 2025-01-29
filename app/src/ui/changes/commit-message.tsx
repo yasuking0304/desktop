@@ -59,6 +59,7 @@ import { formatCommitMessage } from '../../lib/format-commit-message'
 import { useRepoRulesLogic } from '../../lib/helpers/repo-rules'
 import { WorkingDirectoryFileChange } from '../../models/status'
 import { enableCommitMessageGeneration } from '../../lib/feature-flag'
+import { Checkbox, CheckboxValue } from '../lib/checkbox'
 
 const addAuthorIcon: OcticonSymbolVariant = {
   w: 18,
@@ -202,6 +203,7 @@ interface ICommitMessageState {
   readonly descriptionObscured: boolean
 
   readonly isCommittingStatusMessage: string
+  readonly isCopilotDisclaimerPopoverOpen: boolean
 
   readonly repoRulesEnabled: boolean
 
@@ -238,6 +240,7 @@ export class CommitMessage extends React.Component<
 > {
   private descriptionComponent: AutocompletingTextArea | null = null
 
+  private summaryGroupRef = React.createRef<HTMLDivElement>()
   private summaryTextInput: HTMLInputElement | null = null
 
   private descriptionTextArea: HTMLTextAreaElement | null = null
@@ -260,6 +263,7 @@ export class CommitMessage extends React.Component<
       ),
       descriptionObscured: false,
       isCommittingStatusMessage: '',
+      isCopilotDisclaimerPopoverOpen: false,
       repoRulesEnabled: false,
       isRuleFailurePopoverOpen: false,
       repoRuleCommitMessageFailures: new RepoRulesMetadataFailures(),
@@ -297,7 +301,11 @@ export class CommitMessage extends React.Component<
     }
 
     if (commitMessage.timestamp > this.state.commitMessage.timestamp) {
-      this.setState({ commitMessage })
+      this.setState({
+        commitMessage,
+        isCopilotDisclaimerPopoverOpen:
+          commitMessage.generatedByCopilot === true,
+      })
     }
   }
 
@@ -1153,6 +1161,36 @@ export class CommitMessage extends React.Component<
     }
   }
 
+  private renderCopilotDisclaimerPopover() {
+    if (!this.state.isCopilotDisclaimerPopoverOpen) {
+      return null
+    }
+
+    return (
+      <Popover
+        anchor={this.summaryGroupRef.current}
+        anchorPosition={PopoverAnchorPosition.Top}
+        decoration={PopoverDecoration.Balloon}
+        ariaLabelledby="copilot-disclaimer-popover-header"
+        onClickOutside={this.closeCopilotDisclaimerPopover}
+      >
+        <h3 id="copilot-disclaimer-popover-header">GitHub Copilot</h3>
+        <p>
+          Copilot is powered by AI, so mistakes are possible. Review and edit
+          the generated message carefully before use.{' '}
+          <LinkButton uri="https://gh.io/gh-copilot-transparency">
+            Learn more about GitHub Copilot.
+          </LinkButton>
+        </p>
+        <Checkbox value={CheckboxValue.Off} label="Don't show again" />
+      </Popover>
+    )
+  }
+
+  public closeCopilotDisclaimerPopover = () => {
+    this.setState({ isCopilotDisclaimerPopoverOpen: false })
+  }
+
   private renderRuleFailurePopover() {
     const { branch, repository } = this.props
 
@@ -1445,7 +1483,8 @@ export class CommitMessage extends React.Component<
         onContextMenu={this.onContextMenu}
         onKeyDown={this.onKeyDown}
       >
-        <div className={summaryClassName}>
+        {this.renderCopilotDisclaimerPopover()}
+        <div className={summaryClassName} ref={this.summaryGroupRef}>
           {this.renderAvatar()}
 
           <AutocompletingInput
