@@ -1174,7 +1174,16 @@ export class CommitMessage extends React.Component<
         ariaLabelledby="copilot-disclaimer-popover-header"
         onClickOutside={this.closeCopilotDisclaimerPopover}
       >
-        <h3 id="copilot-disclaimer-popover-header">GitHub Copilot</h3>
+        <div className="copilot-disclaimer-popover-header">
+          <h3 id="copilot-disclaimer-popover-header">GitHub Copilot</h3>
+          <button
+            className="close"
+            onClick={this.closeCopilotDisclaimerPopover}
+            aria-label="Close"
+          >
+            <Octicon symbol={octicons.x} />
+          </button>
+        </div>
         <p>
           Copilot is powered by AI, so mistakes are possible. Review and edit
           the generated message carefully before use.{' '}
