@@ -469,7 +469,6 @@
     "repository-path": "リポジトリの存在するパス",
     "save": "保存",
     "select-all": "すべて選択",
-    "setting": "設定",
     "settings": "設定",
     "sign-in": "サインイン",
     "sign-in-darwin": "サインイン",
@@ -913,14 +912,7 @@
     "show-stashed-changes-darwin": "一時退避した変更の表示"
   },
   "launch": {
-    "error": {
-      "could-not-find-executable": "パス '{{0}}' で '{{1}}' の実行可能ファイルが見つかりませんでした。{{2}}を開き、使用可能なエディターを選択してください。",
-      "could-not-find-executable-for-custom-editor": "パス '{{0}}' の外部エディタは実行可能ではありません。 {{1}}を開き、使用可能なエディターを選択してください。",
-      "donot-have-the-permission-to-start": "GitHub Desktop には、'{{0}}' を開始する適切な権限がありません。 {{1}}を開き、別のエディタをお試しください。",
-      "donot-have-the-permission-to-start-custom-editor": "GitHub Desktop には、パス {{0}} で外部エディタを起動する適切な権限がありません。 {{1}}を開き、別のエディタをお試しください。",
-      "something-went-wrong-to-start": "'{{0}}'を起動しようとして問題が発生しました。 {{1}}を開き、別のエディタをお試しください。",
-      "something-went-wrong-to-start-custom-editor": "パス '{{0}}' の外部エディタを起動しようとして問題が発生しました。 {{1}}を開き、別のエディタをお試しください。"
-    }
+    "custom-editor-at-path": "custom editor at path '{{0}}'"
   },
   "local-changes-overwritten-dialog": {
     "Stash-Changes": "変更を退避して続行する",

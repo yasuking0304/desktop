@@ -469,7 +469,6 @@
     "repository-path": "repository path",
     "save": "Save",
     "select-all": "Select All",
-    "setting": "Settings",
     "settings": "Settings",
     "sign-in": "Sign in",
     "sign-in-darwin": "Sign In",
@@ -913,14 +912,7 @@
     "show-stashed-changes-darwin": "Show Stashed Changes"
   },
   "launch": {
-    "error": {
-      "could-not-find-executable": "Could not find executable for '{{0}}' at path '{{1}}'. Please open {{2}} and select an available editor.",
-      "could-not-find-executable-for-custom-editor": "Could not find executable for custom editor at path '{{0}}'. Please open {{1}} and select an available editor.",
-      "donot-have-the-permission-to-start": "GitHub Desktop doesn't have the proper permissions to start '{{0}}'. Please open {{1}} and try another editor.",
-      "donot-have-the-permission-to-start-custom-editor": "GitHub Desktop doesn't have the proper permissions to start custom editor at path {{0}}. Please open {{1}} and try another editor.",
-      "something-went-wrong-to-start": "Something went wrong while trying to start '{{0}}'. Please open {{1}} and try another editor.",
-      "something-went-wrong-to-start-custom-editor": "Something went wrong while trying to start custom editor at path {{0}}. Please open {{1}} and try another editor."
-    }
+    "custom-editor-at-path": "custom editor at path '{{0}}'"
   },
   "local-changes-overwritten-dialog": {
     "Stash-Changes": "Stash changes and continue",
