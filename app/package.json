@@ -3,7 +3,7 @@
   "productName": "GitHub Desktop",
   "bundleID": "com.github.GitHubClient",
   "companyName": "GitHub, Inc.",
-  "version": "3.4.15",
+  "version": "3.4.16",
   "main": "./main.js",
   "repository": {
     "type": "git",
@@ -73,7 +73,7 @@
     "winston": "^3.6.0"
   },
   "devDependencies": {
-    "electron-devtools-installer": "^3.2.1",
+    "electron-devtools-installer": "^4.0.0",
     "temp": "^0.8.3",
     "webpack-hot-middleware": "^2.10.0"
   }
