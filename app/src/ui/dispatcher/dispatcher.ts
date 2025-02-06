@@ -2740,6 +2740,14 @@ export class Dispatcher {
     this.appStore._setNotificationsEnabled(notificationsEnabled)
   }
 
+  public setShowCopilotCommitMessageDisclaimer(
+    showCopilotCommitMessageDisclaimer: boolean
+  ) {
+    this.appStore._setShowCopilotCommitMessageDisclaimer(
+      showCopilotCommitMessageDisclaimer
+    )
+  }
+
   private logHowToRevertCherryPick(
     targetBranchName: string,
     beforeSha: string | null

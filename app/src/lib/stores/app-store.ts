@@ -453,6 +453,9 @@ export const showDiffCheckMarksKey = 'diff-check-marks-visible'
 export const canFilterChangesDefault = false
 export const canFilterChangesKey = 'can-filter-changes'
 
+export const showCopilotCommitMessageDisclaimerKey =
+  'show-copilot-commit-message-disclaimer'
+
 export class AppStore extends TypedBaseStore<IAppState> {
   private readonly gitStoreCache: GitStoreCache
 
@@ -604,6 +607,8 @@ export class AppStore extends TypedBaseStore<IAppState> {
   private underlineLinks: boolean = underlineLinksDefault
 
   private canFilterChanges: boolean = canFilterChangesDefault
+
+  private showCopilotCommitMessageDisclaimer: boolean = true
 
   public constructor(
     private readonly gitHubUserStore: GitHubUserStore,
@@ -1093,6 +1098,8 @@ export class AppStore extends TypedBaseStore<IAppState> {
       underlineLinks: this.underlineLinks,
       showDiffCheckMarks: this.showDiffCheckMarks,
       canFilterChanges: this.canFilterChanges,
+      showCopilotCommitMessageDisclaimer:
+        this.showCopilotCommitMessageDisclaimer,
     }
   }
 
@@ -2322,6 +2329,11 @@ export class AppStore extends TypedBaseStore<IAppState> {
     this.canFilterChanges = getBoolean(
       canFilterChangesKey,
       canFilterChangesDefault
+    )
+
+    this.showCopilotCommitMessageDisclaimer = getBoolean(
+      showCopilotCommitMessageDisclaimerKey,
+      true
     )
 
     this.emitUpdateNow()
@@ -3728,6 +3740,17 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
   public _setNotificationsEnabled(notificationsEnabled: boolean) {
     this.notificationsStore.setNotificationsEnabled(notificationsEnabled)
+    this.emitUpdate()
+  }
+
+  public _setShowCopilotCommitMessageDisclaimer(
+    showCopilotCommitMessageDisclaimer: boolean
+  ) {
+    setBoolean(
+      showCopilotCommitMessageDisclaimerKey,
+      showCopilotCommitMessageDisclaimer
+    )
+    this.showCopilotCommitMessageDisclaimer = showCopilotCommitMessageDisclaimer
     this.emitUpdate()
   }
 

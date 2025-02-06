@@ -3233,6 +3233,9 @@ export class App extends React.Component<IAppProps, IAppState> {
           showDiffCheckMarks={state.showDiffCheckMarks}
           showSideBySideDiff={state.showSideBySideDiff}
           focusCommitMessage={state.focusCommitMessage}
+          showCopilotCommitMessageDisclaimer={
+            state.showCopilotCommitMessageDisclaimer
+          }
           askForConfirmationOnDiscardChanges={
             state.askForConfirmationOnDiscardChanges
           }

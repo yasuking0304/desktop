@@ -373,6 +373,8 @@ export interface IAppState {
   readonly underlineLinks: boolean
 
   readonly canFilterChanges: boolean
+
+  readonly showCopilotCommitMessageDisclaimer: boolean
 }
 
 export enum FoldoutType {

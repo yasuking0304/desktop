@@ -56,6 +56,7 @@ interface IRepositoryViewProps {
   readonly askForConfirmationOnDiscardStash: boolean
   readonly askForConfirmationOnCheckoutCommit: boolean
   readonly focusCommitMessage: boolean
+  readonly showCopilotCommitMessageDisclaimer: boolean
   readonly commitSpellcheckEnabled: boolean
   readonly showCommitLengthWarning: boolean
   readonly accounts: ReadonlyArray<Account>
@@ -251,6 +252,9 @@ export class RepositoryView extends React.Component<
         commitToAmend={this.props.state.commitToAmend}
         isPushPullFetchInProgress={this.props.state.isPushPullFetchInProgress}
         focusCommitMessage={this.props.focusCommitMessage}
+        showCopilotCommitMessageDisclaimer={
+          this.props.showCopilotCommitMessageDisclaimer
+        }
         askForConfirmationOnDiscardChanges={
           this.props.askForConfirmationOnDiscardChanges
         }

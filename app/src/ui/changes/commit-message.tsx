@@ -59,7 +59,6 @@ import { formatCommitMessage } from '../../lib/format-commit-message'
 import { useRepoRulesLogic } from '../../lib/helpers/repo-rules'
 import { WorkingDirectoryFileChange } from '../../models/status'
 import { enableCommitMessageGeneration } from '../../lib/feature-flag'
-import { Checkbox, CheckboxValue } from '../lib/checkbox'
 
 const addAuthorIcon: OcticonSymbolVariant = {
   w: 18,
@@ -111,6 +110,7 @@ interface ICommitMessageProps {
   readonly repoRulesInfo: RepoRulesInfo
   readonly aheadBehind: IAheadBehind | null
   readonly showNoWriteAccess: boolean
+  readonly showCopilotDisclaimer?: boolean
 
   /**
    * Whether or not to show a field for adding co-authors to
@@ -163,6 +163,7 @@ interface ICommitMessageProps {
     filesSelected: ReadonlyArray<WorkingDirectoryFileChange>,
     mustOverrideExistingMessage: boolean
   ) => void
+  readonly onCopilotDisclaimerDontShowAgain?: () => void
 
   /**
    * Called when the component has given the commit message focus due to
@@ -304,6 +305,7 @@ export class CommitMessage extends React.Component<
       this.setState({
         commitMessage,
         isCopilotDisclaimerPopoverOpen:
+          nextProps.showCopilotDisclaimer === true &&
           commitMessage.generatedByCopilot === true,
       })
     }
@@ -1191,12 +1193,17 @@ export class CommitMessage extends React.Component<
             Learn more about GitHub Copilot.
           </LinkButton>
         </p>
-        <Checkbox value={CheckboxValue.Off} label="Don't show again" />
+        <Button onClick={this.onCopilotDisclaimerDontShowAgain}>Ok</Button>
       </Popover>
     )
   }
 
-  public closeCopilotDisclaimerPopover = () => {
+  private onCopilotDisclaimerDontShowAgain = () => {
+    this.closeCopilotDisclaimerPopover()
+    this.props.onCopilotDisclaimerDontShowAgain?.()
+  }
+
+  private closeCopilotDisclaimerPopover = () => {
     this.setState({ isCopilotDisclaimerPopoverOpen: false })
   }
 
@@ -1246,7 +1253,7 @@ export class CommitMessage extends React.Component<
     })
   }
 
-  public closeRuleFailurePopover = () => {
+  private closeRuleFailurePopover = () => {
     this.setState({ isRuleFailurePopoverOpen: false })
   }
 
