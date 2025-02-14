@@ -30,7 +30,11 @@ import {
   CommitMessageAvatarWarningType,
 } from './commit-message-avatar'
 import { getDotComAPIEndpoint } from '../../lib/api'
-import { isAttributableEmailFor, lookupPreferredEmail } from '../../lib/email'
+import {
+  getStealthEmailForUser,
+  isAttributableEmailFor,
+  lookupPreferredEmail,
+} from '../../lib/email'
 import { setGlobalConfigValue } from '../../lib/git/config'
 import { Popup, PopupType } from '../../models/popup'
 import { RepositorySettingsTab } from '../repository-settings/repository-settings'
@@ -56,6 +60,7 @@ import { RepoRulesetsForBranchLink } from '../repository-rules/repo-rulesets-for
 import { RepoRulesMetadataFailureList } from '../repository-rules/repo-rules-failure-list'
 import { formatCommitMessage } from '../../lib/format-commit-message'
 import { useRepoRulesLogic } from '../../lib/helpers/repo-rules'
+import { isDotCom } from '../../lib/endpoint-capabilities'
 
 const addAuthorIcon: OcticonSymbolVariant = {
   w: 18,
@@ -634,7 +639,22 @@ export class CommitMessage extends React.Component<
         : undefined
 
     const repositoryAccount = this.props.repositoryAccount
-    const accountEmails = repositoryAccount?.emails.map(e => e.email) ?? []
+    const accountEmails =
+      repositoryAccount?.emails.filter(e => e.verified).map(e => e.email) ?? []
+
+    if (repositoryAccount && isDotCom(repositoryAccount.endpoint)) {
+      const { id, login, endpoint } = repositoryAccount
+      const stealthEmail = getStealthEmailForUser(id, login, endpoint)
+
+      if (
+        !accountEmails
+          .map(x => x.toLowerCase())
+          .includes(stealthEmail.toLowerCase())
+      ) {
+        accountEmails.push(stealthEmail)
+      }
+    }
+
     const email = commitAuthor?.email
 
     let warningType: CommitMessageAvatarWarningType = 'none'
@@ -1183,13 +1203,19 @@ export class CommitMessage extends React.Component<
       return verb
     }
 
+    /** N.B. For screen reader users, this string literal is important! This was
+     * moved into a string literal because when it was JSX it was interpreted
+     * as three separate strings "Verb" and "Count" and "to" and even tho
+     * visually it was correctly adding spacings, for screen reader users it was
+     * not and putting them all to together as one word. */
+    const action = t('commit-message.commit-title', `{{0}} {{1}}to `, {
+                      0: verb, 1: this.getFilesToBeCommittedButtonText(),
+                    })
+
     return (
       <>
-        {t('commit-message.commit-title2', `{{0}} {{2}} to {{1}}`, {
-          0: verb,
-          1: branch,
-          2: this.getFilesToBeCommittedButtonText(),
-        })}
+        {action}
+        <strong>{branch}</strong>
       </>
     )
   }
@@ -1403,13 +1429,11 @@ export class CommitMessage extends React.Component<
     const { placeholder, isCommitting, commitSpellcheckEnabled } = this.props
 
     return (
-      // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
       <div
         role="group"
         aria-label="Create commit"
         className={className}
         onContextMenu={this.onContextMenu}
-        onKeyDown={this.onKeyDown}
       >
         <div className={summaryClassName}>
           {this.renderAvatar()}

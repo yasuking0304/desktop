@@ -378,15 +378,14 @@ export class ExpandableCommitSummary extends React.Component<
         : t('common.one-or-less-commit', 'commit')
 
     return (
-      // eslint-disable-next-line jsx-a11y/mouse-events-have-key-events
-      <div
-        className="commit-unreachable-info"
-        onMouseOver={this.onHighlightShasNotInDiff}
-        onMouseOut={this.onRemoveHighlightOfShas}
-      >
+      <div className="commit-unreachable-info">
         <Octicon symbol={octicons.info} />
-        <LinkButton onClick={this.showUnreachableCommits}>
-          {t(
+        <LinkButton
+          onClick={this.showUnreachableCommits}
+          onMouseOver={this.onHighlightShasNotInDiff}
+          onMouseOut={this.onRemoveHighlightOfShas}
+        >
+        {t(
             'expandable-commit-summary.number-unreachable-commits',
             '{{0}} unreachable {{1}}',
             { 0: excludedCommitsCount, 1: commitsPluralized }

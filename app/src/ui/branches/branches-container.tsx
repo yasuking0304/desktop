@@ -319,6 +319,10 @@ export class BranchesContainer extends React.Component<
       : t('branches-container.new-branch', 'New branch')
 
     return (
+      /**
+       * This a11y linter is a false-positive as the element is a drop target
+       * facilitating our drag and drop functionality for cherry-picking.
+       */
       // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       <div
         className="branches-list-item new-branch-drop"
