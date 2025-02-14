@@ -84,7 +84,8 @@ export const launchCustomExternalEditor = (
   const editorName = t(
     'launch.custom-editor-at-path',
     `custom editor at path '{{0}}'`,
-    { 0: customEditor.path })
+    { 0: customEditor.path }
+  )
 
   return launchEditor(customEditor.path, args, editorName, spawnAsDarwinApp)
 }

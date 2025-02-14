@@ -1209,8 +1209,9 @@ export class CommitMessage extends React.Component<
      * visually it was correctly adding spacings, for screen reader users it was
      * not and putting them all to together as one word. */
     const action = t('commit-message.commit-title', `{{0}} {{1}}to `, {
-                      0: verb, 1: this.getFilesToBeCommittedButtonText(),
-                    })
+      0: verb,
+      1: this.getFilesToBeCommittedButtonText(),
+    })
 
     return (
       <>

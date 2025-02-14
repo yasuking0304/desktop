@@ -1,6 +1,7 @@
 {
   "about": {
     "about-name": "{{0}} について",
+    "application-is-currently-running": "アプリケーションは現在実行中のため、更新プログラムは受信されません。",
     "build": "ビルド {{0}}",
     "check-for-updates": "更新の確認",
     "check-out-the-beta-channel-1": " ",
@@ -18,6 +19,7 @@
     "terms-and-conditions": "利用条件",
     "update-has-been-downloaded-and-is-ready": "更新プログラムがダウンロードされ、インストールの準備が整いました。",
     "version": "バージョン {{0}}",
+    "you-have-the-latest-version": "最新バージョンがインストール済み (最終チェック {{0}})",
     "you-have-the-latest-version-1": "最新バージョンがインストール済み (最終チェック ",
     "you-have-the-latest-version-2": ")"
   },
@@ -355,7 +357,7 @@
     "commit-count-files": "{{0}}{{1}}を",
     "commit-description": "コミットの概要説明",
     "commit-summaries-length-over": "概要入力は50文字未満でお願いします",
-    "commit-title2": "{{1}} に{{2}} {{0}}",
+    "commit-title": "{{1}} に{{1}} ",
     "committing": "コミット中",
     "committing-changes": "変更をコミットしています…",
     "description-field": "説明フィールド",
@@ -391,7 +393,9 @@
     "update-email-1": "グローバル Git 設定 (",
     "update-email-darwin": "メールの更新",
     "you-can-also-choose-an-email-1": " ",
-    "you-can-also-choose-an-email-2": "から、このリポジトリのローカルなメールアドレスを選択することも可能です。"
+    "you-can-also-choose-an-email-2": "から、このリポジトリのローカルなメールアドレスを選択することも可能です。",
+    "you-can-choose-an-email-1": " ",
+    "you-can-choose-an-email-2": "から、このリポジトリのローカルなメールアドレスを選択可能です。"
   },
   "commit-summary": {
     "collapse": "折りたたむ",
@@ -469,7 +473,6 @@
     "repository-path": "リポジトリの存在するパス",
     "save": "保存",
     "select-all": "すべて選択",
-    "setting": "設定",
     "settings": "設定",
     "sign-in": "サインイン",
     "sign-in-darwin": "サインイン",
@@ -913,14 +916,7 @@
     "show-stashed-changes-darwin": "一時退避した変更の表示"
   },
   "launch": {
-    "error": {
-      "could-not-find-executable": "パス '{{0}}' で '{{1}}' の実行可能ファイルが見つかりませんでした。{{2}}を開き、使用可能なエディターを選択してください。",
-      "could-not-find-executable-for-custom-editor": "パス '{{0}}' の外部エディタは実行可能ではありません。 {{1}}を開き、使用可能なエディターを選択してください。",
-      "donot-have-the-permission-to-start": "GitHub Desktop には、'{{0}}' を開始する適切な権限がありません。 {{1}}を開き、別のエディタをお試しください。",
-      "donot-have-the-permission-to-start-custom-editor": "GitHub Desktop には、パス {{0}} で外部エディタを起動する適切な権限がありません。 {{1}}を開き、別のエディタをお試しください。",
-      "something-went-wrong-to-start": "'{{0}}'を起動しようとして問題が発生しました。 {{1}}を開き、別のエディタをお試しください。",
-      "something-went-wrong-to-start-custom-editor": "パス '{{0}}' の外部エディタを起動しようとして問題が発生しました。 {{1}}を開き、別のエディタをお試しください。"
-    }
+    "custom-editor-at-path": "custom editor at path '{{0}}'"
   },
   "local-changes-overwritten-dialog": {
     "Stash-Changes": "変更を退避して続行する",

@@ -385,7 +385,7 @@ export class ExpandableCommitSummary extends React.Component<
           onMouseOver={this.onHighlightShasNotInDiff}
           onMouseOut={this.onRemoveHighlightOfShas}
         >
-        {t(
+          {t(
             'expandable-commit-summary.number-unreachable-commits',
             '{{0}} unreachable {{1}}',
             { 0: excludedCommitsCount, 1: commitsPluralized }

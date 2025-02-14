@@ -152,10 +152,11 @@ export class About extends React.Component<IAboutProps> {
     if (!this.canCheckForUpdates) {
       return (
         <p>
-          {t('about.application-is-currently-running',
+          {t(
+            'about.application-is-currently-running',
             `The application is currently running in development and will not
-            receive any updates.`)
-          }
+            receive any updates.`
+          )}
         </p>
       )
     }
@@ -164,9 +165,19 @@ export class About extends React.Component<IAboutProps> {
 
     switch (status) {
       case UpdateStatus.CheckingForUpdates:
-        return <UpdateInfo message={t('about.checking-for-updates', 'Checking for updates…')} loading={true} />
+        return (
+          <UpdateInfo
+            message={t('about.checking-for-updates', 'Checking for updates…')}
+            loading={true}
+          />
+        )
       case UpdateStatus.UpdateAvailable:
-        return <UpdateInfo message={t('about.downloading-updates', 'Downloading update…')} loading={true} />
+        return (
+          <UpdateInfo
+            message={t('about.downloading-updates', 'Downloading update…')}
+            loading={true}
+          />
+        )
       case UpdateStatus.UpdateNotAvailable:
         if (!lastSuccessfulCheck) {
           return null
@@ -200,10 +211,12 @@ export class About extends React.Component<IAboutProps> {
         )
       case UpdateStatus.UpdateReady:
         return (
-          <UpdateInfo message={t(
-            'about.update-has-been-downloaded-and-is-ready',
-            'An update has been downloaded and is ready to be installed.'
-          )}/>
+          <UpdateInfo
+            message={t(
+              'about.update-has-been-downloaded-and-is-ready',
+              'An update has been downloaded and is ready to be installed.'
+            )}
+          />
         )
       case UpdateStatus.UpdateNotChecked:
         return null

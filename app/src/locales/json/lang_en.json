@@ -1,6 +1,7 @@
 {
   "about": {
     "about-name": "About {{0}}",
+    "application-is-currently-running": "The application is currently running in development and will not receive any updates.",
     "build": "Build {{0}}",
     "check-for-updates": "Check for Updates",
     "check-out-the-beta-channel-1": "Check out the ",
@@ -18,6 +19,7 @@
     "terms-and-conditions": "Terms and Conditions",
     "update-has-been-downloaded-and-is-ready": "An update has been downloaded and is ready to be installed.",
     "version": "Version {{0}}",
+    "you-have-the-latest-version": "You have the latest version (last checked {{0}})",
     "you-have-the-latest-version-1": "You have the latest version (last checked ",
     "you-have-the-latest-version-2": ")"
   },
@@ -355,7 +357,7 @@
     "commit-count-files": "{{0}} {{1}} ",
     "commit-description": "Commit description",
     "commit-summaries-length-over": "Great commit summaries contain fewer than 50 characters",
-    "commit-title2": "{{0}} {{2}} to {{1}}",
+    "commit-title": "{{0}} {{1}}to ",
     "committing": "Committing",
     "committing-changes": "Committing changes…",
     "description-field": "Description",
@@ -391,7 +393,9 @@
     "update-email-1": "The email in your global Git config (",
     "update-email-darwin": "Update Email",
     "you-can-also-choose-an-email-1": "You can also choose an email local to this repository from the ",
-    "you-can-also-choose-an-email-2": "."
+    "you-can-also-choose-an-email-2": ".",
+    "you-can-choose-an-email-1": "You can choose an email local to this repository from the ",
+    "you-can-choose-an-email-2": "."
   },
   "commit-summary": {
     "collapse": "Collapse",
@@ -469,7 +473,6 @@
     "repository-path": "repository path",
     "save": "Save",
     "select-all": "Select All",
-    "setting": "Settings",
     "settings": "Settings",
     "sign-in": "Sign in",
     "sign-in-darwin": "Sign In",
@@ -913,14 +916,7 @@
     "show-stashed-changes-darwin": "Show Stashed Changes"
   },
   "launch": {
-    "error": {
-      "could-not-find-executable": "Could not find executable for '{{0}}' at path '{{1}}'. Please open {{2}} and select an available editor.",
-      "could-not-find-executable-for-custom-editor": "Could not find executable for custom editor at path '{{0}}'. Please open {{1}} and select an available editor.",
-      "donot-have-the-permission-to-start": "GitHub Desktop doesn't have the proper permissions to start '{{0}}'. Please open {{1}} and try another editor.",
-      "donot-have-the-permission-to-start-custom-editor": "GitHub Desktop doesn't have the proper permissions to start custom editor at path {{0}}. Please open {{1}} and try another editor.",
-      "something-went-wrong-to-start": "Something went wrong while trying to start '{{0}}'. Please open {{1}} and try another editor.",
-      "something-went-wrong-to-start-custom-editor": "Something went wrong while trying to start custom editor at path {{0}}. Please open {{1}} and try another editor."
-    }
+    "custom-editor-at-path": "custom editor at path '{{0}}'"
   },
   "local-changes-overwritten-dialog": {
     "Stash-Changes": "Stash changes and continue",

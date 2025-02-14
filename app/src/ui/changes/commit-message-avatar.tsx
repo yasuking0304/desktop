@@ -306,20 +306,24 @@ export class CommitMessageAvatar extends React.Component<
         )}
         <Row>
           <div className="secondary-text">
-            {hasEmails ? t(
-              'commit-message-avatar.you-can-also-choose-an-email-1',
-              'You can also choose an email local to this repository from the '
-            ) : t(
-              'commit-message-avatar.you-can-also-choose-an-email-1-no-email',
-              'You can choose an email local to this repository from the '
-            )}
+            {hasEmails
+              ? t(
+                  'commit-message-avatar.you-can-also-choose-an-email-1',
+                  'You can also choose an email local to this repository from the '
+                )
+              : t(
+                  'commit-message-avatar.you-can-choose-an-email-1',
+                  'You can choose an email local to this repository from the '
+                )}
             <LinkButton onClick={this.onRepositorySettingsClick}>
               {t(
                 'commit-message-avatar.repository-settings',
                 'repository settings'
               )}
             </LinkButton>
-            {t('commit-message-avatar.you-can-also-choose-an-email-2', '.')}
+            {hasEmails
+              ? t('commit-message-avatar.you-can-also-choose-an-email-2', '.')
+              : t('commit-message-avatar.you-can-choose-an-email-2', '.')}
           </div>
         </Row>
         <Row className="button-row">
