@@ -30,11 +30,9 @@ export interface ISegmentedItem<T extends React.Key> {
 
 interface IVerticalSegmentedControlProps<T extends React.Key> {
   /**
-   * An optional label for the segmented control. Will be rendered
-   * as a legend element inside a field group. Consumers are strongly
-   * encouraged to use this in order to aid accessibility.
+   * An label for the radio group.
    */
-  readonly label?: string
+  readonly label: string
 
   /**
    * A set of items to be rendered as choices in the segmented control.
@@ -62,13 +60,13 @@ interface IVerticalSegmentedControlProps<T extends React.Key> {
  * A component for presenting a small number of choices to the user. Equivalent
  * of a radio button group but styled as a vertically oriented segmented control.
  */
-export class VerticalSegmentedControl<T extends React.Key> extends React.Component<
-  IVerticalSegmentedControlProps<T>
-> {
+export class VerticalSegmentedControl<
+  T extends React.Key
+> extends React.Component<IVerticalSegmentedControlProps<T>> {
+  private onFieldsetRef = React.createRef<HTMLFieldSetElement>()
+
   private onRadioButtonDoubleClick = (key: T) => {
-    console.log('TBD - submit form: ', key)
-    // this.submitForm()
-    // Also, we should see if enter is pressed, and if so, submit the form
+    this.onFieldsetRef.current?.form?.dispatchEvent(new Event('submit'))
   }
 
   private renderItem = (key: T) => {
@@ -96,8 +94,8 @@ export class VerticalSegmentedControl<T extends React.Key> extends React.Compone
     }
 
     return (
-      <div className="vertical-segmented-control">
-        <p id="vertical-segment-control-label">{this.props.label}</p>
+      <fieldset className="vertical-segmented-control" ref={this.onFieldsetRef}>
+        <legend id="vertical-segment-control-label">{this.props.label}</legend>
 
         <RadioGroup<T>
           ariaLabelledBy="vertical-segment-control-label"
@@ -108,7 +106,7 @@ export class VerticalSegmentedControl<T extends React.Key> extends React.Compone
           renderRadioButtonLabelContents={this.renderItem}
           onRadioButtonDoubleClick={this.onRadioButtonDoubleClick}
         />
-      </div>
+      </fieldset>
     )
   }
 }
