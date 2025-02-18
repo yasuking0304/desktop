@@ -87,7 +87,6 @@ export class VerticalSegmentedControl<T extends React.Key> extends React.Compone
   }
 
   private onSelectionChanged = (key: T) => {
-    console.log(key)
     this.props.onSelectionChanged(key)
   }
 
@@ -95,6 +94,7 @@ export class VerticalSegmentedControl<T extends React.Key> extends React.Compone
     if (this.props.items.length === 0) {
       return null
     }
+
     return (
       <div className="vertical-segmented-control">
         <p id="vertical-segment-control-label">{this.props.label}</p>
