@@ -1,13 +1,11 @@
 import * as React from 'react'
-import { createUniqueId, releaseUniqueId } from '../id-pool'
 import { SegmentedItem } from './segmented-item'
-
-type Key = string | number
+import { RadioGroup } from '../radio-group'
 
 /**
  * An item which is rendered as a choice in the segmented control.
  */
-export interface ISegmentedItem<T extends Key> {
+export interface ISegmentedItem<T extends React.Key> {
   /**
    * The title for the segmented item. This should be kept short.
    */
@@ -30,7 +28,7 @@ export interface ISegmentedItem<T extends Key> {
   readonly key: T
 }
 
-interface IVerticalSegmentedControlProps<T extends Key> {
+interface IVerticalSegmentedControlProps<T extends React.Key> {
   /**
    * An optional label for the segmented control. Will be rendered
    * as a legend element inside a field group. Consumers are strongly
@@ -60,156 +58,57 @@ interface IVerticalSegmentedControlProps<T extends Key> {
   readonly onSelectionChanged: (key: T) => void
 }
 
-interface IVerticalSegmentedControlState {
-  /**
-   * An automatically generated id for the list element used to reference
-   * it from the label element. This is generated once via the id pool when the
-   * component is mounted and then released once the component unmounts.
-   */
-  readonly listId?: string
-}
-
 /**
  * A component for presenting a small number of choices to the user. Equivalent
  * of a radio button group but styled as a vertically oriented segmented control.
  */
-export class VerticalSegmentedControl<T extends Key> extends React.Component<
-  IVerticalSegmentedControlProps<T>,
-  IVerticalSegmentedControlState
+export class VerticalSegmentedControl<T extends React.Key> extends React.Component<
+  IVerticalSegmentedControlProps<T>
 > {
-  private formRef: HTMLFormElement | null = null
-
-  public constructor(props: IVerticalSegmentedControlProps<T>) {
-    super(props)
-    this.state = {}
+  private onRadioButtonDoubleClick = (key: T) => {
+    console.log('TBD - submit form: ', key)
+    // this.submitForm()
+    // Also, we should see if enter is pressed, and if so, submit the form
   }
 
-  private updateListId(label: string | undefined) {
-    if (this.state.listId) {
-      releaseUniqueId(this.state.listId)
-      this.setState({ listId: undefined })
+  private renderItem = (key: T) => {
+    const item = this.props.items.find(item => item.key === key)
+    if (!item) {
+      return <span>{key}</span>
     }
 
-    if (label) {
-      this.setState({
-        listId: createUniqueId(`VerticalSegmentedControl_${label}`),
-      })
-    }
-  }
-
-  public componentWillMount() {
-    this.updateListId(this.props.label)
-  }
-
-  public componentWillUnmount() {
-    if (this.state.listId) {
-      releaseUniqueId(this.state.listId)
-    }
-  }
-
-  public componentWillReceiveProps(
-    nextProps: IVerticalSegmentedControlProps<T>
-  ) {
-    if (this.props.label !== nextProps.label) {
-      this.updateListId(nextProps.label)
-    }
-  }
-
-  private submitForm() {
-    const form = this.formRef
-    if (form) {
-      // NB: In order to play nicely with React's custom event dispatching,
-      // we dispatch an event instead of calling `submit` directly on the
-      // form.
-      form.dispatchEvent(new Event('submit'))
-    }
-  }
-
-  private onItemClick = (key: T) => {
-    if (key !== this.props.selectedKey) {
-      this.props.onSelectionChanged(key)
-    }
-  }
-
-  private onItemDoubleClick = (key: T) => {
-    this.onItemClick(key)
-    this.submitForm()
-  }
-
-  private getListItemId(index: number) {
-    return `${this.state.listId}_Item_${index}`
-  }
-
-  private renderItem(item: ISegmentedItem<T>, index: number) {
     return (
       <SegmentedItem
-        id={this.getListItemId(index)}
         key={item.key}
         title={item.title}
         description={item.description}
-        isSelected={item.key === this.props.selectedKey}
-        value={item.key}
-        onClick={this.onItemClick}
-        onDoubleClick={this.onItemDoubleClick}
       />
     )
   }
 
-  private onKeyDown = (event: React.KeyboardEvent<HTMLUListElement>) => {
-    const selectedIndex = this.findSelectedIndex(this.props.items)
-
-    if (event.key === 'ArrowUp') {
-      if (selectedIndex > 0) {
-        this.props.onSelectionChanged(this.props.items[selectedIndex - 1].key)
-      }
-      event.preventDefault()
-    } else if (event.key === 'ArrowDown') {
-      if (selectedIndex < this.props.items.length - 1) {
-        this.props.onSelectionChanged(this.props.items[selectedIndex + 1].key)
-      }
-      event.preventDefault()
-    } else if (event.key === 'Enter') {
-      this.submitForm()
-    }
-  }
-
-  private onFieldsetRef = (ref: HTMLFieldSetElement | null) => {
-    this.formRef = ref ? ref.form : null
+  private onSelectionChanged = (key: T) => {
+    console.log(key)
+    this.props.onSelectionChanged(key)
   }
 
   public render() {
     if (this.props.items.length === 0) {
       return null
     }
-
-    const label = this.props.label ? (
-      <legend>{this.props.label}</legend>
-    ) : undefined
-
-    const selectedIndex = this.findSelectedIndex(this.props.items)
-    const activeDescendant = this.getListItemId(selectedIndex)
-
-    // Using a fieldset with a legend seems to be the way to go here since
-    // we can't use a label to point to a list (https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_categories#Form_labelable).
-    // See http://stackoverflow.com/a/13273907/2114
     return (
-      <fieldset className="vertical-segmented-control" ref={this.onFieldsetRef}>
-        {label}
-        <ul
-          id={this.state.listId}
-          className="vertical-segmented-control"
-          tabIndex={0}
-          onKeyDown={this.onKeyDown}
-          role="radiogroup"
-          aria-activedescendant={activeDescendant}
-        >
-          {this.props.items.map((item, index) => this.renderItem(item, index))}
-        </ul>
-      </fieldset>
-    )
-  }
+      <div className="vertical-segmented-control">
+        <h2>{this.props.label}</h2>
 
-  private findSelectedIndex(items: ReadonlyArray<ISegmentedItem<T>>) {
-    return items.findIndex(item => item.key === this.props.selectedKey)
+        <RadioGroup<T>
+          ariaLabelledBy="theme-heading"
+          className="vertical-segmented-control"
+          selectedKey={this.props.selectedKey}
+          radioButtonKeys={this.props.items.map(item => item.key)}
+          onSelectionChanged={this.onSelectionChanged}
+          renderRadioButtonLabelContents={this.renderItem}
+          onRadioButtonDoubleClick={this.onRadioButtonDoubleClick}
+        />
+      </div>
+    )
   }
 }
