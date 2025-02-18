@@ -97,10 +97,10 @@ export class VerticalSegmentedControl<T extends React.Key> extends React.Compone
     }
     return (
       <div className="vertical-segmented-control">
-        <h2>{this.props.label}</h2>
+        <p id="vertical-segment-control-label">{this.props.label}</p>
 
         <RadioGroup<T>
-          ariaLabelledBy="theme-heading"
+          ariaLabelledBy="vertical-segment-control-label"
           className="vertical-segmented-control"
           selectedKey={this.props.selectedKey}
           radioButtonKeys={this.props.items.map(item => item.key)}
