@@ -30,7 +30,7 @@ export interface ISegmentedItem<T extends React.Key> {
 
 interface IVerticalSegmentedControlProps<T extends React.Key> {
   /**
-   * An label for the radio group.
+   * A label for the radio group.
    */
   readonly label: string
 
