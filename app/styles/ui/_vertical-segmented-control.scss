@@ -21,7 +21,6 @@ fieldset.vertical-segmented-control {
     margin: 0;
     border: var(--base-border);
 
-
     &:first-child {
       border-top-left-radius: var(--border-radius);
       border-top-right-radius: var(--border-radius);
@@ -49,7 +48,6 @@ fieldset.vertical-segmented-control {
       margin-top: 4px;
     }
 
-    
     &:has(input[type='radio']:checked) {
       border-color: var(--box-selected-active-background-color);
     }
