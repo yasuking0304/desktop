@@ -48,13 +48,11 @@
     border-bottom: var(--base-border);
   }
 
-  li {
-    padding: var(--spacing-double);
-  }
   summary {
     display: flex;
     align-items: center;
     font-weight: var(--font-weight-semibold);
+    padding: var(--spacing-double);
 
     .summary-text {
       color: var(--text-secondary-color);
@@ -85,6 +83,7 @@
 
   details .contents {
     padding-left: var(--spacing-triple);
+    padding-bottom: var(--spacing-double);
     .description {
       margin-bottom: var(--spacing);
     }
@@ -114,7 +113,7 @@
     }
   }
   details[open] summary {
-    margin-bottom: var(--spacing);
+    padding-bottom: var(--spacing);
     .summary-text {
       color: var(--text-color);
     }

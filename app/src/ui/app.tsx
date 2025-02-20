@@ -181,6 +181,7 @@ import { isCertificateErrorSuppressedFor } from '../lib/suppress-certificate-err
 import { webUtils } from 'electron'
 import { showTestUI } from './lib/test-ui-components/test-ui-components'
 import { ConfirmCommitFilteredChanges } from './changes/confirm-commit-filtered-changes-dialog'
+import { AboutTestDialog } from './about/about-test-dialog'
 import { GenerateCommitMessageOverrideWarning } from './generate-commit-message/GenerateCommitMessageOverrideWarning'
 
 const MinuteInMilliseconds = 1000 * 60
@@ -600,7 +601,7 @@ export class App extends React.Component<IAppProps, IAppState> {
 
     if (isMacOSAndNoLongerSupportedByElectron()) {
       log.error(
-        `Can't check for updates on macOS 10.14 or older. Next available update only supports macOS 10.15 and later`
+        `Can't check for updates on macOS 10.15 or older. Next available update only supports macOS 11.0 and later`
       )
       return
     }
@@ -1695,6 +1696,8 @@ export class App extends React.Component<IAppProps, IAppState> {
             onCheckForNonStaggeredUpdates={this.onCheckForNonStaggeredUpdates}
             onShowAcknowledgements={this.showAcknowledgements}
             onShowTermsAndConditions={this.showTermsAndConditions}
+            updateState={this.state.updateState}
+            onQuitAndInstall={this.onQuitAndInstall}
           />
         )
       case PopupType.PublishRepository:
@@ -2477,13 +2480,22 @@ export class App extends React.Component<IAppProps, IAppState> {
           <ConfirmCommitFilteredChanges
             onCommitAnyway={popup.onCommitAnyway}
             onDismissed={onPopupDismissedFn}
-            onClearFilter={popup.onClearFilter}
+            showFilesToBeCommitted={popup.showFilesToBeCommitted}
             setConfirmCommitFilteredChanges={
               this.setConfirmCommitFilteredChanges
             }
           />
         )
       }
+      case PopupType.TestAbout:
+        return (
+          <AboutTestDialog
+            key="about"
+            onDismissed={onPopupDismissedFn}
+            onShowAcknowledgements={this.showAcknowledgements}
+            onShowTermsAndConditions={this.showTermsAndConditions}
+          />
+        )
       case PopupType.GenerateCommitMessageOverrideWarning: {
         return (
           <GenerateCommitMessageOverrideWarning
@@ -2595,6 +2607,8 @@ export class App extends React.Component<IAppProps, IAppState> {
   private showTermsAndConditions = () => {
     this.props.dispatcher.showPopup({ type: PopupType.TermsAndConditions })
   }
+
+  private onQuitAndInstall = () => updateStore.quitAndInstallUpdate()
 
   private renderPopups() {
     const popupContent = this.allPopupContent()

@@ -58,6 +58,7 @@ import { TooltippedContent } from '../lib/tooltipped-content'
 import { RepoRulesInfo } from '../../models/repo-rules'
 import { IAheadBehind } from '../../models/branch'
 import { StashDiffViewerId } from '../stashing'
+import { enableFilteredChangesList } from '../../lib/feature-flag'
 
 const RowHeight = 29
 const StashIcon: OcticonSymbolVariant = {
@@ -829,6 +830,9 @@ export class ChangesList extends React.Component<
         anyFilesSelected={anyFilesSelected}
         anyFilesAvailable={fileCount > 0}
         filesSelected={filesSelected}
+        filesToBeCommittedCount={
+          enableFilteredChangesList() ? filesSelected.length : undefined
+        }
         repository={repository}
         repositoryAccount={repositoryAccount}
         commitMessage={this.props.commitMessage}
