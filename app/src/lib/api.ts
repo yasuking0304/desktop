@@ -147,6 +147,7 @@ enum HttpStatusCode {
   NotModified = 304,
   BadRequest = 400,
   Unauthorized = 401,
+  Forbidden = 403,
   NotFound = 404,
   TooManyRequests = 429,
 }
@@ -1880,8 +1881,12 @@ export class API {
       const retryAfter = response.headers.get('Retry-After')
       if (retryAfter) {
         throw new Error(`Rate limited, retry after ${retryAfter} seconds`)
+      } else {
+        throw new Error('Rate limited, try again in a few minutes')
       }
     } else if (response.status === HttpStatusCode.Unauthorized) {
+      throw new Error('Unauthorized: error with authentication')
+    } else if (response.status === HttpStatusCode.Forbidden) {
       const body = await response.text()
       if (body.includes('unauthorized: not licensed to use Copilot')) {
         throw new Error('Unauthorized: not licensed to use Copilot')
