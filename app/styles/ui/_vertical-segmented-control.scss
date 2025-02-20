@@ -19,10 +19,8 @@ fieldset.vertical-segmented-control {
   .radio-button-component {
     padding: var(--spacing);
     margin: 0;
-    border-left: var(--base-border);
-    border-right: var(--base-border);
-    border-top: var(--base-border);
-    border-bottom: none;
+    border: var(--base-border);
+
 
     &:first-child {
       border-top-left-radius: var(--border-radius);
@@ -45,20 +43,18 @@ fieldset.vertical-segmented-control {
     }
 
     input[type='radio'] {
-      margin-right: var(--spacing);
+      margin-right: var(--spacing-half);
+      margin-left: var(--spacing-half);
+      align-self: flex-start;
+      margin-top: 4px;
     }
 
+    
     &:has(input[type='radio']:checked) {
-      background: var(--box-selected-active-background-color);
-      color: var(--box-selected-active-text-color);
       border-color: var(--box-selected-active-background-color);
-
-      p {
-        color: var(--box-selected-active-text-color);
-      }
     }
 
-    &:hover:not(:has(input[type='radio']:checked)) {
+    &:hover {
       background: var(--box-hover-background-color);
       color: var(--box-hover-text-color);
 
