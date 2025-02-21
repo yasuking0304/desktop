@@ -117,7 +117,6 @@ interface IFilterChangesListProps {
   readonly askForConfirmationOnDiscardChanges: boolean
   readonly askForConfirmationOnCommitFilteredChanges: boolean
   readonly focusCommitMessage: boolean
-  readonly showCopilotCommitMessageDisclaimer: boolean
   readonly isShowingModal: boolean
   readonly isShowingFoldout: boolean
   readonly onDiscardChangesFromFiles: (
@@ -946,8 +945,6 @@ export class FilterChangesList extends React.Component<
         autocompletionProviders={this.props.autocompletionProviders}
         isCommitting={isCommitting}
         isGeneratingCommitMessage={isGeneratingCommitMessage}
-        showCopilotDisclaimer={this.props.showCopilotCommitMessageDisclaimer}
-        onCopilotDisclaimerDontShowAgain={this.onCopilotDisclaimerDontShowAgain}
         commitToAmend={commitToAmend}
         showCoAuthoredBy={this.props.showCoAuthoredBy}
         coAuthors={this.props.coAuthors}
@@ -987,10 +984,6 @@ export class FilterChangesList extends React.Component<
 
   private onSuccessfulCommitCreated = () => {
     this.clearFilter()
-  }
-
-  private onCopilotDisclaimerDontShowAgain = () => {
-    this.props.dispatcher.setShowCopilotCommitMessageDisclaimer(false)
   }
 
   private onCoAuthorsUpdated = (coAuthors: ReadonlyArray<Author>) =>

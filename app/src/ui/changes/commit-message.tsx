@@ -115,7 +115,6 @@ interface ICommitMessageProps {
   readonly repoRulesInfo: RepoRulesInfo
   readonly aheadBehind: IAheadBehind | null
   readonly showNoWriteAccess: boolean
-  readonly showCopilotDisclaimer?: boolean
 
   /**
    * Whether or not to show a field for adding co-authors to
@@ -168,7 +167,6 @@ interface ICommitMessageProps {
     filesSelected: ReadonlyArray<WorkingDirectoryFileChange>,
     mustOverrideExistingMessage: boolean
   ) => void
-  readonly onCopilotDisclaimerDontShowAgain?: () => void
 
   /**
    * Called when the component has given the commit message focus due to
@@ -209,7 +207,6 @@ interface ICommitMessageState {
   readonly descriptionObscured: boolean
 
   readonly isCommittingStatusMessage: string
-  readonly isCopilotDisclaimerPopoverOpen: boolean
 
   readonly repoRulesEnabled: boolean
 
@@ -269,7 +266,6 @@ export class CommitMessage extends React.Component<
       ),
       descriptionObscured: false,
       isCommittingStatusMessage: '',
-      isCopilotDisclaimerPopoverOpen: false,
       repoRulesEnabled: false,
       isRuleFailurePopoverOpen: false,
       repoRuleCommitMessageFailures: new RepoRulesMetadataFailures(),
@@ -309,9 +305,6 @@ export class CommitMessage extends React.Component<
     if (commitMessage.timestamp > this.state.commitMessage.timestamp) {
       this.setState({
         commitMessage,
-        isCopilotDisclaimerPopoverOpen:
-          nextProps.showCopilotDisclaimer === true &&
-          commitMessage.generatedByCopilot === true,
       })
     }
   }
@@ -1183,50 +1176,6 @@ export class CommitMessage extends React.Component<
     }
   }
 
-  private renderCopilotDisclaimerPopover() {
-    if (!this.state.isCopilotDisclaimerPopoverOpen) {
-      return null
-    }
-
-    return (
-      <Popover
-        anchor={this.summaryGroupRef.current}
-        anchorPosition={PopoverAnchorPosition.Top}
-        decoration={PopoverDecoration.Balloon}
-        ariaLabelledby="copilot-disclaimer-popover-header"
-        onClickOutside={this.closeCopilotDisclaimerPopover}
-      >
-        <div className="copilot-disclaimer-popover-header">
-          <h3 id="copilot-disclaimer-popover-header">GitHub Copilot</h3>
-          <button
-            className="close"
-            onClick={this.closeCopilotDisclaimerPopover}
-            aria-label="Close"
-          >
-            <Octicon symbol={octicons.x} />
-          </button>
-        </div>
-        <p>
-          Copilot is powered by AI, so mistakes are possible. Review and edit
-          the generated message carefully before use.{' '}
-          <LinkButton uri="https://gh.io/gh-copilot-transparency">
-            Learn more about GitHub Copilot.
-          </LinkButton>
-        </p>
-        <Button onClick={this.onCopilotDisclaimerDontShowAgain}>Ok</Button>
-      </Popover>
-    )
-  }
-
-  private onCopilotDisclaimerDontShowAgain = () => {
-    this.closeCopilotDisclaimerPopover()
-    this.props.onCopilotDisclaimerDontShowAgain?.()
-  }
-
-  private closeCopilotDisclaimerPopover = () => {
-    this.setState({ isCopilotDisclaimerPopoverOpen: false })
-  }
-
   private renderRuleFailurePopover() {
     const { branch, repository } = this.props
 
@@ -1524,7 +1473,6 @@ export class CommitMessage extends React.Component<
         className={className}
         onContextMenu={this.onContextMenu}
       >
-        {this.renderCopilotDisclaimerPopover()}
         <div className={summaryClassName} ref={this.summaryGroupRef}>
           {this.renderAvatar()}
 

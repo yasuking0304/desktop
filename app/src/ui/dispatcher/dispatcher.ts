@@ -1081,6 +1081,10 @@ export class Dispatcher {
     )
   }
 
+  public updateCommitMessageGenerationDisclaimerLastSeen() {
+    return this.appStore._updateCommitMessageGenerationDisclaimerLastSeen()
+  }
+
   public generateCommitMessage(
     repository: Repository,
     filesSelected: ReadonlyArray<WorkingDirectoryFileChange>
@@ -2738,14 +2742,6 @@ export class Dispatcher {
 
   public setNotificationsEnabled(notificationsEnabled: boolean) {
     this.appStore._setNotificationsEnabled(notificationsEnabled)
-  }
-
-  public setShowCopilotCommitMessageDisclaimer(
-    showCopilotCommitMessageDisclaimer: boolean
-  ) {
-    this.appStore._setShowCopilotCommitMessageDisclaimer(
-      showCopilotCommitMessageDisclaimer
-    )
   }
 
   private logHowToRevertCherryPick(

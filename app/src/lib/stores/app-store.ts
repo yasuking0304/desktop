@@ -454,8 +454,8 @@ export const showDiffCheckMarksKey = 'diff-check-marks-visible'
 export const canFilterChangesDefault = false
 export const canFilterChangesKey = 'can-filter-changes'
 
-export const showCopilotCommitMessageDisclaimerKey =
-  'show-copilot-commit-message-disclaimer'
+export const commitMessageGenerationDisclaimerLastSeenKey =
+  'commit-message-generation-disclaimer-last-seen'
 
 export class AppStore extends TypedBaseStore<IAppState> {
   private readonly gitStoreCache: GitStoreCache
@@ -609,7 +609,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
   private canFilterChanges: boolean = canFilterChangesDefault
 
-  private showCopilotCommitMessageDisclaimer: boolean = true
+  private commitMessageGenerationDisclaimerLastSeen: number | null = null
 
   public constructor(
     private readonly gitHubUserStore: GitHubUserStore,
@@ -1104,8 +1104,8 @@ export class AppStore extends TypedBaseStore<IAppState> {
       showDiffCheckMarks: this.showDiffCheckMarks,
       canFilterChanges: this.canFilterChanges,
       updateState: updateStore.state,
-      showCopilotCommitMessageDisclaimer:
-        this.showCopilotCommitMessageDisclaimer,
+      commitMessageGenerationDisclaimerLastSeen:
+        this.commitMessageGenerationDisclaimerLastSeen,
     }
   }
 
@@ -2337,10 +2337,8 @@ export class AppStore extends TypedBaseStore<IAppState> {
       canFilterChangesDefault
     )
 
-    this.showCopilotCommitMessageDisclaimer = getBoolean(
-      showCopilotCommitMessageDisclaimerKey,
-      true
-    )
+    this.commitMessageGenerationDisclaimerLastSeen =
+      getNumber(commitMessageGenerationDisclaimerLastSeenKey) ?? null
 
     this.emitUpdateNow()
 
@@ -3746,17 +3744,6 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
   public _setNotificationsEnabled(notificationsEnabled: boolean) {
     this.notificationsStore.setNotificationsEnabled(notificationsEnabled)
-    this.emitUpdate()
-  }
-
-  public _setShowCopilotCommitMessageDisclaimer(
-    showCopilotCommitMessageDisclaimer: boolean
-  ) {
-    setBoolean(
-      showCopilotCommitMessageDisclaimerKey,
-      showCopilotCommitMessageDisclaimer
-    )
-    this.showCopilotCommitMessageDisclaimer = showCopilotCommitMessageDisclaimer
     this.emitUpdate()
   }
 
@@ -5425,10 +5412,28 @@ export class AppStore extends TypedBaseStore<IAppState> {
     })
   }
 
+  public _updateCommitMessageGenerationDisclaimerLastSeen(): void {
+    this.commitMessageGenerationDisclaimerLastSeen = Date.now()
+    setNumber(
+      commitMessageGenerationDisclaimerLastSeenKey,
+      this.commitMessageGenerationDisclaimerLastSeen
+    )
+    this.emitUpdate()
+  }
+
   public async _generateCommitMessage(
     repository: Repository,
     filesSelected: ReadonlyArray<WorkingDirectoryFileChange>
   ): Promise<boolean> {
+    if (this.commitMessageGenerationDisclaimerLastSeen === null) {
+      await this._showPopup({
+        type: PopupType.GenerateCommitMessageDisclaimer,
+        repository,
+        filesSelected,
+      })
+      return false
+    }
+
     const account = this.getState().accounts.find(account =>
       enableCommitMessageGeneration([account])
     )

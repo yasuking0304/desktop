@@ -182,7 +182,8 @@ import { webUtils } from 'electron'
 import { showTestUI } from './lib/test-ui-components/test-ui-components'
 import { ConfirmCommitFilteredChanges } from './changes/confirm-commit-filtered-changes-dialog'
 import { AboutTestDialog } from './about/about-test-dialog'
-import { GenerateCommitMessageOverrideWarning } from './generate-commit-message/GenerateCommitMessageOverrideWarning'
+import { GenerateCommitMessageOverrideWarning } from './generate-commit-message/generate-commit-message-override-warning'
+import { GenerateCommitMessageDisclaimer } from './generate-commit-message/generate-commit-message-disclaimer'
 
 const MinuteInMilliseconds = 1000 * 60
 const HourInMilliseconds = MinuteInMilliseconds * 60
@@ -2507,6 +2508,17 @@ export class App extends React.Component<IAppProps, IAppState> {
           />
         )
       }
+      case PopupType.GenerateCommitMessageDisclaimer: {
+        return (
+          <GenerateCommitMessageDisclaimer
+            key="generate-commit-message-disclaimer"
+            dispatcher={this.props.dispatcher}
+            repository={popup.repository}
+            filesSelected={popup.filesSelected}
+            onDismissed={onPopupDismissedFn}
+          />
+        )
+      }
       default:
         return assertNever(popup, `Unknown popup type: ${popup}`)
     }
@@ -3247,9 +3259,6 @@ export class App extends React.Component<IAppProps, IAppState> {
           showDiffCheckMarks={state.showDiffCheckMarks}
           showSideBySideDiff={state.showSideBySideDiff}
           focusCommitMessage={state.focusCommitMessage}
-          showCopilotCommitMessageDisclaimer={
-            state.showCopilotCommitMessageDisclaimer
-          }
           askForConfirmationOnDiscardChanges={
             state.askForConfirmationOnDiscardChanges
           }

@@ -63,7 +63,6 @@ interface IChangesSidebarProps {
   // eslint-disable-next-line react/no-unused-prop-types
   readonly gitHubUserStore: GitHubUserStore
   readonly focusCommitMessage: boolean
-  readonly showCopilotCommitMessageDisclaimer: boolean
   readonly askForConfirmationOnDiscardChanges: boolean
   readonly askForConfirmationOnCommitFilteredChanges: boolean
   readonly accounts: ReadonlyArray<Account>
@@ -419,9 +418,6 @@ export class ChangesSidebar extends React.Component<IChangesSidebarProps, {}> {
           mostRecentLocalCommit={this.props.mostRecentLocalCommit}
           rebaseConflictState={rebaseConflictState}
           selectedFileIDs={selectedFileIDs}
-          showCopilotCommitMessageDisclaimer={
-            this.props.showCopilotCommitMessageDisclaimer
-          }
           onFileSelectionChanged={this.onFileSelectionChanged}
           onCreateCommit={this.onCreateCommit}
           onIncludeChanged={this.onIncludeChanged}
