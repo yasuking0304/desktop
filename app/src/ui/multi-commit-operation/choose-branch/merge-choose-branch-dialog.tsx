@@ -195,12 +195,17 @@ export class MergeChooseBranchDialog extends React.Component<
       return (
         <React.Fragment>
           {t(
-            'merge-choose-branch-dialog.this-branch-is-up-to-date-with-1',
-            `This branch is up to date with `
+            'merge-choose-branch-dialog.is-already-up-to-date-with-1',
+            ` `
+          )}
+          <strong>{currentBranch.name}</strong>
+          {t(
+            'merge-choose-branch-dialog.is-already-up-to-date-with-2',
+            ` This branch is up to date with `
           )}
           <strong>{branch.name}</strong>
           {t(
-            'merge-choose-branch-dialog.this-branch-is-up-to-date-with-2',
+            'merge-choose-branch-dialog.is-already-up-to-date-with-3',
             ` `
           )}
         </React.Fragment>
