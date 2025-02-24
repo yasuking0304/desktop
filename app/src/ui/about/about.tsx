@@ -169,7 +169,7 @@ export class About extends React.Component<IAboutProps> {
 
         const richMessage = (
           <>
-            You have the latest version (last checked{' '}
+            You have the latest version (last checked {' '}
             <RelativeTime date={lastSuccessfulCheck} />)
           </>
         )
