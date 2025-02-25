@@ -5425,20 +5425,24 @@ export class AppStore extends TypedBaseStore<IAppState> {
     repository: Repository,
     filesSelected: ReadonlyArray<WorkingDirectoryFileChange>
   ): Promise<boolean> {
-    if (this.commitMessageGenerationDisclaimerLastSeen === null) {
-      await this._showPopup({
-        type: PopupType.GenerateCommitMessageDisclaimer,
-        repository,
-        filesSelected,
-      })
-      return false
-    }
-
     const account = this.getState().accounts.find(account =>
       enableCommitMessageGeneration([account])
     )
 
     if (!account) {
+      return false
+    }
+
+    if (
+      this.commitMessageGenerationDisclaimerLastSeen &&
+      offsetFromNow(-30, 'days') >
+        this.commitMessageGenerationDisclaimerLastSeen
+    ) {
+      await this._showPopup({
+        type: PopupType.GenerateCommitMessageDisclaimer,
+        repository,
+        filesSelected,
+      })
       return false
     }
 
