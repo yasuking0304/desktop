@@ -70,10 +70,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-13-xl-arm64, windows-2019]
+        os: [macos-13-xlarge, windows-2019]
         arch: [x64, arm64]
         include:
-          - os: macos-13-xl-arm64
+          - os: macos-13-xlarge
             friendlyName: macOS
           - os: windows-2019
             friendlyName: Windows
