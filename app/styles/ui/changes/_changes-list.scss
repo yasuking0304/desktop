@@ -19,7 +19,7 @@
     flex: 0 0 auto;
   }
 
-  .checkbox-component {
+  .changes-list-check-all {
     align-items: center;
     height: 100%;
     position: relative;
@@ -45,57 +45,85 @@
   }
 
   &.filtered-changes-list {
+    .filter-options-popover {
+      .filter-options-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        h3 {
+          margin-bottom: var(--spacing-half);
+        }
+      }
+
+      .filter-options {
+        margin: var(--spacing) 0;
+      }
+      
+      .popover-content {
+        padding: var(--spacing);
+      }
+
+      @include close-button;
+
+      .close{
+        margin: 0;
+      }
+    }
+
     .header {
       display: flex;
-      align-items: center;
       height: auto;
+      flex-direction: column;
+      padding: var(--spacing-half) var(--spacing);
+      margin: 0;
+
+      .filter-box-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: var(--spacing-half);
+        transition: all .3s ease-out;
+      }
+
+      .checkbox-container {
+        display: flex;
+        align-items: center;
+
+        .spacer {
+          flex-grow: 1;
+        }
+
+        .filter-button {
+          padding: 0;
+          height: auto;
+          border: none;
+
+          &.remove-filter {
+            margin-right: var(--spacing-half);
+          }
+
+          &.hidden-files-warning {
+            margin-right: var(--spacing-half);
+          }
+          
+          &:hover {
+            color: var(--text-secondary-color);
+            background-color: inherit;
+          }
+        }
+
+      }
 
       label {
         text-align: right;
         padding: 0 var(--spacing-half);
       }
-
-      > button {
-        padding: 1px 3px;
-        margin-left: var(--spacing-half);
-        border: none;
-        height: auto;
-
-        &:focus-visible {
-          outline-offset: 0px;
-        }
-
-        &:hover {
-          color: var(--text-secondary-color);
-          background-color: var(--secondary-button-background);
-        }
-
-        &.included-in-commit-filter-on {
-          color: var(--link-button-color);
-
-          &:hover {
-            color: var(--link-button-hover-color);
-          }
-        }
-      }
     }
   }
 
   .filter-list {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    min-height: 100px;
-
-    .filter-field-row {
-      background-color: var(--box-alt-background-color);
-      padding: var(--spacing-half) var(--spacing);
-      margin: 0;
-    }
-
-    .filter-list-container {
-      height: 100%;
-    }
+    // This is important when app is zoomed in. Otherwise, the filter list
+    // will be overlapped by the commit message form.
+    min-height: 0;
   }
 
   .no-changes-in-list {

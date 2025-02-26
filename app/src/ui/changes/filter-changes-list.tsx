@@ -60,8 +60,13 @@ import { IFilterListGroup, IFilterListItem } from '../lib/filter-list'
 import { ClickSource } from '../lib/list'
 import memoizeOne from 'memoize-one'
 import { IMatches } from '../../lib/fuzzy-find'
-import { Button } from '../lib/button'
 import { TextBox } from '../lib/text-box'
+import { Button } from '../lib/button'
+import {
+  Popover,
+  PopoverAnchorPosition,
+  PopoverDecoration,
+} from '../lib/popover'
 
 interface IChangesListItem extends IFilterListItem {
   readonly id: string
@@ -216,6 +221,8 @@ interface IFilterChangesListState {
   readonly focusedRow: string | null
   readonly groups: ReadonlyArray<IFilterListGroup<IChangesListItem>>
   readonly filterToIncludedCommit: boolean
+  readonly showFilter: boolean
+  readonly isFilterOptionsOpen: boolean
 }
 
 function getSelectedItemsFromProps(
@@ -321,6 +328,7 @@ export class FilterChangesList extends React.Component<
   )
 
   private headerRef = createObservableRef<HTMLDivElement>()
+  private filterOptionsButtonRef: HTMLButtonElement | null = null
   private includeAllCheckBoxRef = React.createRef<Checkbox>()
   private filterListRef =
     React.createRef<AugmentedSectionFilterList<IChangesListItem>>()
@@ -340,6 +348,8 @@ export class FilterChangesList extends React.Component<
       focusedRow: null,
       groups,
       filterToIncludedCommit: false,
+      showFilter: false,
+      isFilterOptionsOpen: false,
     }
   }
 
@@ -1152,7 +1162,6 @@ export class FilterChangesList extends React.Component<
     const { files } = workingDirectory
 
     const visibleFiles = this.state.filteredItems.size
-    const filesDescription = `${visibleFiles}/${files.length}`
 
     const includeAllValue = this.getCheckAllValue(
       workingDirectory,
@@ -1163,9 +1172,18 @@ export class FilterChangesList extends React.Component<
     const disableAllCheckbox =
       files.length === 0 || isCommitting || rebaseConflictState !== null
 
-    const toBeCommittedFilterText = this.state.filterToIncludedCommit
-      ? 'Show files included and not included in the commit'
-      : 'Only show files to be included in the commit'
+    const fileCount = files.length
+
+    const filesChecked = workingDirectory.files.filter(
+      f => f.selection.getSelectionType() !== DiffSelectionType.None
+    )
+
+    const showHiddenCheckedFilesWarning = this.isCommittingFileHiddenByFilter(
+      this.state.filterText,
+      filesChecked.map(f => f.id),
+      this.state.filteredItems,
+      fileCount
+    )
 
     return (
       <div
@@ -1173,16 +1191,146 @@ export class FilterChangesList extends React.Component<
         onContextMenu={this.onContextMenu}
         ref={this.headerRef}
       >
-        <Checkbox
-          ref={this.includeAllCheckBoxRef}
-          value={includeAllValue}
-          onChange={this.onIncludeAllChanged}
-          disabled={disableAllCheckbox}
-          ariaLabelledBy="changes-list-check-all-label"
-        />
+        {this.renderFilterBox()}
+        <div className="checkbox-container">
+          <Checkbox
+            ref={this.includeAllCheckBoxRef}
+            value={includeAllValue}
+            onChange={this.onIncludeAllChanged}
+            disabled={disableAllCheckbox}
+            ariaLabelledBy="changes-list-check-all-label"
+            className="changes-list-check-all"
+          />
 
-        <label id="changes-list-check-all-label"> {filesDescription}</label>
+          <label id="changes-list-check-all-label">{visibleFiles} files</label>
+          <span className="spacer"></span>
+          {showHiddenCheckedFilesWarning ? (
+            <Button
+              className="filter-button hidden-files-warning"
+              ariaLabel="There are files that are checked and will be committed that are not shown in the list below. Click to clear text filter and show them."
+              tooltip="There are files that are checked and will be committed that are not shown in the list below. Click to clear text filter and show them."
+              onClick={this.showFilesToBeCommitted}
+            >
+              <Octicon symbol={octicons.alert} />
+            </Button>
+          ) : null}
 
+          {this.state.filterToIncludedCommit ? (
+            <Button
+              className="filter-button remove-filter"
+              onClick={this.clearNonTextFilters}
+              ariaLabel="Clear 1 additional filter(s)"
+              tooltip="Clear 1 additional filter(s)"
+            >
+              <Octicon symbol={octicons.x} />
+            </Button>
+          ) : null}
+
+          <Button
+            className="filter-button"
+            onClick={this.openFilterOptions}
+            ariaExpanded={this.state.isFilterOptionsOpen}
+            onButtonRef={this.onFilterOptionsButtonRef}
+            tooltip={
+              !this.state.showFilter ? 'Enable Filter' : 'Filter Options'
+            }
+            ariaLabel={
+              !this.state.showFilter ? 'Enable Filter' : 'Filter Options'
+            }
+          >
+            <Octicon symbol={octicons.filter} />
+            {this.state.showFilter ? (
+              <Octicon symbol={octicons.triangleDown} />
+            ) : (
+              <Octicon symbol={octicons.triangleUp} />
+            )}
+          </Button>
+
+          {this.state.isFilterOptionsOpen && this.renderFilterOptions()}
+        </div>
+      </div>
+    )
+  }
+
+  private onFilterOptionsButtonRef = (buttonRef: HTMLButtonElement | null) => {
+    this.filterOptionsButtonRef = buttonRef
+  }
+  private openFilterOptions = () => {
+    if (!this.state.showFilter) {
+      this.setState({ showFilter: !this.state.showFilter })
+      return
+    }
+    this.setState({ isFilterOptionsOpen: true })
+  }
+
+  private closeFilterOptions = () => {
+    this.setState({ isFilterOptionsOpen: false })
+  }
+
+  private renderFilterOptions() {
+    const filesSelectedCount = this.props.workingDirectory.files.filter(
+      f => f.selection.getSelectionType() !== DiffSelectionType.None
+    ).length
+
+    return (
+      <Popover
+        className="filter-options-popover"
+        ariaLabelledby="filter-options-header"
+        anchor={this.filterOptionsButtonRef}
+        anchorPosition={PopoverAnchorPosition.BottomRight}
+        decoration={PopoverDecoration.Balloon}
+        onMousedownOutside={this.closeFilterOptions}
+        onClickOutside={this.closeFilterOptions}
+      >
+        <div className="filter-options-header">
+          <h3 id="filter-options-header">Filter Options</h3>
+          <button
+            className="close"
+            onClick={this.closeFilterOptions}
+            aria-label="Close"
+          >
+            <Octicon symbol={octicons.x} />
+          </button>
+        </div>
+        <div className="filter-options">
+          <Checkbox
+            value={
+              this.state.filterToIncludedCommit
+                ? CheckboxValue.On
+                : CheckboxValue.Off
+            }
+            onChange={this.onFilterToIncludedInCommit}
+            label={`Show Only Checked Files (${filesSelectedCount})`}
+          />
+        </div>
+
+        <Button className="clear-filter" onClick={this.disableFilters}>
+          <Octicon symbol={octicons.filterRemove} /> Disable Filter
+        </Button>
+      </Popover>
+    )
+  }
+
+  private disableFilters = () => {
+    this.setState({
+      showFilter: false,
+      filterText: '',
+      filterToIncludedCommit: false,
+      isFilterOptionsOpen: false,
+    })
+  }
+
+  private clearNonTextFilters = () => {
+    this.setState({ filterToIncludedCommit: false })
+  }
+
+  private renderFilterBox = () => {
+    if (!this.state.showFilter) {
+      return
+    }
+
+    return (
+      <div className="filter-box-container">
         <TextBox
           ref={this.onTextBoxRef}
           displayClearButton={true}
@@ -1194,17 +1342,6 @@ export class FilterChangesList extends React.Component<
           onKeyDown={this.onFilterKeyDown}
           value={this.state.filterText}
         />
-
-        <Button
-          onClick={this.onFilterToIncludedInCommit}
-          className={classNames({
-            'included-in-commit-filter-on': this.state.filterToIncludedCommit,
-          })}
-          ariaLabel={toBeCommittedFilterText}
-          tooltip={toBeCommittedFilterText}
-        >
-          <Octicon symbol={octicons.filter} />
-        </Button>
       </div>
     )
   }
@@ -1298,6 +1435,7 @@ export class FilterChangesList extends React.Component<
     this.setState({
       filterToIncludedCommit: !this.state.filterToIncludedCommit,
     })
+    this.closeFilterOptions()
   }
 
   private onChangedFileFocus = (changeListItem: IChangesListItem) => {
