@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   remove-triage-label-from-issues:
-    if: github.event.label.name != 'triage'
+    if: github.event.label.name != 'triage' && github.event.label.name != 'more-info-needed'
     runs-on: ubuntu-latest
     steps:
       - run: gh issue edit "$NUMBER" --remove-label "$LABELS"
