@@ -10,7 +10,7 @@
       "[Improved] Links that do not open external urls now have a role of button for improved screen reader semantics - #20010",
       "[Improved] Email attribution warning only considers verified emails - #19968",
       "[Improved] Improve tooltip for unknown co-authors - #19992",
-      "[Improved] The length of shortened SHAs are consistently 9 characters - #19902. Thanks @molnarriso!",
+      "[Improved] The length of shortened SHAs are consistently 7 characters - #19902. Thanks @molnarriso!",
       "[Improved] Upgrade Electron to v34.0.1 - #19919",
       "[Removed] Remove support for macOS 10.15 - #19919"
     ],
