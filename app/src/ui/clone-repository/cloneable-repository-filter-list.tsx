@@ -1,7 +1,7 @@
 import * as React from 'react'
-import { Account } from '../../models/account'
+import { Account, isDotComAccount } from '../../models/account'
 import { IFilterListGroup } from '../lib/filter-list'
-import { IAPIRepository, getDotComAPIEndpoint, getHTMLURL } from '../../lib/api'
+import { IAPIRepository, getHTMLURL } from '../../lib/api'
 import {
   ICloneableRepositoryListItem,
   groupRepositories,
@@ -273,11 +273,10 @@ export class CloneableRepositoryFilterList extends React.PureComponent<ICloneabl
   }
 
   private renderNoItems = () => {
-    const { loading, repositories } = this.props
-    const endpointName =
-      this.props.account.endpoint === getDotComAPIEndpoint()
-        ? 'GitHub.com'
-        : getHTMLURL(this.props.account.endpoint)
+    const { loading, repositories, account } = this.props
+    const endpointName = isDotComAccount(account)
+      ? 'GitHub.com'
+      : getHTMLURL(this.props.account.endpoint)
 
     if (loading && (repositories === null || repositories.length === 0)) {
       return (

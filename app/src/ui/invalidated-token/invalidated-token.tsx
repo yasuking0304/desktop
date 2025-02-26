@@ -3,8 +3,7 @@ import { Dialog, DialogContent, DialogFooter } from '../dialog'
 import { Dispatcher } from '../dispatcher'
 import { Row } from '../lib/row'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
-import { Account } from '../../models/account'
-import { getDotComAPIEndpoint } from '../../lib/api'
+import { Account, isEnterpriseAccount } from '../../models/account'
 
 interface IInvalidatedTokenProps {
   readonly dispatcher: Dispatcher
@@ -18,7 +17,8 @@ interface IInvalidatedTokenProps {
  */
 export class InvalidatedToken extends React.Component<IInvalidatedTokenProps> {
   public render() {
-    const accountTypeSuffix = this.isEnterpriseAccount ? ' Enterprise' : ''
+    const { account } = this.props
+    const accountTypeSuffix = isEnterpriseAccount(account) ? ' Enterprise' : ''
 
     return (
       <Dialog
@@ -44,16 +44,12 @@ export class InvalidatedToken extends React.Component<IInvalidatedTokenProps> {
     )
   }
 
-  private get isEnterpriseAccount() {
-    return this.props.account.endpoint !== getDotComAPIEndpoint()
-  }
-
   private onSubmit = () => {
-    const { dispatcher, onDismissed } = this.props
+    const { dispatcher, onDismissed, account } = this.props
 
     onDismissed()
 
-    if (this.isEnterpriseAccount) {
+    if (isEnterpriseAccount(account)) {
       dispatcher.showEnterpriseSignInDialog(this.props.account.endpoint)
     } else {
       dispatcher.showDotComSignInDialog()
