@@ -58,14 +58,14 @@
       .filter-options {
         margin: var(--spacing) 0;
       }
-      
+
       .popover-content {
         padding: var(--spacing);
       }
 
       @include close-button;
 
-      .close{
+      .close {
         margin: 0;
       }
     }
@@ -81,7 +81,7 @@
         display: flex;
         align-items: center;
         margin-bottom: var(--spacing-half);
-        transition: all .3s ease-out;
+        transition: all 0.3s ease-out;
       }
 
       .checkbox-container {
@@ -104,13 +104,12 @@
           &.hidden-files-warning {
             margin-right: var(--spacing-half);
           }
-          
+
           &:hover {
             color: var(--text-secondary-color);
             background-color: inherit;
           }
         }
-
       }
 
       label {
