@@ -1277,8 +1277,13 @@ export class FilterChangesList extends React.Component<
   }
 
   private renderFilterOptions() {
-    const filesSelectedCount = this.props.workingDirectory.files.filter(
-      f => f.selection.getSelectionType() !== DiffSelectionType.None
+    const checkedFilesThatAreVisibleCount = [
+      ...this.state.filteredItems.values(),
+    ].filter(
+      f =>
+        this.props.workingDirectory
+          .findFileWithID(f.id)
+          ?.selection.getSelectionType() !== DiffSelectionType.None
     ).length
 
     return (
@@ -1309,7 +1314,7 @@ export class FilterChangesList extends React.Component<
                 : CheckboxValue.Off
             }
             onChange={this.onFilterToIncludedInCommit}
-            label={`Show Only Checked Files (${filesSelectedCount})`}
+            label={`Being committed (${checkedFilesThatAreVisibleCount})`}
           />
         </div>
 
