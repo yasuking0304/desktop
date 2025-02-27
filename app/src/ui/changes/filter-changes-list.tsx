@@ -1228,7 +1228,9 @@ export class FilterChangesList extends React.Component<
           ) : null}
 
           <Button
-            className="filter-button"
+            className={classNames('filter-button', {
+              active: this.state.filterToIncludedCommit,
+            })}
             onClick={this.openFilterOptions}
             ariaExpanded={this.state.isFilterOptionsOpen}
             onButtonRef={this.onFilterOptionsButtonRef}
