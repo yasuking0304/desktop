@@ -421,6 +421,8 @@ export class CommitMessage extends React.Component<
         description: this.state.commitMessage.description,
         trailers: this.getCoAuthorTrailers(),
         amend: this.props.commitToAmend !== null,
+        messageGeneratedByCopilot:
+          this.state.commitMessage.generatedByCopilot ?? false,
       }
 
       const msg = await formatCommitMessage(this.props.repository, context)
@@ -558,11 +560,13 @@ export class CommitMessage extends React.Component<
 
     const trailers = this.getCoAuthorTrailers()
 
-    const commitContext = {
+    const commitContext: ICommitContext = {
       summary: this.summaryOrPlaceholder,
       description,
       trailers,
       amend: this.props.commitToAmend !== null,
+      messageGeneratedByCopilot:
+        this.state.commitMessage.generatedByCopilot ?? false,
     }
 
     if (
