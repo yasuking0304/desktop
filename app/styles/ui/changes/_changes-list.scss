@@ -46,6 +46,8 @@
 
   &.filtered-changes-list {
     .filter-options-popover {
+      text-align: right;
+      
       .filter-options-header {
         display: flex;
         justify-content: space-between;

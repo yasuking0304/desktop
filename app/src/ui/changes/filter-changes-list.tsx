@@ -67,6 +67,7 @@ import {
   PopoverAnchorPosition,
   PopoverDecoration,
 } from '../lib/popover'
+import { LinkButton } from '../lib/link-button'
 
 interface IChangesListItem extends IFilterListItem {
   readonly id: string
@@ -1304,9 +1305,7 @@ export class FilterChangesList extends React.Component<
           />
         </div>
 
-        <Button className="clear-filter" onClick={this.disableFilters}>
-          <Octicon symbol={octicons.filterRemove} /> Disable Filter
-        </Button>
+        <LinkButton onClick={this.disableFilters}>Disable Filter</LinkButton>
       </Popover>
     )
   }
