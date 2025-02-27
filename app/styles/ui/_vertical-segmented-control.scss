@@ -49,8 +49,7 @@ fieldset.vertical-segmented-control {
       align-self: flex-start;
       margin-top: 4px;
     }
-
-    &:hover {
+    &:has(input[type='radio']:focus), &:hover {
       background: var(--box-hover-background-color);
       color: var(--box-hover-text-color);
 
