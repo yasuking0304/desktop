@@ -1,5 +1,5 @@
 import { Disposable } from 'event-kit'
-import { Account } from '../../models/account'
+import { Account, isDotComAccount } from '../../models/account'
 import { fatalError } from '../fatal-error'
 import {
   validateURL,
@@ -231,9 +231,7 @@ export class SignInStore extends TypedBaseStore<SignInState | null> {
       this.reset()
     }
 
-    const existingAccount = this.accounts.find(
-      x => x.endpoint === getDotComAPIEndpoint()
-    )
+    const existingAccount = this.accounts.find(isDotComAccount)
 
     if (existingAccount) {
       this.setState({

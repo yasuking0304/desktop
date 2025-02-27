@@ -1,8 +1,11 @@
 import * as React from 'react'
 import { DialogContent } from '../dialog'
-import { Account } from '../../models/account'
+import {
+  Account,
+  isDotComAccount,
+  isEnterpriseAccount,
+} from '../../models/account'
 import { GitConfigUserForm } from '../lib/git-config-user-form'
-import { getDotComAPIEndpoint } from '../../lib/api'
 import { Row } from '../lib/row'
 import { RadioGroup } from '../lib/radio-group'
 import { assertNever } from '../../lib/fatal-error'
@@ -45,11 +48,10 @@ export class GitConfig extends React.Component<IGitConfigProps> {
   }
 
   public render() {
-    const isDotComAccount =
-      this.props.account !== null &&
-      this.props.account.endpoint === getDotComAPIEndpoint()
-    const enterpriseAccount = isDotComAccount ? null : this.props.account
-    const dotComAccount = isDotComAccount ? this.props.account : null
+    const { account } = this.props
+    const dotComAccount = account && isDotComAccount(account) ? account : null
+    const enterpriseAccount =
+      account && isEnterpriseAccount(account) ? account : null
 
     const configOptions = [GitConfigLocation.Global, GitConfigLocation.Local]
     const selectionOption =
