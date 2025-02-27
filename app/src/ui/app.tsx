@@ -1524,6 +1524,7 @@ export class App extends React.Component<IAppProps, IAppState> {
             key="preferences"
             initialSelectedTab={popup.initialSelectedTab}
             dispatcher={this.props.dispatcher}
+            accounts={this.state.accounts}
             dotComAccount={this.getDotComAccount()}
             confirmRepositoryRemoval={
               this.state.askForConfirmationOnRepositoryRemoval
