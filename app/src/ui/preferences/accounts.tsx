@@ -55,9 +55,6 @@ export class Accounts extends React.Component<IAccountsProps, {}> {
       endpoint: account.endpoint,
     }
 
-    const accountTypeLabel =
-      type === SignInType.DotCom ? 'GitHub.com' : 'GitHub Enterprise'
-
     // The DotCom account is shown first, so its sign in/out button should be
     // focused initially when the dialog is opened.
     const className =
@@ -73,7 +70,7 @@ export class Accounts extends React.Component<IAccountsProps, {}> {
           </div>
         </div>
         <Button onClick={this.logout(account)} className={className}>
-          {__DARWIN__ ? 'Sign Out of' : 'Sign out of'} {accountTypeLabel}
+          {__DARWIN__ ? 'Sign Out' : 'Sign out'}
         </Button>
       </Row>
     )
