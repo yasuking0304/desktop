@@ -57,5 +57,9 @@ fieldset.vertical-segmented-control {
         color: var(--box-hover-text-color);
       }
     }
+
+    > label {
+      min-width: 0;
+    }
   }
 }
