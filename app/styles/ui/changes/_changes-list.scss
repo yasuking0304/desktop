@@ -99,13 +99,13 @@
           height: auto;
           border: none;
 
-          &.active{
-            color: var(--box-selected-active-background-color)
+          &.active {
+            color: var(--box-selected-active-background-color);
           }
 
           &.remove-filter {
             margin-right: var(--spacing-half);
-            color: var(--box-selected-active-background-color)
+            color: var(--box-selected-active-background-color);
           }
 
           &.hidden-files-warning {
