@@ -225,6 +225,10 @@ interface IFilterChangesListState {
   readonly groups: ReadonlyArray<IFilterListGroup<IChangesListItem>>
   readonly filterToIncludedCommit: boolean
   readonly isFilterOptionsOpen: boolean
+  /**
+   * Whether the warning about committing hidden files is open.
+   */
+  readonly isFilesWarningOpen: boolean
 }
 
 function getSelectedItemsFromProps(
@@ -331,6 +335,7 @@ export class FilterChangesList extends React.Component<
 
   private headerRef = createObservableRef<HTMLDivElement>()
   private filterOptionsButtonRef: HTMLButtonElement | null = null
+  private filterWarningButtonRef: HTMLButtonElement | null = null
   private includeAllCheckBoxRef = React.createRef<Checkbox>()
   private filterListRef =
     React.createRef<AugmentedSectionFilterList<IChangesListItem>>()
@@ -351,6 +356,7 @@ export class FilterChangesList extends React.Component<
       groups,
       filterToIncludedCommit: false,
       isFilterOptionsOpen: false,
+      isFilesWarningOpen: false,
     }
   }
 
@@ -1145,7 +1151,11 @@ export class FilterChangesList extends React.Component<
   }
 
   private showFilesToBeCommitted = () => {
-    this.setState({ filterText: '', filterToIncludedCommit: true })
+    this.setState({
+      filterText: '',
+      filterToIncludedCommit: true,
+      isFilesWarningOpen: false,
+    })
   }
 
   private onTextBoxRef = (component: TextBox | null) => {
@@ -1213,14 +1223,19 @@ export class FilterChangesList extends React.Component<
         <label id="changes-list-check-all-label">{visibleFiles} files</label>
         <span className="spacer"></span>
         {showHiddenCheckedFilesWarning ? (
-          <Button
-            className="filter-button hidden-files-warning"
-            ariaLabel="There are files that are checked and will be committed that are not shown in the list below. Click to clear text filter and show them."
-            tooltip="There are files that are checked and will be committed that are not shown in the list below. Click to clear text filter and show them."
-            onClick={this.showFilesToBeCommitted}
-          >
-            <Octicon symbol={octicons.alert} />
-          </Button>
+          <span>
+            <Button
+              className="filter-button hidden-files-warning"
+              ariaExpanded={this.state.isFilterOptionsOpen}
+              ariaLabel="Open Files Hidden by Filter Warning"
+              tooltip="Open Files Hidden by Filter Warning"
+              onClick={this.openFilterWarning}
+              onButtonRef={this.onFilterWarningButtonRef}
+            >
+              <Octicon symbol={octicons.alert} />
+            </Button>
+            {this.state.isFilesWarningOpen && this.renderFilterWarning()}
+          </span>
         ) : null}
 
         {this.state.filterToIncludedCommit ? (
@@ -1234,29 +1249,30 @@ export class FilterChangesList extends React.Component<
           </Button>
         ) : null}
 
-        <Button
-          className={classNames('filter-button', {
-            active: this.state.filterToIncludedCommit,
-          })}
-          onClick={this.openFilterOptions}
-          ariaExpanded={this.state.isFilterOptionsOpen}
-          onButtonRef={this.onFilterOptionsButtonRef}
-          tooltip={
-            !this.props.canFilterChanges ? 'Enable Filter' : 'Filter Options'
-          }
-          ariaLabel={
-            !this.props.canFilterChanges ? 'Enable Filter' : 'Filter Options'
-          }
-        >
-          <Octicon symbol={octicons.filter} />
-          {this.props.canFilterChanges ? (
-            <Octicon symbol={octicons.triangleDown} />
-          ) : (
-            <Octicon symbol={octicons.triangleUp} />
-          )}
-        </Button>
-
-        {this.state.isFilterOptionsOpen && this.renderFilterOptions()}
+        <span>
+          <Button
+            className={classNames('filter-button', {
+              active: this.state.filterToIncludedCommit,
+            })}
+            onClick={this.openFilterOptions}
+            ariaExpanded={this.state.isFilterOptionsOpen}
+            onButtonRef={this.onFilterOptionsButtonRef}
+            tooltip={
+              !this.props.canFilterChanges ? 'Enable Filter' : 'Filter Options'
+            }
+            ariaLabel={
+              !this.props.canFilterChanges ? 'Enable Filter' : 'Filter Options'
+            }
+          >
+            <Octicon symbol={octicons.filter} />
+            {this.props.canFilterChanges ? (
+              <Octicon symbol={octicons.triangleDown} />
+            ) : (
+              <Octicon symbol={octicons.triangleUp} />
+            )}
+          </Button>
+          {this.state.isFilterOptionsOpen && this.renderFilterOptions()}
+        </span>
       </div>
     )
   }
@@ -1264,6 +1280,51 @@ export class FilterChangesList extends React.Component<
   private onFilterOptionsButtonRef = (buttonRef: HTMLButtonElement | null) => {
     this.filterOptionsButtonRef = buttonRef
   }
+
+  private onFilterWarningButtonRef = (buttonRef: HTMLButtonElement | null) => {
+    this.filterWarningButtonRef = buttonRef
+  }
+
+  private openFilterWarning = () => {
+    this.setState({ isFilesWarningOpen: true })
+  }
+
+  private closeFilterWarning = () => {
+    this.setState({ isFilesWarningOpen: false })
+  }
+
+  private renderFilterWarning() {
+    return (
+      <Popover
+        className="filter-popover"
+        ariaLabelledby="filter-warning-header"
+        anchor={this.filterWarningButtonRef}
+        anchorPosition={PopoverAnchorPosition.BottomRight}
+        decoration={PopoverDecoration.Balloon}
+        onMousedownOutside={this.closeFilterWarning}
+        onClickOutside={this.closeFilterWarning}
+      >
+        <div className="filter-popover-header">
+          <h3 id="filter-warning-header">Committing Hidden Files</h3>
+          <button
+            className="close"
+            onClick={this.closeFilterWarning}
+            aria-label="Close"
+          >
+            <Octicon symbol={octicons.x} />
+          </button>
+        </div>
+        <div className="filter-warning-text">
+          You have a filter applied. There are{' '}
+          <LinkButton onClick={this.showFilesToBeCommitted}>
+            hidden changes
+          </LinkButton>{' '}
+          that will be committed.
+        </div>
+      </Popover>
+    )
+  }
+
   private openFilterOptions = () => {
     if (!this.props.canFilterChanges) {
       this.props.dispatcher.setCanFilterChanges(true)
@@ -1288,7 +1349,7 @@ export class FilterChangesList extends React.Component<
 
     return (
       <Popover
-        className="filter-options-popover"
+        className="filter-popover"
         ariaLabelledby="filter-options-header"
         anchor={this.filterOptionsButtonRef}
         anchorPosition={PopoverAnchorPosition.BottomRight}
@@ -1296,7 +1357,7 @@ export class FilterChangesList extends React.Component<
         onMousedownOutside={this.closeFilterOptions}
         onClickOutside={this.closeFilterOptions}
       >
-        <div className="filter-options-header">
+        <div className="filter-popover-header">
           <h3 id="filter-options-header">Filter Options</h3>
           <button
             className="close"

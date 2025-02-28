@@ -45,10 +45,10 @@
   }
 
   &.filtered-changes-list {
-    .filter-options-popover {
+    .filter-popover {
       text-align: right;
 
-      .filter-options-header {
+      .filter-popover-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -59,6 +59,11 @@
 
       .filter-options {
         margin: var(--spacing) 0;
+      }
+
+      .filter-warning-text {
+        max-width: 200px;
+        text-align: left;
       }
 
       .popover-content {
