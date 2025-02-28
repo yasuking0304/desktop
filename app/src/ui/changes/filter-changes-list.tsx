@@ -1250,6 +1250,8 @@ export class FilterChangesList extends React.Component<
         ) : null}
 
         <span>
+          {this.renderBetaPill()}
+
           <Button
             className={classNames('filter-button', {
               active: this.state.filterToIncludedCommit,
@@ -1258,10 +1260,14 @@ export class FilterChangesList extends React.Component<
             ariaExpanded={this.state.isFilterOptionsOpen}
             onButtonRef={this.onFilterOptionsButtonRef}
             tooltip={
-              !this.props.canFilterChanges ? 'Enable Filter' : 'Filter Options'
+              !this.props.canFilterChanges
+                ? 'Enable Filter (Beta)'
+                : 'Filter Options'
             }
             ariaLabel={
-              !this.props.canFilterChanges ? 'Enable Filter' : 'Filter Options'
+              !this.props.canFilterChanges
+                ? 'Enable Filter (Beta)'
+                : 'Filter Options'
             }
           >
             <Octicon symbol={octicons.filter} />
@@ -1274,6 +1280,20 @@ export class FilterChangesList extends React.Component<
           {this.state.isFilterOptionsOpen && this.renderFilterOptions()}
         </span>
       </div>
+    )
+  }
+
+  private renderBetaPill = () => {
+    if (this.props.canFilterChanges) {
+      return
+    }
+
+    return (
+      <span className="beta-pill">
+        <span>
+          <span>Beta</span>
+        </span>
+      </span>
     )
   }
 
