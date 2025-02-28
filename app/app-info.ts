@@ -23,6 +23,7 @@ export function getReplacements() {
     __APP_NAME__: s(productName),
     __APP_VERSION__: s(version),
     __DEV__: isDevBuild,
+    __DEV_SECRETS__: isDevBuild || !process.env.DESKTOP_OAUTH_CLIENT_SECRET,
     __RELEASE_CHANNEL__: s(channel),
     __UPDATES_URL__: s(getUpdatesURL()),
     __SHA__: s(getSHA()),
