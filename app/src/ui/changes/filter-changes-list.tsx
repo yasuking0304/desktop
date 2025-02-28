@@ -1243,8 +1243,8 @@ export class FilterChangesList extends React.Component<
           <Button
             className="filter-button remove-filter"
             onClick={this.clearNonTextFilters}
-            ariaLabel="Clear 1 additional filter(s)"
-            tooltip="Clear 1 additional filter(s)"
+            ariaLabel="Clear filter option(s)"
+            tooltip="Clear filter option(s)"
           >
             <Octicon symbol={octicons.x} />
           </Button>
