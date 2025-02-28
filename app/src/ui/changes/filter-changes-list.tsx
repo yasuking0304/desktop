@@ -68,6 +68,7 @@ import {
   PopoverDecoration,
 } from '../lib/popover'
 import { LinkButton } from '../lib/link-button'
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
 interface IChangesListItem extends IFilterListItem {
   readonly id: string
@@ -1175,7 +1176,7 @@ export class FilterChangesList extends React.Component<
         onContextMenu={this.onContextMenu}
         ref={this.headerRef}
       >
-        {this.renderFilterBox()}
+        <TransitionGroup>{this.renderFilterBox()}</TransitionGroup>
         {this.renderCheckBoxRow()}
       </div>
     )
@@ -1423,19 +1424,24 @@ export class FilterChangesList extends React.Component<
     }
 
     return (
-      <div className="filter-box-container">
-        <TextBox
-          ref={this.onTextBoxRef}
-          displayClearButton={true}
-          prefixedIcon={octicons.search}
-          autoFocus={true}
-          placeholder={'Filter'}
-          className="filter-list-filter-field"
-          onValueChanged={this.onFilterTextChanged}
-          onKeyDown={this.onFilterKeyDown}
-          value={this.state.filterText}
-        />
-      </div>
+      <CSSTransition
+        classNames="filter-box"
+        timeout={{ enter: 500, exit: 400 }}
+      >
+        <div className="filter-box-container">
+          <TextBox
+            ref={this.onTextBoxRef}
+            displayClearButton={true}
+            prefixedIcon={octicons.search}
+            autoFocus={true}
+            placeholder={'Filter'}
+            className="filter-list-filter-field"
+            onValueChanged={this.onFilterTextChanged}
+            onKeyDown={this.onFilterKeyDown}
+            value={this.state.filterText}
+          />
+        </div>
+      </CSSTransition>
     )
   }
 

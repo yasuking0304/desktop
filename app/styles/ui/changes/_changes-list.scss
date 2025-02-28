@@ -253,3 +253,27 @@
 
   transition: max-height var(--undo-animation-duration) ease-out;
 }
+
+
+ // animations for entering and leaving
+ .filter-box-enter {
+  height: 0px;
+  opacity: 0;
+
+  &.filter-box-enter-active {
+    height: 25px;
+    opacity: 1;
+    transition: max-height 300ms ease-in-out, opacity 200ms ease-in 300ms;
+  }
+}
+
+.filter-box-exit {
+  height: 25px;
+  opacity: 1;
+
+  &.filter-box-exit-active {
+    height: 0px;
+    opacity: 0;
+    transition: max-height 225ms ease-in-out 175ms, opacity 175ms ease-in;
+  }
+}
