@@ -187,6 +187,16 @@ const renderManualConflictedFile: React.FunctionComponent<{
     props.ourBranch,
     props.theirBranch
   )
+
+  const onDropdownKeyDown = makeManualConflictDropdownOnKeyDownHandler(
+    props.path,
+    props.status,
+    props.repository,
+    props.dispatcher,
+    props.ourBranch,
+    props.theirBranch
+  )
+
   const { ourBranch, theirBranch } = props
   const { entry } = props.status
 
@@ -218,6 +228,7 @@ const renderManualConflictedFile: React.FunctionComponent<{
         <Button
           className="small-button button-group-item resolve-arrow-menu"
           onClick={onDropdownClick}
+          onKeyDown={onDropdownKeyDown}
         >
           Resolve
           <Octicon symbol={octicons.triangleDown} />
@@ -277,6 +288,15 @@ const renderConflictedFileWithConflictMarkers: React.FunctionComponent<{
     props.setIsFileResolutionOptionsMenuOpen
   )
 
+  const onDropdownKeyDown = makeManualConflictDropdownOnKeyDownHandler(
+    props.path,
+    props.status,
+    props.repository,
+    props.dispatcher,
+    props.ourBranch,
+    props.theirBranch
+  )
+
   const content = (
     <>
       <div className="column-left">
@@ -294,6 +314,7 @@ const renderConflictedFileWithConflictMarkers: React.FunctionComponent<{
         </Button>
         <Button
           onClick={onDropdownClick}
+          onKeyDown={onDropdownKeyDown}
           className="small-button button-group-item arrow-menu"
           ariaLabel="File resolution options"
           ariaHaspopup="menu"
@@ -327,6 +348,29 @@ const makeManualConflictDropdownClickHandler = (
         theirBranch
       )
     )
+  }
+}
+
+/** makes a click handling function for manual conflict resolution options */
+const makeManualConflictDropdownOnKeyDownHandler = (
+  relativeFilePath: string,
+  status: ManualConflict,
+  repository: Repository,
+  dispatcher: Dispatcher,
+  ourBranch?: string,
+  theirBranch?: string
+) => {
+  return (event: React.KeyboardEvent<HTMLButtonElement>) => {
+    if (event.key === 'ArrowDown') {
+      return makeManualConflictDropdownClickHandler(
+        relativeFilePath,
+        status,
+        repository,
+        dispatcher,
+        ourBranch,
+        theirBranch
+      )()
+    }
   }
 }
 

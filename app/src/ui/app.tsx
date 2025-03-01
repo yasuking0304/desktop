@@ -18,7 +18,6 @@ import { RetryAction } from '../models/retry-actions'
 import { FetchType } from '../models/fetch'
 import { shouldRenderApplicationMenu } from './lib/features'
 import { matchExistingRepository } from '../lib/repository-matching'
-import { getDotComAPIEndpoint } from '../lib/api'
 import { getVersion, getName } from './lib/app-proxy'
 import {
   getOS,
@@ -36,7 +35,11 @@ import {
 import { Branch } from '../models/branch'
 import { PreferencesTab } from '../models/preferences'
 import { findItemByAccessKey, itemIsSelectable } from '../models/app-menu'
-import { Account } from '../models/account'
+import {
+  Account,
+  isDotComAccount,
+  isEnterpriseAccount,
+} from '../models/account'
 import { TipState } from '../models/tip'
 import { CloneRepositoryTab } from '../models/clone-repository-tab'
 import { CloningRepository } from '../models/cloning-repository'
@@ -182,6 +185,7 @@ import { isCertificateErrorSuppressedFor } from '../lib/suppress-certificate-err
 import { webUtils } from 'electron'
 import { showTestUI } from './lib/test-ui-components/test-ui-components'
 import { ConfirmCommitFilteredChanges } from './changes/confirm-commit-filtered-changes-dialog'
+import { AboutTestDialog } from './about/about-test-dialog'
 
 const MinuteInMilliseconds = 1000 * 60
 const HourInMilliseconds = MinuteInMilliseconds * 60
@@ -609,17 +613,11 @@ export class App extends React.Component<IAppProps, IAppState> {
   }
 
   private getDotComAccount(): Account | null {
-    const dotComAccount = this.state.accounts.find(
-      a => a.endpoint === getDotComAPIEndpoint()
-    )
-    return dotComAccount || null
+    return this.state.accounts.find(isDotComAccount) ?? null
   }
 
   private getEnterpriseAccount(): Account | null {
-    const enterpriseAccount = this.state.accounts.find(
-      a => a.endpoint !== getDotComAPIEndpoint()
-    )
-    return enterpriseAccount || null
+    return this.state.accounts.find(isEnterpriseAccount) ?? null
   }
 
   private updateBranchWithContributionTargetBranch() {
@@ -1527,6 +1525,7 @@ export class App extends React.Component<IAppProps, IAppState> {
             key="preferences"
             initialSelectedTab={popup.initialSelectedTab}
             dispatcher={this.props.dispatcher}
+            accounts={this.state.accounts}
             dotComAccount={this.getDotComAccount()}
             confirmRepositoryRemoval={
               this.state.askForConfirmationOnRepositoryRemoval
@@ -1695,6 +1694,8 @@ export class App extends React.Component<IAppProps, IAppState> {
             onCheckForNonStaggeredUpdates={this.onCheckForNonStaggeredUpdates}
             onShowAcknowledgements={this.showAcknowledgements}
             onShowTermsAndConditions={this.showTermsAndConditions}
+            updateState={this.state.updateState}
+            onQuitAndInstall={this.onQuitAndInstall}
           />
         )
       case PopupType.PublishRepository:
@@ -2484,6 +2485,15 @@ export class App extends React.Component<IAppProps, IAppState> {
           />
         )
       }
+      case PopupType.TestAbout:
+        return (
+          <AboutTestDialog
+            key="about"
+            onDismissed={onPopupDismissedFn}
+            onShowAcknowledgements={this.showAcknowledgements}
+            onShowTermsAndConditions={this.showTermsAndConditions}
+          />
+        )
       default:
         return assertNever(popup, `Unknown popup type: ${popup}`)
     }
@@ -2584,6 +2594,8 @@ export class App extends React.Component<IAppProps, IAppState> {
   private showTermsAndConditions = () => {
     this.props.dispatcher.showPopup({ type: PopupType.TermsAndConditions })
   }
+
+  private onQuitAndInstall = () => updateStore.quitAndInstallUpdate()
 
   private renderPopups() {
     const popupContent = this.allPopupContent()

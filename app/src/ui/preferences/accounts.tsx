@@ -1,5 +1,9 @@
 import * as React from 'react'
-import { Account } from '../../models/account'
+import {
+  Account,
+  isDotComAccount,
+  isEnterpriseAccount,
+} from '../../models/account'
 import { IAvatarUser } from '../../models/avatar'
 import { lookupPreferredEmail } from '../../lib/email'
 import { assertNever } from '../../lib/fatal-error'
@@ -11,8 +15,7 @@ import { CallToAction } from '../lib/call-to-action'
 import { t } from 'i18next'
 
 interface IAccountsProps {
-  readonly dotComAccount: Account | null
-  readonly enterpriseAccount: Account | null
+  readonly accounts: ReadonlyArray<Account>
 
   readonly onDotComSignIn: () => void
   readonly onEnterpriseSignIn: () => void
@@ -26,19 +29,20 @@ enum SignInType {
 
 export class Accounts extends React.Component<IAccountsProps, {}> {
   public render() {
+    const { accounts } = this.props
+    const dotComAccount = accounts.find(isDotComAccount)
+    const enterpriseAccount = accounts.find(isEnterpriseAccount)
+
     return (
       <DialogContent className="accounts-tab">
         <h2>GitHub.com</h2>
-        {this.props.dotComAccount
-          ? this.renderAccount(this.props.dotComAccount, SignInType.DotCom)
+        {dotComAccount
+          ? this.renderAccount(dotComAccount, SignInType.DotCom)
           : this.renderSignIn(SignInType.DotCom)}
 
         <h2>GitHub Enterprise</h2>
-        {this.props.enterpriseAccount
-          ? this.renderAccount(
-              this.props.enterpriseAccount,
-              SignInType.Enterprise
-            )
+        {enterpriseAccount
+          ? this.renderAccount(enterpriseAccount, SignInType.Enterprise)
           : this.renderSignIn(SignInType.Enterprise)}
       </DialogContent>
     )
@@ -55,11 +59,6 @@ export class Accounts extends React.Component<IAccountsProps, {}> {
     const accountTypeLabel =
       type === SignInType.DotCom ? 'GitHub.com' : 'GitHub Enterprise'
 
-    const accounts = [
-      ...(this.props.dotComAccount ? [this.props.dotComAccount] : []),
-      ...(this.props.enterpriseAccount ? [this.props.enterpriseAccount] : []),
-    ]
-
     // The DotCom account is shown first, so its sign in/out button should be
     // focused initially when the dialog is opened.
     const className =
@@ -68,7 +67,7 @@ export class Accounts extends React.Component<IAccountsProps, {}> {
     return (
       <Row className="account-info">
         <div className="user-info-container">
-          <Avatar accounts={accounts} user={avatarUser} />
+          <Avatar accounts={this.props.accounts} user={avatarUser} />
           <div className="user-info">
             <div className="name">{account.name}</div>
             <div className="login">@{account.login}</div>

@@ -3,7 +3,7 @@
   "productName": "GitHub Desktop",
   "bundleID": "com.github.GitHubClient",
   "companyName": "GitHub, Inc.",
-  "version": "3.4.16",
+  "version": "3.4.17",
   "main": "./main.js",
   "repository": {
     "type": "git",
@@ -17,7 +17,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@floating-ui/react-dom": "^2.0.0",
+    "@floating-ui/react-dom": "^2.1.2",
     "@github/alive-client": "^1.2.0",
     "app-path": "^3.3.0",
     "byline": "^5.0.0",
@@ -32,7 +32,7 @@
     "desktop-notifications": "^0.2.4",
     "desktop-trampoline": "desktop/desktop-trampoline#v0.9.10",
     "dexie": "^3.2.2",
-    "dompurify": "^2.5.4",
+    "dompurify": "^3.2.4",
     "dugite": "3.0.0-rc10",
     "electron-window-state": "^5.0.3",
     "event-kit": "^2.0.0",

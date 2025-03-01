@@ -9,8 +9,7 @@ import {
   DefaultDialogFooter,
 } from '../dialog'
 import { LinkButton } from '../lib/link-button'
-import { updateStore, IUpdateState, UpdateStatus } from '../lib/update-store'
-import { Disposable } from 'event-kit'
+import { IUpdateState, UpdateStatus } from '../lib/update-store'
 import { Loading } from '../lib/loading'
 import { RelativeTime } from '../relative-time'
 import { assertNever } from '../../lib/fatal-error'
@@ -18,6 +17,8 @@ import { ReleaseNotesUri } from '../lib/releases'
 import { encodePathAsUrl } from '../../lib/path'
 import { t } from 'i18next'
 import { isOSNoLongerSupportedByElectron } from '../../lib/get-os'
+import { AriaLiveContainer } from '../accessibility/aria-live-container'
+import { formatDate } from '../../lib/format-date'
 
 const logoPath = __DARWIN__
   ? 'static/logo-64x64@2x.png'
@@ -53,61 +54,60 @@ interface IAboutProps {
 
   /** A function to call when the user wants to see Terms and Conditions. */
   readonly onShowTermsAndConditions: () => void
+  readonly onQuitAndInstall: () => void
+
+  readonly updateState: IUpdateState
+
+  /**
+   * A flag to indicate whether the About dialog should ignore that
+   * it's running in development mode. Used exclusively by the AboutTestDialog
+   */
+  readonly allowDevelopment?: boolean
 }
 
-interface IAboutState {
-  readonly updateState: IUpdateState
+interface IUpdateInfoProps {
+  readonly message: string
+  readonly richMessage?: JSX.Element
+  readonly loading?: boolean
+}
+
+class UpdateInfo extends React.Component<IUpdateInfoProps> {
+  public render() {
+    return (
+      <div className="update-status">
+        <AriaLiveContainer message={this.props.message} />
+
+        {this.props.loading && <Loading />}
+        {this.props.richMessage ?? this.props.message}
+      </div>
+    )
+  }
 }
 
 /**
  * A dialog that presents information about the
  * running application such as name and version.
  */
-export class About extends React.Component<IAboutProps, IAboutState> {
-  private updateStoreEventHandle: Disposable | null = null
-
-  public constructor(props: IAboutProps) {
-    super(props)
-
-    this.state = {
-      updateState: updateStore.state,
-    }
-  }
-
-  private onUpdateStateChanged = (updateState: IUpdateState) => {
-    this.setState({ updateState })
-  }
-
-  public componentDidMount() {
-    this.updateStoreEventHandle = updateStore.onDidChange(
-      this.onUpdateStateChanged
+export class About extends React.Component<IAboutProps> {
+  private get canCheckForUpdates() {
+    return (
+      __RELEASE_CHANNEL__ !== 'development' ||
+      this.props.allowDevelopment === true
     )
-    this.setState({ updateState: updateStore.state })
-  }
-
-  public componentWillUnmount() {
-    if (this.updateStoreEventHandle) {
-      this.updateStoreEventHandle.dispose()
-      this.updateStoreEventHandle = null
-    }
-  }
-
-  private onQuitAndInstall = () => {
-    updateStore.quitAndInstallUpdate()
   }
 
   private renderUpdateButton() {
-    if (__RELEASE_CHANNEL__ === 'development') {
+    if (!this.canCheckForUpdates) {
       return null
     }
 
-    const updateStatus = this.state.updateState.status
+    const updateStatus = this.props.updateState.status
 
     switch (updateStatus) {
       case UpdateStatus.UpdateReady:
         return (
           <Row>
-            <Button onClick={this.onQuitAndInstall}>
+            <Button onClick={this.props.onQuitAndInstall}>
               {t('about.quit-and-install-update', 'Quit and Install Update')}
             </Button>
           </Row>
@@ -144,90 +144,84 @@ export class About extends React.Component<IAboutProps, IAboutState> {
     }
   }
 
-  private renderCheckingForUpdate() {
-    return (
-      <Row className="update-status">
-        <Loading />
-        <span>{t('about.checking-for-updates', 'Checking for updates…')}</span>
-      </Row>
-    )
-  }
-
-  private renderUpdateAvailable() {
-    return (
-      <Row className="update-status">
-        <Loading />
-        <span>{t('about.downloading-updates', 'Downloading update…')}</span>
-      </Row>
-    )
-  }
-
-  private renderUpdateNotAvailable() {
-    if (__LINUX__) {
-      return null
-    }
-    const lastCheckedDate = this.state.updateState.lastSuccessfulCheck
-
-    // This case is rendered as an error
-    if (!lastCheckedDate) {
-      return null
-    }
-
-    return (
-      <p className="update-status">
-        {t(
-          'about.you-have-the-latest-version-1',
-          `You have the latest version (last checked `
-        )}
-        <RelativeTime date={lastCheckedDate} />
-        {t('about.you-have-the-latest-version-2', ')')}
-      </p>
-    )
-  }
-
-  private renderUpdateReady() {
-    return (
-      <p className="update-status">
-        {t(
-          'about.update-has-been-downloaded-and-is-ready',
-          'An update has been downloaded and is ready to be installed.'
-        )}
-      </p>
-    )
-  }
-
   private renderUpdateDetails() {
     if (__LINUX__) {
       return null
     }
 
-    if (__RELEASE_CHANNEL__ === 'development') {
+    if (!this.canCheckForUpdates) {
       return (
         <p>
-          The application is currently running in development and will not
-          receive any updates.
+          {t(
+            'about.application-is-currently-running',
+            `The application is currently running in development and will not
+            receive any updates.`
+          )}
         </p>
       )
     }
 
-    const updateState = this.state.updateState
+    const { status, lastSuccessfulCheck } = this.props.updateState
 
-    switch (updateState.status) {
+    switch (status) {
       case UpdateStatus.CheckingForUpdates:
-        return this.renderCheckingForUpdate()
+        return (
+          <UpdateInfo
+            message={t('about.checking-for-updates', 'Checking for updates…')}
+            loading={true}
+          />
+        )
       case UpdateStatus.UpdateAvailable:
-        return this.renderUpdateAvailable()
+        return (
+          <UpdateInfo
+            message={t('about.downloading-updates', 'Downloading update…')}
+            loading={true}
+          />
+        )
       case UpdateStatus.UpdateNotAvailable:
-        return this.renderUpdateNotAvailable()
+        if (!lastSuccessfulCheck) {
+          return null
+        }
+
+        const richMessage = (
+          <>
+            {t(
+              'about.you-have-the-latest-version-1',
+              `You have the latest version (last checked `
+            )}
+            <RelativeTime date={lastSuccessfulCheck} />
+            {t('about.you-have-the-latest-version-2', ')')}
+          </>
+        )
+
+        const absoluteDate = formatDate(lastSuccessfulCheck, {
+          dateStyle: 'full',
+          timeStyle: 'short',
+        })
+
+        return (
+          <UpdateInfo
+            message={t(
+              'about.you-have-the-latest-version',
+              `You have the latest version (last checked {{0}})`,
+              { 0: absoluteDate }
+            )}
+            richMessage={richMessage}
+          />
+        )
       case UpdateStatus.UpdateReady:
-        return this.renderUpdateReady()
+        return (
+          <UpdateInfo
+            message={t(
+              'about.update-has-been-downloaded-and-is-ready',
+              'An update has been downloaded and is ready to be installed.'
+            )}
+          />
+        )
       case UpdateStatus.UpdateNotChecked:
         return null
       default:
-        return assertNever(
-          updateState.status,
-          `Unknown update status ${updateState.status}`
-        )
+        return assertNever(status, `Unknown update status ${status}`)
     }
   }
 
@@ -236,7 +230,7 @@ export class About extends React.Component<IAboutProps, IAboutState> {
       return null
     }
 
-    if (__RELEASE_CHANNEL__ === 'development') {
+    if (!this.canCheckForUpdates) {
       return null
     }
 
@@ -263,7 +257,7 @@ export class About extends React.Component<IAboutProps, IAboutState> {
       )
     }
 
-    if (!this.state.updateState.lastSuccessfulCheck) {
+    if (!this.props.updateState.lastSuccessfulCheck) {
       return (
         <DialogError>
           {t(

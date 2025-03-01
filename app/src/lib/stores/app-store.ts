@@ -11,7 +11,7 @@ import {
   SignInStore,
   UpstreamRemoteName,
 } from '.'
-import { Account } from '../../models/account'
+import { Account, isDotComAccount } from '../../models/account'
 import { AppMenu, IMenu } from '../../models/app-menu'
 import { Author } from '../../models/author'
 import { Branch, BranchType, IAheadBehind } from '../../models/branch'
@@ -95,7 +95,6 @@ import {
 import {
   API,
   getAccountForEndpoint,
-  getDotComAPIEndpoint,
   IAPIOrganization,
   getEndpointForRepository,
   IAPIFullRepository,
@@ -343,6 +342,7 @@ import {
   ICustomIntegration,
   migratedCustomIntegration,
 } from '../custom-integration'
+import { updateStore } from '../../ui/lib/update-store'
 
 const LastSelectedRepositoryIDKey = 'last-selected-repository-id'
 
@@ -915,6 +915,10 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
     this.apiRepositoriesStore.onDidUpdate(() => this.emitUpdate())
     this.apiRepositoriesStore.onDidError(error => this.emitError(error))
+
+    // updateStore is a global, App.tsx handles most of it but we carry the
+    // UpdateState in the AppState so we need to emit whenever it updates.
+    updateStore.onDidChange(() => this.emitUpdate())
   }
 
   /** Load the emoji from disk. */
@@ -1090,6 +1094,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
       underlineLinks: this.underlineLinks,
       showDiffCheckMarks: this.showDiffCheckMarks,
       canFilterChanges: this.canFilterChanges,
+      updateState: updateStore.state,
     }
   }
 
@@ -3351,7 +3356,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
     const account = getAccountForRepository(this.accounts, repository)
     if (repository.gitHubRepository !== null) {
       if (account !== null) {
-        if (account.endpoint === getDotComAPIEndpoint()) {
+        if (isDotComAccount(account)) {
           this.statsStore.increment('dotcomCommits')
         } else {
           this.statsStore.increment('enterpriseCommits')

@@ -1,6 +1,7 @@
 {
   "about": {
     "about-name": "About {{0}}",
+    "application-is-currently-running": "The application is currently running in development and will not receive any updates.",
     "build": "Build {{0}}",
     "check-for-updates": "Check for Updates",
     "check-out-the-beta-channel-1": "Check out the ",
@@ -18,6 +19,7 @@
     "terms-and-conditions": "Terms and Conditions",
     "update-has-been-downloaded-and-is-ready": "An update has been downloaded and is ready to be installed.",
     "version": "Version {{0}}",
+    "you-have-the-latest-version": "You have the latest version (last checked {{0}})",
     "you-have-the-latest-version-1": "You have the latest version (last checked ",
     "you-have-the-latest-version-2": ")"
   },
@@ -355,7 +357,8 @@
     "commit-count-files": "{{0}} {{1}} ",
     "commit-description": "Commit description",
     "commit-summaries-length-over": "Great commit summaries contain fewer than 50 characters",
-    "commit-title2": "{{0}} {{2}} to {{1}}",
+    "commit-title-1": "{{0}} {{1}}to ",
+    "commit-title-2": " ",
     "committing": "Committing",
     "committing-changes": "Committing changes…",
     "description-field": "Description",
@@ -391,7 +394,9 @@
     "update-email-1": "The email in your global Git config (",
     "update-email-darwin": "Update Email",
     "you-can-also-choose-an-email-1": "You can also choose an email local to this repository from the ",
-    "you-can-also-choose-an-email-2": "."
+    "you-can-also-choose-an-email-2": ".",
+    "you-can-choose-an-email-1": "You can choose an email local to this repository from the ",
+    "you-can-choose-an-email-2": "."
   },
   "commit-summary": {
     "collapse": "Collapse",
@@ -1115,6 +1120,9 @@
     "checking-for-ability": "Checking for ability to merge automatically...",
     "file": "file",
     "files": "files",
+    "is-already-up-to-date-with-1": " ",
+    "is-already-up-to-date-with-2": " This branch is up to date with ",
+    "is-already-up-to-date-with-3": " ",
     "merge-into-1": "{{0}}Merge into ",
     "merge-into-2": " ",
     "number-commit": "{{0}} {{1}}",
@@ -1124,8 +1132,6 @@
     "there-will-be-number-conflicted-2": " when merging ",
     "there-will-be-number-conflicted-3": " into ",
     "there-will-be-number-conflicted-4": " ",
-    "this-branch-is-up-to-date-with-1": "This branch is up to date with ",
-    "this-branch-is-up-to-date-with-2": " ",
     "this-will-merge-1": "This will merge ",
     "this-will-merge-2": " from ",
     "this-will-merge-3": " into ",
@@ -1429,13 +1435,15 @@
     "warning-title": "Warning:"
   },
   "rebase-choose-branch-dialog": {
+    "branch-is-already-up-to-date": "The current branch is already up to date with the selected branch.",
     "checking-for-ability-to-rebase": "Checking for ability to rebase automatically…",
     "number-commit": " {{0}} {{1}}",
     "rebase-1": "Rebase ",
     "rebase-2": " ",
-    "there-are-no-commits": "There are no commits on the current branch to rebase.",
-    "this-branch-is-up-to-date-with-1": "This branch is up to date with ",
-    "this-branch-is-up-to-date-with-2": " ",
+    "this-will-fast-forward-1": "This will fast-forward ",
+    "this-will-fast-forward-2": " by ",
+    "this-will-fast-forward-3": " to match ",
+    "this-will-fast-forward-4": " ",
     "this-will-update-1": "This will update ",
     "this-will-update-2": " by applying its ",
     "this-will-update-3": " on top of ",
