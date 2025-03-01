@@ -1,6 +1,5 @@
 import * as URL from 'url'
-import { Account } from '../models/account'
-import { getDotComAPIEndpoint } from './api'
+import { Account, isDotComAccount } from '../models/account'
 
 /**
  * Generate a human-friendly description of the Account endpoint.
@@ -10,7 +9,7 @@ import { getDotComAPIEndpoint } from './api'
  * hostname without the protocol and/or path.
  */
 export function friendlyEndpointName(account: Account) {
-  return account.endpoint === getDotComAPIEndpoint()
+  return isDotComAccount(account)
     ? 'GitHub.com'
     : URL.parse(account.endpoint).hostname || account.endpoint
 }

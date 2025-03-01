@@ -1,7 +1,6 @@
 import * as React from 'react'
-import { Account } from '../../models/account'
+import { Account, isDotComAccount } from '../../models/account'
 import { LinkButton } from './link-button'
-import { getDotComAPIEndpoint } from '../../lib/api'
 import { isAttributableEmailFor } from '../../lib/email'
 import { t } from 'i18next'
 import { Octicon } from '../octicons'
@@ -104,10 +103,9 @@ export class GitEmailNotFoundWarning extends React.Component<IGitEmailNotFoundWa
 
   private getAccountTypeDescription() {
     if (this.props.accounts.length === 1) {
-      const accountType =
-        this.props.accounts[0].endpoint === getDotComAPIEndpoint()
-          ? 'GitHub'
-          : 'GitHub Enterprise'
+      const accountType = isDotComAccount(this.props.accounts[0])
+        ? 'GitHub'
+        : 'GitHub Enterprise'
 
       return t(
         'git-email-not-found-warning.your-account',
