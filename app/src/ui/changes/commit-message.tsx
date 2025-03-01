@@ -23,7 +23,7 @@ import { CommitWarning, CommitWarningIcon } from './commit-warning'
 import { LinkButton } from '../lib/link-button'
 import { Foldout, FoldoutType } from '../../lib/app-state'
 import { IAvatarUser, getAvatarUserFromAuthor } from '../../models/avatar'
-import { showContextualMenu } from '../../lib/menu-item'
+import { showContextualMenu, getEditMenuItemOfReact } from '../../lib/menu-item'
 import { Account, isEnterpriseAccount } from '../../models/account'
 import {
   CommitMessageAvatar,
@@ -1207,7 +1207,11 @@ export class CommitMessage extends React.Component<
      * as three separate strings "Verb" and "Count" and "to" and even tho
      * visually it was correctly adding spacings, for screen reader users it was
      * not and putting them all to together as one word. */
-    const action = t('commit-message.commit-title', `{{0}} {{1}}to `, {
+    const action = t('commit-message.commit-title-1', `{{0}} {{1}}to `, {
+      0: verb,
+      1: this.getFilesToBeCommittedButtonText(),
+    })
+    const action2 = t('commit-message.commit-title-2', ` `, {
       0: verb,
       1: this.getFilesToBeCommittedButtonText(),
     })
@@ -1216,6 +1220,7 @@ export class CommitMessage extends React.Component<
       <>
         {action}
         <strong>{branch}</strong>
+        {action2}
       </>
     )
   }
