@@ -1,5 +1,9 @@
 {
   "releases": {
+    "3.4.18-beta1": [
+      "[Fixed] Fix: inconsistent rebase behaviour - #19816. Thanks @sfadschm!",
+      "[Fixed] Pressing Ctrl+A in the Find dialog now selects the search text instead of the diff content - #20049"
+    ],
     "3.4.17": [
       "[Fixed] Dialogs announce their titles on macOS Sequoia for VoiceOver users - #20009",
       "[Fixed] The commit button words are separated by spaces for screen reader users - #20011",
