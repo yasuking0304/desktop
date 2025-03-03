@@ -2106,7 +2106,7 @@ export class API {
       return JSON.parse(message)
     } catch (e) {
       log.warn(
-        `getDiffChangesCommitDetails: failed with endpoint ${this.endpoint}`,
+        `getDiffChangesCommitMessage: failed with endpoint ${this.endpoint}`,
         e
       )
       throw e
