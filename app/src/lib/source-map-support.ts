@@ -106,9 +106,20 @@ export function enableSourceMaps() {
  * perform the source mapping, it'll use the original error stack.
  */
 export function withSourceMappedStack(error: Error): Error {
+  // Guard against `throw "Foo"` which is totally a thing that can happen
+  if (typeof error === 'string') {
+    return {
+      name: 'StringError',
+      message: error,
+    }
+  }
+
   return {
     name: error.name,
-    message: error.message,
+    message:
+      typeof error.message === 'string'
+        ? error.message
+        : JSON.stringify(error.message),
     stack: sourceMappedStackTrace(error),
   }
 }
