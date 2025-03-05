@@ -28,8 +28,11 @@ export type RepositoryListGroup =
       host: string
     }
 
-// Unique grouping key for a repository group. Doubles as a case sensitive
-// sorting key
+/**
+ * Returns a unique grouping key (string) for a repository group. Doubles as a
+ * case sensitive sorting key (i.e the case sensitive sort order of the keys is
+ * the order in which the groups will be displayed in the repository list).
+ */
 export const getGroupKey = (group: RepositoryListGroup) => {
   const { kind } = group
   switch (kind) {
