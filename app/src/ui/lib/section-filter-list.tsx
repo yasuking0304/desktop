@@ -131,6 +131,9 @@ interface ISectionFilterListProps<T extends IFilterListItem, GroupIdentifier> {
   /** Any props which should cause a re-render if they change. */
   readonly invalidationProps: any
 
+  /** Called to render content before the filter. */
+  readonly renderPreFilter?: () => JSX.Element | null
+
   /** Called to render content after the filter. */
   readonly renderPostFilter?: () => JSX.Element | null
 
@@ -296,8 +299,9 @@ export class SectionFilterList<
 
     return (
       <Row className="filter-field-row">
+        {this.props.renderPreFilter?.()}
         {this.props.filterTextBox === undefined ? this.renderTextBox() : null}
-        {this.props.renderPostFilter ? this.props.renderPostFilter() : null}
+        {this.props.renderPostFilter?.()}
       </Row>
     )
   }
