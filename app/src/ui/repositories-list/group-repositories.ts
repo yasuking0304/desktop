@@ -107,12 +107,10 @@ export function groupRepositories(
 
   return Array.from(groups)
     .sort(([xKey], [yKey]) => compare(xKey, yKey))
-    .map<IFilterListGroup<IRepositoryListItem, RepositoryListGroup>>(
-      ([_, { group, repos }]) => ({
-        identifier: group,
-        items: toSortedListItems(group, repos, localRepositoryStateLookup),
-      })
-    )
+    .map(([, { group, repos }]) => ({
+      identifier: group,
+      items: toSortedListItems(group, repos, localRepositoryStateLookup),
+    }))
 }
 
 const toSortedListItems = (
