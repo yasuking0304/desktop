@@ -30,7 +30,6 @@ import { showOpenDialog, showSaveDialog } from '../main-process-proxy'
 import { readdir } from 'fs/promises'
 import { isTopMostDialog } from '../dialog/is-top-most'
 import memoizeOne from 'memoize-one'
-import { enableMultipleEnterpriseAccounts } from '../../lib/feature-flag'
 
 interface ICloneRepositoryProps {
   readonly dispatcher: Dispatcher
@@ -174,7 +173,7 @@ export class CloneRepository extends React.Component<
 
   private getAccountsForTab = memoizeOne(
     (tab: CloneRepositoryTab, accounts: ReadonlyArray<Account>) =>
-      tab === CloneRepositoryTab.DotCom || !enableMultipleEnterpriseAccounts()
+      tab === CloneRepositoryTab.DotCom
         ? accounts.filter(isDotComAccount)
         : accounts.filter(isEnterpriseAccount)
   )
