@@ -185,13 +185,16 @@ const sendErrorWithContext = (
 }
 
 const onUncaughtException = (error: unknown) => {
+  // This is a known issue with the ResizeObserver API in Chromium 132 which is
+  // fixed in 133 that we can safely ignore.
+  // See: https://issues.chromium.org/issues/391393420
   if (
-    (error as any) ===
-    'ResizeObserver loop completed with undelivered notifications.'
+    error === 'ResizeObserver loop completed with undelivered notifications.'
   ) {
-    // This is a known issue with the ResizeObserver API in Chromium
-    // 132 which is fixed in 133 that we can safely ignore.
-    // See https://issues.chromium.org/issues/391393420
+    sendNonFatalException(
+      'resizeObserverLoopCompleted',
+      withSourceMappedStack(error)
+    )
     return
   }
 
