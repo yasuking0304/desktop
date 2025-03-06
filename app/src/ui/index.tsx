@@ -184,12 +184,19 @@ const sendErrorWithContext = (
   }
 }
 
+const resizeLoopCompletedMessage =
+  'ResizeObserver loop completed with undelivered notifications.'
+
 const onUncaughtException = (error: unknown) => {
   // This is a known issue with the ResizeObserver API in Chromium 132 which is
   // fixed in 133 that we can safely ignore.
   // See: https://issues.chromium.org/issues/391393420
   if (
-    error === 'ResizeObserver loop completed with undelivered notifications.'
+    error === resizeLoopCompletedMessage ||
+    (error &&
+      typeof error === 'object' &&
+      'message' in error &&
+      error.message === resizeLoopCompletedMessage)
   ) {
     sendNonFatalException(
       'resizeObserverLoopCompleted',
