@@ -184,10 +184,28 @@ const sendErrorWithContext = (
   }
 }
 
-process.once('uncaughtException', (error: Error) => {
+const onUncaughtException = (error: Error) => {
+  if (
+    (error as any) ===
+    'ResizeObserver loop completed with undelivered notifications.'
+  ) {
+    // This is a known issue with the ResizeObserver API in Chromium
+    // 132 which is fixed in 133 that we can safely ignore.
+    // See https://issues.chromium.org/issues/391393420
+    return
+  }
+
   sendErrorWithContext(error)
   reportUncaughtException(error)
-})
+
+  // We used to subscribe to uncaughtException using process.once but we want
+  // to be able to ignore the resize observer error above so we need to
+  // unsubscribe manually once we encounter an error we actually want to crash
+  // the app for.
+  process.off('uncaughtException', onUncaughtException)
+}
+
+process.on('uncaughtException', onUncaughtException)
 
 // See sendNonFatalException for more information
 process.on(
