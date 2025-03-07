@@ -2,12 +2,19 @@
 
 .popover-dropdown-component {
   display: inline-flex;
+  flex-direction: column;
+  min-width: 0;
+
+  > label {
+    margin-bottom: var(--spacing-third);
+  }
 
   .button-component {
     display: flex;
     align-items: center;
     flex-grow: 1;
-    padding-right: var(--spacing-half);
+    padding: 0 var(--spacing-half);
+    align-self: unset;
   }
 
   .button-content {

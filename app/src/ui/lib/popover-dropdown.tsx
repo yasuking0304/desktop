@@ -12,6 +12,7 @@ interface IPopoverDropdownProps {
   readonly className?: string
   readonly contentTitle: string
   readonly buttonContent: JSX.Element | string
+  readonly label?: string
 }
 
 interface IPopoverDropdownState {
@@ -28,6 +29,7 @@ export class PopoverDropdown extends React.Component<
 > {
   private invokeButtonRef: HTMLButtonElement | null = null
   private dropdownHeaderId: string | undefined = undefined
+  private openButtonId: string | undefined = undefined
 
   public constructor(props: IPopoverDropdownProps) {
     super(props)
@@ -93,14 +95,17 @@ export class PopoverDropdown extends React.Component<
   }
 
   public render() {
-    const { className, buttonContent } = this.props
+    const { className, buttonContent, label } = this.props
     const cn = classNames('popover-dropdown-component', className)
+    this.openButtonId ??= createUniqueId('popover-open-button')
 
     return (
       <div className={cn}>
+        {label && <label htmlFor={this.openButtonId}>{label}</label>}
         <Button
           onClick={this.togglePopover}
           onButtonRef={this.onInvokeButtonRef}
+          id={this.openButtonId}
         >
           <div className="button-content">{buttonContent}</div>
           <Octicon symbol={octicons.triangleDown} />

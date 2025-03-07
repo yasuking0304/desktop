@@ -171,6 +171,7 @@ export class AccountPicker extends React.Component<
             </span>
           </div>
         }
+        label="Account"
         ref={this.popoverRef}
       >
         <SectionFilterList<IAccountListItem>
