@@ -1,5 +1,8 @@
 {
   "releases": {
+    "3.4.18-beta2": [
+      "[Fixed] Prevent crash due to non-critical error - #20150"
+    ],
     "3.4.18-beta1": [
       "[Fixed] Fix: inconsistent rebase behaviour - #19816. Thanks @sfadschm!",
       "[Fixed] Pressing Ctrl+A in the Find dialog now selects the search text instead of the diff content - #20049"
