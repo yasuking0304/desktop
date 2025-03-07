@@ -3,14 +3,24 @@
 .popover-dropdown-component {
   display: inline-flex;
 
-  .button-content,
-  .popover-dropdown-button-label {
+  .button-component {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    padding-right: var(--spacing-half);
+  }
+
+  .button-content {
+    flex-grow: 1;
     font-weight: var(--font-weight-semibold);
+    display: flex;
+    justify-content: flex-start;
   }
 
   .popover-dropdown-button-label {
     color: var(--text-secondary-color);
-    margin: 0 var(--spacing-half);
+    margin: 0;
+    margin-right: var(--spacing-half);
   }
 
   .popover-dropdown-popover {

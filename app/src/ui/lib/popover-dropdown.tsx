@@ -11,7 +11,7 @@ interface IPopoverDropdownProps {
   readonly className?: string
   readonly contentTitle: string
   readonly buttonContent: JSX.Element | string
-  readonly label: string
+  readonly label?: string
 }
 
 interface IPopoverDropdownState {
@@ -93,8 +93,12 @@ export class PopoverDropdown extends React.Component<
           onClick={this.togglePopover}
           onButtonRef={this.onInvokeButtonRef}
         >
-          <span className="popover-dropdown-button-label">{label}</span>
-          <span className="button-content">{buttonContent}</span>
+          <div className="button-content">
+            {label && (
+              <span className="popover-dropdown-button-label">{label}</span>
+            )}
+            {buttonContent}
+          </div>
           <Octicon symbol={octicons.triangleDown} />
         </Button>
         {this.renderPopover()}
