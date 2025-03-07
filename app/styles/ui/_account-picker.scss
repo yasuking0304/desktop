@@ -6,12 +6,9 @@
     // The rows have built-in margin to their content so
     // we only need half a spacer here
     margin-bottom: var(--spacing-half);
-  }
-
-  .list-item.selected:focus {
-    .ci-status {
-      color: inherit;
-    }
+    margin-top: var(--spacing);
+    margin-left: var(--spacing);
+    margin-right: var(--spacing);
   }
 
   .account-list-item {
