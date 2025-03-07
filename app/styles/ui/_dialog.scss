@@ -546,7 +546,13 @@ dialog {
     width: 600px;
 
     .dialog-content {
-      min-height: 410px;
+      $default-tab-height: 430px;
+      min-height: $default-tab-height;
+
+      &.accounts-tab {
+        max-height: $default-tab-height;
+        overflow: auto;
+      }
     }
   }
 
