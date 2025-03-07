@@ -76,6 +76,8 @@ interface ICloneableRepositoryFilterListProps {
     repository: IAPIRepository,
     source: ClickSource
   ) => void
+
+  readonly renderPreFilter?: () => JSX.Element | null
 }
 
 const RowHeight = 31
@@ -184,6 +186,7 @@ export class CloneableRepositoryFilterList extends React.PureComponent<ICloneabl
         onFilterTextChanged={this.props.onFilterTextChanged}
         renderNoItems={this.renderNoItems}
         renderPostFilter={this.renderPostFilter}
+        renderPreFilter={this.props.renderPreFilter}
         onItemClick={this.props.onItemClicked ? this.onItemClick : undefined}
         placeholderText={'Filter your repositories'}
         getGroupAriaLabel={this.getGroupAriaLabelGetter(groups)}

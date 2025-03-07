@@ -87,19 +87,19 @@ interface ICloneGithubRepositoryProps {
 }
 
 export class CloneGithubRepository extends React.PureComponent<ICloneGithubRepositoryProps> {
+  private renderAccountPicker = () => {
+    return (
+      <AccountPicker
+        accounts={this.props.accounts}
+        selectedAccount={this.props.account}
+        onSelectedAccountChanged={this.props.onSelectedAccountChanged}
+      />
+    )
+  }
+
   public render() {
     return (
       <DialogContent className="clone-github-repository-content">
-        <Row>
-          {enableMultipleEnterpriseAccounts() &&
-            this.props.accounts.length > 1 && (
-              <AccountPicker
-                accounts={this.props.accounts}
-                selectedAccount={this.props.account}
-                onSelectedAccountChanged={this.props.onSelectedAccountChanged}
-              />
-            )}
-        </Row>
         <Row>
           <CloneableRepositoryFilterList
             account={this.props.account}
@@ -111,6 +111,12 @@ export class CloneGithubRepository extends React.PureComponent<ICloneGithubRepos
             onFilterTextChanged={this.props.onFilterTextChanged}
             onRefreshRepositories={this.props.onRefreshRepositories}
             onItemClicked={this.props.onItemClicked}
+            renderPreFilter={
+              enableMultipleEnterpriseAccounts() &&
+              this.props.accounts.length > 1
+                ? this.renderAccountPicker
+                : undefined
+            }
           />
         </Row>
 
