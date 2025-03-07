@@ -13,6 +13,12 @@ interface IPopoverDropdownProps {
   readonly contentTitle: string
   readonly buttonContent: JSX.Element | string
   readonly label?: string
+  /**
+   * The class name to apply to the open button. This is useful for
+   * applying the dialog-preferred-focus class to the button when it
+   * should receive focus ahead of a dialog's default focus target
+   */
+  readonly openButtonClassName?: string
 }
 
 interface IPopoverDropdownState {
@@ -106,6 +112,7 @@ export class PopoverDropdown extends React.Component<
           onClick={this.togglePopover}
           onButtonRef={this.onInvokeButtonRef}
           id={this.openButtonId}
+          className={this.props.openButtonClassName}
         >
           <div className="button-content">{buttonContent}</div>
           <Octicon symbol={octicons.triangleDown} />

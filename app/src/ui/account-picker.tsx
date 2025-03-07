@@ -16,6 +16,13 @@ interface IAccountPickerProps {
   readonly accounts: ReadonlyArray<Account>
   readonly selectedAccount: Account
   readonly onSelectedAccountChanged: (account: Account) => void
+
+  /**
+   * The class name to apply to the open button. This is useful for
+   * applying the dialog-preferred-focus class to the button when it
+   * should receive focus ahead of a dialog's default focus target
+   */
+  readonly openButtonClassName?: string
 }
 
 interface IAccountPickerState {
@@ -173,6 +180,7 @@ export class AccountPicker extends React.Component<
         }
         label="Account"
         ref={this.popoverRef}
+        openButtonClassName={this.props.openButtonClassName}
       >
         <SectionFilterList<IAccountListItem>
           className="account-list"

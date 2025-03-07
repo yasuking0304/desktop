@@ -93,6 +93,7 @@ export class CloneGithubRepository extends React.PureComponent<ICloneGithubRepos
         accounts={this.props.accounts}
         selectedAccount={this.props.account}
         onSelectedAccountChanged={this.props.onSelectedAccountChanged}
+        openButtonClassName="dialog-preferred-focus"
       />
     )
   }
