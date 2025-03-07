@@ -70,10 +70,17 @@ export class Account {
     return this.name !== '' ? this.name : this.login
   }
 
+  /**
+   * Get a human-friendly description of the Account endpoint.
+   *
+   * Accounts on GitHub.com will return the string 'GitHub.com'
+   * whereas GitHub Enterprise accounts will return the
+   * hostname without the protocol and/or path.
+   */
   public get friendlyEndpoint(): string {
-    return (this._friendlyEndpoint ??= new URL(
-      getHTMLURL(this.endpoint)
-    ).hostname)
+    return (this._friendlyEndpoint ??= isDotComAccount(this)
+      ? 'GitHub.com'
+      : new URL(getHTMLURL(this.endpoint)).hostname)
   }
 }
 
