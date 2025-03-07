@@ -163,6 +163,9 @@ export class AccountPicker extends React.Component<
     this.setState({ selectedItem })
   }
 
+  private getItemAriaLabel = (item: IAccountListItem) =>
+    `@${item.account.login} ${item.account.friendlyEndpoint}`
+
   public render() {
     const account = this.props.selectedAccount
 
@@ -193,6 +196,7 @@ export class AccountPicker extends React.Component<
           invalidationProps={this.props.accounts}
           onItemClick={this.onItemClick}
           onSelectionChanged={this.onSelectionChanged}
+          getItemAriaLabel={this.getItemAriaLabel}
         />
       </PopoverDropdown>
     )
