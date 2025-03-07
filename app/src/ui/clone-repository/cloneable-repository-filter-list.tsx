@@ -1,7 +1,7 @@
 import * as React from 'react'
-import { Account, isDotComAccount } from '../../models/account'
+import { Account } from '../../models/account'
 import { IFilterListGroup } from '../lib/filter-list'
-import { IAPIRepository, getHTMLURL } from '../../lib/api'
+import { IAPIRepository } from '../../lib/api'
 import {
   ICloneableRepositoryListItem,
   groupRepositories,
@@ -277,13 +277,10 @@ export class CloneableRepositoryFilterList extends React.PureComponent<ICloneabl
 
   private renderNoItems = () => {
     const { loading, repositories, account } = this.props
-    const endpointName = isDotComAccount(account)
-      ? 'GitHub.com'
-      : getHTMLURL(this.props.account.endpoint)
 
     if (loading && (repositories === null || repositories.length === 0)) {
       return (
-        <div className="no-items loading">{`Loading repositories from ${endpointName}…`}</div>
+        <div className="no-items loading">{`Loading repositories from ${account.friendlyEndpoint}…`}</div>
       )
     }
 
@@ -302,7 +299,7 @@ export class CloneableRepositoryFilterList extends React.PureComponent<ICloneabl
       <div className="no-items empty-repository-list">
         <div>
           Looks like there are no repositories for{' '}
-          <Ref>{this.props.account.login}</Ref> on {endpointName}.{' '}
+          <Ref>{this.props.account.login}</Ref> on {account.friendlyEndpoint}.{' '}
           <LinkButton onClick={this.refreshRepositories}>
             Refresh this list
           </LinkButton>{' '}
