@@ -57,6 +57,18 @@
   &.clone-github-repository-content {
     padding: 0;
     padding-top: var(--spacing-double);
+
+    .account-picker-row {
+      margin: 0 var(--spacing-double);
+      padding-bottom: var(--spacing);
+
+      .popover-dropdown-component {
+        &,
+        .button-component {
+          width: 100%;
+        }
+      }
+    }
   }
 
   &.clone-generic-repository-content {
