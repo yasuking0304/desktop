@@ -1,3 +1,5 @@
+@import '../mixins';
+
 .popover-dropdown-component {
   display: inline-flex;
 
@@ -35,6 +37,7 @@
         font-size: var(--font-size);
       }
 
+      @include close-button;
       .close {
         margin-right: 0;
       }
