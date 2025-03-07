@@ -5,11 +5,11 @@ import { DialogContent } from '../dialog'
 import { TextBox } from '../lib/text-box'
 import { Row } from '../lib/row'
 import { Button } from '../lib/button'
-import { getHTMLURL, IAPIRepository } from '../../lib/api'
+import { IAPIRepository } from '../../lib/api'
 import { CloneableRepositoryFilterList } from './cloneable-repository-filter-list'
 import { ClickSource } from '../lib/list'
 import { enableMultipleEnterpriseAccounts } from '../../lib/feature-flag'
-import { Select } from '../lib/select'
+import { AccountPicker } from '../account-picker'
 
 interface ICloneGithubRepositoryProps {
   /** The account to clone from. */
@@ -87,36 +87,17 @@ interface ICloneGithubRepositoryProps {
 }
 
 export class CloneGithubRepository extends React.PureComponent<ICloneGithubRepositoryProps> {
-  private onSelectedAccountChanged = (
-    event: React.FormEvent<HTMLSelectElement>
-  ) => {
-    const accountEndpoint = event.currentTarget.value
-    const account = this.props.accounts.find(
-      a => a.endpoint === accountEndpoint
-    )
-
-    if (account) {
-      this.props.onSelectedAccountChanged(account)
-    }
-  }
-
   public render() {
     return (
       <DialogContent className="clone-github-repository-content">
         <Row>
           {enableMultipleEnterpriseAccounts() &&
             this.props.accounts.length > 1 && (
-              <Select
-                label="Account"
-                className="accounts"
-                onChange={this.onSelectedAccountChanged}
-              >
-                {this.props.accounts.map(account => (
-                  <option key={account.endpoint} value={account.endpoint}>
-                    {account.login}@{new URL(getHTMLURL(account.endpoint)).host}
-                  </option>
-                ))}
-              </Select>
+              <AccountPicker
+                accounts={this.props.accounts}
+                selectedAccount={this.props.account}
+                onSelectedAccountChanged={this.props.onSelectedAccountChanged}
+              />
             )}
         </Row>
         <Row>
