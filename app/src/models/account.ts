@@ -1,4 +1,4 @@
-import { getDotComAPIEndpoint, IAPIEmail } from '../lib/api'
+import { getDotComAPIEndpoint, getHTMLURL, IAPIEmail } from '../lib/api'
 
 /**
  * Returns a value indicating whether two account instances
@@ -22,6 +22,8 @@ export class Account {
   public static anonymous(): Account {
     return new Account('', getDotComAPIEndpoint(), '', [], '', -1, '', 'free')
   }
+
+  private _friendlyEndpoint: string | undefined = undefined
 
   /**
    * Create an instance of an account
@@ -66,6 +68,12 @@ export class Account {
    */
   public get friendlyName(): string {
     return this.name !== '' ? this.name : this.login
+  }
+
+  public get friendlyEndpoint(): string {
+    return (this._friendlyEndpoint ??= new URL(
+      getHTMLURL(this.endpoint)
+    ).hostname)
   }
 }
 

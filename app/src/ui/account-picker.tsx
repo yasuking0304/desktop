@@ -11,7 +11,6 @@ import { IMatches } from '../lib/fuzzy-find'
 import { Avatar } from './lib/avatar'
 import { lookupPreferredEmail } from '../lib/email'
 import { IAvatarUser } from '../models/avatar'
-import { getHTMLURL } from '../lib/api'
 
 interface IAccountPickerProps {
   readonly accounts: ReadonlyArray<Account>
@@ -130,9 +129,7 @@ export class AccountPicker extends React.Component<
         <Avatar accounts={this.props.accounts} user={avatarUser} />
         <div className="info">
           <div className="title">@{item.account.login}</div>
-          <div className="subtitle">
-            {new URL(getHTMLURL(item.account.endpoint)).host}
-          </div>
+          <div className="subtitle">{item.account.friendlyEndpoint}</div>
         </div>
       </div>
     )
@@ -157,8 +154,13 @@ export class AccountPicker extends React.Component<
     return (
       <PopoverDropdown
         contentTitle="Choose an account"
-        buttonContent={this.props.selectedAccount.login}
-        label="account:"
+        buttonContent={
+          <>
+            {this.props.selectedAccount.friendlyEndpoint} - @
+            {this.props.selectedAccount.login}
+          </>
+        }
+        label="account: "
         ref={this.popoverRef}
       >
         <SectionFilterList<IAccountListItem>
