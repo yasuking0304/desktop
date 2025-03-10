@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { PopoverDropdown } from './lib/popover-dropdown'
-import { Account, accountEquals, isDotComAccount } from '../models/account'
+import { Account, accountEquals } from '../models/account'
 import { SectionFilterList } from './lib/section-filter-list'
 import {
   IFilterListGroup,
@@ -11,7 +11,6 @@ import { IMatches } from '../lib/fuzzy-find'
 import { Avatar } from './lib/avatar'
 import { lookupPreferredEmail } from '../lib/email'
 import { IAvatarUser } from '../models/avatar'
-import { compare, compareDescending } from '../lib/compare'
 import memoizeOne from 'memoize-one'
 
 interface IAccountPickerProps {
@@ -51,19 +50,11 @@ export class AccountPicker extends React.Component<
     (
       accounts: ReadonlyArray<Account>
     ): ReadonlyArray<IFilterListGroup<IAccountListItem>> => {
-      const items = accounts
-        .map(account => ({
-          text: [account.login, account.endpoint],
-          id: getItemId(account),
-          account,
-        }))
-        .sort(
-          (x, y) =>
-            compareDescending(
-              isDotComAccount(x.account),
-              isDotComAccount(y.account)
-            ) || compare(x.account.login, y.account.login)
-        )
+      const items = accounts.map(account => ({
+        text: [account.login, account.endpoint],
+        id: getItemId(account),
+        account,
+      }))
 
       return [
         {
