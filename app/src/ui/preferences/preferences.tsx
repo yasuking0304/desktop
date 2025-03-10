@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Account } from '../../models/account'
+import { Account, isDotComAccount } from '../../models/account'
 import { PreferencesTab } from '../../models/preferences'
 import { Dispatcher } from '../dispatcher'
 import { TabBar, TabBarType } from '../tab-bar'
@@ -50,8 +50,7 @@ import {
 
 interface IPreferencesProps {
   readonly dispatcher: Dispatcher
-  readonly dotComAccount: Account | null
-  readonly enterpriseAccount: Account | null
+  readonly accounts: ReadonlyArray<Account>
   readonly repository: Repository | null
   readonly onDismissed: () => void
   readonly useWindowsOpenSSH: boolean
@@ -206,7 +205,8 @@ export class Preferences extends React.Component<
     let committerEmail = initialCommitterEmail
 
     if (!committerName || !committerEmail) {
-      const account = this.props.dotComAccount || this.props.enterpriseAccount
+      const { accounts } = this.props
+      const account = accounts.find(isDotComAccount) ?? accounts.at(0)
 
       if (account) {
         if (!committerName) {
@@ -394,8 +394,7 @@ export class Preferences extends React.Component<
       case PreferencesTab.Accounts:
         View = (
           <Accounts
-            dotComAccount={this.props.dotComAccount}
-            enterpriseAccount={this.props.enterpriseAccount}
+            accounts={this.props.accounts}
             onDotComSignIn={this.onDotComSignIn}
             onEnterpriseSignIn={this.onEnterpriseSignIn}
             onLogout={this.onLogout}
@@ -442,9 +441,8 @@ export class Preferences extends React.Component<
             <Git
               name={this.state.committerName}
               email={this.state.committerEmail}
+              accounts={this.props.accounts}
               defaultBranch={this.state.defaultBranch}
-              dotComAccount={this.props.dotComAccount}
-              enterpriseAccount={this.props.enterpriseAccount}
               onNameChanged={this.onCommitterNameChanged}
               onEmailChanged={this.onCommitterEmailChanged}
               onDefaultBranchChanged={this.onDefaultBranchChanged}

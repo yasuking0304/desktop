@@ -63,6 +63,7 @@
         flex-grow: 1;
         align-self: flex-start;
 
+        .account-title,
         .name {
           font-weight: var(--font-weight-semibold);
           // Tighten it up a little so that the real name and

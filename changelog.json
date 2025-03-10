@@ -4,6 +4,13 @@
       "[Fixed] Prevent crash due to non-critical error - #20150",
       "[Fixed] Reinstate missing space in the About dialog last checked text - #20094. Thanks @alexravenna!"
     ],
+    "3.4.18-beta2": [
+      "[Fixed] Prevent crash due to non-critical error - #20150"
+    ],
+    "3.4.18-beta1": [
+      "[Fixed] Fix: inconsistent rebase behaviour - #19816. Thanks @sfadschm!",
+      "[Fixed] Pressing Ctrl+A in the Find dialog now selects the search text instead of the diff content - #20049"
+    ],
     "3.4.17": [
       "[Fixed] Dialogs announce their titles on macOS Sequoia for VoiceOver users - #20009",
       "[Fixed] The commit button words are separated by spaces for screen reader users - #20011",
