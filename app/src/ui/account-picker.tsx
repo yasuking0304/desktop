@@ -95,7 +95,7 @@ function createListItems(
 }
 
 /**
- * A branch select element for filter and selecting a branch.
+ * A select-like element for filter and selecting an account.
  */
 export class AccountPicker extends React.Component<
   IAccountPickerProps,
