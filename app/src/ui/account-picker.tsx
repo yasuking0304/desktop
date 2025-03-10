@@ -49,20 +49,16 @@ export class AccountPicker extends React.Component<
   private getFilterListGroups = memoizeOne(
     (
       accounts: ReadonlyArray<Account>
-    ): ReadonlyArray<IFilterListGroup<IAccountListItem>> => {
-      const items = accounts.map(account => ({
-        text: [account.login, account.endpoint],
-        id: getItemId(account),
-        account,
-      }))
-
-      return [
-        {
-          identifier: 'accounts',
-          items,
-        },
-      ]
-    }
+    ): ReadonlyArray<IFilterListGroup<IAccountListItem>> => [
+      {
+        identifier: 'accounts',
+        items: accounts.map(account => ({
+          text: [account.login, account.endpoint],
+          id: getItemId(account),
+          account,
+        })),
+      },
+    ]
   )
 
   private getSelectedItem = memoizeOne(
@@ -70,19 +66,16 @@ export class AccountPicker extends React.Component<
       accounts: ReadonlyArray<Account>,
       selectedItemId: string | undefined,
       selectedAccount: Account
-    ) => {
-      return (
-        this.getFilterListGroups(accounts)
-          .flatMap(x => x.items)
-          .find(x =>
-            // Prioritize selectedItemId (i.e. our own internal state) which
-            // gets reset when the selectedAccount props changes.
-            selectedItemId
-              ? x.id === selectedItemId
-              : accountEquals(x.account, selectedAccount)
-          ) ?? null
-      )
-    }
+    ) =>
+      this.getFilterListGroups(accounts)
+        .flatMap(x => x.items)
+        .find(x =>
+          // Prioritize selectedItemId (i.e. our own internal state) which
+          // gets reset when the selectedAccount props changes.
+          selectedItemId
+            ? x.id === selectedItemId
+            : accountEquals(x.account, selectedAccount)
+        ) ?? null
   )
 
   private popoverRef = React.createRef<PopoverDropdown>()
