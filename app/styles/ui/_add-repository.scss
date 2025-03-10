@@ -8,10 +8,14 @@
   }
 }
 
-.clone-github-repo {
-  height: calc(100vh - 400px);
-  max-height: 250px;
+dialog.clone-repository {
+  .clone-github-repo {
+    height: calc(100vh - 400px);
+    max-height: 250px;
+  }
+}
 
+.clone-github-repo {
   &.filter-list {
     max-width: 100%;
 
