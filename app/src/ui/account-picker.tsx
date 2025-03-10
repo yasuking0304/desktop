@@ -108,14 +108,16 @@ export class AccountPicker extends React.Component<
   }
 
   public componentWillReceiveProps(nextProps: IAccountPickerProps) {
-    const group = createListItems(nextProps.accounts)
-    const selectedItem = resolveSelectedItem(
-      group,
-      nextProps,
-      this.state.selectedItem
-    )
+    if (nextProps.accounts !== this.props.accounts) {
+      const group = createListItems(nextProps.accounts)
+      const selectedItem = resolveSelectedItem(
+        group,
+        nextProps,
+        this.state.selectedItem
+      )
 
-    this.setState({ groupedItems: [group], selectedItem })
+      this.setState({ groupedItems: [group], selectedItem })
+    }
   }
 
   private onFilterTextChanged = (text: string) => {
