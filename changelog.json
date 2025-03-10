@@ -1,5 +1,9 @@
 {
   "releases": {
+    "3.4.18": [
+      "[Fixed] Prevent crash due to non-critical error - #20150",
+      "[Fixed] Reinstate missing space in the About dialog last checked text - #20094. Thanks @alexravenna!"
+    ],
     "3.4.17": [
       "[Fixed] Dialogs announce their titles on macOS Sequoia for VoiceOver users - #20009",
       "[Fixed] The commit button words are separated by spaces for screen reader users - #20011",
