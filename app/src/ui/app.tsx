@@ -185,6 +185,7 @@ import { webUtils } from 'electron'
 import { showTestUI } from './lib/test-ui-components/test-ui-components'
 import { ConfirmCommitFilteredChanges } from './changes/confirm-commit-filtered-changes-dialog'
 import { AboutTestDialog } from './about/about-test-dialog'
+import { enableMultipleEnterpriseAccounts } from '../lib/feature-flag'
 
 const MinuteInMilliseconds = 1000 * 60
 const HourInMilliseconds = MinuteInMilliseconds * 60
@@ -253,6 +254,17 @@ export class App extends React.Component<IAppProps, IAppState> {
   private getOnPopupDismissedFn = memoizeOne((popupId: string) => {
     return () => this.onPopupDismissed(popupId)
   })
+
+  /**
+   * Helper method to mimic the behavior prior to us supporting multiple
+   * enterprise accounts. Takes a list of accounts and returns the first
+   * dotcom account (if any) followed by the first enterprise account (if any)
+   */
+  private oneAccountPerKind = memoizeOne((accounts: ReadonlyArray<Account>) =>
+    [accounts.find(isDotComAccount), accounts.find(isEnterpriseAccount)].filter(
+      x => x !== undefined
+    )
+  )
 
   public constructor(props: IAppProps) {
     super(props)
@@ -3180,23 +3192,27 @@ export class App extends React.Component<IAppProps, IAppState> {
   }
 
   private renderRepository() {
-    const state = this.state
+    const accounts = enableMultipleEnterpriseAccounts()
+      ? this.state.accounts
+      : this.oneAccountPerKind(this.state.accounts)
+
     if (this.inNoRepositoriesViewState()) {
       return (
         <NoRepositoriesView
-          dotComAccount={this.getDotComAccount()}
-          enterpriseAccount={this.getEnterpriseAccount()}
+          accounts={accounts}
           onCreate={this.showCreateRepository}
           onClone={this.showCloneRepo}
           onAdd={this.showAddLocalRepo}
           onCreateTutorialRepository={this.showCreateTutorialRepositoryPopup}
           onResumeTutorialRepository={this.onResumeTutorialRepository}
           tutorialPaused={this.isTutorialPaused()}
-          apiRepositories={state.apiRepositories}
+          apiRepositories={this.state.apiRepositories}
           onRefreshRepositories={this.onRefreshRepositories}
         />
       )
     }
+
+    const state = this.state
 
     const selectedState = state.selectedState
     if (!selectedState) {
