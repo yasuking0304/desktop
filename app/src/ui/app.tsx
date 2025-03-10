@@ -623,14 +623,6 @@ export class App extends React.Component<IAppProps, IAppState> {
     updateStore.checkForUpdates(inBackground, skipGuidCheck)
   }
 
-  private getDotComAccount(): Account | null {
-    return this.state.accounts.find(isDotComAccount) ?? null
-  }
-
-  private getEnterpriseAccount(): Account | null {
-    return this.state.accounts.find(isEnterpriseAccount) ?? null
-  }
-
   private updateBranchWithContributionTargetBranch() {
     const { selectedState } = this.state
     if (
@@ -811,9 +803,10 @@ export class App extends React.Component<IAppProps, IAppState> {
   }
 
   private showCreateTutorialRepositoryPopup = () => {
-    const account = this.getDotComAccount() || this.getEnterpriseAccount()
+    const account =
+      this.state.accounts.find(isDotComAccount) ?? this.state.accounts.at(0)
 
-    if (account === null) {
+    if (!account) {
       return
     }
 
@@ -3455,8 +3448,8 @@ export class App extends React.Component<IAppProps, IAppState> {
    * be able to be detected.
    */
   private async checkIfThankYouIsInOrder(): Promise<void> {
-    const dotComAccount = this.getDotComAccount()
-    if (dotComAccount === null) {
+    const dotComAccount = this.state.accounts.find(isDotComAccount)
+    if (!dotComAccount) {
       // The user is not signed in or is a GHE user who should not have any.
       return
     }
@@ -3494,7 +3487,7 @@ export class App extends React.Component<IAppProps, IAppState> {
       // Grab emoji's by reference because we could still be loading emoji's
       emoji: this.state.emoji,
       onOpenCard: () =>
-        this.openThankYouCard(userContributions, displayVersion),
+        this.openThankYouCard(userContributions, displayVersion, dotComAccount),
       onThrowCardAway: () => {
         updateLastThankYou(
           this.props.dispatcher,
@@ -3509,15 +3502,10 @@ export class App extends React.Component<IAppProps, IAppState> {
 
   private openThankYouCard = (
     userContributions: ReadonlyArray<ReleaseNote>,
-    latestVersion: string | null = null
+    latestVersion: string | null = null,
+    account: Account
   ) => {
-    const dotComAccount = this.getDotComAccount()
-
-    if (dotComAccount === null) {
-      // The user is not signed in or is a GHE user who should not have any.
-      return
-    }
-    const { friendlyName } = dotComAccount
+    const { friendlyName } = account
 
     this.props.dispatcher.showPopup({
       type: PopupType.ThankYou,
