@@ -120,14 +120,8 @@
   }
 
   .content-pane.repository-list {
-    .tab-bar {
+    .account-picker {
       margin-bottom: var(--spacing);
-      border: var(--base-border);
-      border-radius: var(--border-radius);
-
-      .tab-bar-item {
-        border-bottom: 0;
-      }
     }
     .clone-selected-repository {
       margin-top: var(--spacing);
