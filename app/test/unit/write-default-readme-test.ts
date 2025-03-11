@@ -29,7 +29,7 @@ describe('repository setup', () => {
       )
 
       const text = await FSE.readFile(file, 'utf8')
-      expect(text).toBe('# some-repository\n description goes here\n')
+      expect(text).toBe('# some-repository\ndescription goes here\n')
     })
   })
 })
