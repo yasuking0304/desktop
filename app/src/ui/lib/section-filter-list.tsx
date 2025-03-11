@@ -359,6 +359,7 @@ export class SectionFilterList<
           rowRenderer={this.renderRow}
           sectionHasHeader={this.sectionHasHeader}
           getRowAriaLabel={this.getRowAriaLabel}
+          getSectionAriaLabel={this.getSectionAriaLabel}
           rowHeight={this.props.rowHeight}
           selectedRows={
             rowIndexPathEquals(this.state.selectedRow, InvalidRowIndexPath)
@@ -403,6 +404,14 @@ export class SectionFilterList<
     return groupAriaLabel !== undefined
       ? `${itemAriaLabel}, ${groupAriaLabel}`
       : itemAriaLabel
+  }
+
+  private getSectionAriaLabel = (section: number) => {
+    const groupAriaLabel = this.props.getGroupAriaLabel?.(
+      this.state.groups[section]
+    )
+
+    return groupAriaLabel !== undefined ? groupAriaLabel : undefined
   }
 
   private renderRow = (index: RowIndexPath) => {

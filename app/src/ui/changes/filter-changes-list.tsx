@@ -1186,12 +1186,14 @@ export class FilterChangesList extends React.Component<
     return item.change.selection.getSelectionType() !== DiffSelectionType.None
   }
 
+  private getListAriaLabel = () => {
+    const { files } = this.props.workingDirectory
+    const filesPlural = files.length === 1 ? 'file' : 'files'
+    return `${files.length} changed ${filesPlural}`
+  }
+
   public render() {
     const { workingDirectory, isCommitting } = this.props
-    const { files } = workingDirectory
-
-    const filesPlural = files.length === 1 ? 'file' : 'files'
-    const filesDescription = `${files.length} changed ${filesPlural}`
 
     return (
       <>
@@ -1225,7 +1227,7 @@ export class FilterChangesList extends React.Component<
               focusedRow: this.state.focusedRow,
             }}
             onItemContextMenu={this.onItemContextMenu}
-            ariaLabel={filesDescription}
+            getGroupAriaLabel={this.getListAriaLabel}
             renderPostFilterRow={this.renderFilterResultsHeader}
             renderNoItems={this.renderNoChanges}
             postNoResultsMessage={this.getNoResultsMessage()}
