@@ -186,9 +186,10 @@ export class RebaseChooseBranchDialog extends React.Component<
   ) {
     // The current branch is behind the base branch
     if (commitsBehindCount > 0 && commitsAheadCount <= 0) {
-      const pluralized = commitsBehindCount === 1
-        ? t('common.one-commit', 'commit')
-        : t('common.multiple-commits', 'commits')
+      const pluralized =
+        commitsBehindCount === 1
+          ? t('common.one-commit', 'commit')
+          : t('common.multiple-commits', 'commits')
       return (
         <>
           {t(
@@ -196,15 +197,12 @@ export class RebaseChooseBranchDialog extends React.Component<
             'This will fast-forward '
           )}
           <strong>{currentBranch.name}</strong>
-          {t(
-            'rebase-choose-branch-dialog.this-will-fast-forward-2',
-            ' by '
-          )}
+          {t('rebase-choose-branch-dialog.this-will-fast-forward-2', ' by ')}
           <strong>{` ${commitsBehindCount} ${pluralized}`}</strong>
-          {
-            t('rebase-choose-branch-dialog.this-will-fast-forward-3',
-              ' to match '
-            )}
+          {t(
+            'rebase-choose-branch-dialog.this-will-fast-forward-3',
+            ' to match '
+          )}
           <strong>{baseBranch.name}</strong>
           {t('rebase-choose-branch-dialog.this-will-fast-forward-4', ' ')}
         </>
@@ -213,9 +211,10 @@ export class RebaseChooseBranchDialog extends React.Component<
 
     // The current branch is behind and ahead of the base branch
     if (commitsBehindCount > 0 && commitsAheadCount > 0) {
-      const pluralized = commitsAheadCount === 1
-        ? t('common.one-commit', 'commit')
-        : t('common.multiple-commits', 'commits')
+      const pluralized =
+        commitsAheadCount === 1
+          ? t('common.one-commit', 'commit')
+          : t('common.multiple-commits', 'commits')
 
       return (
         <>
@@ -230,9 +229,9 @@ export class RebaseChooseBranchDialog extends React.Component<
           )}
           <strong>
             {t('rebase-choose-branch-dialog.number-commit', ` {{0}} {{1}}`, {
-            0: commitsAheadCount,
-            1: pluralized,
-          })}
+              0: commitsAheadCount,
+              1: pluralized,
+            })}
           </strong>
           {t('rebase-choose-branch-dialog.this-will-update-3', ` on top of `)}
           <strong>{baseBranch.name}</strong>

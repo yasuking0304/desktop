@@ -194,20 +194,14 @@ export class MergeChooseBranchDialog extends React.Component<
     if (commitCount === 0) {
       return (
         <React.Fragment>
-          {t(
-            'merge-choose-branch-dialog.is-already-up-to-date-with-1',
-            ` `
-          )}
+          {t('merge-choose-branch-dialog.is-already-up-to-date-with-1', ` `)}
           <strong>{currentBranch.name}</strong>
           {t(
             'merge-choose-branch-dialog.is-already-up-to-date-with-2',
             ` This branch is up to date with `
           )}
           <strong>{branch.name}</strong>
-          {t(
-            'merge-choose-branch-dialog.is-already-up-to-date-with-3',
-            ` `
-          )}
+          {t('merge-choose-branch-dialog.is-already-up-to-date-with-3', ` `)}
         </React.Fragment>
       )
     }
