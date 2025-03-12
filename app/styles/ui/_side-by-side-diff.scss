@@ -431,6 +431,10 @@
 
     .popover-component.whitespace-hint {
       width: 275px;
+      &,
+      * {
+        cursor: default;
+      }
     }
   }
 
