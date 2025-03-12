@@ -481,10 +481,8 @@
     "sign-into-1-darwin": "Sign Into",
     "sign-into-2": " ",
     "sign-into-2-darwin": " ",
-    "sign-out-1": "Sign out of",
-    "sign-out-1-darwin": "Sign Out of",
-    "sign-out-2": " ",
-    "sign-out-2-darwin": " ",
+    "sign-out": "Sign out",
+    "sign-out-darwin": "Sign Out",
     "tag-name": "Tag name",
     "tag-name-darwin": "Tag Name",
     "undo": "Undo",
@@ -1109,8 +1107,8 @@
     "zoom-out-darwin": "Zoom Out"
   },
   "merge-call-to-action": {
-    "merge-into-1": "Merge into ",
-    "merge-into-2": " ",
+    "merge-into-1": "This will merge ",
+    "merge-into-2": " from ",
     "this-will-merge-into-1": "This will merge ",
     "this-will-merge-into-2": " from ",
     "this-will-merge-into-3": " into ",
