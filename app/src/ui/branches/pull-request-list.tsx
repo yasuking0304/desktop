@@ -145,6 +145,10 @@ export class PullRequestList extends React.Component<
     })
   }
 
+  private getListAriaLabel = () => {
+    return `Pull requests in ${this.getRepositoryName()}`
+  }
+
   public render() {
     return (
       <>
@@ -163,6 +167,7 @@ export class PullRequestList extends React.Component<
           renderGroupHeader={this.renderListHeader}
           renderNoItems={this.renderNoItems}
           renderPostFilter={this.renderPostFilter}
+          getGroupAriaLabel={this.getListAriaLabel}
         />
         <AriaLiveContainer message={this.state.screenReaderStateMessage} />
       </>
