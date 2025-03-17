@@ -40,15 +40,6 @@ type AffiliationFilter =
   | 'collaborator,organization_member'
   | 'owner,collaborator,organization_member'
 
-/// Indicates the type of access a user has to GitHub Copilot
-export enum CopilotLicenseType {
-  Business = 'COPILOT_BUSINESS',
-  Enterprise = 'COPILOT_ENTERPRISE',
-  Free = 'COPILOT_FREE',
-  Individual = 'COPILOT_INDIVIDUAL',
-  NoAccess = 'NO_ACCESS',
-}
-
 /** Response type of GraphQL query of Copilot-related info */
 type ViewerCopilotResponse = {
   readonly data: {
@@ -56,14 +47,14 @@ type ViewerCopilotResponse = {
       readonly copilotEndpoints: {
         readonly api: string
       }
-      readonly copilotLicenseType: CopilotLicenseType
+      readonly isCopilotDesktopEnabled: boolean
     }
   }
 }
 
 /** Copilot-related info relevant to Desktop */
 type UserCopilotInfo = {
-  readonly copilotLicenseType: CopilotLicenseType
+  readonly isCopilotDesktopEnabled: boolean
   readonly copilotEndpoint: string
 }
 
@@ -2047,7 +2038,7 @@ export class API {
           api
         }
 
-        copilotLicenseType
+        isCopilotDesktopEnabled
       }
     }
     `
@@ -2065,7 +2056,7 @@ export class API {
       const { viewer } = json.data
       return {
         copilotEndpoint: viewer.copilotEndpoints.api,
-        copilotLicenseType: viewer.copilotLicenseType,
+        isCopilotDesktopEnabled: viewer.isCopilotDesktopEnabled,
       }
     } catch (e) {
       log.warn(
@@ -2157,7 +2148,7 @@ export async function fetchUser(
       user.name || user.login,
       user.plan?.name,
       copilotInfo?.copilotEndpoint,
-      copilotInfo?.copilotLicenseType,
+      copilotInfo?.isCopilotDesktopEnabled,
       features
     )
   } catch (e) {

@@ -1,4 +1,4 @@
-import { CopilotLicenseType, getDotComAPIEndpoint, IAPIEmail } from '../lib/api'
+import { getDotComAPIEndpoint, IAPIEmail } from '../lib/api'
 
 /**
  * Returns a value indicating whether two account instances
@@ -35,7 +35,7 @@ export class Account {
    * @param name The friendly name associated with this account
    * @param plan The plan associated with this account
    * @param copilotEndpoint The endpoint for the Copilot API
-   * @param copilotLicenseType The Copilot license type
+   * @param isCopilotDesktopEnabled Whether Copilot for Desktop is enabled for this account
    * @param features The Desktop-specific features available to this account
    */
   public constructor(
@@ -48,7 +48,7 @@ export class Account {
     public readonly name: string,
     public readonly plan?: string,
     public readonly copilotEndpoint?: string,
-    public readonly copilotLicenseType?: CopilotLicenseType,
+    public readonly isCopilotDesktopEnabled?: boolean,
     public readonly features?: ReadonlyArray<string>
   ) {}
 
@@ -63,7 +63,7 @@ export class Account {
       this.name,
       this.plan,
       this.copilotEndpoint,
-      this.copilotLicenseType,
+      this.isCopilotDesktopEnabled,
       this.features
     )
   }
