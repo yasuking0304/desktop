@@ -23,9 +23,9 @@ import {
 } from './filter-list'
 import * as octicons from '../octicons/octicons.generated'
 
-interface IFlattenedGroup {
+interface IFlattenedGroup<T> {
   readonly kind: 'group'
-  readonly identifier: string
+  readonly identifier: T
 }
 
 interface IFlattenedItem<T extends IFilterListItem> {
@@ -39,11 +39,11 @@ interface IFlattenedItem<T extends IFilterListItem> {
  * A row in the list. This is used internally after the user-provided groups are
  * flattened.
  */
-type IFilterListRow<T extends IFilterListItem> =
-  | IFlattenedGroup
+type IFilterListRow<T extends IFilterListItem, GroupIdentifier> =
+  | IFlattenedGroup<GroupIdentifier>
   | IFlattenedItem<T>
 
-interface ISectionFilterListProps<T extends IFilterListItem> {
+interface ISectionFilterListProps<T extends IFilterListItem, GroupIdentifier> {
   /** A class name for the wrapping element. */
   readonly className?: string
 
@@ -52,7 +52,7 @@ interface ISectionFilterListProps<T extends IFilterListItem> {
 
   /** The ordered groups to display in the list. */
   // eslint-disable-next-line react/no-unused-prop-types
-  readonly groups: ReadonlyArray<IFilterListGroup<T>>
+  readonly groups: ReadonlyArray<IFilterListGroup<T, GroupIdentifier>>
 
   /** The selected item. */
   readonly selectedItem: T | null
@@ -61,7 +61,9 @@ interface ISectionFilterListProps<T extends IFilterListItem> {
   readonly renderItem: (item: T, matches: IMatches) => JSX.Element | null
 
   /** Called to render header for the group with the given identifier. */
-  readonly renderGroupHeader?: (identifier: string) => JSX.Element | null
+  readonly renderGroupHeader?: (
+    identifier: GroupIdentifier
+  ) => JSX.Element | null
 
   /** Called to render content before/above the filter and list. */
   readonly renderPreList?: () => JSX.Element | null
@@ -167,8 +169,10 @@ interface ISectionFilterListProps<T extends IFilterListItem> {
   ) => void
 }
 
-interface IFilterListState<T extends IFilterListItem> {
-  readonly rows: ReadonlyArray<ReadonlyArray<IFilterListRow<T>>>
+interface IFilterListState<T extends IFilterListItem, GroupIdentifier> {
+  readonly rows: ReadonlyArray<
+    ReadonlyArray<IFilterListRow<T, GroupIdentifier>>
+  >
   readonly selectedRow: RowIndexPath
   readonly filterValue: string
   readonly filterValueChanged: boolean
@@ -178,12 +182,16 @@ interface IFilterListState<T extends IFilterListItem> {
 
 /** A List which includes the ability to filter based on its contents. */
 export class SectionFilterList<
-  T extends IFilterListItem
-> extends React.Component<ISectionFilterListProps<T>, IFilterListState<T>> {
+  T extends IFilterListItem,
+  GroupIdentifier = string
+> extends React.Component<
+  ISectionFilterListProps<T, GroupIdentifier>,
+  IFilterListState<T, GroupIdentifier>
+> {
   private list: SectionList | null = null
   private filterTextBox: TextBox | null = null
 
-  public constructor(props: ISectionFilterListProps<T>) {
+  public constructor(props: ISectionFilterListProps<T, GroupIdentifier>) {
     super(props)
 
     if (props.filterTextBox !== undefined) {
@@ -193,13 +201,15 @@ export class SectionFilterList<
     this.state = createStateUpdate(props, null)
   }
 
-  public componentWillReceiveProps(nextProps: ISectionFilterListProps<T>) {
+  public componentWillReceiveProps(
+    nextProps: ISectionFilterListProps<T, GroupIdentifier>
+  ) {
     this.setState(createStateUpdate(nextProps, this.state))
   }
 
   public componentDidUpdate(
-    prevProps: ISectionFilterListProps<T>,
-    prevState: IFilterListState<T>
+    prevProps: ISectionFilterListProps<T, GroupIdentifier>,
+    prevState: IFilterListState<T, GroupIdentifier>
   ) {
     if (this.props.onSelectionChanged) {
       const oldSelectedItemId = getItemIdFromRowIndex(
@@ -639,8 +649,8 @@ export function getText<T extends IFilterListItem>(
   return item['text']
 }
 
-function getFirstVisibleRow<T extends IFilterListItem>(
-  rows: ReadonlyArray<ReadonlyArray<IFilterListRow<T>>>
+function getFirstVisibleRow<T extends IFilterListItem, GroupIdentifier>(
+  rows: ReadonlyArray<ReadonlyArray<IFilterListRow<T, GroupIdentifier>>>
 ): RowIndexPath {
   for (let i = 0; i < rows.length; i++) {
     const groupRows = rows[i]
@@ -655,11 +665,11 @@ function getFirstVisibleRow<T extends IFilterListItem>(
   return InvalidRowIndexPath
 }
 
-function createStateUpdate<T extends IFilterListItem>(
-  props: ISectionFilterListProps<T>,
-  state: IFilterListState<T> | null
+function createStateUpdate<T extends IFilterListItem, GroupIdentifier>(
+  props: ISectionFilterListProps<T, GroupIdentifier>,
+  state: IFilterListState<T, GroupIdentifier> | null
 ) {
-  const rows = new Array<Array<IFilterListRow<T>>>()
+  const rows = new Array<Array<IFilterListRow<T, GroupIdentifier>>>()
   const filter = (props.filterText || '').toLowerCase()
   let selectedRow = InvalidRowIndexPath
   let section = 0
@@ -667,7 +677,7 @@ function createStateUpdate<T extends IFilterListItem>(
   const groupIndices = []
 
   for (const [idx, group] of props.groups.entries()) {
-    const groupRows = new Array<IFilterListRow<T>>()
+    const groupRows = new Array<IFilterListRow<T, GroupIdentifier>>()
     const items: ReadonlyArray<IMatch<T>> = filter
       ? match(filter, group.items, getText)
       : group.items.map(item => ({
@@ -721,8 +731,8 @@ function createStateUpdate<T extends IFilterListItem>(
   }
 }
 
-function getItemFromRowIndex<T extends IFilterListItem>(
-  items: ReadonlyArray<ReadonlyArray<IFilterListRow<T>>>,
+function getItemFromRowIndex<T extends IFilterListItem, GroupIdentifier>(
+  items: ReadonlyArray<ReadonlyArray<IFilterListRow<T, GroupIdentifier>>>,
   index: RowIndexPath
 ): T | null {
   if (index.section < 0 || index.section >= items.length) {
@@ -743,8 +753,8 @@ function getItemFromRowIndex<T extends IFilterListItem>(
   return null
 }
 
-function getItemIdFromRowIndex<T extends IFilterListItem>(
-  items: ReadonlyArray<ReadonlyArray<IFilterListRow<T>>>,
+function getItemIdFromRowIndex<T extends IFilterListItem, GroupIdentifier>(
+  items: ReadonlyArray<ReadonlyArray<IFilterListRow<T, GroupIdentifier>>>,
   index: RowIndexPath
 ): string | null {
   const item = getItemFromRowIndex(items, index)
