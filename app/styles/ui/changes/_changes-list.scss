@@ -119,11 +119,7 @@
             border-radius: 20px;
             line-height: 1;
           }
-
-          &.hidden-files-warning {
-            margin-right: var(--spacing-half);
-          }
-
+          
           &:hover {
             color: var(--text-secondary-color);
             background-color: inherit;

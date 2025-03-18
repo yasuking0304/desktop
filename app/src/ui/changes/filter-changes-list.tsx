@@ -67,7 +67,6 @@ import {
   PopoverAnchorPosition,
   PopoverDecoration,
 } from '../lib/popover'
-import { LinkButton } from '../lib/link-button'
 
 interface IChangesListItem extends IFilterListItem {
   readonly id: string
@@ -223,10 +222,6 @@ interface IFilterChangesListState {
   readonly groups: ReadonlyArray<IFilterListGroup<IChangesListItem>>
   readonly filterToIncludedCommit: boolean
   readonly isFilterOptionsOpen: boolean
-  /**
-   * Whether the warning about committing hidden files is open.
-   */
-  readonly isFilesWarningOpen: boolean
 }
 
 function getSelectedItemsFromProps(
@@ -333,7 +328,6 @@ export class FilterChangesList extends React.Component<
 
   private headerRef = createObservableRef<HTMLDivElement>()
   private filterOptionsButtonRef: HTMLButtonElement | null = null
-  private filterWarningButtonRef: HTMLButtonElement | null = null
   private includeAllCheckBoxRef = React.createRef<Checkbox>()
   private filterListRef =
     React.createRef<AugmentedSectionFilterList<IChangesListItem>>()
@@ -354,7 +348,6 @@ export class FilterChangesList extends React.Component<
       groups,
       filterToIncludedCommit: false,
       isFilterOptionsOpen: false,
-      isFilesWarningOpen: false,
     }
   }
 
@@ -1152,7 +1145,6 @@ export class FilterChangesList extends React.Component<
     this.setState({
       filterText: '',
       filterToIncludedCommit: true,
-      isFilesWarningOpen: false,
     })
   }
 
@@ -1194,16 +1186,21 @@ export class FilterChangesList extends React.Component<
     const disableAllCheckbox =
       files.length === 0 || isCommitting || rebaseConflictState !== null
 
-    const filesChecked = workingDirectory.files.filter(
-      f => f.selection.getSelectionType() !== DiffSelectionType.None
-    )
+    /**
+     * 
+     * 
+      const filesChecked = workingDirectory.files.filter(
+        f => f.selection.getSelectionType() !== DiffSelectionType.None
+      )
 
-    const showHiddenCheckedFilesWarning = this.isCommittingFileHiddenByFilter(
-      this.state.filterText,
-      filesChecked.map(f => f.id),
-      this.state.filteredItems,
-      files.length
-    )
+      const showHiddenCheckedFilesWarning = this.isCommittingFileHiddenByFilter(
+        this.state.filterText,
+        filesChecked.map(f => f.id),
+        this.state.filteredItems,
+        files.length
+      )
+
+    **/
 
     return (
       <div className="checkbox-container">
@@ -1219,72 +1216,12 @@ export class FilterChangesList extends React.Component<
         <label id="changes-list-check-all-label">
           {visibleFiles} of {files.length} files
         </label>
-        <span className="spacer"></span>
-        {showHiddenCheckedFilesWarning ? (
-          <span>
-            <Button
-              className="filter-button hidden-files-warning"
-              ariaExpanded={this.state.isFilterOptionsOpen}
-              ariaLabel="Open Files Hidden by Filter Warning"
-              tooltip="Open Files Hidden by Filter Warning"
-              onClick={this.openFilterWarning}
-              onButtonRef={this.onFilterWarningButtonRef}
-            >
-              <Octicon symbol={octicons.alert} />
-            </Button>
-            {this.state.isFilesWarningOpen && this.renderFilterWarning()}
-          </span>
-        ) : null}
       </div>
     )
   }
 
   private onFilterOptionsButtonRef = (buttonRef: HTMLButtonElement | null) => {
     this.filterOptionsButtonRef = buttonRef
-  }
-
-  private onFilterWarningButtonRef = (buttonRef: HTMLButtonElement | null) => {
-    this.filterWarningButtonRef = buttonRef
-  }
-
-  private openFilterWarning = () => {
-    this.setState({ isFilesWarningOpen: true })
-  }
-
-  private closeFilterWarning = () => {
-    this.setState({ isFilesWarningOpen: false })
-  }
-
-  private renderFilterWarning() {
-    return (
-      <Popover
-        className="filter-popover"
-        ariaLabelledby="filter-warning-header"
-        anchor={this.filterWarningButtonRef}
-        anchorPosition={PopoverAnchorPosition.BottomRight}
-        decoration={PopoverDecoration.Balloon}
-        onMousedownOutside={this.closeFilterWarning}
-        onClickOutside={this.closeFilterWarning}
-      >
-        <div className="filter-popover-header">
-          <h3 id="filter-warning-header">Committing Hidden Files</h3>
-          <button
-            className="close"
-            onClick={this.closeFilterWarning}
-            aria-label="Close"
-          >
-            <Octicon symbol={octicons.x} />
-          </button>
-        </div>
-        <div className="filter-warning-text">
-          You have a filter applied. There are{' '}
-          <LinkButton onClick={this.showFilesToBeCommitted}>
-            hidden changes
-          </LinkButton>{' '}
-          that will be committed.
-        </div>
-      </Popover>
-    )
   }
 
   private openFilterOptions = () => {
