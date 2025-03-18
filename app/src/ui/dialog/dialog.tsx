@@ -854,6 +854,10 @@ export class Dialog extends React.Component<DialogProps, IDialogState> {
     )
 
     return (
+      /**
+       * This a11y linter is a false-positive as the mousedown and keydown
+       * listeners facilitate expected behaviors around dismissing the dialog.
+       */
       // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
       <dialog
         ref={this.onDialogRef}

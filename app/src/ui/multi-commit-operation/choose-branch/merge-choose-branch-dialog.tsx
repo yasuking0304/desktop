@@ -182,8 +182,9 @@ export class MergeChooseBranchDialog extends React.Component<
     if (commitCount === 0) {
       return (
         <React.Fragment>
-          {`This branch is up to date with `}
-          <strong>{branch.name}</strong>
+          <strong>{currentBranch.name}</strong>
+          {` `}
+          is already up to date with <strong>{branch.name}</strong>
         </React.Fragment>
       )
     }

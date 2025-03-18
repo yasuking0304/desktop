@@ -1,4 +1,4 @@
-import { getDotComAPIEndpoint, IAPIEmail } from '../lib/api'
+import { getDotComAPIEndpoint, getHTMLURL, IAPIEmail } from '../lib/api'
 
 /**
  * Returns a value indicating whether two account instances
@@ -22,6 +22,8 @@ export class Account {
   public static anonymous(): Account {
     return new Account('', getDotComAPIEndpoint(), '', [], '', -1, '', 'free')
   }
+
+  private _friendlyEndpoint: string | undefined = undefined
 
   /**
    * Create an instance of an account
@@ -77,4 +79,31 @@ export class Account {
   public get friendlyName(): string {
     return this.name !== '' ? this.name : this.login
   }
+
+  /**
+   * Get a human-friendly description of the Account endpoint.
+   *
+   * Accounts on GitHub.com will return the string 'GitHub.com'
+   * whereas GitHub Enterprise accounts will return the
+   * hostname without the protocol and/or path.
+   */
+  public get friendlyEndpoint(): string {
+    return (this._friendlyEndpoint ??= isDotComAccount(this)
+      ? 'GitHub.com'
+      : new URL(getHTMLURL(this.endpoint)).hostname)
+  }
 }
+
+/**
+ * Whether or not the given account is a GitHub.com account as opposed to
+ * a GitHub Enteprise account.
+ */
+export const isDotComAccount = (account: Account) =>
+  account.endpoint === getDotComAPIEndpoint()
+
+/**
+ * Whether or not the given account is a GitHub Enterprise account (as opposed to
+ * a GitHub.com account)
+ */
+export const isEnterpriseAccount = (account: Account) =>
+  !isDotComAccount(account)

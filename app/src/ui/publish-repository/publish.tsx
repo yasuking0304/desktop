@@ -1,11 +1,14 @@
 import * as React from 'react'
 import { PublishRepository } from './publish-repository'
 import { Dispatcher } from '../dispatcher'
-import { Account } from '../../models/account'
+import {
+  Account,
+  isDotComAccount,
+  isEnterpriseAccount,
+} from '../../models/account'
 import { Repository } from '../../models/repository'
 import { Dialog, DialogFooter, DialogContent, DialogError } from '../dialog'
 import { TabBar } from '../tab-bar'
-import { getDotComAPIEndpoint } from '../../lib/api'
 import { assertNever, fatalError } from '../../lib/fatal-error'
 import { CallToAction } from '../lib/call-to-action'
 import { getGitDescription } from '../../lib/git'
@@ -216,9 +219,9 @@ export class Publish extends React.Component<IPublishProps, IPublishState> {
     const accounts = this.props.accounts
     switch (tab) {
       case PublishTab.DotCom:
-        return accounts.find(a => a.endpoint === getDotComAPIEndpoint()) || null
+        return accounts.find(isDotComAccount) ?? null
       case PublishTab.Enterprise:
-        return accounts.find(a => a.endpoint !== getDotComAPIEndpoint()) || null
+        return accounts.find(isEnterpriseAccount) ?? null
       default:
         return assertNever(tab, `Unknown tab: ${tab}`)
     }

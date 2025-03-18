@@ -11,7 +11,7 @@ import {
   SignInStore,
   UpstreamRemoteName,
 } from '.'
-import { Account } from '../../models/account'
+import { Account, isDotComAccount } from '../../models/account'
 import { AppMenu, IMenu } from '../../models/app-menu'
 import { Author } from '../../models/author'
 import { Branch, BranchType, IAheadBehind } from '../../models/branch'
@@ -95,7 +95,6 @@ import {
 import {
   API,
   getAccountForEndpoint,
-  getDotComAPIEndpoint,
   IAPIOrganization,
   getEndpointForRepository,
   IAPIFullRepository,
@@ -3359,7 +3358,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
     const account = getAccountForRepository(this.accounts, repository)
     if (repository.gitHubRepository !== null) {
       if (account !== null) {
-        if (account.endpoint === getDotComAPIEndpoint()) {
+        if (isDotComAccount(account)) {
           this.statsStore.increment('dotcomCommits')
         } else {
           this.statsStore.increment('enterpriseCommits')

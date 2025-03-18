@@ -6,7 +6,7 @@ import {
   setGlobalConfigValue,
 } from '../../lib/git/config'
 import { CommitListItem } from '../history/commit-list-item'
-import { Account } from '../../models/account'
+import { Account, isDotComAccount } from '../../models/account'
 import { CommitIdentity } from '../../models/commit-identity'
 import { Form } from '../lib/form'
 import { Button } from '../lib/button'
@@ -20,7 +20,6 @@ import { ConfigLockFileExists } from './config-lock-file-exists'
 import { RadioButton } from './radio-button'
 import { Select } from './select'
 import { GitEmailNotFoundWarning } from './git-email-not-found-warning'
-import { getDotComAPIEndpoint } from '../../lib/api'
 import { Loading } from './loading'
 
 interface IConfigureGitUserProps {
@@ -266,8 +265,7 @@ export class ConfigureGitUser extends React.Component<
       return
     }
 
-    const accountTypeSuffix =
-      account.endpoint === getDotComAPIEndpoint() ? '' : ' Enterprise'
+    const accountTypeSuffix = isDotComAccount(account) ? '' : ' Enterprise'
 
     return (
       <div>

@@ -486,6 +486,15 @@ const editors: WindowsExternalEditor[] = [
     displayNamePrefixes: ['Cursor'],
     publishers: ['Cursor AI, Inc.'],
   },
+  {
+    name: 'Windsurf',
+    registryKeys: [
+      CurrentUserUninstallKey('{5A8B7D94-9B5F-4D1F-93FC-5609F7159349}_is1'),
+    ],
+    installLocationRegistryKey: 'DisplayIcon',
+    displayNamePrefixes: ['Windsurf', 'Windsurf (User)'],
+    publishers: ['Codeium'],
+  },
 ]
 
 function getKeyOrEmpty(

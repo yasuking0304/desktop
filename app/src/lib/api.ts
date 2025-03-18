@@ -1699,10 +1699,16 @@ export class API {
       const response = await this.ghRequest('GET', path)
       return await parsedResponse<IAPIRepoRule[]>(response)
     } catch (err) {
-      log.info(
-        `[fetchRepoRulesForBranch] unable to fetch repo rules for branch: ${branch} | ${path}`,
-        err
-      )
+      // If the repository isn't owned by the current user there's no way for us
+      // to preemptively check whether rulesets are enabled so we give it a shot
+      // but there's no need to log if it fails. Same with 404s, i.e the user
+      // doesn't have access to the repo any more or it's been deleted.
+      if (!isRulesetsNotEnabledError(err) && !isNotFoundApiError(err)) {
+        log.info(
+          `[fetchRepoRulesForBranch] unable to fetch repo rules for branch: ${branch} | ${path}`,
+          err
+        )
+      }
       return new Array<IAPIRepoRule>()
     }
   }
@@ -1720,10 +1726,16 @@ export class API {
       const response = await this.ghRequest('GET', path)
       return await parsedResponse<ReadonlyArray<IAPISlimRepoRuleset>>(response)
     } catch (err) {
-      log.info(
-        `[fetchAllRepoRulesets] unable to fetch all repo rulesets | ${path}`,
-        err
-      )
+      // If the repository isn't owned by the current user there's no way for us
+      // to preemptively check whether rulesets are enabled so we give it a shot
+      // but there's no need to log if it fails. Same with 404s, i.e the user
+      // doesn't have access to the repo any more or it's been deleted.
+      if (!isRulesetsNotEnabledError(err) && !isNotFoundApiError(err)) {
+        log.info(
+          `[fetchAllRepoRulesets] unable to fetch all repo rulesets | ${path}`,
+          err
+        )
+      }
       return null
     }
   }
@@ -2382,3 +2394,11 @@ export async function isGitHubHost(url: string) {
     clearCertificateErrorSuppressionFor(metaUrl)
   }
 }
+
+const isRulesetsNotEnabledError = (error: any) =>
+  error instanceof APIError &&
+  error.responseStatus === 403 &&
+  /upgrade.*to enable this feature.*/i.test(error.apiError?.message ?? '')
+
+const isNotFoundApiError = (error: any) =>
+  error instanceof APIError && error.responseStatus === 404

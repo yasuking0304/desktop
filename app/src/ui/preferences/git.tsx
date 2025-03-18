@@ -12,8 +12,7 @@ interface IGitProps {
   readonly defaultBranch: string
   readonly isLoadingGitConfig: boolean
 
-  readonly dotComAccount: Account | null
-  readonly enterpriseAccount: Account | null
+  readonly accounts: ReadonlyArray<Account>
 
   readonly onNameChanged: (name: string) => void
   readonly onEmailChanged: (email: string) => void
@@ -38,8 +37,7 @@ export class Git extends React.Component<IGitProps> {
         email={this.props.email}
         name={this.props.name}
         isLoadingGitConfig={this.props.isLoadingGitConfig}
-        enterpriseAccount={this.props.enterpriseAccount}
-        dotComAccount={this.props.dotComAccount}
+        accounts={this.props.accounts}
         onEmailChanged={this.props.onEmailChanged}
         onNameChanged={this.props.onNameChanged}
       />

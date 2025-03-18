@@ -418,6 +418,7 @@
 
       .prefix {
         user-select: none;
+        white-space: nowrap;
       }
 
       .octicon {
@@ -431,6 +432,10 @@
 
     .popover-component.whitespace-hint {
       width: 275px;
+      &,
+      * {
+        cursor: default;
+      }
     }
   }
 
