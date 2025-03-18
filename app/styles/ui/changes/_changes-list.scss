@@ -57,15 +57,6 @@
         }
       }
 
-      .filter-options {
-        margin: var(--spacing) 0;
-      }
-
-      .filter-warning-text {
-        max-width: 200px;
-        text-align: left;
-      }
-
       .popover-content {
         padding: var(--spacing);
       }
@@ -119,7 +110,7 @@
             border-radius: 20px;
             line-height: 1;
           }
-          
+
           &:hover {
             color: var(--text-secondary-color);
             background-color: inherit;
