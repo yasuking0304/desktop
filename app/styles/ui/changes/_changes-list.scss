@@ -52,11 +52,15 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+
         h3 {
           margin-bottom: var(--spacing-half);
         }
       }
 
+            .filter-options {
+              margin: var(--spacing) 0;
+            }
       .popover-content {
         padding: var(--spacing);
       }
@@ -126,7 +130,7 @@
           flex-grow: 1;
         }
 
-        
+
       }
 
       label {
@@ -183,10 +187,12 @@
     background-color: var(--secondary-button-hover-background);
     background: var(--box-selected-background-color);
   }
+
   &.selected,
   &.selected:hover {
     color: var(--box-selected-active-text-color);
     background-color: var(--box-selected-active-background-color);
+
     .stack-icon {
       fill: var(--box-selected-active-text-color);
     }
