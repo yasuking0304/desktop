@@ -107,13 +107,12 @@ export const enableFilteredChangesList = enableDevelopmentFeatures
 
 export const enableMultipleEnterpriseAccounts = enableDevelopmentFeatures
 
-export const enableCommitMessageGeneration = (
-  accounts: ReadonlyArray<Account>
-) => {
+export const enableCommitMessageGeneration = (account: Account) => {
   return (
     enableBetaFeatures() &&
-    accounts.some(a =>
-      (a.features ?? []).includes('desktop_copilot_generate_commit_message')
-    )
+    (account.features ?? []).includes(
+      'desktop_copilot_generate_commit_message'
+    ) &&
+    account.isCopilotDesktopEnabled
   )
 }

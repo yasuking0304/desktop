@@ -861,8 +861,7 @@ export class CommitMessage extends React.Component<
 
   private renderCopilotButton() {
     if (
-      !this.props.accounts.some(account => account.isCopilotDesktopEnabled) ||
-      !enableCommitMessageGeneration(this.props.accounts) ||
+      !this.props.accounts.some(enableCommitMessageGeneration) ||
       this.props.onGenerateCommitMessage === undefined
     ) {
       return null

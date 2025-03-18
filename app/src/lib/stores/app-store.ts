@@ -5424,9 +5424,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
     repository: Repository,
     filesSelected: ReadonlyArray<WorkingDirectoryFileChange>
   ): Promise<boolean> {
-    const account = this.getState().accounts.find(account =>
-      enableCommitMessageGeneration([account])
-    )
+    const account = this.getState().accounts.find(enableCommitMessageGeneration)
 
     if (!account) {
       return false
