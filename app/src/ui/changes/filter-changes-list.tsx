@@ -1186,22 +1186,6 @@ export class FilterChangesList extends React.Component<
     const disableAllCheckbox =
       files.length === 0 || isCommitting || rebaseConflictState !== null
 
-    /**
-     * 
-     * 
-      const filesChecked = workingDirectory.files.filter(
-        f => f.selection.getSelectionType() !== DiffSelectionType.None
-      )
-
-      const showHiddenCheckedFilesWarning = this.isCommittingFileHiddenByFilter(
-        this.state.filterText,
-        filesChecked.map(f => f.id),
-        this.state.filteredItems,
-        files.length
-      )
-
-    **/
-
     return (
       <div className="checkbox-container">
         <Checkbox
