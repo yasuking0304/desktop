@@ -1194,8 +1194,6 @@ export class FilterChangesList extends React.Component<
     const disableAllCheckbox =
       files.length === 0 || isCommitting || rebaseConflictState !== null
 
-    const fileCount = files.length
-
     const filesChecked = workingDirectory.files.filter(
       f => f.selection.getSelectionType() !== DiffSelectionType.None
     )
@@ -1204,7 +1202,7 @@ export class FilterChangesList extends React.Component<
       this.state.filterText,
       filesChecked.map(f => f.id),
       this.state.filteredItems,
-      fileCount
+      files.length
     )
 
     return (
@@ -1218,7 +1216,9 @@ export class FilterChangesList extends React.Component<
           className="changes-list-check-all"
         />
 
-        <label id="changes-list-check-all-label">{visibleFiles} files</label>
+        <label id="changes-list-check-all-label">
+          {visibleFiles} of {files.length} files
+        </label>
         <span className="spacer"></span>
         {showHiddenCheckedFilesWarning ? (
           <span>
