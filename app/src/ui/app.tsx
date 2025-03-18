@@ -1620,8 +1620,7 @@ export class App extends React.Component<IAppProps, IAppState> {
         return (
           <CloneRepository
             key="clone-repository"
-            dotComAccount={this.getDotComAccount()}
-            enterpriseAccount={this.getEnterpriseAccount()}
+            accounts={this.state.accounts}
             initialURL={popup.initialURL}
             onDismissed={onPopupDismissedFn}
             dispatcher={this.props.dispatcher}
