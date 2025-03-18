@@ -1235,34 +1235,6 @@ export class FilterChangesList extends React.Component<
             {this.state.isFilesWarningOpen && this.renderFilterWarning()}
           </span>
         ) : null}
-
-        {this.state.filterToIncludedCommit ? (
-          <Button
-            className="filter-button remove-filter"
-            onClick={this.clearNonTextFilters}
-            ariaLabel="Clear filter option(s)"
-            tooltip="Clear filter option(s)"
-          >
-            <Octicon symbol={octicons.x} />
-          </Button>
-        ) : null}
-
-        <span>
-          <Button
-            className={classNames('filter-button', {
-              active: this.state.filterToIncludedCommit,
-            })}
-            onClick={this.openFilterOptions}
-            ariaExpanded={this.state.isFilterOptionsOpen}
-            onButtonRef={this.onFilterOptionsButtonRef}
-            tooltip={'Filter Options'}
-            ariaLabel={'Filter Options'}
-          >
-            <Octicon symbol={octicons.filter} />
-            <Octicon symbol={octicons.triangleUp} />
-          </Button>
-          {this.state.isFilterOptionsOpen && this.renderFilterOptions()}
-        </span>
       </div>
     )
   }
@@ -1364,27 +1336,34 @@ export class FilterChangesList extends React.Component<
             label={`Being committed (${checkedFilesThatAreVisibleCount})`}
           />
         </div>
-
-        <LinkButton onClick={this.disableFilters}>Disable Filter</LinkButton>
       </Popover>
     )
-  }
-
-  private disableFilters = () => {
-    this.setState({
-      filterText: '',
-      filterToIncludedCommit: false,
-      isFilterOptionsOpen: false,
-    })
-  }
-
-  private clearNonTextFilters = () => {
-    this.setState({ filterToIncludedCommit: false })
   }
 
   private renderFilterBox = () => {
     return (
       <div className="filter-box-container">
+        <span>
+          <Button
+            className={classNames('filter-button', {
+              active: this.state.filterToIncludedCommit,
+            })}
+            onClick={this.openFilterOptions}
+            ariaExpanded={this.state.isFilterOptionsOpen}
+            onButtonRef={this.onFilterOptionsButtonRef}
+            tooltip={'Filter Options'}
+            ariaLabel={'Filter Options'}
+          >
+            <span>
+              <Octicon symbol={octicons.filter} />
+            </span>
+            {this.state.filterToIncludedCommit ? (
+              <span className="counter">1</span>
+            ) : null}
+            <Octicon symbol={octicons.triangleDown} />
+          </Button>
+          {this.state.isFilterOptionsOpen && this.renderFilterOptions()}
+        </span>
         <TextBox
           ref={this.onTextBoxRef}
           displayClearButton={true}
