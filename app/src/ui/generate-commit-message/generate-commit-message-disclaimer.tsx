@@ -35,6 +35,7 @@ export class GenerateCommitMessageDisclaimer extends React.Component<IGenerateCo
         onDismissed={this.props.onDismissed}
         onSubmit={this.onSubmit}
         ariaDescribedBy="generate-commit-message-disclaimer-body"
+        role="alertdialog"
       >
         <DialogContent>
           <p id="generate-commit-message-disclaimer-body">

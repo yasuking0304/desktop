@@ -34,6 +34,7 @@ export class GenerateCommitMessageOverrideWarning extends React.Component<IGener
         onDismissed={this.props.onDismissed}
         onSubmit={this.onOverride}
         ariaDescribedBy="generate-commit-message-override-warning-body"
+        role="alertdialog"
       >
         <DialogContent>
           <p id="generate-commit-message-override-warning-body">
