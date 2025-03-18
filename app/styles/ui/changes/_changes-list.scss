@@ -99,33 +99,6 @@
           flex-grow: 1;
         }
 
-        .beta-pill {
-          background: -webkit-linear-gradient(-70deg, #9867f0 0%, #ed4e50 100%);
-          padding: 1px;
-          border-radius: 2em;
-          margin-right: var(--spacing-half);
-          display: inline-block;
-          height: 20px;
-
-          > span {
-            background: var(--box-alt-background-color);
-            border-radius: 2em;
-            padding: 0 var(--spacing-half);
-            display: inline-block;
-
-            > span {
-              background: -webkit-linear-gradient(-70deg, #9867f0 0%, #ed4e50 100%);
-              -webkit-background-clip: text;
-              background-clip: text;
-              -webkit-text-fill-color: transparent;
-              -webkit-box-decoration-break: clone;
-              font-weight: 600 !important;
-              font-size: var(--font-size-sm);
-              padding-bottom: 2px;
-            }
-          }
-        }
-
         .filter-button {
           padding: 0;
           height: auto;
@@ -250,27 +223,4 @@
   max-height: 0;
 
   transition: max-height var(--undo-animation-duration) ease-out;
-}
-
-// animations for entering and leaving
-.filter-box-enter {
-  height: 0px;
-  opacity: 0;
-
-  &.filter-box-enter-active {
-    height: 25px;
-    opacity: 1;
-    transition: max-height 300ms ease-in-out, opacity 200ms ease-in 300ms;
-  }
-}
-
-.filter-box-exit {
-  height: 25px;
-  opacity: 1;
-
-  &.filter-box-exit-active {
-    height: 0px;
-    opacity: 0;
-    transition: max-height 225ms ease-in-out 175ms, opacity 175ms ease-in;
-  }
 }

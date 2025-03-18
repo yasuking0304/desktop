@@ -1248,8 +1248,6 @@ export class FilterChangesList extends React.Component<
         ) : null}
 
         <span>
-          {this.renderBetaPill()}
-
           <Button
             className={classNames('filter-button', {
               active: this.state.filterToIncludedCommit,
@@ -1266,16 +1264,6 @@ export class FilterChangesList extends React.Component<
           {this.state.isFilterOptionsOpen && this.renderFilterOptions()}
         </span>
       </div>
-    )
-  }
-
-  private renderBetaPill = () => {
-    return (
-      <span className="beta-pill">
-        <span>
-          <span>Beta</span>
-        </span>
-      </span>
     )
   }
 
