@@ -88,8 +88,6 @@ interface IChangesSidebarProps {
   readonly commitSpellcheckEnabled: boolean
 
   readonly showCommitLengthWarning: boolean
-
-  readonly canFilterChanges: boolean
 }
 
 export class ChangesSidebar extends React.Component<IChangesSidebarProps, {}> {
@@ -457,7 +455,6 @@ export class ChangesSidebar extends React.Component<IChangesSidebarProps, {}> {
           currentRepoRulesInfo={currentRepoRulesInfo}
           aheadBehind={this.props.aheadBehind}
           accounts={this.props.accounts}
-          canFilterChanges={this.props.canFilterChanges}
         />
         {this.renderUndoCommit(rebaseConflictState)}
       </div>

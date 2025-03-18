@@ -68,7 +68,6 @@ import {
   PopoverDecoration,
 } from '../lib/popover'
 import { LinkButton } from '../lib/link-button'
-import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
 interface IChangesListItem extends IFilterListItem {
   readonly id: string
@@ -214,8 +213,6 @@ interface IFilterChangesListProps {
   readonly showCommitLengthWarning: boolean
 
   readonly accounts: ReadonlyArray<Account>
-
-  readonly canFilterChanges: boolean
 }
 
 interface IFilterChangesListState {
@@ -1176,7 +1173,7 @@ export class FilterChangesList extends React.Component<
         onContextMenu={this.onContextMenu}
         ref={this.headerRef}
       >
-        <TransitionGroup>{this.renderFilterBox()}</TransitionGroup>
+        {this.renderFilterBox()}
         {this.renderCheckBoxRow()}
       </div>
     )
@@ -1260,23 +1257,11 @@ export class FilterChangesList extends React.Component<
             onClick={this.openFilterOptions}
             ariaExpanded={this.state.isFilterOptionsOpen}
             onButtonRef={this.onFilterOptionsButtonRef}
-            tooltip={
-              !this.props.canFilterChanges
-                ? 'Enable Filter (Beta)'
-                : 'Filter Options'
-            }
-            ariaLabel={
-              !this.props.canFilterChanges
-                ? 'Enable Filter (Beta)'
-                : 'Filter Options'
-            }
+            tooltip={'Filter Options'}
+            ariaLabel={'Filter Options'}
           >
             <Octicon symbol={octicons.filter} />
-            {this.props.canFilterChanges ? (
-              <Octicon symbol={octicons.triangleDown} />
-            ) : (
-              <Octicon symbol={octicons.triangleUp} />
-            )}
+            <Octicon symbol={octicons.triangleUp} />
           </Button>
           {this.state.isFilterOptionsOpen && this.renderFilterOptions()}
         </span>
@@ -1285,10 +1270,6 @@ export class FilterChangesList extends React.Component<
   }
 
   private renderBetaPill = () => {
-    if (this.props.canFilterChanges) {
-      return
-    }
-
     return (
       <span className="beta-pill">
         <span>
@@ -1347,10 +1328,6 @@ export class FilterChangesList extends React.Component<
   }
 
   private openFilterOptions = () => {
-    if (!this.props.canFilterChanges) {
-      this.props.dispatcher.setCanFilterChanges(true)
-      return
-    }
     this.setState({ isFilterOptionsOpen: true })
   }
 
@@ -1411,7 +1388,6 @@ export class FilterChangesList extends React.Component<
       filterToIncludedCommit: false,
       isFilterOptionsOpen: false,
     })
-    this.props.dispatcher.setCanFilterChanges(false)
   }
 
   private clearNonTextFilters = () => {
@@ -1419,29 +1395,20 @@ export class FilterChangesList extends React.Component<
   }
 
   private renderFilterBox = () => {
-    if (!this.props.canFilterChanges) {
-      return
-    }
-
     return (
-      <CSSTransition
-        classNames="filter-box"
-        timeout={{ enter: 500, exit: 400 }}
-      >
-        <div className="filter-box-container">
-          <TextBox
-            ref={this.onTextBoxRef}
-            displayClearButton={true}
-            prefixedIcon={octicons.search}
-            autoFocus={true}
-            placeholder={'Filter'}
-            className="filter-list-filter-field"
-            onValueChanged={this.onFilterTextChanged}
-            onKeyDown={this.onFilterKeyDown}
-            value={this.state.filterText}
-          />
-        </div>
-      </CSSTransition>
+      <div className="filter-box-container">
+        <TextBox
+          ref={this.onTextBoxRef}
+          displayClearButton={true}
+          prefixedIcon={octicons.search}
+          autoFocus={true}
+          placeholder={'Filter'}
+          className="filter-list-filter-field"
+          onValueChanged={this.onFilterTextChanged}
+          onKeyDown={this.onFilterKeyDown}
+          value={this.state.filterText}
+        />
+      </div>
     )
   }
 
