@@ -301,11 +301,8 @@ interface ISectionListProps {
    */
   readonly setScrollTop?: number
 
-  /** The aria-labelledby attribute for the list component. */
-  readonly ariaLabelledBy?: string
-
-  /** The aria-label attribute for the list component. */
-  readonly ariaLabel?: string
+  /** The aria-label attribute for the section list component. */
+  readonly getSectionAriaLabel?: (section: number) => string | undefined
 
   /**
    * Optional callback for providing an aria label for screen readers for each
@@ -1352,8 +1349,7 @@ export class SectionList extends React.Component<
           overscanRowCount={4}
           style={{ ...params.style, width: '100%' }}
           tabIndex={-1}
-          aria-labelledby={this.props.ariaLabelledBy}
-          aria-label={this.props.ariaLabel}
+          aria-label={this.props.getSectionAriaLabel?.(section)}
         />
       )
     }

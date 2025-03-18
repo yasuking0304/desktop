@@ -168,10 +168,10 @@ export class About extends React.Component<IAboutProps> {
         }
 
         const richMessage = (
-          <>
+          <p>
             You have the latest version (last checked{' '}
             <RelativeTime date={lastSuccessfulCheck} />)
-          </>
+          </p>
         )
 
         const absoluteDate = formatDate(lastSuccessfulCheck, {

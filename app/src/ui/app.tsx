@@ -18,7 +18,6 @@ import { RetryAction } from '../models/retry-actions'
 import { FetchType } from '../models/fetch'
 import { shouldRenderApplicationMenu } from './lib/features'
 import { matchExistingRepository } from '../lib/repository-matching'
-import { getDotComAPIEndpoint } from '../lib/api'
 import { getVersion, getName } from './lib/app-proxy'
 import {
   getOS,
@@ -36,7 +35,11 @@ import {
 import { Branch } from '../models/branch'
 import { PreferencesTab } from '../models/preferences'
 import { findItemByAccessKey, itemIsSelectable } from '../models/app-menu'
-import { Account } from '../models/account'
+import {
+  Account,
+  isDotComAccount,
+  isEnterpriseAccount,
+} from '../models/account'
 import { TipState } from '../models/tip'
 import { CloneRepositoryTab } from '../models/clone-repository-tab'
 import { CloningRepository } from '../models/cloning-repository'
@@ -609,17 +612,11 @@ export class App extends React.Component<IAppProps, IAppState> {
   }
 
   private getDotComAccount(): Account | null {
-    const dotComAccount = this.state.accounts.find(
-      a => a.endpoint === getDotComAPIEndpoint()
-    )
-    return dotComAccount || null
+    return this.state.accounts.find(isDotComAccount) ?? null
   }
 
   private getEnterpriseAccount(): Account | null {
-    const enterpriseAccount = this.state.accounts.find(
-      a => a.endpoint !== getDotComAPIEndpoint()
-    )
-    return enterpriseAccount || null
+    return this.state.accounts.find(isEnterpriseAccount) ?? null
   }
 
   private updateBranchWithContributionTargetBranch() {
@@ -1527,7 +1524,7 @@ export class App extends React.Component<IAppProps, IAppState> {
             key="preferences"
             initialSelectedTab={popup.initialSelectedTab}
             dispatcher={this.props.dispatcher}
-            dotComAccount={this.getDotComAccount()}
+            accounts={this.state.accounts}
             confirmRepositoryRemoval={
               this.state.askForConfirmationOnRepositoryRemoval
             }
@@ -1553,7 +1550,6 @@ export class App extends React.Component<IAppProps, IAppState> {
             notificationsEnabled={this.state.notificationsEnabled}
             optOutOfUsageTracking={this.state.optOutOfUsageTracking}
             useExternalCredentialHelper={this.state.useExternalCredentialHelper}
-            enterpriseAccount={this.getEnterpriseAccount()}
             repository={repository}
             onDismissed={onPopupDismissedFn}
             selectedShell={this.state.selectedShell}
@@ -1623,8 +1619,7 @@ export class App extends React.Component<IAppProps, IAppState> {
         return (
           <CloneRepository
             key="clone-repository"
-            dotComAccount={this.getDotComAccount()}
-            enterpriseAccount={this.getEnterpriseAccount()}
+            accounts={this.state.accounts}
             initialURL={popup.initialURL}
             onDismissed={onPopupDismissedFn}
             dispatcher={this.props.dispatcher}

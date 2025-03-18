@@ -209,9 +209,6 @@ interface IAugmentedSectionFilterListProps<T extends IFilterListItem> {
    */
   readonly setScrollTop?: number
 
-  /** The aria-label attribute for the list component. */
-  readonly ariaLabel?: string
-
   /** A message to be announced after the no results message - Used to pass in
    * any messaging shown to visual users */
   readonly postNoResultsMessage?: string
@@ -489,8 +486,8 @@ export class AugmentedSectionFilterList<
           }}
           onScroll={this.props.onScroll}
           setScrollTop={this.props.setScrollTop}
-          ariaLabel={this.props.ariaLabel}
           selectionMode={this.props.selectionMode}
+          getSectionAriaLabel={this.getSectionAriaLabel}
         />
       )
     }
@@ -520,6 +517,14 @@ export class AugmentedSectionFilterList<
     return groupAriaLabel !== undefined
       ? `${itemAriaLabel}, ${groupAriaLabel}`
       : itemAriaLabel
+  }
+
+  private getSectionAriaLabel = (section: number) => {
+    const groupAriaLabel = this.props.getGroupAriaLabel?.(
+      this.state.groups[section]
+    )
+
+    return groupAriaLabel !== undefined ? groupAriaLabel : undefined
   }
 
   private renderRow = (index: RowIndexPath) => {

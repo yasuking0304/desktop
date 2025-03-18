@@ -24,12 +24,11 @@ import { LinkButton } from '../lib/link-button'
 import { Foldout, FoldoutType } from '../../lib/app-state'
 import { IAvatarUser, getAvatarUserFromAuthor } from '../../models/avatar'
 import { showContextualMenu } from '../../lib/menu-item'
-import { Account } from '../../models/account'
+import { Account, isEnterpriseAccount } from '../../models/account'
 import {
   CommitMessageAvatar,
   CommitMessageAvatarWarningType,
 } from './commit-message-avatar'
-import { getDotComAPIEndpoint } from '../../lib/api'
 import {
   getStealthEmailForUser,
   isAttributableEmailFor,
@@ -677,7 +676,7 @@ export class CommitMessage extends React.Component<
         user={avatarUser}
         email={commitAuthor?.email}
         isEnterpriseAccount={
-          repositoryAccount?.endpoint !== getDotComAPIEndpoint()
+          repositoryAccount !== null && isEnterpriseAccount(repositoryAccount)
         }
         warningType={warningType}
         emailRuleFailures={this.state.repoRuleCommitAuthorFailures}
