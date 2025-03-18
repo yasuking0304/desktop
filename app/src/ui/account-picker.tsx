@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { PopoverDropdown } from './lib/popover-dropdown'
-import { Account } from '../models/account'
+import { Account, accountEquals } from '../models/account'
 import { SectionFilterList } from './lib/section-filter-list'
 import {
   IFilterListGroup,
@@ -11,6 +11,7 @@ import { IMatches } from '../lib/fuzzy-find'
 import { Avatar } from './lib/avatar'
 import { lookupPreferredEmail } from '../lib/email'
 import { IAvatarUser } from '../models/avatar'
+import memoizeOne from 'memoize-one'
 
 interface IAccountPickerProps {
   readonly accounts: ReadonlyArray<Account>
@@ -27,8 +28,7 @@ interface IAccountPickerProps {
 
 interface IAccountPickerState {
   readonly filterText: string
-  readonly groupedItems: ReadonlyArray<IFilterListGroup<IAccountListItem>>
-  readonly selectedItem: IAccountListItem | null
+  readonly selectedItemId: string | undefined
 }
 
 interface IAccountListItem extends IFilterListItem {
@@ -37,85 +37,62 @@ interface IAccountListItem extends IFilterListItem {
   readonly account: Account
 }
 
-function findItemForAccount(
-  group: IFilterListGroup<IAccountListItem>,
-  account: Account
-): IAccountListItem | null {
-  return (
-    group.items.find(
-      i =>
-        i.account.endpoint === account.endpoint &&
-        i.account.login === account.login
-    ) ?? null
-  )
-}
-
-function resolveSelectedItem(
-  group: IFilterListGroup<IAccountListItem>,
-  props: IAccountPickerProps,
-  currentlySelectedItem: IAccountListItem | null
-): IAccountListItem | null {
-  let selectedItem: IAccountListItem | null = null
-
-  if (props.selectedAccount != null) {
-    selectedItem = findItemForAccount(group, props.selectedAccount)
-  }
-
-  if (selectedItem == null && currentlySelectedItem != null) {
-    selectedItem = findItemForAccount(group, currentlySelectedItem.account)
-  }
-
-  return selectedItem
-}
-
 const getItemId = (account: Account) => `${account.login}@${account.endpoint}`
 
-function createListItems(
-  accounts: ReadonlyArray<Account>
-): IFilterListGroup<IAccountListItem> {
-  const items = accounts.map(account => ({
-    text: [account.login, account.endpoint],
-    id: getItemId(account),
-    account,
-  }))
-
-  return {
-    identifier: 'accounts',
-    items,
-  }
-}
-
 /**
- * A branch select element for filter and selecting a branch.
+ * A select-like element for filter and selecting an account.
  */
 export class AccountPicker extends React.Component<
   IAccountPickerProps,
   IAccountPickerState
 > {
+  private getFilterListGroups = memoizeOne(
+    (
+      accounts: ReadonlyArray<Account>
+    ): ReadonlyArray<IFilterListGroup<IAccountListItem>> => [
+      {
+        identifier: 'accounts',
+        items: accounts.map(account => ({
+          text: [account.login, account.endpoint],
+          id: getItemId(account),
+          account,
+        })),
+      },
+    ]
+  )
+
+  private getSelectedItem = memoizeOne(
+    (
+      accounts: ReadonlyArray<Account>,
+      selectedItemId: string | undefined,
+      selectedAccount: Account
+    ) =>
+      this.getFilterListGroups(accounts)
+        .flatMap(x => x.items)
+        .find(x =>
+          // Prioritize selectedItemId (i.e. our own internal state) which
+          // gets reset when the selectedAccount props changes.
+          selectedItemId
+            ? x.id === selectedItemId
+            : accountEquals(x.account, selectedAccount)
+        ) ?? null
+  )
+
   private popoverRef = React.createRef<PopoverDropdown>()
 
   public constructor(props: IAccountPickerProps) {
     super(props)
 
-    const group = createListItems(props.accounts)
-    const selectedItem = resolveSelectedItem(group, props, null)
-
     this.state = {
       filterText: '',
-      groupedItems: [group],
-      selectedItem,
+      selectedItemId: undefined,
     }
   }
 
-  public componentWillReceiveProps(nextProps: IAccountPickerProps) {
-    const group = createListItems(nextProps.accounts)
-    const selectedItem = resolveSelectedItem(
-      group,
-      nextProps,
-      this.state.selectedItem
-    )
-
-    this.setState({ groupedItems: [group], selectedItem })
+  public componentDidUpdate(prevProps: IAccountPickerProps) {
+    if (prevProps.selectedAccount !== this.props.selectedAccount) {
+      this.setState({ selectedItemId: undefined })
+    }
   }
 
   private onFilterTextChanged = (text: string) => {
@@ -152,16 +129,12 @@ export class AccountPicker extends React.Component<
     const account = item.account
     this.popoverRef.current?.closePopover()
 
-    this.setState({ selectedItem: item })
+    this.setState({ selectedItemId: item.id })
     this.props.onSelectedAccountChanged(account)
   }
 
-  private onSelectionChanged = (
-    selectedItem: IAccountListItem | null,
-    source: SelectionSource
-  ) => {
-    this.setState({ selectedItem })
-  }
+  private onSelectionChanged = (selectedItem: IAccountListItem | null) =>
+    this.setState({ selectedItemId: selectedItem?.id })
 
   private getItemAriaLabel = (item: IAccountListItem) =>
     `@${item.account.login} ${item.account.friendlyEndpoint}`
@@ -188,8 +161,12 @@ export class AccountPicker extends React.Component<
         <SectionFilterList<IAccountListItem>
           className="account-list"
           rowHeight={47}
-          groups={this.state.groupedItems}
-          selectedItem={this.state.selectedItem}
+          groups={this.getFilterListGroups(this.props.accounts)}
+          selectedItem={this.getSelectedItem(
+            this.props.accounts,
+            this.state.selectedItemId,
+            this.props.selectedAccount
+          )}
           renderItem={this.renderAccount}
           filterText={this.state.filterText}
           onFilterTextChanged={this.onFilterTextChanged}
