@@ -5433,7 +5433,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
     }
 
     if (
-      this.commitMessageGenerationDisclaimerLastSeen &&
+      !this.commitMessageGenerationDisclaimerLastSeen ||
       offsetFromNow(-30, 'days') >
         this.commitMessageGenerationDisclaimerLastSeen
     ) {
