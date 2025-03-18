@@ -1333,7 +1333,7 @@ export class FilterChangesList extends React.Component<
                 : CheckboxValue.Off
             }
             onChange={this.onFilterToIncludedInCommit}
-            label={`Being committed (${checkedFilesThatAreVisibleCount})`}
+            label={`Included in commit (${checkedFilesThatAreVisibleCount})`}
           />
         </div>
       </Popover>
