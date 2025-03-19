@@ -131,9 +131,15 @@
         }
       }
 
-      label {
-        text-align: right;
-        padding: 0 var(--spacing-half);
+      .changes-list-check-all {
+        input {
+          margin-right: 7px;
+        }
+        label {
+          text-align: right;
+          padding: 0;
+          position: unset;
+        }
       }
     }
   }

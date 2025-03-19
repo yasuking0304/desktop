@@ -1186,6 +1186,11 @@ export class FilterChangesList extends React.Component<
     const disableAllCheckbox =
       files.length === 0 || isCommitting || rebaseConflictState !== null
 
+    const checkAllLabel = `${
+      visibleFiles !== files.length ? `${visibleFiles} of ` : ''
+    }
+    ${files.length} changed file${files.length === 1 ? '' : 's'}`
+
     return (
       <div className="checkbox-container">
         <Checkbox
@@ -1195,12 +1200,8 @@ export class FilterChangesList extends React.Component<
           disabled={disableAllCheckbox}
           ariaLabelledBy="changes-list-check-all-label"
           className="changes-list-check-all"
+          label={checkAllLabel}
         />
-
-        <label id="changes-list-check-all-label">
-          {visibleFiles !== files.length ? `${visibleFiles} of ` : null}
-          {files.length} changed file{files.length === 1 ? '' : 's'}
-        </label>
       </div>
     )
   }
@@ -1210,7 +1211,7 @@ export class FilterChangesList extends React.Component<
   }
 
   private openFilterOptions = () => {
-    this.setState({ isFilterOptionsOpen: true })
+    this.setState({ isFilterOptionsOpen: !this.state.isFilterOptionsOpen })
   }
 
   private closeFilterOptions = () => {
