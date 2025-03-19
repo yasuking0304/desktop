@@ -1199,7 +1199,7 @@ export class FilterChangesList extends React.Component<
 
         <label id="changes-list-check-all-label">
           {visibleFiles !== files.length ? `${visibleFiles} of ` : null}
-          {files.length} changed file{files.length > 1 ? 's' : ''}
+          {files.length} changed file{files.length === 1 ? '' : 's'}
         </label>
       </div>
     )
