@@ -233,3 +233,19 @@
 
   transition: max-height var(--undo-animation-duration) ease-out;
 }
+
+
+.hidden-changes-warning {
+  background-color: var(--file-warning-background-color);
+  padding: var(--spacing-half) var(--spacing);
+  border-bottom: var(--file-warning-border-color) solid 1px;
+  border-top: var(--file-warning-border-color) solid 1px;
+
+  .octicon {
+    color: var(--file-warning-color);
+    margin-right: var(--spacing);
+    vertical-align: text-bottom;
+  }
+}
+
+

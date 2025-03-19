@@ -67,6 +67,7 @@ import {
   PopoverAnchorPosition,
   PopoverDecoration,
 } from '../lib/popover'
+import { LinkButton } from '../lib/link-button'
 
 interface IChangesListItem extends IFilterListItem {
   readonly id: string
@@ -1361,8 +1362,39 @@ export class FilterChangesList extends React.Component<
           />
         </div>
         {this.renderStashedChanges()}
+        {this.renderHiddenChangesWarning()}
         {this.renderCommitMessageForm()}
       </>
+    )
+  }
+
+  private renderHiddenChangesWarning = () => {
+    const { files } = this.props.workingDirectory
+    const filesSelected = files.filter(
+      f => f.selection.getSelectionType() !== DiffSelectionType.None
+    )
+
+    if (
+      !this.isCommittingFileHiddenByFilter(
+        this.state.filterText,
+        filesSelected.map(f => f.id),
+        this.state.filteredItems,
+        files.length
+      )
+    ) {
+      return null
+    }
+
+    return (
+      <div className="hidden-changes-warning" id="hidden-changes-warning">
+        <Octicon symbol={octicons.alert} />
+        <span>
+          <LinkButton onClick={this.showFilesToBeCommitted}>
+            Adjust the filters
+          </LinkButton>{' '}
+          to see all ${filesSelected} changes that will be committed.
+        </span>
+      </div>
     )
   }
 
