@@ -713,6 +713,7 @@ export class GitStore extends BaseStore {
     this._commitMessage = {
       summary: commit.summary,
       description: commit.body,
+      timestamp: Date.now(),
     }
     this.emitUpdate()
   }
@@ -726,6 +727,7 @@ export class GitStore extends BaseStore {
     this._commitMessage = {
       summary: commit.summary,
       description: commit.body,
+      timestamp: Date.now(),
     }
     this.emitUpdate()
   }
@@ -778,6 +780,7 @@ export class GitStore extends BaseStore {
       this._commitMessage = {
         summary: commit.summary,
         description: commit.body,
+        timestamp: Date.now(),
       }
 
       return
@@ -855,6 +858,7 @@ export class GitStore extends BaseStore {
     this._commitMessage = {
       summary: commit.summary,
       description: newBody,
+      timestamp: Date.now(),
     }
 
     const extractedAuthors = extractedTrailers.map(t =>

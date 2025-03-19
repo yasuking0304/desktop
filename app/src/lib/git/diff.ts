@@ -34,6 +34,8 @@ import { getMergeBase } from './merge'
 import { IStatusEntry } from '../status-parser'
 import { createLogParser } from './git-delimiter-parser'
 import { enableImagePreviewsForDDSFiles } from '../feature-flag'
+import { unstageAll } from './reset'
+import { stageFiles } from './update-index'
 
 /**
  * V8 has a limit on the size of string it can create (~256MB), and unless we want to
@@ -393,6 +395,51 @@ export async function getWorkingDirectoryDiff(
   const lineEndingsChange = parseLineEndingsWarning(stderr)
 
   return buildDiff(stdout, repository, file, 'HEAD', lineEndingsChange)
+}
+
+/**
+ * Render the diff for a list of files within the repository working directory.
+ * The files will be compared against HEAD if it's tracked, if not it'll be
+ * compared to an empty file meaning that all content in the file will be
+ * treated as additions.
+ */
+export async function getFilesDiffText(
+  repository: Repository,
+  files: ReadonlyArray<WorkingDirectoryFileChange>
+): Promise<string> {
+  // Clear the staging area, our diffs reflect the difference between the
+  // working directory and the last commit (if any) so our commits should
+  // do the same thing.
+  await unstageAll(repository)
+
+  await stageFiles(repository, files)
+
+  // `--no-ext-diff` should be provided wherever we invoke `git diff` so that any
+  // diff.external program configured by the user is ignored
+  const args = [
+    'diff',
+    '--no-ext-diff',
+    '--patch-with-raw',
+    '--no-color',
+    '--staged',
+  ]
+  const successExitCodes = new Set([0])
+
+  const { stdout } = await git(args, repository.path, 'getFilesDiffText', {
+    successExitCodes,
+    encoding: 'buffer',
+  })
+
+  await unstageAll(repository)
+
+  // No more than 10MB
+  if (stdout.length > 10 * 1024 * 1024) {
+    throw new Error('Diff is too large to render')
+  }
+
+  // `.toString()` in a promise in case its a large buffer
+  const outputString = await (async () => stdout.toString('utf8'))()
+  return outputString
 }
 
 async function getImageDiff(

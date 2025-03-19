@@ -355,6 +355,7 @@ function getInitialRepositoryState(): IRepositoryState {
     remote: null,
     isPushPullFetchInProgress: false,
     isCommitting: false,
+    isGeneratingCommitMessage: false,
     commitToAmend: null,
     lastFetched: null,
     checkoutProgress: null,

@@ -152,6 +152,7 @@ interface IFilterChangesListProps {
   readonly dispatcher: Dispatcher
   readonly availableWidth: number
   readonly isCommitting: boolean
+  readonly isGeneratingCommitMessage: boolean
   readonly commitToAmend: Commit | null
   readonly currentBranchProtected: boolean
   readonly currentRepoRulesInfo: RepoRulesInfo
@@ -868,6 +869,7 @@ export class FilterChangesList extends React.Component<
       repositoryAccount,
       dispatcher,
       isCommitting,
+      isGeneratingCommitMessage,
       commitToAmend,
       currentBranchProtected,
       currentRepoRulesInfo: currentRepoRulesInfo,
@@ -934,6 +936,7 @@ export class FilterChangesList extends React.Component<
           showPromptForCommittingFileHiddenByFilter
         }
         anyFilesAvailable={fileCount > 0}
+        filesSelected={filesSelected}
         filesToBeCommittedCount={filesSelected.length}
         repository={repository}
         repositoryAccount={repositoryAccount}
@@ -941,6 +944,7 @@ export class FilterChangesList extends React.Component<
         focusCommitMessage={this.props.focusCommitMessage}
         autocompletionProviders={this.props.autocompletionProviders}
         isCommitting={isCommitting}
+        isGeneratingCommitMessage={isGeneratingCommitMessage}
         commitToAmend={commitToAmend}
         showCoAuthoredBy={this.props.showCoAuthoredBy}
         coAuthors={this.props.coAuthors}
@@ -963,6 +967,7 @@ export class FilterChangesList extends React.Component<
           this.onConfirmCommitWithUnknownCoAuthors
         }
         onPersistCommitMessage={this.onPersistCommitMessage}
+        onGenerateCommitMessage={this.onGenerateCommitMessage}
         onCommitMessageFocusSet={this.onCommitMessageFocusSet}
         onRefreshAuthor={this.onRefreshAuthor}
         onShowPopup={this.onShowPopup}
@@ -1005,6 +1010,20 @@ export class FilterChangesList extends React.Component<
 
   private onPersistCommitMessage = (message: ICommitMessage) =>
     this.props.dispatcher.setCommitMessage(this.props.repository, message)
+
+  private onGenerateCommitMessage = (
+    filesSelected: ReadonlyArray<WorkingDirectoryFileChange>,
+    mustOverrideExistingMessage: boolean
+  ) =>
+    mustOverrideExistingMessage
+      ? this.props.dispatcher.promptOverrideWithGeneratedCommitMessage(
+          this.props.repository,
+          filesSelected
+        )
+      : this.props.dispatcher.generateCommitMessage(
+          this.props.repository,
+          filesSelected
+        )
 
   private onShowPopup = (p: Popup) => this.props.dispatcher.showPopup(p)
   private onShowFoldout = (f: Foldout) => this.props.dispatcher.showFoldout(f)

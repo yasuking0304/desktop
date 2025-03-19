@@ -703,6 +703,7 @@ export class CompareSidebar extends React.Component<
       commitMessage: {
         summary: squashOnto.summary,
         description: squashedDescription,
+        timestamp: Date.now(),
       },
       dialogTitle: `Squash ${allCommitsInSquash.length} Commits`,
       dialogButtonText: `Squash ${allCommitsInSquash.length} Commits`,
