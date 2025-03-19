@@ -214,15 +214,17 @@ interface IFilterChangesListProps {
   readonly showCommitLengthWarning: boolean
 
   readonly accounts: ReadonlyArray<Account>
+
+  readonly filterText: string
+
+  readonly includedChangesInCommitFilter: boolean
 }
 
 interface IFilterChangesListState {
-  readonly filterText: string
   readonly filteredItems: Map<string, IChangesListItem>
   readonly selectedItems: ReadonlyArray<IChangesListItem>
   readonly focusedRow: string | null
   readonly groups: ReadonlyArray<IFilterListGroup<IChangesListItem>>
-  readonly filterToIncludedCommit: boolean
   readonly isFilterOptionsOpen: boolean
 }
 
@@ -341,14 +343,12 @@ export class FilterChangesList extends React.Component<
     const groups = [listItems]
 
     this.state = {
-      filterText: '',
       filteredItems: new Map<string, IChangesListItem>(
         listItems.items.map(i => [i.id, i])
       ),
       selectedItems: getSelectedItemsFromProps(props),
       focusedRow: null,
       groups,
-      filterToIncludedCommit: false,
       isFilterOptionsOpen: false,
     }
   }
@@ -930,7 +930,7 @@ export class FilterChangesList extends React.Component<
     const showPromptForCommittingFileHiddenByFilter =
       this.props.askForConfirmationOnCommitFilteredChanges &&
       this.isCommittingFileHiddenByFilter(
-        this.state.filterText,
+        this.props.filterText,
         filesSelected.map(f => f.id),
         this.state.filteredItems,
         fileCount
@@ -1114,11 +1114,11 @@ export class FilterChangesList extends React.Component<
   }
 
   private onFilterTextChanged = (text: string) => {
-    if (this.state.filterText === '' && text !== '') {
+    if (this.props.filterText === '' && text !== '') {
       this.props.dispatcher.incrementMetric('typedInChangesFilterCount')
     }
 
-    this.setState({ filterText: text })
+    this.props.dispatcher.setChangesListFilterText(this.props.repository, text)
   }
 
   private onFilterListResultsChanged = (
@@ -1145,17 +1145,18 @@ export class FilterChangesList extends React.Component<
   }
 
   private clearFilter = () => {
-    this.setState({ filterText: '' })
+    this.props.dispatcher.setChangesListFilterText(this.props.repository, '')
   }
 
   private showFilesToBeCommitted = () => {
     this.props.dispatcher.incrementMetric(
       'adjustedFiltersForHiddenChangesCount'
     )
-    this.setState({
-      filterText: '',
-      filterToIncludedCommit: true,
-    })
+    this.props.dispatcher.setIncludedChangesInCommitFilter(
+      this.props.repository,
+      true
+    )
+    this.clearFilter()
   }
 
   private onTextBoxRef = (component: TextBox | null) => {
@@ -1261,7 +1262,7 @@ export class FilterChangesList extends React.Component<
         <div className="filter-options">
           <Checkbox
             value={
-              this.state.filterToIncludedCommit
+              this.props.includedChangesInCommitFilter
                 ? CheckboxValue.On
                 : CheckboxValue.Off
             }
@@ -1275,7 +1276,7 @@ export class FilterChangesList extends React.Component<
 
   private renderFilterBox = () => {
     const buttonTextLabel = `Filter Options ${
-      this.state.filterToIncludedCommit ? '(1 applied)' : ''
+      this.props.includedChangesInCommitFilter ? '(1 applied)' : ''
     }`
 
     return (
@@ -1283,7 +1284,7 @@ export class FilterChangesList extends React.Component<
         <span>
           <Button
             className={classNames('filter-button', {
-              active: this.state.filterToIncludedCommit,
+              active: this.props.includedChangesInCommitFilter,
             })}
             onClick={this.openFilterOptions}
             ariaExpanded={this.state.isFilterOptionsOpen}
@@ -1294,7 +1295,7 @@ export class FilterChangesList extends React.Component<
             <span>
               <Octicon symbol={octicons.filter} />
             </span>
-            {this.state.filterToIncludedCommit ? (
+            {this.props.includedChangesInCommitFilter ? (
               <span className="active-badge">
                 <div className="badge-bg">
                   <div className="badge"></div>
@@ -1313,7 +1314,7 @@ export class FilterChangesList extends React.Component<
           className="filter-list-filter-field"
           onValueChanged={this.onFilterTextChanged}
           onKeyDown={this.onFilterKeyDown}
-          value={this.state.filterText}
+          value={this.props.filterText}
         />
       </div>
     )
@@ -1338,7 +1339,7 @@ export class FilterChangesList extends React.Component<
             ref={this.filterListRef}
             id="changes-list"
             rowHeight={RowHeight}
-            filterText={this.state.filterText}
+            filterText={this.props.filterText}
             filterTextBox={this.filterTextBox}
             onFilterListResultsChanged={this.onFilterListResultsChanged}
             selectedItems={this.state.selectedItems}
@@ -1354,7 +1355,7 @@ export class FilterChangesList extends React.Component<
             onSelectionChanged={this.onFileSelectionChanged}
             groups={this.state.groups}
             filterMethod={
-              this.state.filterToIncludedCommit
+              this.props.includedChangesInCommitFilter
                 ? this.isIncludedInCommit
                 : undefined
             }
@@ -1385,7 +1386,7 @@ export class FilterChangesList extends React.Component<
 
     if (
       !this.isCommittingFileHiddenByFilter(
-        this.state.filterText,
+        this.props.filterText,
         filesSelected.map(f => f.id),
         this.state.filteredItems,
         files.length
@@ -1407,15 +1408,18 @@ export class FilterChangesList extends React.Component<
   }
 
   private getNoResultsMessage = () => {
-    if (this.state.filterText === '' && !this.state.filterToIncludedCommit) {
+    if (
+      this.props.filterText === '' &&
+      !this.props.includedChangesInCommitFilter
+    ) {
       return undefined
     }
 
-    const filterTextMessage = this.state.filterText
-      ? ` matching your filter of '${this.state.filterText}'`
+    const filterTextMessage = this.props.filterText
+      ? ` matching your filter of '${this.props.filterText}'`
       : ''
 
-    const includedCommitText = this.state.filterToIncludedCommit
+    const includedCommitText = this.props.includedChangesInCommitFilter
       ? ' that are to be included in your commit'
       : ''
 
@@ -1426,7 +1430,10 @@ export class FilterChangesList extends React.Component<
   }
 
   private renderNoChanges = () => {
-    if (this.state.filterText === '' && !this.state.filterToIncludedCommit) {
+    if (
+      this.props.filterText === '' &&
+      !this.props.includedChangesInCommitFilter
+    ) {
       return null
     }
 
@@ -1436,14 +1443,15 @@ export class FilterChangesList extends React.Component<
   }
 
   private onFilterToIncludedInCommit = () => {
-    if (!this.state.filterToIncludedCommit) {
+    if (!this.props.includedChangesInCommitFilter) {
       this.props.dispatcher.incrementMetric(
         'appliesIncludedInCommitFilterCount'
       )
     }
-    this.setState({
-      filterToIncludedCommit: !this.state.filterToIncludedCommit,
-    })
+    this.props.dispatcher.setIncludedChangesInCommitFilter(
+      this.props.repository,
+      !this.props.includedChangesInCommitFilter
+    )
     this.closeFilterOptions()
   }
 
