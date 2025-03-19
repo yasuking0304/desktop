@@ -1114,7 +1114,7 @@ export class FilterChangesList extends React.Component<
     if (this.state.filterText === '' && text !== '') {
       this.props.dispatcher.incrementMetric('typedInChangesFilterCount')
     }
-    
+
     this.setState({ filterText: text })
   }
 
