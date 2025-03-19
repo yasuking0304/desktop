@@ -68,6 +68,7 @@ import {
   PopoverDecoration,
 } from '../lib/popover'
 import { LinkButton } from '../lib/link-button'
+import { plural } from '../lib/plural'
 
 interface IChangesListItem extends IFilterListItem {
   readonly id: string
@@ -1194,6 +1195,11 @@ export class FilterChangesList extends React.Component<
     const disableAllCheckbox =
       files.length === 0 || isCommitting || rebaseConflictState !== null
 
+    const checkAllLabel = `${
+      visibleFiles !== files.length ? `${visibleFiles} of ` : ''
+    }
+    ${files.length} changed file${plural(files.length)}`
+
     return (
       <div className="checkbox-container">
         <Checkbox
@@ -1203,12 +1209,8 @@ export class FilterChangesList extends React.Component<
           disabled={disableAllCheckbox}
           ariaLabelledBy="changes-list-check-all-label"
           className="changes-list-check-all"
+          label={checkAllLabel}
         />
-
-        <label id="changes-list-check-all-label">
-          {visibleFiles !== files.length ? `${visibleFiles} of ` : null}
-          {files.length} changed file{files.length > 1 ? 's' : ''}
-        </label>
       </div>
     )
   }
@@ -1218,7 +1220,7 @@ export class FilterChangesList extends React.Component<
   }
 
   private openFilterOptions = () => {
-    this.setState({ isFilterOptionsOpen: true })
+    this.setState({ isFilterOptionsOpen: !this.state.isFilterOptionsOpen })
   }
 
   private closeFilterOptions = () => {
@@ -1271,6 +1273,10 @@ export class FilterChangesList extends React.Component<
   }
 
   private renderFilterBox = () => {
+    const buttonTextLabel = `Filter Options ${
+      this.state.filterToIncludedCommit ? '(1 applied)' : ''
+    }`
+
     return (
       <div className="filter-box-container">
         <span>
@@ -1281,14 +1287,18 @@ export class FilterChangesList extends React.Component<
             onClick={this.openFilterOptions}
             ariaExpanded={this.state.isFilterOptionsOpen}
             onButtonRef={this.onFilterOptionsButtonRef}
-            tooltip={'Filter Options'}
-            ariaLabel={'Filter Options'}
+            tooltip={buttonTextLabel}
+            ariaLabel={buttonTextLabel}
           >
             <span>
               <Octicon symbol={octicons.filter} />
             </span>
             {this.state.filterToIncludedCommit ? (
-              <span className="counter">1</span>
+              <span className="active-badge">
+                <div className="badge-bg">
+                  <div className="badge"></div>
+                </div>
+              </span>
             ) : null}
             <Octicon symbol={octicons.triangleDown} />
           </Button>
@@ -1297,7 +1307,6 @@ export class FilterChangesList extends React.Component<
         <TextBox
           ref={this.onTextBoxRef}
           displayClearButton={true}
-          prefixedIcon={octicons.search}
           autoFocus={true}
           placeholder={'Filter'}
           className="filter-list-filter-field"
@@ -1315,8 +1324,7 @@ export class FilterChangesList extends React.Component<
 
   private getListAriaLabel = () => {
     const { files } = this.props.workingDirectory
-    const filesPlural = files.length === 1 ? 'file' : 'files'
-    return `${files.length} changed ${filesPlural}`
+    return `${files.length} changed file${plural(files.length)}`
   }
 
   public render() {
