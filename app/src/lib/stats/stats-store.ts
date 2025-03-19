@@ -238,6 +238,9 @@ const DefaultDailyMeasures: IDailyMeasures = {
   submoduleDiffViewedFromHistoryCount: 0,
   openSubmoduleFromDiffCount: 0,
   previewedPullRequestCount: 0,
+  typedInChangesFilterCount: 0,
+  appliesIncludedInCommitFilterCount: 0,
+  adjustedFiltersForHiddenChangesCount: 0,
 }
 
 // A subtype of IDailyMeasures filtered to contain only its numeric properties

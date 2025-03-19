@@ -1111,6 +1111,10 @@ export class FilterChangesList extends React.Component<
   }
 
   private onFilterTextChanged = (text: string) => {
+    if (this.state.filterText === '' && text !== '') {
+      this.props.dispatcher.incrementMetric('typedInChangesFilterCount')
+    }
+    
     this.setState({ filterText: text })
   }
 
@@ -1142,6 +1146,9 @@ export class FilterChangesList extends React.Component<
   }
 
   private showFilesToBeCommitted = () => {
+    this.props.dispatcher.incrementMetric(
+      'adjustedFiltersForHiddenChangesCount'
+    )
     this.setState({
       filterText: '',
       filterToIncludedCommit: true,
@@ -1389,6 +1396,11 @@ export class FilterChangesList extends React.Component<
   }
 
   private onFilterToIncludedInCommit = () => {
+    if (!this.state.filterToIncludedCommit) {
+      this.props.dispatcher.incrementMetric(
+        'appliesIncludedInCommitFilterCount'
+      )
+    }
     this.setState({
       filterToIncludedCommit: !this.state.filterToIncludedCommit,
     })
