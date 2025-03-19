@@ -1265,7 +1265,9 @@ export class FilterChangesList extends React.Component<
   }
 
   private renderFilterBox = () => {
-    const buttonTextLabel = `Filter Options ${this.state.filterToIncludedCommit ? '(1 applied)' : ''}`
+    const buttonTextLabel = `Filter Options ${
+      this.state.filterToIncludedCommit ? '(1 applied)' : ''
+    }`
 
     return (
       <div className="filter-box-container">

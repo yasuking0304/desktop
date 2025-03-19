@@ -110,21 +110,19 @@
             position: absolute;
             right: 18px;
             top: 4px;
-        
-              
+
+            .badge-bg {
+              padding: 1px;
+              border-radius: 50%;
+              background-color: var(--secondary-button-background);
+
               .badge {
                 width: 5px;
                 height: 5px;
                 background-color: var(--box-selected-active-background-color);
                 border-radius: 50%;
               }
-              
-              .badge-bg {
-                padding: 1px;
-                border-radius: 50%;
-                background-color: var(--secondary-button-background);
-              }
-              
+            }
           }
 
           &:hover {
