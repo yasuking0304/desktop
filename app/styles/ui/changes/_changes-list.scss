@@ -254,7 +254,6 @@
   transition: max-height var(--undo-animation-duration) ease-out;
 }
 
-
 .hidden-changes-warning {
   background-color: var(--file-warning-background-color);
   padding: var(--spacing-half) var(--spacing);
@@ -275,5 +274,3 @@
     display: inline;
   }
 }
-
-
