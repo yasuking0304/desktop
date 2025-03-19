@@ -601,6 +601,9 @@ export interface IDailyMeasures {
 
   /** The number of times a user has opened the preview pull request dialog */
   readonly previewedPullRequestCount: number
+
+  /** The number of enterprise accounts the user is signed in to */
+  readonly enterpriseAccountCount: number
 }
 
 export class StatsDatabase extends Dexie {
