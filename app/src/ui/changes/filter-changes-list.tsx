@@ -988,6 +988,7 @@ export class FilterChangesList extends React.Component<
         onFilesToCommitNotVisible={this.onFilesToCommitNotVisible}
         accounts={this.props.accounts}
         onSuccessfulCommitCreated={this.onSuccessfulCommitCreated}
+        submitButtonAriaDescribedBy={'hidden-changes-warning'}
       />
     )
   }
@@ -1396,12 +1397,11 @@ export class FilterChangesList extends React.Component<
     return (
       <div className="hidden-changes-warning" id="hidden-changes-warning">
         <Octicon symbol={octicons.alert} />
-        <span>
-          <LinkButton onClick={this.showFilesToBeCommitted}>
-            Adjust the filters
-          </LinkButton>{' '}
-          to see all ${filesSelected} changes that will be committed.
-        </span>
+        <span className="sr-only">Warning:</span>
+        <span>Hidden changes will be committed. </span>
+        <LinkButton onClick={this.showFilesToBeCommitted}>
+          Adjust the filters to see all {filesSelected.length} changes
+        </LinkButton>
       </div>
     )
   }

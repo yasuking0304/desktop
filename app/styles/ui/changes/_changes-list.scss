@@ -261,10 +261,18 @@
   border-bottom: var(--file-warning-border-color) solid 1px;
   border-top: var(--file-warning-border-color) solid 1px;
 
+  // To overlap the commit message form border
+  margin-bottom: -1px;
+  z-index: 1;
+
   .octicon {
     color: var(--file-warning-color);
-    margin-right: var(--spacing);
+    margin-right: var(--spacing-half);
     vertical-align: text-bottom;
+  }
+
+  .link-button-component {
+    display: inline;
   }
 }
 
