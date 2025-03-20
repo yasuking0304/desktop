@@ -253,3 +253,24 @@
 
   transition: max-height var(--undo-animation-duration) ease-out;
 }
+
+.hidden-changes-warning {
+  background-color: var(--file-warning-background-color);
+  padding: var(--spacing-half) var(--spacing);
+  border-bottom: var(--file-warning-border-color) solid 1px;
+  border-top: var(--file-warning-border-color) solid 1px;
+
+  // To overlap the commit message form border
+  margin-bottom: -1px;
+  z-index: 1;
+
+  .octicon {
+    color: var(--file-warning-color);
+    margin-right: var(--spacing-half);
+    vertical-align: text-bottom;
+  }
+
+  .link-button-component {
+    display: inline;
+  }
+}

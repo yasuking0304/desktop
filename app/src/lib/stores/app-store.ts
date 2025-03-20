@@ -8148,6 +8148,23 @@ export class AppStore extends TypedBaseStore<IAppState> {
       this.emitUpdate()
     }
   }
+
+  public _setChangesListFilterText(repository: Repository, filterText: string) {
+    this.repositoryStateCache.updateChangesState(repository, () => ({
+      filterText,
+    }))
+    this.emitUpdate()
+  }
+
+  public _setIncludedChangesInCommitFilter(
+    repository: Repository,
+    includedChangesInCommitFilter: boolean
+  ) {
+    this.repositoryStateCache.updateChangesState(repository, () => ({
+      includedChangesInCommitFilter,
+    }))
+    this.emitUpdate()
+  }
 }
 
 /**
