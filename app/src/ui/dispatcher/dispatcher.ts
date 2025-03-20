@@ -3966,10 +3966,6 @@ export class Dispatcher {
     return this.appStore._updateShowDiffCheckMarks(diffCheckMarks)
   }
 
-  public setCanFilterChanges(canFilterChanges: boolean) {
-    return this.appStore._updateCanFilterChanges(canFilterChanges)
-  }
-
   public testPruneBranches() {
     return this.appStore._testPruneBranches()
   }

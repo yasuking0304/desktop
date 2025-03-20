@@ -88,8 +88,6 @@ interface IChangesSidebarProps {
   readonly commitSpellcheckEnabled: boolean
 
   readonly showCommitLengthWarning: boolean
-
-  readonly canFilterChanges: boolean
 }
 
 export class ChangesSidebar extends React.Component<IChangesSidebarProps, {}> {
@@ -400,10 +398,9 @@ export class ChangesSidebar extends React.Component<IChangesSidebarProps, {}> {
       this.props.repository
     )
 
-    const ChangesListComponent =
-      enableFilteredChangesList() && this.props.canFilterChanges
-        ? FilterChangesList
-        : ChangesList
+    const ChangesListComponent = enableFilteredChangesList()
+      ? FilterChangesList
+      : ChangesList
 
     return (
       <div className="panel" role="tabpanel" aria-labelledby="changes-tab">
