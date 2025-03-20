@@ -610,6 +610,9 @@ export interface IDailyMeasures {
 
   /** The number of times the user adjust the filter from warnings about hidden changes */
   adjustedFiltersForHiddenChangesCount: 0
+
+  /** The number of enterprise accounts the user is signed in to */
+  readonly enterpriseAccountCount: number
 }
 
 export class StatsDatabase extends Dexie {
