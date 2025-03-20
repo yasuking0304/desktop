@@ -318,6 +318,8 @@ function getInitialRepositoryState(): IRepositoryState {
       stashEntry: null,
       currentBranchProtected: false,
       currentRepoRulesInfo: new RepoRulesInfo(),
+      filterText: '',
+      includedChangesInCommitFilter: false,
     },
     selectedSection: RepositorySectionTab.Changes,
     branchesState: {

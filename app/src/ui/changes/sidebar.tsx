@@ -455,6 +455,10 @@ export class ChangesSidebar extends React.Component<IChangesSidebarProps, {}> {
           currentRepoRulesInfo={currentRepoRulesInfo}
           aheadBehind={this.props.aheadBehind}
           accounts={this.props.accounts}
+          filterText={this.props.changes.filterText}
+          includedChangesInCommitFilter={
+            this.props.changes.includedChangesInCommitFilter
+          }
         />
         {this.renderUndoCommit(rebaseConflictState)}
       </div>

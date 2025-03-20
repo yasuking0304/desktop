@@ -3973,4 +3973,17 @@ export class Dispatcher {
   public editGlobalGitConfig() {
     return this.appStore._editGlobalGitConfig()
   }
+
+  public setChangesListFilterText(repository: Repository, filterText: string) {
+    return this.appStore._setChangesListFilterText(repository, filterText)
+  }
+  public setIncludedChangesInCommitFilter(
+    repository: Repository,
+    includedChangesInCommitFilter: boolean
+  ) {
+    return this.appStore._setIncludedChangesInCommitFilter(
+      repository,
+      includedChangesInCommitFilter
+    )
+  }
 }
