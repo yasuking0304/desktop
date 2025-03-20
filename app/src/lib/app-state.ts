@@ -373,7 +373,6 @@ export interface IAppState {
 
   readonly underlineLinks: boolean
 
-  readonly canFilterChanges: boolean
   readonly updateState: IUpdateState
 }
 
