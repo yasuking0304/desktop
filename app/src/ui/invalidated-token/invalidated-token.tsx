@@ -4,6 +4,8 @@ import { Dispatcher } from '../dispatcher'
 import { Row } from '../lib/row'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
 import { Account, isEnterpriseAccount } from '../../models/account'
+import { getHTMLURL } from '../../lib/api'
+import { Ref } from '../lib/ref'
 
 interface IInvalidatedTokenProps {
   readonly dispatcher: Dispatcher
@@ -18,7 +20,6 @@ interface IInvalidatedTokenProps {
 export class InvalidatedToken extends React.Component<IInvalidatedTokenProps> {
   public render() {
     const { account } = this.props
-    const accountTypeSuffix = isEnterpriseAccount(account) ? ' Enterprise' : ''
 
     return (
       <Dialog
@@ -33,8 +34,8 @@ export class InvalidatedToken extends React.Component<IInvalidatedTokenProps> {
         <DialogContent>
           <Row>
             Your account token has been invalidated and you have been signed out
-            from your GitHub{accountTypeSuffix} account. Do you want to sign in
-            again?
+            from your <Ref>{account.friendlyEndpoint}</Ref> account. Do you want
+            to sign in again?
           </Row>
         </DialogContent>
         <DialogFooter>
@@ -50,7 +51,9 @@ export class InvalidatedToken extends React.Component<IInvalidatedTokenProps> {
     onDismissed()
 
     if (isEnterpriseAccount(account)) {
-      dispatcher.showEnterpriseSignInDialog(this.props.account.endpoint)
+      dispatcher.showEnterpriseSignInDialog(
+        getHTMLURL(this.props.account.endpoint)
+      )
     } else {
       dispatcher.showDotComSignInDialog()
     }
