@@ -1887,9 +1887,9 @@ export class API {
         )
       }
     } else if (response.status === HttpStatusCode.PaymentRequired) {
-      const message = (await response.text()) || 'You have exceeded your quota.'
+      const errorMsg = (await response.text()) || 'You have exceeded your quota'
 
-      throw new CopilotError(message, response.status)
+      throw new CopilotError(errorMsg, response.status)
     } else if (response.status === HttpStatusCode.Unauthorized) {
       throw new CopilotError(
         'Unauthorized: error with authentication',
