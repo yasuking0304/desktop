@@ -21,6 +21,8 @@ import {
   clearCertificateErrorSuppressionFor,
   suppressCertificateErrorFor,
 } from './suppress-certificate-error'
+import { HttpStatusCode } from './http-status-code'
+import { CopilotError } from './copilot-error'
 
 const envEndpoint = process.env['DESKTOP_GITHUB_DOTCOM_API_ENDPOINT']
 const envHTMLURL = process.env['DESKTOP_GITHUB_DOTCOM_HTML_URL']
@@ -133,16 +135,6 @@ export type GitHubAccountType = 'User' | 'Organization'
 
 /** The OAuth scopes we want to request */
 const oauthScopes = ['repo', 'user', 'workflow']
-
-enum HttpStatusCode {
-  NotModified = 304,
-  BadRequest = 400,
-  Unauthorized = 401,
-  PaymentRequired = 402,
-  Forbidden = 403,
-  NotFound = 404,
-  TooManyRequests = 429,
-}
 
 /**
  * Information about a repository as returned by the GitHub API.
@@ -1884,45 +1876,62 @@ export class API {
     if (response.status === HttpStatusCode.TooManyRequests) {
       const retryAfter = response.headers.get('Retry-After')
       if (retryAfter) {
-        throw new Error(`Rate limited, retry after ${retryAfter} seconds`)
+        throw new CopilotError(
+          `Rate limited, retry after ${retryAfter} seconds`,
+          response.status
+        )
       } else {
-        throw new Error('Rate limited, try again in a few minutes')
+        throw new CopilotError(
+          'Rate limited, try again in a few minutes',
+          response.status
+        )
       }
     } else if (response.status === HttpStatusCode.PaymentRequired) {
       const message = (await response.text()) || 'You have exceeded your quota.'
 
-      throw new Error(
-        message +
-          '\nUpgrade your plan: https://github.com/features/copilot/plans'
-      )
+      throw new CopilotError(message, response.status)
     } else if (response.status === HttpStatusCode.Unauthorized) {
-      throw new Error('Unauthorized: error with authentication')
+      throw new CopilotError(
+        'Unauthorized: error with authentication',
+        response.status
+      )
     } else if (response.status === HttpStatusCode.Forbidden) {
       const body = await response.text()
       if (body.includes('unauthorized: not licensed to use Copilot')) {
-        throw new Error('Unauthorized: not licensed to use Copilot')
+        throw new CopilotError(
+          'Unauthorized: not licensed to use Copilot',
+          response.status
+        )
       } else if (
         body.includes(
-          'unauthorized: not authorized to use this Copilot feature'
+          'unauthorized: not authorized to use this Copilot feature',
+          response.status
         )
       ) {
-        throw new Error(
-          'Unauthorized: not authorized to use this Copilot feature'
+        throw new CopilotError(
+          'Unauthorized: not authorized to use this Copilot feature',
+          response.status
         )
       } else if (
         body.includes('integration does not have GitHub chat enabled')
       ) {
-        throw new Error('Integration does not have GitHub chat enabled')
+        throw new CopilotError(
+          'Integration does not have GitHub chat enabled',
+          response.status
+        )
       } else {
-        throw new Error('Unauthorized: unknown')
+        throw new CopilotError('Unauthorized: unknown', response.status)
       }
     } else if (response.status === 466) {
-      throw new Error('Client issue: unsupported API version')
+      throw new CopilotError(
+        'Client issue: unsupported API version',
+        response.status
+      )
     } else if (response.status >= HttpStatusCode.BadRequest) {
       const internalError = `Internal server error, code: ${
         response.status
       }, request ID: ${response.headers.get('X-Github-Request-Id')}`
-      throw new Error(internalError)
+      throw new CopilotError(internalError, response.status)
     }
 
     const text = await response.text()
