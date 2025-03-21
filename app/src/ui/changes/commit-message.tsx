@@ -178,6 +178,10 @@ interface ICommitMessageProps {
   readonly onFilesToCommitNotVisible?: (onCommitAnyway: () => {}) => void
   readonly onSuccessfulCommitCreated?: () => void
   readonly accounts: ReadonlyArray<Account>
+
+  /** Optional to add an id to a message that should be provided as an aria
+   * description of the submit button */
+  readonly submitButtonAriaDescribedBy?: string
 }
 
 interface ICommitMessageState {
@@ -1322,6 +1326,7 @@ export class CommitMessage extends React.Component<
         tooltip={tooltip}
         tooltipDismissable={false}
         onlyShowTooltipWhenOverflowed={buttonEnabled}
+        ariaDescribedBy={this.props.submitButtonAriaDescribedBy}
       >
         <>
           {loading}

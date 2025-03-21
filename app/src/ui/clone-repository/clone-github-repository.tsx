@@ -9,10 +9,14 @@ import { IAPIRepository } from '../../lib/api'
 import { CloneableRepositoryFilterList } from './cloneable-repository-filter-list'
 import { ClickSource } from '../lib/list'
 import { t } from 'i18next'
+import { enableMultipleEnterpriseAccounts } from '../../lib/feature-flag'
+import { AccountPicker } from '../account-picker'
 
 interface ICloneGithubRepositoryProps {
   /** The account to clone from. */
   readonly account: Account
+
+  readonly accounts: ReadonlyArray<Account>
 
   /** The path to clone to. */
   readonly path: string
@@ -79,12 +83,29 @@ interface ICloneGithubRepositoryProps {
     repository: IAPIRepository,
     source: ClickSource
   ) => void
+
+  readonly onSelectedAccountChanged: (account: Account) => void
 }
 
 export class CloneGithubRepository extends React.PureComponent<ICloneGithubRepositoryProps> {
+  private renderAccountPicker = () => {
+    return (
+      <AccountPicker
+        accounts={this.props.accounts}
+        selectedAccount={this.props.account}
+        onSelectedAccountChanged={this.props.onSelectedAccountChanged}
+        openButtonClassName="dialog-preferred-focus"
+      />
+    )
+  }
+
   public render() {
     return (
       <DialogContent className="clone-github-repository-content">
+        {enableMultipleEnterpriseAccounts() &&
+        this.props.accounts.length > 1 ? (
+          <Row className="account-picker-row">{this.renderAccountPicker()}</Row>
+        ) : undefined}
         <Row>
           <CloneableRepositoryFilterList
             account={this.props.account}

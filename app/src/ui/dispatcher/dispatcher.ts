@@ -3966,15 +3966,24 @@ export class Dispatcher {
     return this.appStore._updateShowDiffCheckMarks(diffCheckMarks)
   }
 
-  public setCanFilterChanges(canFilterChanges: boolean) {
-    return this.appStore._updateCanFilterChanges(canFilterChanges)
-  }
-
   public testPruneBranches() {
     return this.appStore._testPruneBranches()
   }
 
   public editGlobalGitConfig() {
     return this.appStore._editGlobalGitConfig()
+  }
+
+  public setChangesListFilterText(repository: Repository, filterText: string) {
+    return this.appStore._setChangesListFilterText(repository, filterText)
+  }
+  public setIncludedChangesInCommitFilter(
+    repository: Repository,
+    includedChangesInCommitFilter: boolean
+  ) {
+    return this.appStore._setIncludedChangesInCommitFilter(
+      repository,
+      includedChangesInCommitFilter
+    )
   }
 }

@@ -601,6 +601,18 @@ export interface IDailyMeasures {
 
   /** The number of times a user has opened the preview pull request dialog */
   readonly previewedPullRequestCount: number
+
+  /** The number of times a user initiates (from an empty state) typing in the changes filter bar */
+  typedInChangesFilterCount: 0
+
+  /** The number of times the user applies the "Included in Commit" Filter */
+  appliesIncludedInCommitFilterCount: 0
+
+  /** The number of times the user adjust the filter from warnings about hidden changes */
+  adjustedFiltersForHiddenChangesCount: 0
+
+  /** The number of enterprise accounts the user is signed in to */
+  readonly enterpriseAccountCount: number
 }
 
 export class StatsDatabase extends Dexie {

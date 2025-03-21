@@ -447,9 +447,6 @@ export const underlineLinksDefault = true
 export const showDiffCheckMarksDefault = true
 export const showDiffCheckMarksKey = 'diff-check-marks-visible'
 
-export const canFilterChangesDefault = false
-export const canFilterChangesKey = 'can-filter-changes'
-
 export class AppStore extends TypedBaseStore<IAppState> {
   private readonly gitStoreCache: GitStoreCache
 
@@ -599,8 +596,6 @@ export class AppStore extends TypedBaseStore<IAppState> {
   private cachedRepoRulesets = new Map<number, IAPIRepoRuleset>()
 
   private underlineLinks: boolean = underlineLinksDefault
-
-  private canFilterChanges: boolean = canFilterChangesDefault
 
   public constructor(
     private readonly gitHubUserStore: GitHubUserStore,
@@ -1093,7 +1088,6 @@ export class AppStore extends TypedBaseStore<IAppState> {
       cachedRepoRulesets: this.cachedRepoRulesets,
       underlineLinks: this.underlineLinks,
       showDiffCheckMarks: this.showDiffCheckMarks,
-      canFilterChanges: this.canFilterChanges,
       updateState: updateStore.state,
     }
   }
@@ -2330,11 +2324,6 @@ export class AppStore extends TypedBaseStore<IAppState> {
     this.showDiffCheckMarks = getBoolean(
       showDiffCheckMarksKey,
       showDiffCheckMarksDefault
-    )
-
-    this.canFilterChanges = getBoolean(
-      canFilterChangesKey,
-      canFilterChangesDefault
     )
 
     this.emitUpdateNow()
@@ -8182,12 +8171,21 @@ export class AppStore extends TypedBaseStore<IAppState> {
     }
   }
 
-  public _updateCanFilterChanges(canFilterChanges: boolean) {
-    if (canFilterChanges !== this.canFilterChanges) {
-      this.canFilterChanges = canFilterChanges
-      setBoolean(canFilterChangesKey, canFilterChanges)
-      this.emitUpdate()
-    }
+  public _setChangesListFilterText(repository: Repository, filterText: string) {
+    this.repositoryStateCache.updateChangesState(repository, () => ({
+      filterText,
+    }))
+    this.emitUpdate()
+  }
+
+  public _setIncludedChangesInCommitFilter(
+    repository: Repository,
+    includedChangesInCommitFilter: boolean
+  ) {
+    this.repositoryStateCache.updateChangesState(repository, () => ({
+      includedChangesInCommitFilter,
+    }))
+    this.emitUpdate()
   }
 }
 

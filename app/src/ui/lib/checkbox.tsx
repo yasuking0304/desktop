@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { createUniqueId, releaseUniqueId } from './id-pool'
 import uuid from 'uuid'
+import classNames from 'classnames'
 
 /** The possible values for a Checkbox component. */
 export enum CheckboxValue {
@@ -31,6 +32,8 @@ interface ICheckboxProps {
   /** An aria description of a checkbox - intended to provide more verbose
    * information than a label that a the user might need */
   readonly ariaDescribedBy?: string
+
+  readonly className?: string
 }
 
 interface ICheckboxState {
@@ -110,7 +113,7 @@ export class Checkbox extends React.Component<ICheckboxProps, ICheckboxState> {
 
   public render() {
     return (
-      <div className="checkbox-component">
+      <div className={classNames('checkbox-component', this.props.className)}>
         <input
           id={this.state.inputId}
           tabIndex={this.props.tabIndex}

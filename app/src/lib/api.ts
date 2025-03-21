@@ -2018,7 +2018,11 @@ export function getOAuthAuthorizationURL(
 ): string {
   const urlBase = getHTMLURL(endpoint)
   const scope = encodeURIComponent(oauthScopes.join(' '))
-  return `${urlBase}/login/oauth/authorize?client_id=${ClientID}&scope=${scope}&state=${state}`
+
+  return new window.URL(
+    `/login/oauth/authorize?client_id=${ClientID}&scope=${scope}&state=${state}`,
+    urlBase
+  ).toString()
 }
 
 export async function requestOAuthToken(

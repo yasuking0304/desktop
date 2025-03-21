@@ -238,6 +238,10 @@ const DefaultDailyMeasures: IDailyMeasures = {
   submoduleDiffViewedFromHistoryCount: 0,
   openSubmoduleFromDiffCount: 0,
   previewedPullRequestCount: 0,
+  typedInChangesFilterCount: 0,
+  appliesIncludedInCommitFilterCount: 0,
+  adjustedFiltersForHiddenChangesCount: 0,
+  enterpriseAccountCount: 0,
 }
 
 // A subtype of IDailyMeasures filtered to contain only its numeric properties
@@ -669,6 +673,7 @@ export class StatsStore implements IStatsStore {
     return {
       dotComAccount: accounts.some(isDotComAccount),
       enterpriseAccount: accounts.some(isEnterpriseAccount),
+      enterpriseAccountCount: accounts.filter(isEnterpriseAccount).length,
     }
   }
 

@@ -1,7 +1,7 @@
 import * as React from 'react'
-import { Account, isDotComAccount } from '../../models/account'
+import { Account } from '../../models/account'
 import { IFilterListGroup } from '../lib/filter-list'
-import { IAPIRepository, getHTMLURL } from '../../lib/api'
+import { IAPIRepository } from '../../lib/api'
 import {
   ICloneableRepositoryListItem,
   groupRepositories,
@@ -77,6 +77,8 @@ interface ICloneableRepositoryFilterListProps {
     repository: IAPIRepository,
     source: ClickSource
   ) => void
+
+  readonly renderPreFilter?: () => JSX.Element | null
 }
 
 const RowHeight = 31
@@ -185,6 +187,7 @@ export class CloneableRepositoryFilterList extends React.PureComponent<ICloneabl
         onFilterTextChanged={this.props.onFilterTextChanged}
         renderNoItems={this.renderNoItems}
         renderPostFilter={this.renderPostFilter}
+        renderPreFilter={this.props.renderPreFilter}
         onItemClick={this.props.onItemClicked ? this.onItemClick : undefined}
         placeholderText={t(
           'cloneable-repository-filter-list.placeholder-filter-repositories',
@@ -289,9 +292,6 @@ export class CloneableRepositoryFilterList extends React.PureComponent<ICloneabl
 
   private renderNoItems = () => {
     const { loading, repositories, account } = this.props
-    const endpointName = isDotComAccount(account)
-      ? 'GitHub.com'
-      : getHTMLURL(this.props.account.endpoint)
 
     if (loading && (repositories === null || repositories.length === 0)) {
       return (
@@ -299,7 +299,7 @@ export class CloneableRepositoryFilterList extends React.PureComponent<ICloneabl
           {t(
             'cloneable-repository-filter-list.loading-repositories',
             `Loading repositories from {{0}}…`,
-            { 0: endpointName }
+            { 0: account.friendlyEndpoint }
           )}
         </div>
       )
@@ -325,13 +325,13 @@ export class CloneableRepositoryFilterList extends React.PureComponent<ICloneabl
           {t(
             'cloneable-repository-filter-list.looks-like-no-repositories-1',
             `Looks like there are no repositories for `,
-            { 0: endpointName }
+            { 0: account.friendlyEndpoint }
           )}
           <Ref>{this.props.account.login}</Ref>
           {t(
             'cloneable-repository-filter-list.looks-like-no-repositories-2',
             ' on {{0}}.',
-            { 0: endpointName }
+            { 0: account.friendlyEndpoint }
           )}
           {t('cloneable-repository-filter-list.created-a-repository-1', ` `)}
           <LinkButton onClick={this.refreshRepositories}>

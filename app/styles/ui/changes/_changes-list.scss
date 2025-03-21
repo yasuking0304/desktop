@@ -19,7 +19,7 @@
     flex: 0 0 auto;
   }
 
-  .checkbox-component {
+  .changes-list-check-all {
     align-items: center;
     height: 100%;
     position: relative;
@@ -45,57 +45,123 @@
   }
 
   &.filtered-changes-list {
-    .header {
-      display: flex;
-      align-items: center;
+    .filter-popover {
+      text-align: right;
 
-      label {
-        flex: 1;
-        text-align: right;
+      .filter-popover-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        h3 {
+          margin-bottom: var(--spacing-half);
+        }
       }
 
-      button {
-        padding: 1px 3px;
-        margin-left: var(--spacing-half);
-        border: none;
-        height: auto;
+      .filter-options {
+        margin: var(--spacing) 0;
+      }
+      .popover-content {
+        padding: var(--spacing);
+      }
 
-        &:focus-visible {
-          outline-offset: 0px;
+      @include close-button;
+
+      .close {
+        margin: 0;
+      }
+    }
+
+    .header {
+      display: flex;
+      height: auto;
+      flex-direction: column;
+      padding: var(--spacing-half) var(--spacing);
+      margin: 0;
+
+      .filter-box-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: var(--spacing-half);
+        transition: all 0.3s ease-out;
+
+        input {
+          border-radius: 0 var(--border-radius) var(--border-radius) 0;
         }
 
-        &:hover {
-          color: var(--text-secondary-color);
-          background-color: var(--secondary-button-background);
-        }
+        .filter-button {
+          border-radius: var(--border-radius) 0 0 var(--border-radius);
+          border-right: none;
+          font-weight: var(--font-weight-semibold);
+          color: var(--text-color);
+          justify-content: space-between;
+          display: inline-flex;
+          align-items: center;
+          padding-right: var(--spacing-half);
+          position: relative;
 
-        &.included-in-commit-filter-on {
-          color: var(--link-button-color);
+          &.active {
+            span:first-child {
+              color: var(--box-selected-active-background-color);
+            }
+          }
+
+          .active-badge {
+            position: absolute;
+            right: 18px;
+            top: 4px;
+
+            .badge-bg {
+              padding: 1px;
+              border-radius: 50%;
+              background-color: var(--secondary-button-background);
+
+              .badge {
+                width: 5px;
+                height: 5px;
+                background-color: var(--box-selected-active-background-color);
+                border-radius: 50%;
+              }
+            }
+          }
 
           &:hover {
-            color: var(--link-button-hover-color);
+            color: var(--text-secondary-color);
+            background-color: inherit;
+
+            .badge-bg {
+              background-color: var(--secondary-button-background);
+            }
           }
+        }
+      }
+
+      .checkbox-container {
+        display: flex;
+        align-items: center;
+
+        .spacer {
+          flex-grow: 1;
+        }
+      }
+
+      .changes-list-check-all {
+        input {
+          margin-right: 7px;
+        }
+        label {
+          text-align: right;
+          padding: 0;
+          position: unset;
         }
       }
     }
   }
 
   .filter-list {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    min-height: 100px;
-
-    .filter-field-row {
-      background-color: var(--box-alt-background-color);
-      padding: var(--spacing);
-      padding-bottom: 0px;
-      margin: 0;
-    }
-
-    .filter-list-container {
-      height: 100%;
-    }
+    // This is important when app is zoomed in. Otherwise, the filter list
+    // will be overlapped by the commit message form.
+    min-height: 0;
   }
 
   .no-changes-in-list {
@@ -139,10 +205,12 @@
     background-color: var(--secondary-button-hover-background);
     background: var(--box-selected-background-color);
   }
+
   &.selected,
   &.selected:hover {
     color: var(--box-selected-active-text-color);
     background-color: var(--box-selected-active-background-color);
+
     .stack-icon {
       fill: var(--box-selected-active-text-color);
     }
@@ -184,4 +252,25 @@
   max-height: 0;
 
   transition: max-height var(--undo-animation-duration) ease-out;
+}
+
+.hidden-changes-warning {
+  background-color: var(--file-warning-background-color);
+  padding: var(--spacing-half) var(--spacing);
+  border-bottom: var(--file-warning-border-color) solid 1px;
+  border-top: var(--file-warning-border-color) solid 1px;
+
+  // To overlap the commit message form border
+  margin-bottom: -1px;
+  z-index: 1;
+
+  .octicon {
+    color: var(--file-warning-color);
+    margin-right: var(--spacing-half);
+    vertical-align: text-bottom;
+  }
+
+  .link-button-component {
+    display: inline;
+  }
 }

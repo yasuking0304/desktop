@@ -1,7 +1,4 @@
-import {
-  groupRepositories,
-  KnownRepositoryGroup,
-} from '../../src/ui/repositories-list/group-repositories'
+import { groupRepositories } from '../../src/ui/repositories-list/group-repositories'
 import { Repository, ILocalRepositoryState } from '../../src/models/repository'
 import { CloningRepository } from '../../src/models/cloning-repository'
 import { gitHubRepoFixture } from '../helpers/github-repo-builder'
@@ -21,7 +18,7 @@ describe('repository list grouping', () => {
       gitHubRepoFixture({
         owner: '',
         name: 'my-repo3',
-        endpoint: 'github.big-corp.com',
+        endpoint: 'https://github.big-corp.com/api/v3',
       }),
       false
     ),
@@ -30,22 +27,23 @@ describe('repository list grouping', () => {
   const cache = new Map<number, ILocalRepositoryState>()
 
   it('groups repositories by owners/Enterprise/Other', () => {
-    const grouped = groupRepositories(repositories, cache)
+    const grouped = groupRepositories(repositories, cache, [])
     expect(grouped).toHaveLength(3)
 
-    expect(grouped[0].identifier).toBe('me')
+    expect(grouped[0].identifier.kind).toBe('dotcom')
+    expect((grouped[0].identifier as any).owner.login).toBe('me')
     expect(grouped[0].items).toHaveLength(1)
 
     let item = grouped[0].items[0]
     expect(item.repository.path).toBe('repo2')
 
-    expect(grouped[1].identifier).toBe(KnownRepositoryGroup.Enterprise)
+    expect(grouped[1].identifier.kind).toBe('enterprise')
     expect(grouped[1].items).toHaveLength(1)
 
     item = grouped[1].items[0]
     expect(item.repository.path).toBe('repo3')
 
-    expect(grouped[2].identifier).toBe(KnownRepositoryGroup.NonGitHub)
+    expect(grouped[2].identifier.kind).toBe('other')
     expect(grouped[2].items).toHaveLength(1)
 
     item = grouped[2].items[0]
@@ -71,18 +69,20 @@ describe('repository list grouping', () => {
 
     const grouped = groupRepositories(
       [repoC, repoB, repoZ, repoD, repoA],
-      cache
+      cache,
+      []
     )
     expect(grouped).toHaveLength(2)
 
-    expect(grouped[0].identifier).toBe('me')
+    expect(grouped[0].identifier.kind).toBe('dotcom')
+    expect((grouped[0].identifier as any).owner.login).toBe('me')
     expect(grouped[0].items).toHaveLength(2)
 
     let items = grouped[0].items
     expect(items[0].repository.path).toBe('b')
     expect(items[1].repository.path).toBe('d')
 
-    expect(grouped[1].identifier).toBe(KnownRepositoryGroup.NonGitHub)
+    expect(grouped[1].identifier.kind).toBe('other')
     expect(grouped[1].items).toHaveLength(3)
 
     items = grouped[1].items
@@ -110,7 +110,7 @@ describe('repository list grouping', () => {
       gitHubRepoFixture({
         owner: 'business',
         name: 'enterprise-repo',
-        endpoint: '',
+        endpoint: 'https://ghe.io/api/v3',
       }),
       false
     )
@@ -120,21 +120,23 @@ describe('repository list grouping', () => {
       gitHubRepoFixture({
         owner: 'silliness',
         name: 'enterprise-repo',
-        endpoint: '',
+        endpoint: 'https://ghe.io/api/v3',
       }),
       false
     )
 
-    const grouped = groupRepositories([repoA, repoB, repoC, repoD], cache)
+    const grouped = groupRepositories([repoA, repoB, repoC, repoD], cache, [])
     expect(grouped).toHaveLength(3)
 
-    expect(grouped[0].identifier).toBe('user1')
+    expect(grouped[0].identifier.kind).toBe('dotcom')
+    expect((grouped[0].identifier as any).owner.login).toBe('user1')
     expect(grouped[0].items).toHaveLength(1)
 
-    expect(grouped[1].identifier).toBe('user2')
+    expect(grouped[1].identifier.kind).toBe('dotcom')
+    expect((grouped[1].identifier as any).owner.login).toBe('user2')
     expect(grouped[1].items).toHaveLength(1)
 
-    expect(grouped[2].identifier).toBe(KnownRepositoryGroup.Enterprise)
+    expect(grouped[2].identifier.kind).toBe('enterprise')
     expect(grouped[2].items).toHaveLength(2)
 
     expect(grouped[0].items[0].text[0]).toBe('repo')
