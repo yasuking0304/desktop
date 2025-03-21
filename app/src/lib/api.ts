@@ -138,6 +138,7 @@ enum HttpStatusCode {
   NotModified = 304,
   BadRequest = 400,
   Unauthorized = 401,
+  PaymentRequired = 402,
   Forbidden = 403,
   NotFound = 404,
   TooManyRequests = 429,
@@ -1887,6 +1888,13 @@ export class API {
       } else {
         throw new Error('Rate limited, try again in a few minutes')
       }
+    } else if (response.status === HttpStatusCode.PaymentRequired) {
+      const message = (await response.text()) || 'You have exceeded your quota.'
+
+      throw new Error(
+        message +
+          '\nUpgrade your plan: https://github.com/features/copilot/plans'
+      )
     } else if (response.status === HttpStatusCode.Unauthorized) {
       throw new Error('Unauthorized: error with authentication')
     } else if (response.status === HttpStatusCode.Forbidden) {
