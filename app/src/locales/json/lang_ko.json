@@ -222,11 +222,11 @@
   "choose-fork-settings-dialog": {
     "contribute-to-parent-project": "To contribute to the parent project",
     "for-my-own-purposes": "For my own purposes",
+    "this-repository-is-a-fork": "This repository is a fork. How do you plan to use it?",
     "we-will-for-my-own-purposes-1": "We will help you contribute to the ",
     "we-will-for-my-own-purposes-2": " repository",
     "we-will-help-you-contribute-1": "We will help you contribute to the ",
     "we-will-help-you-contribute-2": " repository",
-    "you-have-changes-on-this-branch": "You have changes on this branch. What would you like to do with them?",
     "you-planning-to-use-this-fork": "How are you planning to use this fork?"
   },
   "choose-target-branch": {
@@ -466,6 +466,7 @@
     "paste": "Paste",
     "preferences": "Settings",
     "pulling": "Pulling {{0}}",
+    "recent": "Recent",
     "redo": "Redo",
     "remove": "Remove",
     "remove-alias": "Remove alias",
@@ -905,7 +906,8 @@
   "invalidated-token": {
     "invalidated-account-token": "Invalidated account token",
     "invalidated-account-token-darwin": "Invalidated Account Token",
-    "token-has-been-invalidated": "Your account token has been invalidated and you have been signed out from your GitHub{{0}} account. Do you want to sign in again?"
+    "token-has-been-invalidated-1": "Your account token has been invalidated and you have been signed out from your ",
+    "token-has-been-invalidated-2": "account. Do you want to sign in again?"
   },
   "label": {
     "about-github-desktop": "&About GitHub Desktop",

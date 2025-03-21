@@ -222,11 +222,11 @@
   "choose-fork-settings-dialog": {
     "contribute-to-parent-project": "パートナープロジェクトに貢献するため",
     "for-my-own-purposes": "私用目的のため",
+    "this-repository-is-a-fork": "このリポジトリはフォークされたものです。どのように使用する予定ですか?",
     "we-will-for-my-own-purposes-1": "私たちはあなたが ",
     "we-will-for-my-own-purposes-2": " リポジトリに貢献するのを手助けします",
     "we-will-help-you-contribute-1": "私たちはあなたが ",
     "we-will-help-you-contribute-2": " リポジトリに貢献するのを手助けします",
-    "you-have-changes-on-this-branch": "このブランチに変更があります。どのように対応しますか?",
     "you-planning-to-use-this-fork": "このフォークをどのように使用する予定ですか?"
   },
   "choose-target-branch": {
@@ -466,6 +466,7 @@
     "paste": "貼り付け",
     "preferences": "環境設定",
     "pulling": "{{0}} にプル中",
+    "recent": "最近",
     "redo": "やり直し",
     "remove": "削除",
     "remove-alias": "エイリアス削除",
@@ -905,7 +906,8 @@
   "invalidated-token": {
     "invalidated-account-token": "アカウント トークンが無効になりました",
     "invalidated-account-token-darwin": "アカウント トークンが無効になりました",
-    "token-has-been-invalidated": "アカウント トークンが無効になり、GitHub{{0}} アカウントからサインアウトされました。もう一度サインインしますか?"
+    "token-has-been-invalidated-1": "アカウント トークンが無効になり、",
+    "token-has-been-invalidated-2": " アカウントからサインアウトされました。再度サインインしますか?"
   },
   "label": {
     "about-github-desktop": "GitHub Desktop について(&A)",
