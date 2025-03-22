@@ -2,7 +2,7 @@
   "releases": {
     "3.4.19-beta1": [
       "[New] Add support for multiple enterprise accounts - #20227",
-      "[New] Users can filter the change files list - #20220",
+      "[New] Users can filter the changed files list - #20220",
       "[Fixed] Resizing the list of files in \"Preview Pull Request\" does not open/create the pull request - #20200",
       "[Fixed] Sections lists such as the repository list in the cloning dialog and the pull request list announce their labels to screen readers - #20184",
       "[Fixed] The added and removed prefixes of diff do not wrap making diff contents width equal in side by side diffs - #20191",
