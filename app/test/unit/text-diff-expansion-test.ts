@@ -91,7 +91,9 @@ describe('text-diff-expansion', () => {
 
   it('does not add a dummy hunk to the bottom when last hunk reaches bottom', async () => {
     const { textDiff } = await prepareDiff(100, [99])
-    expect(textDiff.hunks.at(-1)?.lines).toHaveLength(6)
+    const lastHunk = textDiff.hunks.at(-1)
+    expect(lastHunk).not.toBeUndefined()
+    expect(lastHunk!.lines).toHaveLength(6)
   })
 
   it('expands the initial hunk without reaching the top', async () => {
