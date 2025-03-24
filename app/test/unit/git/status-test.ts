@@ -17,14 +17,10 @@ import {
   GitStatusEntry,
   isManualConflict,
 } from '../../../src/models/status'
-import * as temp from 'temp'
 import { getStatus } from '../../../src/lib/git'
 import { isConflictedFile } from '../../../src/lib/status'
 import { setupLocalConfig } from '../../helpers/local-config'
 import { generateString } from '../../helpers/random-data'
-
-const _temp = temp.track()
-const mkdir = _temp.mkdir
 
 describe('git/status', () => {
   describe('getStatus', () => {
@@ -281,26 +277,6 @@ describe('git/status', () => {
           submoduleStatus: undefined,
         })
       })
-
-      it.skip('Handles at least 10k untracked files without failing', async () => {
-        const numFiles = 10000
-        const basePath = repository.path
-
-        await mkdir(basePath)
-
-        // create a lot of files
-        const promises = []
-        for (let i = 0; i < numFiles; i++) {
-          promises.push(
-            FSE.writeFile(path.join(basePath, `test-file-${i}`), 'Hey there\n')
-          )
-        }
-        await Promise.all(promises)
-
-        const status = await getStatusOrThrow(repository)
-        const files = status.workingDirectory.files
-        expect(files).toHaveLength(numFiles)
-      }, 25000) // needs a little extra time on CI
 
       it('returns null for directory without a .git directory', async () => {
         repository = setupEmptyDirectory()
