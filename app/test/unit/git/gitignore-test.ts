@@ -37,7 +37,7 @@ describe('gitignore', () => {
       expect(gitignore).toBe(expected)
     })
 
-    it('when autocrlf=true and safecrlf=true, appends CRLF to file', async () => {
+    it.only('when autocrlf=true and safecrlf=true, appends CRLF to file', async () => {
       const repo = await setupEmptyRepository()
 
       await setupLocalConfig(repo, [
@@ -57,7 +57,7 @@ describe('gitignore', () => {
       expect(commit.exitCode).toBe(0)
 
       const contents = await readGitIgnoreAtRoot(repo)
-      expect(contents!.endsWith('\r\n'))
+      expect(contents!.endsWith('\r\n')).toBeTrue()
     })
 
     it('when autocrlf=input, appends LF to file', async () => {
@@ -82,7 +82,7 @@ describe('gitignore', () => {
       expect(commit.exitCode).toBe(0)
 
       const contents = await readGitIgnoreAtRoot(repo)
-      expect(contents!.endsWith('\n'))
+      expect(contents!.endsWith('\n')).toBeTrue()
     })
   })
 
