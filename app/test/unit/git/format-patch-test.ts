@@ -64,9 +64,7 @@ describe('formatPatch', () => {
       firstCommit = stdout.trim()
     })
     it('can create a series of commits from start to HEAD', async () => {
-      await expect(
-        formatPatch(repository, firstCommit, 'HEAD')
-      ).resolves.toBeString()
+      expect(await formatPatch(repository, firstCommit, 'HEAD')).toBeString()
     })
   })
 })
