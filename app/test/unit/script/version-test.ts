@@ -10,15 +10,13 @@ describe('getNextVersionNumber', () => {
 
     describe("doesn't care for", () => {
       it('beta versions', () => {
-        const version = '1.0.1-beta1'
-        expect(() => getNextVersionNumber(version, channel)).toThrow(
-          `Unable to draft production release using beta version '${version}'`
+        expect(() => getNextVersionNumber('1.0.1-beta1', channel)).toThrow(
+          /Unable to draft production release using beta version '1\.0\.1-beta1'/
         )
       })
       it('test versions', () => {
-        const version = '1.0.1-test42'
         expect(() => getNextVersionNumber('1.0.1-test42', channel)).toThrow(
-          `Unable to draft production release using test version '${version}'`
+          /Unable to draft production release using test version '1\.0\.1-test42'/
         )
       })
     })
@@ -46,9 +44,8 @@ describe('getNextVersionNumber', () => {
 
     describe("doesn't care for", () => {
       it('test versions', () => {
-        const version = '1.0.1-test1'
-        expect(() => getNextVersionNumber(version, channel)).toThrow(
-          `Unable to draft beta release using test version '${version}'`
+        expect(() => getNextVersionNumber('1.0.1-test1', channel)).toThrow(
+          /Unable to draft beta release using test version '1\.0\.1-test1'/
         )
       })
     })
