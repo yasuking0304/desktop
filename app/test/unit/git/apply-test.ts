@@ -142,8 +142,7 @@ describe('git/apply', () => {
         'utf8'
       )
 
-      expect(getDifference(previousContents, fileContents))
-        .toMatchInlineSnapshot(`
+      expect(getDifference(previousContents, fileContents)).toEqual(`
 "@@ -7,0 +7,1 @@
 + Aliquam leo ipsum, laoreet sed libero at, mollis pulvinar arcu. Nullam porttitor"
 `)
@@ -173,8 +172,7 @@ describe('git/apply', () => {
         'utf8'
       )
 
-      expect(getDifference(previousContents, fileContents))
-        .toMatchInlineSnapshot(`
+      expect(getDifference(previousContents, fileContents)).toEqual(`
 "@@ -7,0 +7,4 @@
 + Aliquam leo ipsum, laoreet sed libero at, mollis pulvinar arcu. Nullam porttitor
 + nisl eget hendrerit vestibulum. Curabitur ornare id neque ac tristique. Cras in
@@ -206,8 +204,7 @@ describe('git/apply', () => {
         'utf8'
       )
 
-      expect(getDifference(previousContents, fileContents))
-        .toMatchInlineSnapshot(`
+      expect(getDifference(previousContents, fileContents)).toEqual(`
 "@@ -21,1 +21,0 @@
 - nisl eget hendrerit vestibulum. Curabitur ornare id neque ac tristique. Cras in"
 `)
@@ -244,8 +241,7 @@ describe('git/apply', () => {
         'utf8'
       )
 
-      expect(getDifference(previousContents, fileContents))
-        .toMatchInlineSnapshot(`
+      expect(getDifference(previousContents, fileContents)).toEqual(`
 "@@ -20,4 +20,0 @@
 - Aliquam leo ipsum, laoreet sed libero at, mollis pulvinar arcu. Nullam porttitor
 - nisl eget hendrerit vestibulum. Curabitur ornare id neque ac tristique. Cras in
