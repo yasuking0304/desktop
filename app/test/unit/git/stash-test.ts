@@ -304,7 +304,7 @@ describe('git/stash', () => {
         const entryToApply = desktopEntries[0]
         await expect(
           popStashEntry(repository, entryToApply.stashSha)
-        ).rejects.toThrowError()
+        ).rejects.toThrow()
       })
     })
   })
