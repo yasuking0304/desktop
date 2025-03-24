@@ -517,11 +517,9 @@ describe('git/diff', () => {
       const diff = await getSubmoduleDiff()
       expect(diff.oldSHA).toBeNull()
       expect(diff.newSHA).toBeNull()
-      expect(diff.status).toMatchObject({
-        commitChanged: false,
-        modifiedChanges: true,
-        untrackedChanges: false,
-      })
+      expect(diff.status.commitChanged).toBe(false)
+      expect(diff.status.modifiedChanges).toBe(true)
+      expect(diff.status.untrackedChanges).toBe(false)
     })
 
     it('can get the diff for a submodule with only untracked changes', async () => {
@@ -531,11 +529,9 @@ describe('git/diff', () => {
       const diff = await getSubmoduleDiff()
       expect(diff.oldSHA).toBeNull()
       expect(diff.newSHA).toBeNull()
-      expect(diff.status).toMatchObject({
-        commitChanged: false,
-        modifiedChanges: false,
-        untrackedChanges: true,
-      })
+      expect(diff.status.commitChanged).toBe(false)
+      expect(diff.status.modifiedChanges).toBe(false)
+      expect(diff.status.untrackedChanges).toBe(true)
     })
 
     it('can get the diff for a submodule a commit change', async () => {
@@ -546,11 +542,9 @@ describe('git/diff', () => {
       const diff = await getSubmoduleDiff()
       expect(diff.oldSHA).not.toBeNull()
       expect(diff.newSHA).not.toBeNull()
-      expect(diff.status).toMatchObject({
-        commitChanged: true,
-        modifiedChanges: false,
-        untrackedChanges: false,
-      })
+      expect(diff.status.commitChanged).toBe(true)
+      expect(diff.status.modifiedChanges).toBe(false)
+      expect(diff.status.untrackedChanges).toBe(false)
     })
 
     it('can get the diff for a submodule a all kinds of changes', async () => {
@@ -562,11 +556,9 @@ describe('git/diff', () => {
       const diff = await getSubmoduleDiff()
       expect(diff.oldSHA).not.toBeNull()
       expect(diff.newSHA).not.toBeNull()
-      expect(diff.status).toMatchObject({
-        commitChanged: true,
-        modifiedChanges: true,
-        untrackedChanges: true,
-      })
+      expect(diff.status.commitChanged).toBe(true)
+      expect(diff.status.modifiedChanges).toBe(true)
+      expect(diff.status.untrackedChanges).toBe(true)
     })
   })
 
