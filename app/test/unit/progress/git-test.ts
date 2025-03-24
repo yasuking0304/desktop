@@ -16,8 +16,8 @@ describe('GitProgressParser', () => {
     ])
 
     expect(
-      parser.parse('remote: Compressing objects:  72% (16/22)')
-    ).toHaveProperty('percent', 16 / 22)
+      parser.parse('remote: Compressing objects:  72% (16/22)').percent
+    ).toEqual(16 / 22)
   })
 
   it('parses progress with several steps', () => {
