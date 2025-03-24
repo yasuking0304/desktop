@@ -397,8 +397,8 @@ describe('git/diff', () => {
       beforeEach(async () => {
         repo = await setupEmptyRepository()
       })
-      it('throws since HEAD doesnt exist', () => {
-        expect(getBinaryPaths(repo, 'HEAD', [])).rejects.toThrow()
+      it('throws since HEAD doesnt exist', async () => {
+        await expect(getBinaryPaths(repo, 'HEAD', [])).rejects.toThrow()
       })
     })
 

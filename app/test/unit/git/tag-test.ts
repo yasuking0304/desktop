@@ -73,7 +73,7 @@ describe('git/tag', () => {
     it('fails when creating a tag with a name that already exists', async () => {
       await createTag(repository, 'my-new-tag', 'HEAD')
 
-      expect(createTag(repository, 'my-new-tag', 'HEAD')).rejects.toThrow(
+      await expect(createTag(repository, 'my-new-tag', 'HEAD')).rejects.toThrow(
         /already exists/i
       )
     })

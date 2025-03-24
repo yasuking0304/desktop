@@ -174,7 +174,7 @@ describe('git/remote', () => {
       expect(remotes[0].url).toEqual(newUrl)
     })
     it('returns false for unknown remote name', async () => {
-      expect(setRemoteURL(repository, 'none', newUrl)).rejects.toThrow()
+      await expect(setRemoteURL(repository, 'none', newUrl)).rejects.toThrow()
 
       const remotes = await getRemotes(repository)
       expect(remotes).toHaveLength(1)
