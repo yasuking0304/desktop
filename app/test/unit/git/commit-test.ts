@@ -675,8 +675,8 @@ describe('git/commit', () => {
             'utf8'
           )
 
-          expect(fileContents).not.toStrictEqual(fileContentsOurs)
-          expect(fileContents).toStrictEqual(fileContentsTheirs)
+          expect(fileContents).not.toEqual(fileContentsOurs)
+          expect(fileContents).toEqual(fileContentsTheirs)
         })
 
         it('chooses `our` version of a file and commits', async () => {
@@ -708,7 +708,7 @@ describe('git/commit', () => {
             'utf8'
           )
 
-          expect(fileContents).toStrictEqual(fileContentsOurs)
+          expect(fileContents).toEqual(fileContentsOurs)
         })
       })
     })
