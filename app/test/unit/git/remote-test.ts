@@ -152,7 +152,7 @@ describe('git/remote', () => {
   describe('removeRemote', () => {
     it('silently fails when remote not defined', async () => {
       const repository = await setupEmptyRepository()
-      expect(removeRemote(repository, 'origin')).resolves.not.toThrow()
+      await expect(removeRemote(repository, 'origin')).resolves.not.toThrow()
     })
   })
 
