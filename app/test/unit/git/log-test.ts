@@ -50,11 +50,8 @@ describe('git/log', () => {
       const commits = await getCommits(repository, 'HEAD', 100)
       expect(commits).toBeArrayOfSize(5)
 
-      expect(commits[0].tags).toIncludeSameMembers(['important'])
-      expect(commits[1].tags).toIncludeSameMembers([
-        'tentative',
-        'less-important',
-      ])
+      expect(commits[0].tags).toEqual(['important'])
+      expect(commits[1].tags).toEqual(['tentative', 'less-important'])
       expect(commits[2].tags).toBeArrayOfSize(0)
     })
   })

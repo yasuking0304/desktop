@@ -125,7 +125,7 @@ describe('git/tag', () => {
     it('returns an empty array when there are no tags to get pushed', async () => {
       expect(
         await fetchTagsToPush(repository, originRemote, 'master')
-      ).toIncludeAllMembers([])
+      ).toBeArrayOfSize(0)
     })
 
     it("returns local tags that haven't been pushed", async () => {
