@@ -139,12 +139,14 @@ describe('git/branch', () => {
 
       it('finds one branch name', async () => {
         const branches = await getBranchesPointedAt(repository, 'HEAD')
+        expect(branches).not.toBeNull()
         expect(branches).toHaveLength(1)
         expect(branches![0]).toEqual('master')
       })
 
       it('finds no branch names', async () => {
         const branches = await getBranchesPointedAt(repository, 'HEAD^')
+        expect(branches).not.toBeNull()
         expect(branches).toHaveLength(0)
       })
 
@@ -162,6 +164,7 @@ describe('git/branch', () => {
       })
       it('finds multiple branch names', async () => {
         const branches = await getBranchesPointedAt(repository, 'HEAD')
+        expect(branches).not.toBeNull()
         expect(branches).toHaveLength(2)
         expect(branches).toContain('other-branch')
         expect(branches).toContain('master')
