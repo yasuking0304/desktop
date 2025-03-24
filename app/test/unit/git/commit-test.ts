@@ -41,7 +41,7 @@ async function getTextDiff(
   file: WorkingDirectoryFileChange
 ): Promise<ITextDiff> {
   const diff = await getWorkingDirectoryDiff(repo, file)
-  expect(diff.kind === DiffType.Text)
+  expect(diff.kind).toEqual(DiffType.Text)
   return diff as ITextDiff
 }
 

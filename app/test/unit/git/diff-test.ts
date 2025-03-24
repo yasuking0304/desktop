@@ -40,7 +40,7 @@ async function getTextDiff(
   file: WorkingDirectoryFileChange
 ): Promise<ITextDiff> {
   const diff = await getWorkingDirectoryDiff(repo, file)
-  expect(diff.kind === DiffType.Text)
+  expect(diff.kind).toEqual(DiffType.Text)
   return diff as ITextDiff
 }
 
@@ -131,7 +131,7 @@ describe('git/diff', () => {
       )
       const diff = await getWorkingDirectoryDiff(repository, file)
 
-      expect(diff.kind === DiffType.Image)
+      expect(diff.kind).toEqual(DiffType.Image)
 
       const imageDiff = diff as IImageDiff
       expect(imageDiff.previous).not.toBeUndefined()

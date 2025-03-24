@@ -26,7 +26,7 @@ async function parseDiff(diff: string): Promise<ITextDiff> {
     kind: AppFileStatusKind.Modified,
   })
   const output = await convertDiff(repository, fileChange, rawDiff, 'HEAD')
-  expect(output.kind === DiffType.Text)
+  expect(output.kind).toEqual(DiffType.Text)
   return output as ITextDiff
 }
 
@@ -53,7 +53,7 @@ describe('patch formatting', () => {
 
       const diff = await getWorkingDirectoryDiff(repository, file)
 
-      expect(diff.kind === DiffType.Text)
+      expect(diff.kind).toEqual(DiffType.Text)
 
       const textDiff = diff as ITextDiff
       const second = textDiff.hunks[1]
@@ -92,7 +92,7 @@ describe('patch formatting', () => {
 
       const diff = await getWorkingDirectoryDiff(repository, file)
 
-      expect(diff.kind === DiffType.Text)
+      expect(diff.kind).toEqual(DiffType.Text)
 
       const textDiff = diff as ITextDiff
       const first = textDiff.hunks[0]
@@ -132,7 +132,7 @@ describe('patch formatting', () => {
 
       const diff = await getWorkingDirectoryDiff(repository, file)
 
-      expect(diff.kind === DiffType.Text)
+      expect(diff.kind).toEqual(DiffType.Text)
 
       const textDiff = diff as ITextDiff
       const second = textDiff.hunks[1]
@@ -172,7 +172,7 @@ describe('patch formatting', () => {
 
       const diff = await getWorkingDirectoryDiff(repository, file)
 
-      expect(diff.kind === DiffType.Text)
+      expect(diff.kind).toEqual(DiffType.Text)
 
       const textDiff = diff as ITextDiff
 
