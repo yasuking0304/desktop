@@ -64,7 +64,7 @@ describe('git/reorder', () => {
     expect(log.length).toBe(5)
 
     const summaries = log.map(c => c.summary)
-    expect(summaries).toStrictEqual([
+    expect(summaries).toEqual([
       'third',
       'fourth',
       'first',
@@ -90,7 +90,7 @@ describe('git/reorder', () => {
 
     const log = await getCommits(repository, 'HEAD', 5)
     const summaries = log.map(c => c.summary)
-    expect(summaries).toStrictEqual([
+    expect(summaries).toEqual([
       'first',
       'last',
       'third',
@@ -111,7 +111,7 @@ describe('git/reorder', () => {
     expect(log.length).toBe(3)
 
     const summaries = log.map(c => c.summary)
-    expect(summaries).toStrictEqual(['second', 'initialize', 'first'])
+    expect(summaries).toEqual(['second', 'initialize', 'first'])
   })
 
   it('handles reordering a conflicting commit', async () => {
@@ -187,7 +187,7 @@ describe('git/reorder', () => {
 
     const log = await getCommits(repository, 'HEAD', 5)
     const summaries = log.map(c => c.summary)
-    expect(summaries).toStrictEqual([
+    expect(summaries).toEqual([
       'second - fixed',
       'third - fixed',
       'first',
