@@ -83,7 +83,8 @@ describe('git/remote', () => {
 
       // Shows that the new remote does have a filter
       const rawGetRemote = await exec(['remote', '-v'], repository.path)
-      expect(rawGetRemote.stdout).toContain(url + ' (fetch) [blob:none]')
+      const needle = url + ' (fetch) [blob:none]'
+      expect(rawGetRemote.stdout).toContain(needle)
 
       // Shows that the `getRemote` returns that remote
       const result = await getRemotes(repository)
