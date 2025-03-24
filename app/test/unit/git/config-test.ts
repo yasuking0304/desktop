@@ -37,31 +37,35 @@ describe('git/config', () => {
 
   describe('GIT_CONFIG_PARAMETERS', () => {
     it('picks them up', async () => {
-      expect(
-        await git(['config', 'desktop.test'], repository.path, '', {
-          successExitCodes: new Set([1]),
-        }).then(x => x.stdout)
-      ).toBeEmpty()
-      expect(
-        await git(['config', 'desktop.test'], repository.path, '', {
-          env: {
-            GIT_CONFIG_PARAMETERS: "'desktop.test=1'",
-          },
-        }).then(x => x.stdout)
-      ).toEqual('1\n')
+      const withoutEnvOutput = await git(
+        ['config', 'desktop.test'],
+        repository.path,
+        '',
+        { successExitCodes: new Set([1]) }
+      ).then(x => x.stdout)
+
+      expect(withoutEnvOutput).toBeEmpty()
+      const withEnvOutput = await git(
+        ['config', 'desktop.test'],
+        repository.path,
+        '',
+        { env: { GIT_CONFIG_PARAMETERS: "'desktop.test=1'" } }
+      ).then(x => x.stdout)
+
+      expect(withEnvOutput).toEqual('1\n')
     })
 
     it('takes precedence over GIT_CONFIG_*', async () => {
-      expect(
-        await git(['config', 'user.name'], repository.path, '', {
-          env: {
-            GIT_CONFIG_PARAMETERS: "'user.name=foobar'",
-            GIT_CONFIG_COUNT: '1',
-            GIT_CONFIG_KEY_0: 'user.name',
-            GIT_CONFIG_VALUE_0: 'baz',
-          },
-        }).then(x => x.stdout)
-      ).toEqual('foobar\n')
+      const output = await git(['config', 'user.name'], repository.path, '', {
+        env: {
+          GIT_CONFIG_PARAMETERS: "'user.name=foobar'",
+          GIT_CONFIG_COUNT: '1',
+          GIT_CONFIG_KEY_0: 'user.name',
+          GIT_CONFIG_VALUE_0: 'baz',
+        },
+      }).then(x => x.stdout)
+
+      expect(output).toEqual('foobar\n')
     })
   })
 
