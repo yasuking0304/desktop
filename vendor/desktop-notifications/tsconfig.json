@@ -12,7 +12,6 @@
     "sourceMap": true,
     "outDir": "./dist",
     "declaration": true,
-    "types": ["node"],
     "typeRoots": ["./node_modules/@types"]
   },
   "exclude": ["node_modules", "build"],
