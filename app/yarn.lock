@@ -323,7 +323,6 @@ delegates@^1.0.0:
   version "0.2.5"
   dependencies:
     node-addon-api "^7.0.0"
-    prebuild-install "^7.0.1"
     uuid "^8.3.2"
 
 desktop-trampoline@desktop/desktop-trampoline#v0.9.10:

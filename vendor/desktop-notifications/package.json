@@ -5,31 +5,16 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
-    "install": "prebuild-install || (node-gyp rebuild && tsc)",
+    "install": "node-gyp rebuild && tsc",
     "build": "node-gyp rebuild && tsc",
     "pretest": "yarn build",
     "test": "jest -c jest.json",
-    "prepublishOnly": "yarn build",
-    "postpublish": "git push --follow-tags",
     "prettify": "yarn prettier --write \"./**/*.{ts,tsx,js,json,jsx,scss,html,yaml,yml}\"",
-    "check-prettier": "prettier --check \"./**/*.{ts,tsx,js,json,jsx,scss,html,yaml,yml}\"",
-    "prebuild-napi-x64": "prebuild -t 4 -r napi -a x64 --strip",
-    "prebuild-napi-ia32": "prebuild -t 4 -r napi -a ia32 --strip",
-    "prebuild-napi-arm64": "prebuild -t 4 -r napi -a arm64 --strip",
-    "prebuild-all": "yarn prebuild-napi-x64 && yarn prebuild-napi-ia32 && yarn prebuild-napi-arm64",
-    "upload": "node ./script/upload.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/desktop/desktop-notifications.git"
+    "check-prettier": "prettier --check \"./**/*.{ts,tsx,js,json,jsx,scss,html,yaml,yml}\""
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/desktop/desktop-notifications/issues"
-  },
-  "homepage": "https://github.com/desktop/desktop-notifications#readme",
   "devDependencies": {
     "@types/benchmark": "^1.0.31",
     "@types/jest": "^26.0.13",
@@ -38,14 +23,12 @@
     "benchmark": "^2.1.4",
     "jest": "^26.4.2",
     "node-gyp": "^10.1.0",
-    "prebuild": "^11.0.2",
     "prettier": "^2.0.5",
     "ts-node": "^9.0.0",
     "typescript": "^3.9.0"
   },
   "dependencies": {
     "node-addon-api": "^7.0.0",
-    "prebuild-install": "^7.0.1",
     "uuid": "^8.3.2"
   },
   "binary": {
