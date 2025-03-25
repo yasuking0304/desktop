@@ -2,19 +2,21 @@
   "compilerOptions": {
     "module": "commonjs",
     "moduleResolution": "node",
-    "target": "es6",
-    "noImplicitAny": true,
+    "target": "ES2022",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "importHelpers": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
     "noImplicitReturns": true,
-    "noImplicitThis": true,
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,
-    "strict": true,
     "sourceMap": true,
+    "strict": true,
     "outDir": "./dist",
-    "declaration": true,
-    "typeRoots": ["./node_modules/@types"]
+    "useUnknownInCatchVariables": false
   },
+  "include": ["lib/**/*.ts"],
   "exclude": ["node_modules", "build"],
-  "include": ["lib/**/*.ts", "test/**/*.ts"],
   "compileOnSave": false
 }
