@@ -29,7 +29,7 @@
     "codemirror-mode-zig": "^1.0.7",
     "compare-versions": "^3.6.0",
     "deep-equal": "^1.0.1",
-    "desktop-notifications": "^0.2.4",
+    "desktop-notifications": "file:../vendor/desktop-notifications",
     "desktop-trampoline": "desktop/desktop-trampoline#v0.9.10",
     "dexie": "^3.2.2",
     "dompurify": "^3.2.4",
