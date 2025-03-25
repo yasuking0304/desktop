@@ -8,11 +8,11 @@ class DesktopNotification
 {
 
 public:
-    explicit DesktopNotification::DesktopNotification(const std::wstring &id,
-                                                      const std::wstring &appID,
-                                                      const std::wstring &title,
-                                                      const std::wstring &body,
-                                                      const std::wstring &userInfo);
+    explicit DesktopNotification(const std::wstring &id,
+                                 const std::wstring &appID,
+                                 const std::wstring &title,
+                                 const std::wstring &body,
+                                 const std::wstring &userInfo);
 
     std::wstring getID()
     {

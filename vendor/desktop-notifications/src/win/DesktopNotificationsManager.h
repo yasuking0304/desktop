@@ -133,9 +133,9 @@ private:
     HRESULT RegisterClassObjects(const std::wstring &toastActivatorClsid);
     HRESULT UnregisterClassObjects();
     bool closeNotification(std::shared_ptr<DesktopNotification> d);
-    void DesktopNotificationsManager::invokeJSCallback(const std::string &eventName,
-                                                       const std::string &notificationID,
-                                                       const std::wstring &userInfo);
+    void invokeJSCallback(const std::string &eventName,
+                          const std::string &notificationID,
+                          const std::wstring &userInfo);
 
     // Identifiers of registered class objects. Used for unregistration.
     DWORD m_comCookies[1] = {0};

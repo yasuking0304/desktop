@@ -20,7 +20,7 @@ namespace
 {
   Napi::Value initializeNotifications(const Napi::CallbackInfo &info)
   {
-    Napi::Env &env = info.Env();
+    const Napi::Env &env = info.Env();
 
     if (desktopNotificationsManager)
     {
@@ -69,7 +69,7 @@ namespace
 
   Napi::Value showNotification(const Napi::CallbackInfo &info)
   {
-    Napi::Env &env = info.Env();
+    const Napi::Env &env = info.Env();
 
     if (!desktopNotificationsManager)
     {
@@ -122,7 +122,7 @@ namespace
 
   Napi::Value closeNotification(const Napi::CallbackInfo &info)
   {
-    Napi::Env &env = info.Env();
+    const Napi::Env &env = info.Env();
 
     if (!desktopNotificationsManager)
     {
@@ -151,7 +151,7 @@ namespace
 
   Napi::Value getNotificationsPermission(const Napi::CallbackInfo &info)
   {
-    Napi::Env &env = info.Env();
+    const Napi::Env &env = info.Env();
 
     Napi::Promise::Deferred deferred = Napi::Promise::Deferred::New(env);
 
@@ -171,7 +171,7 @@ namespace
 
   Napi::Value requestNotificationsPermission(const Napi::CallbackInfo &info)
   {
-    Napi::Env &env = info.Env();
+    const Napi::Env &env = info.Env();
 
     // Do nothing. There is no way of requesting permission on Windows.
     Napi::Promise::Deferred deferred = Napi::Promise::Deferred::New(env);
