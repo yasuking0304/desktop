@@ -65,7 +65,7 @@ describe('BranchPruner', () => {
     )
 
     const branchesBeforePruning = await getBranchesFromGit(repo)
-    await branchPruner.start()
+    await branchPruner.runOnce()
     const branchesAfterPruning = await getBranchesFromGit(repo)
 
     expect(branchesBeforePruning).toEqual(branchesAfterPruning)
@@ -91,7 +91,7 @@ describe('BranchPruner', () => {
       () => Promise.resolve()
     )
 
-    await branchPruner.start()
+    await branchPruner.runOnce()
     const branchesAfterPruning = await getBranchesFromGit(repo)
 
     expect(branchesAfterPruning).not.toContain('deleted-branch-1')
@@ -118,7 +118,7 @@ describe('BranchPruner', () => {
     )
 
     const branchesBeforePruning = await getBranchesFromGit(repo)
-    await branchPruner.start()
+    await branchPruner.runOnce()
     const branchesAfterPruning = await getBranchesFromGit(repo)
 
     expect(branchesBeforePruning).toEqual(branchesAfterPruning)
@@ -146,7 +146,7 @@ describe('BranchPruner', () => {
     )
 
     const branchesBeforePruning = await getBranchesFromGit(repo)
-    await branchPruner.start()
+    await branchPruner.runOnce()
     const branchesAfterPruning = await getBranchesFromGit(repo)
 
     expect(branchesBeforePruning).toEqual(branchesAfterPruning)
@@ -172,7 +172,7 @@ describe('BranchPruner', () => {
       () => Promise.resolve()
     )
 
-    await branchPruner.start()
+    await branchPruner.runOnce()
     const branchesAfterPruning = await getBranchesFromGit(repo)
 
     const expectedBranchesAfterPruning = [
@@ -213,7 +213,7 @@ describe('BranchPruner', () => {
       () => Promise.resolve()
     )
 
-    await branchPruner.start()
+    await branchPruner.runOnce()
     const branchesAfterPruning = await getBranchesFromGit(repo)
 
     expect(branchesAfterPruning).toContain('master')
