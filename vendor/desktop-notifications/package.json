@@ -2,8 +2,8 @@
   "name": "desktop-notifications",
   "version": "0.2.5",
   "description": "A simple and opinionated library for handling Windows notifications",
+  "license": "MIT",
   "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
   "scripts": {
     "install": "node-gyp rebuild && tsc",
     "build": "node-gyp rebuild && tsc",
@@ -12,9 +12,6 @@
     "prettify": "yarn prettier --write \"./**/*.{ts,tsx,js,json,jsx,scss,html,yaml,yml}\"",
     "check-prettier": "prettier --check \"./**/*.{ts,tsx,js,json,jsx,scss,html,yaml,yml}\""
   },
-  "keywords": [],
-  "author": "",
-  "license": "MIT",
   "devDependencies": {
     "@types/uuid": "^8.3.4",
     "node-gyp": "^10.1.0",
