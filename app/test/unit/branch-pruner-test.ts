@@ -11,39 +11,27 @@ import {
   createRepository as createPrunedRepository,
   setupRepository,
 } from '../helpers/repository-builder-branch-pruner'
-import { StatsStore, StatsDatabase } from '../../src/lib/stats'
-import { UiActivityMonitor } from '../../src/ui/lib/ui-activity-monitor'
+import { TestStatsStore } from '../helpers/test-stats-store'
 import { offsetFromNow } from '../../src/lib/offset-from'
 import * as FSE from 'fs-extra'
 import * as path from 'path'
-import { fakePost } from '../fake-stats-post'
+import noop from 'lodash/noop'
 
 describe('BranchPruner', () => {
-  const onGitStoreUpdated = () => {}
-  const onDidError = () => {}
-
   let gitStoreCache: GitStoreCache
+  let repositoriesDb: TestRepositoriesDatabase
   let repositoriesStore: RepositoriesStore
   let repositoriesStateCache: RepositoryStateCache
 
   beforeEach(async () => {
-    const statsStore = new StatsStore(
-      new StatsDatabase('test-StatsDatabase'),
-      new UiActivityMonitor(),
-      fakePost
-    )
-    gitStoreCache = new GitStoreCache(
-      shell,
-      statsStore,
-      onGitStoreUpdated,
-      onDidError
-    )
-
-    const repositoriesDb = new TestRepositoriesDatabase()
-    await repositoriesDb.reset()
+    const statsStore = new TestStatsStore()
+    gitStoreCache = new GitStoreCache(shell, statsStore, noop, noop)
+    repositoriesDb = new TestRepositoriesDatabase()
     repositoriesStore = new RepositoriesStore(repositoriesDb)
     repositoriesStateCache = new RepositoryStateCache(statsStore)
   })
+
+  afterEach(() => repositoriesDb.delete())
 
   it('does nothing on non GitHub repositories', async () => {
     const path = await setupFixtureRepository('branch-prune-tests')

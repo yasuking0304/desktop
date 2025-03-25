@@ -23,13 +23,13 @@ import {
 import { merge } from '../merge'
 import { DefaultCommitMessage } from '../../models/commit-message'
 import { sendNonFatalException } from '../helpers/non-fatal-exception'
-import { StatsStore } from '../stats'
+import { IStatsStore } from '../stats'
 import { RepoRulesInfo } from '../../models/repo-rules'
 
 export class RepositoryStateCache {
   private readonly repositoryState = new Map<string, IRepositoryState>()
 
-  public constructor(private readonly statsStore: StatsStore) {}
+  public constructor(private readonly statsStore: IStatsStore) {}
 
   /** Get the state for the repository. */
   public get(repository: Repository): IRepositoryState {

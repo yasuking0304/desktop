@@ -245,7 +245,7 @@ const DefaultDailyMeasures: IDailyMeasures = {
 }
 
 // A subtype of IDailyMeasures filtered to contain only its numeric properties
-type NumericMeasures = {
+export type NumericMeasures = {
   [P in keyof IDailyMeasures as IDailyMeasures[P] extends number
     ? P
     : never]: IDailyMeasures[P]
@@ -420,13 +420,7 @@ type DailyStats = ICalculatedStats &
  *
  */
 export interface IStatsStore {
-  increment: (
-    metric:
-      | 'mergeAbortedAfterConflictsCount'
-      | 'rebaseAbortedAfterConflictsCount'
-      | 'mergeSuccessAfterConflictsCount'
-      | 'rebaseSuccessAfterConflictsCount'
-  ) => void
+  increment: (k: keyof NumericMeasures, n?: number) => Promise<void>
 }
 
 const defaultPostImplementation = (body: Record<string, any>) =>
@@ -985,9 +979,6 @@ export class StatsStore implements IStatsStore {
       ])
     }
   }
-
-  public recordTagCreated = (numCreatedTags: number) =>
-    this.increment('tagsCreated', numCreatedTags)
 
   private recordSquashUndone = () => this.increment('squashUndoneCount')
 
