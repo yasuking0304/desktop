@@ -25,9 +25,9 @@ import {
   ITextDiff,
 } from '../../../src/models/diff'
 import { findInteractiveDiffRange } from '../../../src/ui/diff/diff-explorer'
-import { diffStringsUnified } from 'jest-diff'
 import * as FSE from 'fs-extra'
 import * as Path from 'path'
+import { structuredPatch } from 'diff'
 
 describe('git/apply', () => {
   describe('checkPatch()', () => {
@@ -147,7 +147,7 @@ describe('git/apply', () => {
       assert.equal(
         getDifference(previousContents, fileContents),
         `@@ -7,0 +7,1 @@
-+ Aliquam leo ipsum, laoreet sed libero at, mollis pulvinar arcu. Nullam porttitor`
++Aliquam leo ipsum, laoreet sed libero at, mollis pulvinar arcu. Nullam porttitor`
       )
     })
 
@@ -178,9 +178,9 @@ describe('git/apply', () => {
       assert.equal(
         getDifference(previousContents, fileContents),
         `@@ -7,0 +7,4 @@
-+ Aliquam leo ipsum, laoreet sed libero at, mollis pulvinar arcu. Nullam porttitor
-+ nisl eget hendrerit vestibulum. Curabitur ornare id neque ac tristique. Cras in
-+ eleifend mi.
++Aliquam leo ipsum, laoreet sed libero at, mollis pulvinar arcu. Nullam porttitor
++nisl eget hendrerit vestibulum. Curabitur ornare id neque ac tristique. Cras in
++eleifend mi.
 +`
       )
     })
@@ -211,7 +211,7 @@ describe('git/apply', () => {
       assert.equal(
         getDifference(previousContents, fileContents),
         `@@ -21,1 +21,0 @@
-- nisl eget hendrerit vestibulum. Curabitur ornare id neque ac tristique. Cras in`
+-nisl eget hendrerit vestibulum. Curabitur ornare id neque ac tristique. Cras in`
       )
     })
 
@@ -247,33 +247,31 @@ describe('git/apply', () => {
       assert.equal(
         getDifference(previousContents, fileContents),
         `@@ -20,4 +20,0 @@
-- Aliquam leo ipsum, laoreet sed libero at, mollis pulvinar arcu. Nullam porttitor
-- nisl eget hendrerit vestibulum. Curabitur ornare id neque ac tristique. Cras in
-- eleifend mi.
+-Aliquam leo ipsum, laoreet sed libero at, mollis pulvinar arcu. Nullam porttitor
+-nisl eget hendrerit vestibulum. Curabitur ornare id neque ac tristique. Cras in
+-eleifend mi.
 -`
       )
     })
   })
 })
 
-const noColor = (str: string) => str
-
 /**
  * Returns a diff-style string with the line differences between two strings.
  */
 function getDifference(before: string, after: string) {
-  return diffStringsUnified(
+  return structuredPatch(
+    'before',
+    'after',
     before.replace(/\r\n/g, '\n'),
     after.replace(/\r\n/g, '\n'),
-    {
-      omitAnnotationLines: true,
-      contextLines: 0,
-      expand: false,
-      aColor: noColor,
-      bColor: noColor,
-      changeColor: noColor,
-      commonColor: noColor,
-      patchColor: noColor,
-    }
+    undefined,
+    undefined,
+    { context: 0 }
   )
+    .hunks.flatMap(hunk => [
+      `@@ -${hunk.oldStart},${hunk.oldLines} +${hunk.newStart},${hunk.newLines} @@`,
+      ...hunk.lines,
+    ])
+    .join('\n')
 }
