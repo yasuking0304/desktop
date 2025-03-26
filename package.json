@@ -7,9 +7,10 @@
   "scripts": {
     "cli": "ts-node app/src/cli/main.ts",
     "check:eslint": "tsc -P eslint-rules/",
-    "test:eslint": "jest eslint-rules/tests/*.test.js",
-    "test:script": "jest --silent --config ./script/jest.config.js",
+    "test:eslint": "node script/test.mjs eslint-rules",
+    "test:script": "node script/test.mjs script",
     "test": "node script/test.mjs",
+    "test:unit": "node script/test.mjs",
     "test:setup": "ts-node -P script/tsconfig.json script/test-setup.ts",
     "test:review": "ts-node  -P script/tsconfig.json script/test-review.ts",
     "postinstall": "ts-node -P script/tsconfig.json script/post-install.ts",

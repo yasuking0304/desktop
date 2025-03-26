@@ -1,20 +1,35 @@
 import { spawn } from 'child_process'
 import { join, resolve } from 'path'
-import { readdir, readFile } from 'fs/promises'
+import { readdir, readFile, stat } from 'fs/promises'
 import { parseEnv } from 'util'
 
 function reporter(r) {
   return ['--test-reporter', r, '--test-reporter-destination', 'stdout']
 }
 
+async function findTestFilesIn(paths) {
+  const files = []
+  for (const path of paths) {
+    const entry = await stat(path)
+    if (entry.isFile()) {
+      files.push(path)
+      continue
+    }
+
+    for (const file of await readdir(path, { recursive: true }).then(x =>
+      x.filter(f => /-test\.(ts|js|mts|mjs)$/.test(f)).map(f => join(path, f))
+    )) {
+      files.push(file)
+    }
+  }
+  return files
+}
+
+const projectRoot = join(import.meta.dirname, '..')
 const files =
   process.argv.length > 2
-    ? process.argv.slice(2)
-    : await readdir('app/test/unit', { recursive: true }).then(x =>
-        x
-          .filter(f => f.endsWith('-test.ts'))
-          .map(f => join('app', 'test', 'unit', f))
-      )
+    ? await findTestFilesIn(process.argv.slice(2))
+    : await findTestFilesIn([join(projectRoot, 'app', 'test', 'unit')])
 
 // I would _looooove_ to use the `--env-file` option, but it doesn't override
 // existing environment variables and we need to override some of them.
