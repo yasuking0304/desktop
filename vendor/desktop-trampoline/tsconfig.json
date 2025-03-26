@@ -17,7 +17,7 @@
     "useUnknownInCatchVariables": false,
     "declaration": true
   },
-  "include": ["lib/**/*.ts"],
+  "include": ["*.ts"],
   "exclude": ["node_modules", "build"],
   "compileOnSave": false
 }

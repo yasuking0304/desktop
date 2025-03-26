@@ -1,6 +1,6 @@
-const Path = require('path')
+import * as Path from 'path'
 
-function getDesktopAskpassTrampolinePath() {
+export function getDesktopAskpassTrampolinePath(): string {
   return Path.join(
     __dirname,
     'build',
@@ -9,13 +9,13 @@ function getDesktopAskpassTrampolinePath() {
   )
 }
 
-function getDesktopAskpassTrampolineFilename() {
+export function getDesktopAskpassTrampolineFilename(): string {
   return process.platform === 'win32'
     ? 'desktop-askpass-trampoline.exe'
     : 'desktop-askpass-trampoline'
 }
 
-function getDesktopCredentialHelperTrampolinePath() {
+export function getDesktopCredentialHelperTrampolinePath(): string {
   return Path.join(
     __dirname,
     'build',
@@ -24,25 +24,16 @@ function getDesktopCredentialHelperTrampolinePath() {
   )
 }
 
-function getDesktopCredentialHelperTrampolineFilename() {
+export function getDesktopCredentialHelperTrampolineFilename(): string {
   return process.platform === 'win32'
     ? 'desktop-credential-helper-trampoline.exe'
     : 'desktop-credential-helper-trampoline'
 }
 
-function getSSHWrapperPath() {
+export function getSSHWrapperPath(): string {
   return Path.join(__dirname, 'build', 'Release', getSSHWrapperFilename())
 }
 
-function getSSHWrapperFilename() {
+export function getSSHWrapperFilename(): string {
   return process.platform === 'win32' ? 'ssh-wrapper.exe' : 'ssh-wrapper'
-}
-
-module.exports = {
-  getDesktopAskpassTrampolinePath,
-  getDesktopAskpassTrampolineFilename,
-  getDesktopCredentialHelperTrampolinePath,
-  getDesktopCredentialHelperTrampolineFilename,
-  getSSHWrapperPath,
-  getSSHWrapperFilename,
 }
