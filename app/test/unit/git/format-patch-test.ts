@@ -66,7 +66,10 @@ describe('formatPatch', () => {
       firstCommit = stdout.trim()
     })
     it('can create a series of commits from start to HEAD', async () => {
-      assert.equal(typeof await formatPatch(repository, firstCommit, 'HEAD'), 'string')
+      assert.equal(
+        typeof (await formatPatch(repository, firstCommit, 'HEAD')),
+        'string'
+      )
     })
   })
 })

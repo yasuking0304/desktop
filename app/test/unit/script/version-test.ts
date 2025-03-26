@@ -12,12 +12,14 @@ describe('getNextVersionNumber', () => {
 
     describe("doesn't care for", () => {
       it('beta versions', () => {
-        assert.throws(() => getNextVersionNumber('1.0.1-beta1', channel), 
+        assert.throws(
+          () => getNextVersionNumber('1.0.1-beta1', channel),
           /Unable to draft production release using beta version '1\.0\.1-beta1'/
         )
       })
       it('test versions', () => {
-        assert.throws(() => getNextVersionNumber('1.0.1-test42', channel), 
+        assert.throws(
+          () => getNextVersionNumber('1.0.1-test42', channel),
           /Unable to draft production release using test version '1\.0\.1-test42'/
         )
       })
@@ -29,10 +31,14 @@ describe('getNextVersionNumber', () => {
 
     describe('when a beta version is used', () => {
       it('the beta tag is incremented', () => {
-        assert.equal(getNextVersionNumber('1.1.2-beta3', channel), '1.1.2-beta4')
+        assert.equal(
+          getNextVersionNumber('1.1.2-beta3', channel),
+          '1.1.2-beta4'
+        )
       })
       it('handles multiple digits', () => {
-        assert.equal(getNextVersionNumber('1.1.2-beta99', channel), 
+        assert.equal(
+          getNextVersionNumber('1.1.2-beta99', channel),
           '1.1.2-beta100'
         )
       })
@@ -46,7 +52,8 @@ describe('getNextVersionNumber', () => {
 
     describe("doesn't care for", () => {
       it('test versions', () => {
-        assert.throws(() => getNextVersionNumber('1.0.1-test1', channel), 
+        assert.throws(
+          () => getNextVersionNumber('1.0.1-test1', channel),
           /Unable to draft beta release using test version '1\.0\.1-test1'/
         )
       })

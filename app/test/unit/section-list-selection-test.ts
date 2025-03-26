@@ -57,8 +57,9 @@ describe('section-list-selection', () => {
         },
       })
       assert.equal(
-        rowIndexPathEquals(selectedRow!, { section: 2, row: 7 })
-      , true)
+        rowIndexPathEquals(selectedRow!, { section: 2, row: 7 }),
+        true
+      )
     })
 
     it('returns first row of next section when selecting down from last row of a section', () => {
@@ -70,8 +71,9 @@ describe('section-list-selection', () => {
         },
       })
       assert.equal(
-        rowIndexPathEquals(selectedRow!, { section: 1, row: 0 })
-      , true)
+        rowIndexPathEquals(selectedRow!, { section: 1, row: 0 }),
+        true
+      )
     })
 
     it('returns last row of previous section when selecting up from first row of a section', () => {
@@ -83,8 +85,9 @@ describe('section-list-selection', () => {
         },
       })
       assert.equal(
-        rowIndexPathEquals(selectedRow!, { section: 1, row: 2 })
-      , true)
+        rowIndexPathEquals(selectedRow!, { section: 1, row: 2 }),
+        true
+      )
     })
   })
 })

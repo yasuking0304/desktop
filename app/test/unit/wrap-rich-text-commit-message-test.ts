@@ -88,7 +88,8 @@ describe('wrapRichTextCommitMessage', () => {
     assert.equal(body.length, 0)
 
     assert.equal(summary[0].kind, TokenType.Text)
-    assert.equal(summary[0].text, 
+    assert.equal(
+      summary[0].text,
       'This issue summary should be exactly 72 chars including the issue no: '
     )
     assert.equal(summary[1].kind, TokenType.Link)
@@ -104,12 +105,14 @@ describe('wrapRichTextCommitMessage', () => {
     assert.equal(body.length, 0)
 
     assert.equal(summary[0].kind, TokenType.Text)
-    assert.equal(summary[0].text, 
+    assert.equal(
+      summary[0].text,
       'This issue link should be shortened to well under 72 characters: '
     )
     assert.equal(summary[1].kind, TokenType.Link)
     assert.equal(summary[1].text, '#1')
-    assert.equal((summary[1] as HyperlinkMatch).url, 
+    assert.equal(
+      (summary[1] as HyperlinkMatch).url,
       'https://github.com/niik/commit-summary-wrap-tests/issues/1'
     )
   })
@@ -135,13 +138,15 @@ describe('wrapRichTextCommitMessage', () => {
     assert.equal(body.length, 2)
 
     assert.equal(summary[0].kind, TokenType.Text)
-    assert.equal(summary[0].text, 
+    assert.equal(
+      summary[0].text,
       'Link should be truncated but open our release notes '
     )
 
     assert.equal(summary[1].kind, TokenType.Link)
     assert.equal(summary[1].text, 'https://desktop.gith')
-    assert.equal((summary[1] as HyperlinkMatch).url, 
+    assert.equal(
+      (summary[1] as HyperlinkMatch).url,
       'https://desktop.github.com/release-notes/'
     )
 
@@ -153,7 +158,8 @@ describe('wrapRichTextCommitMessage', () => {
 
     assert.equal(body[1].kind, TokenType.Link)
     assert.equal(body[1].text, 'ub.com/release-notes/')
-    assert.equal((body[1] as HyperlinkMatch).url, 
+    assert.equal(
+      (body[1] as HyperlinkMatch).url,
       'https://desktop.github.com/release-notes/'
     )
   })

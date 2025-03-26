@@ -14,14 +14,12 @@ describe('CloneProgressParser', () => {
       assert(
         parser.parse(
           'Receiving objects:  17% (4808/28282), 3.30 MiB | 1.29 MiB/s'
-        )
-       !== null)
+        ) !== null
+      )
     })
 
     it('understands resolving deltas', () => {
-      assert(
-        parser.parse('Resolving deltas:  89% (18063/20263)')
-       !== null)
+      assert(parser.parse('Resolving deltas:  89% (18063/20263)') !== null)
     })
 
     it('understands checking out files', () => {
@@ -29,9 +27,7 @@ describe('CloneProgressParser', () => {
     })
 
     it('understands remote compression', () => {
-      assert(
-        parser.parse('remote: Compressing objects:  45% (10/22)')
-       !== null)
+      assert(parser.parse('remote: Compressing objects:  45% (10/22)') !== null)
     })
 
     it('understands relative weights', () => {
@@ -65,7 +61,8 @@ describe('CloneProgressParser', () => {
     })
 
     it("ignores lines it doesn't understand", () => {
-      assert.equal(parser.parse('Counting objects: 28282, done.').kind, 
+      assert.equal(
+        parser.parse('Counting objects: 28282, done.').kind,
         'context'
       )
     })

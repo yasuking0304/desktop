@@ -21,27 +21,27 @@ describe('fuzzy find', () => {
   it('should find matching item when searching by pull request number', () => {
     const results = match('4653', items, getText)
 
-    assert.equal((results).length, 1)
+    assert.equal(results.length, 1)
     assert(results[0].item['text'].join('').includes('4653'))
   })
 
   it('should find matching item when searching by author', () => {
     const results = match('damaneice', items, getText)
 
-    assert.equal((results).length, 1)
+    assert.equal(results.length, 1)
     assert(results[0].item['text'].join('').includes('damaneice'))
   })
 
   it('should find matching item when by title', () => {
     const results = match('awesome feature', items, getText)
 
-    assert.equal((results).length, 1)
+    assert.equal(results.length, 1)
     assert(results[0].item['text'].join('').includes('awesome feature'))
   })
 
   it('should find nothing', () => {
     const results = match('$%^', items, getText)
 
-    assert.equal((results).length, 0)
+    assert.equal(results.length, 0)
   })
 })

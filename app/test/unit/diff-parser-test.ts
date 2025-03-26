@@ -55,17 +55,18 @@ index e1d4871..3bd3ee0 100644
 
     const parser = new DiffParser()
     const diff = parser.parse(reinstateSpacesAtTheStartOfBlankLines(diffText))
-    assert.equal((diff.hunks).length, 3)
+    assert.equal(diff.hunks.length, 3)
 
     let hunk = diff.hunks[0]
     assert.equal(hunk.unifiedDiffStart, 0)
     assert.equal(hunk.unifiedDiffEnd, 7)
 
     let lines = hunk.lines
-    assert.equal((lines).length, 8)
+    assert.equal(lines.length, 8)
 
     let i = 0
-    assert.equal(lines[i].text, 
+    assert.equal(
+      lines[i].text,
       '@@ -18,6 +18,7 @@ export function parseRawDiff(lines: ReadonlyArray<string>): Diff {'
     )
     assert.equal(lines[i].type, DiffLineType.Hunk)
@@ -108,7 +109,7 @@ index e1d4871..3bd3ee0 100644
     assert.equal(hunk.unifiedDiffEnd, 20)
 
     lines = hunk.lines
-    assert.equal((lines).length, 13)
+    assert.equal(lines.length, 13)
   })
 
   it('parses new files', () => {
@@ -123,14 +124,14 @@ index 0000000..f13588b
 
     const parser = new DiffParser()
     const diff = parser.parse(diffText)
-    assert.equal((diff.hunks).length, 1)
+    assert.equal(diff.hunks.length, 1)
 
     const hunk = diff.hunks[0]
     assert.equal(hunk.unifiedDiffStart, 0)
     assert.equal(hunk.unifiedDiffEnd, 1)
 
     const lines = hunk.lines
-    assert.equal((lines).length, 2)
+    assert.equal(lines.length, 2)
 
     let i = 0
     assert.equal(lines[i].text, '@@ -0,0 +1 @@')
@@ -158,14 +159,14 @@ index 24219cc..bf711a5 100644
 
     const parser = new DiffParser()
     const diff = parser.parse(diffText)
-    assert.equal((diff.hunks).length, 1)
+    assert.equal(diff.hunks.length, 1)
 
     const hunk = diff.hunks[0]
     assert.equal(hunk.unifiedDiffStart, 0)
     assert.equal(hunk.unifiedDiffEnd, 2)
 
     const lines = hunk.lines
-    assert.equal((lines).length, 3)
+    assert.equal(lines.length, 3)
 
     let i = 0
     assert.equal(lines[i].text, '@@ -1 +1 @@')
@@ -200,14 +201,14 @@ index 0000000..faf7da1
 
     const parser = new DiffParser()
     const diff = parser.parse(diffText)
-    assert.equal((diff.hunks).length, 1)
+    assert.equal(diff.hunks.length, 1)
 
     const hunk = diff.hunks[0]
     assert.equal(hunk.unifiedDiffStart, 0)
     assert.equal(hunk.unifiedDiffEnd, 1)
 
     const lines = hunk.lines
-    assert.equal((lines).length, 2)
+    assert.equal(lines.length, 2)
 
     let i = 0
     assert.equal(lines[i].text, '@@ -0,0 +1 @@')
@@ -237,14 +238,14 @@ index 1910281..257cc56 100644
 `
     const parser = new DiffParser()
     const diff = parser.parse(diffText)
-    assert.equal((diff.hunks).length, 1)
+    assert.equal(diff.hunks.length, 1)
 
     const hunk = diff.hunks[0]
     assert.equal(hunk.unifiedDiffStart, 0)
     assert.equal(hunk.unifiedDiffEnd, 2)
 
     const lines = hunk.lines
-    assert.equal((lines).length, 3)
+    assert.equal(lines.length, 3)
 
     let i = 0
     assert.equal(lines[i].text, '@@ -1 +1 @@')
@@ -288,14 +289,14 @@ index 1910281..ba0e162 100644
 `
     const parser = new DiffParser()
     const diff = parser.parse(diffText)
-    assert.equal((diff.hunks).length, 1)
+    assert.equal(diff.hunks.length, 1)
 
     const hunk = diff.hunks[0]
     assert.equal(hunk.unifiedDiffStart, 0)
     assert.equal(hunk.unifiedDiffEnd, 2)
 
     const lines = hunk.lines
-    assert.equal((lines).length, 3)
+    assert.equal(lines.length, 3)
 
     let i = 0
     assert.equal(lines[i].text, '@@ -1 +1 @@')
@@ -330,7 +331,7 @@ Binary files /dev/null and b/IMG_2306.CR2 differ
 `
     const parser = new DiffParser()
     const diff = parser.parse(diffText)
-    assert.equal((diff.hunks).length, 0)
+    assert.equal(diff.hunks.length, 0)
     assert.equal(diff.isBinary, true)
   })
 
@@ -344,7 +345,7 @@ index 0000000..e69de29
 
     const parser = new DiffParser()
     const diff = parser.parse(diffText)
-    assert.equal((diff.hunks).length, 0)
+    assert.equal(diff.hunks.length, 0)
   })
 
   it('parses hunk headers with omitted line counts from new file', () => {
@@ -359,7 +360,7 @@ index 0000000..f13588b
 
     const parser = new DiffParser()
     const diff = parser.parse(diffText)
-    assert.equal((diff.hunks).length, 1)
+    assert.equal(diff.hunks.length, 1)
 
     const hunk = diff.hunks[0]
     assert.equal(hunk.header.oldStartLine, 0)
@@ -380,7 +381,7 @@ index 0000000..f13588b
 
     const parser = new DiffParser()
     const diff = parser.parse(diffText)
-    assert.equal((diff.hunks).length, 1)
+    assert.equal(diff.hunks.length, 1)
 
     const hunk = diff.hunks[0]
     assert.equal(hunk.header.oldStartLine, 1)

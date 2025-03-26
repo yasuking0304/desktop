@@ -56,23 +56,29 @@ describe('PathText', () => {
 
     it('favors truncation of directory components over file names', () => {
       if (__WIN32__) {
-        assert.equal(truncatePath('alfa\\bravo\\charlie\\delta.txt', 25), 
+        assert.equal(
+          truncatePath('alfa\\bravo\\charlie\\delta.txt', 25),
           'alfa\\bravo\\cha…\\delta.txt'
         )
-        assert.equal(truncatePath('alfa\\bravo\\charlie\\delta.txt', 22), 
+        assert.equal(
+          truncatePath('alfa\\bravo\\charlie\\delta.txt', 22),
           'alfa\\bravo\\…\\delta.txt'
         )
-        assert.equal(truncatePath('alfa\\bravo\\charlie\\delta.txt', 17), 
+        assert.equal(
+          truncatePath('alfa\\bravo\\charlie\\delta.txt', 17),
           'alfa\\b…\\delta.txt'
         )
       } else {
-        assert.equal(truncatePath('alfa/bravo/charlie/delta.txt', 25), 
+        assert.equal(
+          truncatePath('alfa/bravo/charlie/delta.txt', 25),
           'alfa/bravo/cha…/delta.txt'
         )
-        assert.equal(truncatePath('alfa/bravo/charlie/delta.txt', 22), 
+        assert.equal(
+          truncatePath('alfa/bravo/charlie/delta.txt', 22),
           'alfa/bravo/…/delta.txt'
         )
-        assert.equal(truncatePath('alfa/bravo/charlie/delta.txt', 17), 
+        assert.equal(
+          truncatePath('alfa/bravo/charlie/delta.txt', 17),
           'alfa/b…/delta.txt'
         )
       }
@@ -85,7 +91,8 @@ describe('PathText', () => {
         __WIN32__ ? 'some\\submodule\\path\\' : 'some/submodule/path/'
       )
       assert.equal(normalizedFileName, 'path')
-      assert.equal(normalizedDirectory, 
+      assert.equal(
+        normalizedDirectory,
         __WIN32__ ? 'some\\submodule\\' : 'some/submodule/'
       )
     })
@@ -95,7 +102,8 @@ describe('PathText', () => {
         __WIN32__ ? 'some\\submodule\\path' : 'some/submodule/path'
       )
       assert.equal(normalizedFileName, 'path')
-      assert.equal(normalizedDirectory, 
+      assert.equal(
+        normalizedDirectory,
         __WIN32__ ? 'some\\submodule\\' : 'some/submodule/'
       )
     })
@@ -105,7 +113,8 @@ describe('PathText', () => {
         __WIN32__ ? 'some\\repository\\path.tsx' : 'some/repository/path.tsx'
       )
       assert.equal(normalizedFileName, 'path.tsx')
-      assert.equal(normalizedDirectory, 
+      assert.equal(
+        normalizedDirectory,
         __WIN32__ ? 'some\\repository\\' : 'some/repository/'
       )
     })

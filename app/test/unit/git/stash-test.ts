@@ -39,13 +39,13 @@ describe('git/stash', () => {
 
       const stash = await getStashes(repo)
 
-      assert.equal((stash.desktopEntries).length, 0)
+      assert.equal(stash.desktopEntries.length, 0)
     })
 
     it('returns an empty list when no stash entries have been created', async () => {
       const stash = await getStashes(repository)
 
-      assert.equal((stash.desktopEntries).length, 0)
+      assert.equal(stash.desktopEntries.length, 0)
     })
 
     it('returns all stash entries created by Desktop', async () => {
@@ -55,7 +55,7 @@ describe('git/stash', () => {
 
       const stash = await getStashes(repository)
       const entries = stash.desktopEntries
-      assert.equal((entries).length, 1)
+      assert.equal(entries.length, 1)
       assert.equal(entries[0].branchName, 'master')
       assert.equal(entries[0].name, 'refs/stash@{0}')
     })
@@ -81,7 +81,7 @@ describe('git/stash', () => {
       const stash = await getStashes(repository)
       const entries = stash.desktopEntries
 
-      assert.equal((entries).length, 1)
+      assert.equal(entries.length, 1)
       assert.equal(entries[0].branchName, 'master')
     })
 
@@ -92,7 +92,7 @@ describe('git/stash', () => {
       let status = await getStatusOrThrow(repository)
       let files = status.workingDirectory.files
 
-      assert.equal((files).length, 1)
+      assert.equal(files.length, 1)
       assert.equal(files[0].status.kind, AppFileStatusKind.Untracked)
 
       const untrackedFiles = status.workingDirectory.files.filter(
@@ -104,7 +104,7 @@ describe('git/stash', () => {
       status = await getStatusOrThrow(repository)
       files = status.workingDirectory.files
 
-      assert.equal((files).length, 0)
+      assert.equal(files.length, 0)
     })
   })
 
@@ -255,14 +255,14 @@ describe('git/stash', () => {
 
         let status = await getStatusOrThrow(repository)
         let files = status.workingDirectory.files
-        assert.equal((files).length, 0)
+        assert.equal(files.length, 0)
 
         const entryToApply = desktopEntries[0]
         await popStashEntry(repository, entryToApply.stashSha)
 
         status = await getStatusOrThrow(repository)
         files = status.workingDirectory.files
-        assert.equal((files).length, 1)
+        assert.equal(files.length, 1)
       })
     })
 
@@ -279,14 +279,14 @@ describe('git/stash', () => {
 
         let status = await getStatusOrThrow(repository)
         let files = status.workingDirectory.files
-        assert.equal((files).length, 0)
+        assert.equal(files.length, 0)
 
         const entryToApply = desktopEntries[0]
         await popStashEntry(repository, entryToApply.stashSha)
 
         status = await getStatusOrThrow(repository)
         files = status.workingDirectory.files
-        assert.equal((files).length, 1)
+        assert.equal(files.length, 1)
 
         const stashAfter = await getStashes(repository)
         assert.equal(stashAfter.desktopEntries.includes(entryToApply), false)
@@ -304,9 +304,7 @@ describe('git/stash', () => {
         await FSE.writeFile(readme, generateString())
 
         const entryToApply = desktopEntries[0]
-        await assert.rejects(
-          popStashEntry(repository, entryToApply.stashSha)
-        )
+        await assert.rejects(popStashEntry(repository, entryToApply.stashSha))
       })
     })
   })

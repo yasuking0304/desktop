@@ -22,7 +22,8 @@ describe('getAbsoluteUrl', () => {
         getDotComAPIEndpoint(),
         '/issues?since=2019-05-10T16%3A00%3A00Z'
       )
-      assert.equal(result, 
+      assert.equal(
+        result,
         'https://api.github.com/issues?since=2019-05-10T16%3A00%3A00Z'
       )
     })
@@ -54,7 +55,8 @@ describe('getAbsoluteUrl', () => {
         enterpriseEndpoint,
         '/issues?since=2019-05-10T16%3A00%3A00Z'
       )
-      assert.equal(result, 
+      assert.equal(
+        result,
         `${enterpriseEndpoint}/issues?since=2019-05-10T16%3A00%3A00Z`
       )
     })

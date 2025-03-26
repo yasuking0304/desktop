@@ -29,7 +29,7 @@ describe('git/reset', () => {
       await reset(repository, GitResetMode.Hard, 'HEAD')
 
       const status = await getStatusOrThrow(repository)
-      assert.equal((status.workingDirectory.files).length, 0)
+      assert.equal(status.workingDirectory.files.length, 0)
     })
   })
 
@@ -52,7 +52,7 @@ describe('git/reset', () => {
       await exec(['checkout-index', '-f', '-u', '-q', '--', fileName], repoPath)
 
       const status = await getStatusOrThrow(repository)
-      assert.equal((status.workingDirectory.files).length, 0)
+      assert.equal(status.workingDirectory.files.length, 0)
     })
   })
 })

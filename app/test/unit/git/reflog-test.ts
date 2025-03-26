@@ -67,7 +67,7 @@ describe('git/reflog', () => {
       await createAndCheckout(repository, 'branch-4')
 
       const branches = await getRecentBranches(repository, 2)
-      assert.equal((branches).length, 2)
+      assert.equal(branches.length, 2)
       assert(branches.includes('branch-4'))
       assert(branches.includes('branch-3'))
     })

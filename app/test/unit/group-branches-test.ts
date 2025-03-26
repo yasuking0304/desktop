@@ -46,7 +46,7 @@ describe('Branches grouping', () => {
       allBranches,
       recentBranches
     )
-    assert.equal((groups).length, 3)
+    assert.equal(groups.length, 3)
 
     assert.equal(groups[0].identifier, 'default')
     let items = groups[0].items

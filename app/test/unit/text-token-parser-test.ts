@@ -26,7 +26,7 @@ describe('Tokenizer', () => {
       const text = 'this is a string without anything interesting'
       const tokenizer = new Tokenizer(emoji)
       const results = tokenizer.tokenize(text)
-      assert.equal((results).length, 1)
+      assert.equal(results.length, 1)
       assert.equal(results[0].kind, TokenType.Text)
       assert.equal(results[0].text, text)
     })
@@ -35,7 +35,7 @@ describe('Tokenizer', () => {
       const text = "let's :shipit: this thing"
       const tokenizer = new Tokenizer(emoji)
       const results = tokenizer.tokenize(text)
-      assert.equal((results).length, 3)
+      assert.equal(results.length, 3)
       assert.equal(results[0].kind, TokenType.Text)
       assert.equal(results[0].text, "let's ")
       assert.equal(results[1].kind, TokenType.Emoji)
@@ -68,7 +68,7 @@ describe('Tokenizer', () => {
       const text = 'releasing the thing :shipit:'
       const tokenizer = new Tokenizer(emoji, repository)
       const results = tokenizer.tokenize(text)
-      assert.equal((results).length, 2)
+      assert.equal(results.length, 2)
       assert.equal(results[0].kind, TokenType.Text)
       assert.equal(results[0].text, 'releasing the thing ')
 
@@ -83,7 +83,7 @@ describe('Tokenizer', () => {
       const text = 'releasing the thing :unknown:'
       const tokenizer = new Tokenizer(emoji, repository)
       const results = tokenizer.tokenize(text)
-      assert.equal((results).length, 1)
+      assert.equal(results.length, 1)
       assert.equal(results[0].kind, TokenType.Text)
       assert.equal(results[0].text, 'releasing the thing :unknown:')
     })
@@ -92,9 +92,10 @@ describe('Tokenizer', () => {
       const text = 'the email address support@github.com should be ignored'
       const tokenizer = new Tokenizer(emoji, repository)
       const results = tokenizer.tokenize(text)
-      assert.equal((results).length, 1)
+      assert.equal(results.length, 1)
       assert.equal(results[0].kind, TokenType.Text)
-      assert.equal(results[0].text, 
+      assert.equal(
+        results[0].text,
         'the email address support@github.com should be ignored'
       )
     })
@@ -105,7 +106,7 @@ describe('Tokenizer', () => {
 
       const tokenizer = new Tokenizer(emoji, repository)
       const results = tokenizer.tokenize(text)
-      assert.equal((results).length, 2)
+      assert.equal(results.length, 2)
 
       assert.equal(results[0].kind, TokenType.Link)
       const mention = results[0] as HyperlinkMatch
@@ -123,7 +124,7 @@ describe('Tokenizer', () => {
 
       const tokenizer = new Tokenizer(emoji, repository)
       const results = tokenizer.tokenize(text)
-      assert.equal((results).length, 2)
+      assert.equal(results.length, 2)
 
       assert.equal(results[0].kind, TokenType.Text)
       assert.equal(results[0].text, 'fixed based on suggestion from ')
@@ -140,7 +141,7 @@ describe('Tokenizer', () => {
 
       const tokenizer = new Tokenizer(emoji, repository)
       const results = tokenizer.tokenize(text)
-      assert.equal((results).length, 1)
+      assert.equal(results.length, 1)
 
       assert.equal(results[0].kind, TokenType.Text)
       assert.equal(results[0].text, 'fix double http:// in avatar URLs')
@@ -151,7 +152,7 @@ describe('Tokenizer', () => {
 
       const tokenizer = new Tokenizer(emoji, repository)
       const results = tokenizer.tokenize(text)
-      assert.equal((results).length, 1)
+      assert.equal(results.length, 1)
 
       assert.equal(results[0].kind, TokenType.Text)
       assert.equal(results[0].text, 'fix double https:// in avatar URLs')
@@ -164,7 +165,7 @@ describe('Tokenizer', () => {
 
       const tokenizer = new Tokenizer(emoji, repository)
       const results = tokenizer.tokenize(text)
-      assert.equal((results).length, 3)
+      assert.equal(results.length, 3)
 
       assert.equal(results[0].kind, TokenType.Text)
       assert.equal(results[0].text, 'Merge pull request ')
@@ -186,7 +187,7 @@ describe('Tokenizer', () => {
 
       const tokenizer = new Tokenizer(emoji, repository)
       const results = tokenizer.tokenize(text)
-      assert.equal((results).length, 3)
+      assert.equal(results.length, 3)
 
       assert.equal(results[0].kind, TokenType.Text)
       assert.equal(results[0].text, 'Update README.md (')
@@ -208,10 +209,11 @@ describe('Tokenizer', () => {
 
       const tokenizer = new Tokenizer(emoji, repository)
       const results = tokenizer.tokenize(text)
-      assert.equal((results).length, 5)
+      assert.equal(results.length, 5)
 
       assert.equal(results[0].kind, TokenType.Text)
-      assert.equal(results[0].text, 
+      assert.equal(
+        results[0].text,
         `'Clone repository' menu item label is obscured on Windows - `
       )
 
@@ -246,7 +248,7 @@ describe('Tokenizer', () => {
 
       const tokenizer = new Tokenizer(emoji, repository)
       const results = tokenizer.tokenize(text)
-      assert.equal((results).length, 13)
+      assert.equal(results.length, 13)
 
       assert.equal(results[0].kind, TokenType.Text)
       assert.equal(results[0].text, 'Assorted changelog typos - ')
@@ -318,7 +320,7 @@ describe('Tokenizer', () => {
 
       const tokenizer = new Tokenizer(emoji, repository)
       const results = tokenizer.tokenize(text)
-      assert.equal((results).length, 13)
+      assert.equal(results.length, 13)
 
       assert.equal(results[0].kind, TokenType.Text)
       assert.equal(results[0].text, 'Assorted changelog typos - ')
@@ -408,7 +410,7 @@ Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>`
       const tokenizer = new Tokenizer(emoji, repository)
       const results = tokenizer.tokenize(text)
 
-      assert.equal((results).length, 3)
+      assert.equal(results.length, 3)
 
       assert.equal(results[0].kind, TokenType.Text)
       assert.equal(results[0].text, expectedBefore)
@@ -417,7 +419,8 @@ Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>`
       const issue = results[1] as HyperlinkMatch
 
       assert.equal(issue.text, '#1034')
-      assert.equal(issue.url, 
+      assert.equal(
+        issue.url,
         'https://github.com/shiftkey/some-repo/issues/1034'
       )
 
@@ -431,7 +434,7 @@ Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>`
       const text = 'releasing the thing :shipit:'
       const tokenizer = new Tokenizer(emoji)
       const results = tokenizer.tokenize(text)
-      assert.equal((results).length, 2)
+      assert.equal(results.length, 2)
       assert.equal(results[0].kind, TokenType.Text)
       assert.equal(results[0].text, 'releasing the thing ')
 
@@ -446,7 +449,7 @@ Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>`
       const text = 'releasing the thing :unknown:'
       const tokenizer = new Tokenizer(emoji)
       const results = tokenizer.tokenize(text)
-      assert.equal((results).length, 1)
+      assert.equal(results.length, 1)
       assert.equal(results[0].kind, TokenType.Text)
       assert.equal(results[0].text, text)
     })
@@ -455,7 +458,7 @@ Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>`
       const text = 'fixed based on suggestion from @shiftkey'
       const tokenizer = new Tokenizer(emoji)
       const results = tokenizer.tokenize(text)
-      assert.equal((results).length, 1)
+      assert.equal(results.length, 1)
       assert.equal(results[0].kind, TokenType.Text)
       assert.equal(results[0].text, text)
     })
@@ -465,7 +468,7 @@ Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>`
         'Merge pull request #955 from desktop/computering-icons-for-all'
       const tokenizer = new Tokenizer(emoji)
       const results = tokenizer.tokenize(text)
-      assert.equal((results).length, 1)
+      assert.equal(results.length, 1)
       assert.equal(results[0].kind, TokenType.Text)
       assert.equal(results[0].text, text)
     })
@@ -488,15 +491,17 @@ Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>`
 
       // other tests are looking at the newline formatting here
       // let's just verify the URL conversion works
-      assert.equal((results).length, 3)
+      assert.equal(results.length, 3)
 
       assert.equal(results[1].kind, TokenType.Link)
       const mention = results[1] as HyperlinkMatch
 
-      assert.equal(mention.text, 
+      assert.equal(
+        mention.text,
         'https://github.com/shiftkey/some-repo/issues/1034'
       )
-      assert.equal(mention.url, 
+      assert.equal(
+        mention.url,
         'https://github.com/shiftkey/some-repo/issues/1034'
       )
     })

@@ -21,7 +21,8 @@ describe('findUpstreamRemote', () => {
     const upstream = findUpstreamRemote(parent, remotes)
     assert(upstream !== null)
     assert.equal(upstream!.name, UpstreamRemoteName)
-    assert.equal(upstream!.url, 
+    assert.equal(
+      upstream!.url,
       'https://github.com/Somsubhra/github-release-stats.git'
     )
   })

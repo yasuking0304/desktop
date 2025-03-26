@@ -290,24 +290,28 @@ describe('repo metadata rules', () => {
       const results2 =
         repoRulesInfo.commitMessagePatterns.getFailedRules('afbgch')
       validateMetadataRules(results2, 'fail', 0, 1)
-      assert.equal(results2.failed[0].description, 
+      assert.equal(
+        results2.failed[0].description,
         'must match the regular expression "^\\A(d|e)oo\\d$"'
       )
 
       const results3 =
         repoRulesInfo.commitMessagePatterns.getFailedRules('eoo4')
       validateMetadataRules(results3, 'fail', 0, 1)
-      assert.equal(results3.failed[0].description, 
+      assert.equal(
+        results3.failed[0].description,
         'must match the regular expression "(a.b.c.)|(d+)"'
       )
 
       const results4 =
         repoRulesInfo.commitMessagePatterns.getFailedRules('fgsa')
       validateMetadataRules(results4, 'fail', 0, 2)
-      assert.equal(results4.failed[0].description, 
+      assert.equal(
+        results4.failed[0].description,
         'must match the regular expression "(a.b.c.)|(d+)"'
       )
-      assert.equal(results4.failed[1].description, 
+      assert.equal(
+        results4.failed[1].description,
         'must match the regular expression "^\\A(d|e)oo\\d$"'
       )
     })
@@ -323,7 +327,8 @@ describe('repo metadata rules', () => {
       const results2 =
         repoRulesInfo.commitMessagePatterns.getFailedRules('asdf\nbar')
       validateMetadataRules(results2, 'fail', 0, 1)
-      assert.equal(results2.failed[0].description, 
+      assert.equal(
+        results2.failed[0].description,
         'must match the regular expression "(?m)^foo"'
       )
     })

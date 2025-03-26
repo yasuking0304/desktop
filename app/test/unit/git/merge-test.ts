@@ -35,7 +35,10 @@ describe('git/merge', () => {
         await merge(repository, 'dev')
       })
       it('returns MergeResult.AlreadyUpToDate', async () => {
-        assert.equal(await merge(repository, 'dev'), MergeResult.AlreadyUpToDate)
+        assert.equal(
+          await merge(repository, 'dev'),
+          MergeResult.AlreadyUpToDate
+        )
       })
     })
   })
@@ -121,7 +124,8 @@ describe('git/merge', () => {
         repository = await setupEmptyRepository()
       })
       it('throws an error', async () => {
-        await assert.rejects(subject(), 
+        await assert.rejects(
+          subject(),
           /There is no merge in progress, so there is nothing to abort/
         )
       })

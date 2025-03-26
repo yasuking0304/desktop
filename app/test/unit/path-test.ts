@@ -15,15 +15,19 @@ describe('path', () => {
           'C:/Users/shiftkey\\AppData\\Local\\GitHubDesktop\\app-1.0.4\\resources\\app'
         const uri = encodePathAsUrl(dirName, 'folder/file.html')
         assert.equal(
-          uri.startsWith('file:///C:/Users/shiftkey/AppData/Local/')
-        , true)
+          uri.startsWith('file:///C:/Users/shiftkey/AppData/Local/'),
+          true
+        )
       })
 
       it('encodes spaces and hashes', () => {
         const dirName =
           'C:/Users/The Kong #2\\AppData\\Local\\GitHubDesktop\\app-1.0.4\\resources\\app'
         const uri = encodePathAsUrl(dirName, 'index.html')
-        assert.equal(uri.startsWith('file:///C:/Users/The%20Kong%20%232/'), true)
+        assert.equal(
+          uri.startsWith('file:///C:/Users/The%20Kong%20%232/'),
+          true
+        )
       })
     }
 
@@ -41,18 +45,16 @@ describe('path', () => {
     const root = process.cwd()
 
     it('fails for paths outside of the root', async () => {
-      assert(await resolveWithin(root, join('..')) === null)
-      assert(await resolveWithin(root, join('..', '..')) === null)
+      assert((await resolveWithin(root, join('..'))) === null)
+      assert((await resolveWithin(root, join('..', '..'))) === null)
     })
 
     it('succeeds for paths that traverse out, and then back into, the root', async () => {
-      assert.equal(await resolveWithin(root, join('..', basename(root))), 
-        root
-      )
+      assert.equal(await resolveWithin(root, join('..', basename(root))), root)
     })
 
     it('fails for paths containing null bytes', async () => {
-      assert(await resolveWithin(root, 'foo\0bar') === null)
+      assert((await resolveWithin(root, 'foo\0bar')) === null)
     })
 
     it('succeeds for absolute relative paths as long as they stay within the root', async () => {
@@ -68,7 +70,7 @@ describe('path', () => {
 
         try {
           await symlink(resolve(tempDir, '..', '..'), symlinkPath)
-          assert(await resolveWithin(tempDir, symlinkName) === null)
+          assert((await resolveWithin(tempDir, symlinkName)) === null)
         } finally {
           await unlink(symlinkPath)
           await rmdir(tempDir)
@@ -87,7 +89,8 @@ describe('path', () => {
             basename(resolve(tempDir, '..')),
             basename(tempDir)
           )
-          assert.equal(await resolveWithin(tempDir, throughSymlinkPath), 
+          assert.equal(
+            await resolveWithin(tempDir, throughSymlinkPath),
             resolve(tempDir, throughSymlinkPath)
           )
         } finally {

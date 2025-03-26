@@ -77,7 +77,8 @@ describe('updateChangedFiles', () => {
         partiallySelectedFile.id
       )
 
-      assert.equal(partialFile!.selection.getSelectionType(), 
+      assert.equal(
+        partialFile!.selection.getSelectionType(),
         DiffSelectionType.None
       )
     })
@@ -97,7 +98,8 @@ describe('updateChangedFiles', () => {
         partiallySelectedFile.id
       )
 
-      assert.equal(partialFile!.selection.getSelectionType(), 
+      assert.equal(
+        partialFile!.selection.getSelectionType(),
         DiffSelectionType.Partial
       )
     })
@@ -131,7 +133,7 @@ describe('updateChangedFiles', () => {
       const workingDirectorySelection =
         selection as ChangesWorkingDirectorySelection
       const { selectedFileIDs } = workingDirectorySelection
-      assert.equal((selectedFileIDs).length, 1)
+      assert.equal(selectedFileIDs.length, 1)
       // NOTE: `updateChangedFiles` sorts the paths and `app/package.json` will
       // appear in list before `README.md`
       assert.equal(selectedFileIDs[0], files[1].id)
@@ -156,7 +158,7 @@ describe('updateChangedFiles', () => {
       const workingDirectorySelection =
         selection as ChangesWorkingDirectorySelection
       const { selectedFileIDs } = workingDirectorySelection
-      assert.equal((selectedFileIDs).length, 1)
+      assert.equal(selectedFileIDs.length, 1)
       assert.equal(selectedFileIDs[0], firstFile)
     })
 
@@ -177,7 +179,7 @@ describe('updateChangedFiles', () => {
       const workingDirectorySelection =
         selection as ChangesWorkingDirectorySelection
       const { selectedFileIDs } = workingDirectorySelection
-      assert.equal((selectedFileIDs).length, 0)
+      assert.equal(selectedFileIDs.length, 0)
     })
   })
 

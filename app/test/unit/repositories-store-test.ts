@@ -31,7 +31,7 @@ describe('RepositoriesStore', () => {
       await repositoriesStore.addRepository('/some/other/path')
 
       const repositories = await repositoriesStore.getAll()
-      assert.equal((repositories).length, 2)
+      assert.equal(repositories.length, 2)
     })
   })
 
@@ -74,7 +74,8 @@ describe('RepositoriesStore', () => {
       assertIsRepositoryWithGitHubRepository(repo)
       assert.equal(repo.gitHubRepository.isPrivate, true)
       assert.equal(repo.gitHubRepository.fork, false)
-      assert.equal(repo.gitHubRepository.htmlURL, 
+      assert.equal(
+        repo.gitHubRepository.htmlURL,
         'https://github.com/my-user/my-repo'
       )
     })
@@ -90,7 +91,8 @@ describe('RepositoriesStore', () => {
         await repositoriesStore.upsertGitHubRepository(endpoint, apiRepo)
       )
 
-      assert.equal(firstRepo.gitHubRepository.dbID, 
+      assert.equal(
+        firstRepo.gitHubRepository.dbID,
         secondRepo.gitHubRepository.dbID
       )
     })

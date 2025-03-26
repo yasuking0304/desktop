@@ -86,7 +86,10 @@ describe('parseAppURL', () => {
       const openRepo = result as IOpenRepositoryFromURLAction
       assert.equal(openRepo.url, 'https://github.com/octokit/octokit.net')
       assert.equal(openRepo.branch, 'master')
-      assert.equal(openRepo.filepath, 'Octokit.Reactive/Octokit.Reactive.csproj')
+      assert.equal(
+        openRepo.filepath,
+        'Octokit.Reactive/Octokit.Reactive.csproj'
+      )
     })
   })
 
@@ -153,7 +156,10 @@ describe('parseAppURL', () => {
       const openRepo = result as IOpenRepositoryFromURLAction
       assert.equal(openRepo.url, 'git@github.com/octokit/octokit.net')
       assert.equal(openRepo.branch, 'master')
-      assert.equal(openRepo.filepath, 'Octokit.Reactive/Octokit.Reactive.csproj')
+      assert.equal(
+        openRepo.filepath,
+        'Octokit.Reactive/Octokit.Reactive.csproj'
+      )
     })
   })
 })

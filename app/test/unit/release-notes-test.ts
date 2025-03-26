@@ -12,7 +12,7 @@ describe('release-notes', () => {
 
       const result = parseReleaseEntries(values)
 
-      assert.equal((result).length, 1)
+      assert.equal(result.length, 1)
       assert.equal(result[0].kind, 'fixed')
       assert.equal(result[0].message, 'something else')
     })
@@ -21,7 +21,7 @@ describe('release-notes', () => {
 
       const result = parseReleaseEntries(values)
 
-      assert.equal((result).length, 1)
+      assert.equal(result.length, 1)
       assert.equal(result[0].kind, 'fixed')
       assert.equal(result[0].message, 'and another thing')
     })
@@ -30,7 +30,7 @@ describe('release-notes', () => {
 
       const result = parseReleaseEntries(values)
 
-      assert.equal((result).length, 1)
+      assert.equal(result.length, 1)
       assert.equal(result[0].kind, 'other')
       assert.equal(result[0].message, 'we did a thing!')
     })
@@ -72,8 +72,8 @@ describe('release-notes', () => {
       // let's just test it's showing the right month and year instead
       assert(result.datePublished.includes('December'))
       assert(result.datePublished.includes('2017'))
-      assert.equal((result.bugfixes).length, 8)
-      assert.equal((result.enhancements).length, 12)
+      assert.equal(result.bugfixes.length, 8)
+      assert.equal(result.enhancements.length, 12)
     })
 
     it('can render 1.0.10 layout', () => {
@@ -117,8 +117,8 @@ describe('release-notes', () => {
       // let's just test it's showing the right month and year instead
       assert(result.datePublished.includes('December'))
       assert(result.datePublished.includes('2017'))
-      assert.equal((result.bugfixes).length, 10)
-      assert.equal((result.enhancements).length, 16)
+      assert.equal(result.bugfixes.length, 10)
+      assert.equal(result.enhancements.length, 16)
     })
 
     it('can render 1.0.9 layout', () => {
@@ -144,8 +144,8 @@ describe('release-notes', () => {
       // let's just test it's showing the right month and year instead
       assert(result.datePublished.includes('November'))
       assert(result.datePublished.includes('2017'))
-      assert.equal((result.bugfixes).length, 4)
-      assert.equal((result.enhancements).length, 4)
+      assert.equal(result.bugfixes.length, 4)
+      assert.equal(result.enhancements.length, 4)
     })
   })
 })

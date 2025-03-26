@@ -8,32 +8,37 @@ describe('formatCommitMessage', () => {
     const repo = await setupEmptyRepository()
 
     assert.equal(
-      await formatCommitMessage(repo, { summary: 'test', description: null })
-    , 'test\n')
+      await formatCommitMessage(repo, { summary: 'test', description: null }),
+      'test\n'
+    )
     assert.equal(
-      await formatCommitMessage(repo, { summary: 'test', description: 'test' })
-    , 'test\n\ntest\n')
+      await formatCommitMessage(repo, { summary: 'test', description: 'test' }),
+      'test\n\ntest\n'
+    )
   })
 
   it('omits description when null', async () => {
     const repo = await setupEmptyRepository()
     assert.equal(
-      await formatCommitMessage(repo, { summary: 'test', description: null })
-    , 'test\n')
+      await formatCommitMessage(repo, { summary: 'test', description: null }),
+      'test\n'
+    )
   })
 
   it('omits description when empty string', async () => {
     const repo = await setupEmptyRepository()
     assert.equal(
-      await formatCommitMessage(repo, { summary: 'test', description: '' })
-    , 'test\n')
+      await formatCommitMessage(repo, { summary: 'test', description: '' }),
+      'test\n'
+    )
   })
 
   it('adds two newlines between summary and description', async () => {
     const repo = await setupEmptyRepository()
     assert.equal(
-      await formatCommitMessage(repo, { summary: 'foo', description: 'bar' })
-    , 'foo\n\nbar\n')
+      await formatCommitMessage(repo, { summary: 'foo', description: 'bar' }),
+      'foo\n\nbar\n'
+    )
   })
 
   it('appends trailers to a summary-only message', async () => {
@@ -47,8 +52,7 @@ describe('formatCommitMessage', () => {
         summary: 'foo',
         description: null,
         trailers,
-      })
-    , 
+      }),
       'foo\n\n' +
         'Co-Authored-By: Markus Olsson <niik@github.com>\n' +
         'Signed-Off-By: nerdneha <nerdneha@github.com>\n'
@@ -66,8 +70,7 @@ describe('formatCommitMessage', () => {
         summary: 'foo',
         description: 'bar',
         trailers,
-      })
-    , 
+      }),
       'foo\n\nbar\n\n' +
         'Co-Authored-By: Markus Olsson <niik@github.com>\n' +
         'Signed-Off-By: nerdneha <nerdneha@github.com>\n'
@@ -86,8 +89,7 @@ describe('formatCommitMessage', () => {
         summary: 'foo',
         description: 'Co-Authored-By: Markus Olsson <niik@github.com>',
         trailers,
-      })
-    , 
+      }),
       'foo\n\n' +
         'Co-Authored-By: Markus Olsson <niik@github.com>\n' +
         'Signed-Off-By: nerdneha <nerdneha@github.com>\n'
@@ -107,8 +109,7 @@ describe('formatCommitMessage', () => {
         // note the lack of space after :
         description: 'Co-Authored-By:Markus Olsson <niik@github.com>',
         trailers,
-      })
-    , 
+      }),
       'foo\n\n' +
         'Co-Authored-By: Markus Olsson <niik@github.com>\n' +
         'Signed-Off-By: nerdneha <nerdneha@github.com>\n'
@@ -127,8 +128,7 @@ describe('formatCommitMessage', () => {
       'hello\n---\nworld\n\nCo-Authored-By: Markus Olsson <niik@github.com>'
 
     assert.equal(
-      await formatCommitMessage(repo, { summary, description, trailers })
-    , 
+      await formatCommitMessage(repo, { summary, description, trailers }),
       'foo\n\nhello\n---\nworld\n\n' +
         'Co-Authored-By: Markus Olsson <niik@github.com>\n' +
         'Signed-Off-By: nerdneha <nerdneha@github.com>\n'

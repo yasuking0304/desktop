@@ -156,7 +156,7 @@ describe('git/checkout', () => {
 
       const status = await getStatusOrThrow(repository)
 
-      assert.equal((status.workingDirectory.files).length, 0)
+      assert.equal(status.workingDirectory.files.length, 0)
     })
 
     it('updates a changed submodule reference', async () => {
@@ -176,7 +176,7 @@ describe('git/checkout', () => {
       await checkoutBranch(repository, devBranch, null)
 
       const status = await getStatusOrThrow(repository)
-      assert.equal((status.workingDirectory.files).length, 0)
+      assert.equal(status.workingDirectory.files.length, 0)
     })
   })
 })

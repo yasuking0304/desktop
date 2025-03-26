@@ -123,24 +123,27 @@ describe('git/core', () => {
             createGitResult(
               'error: could not lock config file C:/Users/markus/.gitconfig: File exists'
             )
-          )
-        , 'C:\\Users\\markus\\.gitconfig.lock')
+          ),
+          'C:\\Users\\markus\\.gitconfig.lock'
+        )
 
         assert.equal(
           parseConfigLockFilePathFromError(
             createGitResult(
               'error: could not lock config file C:\\Users\\markus\\.gitconfig: File exists'
             )
-          )
-        , 'C:\\Users\\markus\\.gitconfig.lock')
+          ),
+          'C:\\Users\\markus\\.gitconfig.lock'
+        )
       } else {
         assert.equal(
           parseConfigLockFilePathFromError(
             createGitResult(
               'error: could not lock config file /Users/markus/.gitconfig: File exists'
             )
-          )
-        , '/Users/markus/.gitconfig.lock')
+          ),
+          '/Users/markus/.gitconfig.lock'
+        )
       }
     })
   })

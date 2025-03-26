@@ -216,14 +216,16 @@ describe('repository-matching', () => {
         urlMatchesCloneURL(
           'https://github.com/shiftkey/desktop.git',
           repository
-        )
-      , true)
+        ),
+        true
+      )
     })
 
     it(`returns true when URL doesn't have a .git suffix`, () => {
       assert.equal(
-        urlMatchesCloneURL('https://github.com/shiftkey/desktop', repository)
-      , true)
+        urlMatchesCloneURL('https://github.com/shiftkey/desktop', repository),
+        true
+      )
     })
 
     it(`returns false when URL belongs to a different owner`, () => {
@@ -231,8 +233,9 @@ describe('repository-matching', () => {
         urlMatchesCloneURL(
           'https://github.com/outofambit/desktop.git',
           repository
-        )
-      , false)
+        ),
+        false
+      )
     })
 
     it(`returns false if GitHub repository does't have a cloneURL set`, () => {
@@ -240,8 +243,9 @@ describe('repository-matching', () => {
         urlMatchesCloneURL(
           'https://github.com/shiftkey/desktop',
           repositoryWithoutCloneURL
-        )
-      , false)
+        ),
+        false
+      )
     })
   })
 })

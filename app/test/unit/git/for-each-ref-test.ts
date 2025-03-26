@@ -26,19 +26,21 @@ describe('git/for-each-ref', () => {
         b => b.type === BranchType.Local
       )
 
-      assert.equal((branches).length, 3)
+      assert.equal(branches.length, 3)
 
       const commitWithBody = branches[0]
       assert.equal(commitWithBody.name, 'commit-with-long-description')
       assert(commitWithBody.upstream === null)
-      assert.equal(commitWithBody.tip.sha, 
+      assert.equal(
+        commitWithBody.tip.sha,
         'dfa96676b65e1c0ed43ca25492252a5e384c8efd'
       )
 
       const commitNoBody = branches[1]
       assert.equal(commitNoBody.name, 'commit-with-no-body')
       assert(commitNoBody.upstream === null)
-      assert.equal(commitNoBody.tip.sha, 
+      assert.equal(
+        commitNoBody.tip.sha,
         '49ec1e05f39eef8d1ab6200331a028fb3dd96828'
       )
 
@@ -51,13 +53,13 @@ describe('git/for-each-ref', () => {
     it('should return empty list for empty repo', async () => {
       const repo = await setupEmptyRepository()
       const branches = await getBranches(repo)
-      assert.equal((branches).length, 0)
+      assert.equal(branches.length, 0)
     })
 
     it('should return empty list for directory without a .git directory', async () => {
       const repo = setupEmptyDirectory()
       const status = await getBranches(repo)
-      assert.equal((status).length, 0)
+      assert.equal(status.length, 0)
     })
   })
 
@@ -73,7 +75,7 @@ describe('git/for-each-ref', () => {
       const branches = await getBranchesDifferingFromUpstream(repository)
 
       const branchRefs = branches.map(branch => branch.ref)
-      assert.equal((branchRefs).length, 3)
+      assert.equal(branchRefs.length, 3)
 
       // All branches that are behind and/or ahead must be included
       assert(branchRefs.includes('refs/heads/branch-behind'))

@@ -46,8 +46,9 @@ describe('endpoint-capabilities', () => {
           dotcom: true,
           ghe: false,
           es: '>= 3.0.0',
-        })
-      , true)
+        }),
+        true
+      )
 
       assert.equal(
         testEndpoint(
@@ -58,8 +59,9 @@ describe('endpoint-capabilities', () => {
             es: '>= 3.1.0',
           },
           '3.1.0'
-        )
-      , true)
+        ),
+        true
+      )
     })
   })
 })

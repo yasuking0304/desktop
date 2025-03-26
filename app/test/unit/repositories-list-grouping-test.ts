@@ -30,23 +30,23 @@ describe('repository list grouping', () => {
 
   it('groups repositories by owners/Enterprise/Other', () => {
     const grouped = groupRepositories(repositories, cache, [])
-    assert.equal((grouped).length, 3)
+    assert.equal(grouped.length, 3)
 
     assert.equal(grouped[0].identifier.kind, 'dotcom')
     assert.equal((grouped[0].identifier as any).owner.login, 'me')
-    assert.equal((grouped[0].items).length, 1)
+    assert.equal(grouped[0].items.length, 1)
 
     let item = grouped[0].items[0]
     assert.equal(item.repository.path, 'repo2')
 
     assert.equal(grouped[1].identifier.kind, 'enterprise')
-    assert.equal((grouped[1].items).length, 1)
+    assert.equal(grouped[1].items.length, 1)
 
     item = grouped[1].items[0]
     assert.equal(item.repository.path, 'repo3')
 
     assert.equal(grouped[2].identifier.kind, 'other')
-    assert.equal((grouped[2].items).length, 1)
+    assert.equal(grouped[2].items.length, 1)
 
     item = grouped[2].items[0]
     assert.equal(item.repository.path, 'repo1')
@@ -74,18 +74,18 @@ describe('repository list grouping', () => {
       cache,
       []
     )
-    assert.equal((grouped).length, 2)
+    assert.equal(grouped.length, 2)
 
     assert.equal(grouped[0].identifier.kind, 'dotcom')
     assert.equal((grouped[0].identifier as any).owner.login, 'me')
-    assert.equal((grouped[0].items).length, 2)
+    assert.equal(grouped[0].items.length, 2)
 
     let items = grouped[0].items
     assert.equal(items[0].repository.path, 'b')
     assert.equal(items[1].repository.path, 'd')
 
     assert.equal(grouped[1].identifier.kind, 'other')
-    assert.equal((grouped[1].items).length, 3)
+    assert.equal(grouped[1].items.length, 3)
 
     items = grouped[1].items
     assert.equal(items[0].repository.path, 'a')
@@ -128,18 +128,18 @@ describe('repository list grouping', () => {
     )
 
     const grouped = groupRepositories([repoA, repoB, repoC, repoD], cache, [])
-    assert.equal((grouped).length, 3)
+    assert.equal(grouped.length, 3)
 
     assert.equal(grouped[0].identifier.kind, 'dotcom')
     assert.equal((grouped[0].identifier as any).owner.login, 'user1')
-    assert.equal((grouped[0].items).length, 1)
+    assert.equal(grouped[0].items.length, 1)
 
     assert.equal(grouped[1].identifier.kind, 'dotcom')
     assert.equal((grouped[1].identifier as any).owner.login, 'user2')
-    assert.equal((grouped[1].items).length, 1)
+    assert.equal(grouped[1].items.length, 1)
 
     assert.equal(grouped[2].identifier.kind, 'enterprise')
-    assert.equal((grouped[2].items).length, 2)
+    assert.equal(grouped[2].items.length, 2)
 
     assert.equal(grouped[0].items[0].text[0], 'repo')
     assert.equal(grouped[0].items[0].needsDisambiguation, false)

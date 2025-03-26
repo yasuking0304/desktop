@@ -108,7 +108,8 @@ describe('AccountsStore', () => {
 
       const persistedUsers = JSON.parse(dataStore.getItem('users'))
       assert.equal(persistedUsers[0].login, 'joan')
-      assert.equal(persistedUsers[0].endpoint, 
+      assert.equal(
+        persistedUsers[0].endpoint,
         'https://my-company-repos.com/api/v3'
       )
     })

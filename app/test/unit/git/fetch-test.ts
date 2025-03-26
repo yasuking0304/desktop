@@ -60,7 +60,8 @@ describe('git/fetch', () => {
         resultBranches,
         branchAheadAndBehind.upstream!
       )
-      assert.notEqual(branchAheadAndBehindUpstream.tip.sha, 
+      assert.notEqual(
+        branchAheadAndBehindUpstream.tip.sha,
         branchAheadAndBehind.tip.sha
       )
 

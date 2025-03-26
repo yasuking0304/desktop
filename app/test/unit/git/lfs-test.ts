@@ -85,7 +85,7 @@ describe('git-lfs', () => {
 
       const notFound = await filesNotTrackedByLFS(repository, [videoFile])
 
-      assert.equal((notFound).length, 1)
+      assert.equal(notFound.length, 1)
       assert(notFound.includes(videoFile))
     })
 
@@ -97,7 +97,7 @@ describe('git-lfs', () => {
 
       const notFound = await filesNotTrackedByLFS(repository, [photoFile])
 
-      assert.equal((notFound).length, 0)
+      assert.equal(notFound.length, 0)
     })
 
     it('skips files in a subfolder that are tracked', async () => {
@@ -109,7 +109,7 @@ describe('git-lfs', () => {
         photoFileInDirectory,
       ])
 
-      assert.equal((notFound).length, 0)
+      assert.equal(notFound.length, 0)
     })
 
     it('skips files in a subfolder where the rule only covers the subdirectory', async () => {
@@ -121,7 +121,7 @@ describe('git-lfs', () => {
         photoFileInDirectory,
       ])
 
-      assert.equal((notFound).length, 0)
+      assert.equal(notFound.length, 0)
     })
   })
 })

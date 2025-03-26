@@ -98,9 +98,12 @@ describe('findForkedRemotesToPrune', () => {
 
     const remotesToPrune = findForkedRemotesToPrune(remotes, [], allBranches)
 
-    assert.equal(getNamesFromRemotes(remotesToPrune).includes(
-      GitHubDesktopRemoteWithLocalBranch
-    ), false)
+    assert.equal(
+      getNamesFromRemotes(remotesToPrune).includes(
+        GitHubDesktopRemoteWithLocalBranch
+      ),
+      false
+    )
   })
 
   it('never prunes remotes with pull requests', () => {
@@ -114,9 +117,12 @@ describe('findForkedRemotesToPrune', () => {
 
     const remotesToPrune = findForkedRemotesToPrune(remotes, openPRs, [])
 
-    assert.equal(getNamesFromRemotes(remotesToPrune).includes(
-      GitHubDesktopRemoteWithPullRequest
-    ), false)
+    assert.equal(
+      getNamesFromRemotes(remotesToPrune).includes(
+        GitHubDesktopRemoteWithPullRequest
+      ),
+      false
+    )
   })
 
   it('prunes remotes without pull requests or local branches', () => {

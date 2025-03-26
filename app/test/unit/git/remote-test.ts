@@ -58,7 +58,7 @@ describe('git/remote', () => {
       await exec(['remote', 'add', 'D', url], repository.path)
 
       const result = await getRemotes(repository)
-      assert.equal((result).length, 5)
+      assert.equal(result.length, 5)
 
       assert.equal(result[0].name, 'A')
       assert.equal(result[1].name, 'D')
@@ -70,7 +70,7 @@ describe('git/remote', () => {
     it('returns empty array for directory without a .git directory', async () => {
       const repository = setupEmptyDirectory()
       const remotes = await getRemotes(repository)
-      assert.equal((remotes).length, 0)
+      assert.equal(remotes.length, 0)
     })
 
     it('returns promisor remote', async () => {
@@ -90,7 +90,7 @@ describe('git/remote', () => {
 
       // Shows that the `getRemote` returns that remote
       const result = await getRemotes(repository)
-      assert.equal((result).length, 1)
+      assert.equal(result.length, 1)
       assert.equal(result[0].name, 'hasBlobFilter')
     })
   })
@@ -173,14 +173,14 @@ describe('git/remote', () => {
       assert.equal(await setRemoteURL(repository, remoteName, newUrl), true)
 
       const remotes = await getRemotes(repository)
-      assert.equal((remotes).length, 1)
+      assert.equal(remotes.length, 1)
       assert.equal(remotes[0].url, newUrl)
     })
     it('returns false for unknown remote name', async () => {
       await assert.rejects(setRemoteURL(repository, 'none', newUrl))
 
       const remotes = await getRemotes(repository)
-      assert.equal((remotes).length, 1)
+      assert.equal(remotes.length, 1)
       assert.equal(remotes[0].url, remoteUrl)
     })
   })

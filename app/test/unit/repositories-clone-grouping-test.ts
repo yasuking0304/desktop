@@ -96,23 +96,23 @@ describe('clone repository grouping', () => {
     ]
 
     const grouped = groupRepositories(repositories, 'shiftkey')
-    assert.equal((grouped).length, 3)
+    assert.equal(grouped.length, 3)
 
     assert.equal(grouped[0].identifier, YourRepositoriesIdentifier)
-    assert.equal((grouped[0].items).length, 1)
+    assert.equal(grouped[0].items.length, 1)
 
     let item = grouped[0].items[0]
     assert.equal(item.name, 'some-repo')
 
     assert.equal(grouped[1].identifier, 'desktop')
-    assert.equal((grouped[1].items).length, 1)
+    assert.equal(grouped[1].items.length, 1)
 
     item = grouped[1].items[0]
     assert.equal(item.name, 'desktop')
 
     item = grouped[2].items[0]
     assert.equal(grouped[2].identifier, 'octokit')
-    assert.equal((grouped[2].items).length, 1)
+    assert.equal(grouped[2].items.length, 1)
 
     item = grouped[2].items[0]
     assert.equal(item.name, 'octokit.net')

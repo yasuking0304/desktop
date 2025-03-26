@@ -46,7 +46,11 @@ describe('git/config', () => {
         { successExitCodes: new Set([1]) }
       ).then(x => x.stdout)
 
-      assert.equal(withoutEnvOutput.length, 0, 'Expected withoutEnvOutput to be empty')
+      assert.equal(
+        withoutEnvOutput.length,
+        0,
+        'Expected withoutEnvOutput to be empty'
+      )
       const withEnvOutput = await git(
         ['config', 'desktop.test'],
         repository.path,
