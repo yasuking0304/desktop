@@ -93,7 +93,7 @@ import { BaseStore } from './base-store'
 import { getStashes, getStashedFiles } from '../git/stash'
 import { IStashEntry, StashedChangesLoadStates } from '../../models/stash-entry'
 import { PullRequest } from '../../models/pull-request'
-import { StatsStore } from '../stats'
+import { IStatsStore } from '../stats'
 import { getTagsToPush, storeTagsToPush } from './helpers/tags-to-push-storage'
 import { DiffSelection, ITextDiff } from '../../models/diff'
 import { getDefaultBranch } from '../helpers/default-branch'
@@ -161,7 +161,7 @@ export class GitStore extends BaseStore {
   public constructor(
     private readonly repository: Repository,
     private readonly shell: IAppShell,
-    private readonly statsStore: StatsStore
+    private readonly statsStore: IStatsStore
   ) {
     super()
 
@@ -302,7 +302,7 @@ export class GitStore extends BaseStore {
     }
 
     if (numCreatedTags > 0) {
-      this.statsStore.recordTagCreated(numCreatedTags)
+      this.statsStore.increment('tagsCreated', numCreatedTags)
     }
 
     const commitsToStore = []
