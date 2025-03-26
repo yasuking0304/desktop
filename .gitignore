@@ -7,6 +7,7 @@ yarn-error.log
 app/node_modules/
 vendor/windows-argv-parser/build/
 vendor/desktop-notifications/build/
+vendor/desktop-trampoline/build/
 .DS_Store
 .awcache
 .idea/
