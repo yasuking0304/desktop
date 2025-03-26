@@ -6,6 +6,7 @@ npm-debug.log
 yarn-error.log
 app/node_modules/
 vendor/windows-argv-parser/build/
+vendor/desktop-notifications/build/
 .DS_Store
 .awcache
 .idea/
