@@ -81,7 +81,6 @@
     "html-webpack-plugin": "^5.6.0",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
-    "jest-extended": "^4.0.2",
     "jsdom": "^26.0.0",
     "klaw-sync": "^3.0.0",
     "legal-eagle": "0.16.0",
