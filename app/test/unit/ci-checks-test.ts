@@ -1,3 +1,5 @@
+import { describe, it } from 'node:test'
+import assert from 'node:assert'
 import { APICheckConclusion, APICheckStatus } from '../../src/lib/api'
 import {
   getCheckRunsGroupedByActionWorkflowNameAndEvent,
@@ -12,8 +14,8 @@ describe('getCheckRunsGroupedByActionWorkflowNameAndEvent', () => {
     ]
     const groups = getCheckRunsGroupedByActionWorkflowNameAndEvent(checkRuns)
     const groupNames = [...groups.keys()]
-    expect(groupNames.includes('test1')).toBe(true)
-    expect(groupNames.includes('test2')).toBe(true)
+    assert.equal(groupNames.includes('test1'), true)
+    assert.equal(groupNames.includes('test2'), true)
   })
 
   it('groups any check run without an actions workflow name into Other', () => {
@@ -23,8 +25,8 @@ describe('getCheckRunsGroupedByActionWorkflowNameAndEvent', () => {
     ]
     const groups = getCheckRunsGroupedByActionWorkflowNameAndEvent(checkRuns)
     const groupNames = [...groups.keys()]
-    expect(groupNames.includes('test1')).toBe(true)
-    expect(groupNames.includes('Other')).toBe(true)
+    assert.equal(groupNames.includes('test1'), true)
+    assert.equal(groupNames.includes('Other'), true)
   })
 
   it('groups any check run without an actions workflow name with an app name of "GitHub Code Scanning" into "Code scanning results"', () => {
@@ -35,9 +37,9 @@ describe('getCheckRunsGroupedByActionWorkflowNameAndEvent', () => {
     ]
     const groups = getCheckRunsGroupedByActionWorkflowNameAndEvent(checkRuns)
     const groupNames = [...groups.keys()]
-    expect(groupNames.includes('test1')).toBe(true)
-    expect(groupNames.includes('Other')).toBe(true)
-    expect(groupNames.includes('Code scanning results')).toBe(true)
+    assert.equal(groupNames.includes('test1'), true)
+    assert.equal(groupNames.includes('Other'), true)
+    assert.equal(groupNames.includes('Code scanning results'), true)
   })
 
   it('groups by actions event type if more than one event type', () => {
@@ -49,27 +51,27 @@ describe('getCheckRunsGroupedByActionWorkflowNameAndEvent', () => {
     let groupNames = [...groups.keys()]
 
     // no event types
-    expect(groupNames.includes('test1')).toBe(true)
-    expect(groupNames.includes('test2')).toBe(true)
+    assert.equal(groupNames.includes('test1'), true)
+    assert.equal(groupNames.includes('test2'), true)
 
     checkRuns.push(buildMockCheckRun('1', '', 'test3', 'pull_request'))
     groups = getCheckRunsGroupedByActionWorkflowNameAndEvent(checkRuns)
     groupNames = [...groups.keys()]
 
     // only one event
-    expect(groupNames.includes('test1')).toBe(true)
-    expect(groupNames.includes('test2')).toBe(true)
-    expect(groupNames.includes('test3')).toBe(true)
+    assert.equal(groupNames.includes('test1'), true)
+    assert.equal(groupNames.includes('test2'), true)
+    assert.equal(groupNames.includes('test3'), true)
 
     checkRuns.push(buildMockCheckRun('1', '', 'test4', 'push'))
     groups = getCheckRunsGroupedByActionWorkflowNameAndEvent(checkRuns)
     groupNames = [...groups.keys()]
 
     // two event types for test3 and test4
-    expect(groupNames.includes('test1')).toBe(true)
-    expect(groupNames.includes('test2')).toBe(true)
-    expect(groupNames.includes('test3 (pull_request)')).toBe(true)
-    expect(groupNames.includes('test4 (push)')).toBe(true)
+    assert.equal(groupNames.includes('test1'), true)
+    assert.equal(groupNames.includes('test2'), true)
+    assert.equal(groupNames.includes('test3 (pull_request)'), true)
+    assert.equal(groupNames.includes('test4 (push)'), true)
   })
 })
 

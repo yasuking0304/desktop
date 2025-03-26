@@ -1,3 +1,5 @@
+import { describe, it, beforeEach } from 'node:test'
+import assert from 'node:assert'
 import * as Path from 'path'
 import * as FSE from 'fs-extra'
 
@@ -26,7 +28,7 @@ async function parseDiff(diff: string): Promise<ITextDiff> {
     kind: AppFileStatusKind.Modified,
   })
   const output = await convertDiff(repository, fileChange, rawDiff, 'HEAD')
-  expect(output.kind).toEqual(DiffType.Text)
+  assert.equal(output.kind, DiffType.Text)
   return output as ITextDiff
 }
 
@@ -53,7 +55,7 @@ describe('patch formatting', () => {
 
       const diff = await getWorkingDirectoryDiff(repository, file)
 
-      expect(diff.kind).toEqual(DiffType.Text)
+      assert.equal(diff.kind, DiffType.Text)
 
       const textDiff = diff as ITextDiff
       const second = textDiff.hunks[1]
@@ -74,9 +76,9 @@ describe('patch formatting', () => {
 
       const patch = formatPatch(updatedFile, textDiff)
 
-      expect(patch).toContain('--- a/modified-file.md\n')
-      expect(patch).toContain('+++ b/modified-file.md\n')
-      expect(patch).toContain('@@ -4,10 +4,6 @@')
+      assert(patch.includes('--- a/modified-file.md\n'))
+      assert(patch.includes('+++ b/modified-file.md\n'))
+      assert(patch.includes('@@ -4,10 +4,6 @@'))
     })
 
     it('creates right patch when second hunk is selected', async () => {
@@ -92,7 +94,7 @@ describe('patch formatting', () => {
 
       const diff = await getWorkingDirectoryDiff(repository, file)
 
-      expect(diff.kind).toEqual(DiffType.Text)
+      assert.equal(diff.kind, DiffType.Text)
 
       const textDiff = diff as ITextDiff
       const first = textDiff.hunks[0]
@@ -113,9 +115,9 @@ describe('patch formatting', () => {
 
       const patch = formatPatch(updatedFile, textDiff)
 
-      expect(patch).toContain('--- a/modified-file.md\n')
-      expect(patch).toContain('+++ b/modified-file.md\n')
-      expect(patch).toContain('@@ -21,6 +17,10 @@')
+      assert(patch.includes('--- a/modified-file.md\n'))
+      assert(patch.includes('+++ b/modified-file.md\n'))
+      assert(patch.includes('@@ -21,6 +17,10 @@'))
     })
 
     it('creates right patch when first and third hunk is selected', async () => {
@@ -132,7 +134,7 @@ describe('patch formatting', () => {
 
       const diff = await getWorkingDirectoryDiff(repository, file)
 
-      expect(diff.kind).toEqual(DiffType.Text)
+      assert.equal(diff.kind, DiffType.Text)
 
       const textDiff = diff as ITextDiff
       const second = textDiff.hunks[1]
@@ -152,9 +154,9 @@ describe('patch formatting', () => {
 
       const patch = formatPatch(updatedFile, textDiff)
 
-      expect(patch).toContain('--- a/modified-file.md\n')
-      expect(patch).toContain('+++ b/modified-file.md\n')
-      expect(patch).toContain('@@ -31,3 +31,8 @@')
+      assert(patch.includes('--- a/modified-file.md\n'))
+      assert(patch.includes('+++ b/modified-file.md\n'))
+      assert(patch.includes('@@ -31,3 +31,8 @@'))
     })
 
     it(`creates the right patch when an addition is selected but preceding deletions aren't`, async () => {
@@ -172,7 +174,7 @@ describe('patch formatting', () => {
 
       const diff = await getWorkingDirectoryDiff(repository, file)
 
-      expect(diff.kind).toEqual(DiffType.Text)
+      assert.equal(diff.kind, DiffType.Text)
 
       const textDiff = diff as ITextDiff
 
@@ -232,7 +234,7 @@ describe('patch formatting', () => {
   urna, ac porta justo leo sed magna.
 +line 1
 `
-      expect(patch).toBe(expectedPatch)
+      assert.equal(patch, expectedPatch)
     })
 
     it("doesn't include unselected added lines as context", async () => {
@@ -260,13 +262,16 @@ describe('patch formatting', () => {
       )
       const patch = formatPatch(file, diff)
 
-      expect(patch).toBe(`--- a/file.md
+      assert.equal(
+        patch,
+        `--- a/file.md
 +++ b/file.md
 @@ -10,2 +10,3 @@
  context
 +added line 2
  context
-`)
+`
+      )
     })
 
     it('rewrites hunk header when necessary', async () => {
@@ -291,8 +296,8 @@ describe('patch formatting', () => {
       )
       const patch = formatPatch(file, diff)
 
-      expect(patch).toContain('@@ -0,0 +1 @@')
-      expect(patch).toContain('+added line 2')
+      assert(patch.includes('@@ -0,0 +1 @@'))
+      assert(patch.includes('+added line 2'))
     })
 
     it('includes empty context lines', async () => {
@@ -317,9 +322,9 @@ describe('patch formatting', () => {
       )
       const patch = formatPatch(file, diff)
 
-      expect(patch).toContain('@@ -1 +1,2 @@')
-      expect(patch).toContain(' ')
-      expect(patch).toContain('+added line 2')
+      assert(patch.includes('@@ -1 +1,2 @@'))
+      assert(patch.includes(' '))
+      assert(patch.includes('+added line 2'))
     })
 
     it('creates the right patch when a `No newline` marker is involved', async () => {
@@ -351,8 +356,8 @@ describe('patch formatting', () => {
 
       const patch = formatPatch(file, diff)
 
-      expect(patch).toContain('\\ No newline at end of file')
-      expect(patch).toContain('+it could be')
+      assert(patch.includes('\\ No newline at end of file'))
+      assert(patch.includes('+it could be'))
     })
   })
 })

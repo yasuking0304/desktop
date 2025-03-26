@@ -1,3 +1,5 @@
+import { describe, it } from 'node:test'
+import assert from 'node:assert'
 import * as FSE from 'fs-extra'
 import * as Path from 'path'
 
@@ -9,7 +11,7 @@ describe('git/description', () => {
     it('returns empty for an initialized repository', async () => {
       const repo = await setupEmptyRepository()
       const actual = await getGitDescription(repo.path)
-      expect(actual).toBe('')
+      assert.equal(actual, '')
     })
 
     it('returns empty when path is missing', async () => {
@@ -18,7 +20,7 @@ describe('git/description', () => {
       await FSE.unlink(path)
 
       const actual = await getGitDescription(repo.path)
-      expect(actual).toBe('')
+      assert.equal(actual, '')
     })
 
     it('reads the custom text', async () => {
@@ -28,7 +30,7 @@ describe('git/description', () => {
       await FSE.writeFile(path, expected)
 
       const actual = await getGitDescription(repo.path)
-      expect(actual).toBe(expected)
+      assert.equal(actual, expected)
     })
   })
 })

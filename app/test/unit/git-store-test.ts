@@ -1,3 +1,5 @@
+import { describe, it, beforeEach } from 'node:test'
+import assert from 'node:assert'
 import * as FSE from 'fs-extra'
 import * as Path from 'path'
 import { exec } from 'dugite'
@@ -31,9 +33,9 @@ describe('GitStore', () => {
 
       const commits = await gitStore.loadCommitBatch('HEAD', 0)
 
-      expect(commits).not.toBeNull()
-      expect(commits).toHaveLength(100)
-      expect(commits![0]).toEqual('708a46eac512c7b2486da2247f116d11a100b611')
+      assert(commits !== null)
+      assert.equal(commits.length, 100)
+      assert.equal(commits![0], '708a46eac512c7b2486da2247f116d11a100b611')
     })
   })
 
@@ -62,9 +64,9 @@ describe('GitStore', () => {
     let status = await getStatusOrThrow(repo)
     let files = status.workingDirectory.files
 
-    expect(files).toHaveLength(2)
-    expect(files[0].path).toEqual('README.md')
-    expect(files[0].status.kind).toEqual(AppFileStatusKind.Modified)
+    assert.equal(files.length, 2)
+    assert.equal(files[0].path, 'README.md')
+    assert.equal(files[0].status.kind, AppFileStatusKind.Modified)
 
     // discard the LICENSE.md file
     await gitStore.discardChanges([files[1]])
@@ -72,7 +74,7 @@ describe('GitStore', () => {
     status = await getStatusOrThrow(repo)
     files = status.workingDirectory.files
 
-    expect(files).toHaveLength(1)
+    assert.equal(files.length, 1)
   })
 
   it('can discard a renamed file', async () => {
@@ -99,7 +101,7 @@ describe('GitStore', () => {
     const status = await getStatusOrThrow(repo)
     const files = status.workingDirectory.files
 
-    expect(files).toHaveLength(0)
+    assert.equal(files.length, 0)
   })
 
   describe('undo first commit', () => {
@@ -109,6 +111,7 @@ describe('GitStore', () => {
     const commitMessage = 'added file'
 
     beforeEach(async () => {
+      debugger
       repository = await setupEmptyRepository()
 
       const file = 'README.md'
@@ -120,20 +123,20 @@ describe('GitStore', () => {
       await exec(['commit', '-m', commitMessage], repository.path)
 
       firstCommit = await getCommit(repository, 'master')
-      expect(firstCommit).not.toBeNull()
-      expect(firstCommit!.parentSHAs).toHaveLength(0)
+      assert(firstCommit !== null)
+      assert.equal(firstCommit!.parentSHAs.length, 0)
     })
 
     it('reports the repository is unborn', async () => {
       const gitStore = new GitStore(repository, shell, new TestStatsStore())
 
       await gitStore.loadStatus()
-      expect(gitStore.tip.kind).toEqual(TipState.Valid)
+      assert.equal(gitStore.tip.kind, TipState.Valid)
 
       await gitStore.undoCommit(firstCommit!)
 
       const after = await getStatusOrThrow(repository)
-      expect(after.currentTip).toBeUndefined()
+      assert(after.currentTip === undefined)
     })
 
     it('pre-fills the commit message', async () => {
@@ -142,8 +145,8 @@ describe('GitStore', () => {
       await gitStore.undoCommit(firstCommit!)
 
       const newCommitMessage = gitStore.commitMessage
-      expect(newCommitMessage).not.toBeNull()
-      expect(newCommitMessage!.summary).toEqual(commitMessage)
+      assert(newCommitMessage !== null)
+      assert.equal(newCommitMessage!.summary, commitMessage)
     })
 
     it('clears the undo commit dialog', async () => {
@@ -154,16 +157,16 @@ describe('GitStore', () => {
       const tip = gitStore.tip as IValidBranch
       await gitStore.loadLocalCommits(tip.branch)
 
-      expect(gitStore.localCommitSHAs).toHaveLength(1)
+      assert.equal(gitStore.localCommitSHAs.length, 1)
 
       await gitStore.undoCommit(firstCommit!)
 
       await gitStore.loadStatus()
-      expect(gitStore.tip.kind).toEqual(TipState.Unborn)
+      assert.equal(gitStore.tip.kind, TipState.Unborn)
 
       await gitStore.loadLocalCommits(null)
 
-      expect(gitStore.localCommitSHAs).toHaveLength(0)
+      assert.equal(gitStore.localCommitSHAs.length, 0)
     })
 
     it('has no staged files', async () => {
@@ -174,7 +177,7 @@ describe('GitStore', () => {
       const tip = gitStore.tip as IValidBranch
       await gitStore.loadLocalCommits(tip.branch)
 
-      expect(gitStore.localCommitSHAs.length).toEqual(1)
+      assert.equal(gitStore.localCommitSHAs.length, 1)
 
       await gitStore.undoCommit(firstCommit!)
 
@@ -190,7 +193,7 @@ describe('GitStore', () => {
         ],
         repository.path
       )
-      expect(result.stdout.length).toEqual(0)
+      assert.equal(result.stdout.length, 0)
     })
   })
 
@@ -207,13 +210,13 @@ describe('GitStore', () => {
 
       let status = await getStatusOrThrow(repo!)
       let files = status.workingDirectory.files
-      expect(files.length).toEqual(1)
+      assert.equal(files.length, 1)
 
       await gitStore.discardChanges([files[0]])
 
       status = await getStatusOrThrow(repo)
       files = status.workingDirectory.files
-      expect(files.length).toEqual(0)
+      assert.equal(files.length, 0)
     })
   })
 
@@ -268,22 +271,22 @@ describe('GitStore', () => {
 
     it('has a remote defined', async () => {
       const remotes = await getRemotes(repository)
-      expect(remotes).toHaveLength(1)
+      assert.equal(remotes.length, 1)
     })
 
     it('will merge a local and remote branch when tracking branch set', async () => {
       const gitStore = new GitStore(repository, shell, new TestStatsStore())
       await gitStore.loadBranches()
 
-      expect(gitStore.allBranches).toHaveLength(2)
+      assert.equal(gitStore.allBranches.length, 2)
 
       const defaultBranch = gitStore.allBranches.find(b => b.name === 'master')
-      expect(defaultBranch!.upstream).toBe('origin/master')
+      assert.equal(defaultBranch!.upstream, 'origin/master')
 
       const remoteBranch = gitStore.allBranches.find(
         b => b.name === 'origin/some-other-branch'
       )
-      expect(remoteBranch!.type).toBe(BranchType.Remote)
+      assert.equal(remoteBranch!.type, BranchType.Remote)
     })
 
     it('the tracking branch is not cleared when the remote branch is removed', async () => {
@@ -296,7 +299,7 @@ describe('GitStore', () => {
       const currentBranchBefore = gitStore.allBranches.find(
         b => b.name === 'some-other-branch'
       )
-      expect(currentBranchBefore!.upstream).toBe('origin/some-other-branch')
+      assert.equal(currentBranchBefore!.upstream, 'origin/some-other-branch')
 
       // delete the ref in the upstream branch
       await exec(['branch', '-D', 'some-other-branch'], upstream.path)
@@ -310,7 +313,7 @@ describe('GitStore', () => {
       )
 
       // ensure the tracking information is unchanged
-      expect(currentBranchAfter!.upstream).toBe('origin/some-other-branch')
+      assert.equal(currentBranchAfter!.upstream, 'origin/some-other-branch')
     })
   })
 })

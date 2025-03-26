@@ -1,3 +1,5 @@
+import { describe, it } from 'node:test'
+import assert from 'node:assert'
 import * as path from 'path'
 import * as os from 'os'
 import * as FSE from 'fs-extra'
@@ -80,20 +82,20 @@ describe('text-diff-expansion', () => {
     const { textDiff } = await prepareDiff(100, [30])
 
     const lastHunk = textDiff.hunks[textDiff.hunks.length - 1]
-    expect(lastHunk.lines).toHaveLength(1)
+    assert.equal((lastHunk.lines).length, 1)
 
     const firstLine = lastHunk.lines[0]
-    expect(firstLine.type).toBe(DiffLineType.Hunk)
-    expect(firstLine.text).toBe('')
-    expect(firstLine.newLineNumber).toBe(null)
-    expect(firstLine.oldLineNumber).toBe(null)
+    assert.equal(firstLine.type, DiffLineType.Hunk)
+    assert.equal(firstLine.text, '')
+    assert.equal(firstLine.newLineNumber, null)
+    assert.equal(firstLine.oldLineNumber, null)
   })
 
   it('does not add a dummy hunk to the bottom when last hunk reaches bottom', async () => {
     const { textDiff } = await prepareDiff(100, [99])
     const lastHunk = textDiff.hunks.at(-1)
-    expect(lastHunk).not.toBeUndefined()
-    expect(lastHunk!.lines).toHaveLength(6)
+    assert(lastHunk !== undefined)
+    assert.equal((lastHunk!.lines).length, 6)
   })
 
   it('expands the initial hunk without reaching the top', async () => {
@@ -106,13 +108,13 @@ describe('text-diff-expansion', () => {
     )
 
     const firstHunk = expandedDiff!.hunks[0]
-    expect(firstHunk.header.oldStartLine).toBe(8)
-    expect(firstHunk.header.oldLineCount).toBe(26)
-    expect(firstHunk.header.newStartLine).toBe(8)
-    expect(firstHunk.header.newLineCount).toBe(27)
+    assert.equal(firstHunk.header.oldStartLine, 8)
+    assert.equal(firstHunk.header.oldLineCount, 26)
+    assert.equal(firstHunk.header.newStartLine, 8)
+    assert.equal(firstHunk.header.newLineCount, 27)
 
     // Check the first line is still the header info
-    expect(firstHunk.lines[0].type).toBe(DiffLineType.Hunk)
+    assert.equal(firstHunk.lines[0].type, DiffLineType.Hunk)
   })
 
   it('expands the initial hunk reaching the top', async () => {
@@ -125,13 +127,13 @@ describe('text-diff-expansion', () => {
     )
 
     const firstHunk = expandedDiff!.hunks[0]
-    expect(firstHunk.header.oldStartLine).toBe(1)
-    expect(firstHunk.header.oldLineCount).toBe(18)
-    expect(firstHunk.header.newStartLine).toBe(1)
-    expect(firstHunk.header.newLineCount).toBe(19)
+    assert.equal(firstHunk.header.oldStartLine, 1)
+    assert.equal(firstHunk.header.oldLineCount, 18)
+    assert.equal(firstHunk.header.newStartLine, 1)
+    assert.equal(firstHunk.header.newLineCount, 19)
 
     // Check the first line is still the header info
-    expect(firstHunk.lines[0].type).toBe(DiffLineType.Hunk)
+    assert.equal(firstHunk.lines[0].type, DiffLineType.Hunk)
   })
 
   // The last hunk is a dummy hunk to expand the bottom of the diff
@@ -145,10 +147,10 @@ describe('text-diff-expansion', () => {
     )
 
     const secondToLastHunk = expandedDiff!.hunks[expandedDiff!.hunks.length - 2]
-    expect(secondToLastHunk.header.oldStartLine).toBe(13)
-    expect(secondToLastHunk.header.oldLineCount).toBe(26)
-    expect(secondToLastHunk.header.newStartLine).toBe(13)
-    expect(secondToLastHunk.header.newLineCount).toBe(27)
+    assert.equal(secondToLastHunk.header.oldStartLine, 13)
+    assert.equal(secondToLastHunk.header.oldLineCount, 26)
+    assert.equal(secondToLastHunk.header.newStartLine, 13)
+    assert.equal(secondToLastHunk.header.newLineCount, 27)
   })
 
   it('expands the second-to-last hunk reaching the bottom', async () => {
@@ -161,10 +163,10 @@ describe('text-diff-expansion', () => {
     )
 
     const lastHunk = expandedDiff!.hunks[expandedDiff!.hunks.length - 1]
-    expect(lastHunk.header.oldStartLine).toBe(88)
-    expect(lastHunk.header.oldLineCount).toBe(13)
-    expect(lastHunk.header.newStartLine).toBe(88)
-    expect(lastHunk.header.newLineCount).toBe(14)
+    assert.equal(lastHunk.header.oldStartLine, 88)
+    assert.equal(lastHunk.header.oldLineCount, 13)
+    assert.equal(lastHunk.header.newStartLine, 88)
+    assert.equal(lastHunk.header.newLineCount, 14)
   })
 
   it('merges hunks when the gap between them is shorter than the expansion size', async () => {
@@ -180,16 +182,16 @@ describe('text-diff-expansion', () => {
     // - First around line 10
     // - Second around line 20
     // - Third is the dummy hunk at the end
-    expect(textDiff.hunks).toHaveLength(3)
+    assert.equal((textDiff.hunks).length, 3)
 
     // After expanding the hunk, the first two hunks are merged
-    expect(expandedDiff!.hunks).toHaveLength(2)
+    assert.equal((expandedDiff!.hunks).length, 2)
 
     const firstHunk = expandedDiff!.hunks[0]
-    expect(firstHunk.header.oldStartLine).toBe(8)
-    expect(firstHunk.header.oldLineCount).toBe(16)
-    expect(firstHunk.header.newStartLine).toBe(8)
-    expect(firstHunk.header.newLineCount).toBe(18)
+    assert.equal(firstHunk.header.oldStartLine, 8)
+    assert.equal(firstHunk.header.oldLineCount, 16)
+    assert.equal(firstHunk.header.newStartLine, 8)
+    assert.equal(firstHunk.header.newLineCount, 18)
   })
 
   it('expands the whole file', async () => {
@@ -199,10 +201,10 @@ describe('text-diff-expansion', () => {
     )
 
     const expandedDiff = expandWholeTextDiff(textDiff, newContentLines)
-    expect(expandedDiff!.hunks).toHaveLength(1)
+    assert.equal((expandedDiff!.hunks).length, 1)
 
     const firstHunk = expandedDiff!.hunks[0]
-    expect(firstHunk.lines).toHaveLength(40 + 1) // +1 for the header
+    assert.equal((firstHunk.lines).length, 40 + 1) // +1 for the header
 
     let expectedNewLine = 1
     let expectedOldLine = 1
@@ -210,15 +212,15 @@ describe('text-diff-expansion', () => {
     // Make sure line numbers are consecutive as expected
     for (const line of firstHunk.lines) {
       if (line.type === DiffLineType.Add) {
-        expect(line.newLineNumber).toBe(expectedNewLine)
+        assert.equal(line.newLineNumber, expectedNewLine)
         expectedNewLine++
       } else if (line.type === DiffLineType.Delete) {
-        expect(line.oldLineNumber).toBe(expectedOldLine)
+        assert.equal(line.oldLineNumber, expectedOldLine)
         expectedOldLine++
       } else if (line.type === DiffLineType.Context) {
-        expect(line.newLineNumber).toBe(expectedNewLine)
+        assert.equal(line.newLineNumber, expectedNewLine)
         expectedNewLine++
-        expect(line.oldLineNumber).toBe(expectedOldLine)
+        assert.equal(line.oldLineNumber, expectedOldLine)
         expectedOldLine++
       }
     }

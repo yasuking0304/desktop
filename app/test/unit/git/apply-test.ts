@@ -1,3 +1,5 @@
+import { describe, it, beforeEach } from 'node:test'
+import assert from 'node:assert'
 import { exec } from 'dugite'
 import {
   setupTwoCommitRepo,
@@ -45,7 +47,7 @@ describe('git/apply', () => {
         patch = result.stdout
       })
       it('returns true', async () => {
-        expect(await checkPatch(repository, patch)).toBe(true)
+        assert.equal(await checkPatch(repository, patch), true)
       })
     })
     describe('on a related repo with conflicts', () => {
@@ -64,7 +66,7 @@ describe('git/apply', () => {
         })
       })
       it('returns false', async () => {
-        expect(await checkPatch(repository, patch)).toBe(false)
+        assert.equal(await checkPatch(repository, patch), false)
       })
     })
   })
@@ -100,7 +102,7 @@ describe('git/apply', () => {
 
       const diff = await getDiff(filePath)
 
-      expect(diff.text).toEqual(previousDiff.text)
+      assert.equal(diff.text, previousDiff.text)
     })
 
     it('discards all file changes when a full selection is passed', async () => {
@@ -115,8 +117,8 @@ describe('git/apply', () => {
       const diff = await getDiff(filePath)
 
       // Check that the file has no local changes.
-      expect(diff.text).toEqual('')
-      expect(diff.hunks).toEqual([])
+      assert.equal(diff.text, '')
+      assert(diff.hunks.length === 0)
     })
 
     it('re-adds a single removed line', async () => {
@@ -142,10 +144,11 @@ describe('git/apply', () => {
         'utf8'
       )
 
-      expect(getDifference(previousContents, fileContents)).toEqual(`
-"@@ -7,0 +7,1 @@
-+ Aliquam leo ipsum, laoreet sed libero at, mollis pulvinar arcu. Nullam porttitor"
-`)
+      assert.equal(
+        getDifference(previousContents, fileContents),
+        `@@ -7,0 +7,1 @@
++ Aliquam leo ipsum, laoreet sed libero at, mollis pulvinar arcu. Nullam porttitor`
+      )
     })
 
     it('re-adds a removed hunk', async () => {
@@ -172,13 +175,14 @@ describe('git/apply', () => {
         'utf8'
       )
 
-      expect(getDifference(previousContents, fileContents)).toEqual(`
-"@@ -7,0 +7,4 @@
+      assert.equal(
+        getDifference(previousContents, fileContents),
+        `@@ -7,0 +7,4 @@
 + Aliquam leo ipsum, laoreet sed libero at, mollis pulvinar arcu. Nullam porttitor
 + nisl eget hendrerit vestibulum. Curabitur ornare id neque ac tristique. Cras in
 + eleifend mi.
-+"
-`)
++`
+      )
     })
 
     it('removes an added line', async () => {
@@ -204,10 +208,11 @@ describe('git/apply', () => {
         'utf8'
       )
 
-      expect(getDifference(previousContents, fileContents)).toEqual(`
-"@@ -21,1 +21,0 @@
-- nisl eget hendrerit vestibulum. Curabitur ornare id neque ac tristique. Cras in"
-`)
+      assert.equal(
+        getDifference(previousContents, fileContents),
+        `@@ -21,1 +21,0 @@
+- nisl eget hendrerit vestibulum. Curabitur ornare id neque ac tristique. Cras in`
+      )
     })
 
     it('removes an added hunk', async () => {
@@ -221,8 +226,6 @@ describe('git/apply', () => {
         hunkRange!.to - hunkRange!.from + 1,
         true
       )
-
-      console.log('diff', hunkRange)
 
       const previousContents = await FSE.readFile(
         Path.join(repository.path, filePath),
@@ -241,13 +244,14 @@ describe('git/apply', () => {
         'utf8'
       )
 
-      expect(getDifference(previousContents, fileContents)).toEqual(`
-"@@ -20,4 +20,0 @@
+      assert.equal(
+        getDifference(previousContents, fileContents),
+        `@@ -20,4 +20,0 @@
 - Aliquam leo ipsum, laoreet sed libero at, mollis pulvinar arcu. Nullam porttitor
 - nisl eget hendrerit vestibulum. Curabitur ornare id neque ac tristique. Cras in
 - eleifend mi.
--"
-`)
+-`
+      )
     })
   })
 })

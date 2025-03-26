@@ -1,3 +1,5 @@
+import { describe, it, beforeEach } from 'node:test'
+import assert from 'node:assert'
 import { GitError } from 'dugite'
 import { Repository } from '../../../src/models/repository'
 import {
@@ -26,12 +28,12 @@ describe('git/core', () => {
         const result = await git(args, repository.path, 'test', {
           expectedErrors: new Set([GitError.BadRevision]),
         })
-        expect(result.gitError).toBe(GitError.BadRevision)
+        assert.equal(result.gitError, GitError.BadRevision)
       } catch (e) {
         threw = true
       }
 
-      expect(threw).toBe(false)
+      assert.equal(threw, false)
     })
 
     it('throws for errors that were not expected', async () => {
@@ -46,7 +48,7 @@ describe('git/core', () => {
         threw = true
       }
 
-      expect(threw).toBe(true)
+      assert.equal(threw, true)
     })
   })
 
@@ -59,12 +61,12 @@ describe('git/core', () => {
         const result = await git(args, repository.path, 'test', {
           successExitCodes: new Set([128]),
         })
-        expect(result.exitCode).toBe(128)
+        assert.equal(result.exitCode, 128)
       } catch (e) {
         threw = true
       }
 
-      expect(threw).toBe(false)
+      assert.equal(threw, false)
     })
 
     it('throws for exit codes that were not expected', async () => {
@@ -79,7 +81,7 @@ describe('git/core', () => {
         threw = true
       }
 
-      expect(threw).toBe(true)
+      assert.equal(threw, true)
     })
   })
 
@@ -95,12 +97,12 @@ describe('git/core', () => {
         expectedErrors: new Set([GitError.ConfigLockFileAlreadyExists]),
       })
 
-      expect(result.exitCode).toBe(255)
-      expect(result.gitError).toBe(GitError.ConfigLockFileAlreadyExists)
+      assert.equal(result.exitCode, 255)
+      assert.equal(result.gitError, GitError.ConfigLockFileAlreadyExists)
       const parsedPath = parseConfigLockFilePathFromError(result)
-      expect(parsedPath).not.toBeNull()
+      assert(parsedPath !== null)
       const absolutePath = resolve(result.path, parsedPath!)
-      expect(absolutePath).toBe(configLockFilePath)
+      assert.equal(absolutePath, configLockFilePath)
     })
 
     it('normalizes paths', () => {
@@ -116,29 +118,29 @@ describe('git/core', () => {
       }
 
       if (__WIN32__) {
-        expect(
+        assert.equal(
           parseConfigLockFilePathFromError(
             createGitResult(
               'error: could not lock config file C:/Users/markus/.gitconfig: File exists'
             )
           )
-        ).toBe('C:\\Users\\markus\\.gitconfig.lock')
+        , 'C:\\Users\\markus\\.gitconfig.lock')
 
-        expect(
+        assert.equal(
           parseConfigLockFilePathFromError(
             createGitResult(
               'error: could not lock config file C:\\Users\\markus\\.gitconfig: File exists'
             )
           )
-        ).toBe('C:\\Users\\markus\\.gitconfig.lock')
+        , 'C:\\Users\\markus\\.gitconfig.lock')
       } else {
-        expect(
+        assert.equal(
           parseConfigLockFilePathFromError(
             createGitResult(
               'error: could not lock config file /Users/markus/.gitconfig: File exists'
             )
           )
-        ).toBe('/Users/markus/.gitconfig.lock')
+        , '/Users/markus/.gitconfig.lock')
       }
     })
   })

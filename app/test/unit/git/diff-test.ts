@@ -1,3 +1,5 @@
+import { describe, it, beforeEach } from 'node:test'
+import assert from 'node:assert'
 import * as path from 'path'
 import * as FSE from 'fs-extra'
 
@@ -40,7 +42,7 @@ async function getTextDiff(
   file: WorkingDirectoryFileChange
 ): Promise<ITextDiff> {
   const diff = await getWorkingDirectoryDiff(repo, file)
-  expect(diff.kind).toEqual(DiffType.Text)
+  assert.equal(diff.kind, DiffType.Text)
   return diff as ITextDiff
 }
 
@@ -64,8 +66,8 @@ describe('git/diff', () => {
       )
       const current = await getWorkingDirectoryImage(repository, file)
 
-      expect(current.mediaType).toBe('image/png')
-      expect(current.contents).toMatch(/A2HkbLsBYSgAAAABJRU5ErkJggg==$/)
+      assert.equal(current.mediaType, 'image/png')
+      assert(/A2HkbLsBYSgAAAABJRU5ErkJggg==$/.test(current.contents))
     })
 
     it('retrieves valid images for modified file', async () => {
@@ -78,8 +80,8 @@ describe('git/diff', () => {
         diffSelection
       )
       const current = await getWorkingDirectoryImage(repository, file)
-      expect(current.mediaType).toBe('image/jpg')
-      expect(current.contents).toMatch(/gdTTb6MClWJ3BU8T8PTtXoB88kFL\/9k=$/)
+      assert.equal(current.mediaType, 'image/jpg')
+      assert(/gdTTb6MClWJ3BU8T8PTtXoB88kFL\/9k=$/.test(current.contents))
     })
   })
 
@@ -95,9 +97,11 @@ describe('git/diff', () => {
       )
       const current = await getBlobImage(repository, file.path, 'HEAD')
 
-      expect(current.mediaType).toBe('image/jpg')
-      expect(current.contents).toMatch(
-        /zcabBFNf6G8U1y7QpBYtbOWQivIsDU8T4kYKKTQFg7v\/9k=/
+      assert.equal(current.mediaType, 'image/jpg')
+      assert(
+        /zcabBFNf6G8U1y7QpBYtbOWQivIsDU8T4kYKKTQFg7v\/9k=/.test(
+          current.contents
+        )
       )
     })
 
@@ -112,9 +116,11 @@ describe('git/diff', () => {
       )
       const previous = await getBlobImage(repository, file.path, 'HEAD')
 
-      expect(previous.mediaType).toBe('image/gif')
-      expect(previous.contents).toMatch(
-        /pSQ0J85QG55rqWbgLdEmOWQJ1MjFS3WWA2slfZxeEAtp3AykkAAA7$/
+      assert.equal(previous.mediaType, 'image/gif')
+      assert(
+        /pSQ0J85QG55rqWbgLdEmOWQJ1MjFS3WWA2slfZxeEAtp3AykkAAA7$/.test(
+          previous.contents
+        )
       )
     })
   })
@@ -131,11 +137,11 @@ describe('git/diff', () => {
       )
       const diff = await getWorkingDirectoryDiff(repository, file)
 
-      expect(diff.kind).toEqual(DiffType.Image)
+      assert.equal(diff.kind, DiffType.Image)
 
       const imageDiff = diff as IImageDiff
-      expect(imageDiff.previous).not.toBeUndefined()
-      expect(imageDiff.current).not.toBeUndefined()
+      assert(imageDiff.previous !== undefined)
+      assert(imageDiff.current !== undefined)
     })
 
     it('changes for text are not set', async () => {
@@ -152,7 +158,7 @@ describe('git/diff', () => {
       )
       const diff = await getTextDiff(repository, file)
 
-      expect(diff.hunks.length).toBeGreaterThan(0)
+      assert(diff.hunks.length > 0)
     })
   })
 
@@ -175,15 +181,13 @@ describe('git/diff', () => {
 
       const hunk = diff.hunks[0]
 
-      expect(hunk.lines[0].text).toContain('@@ -0,0 +1,33 @@')
+      assert(hunk.lines[0].text.includes('@@ -0,0 +1,33 @@'))
 
-      expect(hunk.lines[1].text).toContain('+Lorem ipsum dolor sit amet,')
-      expect(hunk.lines[2].text).toContain(
-        '+ullamcorper sit amet tellus eget, '
-      )
+      assert(hunk.lines[1].text.includes('+Lorem ipsum dolor sit amet,'))
+      assert(hunk.lines[2].text.includes('+ullamcorper sit amet tellus eget, '))
 
-      expect(hunk.lines[33].text).toContain(
-        '+ urna, ac porta justo leo sed magna.'
+      assert(
+        hunk.lines[33].text.includes('+ urna, ac porta justo leo sed magna.')
       )
     })
 
@@ -199,20 +203,20 @@ describe('git/diff', () => {
       const diff = await getTextDiff(repository, file)
 
       const first = diff.hunks[0]
-      expect(first.lines[0].text).toContain('@@ -4,10 +4,6 @@')
+      assert(first.lines[0].text.includes('@@ -4,10 +4,6 @@'))
 
-      expect(first.lines[4].text).toContain('-Aliquam leo ipsum')
-      expect(first.lines[5].text).toContain('-nisl eget hendrerit')
-      expect(first.lines[6].text).toContain('-eleifend mi.')
-      expect(first.lines[7].text).toContain('-')
+      assert(first.lines[4].text.includes('-Aliquam leo ipsum'))
+      assert(first.lines[5].text.includes('-nisl eget hendrerit'))
+      assert(first.lines[6].text.includes('-eleifend mi.'))
+      assert(first.lines[7].text.includes('-'))
 
       const second = diff.hunks[1]
-      expect(second.lines[0].text).toContain('@@ -21,6 +17,10 @@')
+      assert(second.lines[0].text.includes('@@ -21,6 +17,10 @@'))
 
-      expect(second.lines[4].text).toContain('+Aliquam leo ipsum')
-      expect(second.lines[5].text).toContain('+nisl eget hendrerit')
-      expect(second.lines[6].text).toContain('+eleifend mi.')
-      expect(second.lines[7].text).toContain('+')
+      assert(second.lines[4].text.includes('+Aliquam leo ipsum'))
+      assert(second.lines[5].text.includes('+nisl eget hendrerit'))
+      assert(second.lines[6].text.includes('+eleifend mi.'))
+      assert(second.lines[7].text.includes('+'))
     })
 
     it('counts lines for staged file', async () => {
@@ -227,24 +231,28 @@ describe('git/diff', () => {
       const diff = await getTextDiff(repository, file)
 
       const first = diff.hunks[0]
-      expect(first.lines[0].text).toContain('@@ -2,7 +2,7 @@ ')
+      assert(first.lines[0].text.includes('@@ -2,7 +2,7 @@ '))
 
-      expect(first.lines[4].text).toContain(
-        '-tortor placerat facilisis. Ut sed ex tortor. Duis consectetur at ex vel mattis.'
+      assert(
+        first.lines[4].text.includes(
+          '-tortor placerat facilisis. Ut sed ex tortor. Duis consectetur at ex vel mattis.'
+        )
       )
-      expect(first.lines[5].text).toContain('+tortor placerat facilisis.')
+      assert(first.lines[5].text.includes('+tortor placerat facilisis.'))
 
       const second = diff.hunks[1]
-      expect(second.lines[0].text).toContain('@@ -17,9 +17,7 @@ ')
+      assert(second.lines[0].text.includes('@@ -17,9 +17,7 @@ '))
 
-      expect(second.lines[4].text).toContain('-vel sagittis nisl rutrum. ')
-      expect(second.lines[5].text).toContain(
-        '-tempor a ligula. Proin pretium ipsum '
+      assert(second.lines[4].text.includes('-vel sagittis nisl rutrum. '))
+      assert(
+        second.lines[5].text.includes('-tempor a ligula. Proin pretium ipsum ')
       )
-      expect(second.lines[6].text).toContain(
-        '-elementum neque id tellus gravida rhoncus.'
+      assert(
+        second.lines[6].text.includes(
+          '-elementum neque id tellus gravida rhoncus.'
+        )
       )
-      expect(second.lines[7].text).toContain('+vel sagittis nisl rutrum.')
+      assert(second.lines[7].text.includes('+vel sagittis nisl rutrum.'))
     })
 
     it('displays a binary diff for a docx file', async () => {
@@ -254,11 +262,11 @@ describe('git/diff', () => {
       const status = await getStatusOrThrow(repo)
       const files = status.workingDirectory.files
 
-      expect(files).toHaveLength(1)
+      assert.equal(files.length, 1)
 
       const diff = await getWorkingDirectoryDiff(repo, files[0])
 
-      expect(diff.kind).toBe(DiffType.Binary)
+      assert.equal(diff.kind, DiffType.Binary)
     })
 
     it('is empty for a renamed file', async () => {
@@ -273,11 +281,11 @@ describe('git/diff', () => {
       const status = await getStatusOrThrow(repo)
       const files = status.workingDirectory.files
 
-      expect(files).toHaveLength(1)
+      assert.equal(files.length, 1)
 
       const diff = await getTextDiff(repo, files[0])
 
-      expect(diff.hunks).toHaveLength(0)
+      assert.equal(diff.hunks.length, 0)
     })
 
     // A renamed file in the working directory is just two staged files
@@ -298,16 +306,16 @@ describe('git/diff', () => {
       const status = await getStatusOrThrow(repo)
       const files = status.workingDirectory.files
 
-      expect(files).toHaveLength(1)
+      assert.equal(files.length, 1)
 
       const diff = await getTextDiff(repo, files[0])
 
-      expect(diff.hunks).toHaveLength(1)
+      assert.equal(diff.hunks.length, 1)
 
       const first = diff.hunks[0]
-      expect(first.lines).toHaveLength(3)
-      expect(first.lines[1].text).toBe('-foo')
-      expect(first.lines[2].text).toBe('+bar')
+      assert.equal(first.lines.length, 3)
+      assert.equal(first.lines[1].text, '-foo')
+      assert.equal(first.lines[2].text, '+bar')
     })
 
     it('handles unborn repository with mixed state', async () => {
@@ -325,15 +333,15 @@ describe('git/diff', () => {
       const status = await getStatusOrThrow(repo)
       const files = status.workingDirectory.files
 
-      expect(files).toHaveLength(1)
+      assert.equal(files.length, 1)
 
       const diff = await getTextDiff(repo, files[0])
 
-      expect(diff.hunks).toHaveLength(1)
+      assert.equal(diff.hunks.length, 1)
 
       const first = diff.hunks[0]
-      expect(first.lines).toHaveLength(2)
-      expect(first.lines[1].text).toBe('+WRITING OVER THE TOP')
+      assert.equal(first.lines.length, 2)
+      assert.equal(first.lines[1].text, '+WRITING OVER THE TOP')
     })
   })
 
@@ -364,13 +372,13 @@ describe('git/diff', () => {
       const status = await getStatusOrThrow(repo)
       const files = status.workingDirectory.files
 
-      expect(files).toHaveLength(1)
+      assert.equal(files.length, 1)
 
       const diff = await getTextDiff(repo, files[0])
 
-      expect(diff.lineEndingsChange).not.toBeUndefined()
-      expect(diff.lineEndingsChange!.from).toBe('LF')
-      expect(diff.lineEndingsChange!.to).toBe('CRLF')
+      assert(diff.lineEndingsChange !== undefined)
+      assert.equal(diff.lineEndingsChange!.from, 'LF')
+      assert.equal(diff.lineEndingsChange!.to, 'CRLF')
     })
   })
 
@@ -384,10 +392,10 @@ describe('git/diff', () => {
 
       const status = await getStatusOrThrow(repo)
       const files = status.workingDirectory.files
-      expect(files).toHaveLength(1)
+      assert.equal(files.length, 1)
 
       const diff = await getTextDiff(repo, files[0])
-      expect(diff.text).toBe(`@@ -0,0 +1 @@\n+${testString}`)
+      assert.equal(diff.text, `@@ -0,0 +1 @@\n+${testString}`)
     })
   })
 
@@ -398,7 +406,7 @@ describe('git/diff', () => {
         repo = await setupEmptyRepository()
       })
       it('throws since HEAD doesnt exist', async () => {
-        await expect(getBinaryPaths(repo, 'HEAD', [])).rejects.toThrow()
+        await assert.rejects(getBinaryPaths(repo, 'HEAD', []))
       })
     })
 
@@ -424,7 +432,7 @@ describe('git/diff', () => {
         })
       })
       it('includes plain text files using binary driver', async () => {
-        expect(
+        assert.deepStrictEqual(
           await getBinaryPaths(repo, 'MERGE_HEAD', [
             {
               kind: 'entry',
@@ -432,8 +440,9 @@ describe('git/diff', () => {
               statusCode: 'UU',
               submoduleStatusCode: '????',
             },
-          ])
-        ).toEqual(['foo.bin'])
+          ]),
+          ['foo.bin']
+        )
       })
     })
 
@@ -444,7 +453,7 @@ describe('git/diff', () => {
         repo = new Repository(testRepoPath, -1, null, false)
       })
       it('returns an empty array', async () => {
-        expect(await getBinaryPaths(repo, 'HEAD', [])).toHaveLength(0)
+        assert.equal((await getBinaryPaths(repo, 'HEAD', [])).length, 0)
       })
     })
     describe('in repo with image changes', () => {
@@ -456,7 +465,7 @@ describe('git/diff', () => {
         repo = new Repository(testRepoPath, -1, null, false)
       })
       it('returns all changed image files', async () => {
-        expect(await getBinaryPaths(repo, 'HEAD', [])).toEqual([
+        assert.deepStrictEqual(await getBinaryPaths(repo, 'HEAD', []), [
           'modified-image.jpg',
           'new-animated-image.gif',
           'new-image.png',
@@ -474,7 +483,7 @@ describe('git/diff', () => {
         await exec(['merge', 'master'], repo.path)
       })
       it('returns all conflicted image files', async () => {
-        expect(await getBinaryPaths(repo, 'MERGE_HEAD', [])).toEqual([
+        assert.deepStrictEqual(await getBinaryPaths(repo, 'MERGE_HEAD', []), [
           'my-cool-image.png',
         ])
       })
@@ -489,7 +498,7 @@ describe('git/diff', () => {
       const status = await getStatusOrThrow(repository)
       const file = status.workingDirectory.files[0]
       const diff = await getWorkingDirectoryDiff(repository, file)
-      expect(diff.kind).toBe(DiffType.Submodule)
+      assert.equal(diff.kind, DiffType.Submodule)
 
       return diff as ISubmoduleDiff
     }
@@ -505,9 +514,9 @@ describe('git/diff', () => {
       await FSE.writeFile(path.join(submodulePath, 'README.md'), 'hello\n')
 
       const diff = await getSubmoduleDiff()
-      expect(diff.fullPath).toBe(submodulePath)
+      assert.equal(diff.fullPath, submodulePath)
       // Even on Windows, the path separator is '/' for this specific attribute
-      expect(diff.path).toBe('foo/submodule')
+      assert.equal(diff.path, 'foo/submodule')
     })
 
     it('can get the diff for a submodule with only modified changes', async () => {
@@ -515,11 +524,11 @@ describe('git/diff', () => {
       await FSE.writeFile(path.join(submodulePath, 'README.md'), 'hello\n')
 
       const diff = await getSubmoduleDiff()
-      expect(diff.oldSHA).toBeNull()
-      expect(diff.newSHA).toBeNull()
-      expect(diff.status.commitChanged).toBe(false)
-      expect(diff.status.modifiedChanges).toBe(true)
-      expect(diff.status.untrackedChanges).toBe(false)
+      assert(diff.oldSHA === null)
+      assert(diff.newSHA === null)
+      assert.equal(diff.status.commitChanged, false)
+      assert.equal(diff.status.modifiedChanges, true)
+      assert.equal(diff.status.untrackedChanges, false)
     })
 
     it('can get the diff for a submodule with only untracked changes', async () => {
@@ -527,11 +536,11 @@ describe('git/diff', () => {
       await FSE.writeFile(path.join(submodulePath, 'NEW.md'), 'hello\n')
 
       const diff = await getSubmoduleDiff()
-      expect(diff.oldSHA).toBeNull()
-      expect(diff.newSHA).toBeNull()
-      expect(diff.status.commitChanged).toBe(false)
-      expect(diff.status.modifiedChanges).toBe(false)
-      expect(diff.status.untrackedChanges).toBe(true)
+      assert(diff.oldSHA === null)
+      assert(diff.newSHA === null)
+      assert.equal(diff.status.commitChanged, false)
+      assert.equal(diff.status.modifiedChanges, false)
+      assert.equal(diff.status.untrackedChanges, true)
     })
 
     it('can get the diff for a submodule a commit change', async () => {
@@ -540,11 +549,11 @@ describe('git/diff', () => {
       await exec(['commit', '-a', '-m', 'test'], submodulePath)
 
       const diff = await getSubmoduleDiff()
-      expect(diff.oldSHA).not.toBeNull()
-      expect(diff.newSHA).not.toBeNull()
-      expect(diff.status.commitChanged).toBe(true)
-      expect(diff.status.modifiedChanges).toBe(false)
-      expect(diff.status.untrackedChanges).toBe(false)
+      assert(diff.oldSHA !== null)
+      assert(diff.newSHA !== null)
+      assert.equal(diff.status.commitChanged, true)
+      assert.equal(diff.status.modifiedChanges, false)
+      assert.equal(diff.status.untrackedChanges, false)
     })
 
     it('can get the diff for a submodule a all kinds of changes', async () => {
@@ -554,11 +563,11 @@ describe('git/diff', () => {
       await FSE.writeFile(path.join(submodulePath, 'NEW.md'), 'new!!\n')
 
       const diff = await getSubmoduleDiff()
-      expect(diff.oldSHA).not.toBeNull()
-      expect(diff.newSHA).not.toBeNull()
-      expect(diff.status.commitChanged).toBe(true)
-      expect(diff.status.modifiedChanges).toBe(true)
-      expect(diff.status.untrackedChanges).toBe(true)
+      assert(diff.oldSHA !== null)
+      assert(diff.newSHA !== null)
+      assert.equal(diff.status.commitChanged, true)
+      assert.equal(diff.status.modifiedChanges, true)
+      assert.equal(diff.status.untrackedChanges, true)
     })
   })
 
@@ -603,13 +612,13 @@ describe('git/diff', () => {
         'irrelevantToTest'
       )
 
-      expect(changesetData).not.toBeNull()
+      assert(changesetData !== null)
       if (changesetData === null) {
         return
       }
 
-      expect(changesetData.files).toHaveLength(1)
-      expect(changesetData.files[0].path).toBe('feature.md')
+      assert.equal(changesetData.files.length, 1)
+      assert.equal(changesetData.files[0].path, 'feature.md')
     })
 
     it('returns null for unrelated histories', async () => {
@@ -629,7 +638,7 @@ describe('git/diff', () => {
         'irrelevantToTest'
       )
 
-      expect(changesetData).toBeNull()
+      assert(changesetData === null)
     })
   })
 
@@ -683,14 +692,14 @@ describe('git/diff', () => {
         false,
         'irrelevantToTest'
       )
-      expect(diff.kind).toBe(DiffType.Text)
+      assert.equal(diff.kind, DiffType.Text)
 
       if (diff.kind !== DiffType.Text) {
         return
       }
 
-      expect(diff.text).not.toContain('bar')
-      expect(diff.text).toContain('feature')
+      assert.equal(diff.text.includes('bar'), false)
+      assert(diff.text.includes('feature'))
     })
   })
 })

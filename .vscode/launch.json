@@ -41,6 +41,25 @@
       "windows": {
         "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron.cmd"
       }
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug current test file",
+      "args": [
+        "--experimental-test-module-mocks",
+        "--import",
+        "tsx",
+        "--import",
+        "${workspaceFolder}/app/test/__mocks__/electron.mjs",
+        "--import",
+        "${workspaceFolder}/app/test/globals.ts",
+        "--test",
+        "${relativeFile}"
+      ],
+      "envFile": "${workspaceFolder}/.test.env",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
     }
   ]
 }

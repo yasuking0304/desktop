@@ -1,3 +1,5 @@
+import { describe, it, beforeEach } from 'node:test'
+import assert from 'node:assert'
 import {
   IStatusResult,
   continueRebase,
@@ -28,7 +30,7 @@ describe('git/rebase', () => {
       const repository = setupEmptyDirectory()
       const progress = await getRebaseSnapshot(repository)
 
-      expect(progress).toEqual(null)
+      assert.equal(progress, null)
     })
   })
 
@@ -63,11 +65,11 @@ describe('git/rebase', () => {
     })
 
     it('returns a value indicating conflicts were encountered', () => {
-      expect(result).toBe(RebaseResult.ConflictsEncountered)
+      assert.equal(result, RebaseResult.ConflictsEncountered)
     })
 
     it('reported step-by-step progress before encountering conflicts', () => {
-      expect(progress).toEqual([
+      assert.deepStrictEqual(progress, [
         {
           currentCommitSummary: 'Feature Branch!',
           kind: 'multiCommitOperation',
@@ -79,19 +81,19 @@ describe('git/rebase', () => {
     })
 
     it('status detects REBASE_HEAD', () => {
-      expect(snapshot).not.toEqual(null)
+      assert.notEqual(snapshot, null)
       const s = snapshot!
-      expect(s.commits.length).toEqual(1)
-      expect(s.commits[0].summary).toEqual('Feature Branch!')
+      assert.equal(s.commits.length, 1)
+      assert.equal(s.commits[0].summary, 'Feature Branch!')
 
-      expect(s.progress.position).toEqual(1)
-      expect(s.progress.totalCommitCount).toEqual(1)
-      expect(s.progress.currentCommitSummary).toEqual('Feature Branch!')
-      expect(s.progress.value).toEqual(1)
+      assert.equal(s.progress.position, 1)
+      assert.equal(s.progress.totalCommitCount, 1)
+      assert.equal(s.progress.currentCommitSummary, 'Feature Branch!')
+      assert.equal(s.progress.value, 1)
     })
 
     it('is a detached HEAD state', () => {
-      expect(status.currentBranch).toBeUndefined()
+      assert(status.currentBranch === undefined)
     })
   })
 
@@ -123,11 +125,11 @@ describe('git/rebase', () => {
     })
 
     it('returns a value indicating conflicts were encountered', () => {
-      expect(result).toBe(RebaseResult.ConflictsEncountered)
+      assert.equal(result, RebaseResult.ConflictsEncountered)
     })
 
     it('reported step-by-step progress before encountering conflicts', () => {
-      expect(progress).toEqual([
+      assert.deepStrictEqual(progress, [
         {
           currentCommitSummary: 'Feature Branch First Commit!',
           kind: 'multiCommitOperation',
@@ -146,8 +148,8 @@ describe('git/rebase', () => {
         result = await resolveAndContinue(repository!, strategy, progressCb)
       }
 
-      expect(progress.length).toEqual(10)
-      expect(progress[9]).toEqual({
+      assert.equal(progress.length, 10)
+      assert.deepStrictEqual(progress[9], {
         currentCommitSummary: 'Feature Branch Tenth Commit!',
         kind: 'multiCommitOperation',
         position: 10,
@@ -157,21 +159,22 @@ describe('git/rebase', () => {
     })
 
     it('status detects REBASE_HEAD', () => {
-      expect(snapshot).not.toEqual(null)
+      assert.notEqual(snapshot, null)
       const s = snapshot!
-      expect(s.commits.length).toEqual(10)
-      expect(s.commits[0].summary).toEqual('Feature Branch First Commit!')
+      assert.equal(s.commits.length, 10)
+      assert.equal(s.commits[0].summary, 'Feature Branch First Commit!')
 
-      expect(s.progress.position).toEqual(1)
-      expect(s.progress.totalCommitCount).toEqual(10)
-      expect(s.progress.currentCommitSummary).toEqual(
+      assert.equal(s.progress.position, 1)
+      assert.equal(s.progress.totalCommitCount, 10)
+      assert.equal(
+        s.progress.currentCommitSummary,
         'Feature Branch First Commit!'
       )
-      expect(s.progress.value).toEqual(0.1)
+      assert.equal(s.progress.value, 0.1)
     })
 
     it('is a detached HEAD state', () => {
-      expect(status.currentBranch).toBeUndefined()
+      assert(status.currentBranch === undefined)
     })
   })
 })

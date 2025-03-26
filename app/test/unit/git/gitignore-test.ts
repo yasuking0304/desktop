@@ -1,3 +1,5 @@
+import { describe, it } from 'node:test'
+import assert from 'node:assert'
 import * as FSE from 'fs-extra'
 import * as Path from 'path'
 import { exec } from 'dugite'
@@ -20,7 +22,7 @@ describe('gitignore', () => {
 
       const gitignore = await readGitIgnoreAtRoot(repo)
 
-      expect(gitignore).toBeNull()
+      assert(gitignore === null)
     })
 
     it('reads contents from disk', async () => {
@@ -34,10 +36,10 @@ describe('gitignore', () => {
 
       const gitignore = await readGitIgnoreAtRoot(repo)
 
-      expect(gitignore).toBe(expected)
+      assert.equal(gitignore, expected)
     })
 
-    it.only('when autocrlf=true and safecrlf=true, appends CRLF to file', async () => {
+    it('when autocrlf=true and safecrlf=true, appends CRLF to file', async () => {
       const repo = await setupEmptyRepository()
 
       await setupLocalConfig(repo, [
@@ -54,10 +56,10 @@ describe('gitignore', () => {
         ['commit', '-m', 'create the ignore file'],
         path
       )
-      expect(commit.exitCode).toBe(0)
+      assert.equal(commit.exitCode, 0)
 
       const contents = await readGitIgnoreAtRoot(repo)
-      expect(contents!.endsWith('\r\n')).toBeTrue()
+      assert.equal(contents!.endsWith('\r\n'), true)
     })
 
     it('when autocrlf=input, appends LF to file', async () => {
@@ -79,10 +81,10 @@ describe('gitignore', () => {
         ['commit', '-m', 'create the ignore file'],
         path
       )
-      expect(commit.exitCode).toBe(0)
+      assert.equal(commit.exitCode, 0)
 
       const contents = await readGitIgnoreAtRoot(repo)
-      expect(contents!.endsWith('\n')).toBeTrue()
+      assert.equal(contents!.endsWith('\n'), true)
     })
   })
 
@@ -94,7 +96,7 @@ describe('gitignore', () => {
 
       const exists = await FSE.pathExists(`${repo.path}/.gitignore`)
 
-      expect(exists).toBe(true)
+      assert.equal(exists, true)
     })
 
     it('deletes gitignore file when no entries provided', async () => {
@@ -108,7 +110,7 @@ describe('gitignore', () => {
       await saveGitIgnore(repo, '')
 
       const exists = await FSE.pathExists(ignoreFile)
-      expect(exists).toBe(false)
+      assert.equal(exists, false)
     })
 
     it('applies rule correctly to repository', async () => {
@@ -129,7 +131,7 @@ describe('gitignore', () => {
       const status = await getStatusOrThrow(repo)
       const files = status.workingDirectory.files
 
-      expect(files).toHaveLength(0)
+      assert.equal(files.length, 0)
     })
 
     it('escapes string with special git characters', async () => {
@@ -137,7 +139,7 @@ describe('gitignore', () => {
       const escapedFilePath = '\\[never\\]\\\\!gonna\\*give\\#you\\?_.up'
 
       const result = escapeGitSpecialCharacters(unescapedFilePath)
-      expect(result).toBe(escapedFilePath)
+      assert.equal(result, escapedFilePath)
     })
   })
 
@@ -157,7 +159,7 @@ describe('gitignore', () => {
       const gitignore = await FSE.readFile(ignoreFile)
 
       const expected = 'node_modules\nyarn-error.log\n'
-      expect(gitignore.toString('utf8')).toBe(expected)
+      assert.equal(gitignore.toString('utf8'), expected)
     })
 
     it('appends multiple rules', async () => {
@@ -175,7 +177,7 @@ describe('gitignore', () => {
       const gitignore = await FSE.readFile(ignoreFile)
 
       const expected = 'node_modules\nyarn-error.log\n.eslintcache\ndist/\n'
-      expect(gitignore.toString('utf8')).toBe(expected)
+      assert.equal(gitignore.toString('utf8'), expected)
     })
 
     it('appends one file containing special characters', async () => {
@@ -195,7 +197,7 @@ describe('gitignore', () => {
 
       const expected =
         'node_modules\n' + '\\[never\\]\\!gonna\\*give\\#you\\?_.up\n'
-      expect(gitignore.toString('utf8')).toBe(expected)
+      assert.equal(gitignore.toString('utf8'), expected)
     })
   })
 })

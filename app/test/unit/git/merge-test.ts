@@ -1,3 +1,5 @@
+import { describe, it, beforeEach } from 'node:test'
+import assert from 'node:assert'
 import {
   abortMerge,
   getMergeBase,
@@ -22,7 +24,7 @@ describe('git/merge', () => {
         repository = new Repository(path, -1, null, false)
       })
       it('returns MergeResult.Success', async () => {
-        expect(await merge(repository, 'dev')).toBe(MergeResult.Success)
+        assert.equal(await merge(repository, 'dev'), MergeResult.Success)
       })
     })
     describe('and is a noop', () => {
@@ -33,7 +35,7 @@ describe('git/merge', () => {
         await merge(repository, 'dev')
       })
       it('returns MergeResult.AlreadyUpToDate', async () => {
-        expect(await merge(repository, 'dev')).toBe(MergeResult.AlreadyUpToDate)
+        assert.equal(await merge(repository, 'dev'), MergeResult.AlreadyUpToDate)
       })
     })
   })
@@ -55,7 +57,7 @@ describe('git/merge', () => {
       }
 
       const ref = await getMergeBase(repository, first.tip.sha, second.tip.sha)
-      expect(ref).toEqual('df0d73dc92ff496c6a61f10843d527b7461703f4')
+      assert.equal(ref, 'df0d73dc92ff496c6a61f10843d527b7461703f4')
     })
 
     it('returns null when the branches do not have a common ancestor', async () => {
@@ -91,7 +93,7 @@ describe('git/merge', () => {
       }
 
       const ref = await getMergeBase(repository, first.tip.sha, second.tip.sha)
-      expect(ref).toBeNull()
+      assert(ref === null)
     })
 
     it('returns null when a ref cannot be found', async () => {
@@ -108,7 +110,7 @@ describe('git/merge', () => {
         'master',
         'origin/some-unknown-branch'
       )
-      expect(ref).toBeNull()
+      assert(ref === null)
     })
   })
   describe('abortMerge', () => {
@@ -119,7 +121,7 @@ describe('git/merge', () => {
         repository = await setupEmptyRepository()
       })
       it('throws an error', async () => {
-        await expect(subject()).rejects.toThrow(
+        await assert.rejects(subject(), 
           /There is no merge in progress, so there is nothing to abort/
         )
       })
@@ -129,7 +131,7 @@ describe('git/merge', () => {
         repository = await setupConflictedRepo()
       })
       it('aborts the merge', async () => {
-        await expect(subject()).resolves.not.toThrow()
+        await assert.doesNotReject(subject())
       })
     })
   })

@@ -1,3 +1,5 @@
+import { describe, it, beforeEach } from 'node:test'
+import assert from 'node:assert'
 import { Repository } from '../../../src/models/repository'
 import {
   getRemotes,
@@ -33,14 +35,14 @@ describe('git/remote', () => {
       // https://github.com/git/git/blob/9005149a4a77e2d3409c6127bf4fd1a0893c3495/builtin/remote.c#L1223-L1226
       setConfigValue(repository, 'remote.bassoon.partialclonefilter', 'foo')
 
-      expect(result[0].name).toEqual('bassoon')
-      expect(result[0].url.endsWith(nwo)).toEqual(true)
+      assert.equal(result[0].name, 'bassoon')
+      assert.equal(result[0].url.endsWith(nwo), true)
 
-      expect(result[1].name).toEqual('origin')
-      expect(result[1].url.endsWith(nwo)).toEqual(true)
+      assert.equal(result[1].name, 'origin')
+      assert.equal(result[1].url.endsWith(nwo), true)
 
-      expect(result[2].name).toEqual('spaces-in-path')
-      expect(result[2].url).toEqual('/path/with spaces/foo')
+      assert.equal(result[2].name, 'spaces-in-path')
+      assert.equal(result[2].url, '/path/with spaces/foo')
     })
 
     it('returns remotes sorted alphabetically', async () => {
@@ -56,19 +58,19 @@ describe('git/remote', () => {
       await exec(['remote', 'add', 'D', url], repository.path)
 
       const result = await getRemotes(repository)
-      expect(result).toHaveLength(5)
+      assert.equal((result).length, 5)
 
-      expect(result[0].name).toEqual('A')
-      expect(result[1].name).toEqual('D')
-      expect(result[2].name).toEqual('L')
-      expect(result[3].name).toEqual('T')
-      expect(result[4].name).toEqual('X')
+      assert.equal(result[0].name, 'A')
+      assert.equal(result[1].name, 'D')
+      assert.equal(result[2].name, 'L')
+      assert.equal(result[3].name, 'T')
+      assert.equal(result[4].name, 'X')
     })
 
     it('returns empty array for directory without a .git directory', async () => {
       const repository = setupEmptyDirectory()
       const remotes = await getRemotes(repository)
-      expect(remotes).toHaveLength(0)
+      assert.equal((remotes).length, 0)
     })
 
     it('returns promisor remote', async () => {
@@ -84,19 +86,19 @@ describe('git/remote', () => {
       // Shows that the new remote does have a filter
       const rawGetRemote = await exec(['remote', '-v'], repository.path)
       const needle = url + ' (fetch) [blob:none]'
-      expect(rawGetRemote.stdout).toContain(needle)
+      assert(rawGetRemote.stdout.includes(needle))
 
       // Shows that the `getRemote` returns that remote
       const result = await getRemotes(repository)
-      expect(result).toHaveLength(1)
-      expect(result[0].name).toEqual('hasBlobFilter')
+      assert.equal((result).length, 1)
+      assert.equal(result[0].name, 'hasBlobFilter')
     })
   })
 
   describe('findDefaultRemote', () => {
     it('returns null for empty array', async () => {
       const result = await findDefaultRemote([])
-      expect(result).toBeNull()
+      assert(result === null)
     })
 
     it('returns origin when multiple remotes found', async () => {
@@ -108,7 +110,7 @@ describe('git/remote', () => {
       const remotes = await getRemotes(repository)
       const result = await findDefaultRemote(remotes)
 
-      expect(result!.name).toEqual('origin')
+      assert.equal(result!.name, 'origin')
     })
 
     it('returns something when origin removed', async () => {
@@ -121,7 +123,7 @@ describe('git/remote', () => {
       const remotes = await getRemotes(repository)
       const result = await findDefaultRemote(remotes)
 
-      expect(result!.name).toEqual('bassoon')
+      assert.equal(result!.name, 'bassoon')
     })
 
     it('returns null for new repository', async () => {
@@ -130,7 +132,7 @@ describe('git/remote', () => {
       const remotes = await getRemotes(repository)
       const result = await findDefaultRemote(remotes)
 
-      expect(result).toBeNull()
+      assert(result === null)
     })
   })
 
@@ -146,14 +148,14 @@ describe('git/remote', () => {
       const remotes = await getRemotes(repository)
       const result = await findDefaultRemote(remotes)
 
-      expect(result!.name).toEqual('origin')
+      assert.equal(result!.name, 'origin')
     })
   })
 
   describe('removeRemote', () => {
     it('silently fails when remote not defined', async () => {
       const repository = await setupEmptyRepository()
-      await expect(removeRemote(repository, 'origin')).resolves.not.toThrow()
+      await assert.doesNotReject(removeRemote(repository, 'origin'))
     })
   })
 
@@ -168,18 +170,18 @@ describe('git/remote', () => {
       await addRemote(repository, remoteName, remoteUrl)
     })
     it('can set the url for an existing remote', async () => {
-      expect(await setRemoteURL(repository, remoteName, newUrl)).toBeTrue()
+      assert.equal(await setRemoteURL(repository, remoteName, newUrl), true)
 
       const remotes = await getRemotes(repository)
-      expect(remotes).toHaveLength(1)
-      expect(remotes[0].url).toEqual(newUrl)
+      assert.equal((remotes).length, 1)
+      assert.equal(remotes[0].url, newUrl)
     })
     it('returns false for unknown remote name', async () => {
-      await expect(setRemoteURL(repository, 'none', newUrl)).rejects.toThrow()
+      await assert.rejects(setRemoteURL(repository, 'none', newUrl))
 
       const remotes = await getRemotes(repository)
-      expect(remotes).toHaveLength(1)
-      expect(remotes[0].url).toEqual(remoteUrl)
+      assert.equal((remotes).length, 1)
+      assert.equal(remotes[0].url, remoteUrl)
     })
   })
 })

@@ -1,3 +1,5 @@
+import { describe, it, beforeEach } from 'node:test'
+import assert from 'node:assert'
 import { exec } from 'dugite'
 import * as FSE from 'fs-extra'
 import * as Path from 'path'
@@ -64,9 +66,9 @@ describe('git/cherry-pick', () => {
     )
 
     const commits = await getCommits(repository, targetBranch.ref, 3)
-    expect(commits.length).toBe(2)
-    expect(commits[0].summary).toBe(cherryPickedCommit!.summary)
-    expect(result).toBe(CherryPickResult.CompletedWithoutError)
+    assert.equal(commits.length, 2)
+    assert.equal(commits[0].summary, cherryPickedCommit!.summary)
+    assert.equal(result, CherryPickResult.CompletedWithoutError)
   })
 
   it('successfully cherry-picked a commit with empty message', async () => {
@@ -85,15 +87,15 @@ describe('git/cherry-pick', () => {
       repository,
       featureBranch.tip.sha
     )
-    expect(emptyMessageCommit?.summary).toBe('')
+    assert.equal(emptyMessageCommit?.summary, '')
 
     const featureTip = await getCommitOneLine(repository, featureBranch.tip.sha)
     result = await cherryPick(repository, [featureTip])
 
     const commits = await getCommits(repository, targetBranch.ref, 5)
-    expect(commits.length).toBe(2)
-    expect(commits[0]!.summary).toBe('')
-    expect(result).toBe(CherryPickResult.CompletedWithoutError)
+    assert.equal(commits.length, 2)
+    assert.equal(commits[0]!.summary, '')
+    assert.equal(result, CherryPickResult.CompletedWithoutError)
   })
 
   it('successfully cherry-picks a redundant commit', async () => {
@@ -101,8 +103,8 @@ describe('git/cherry-pick', () => {
     result = await cherryPick(repository, [featureTip])
 
     const commits = await getCommits(repository, targetBranch.ref, 5)
-    expect(commits.length).toBe(2)
-    expect(result).toBe(CherryPickResult.CompletedWithoutError)
+    assert.equal(commits.length, 2)
+    assert.equal(result, CherryPickResult.CompletedWithoutError)
 
     featureTip = await getCommitOneLine(repository, featureBranch.tip.sha)
     result = await cherryPick(repository, [featureTip])
@@ -112,8 +114,8 @@ describe('git/cherry-pick', () => {
       targetBranch.ref,
       5
     )
-    expect(commitsAfterRedundant.length).toBe(3)
-    expect(result).toBe(CherryPickResult.CompletedWithoutError)
+    assert.equal(commitsAfterRedundant.length, 3)
+    assert.equal(result, CherryPickResult.CompletedWithoutError)
   })
 
   it('successfully cherry-picks an empty commit', async () => {
@@ -131,8 +133,8 @@ describe('git/cherry-pick', () => {
     result = await cherryPick(repository, [featureTip])
 
     const commits = await getCommits(repository, targetBranch.ref, 5)
-    expect(commits.length).toBe(2)
-    expect(result).toBe(CherryPickResult.CompletedWithoutError)
+    assert.equal(commits.length, 2)
+    assert.equal(result, CherryPickResult.CompletedWithoutError)
   })
 
   it('successfully cherry-picks an empty commit inside a range', async () => {
@@ -166,8 +168,8 @@ describe('git/cherry-pick', () => {
     result = await cherryPick(repository, commitsInRange!)
 
     const commits = await getCommits(repository, targetBranch.ref, 5)
-    expect(commits.length).toBe(4) // original commit + 4 cherry picked
-    expect(result).toBe(CherryPickResult.CompletedWithoutError)
+    assert.equal(commits.length, 4) // original commit + 4 cherry picked
+    assert.equal(result, CherryPickResult.CompletedWithoutError)
   })
 
   it('successfully cherry-picked multiple commits without conflicts', async () => {
@@ -183,14 +185,14 @@ describe('git/cherry-pick', () => {
     result = await cherryPick(repository, commitsInRange!)
 
     const commits = await getCommits(repository, targetBranch.ref, 5)
-    expect(commits.length).toBe(5)
-    expect(commits[1].summary).toBe('Cherry-picked Feature! Number Three')
-    expect(commits[2].summary).toBe('Cherry-picked Feature! Number Two')
+    assert.equal(commits.length, 5)
+    assert.equal(commits[1].summary, 'Cherry-picked Feature! Number Three')
+    assert.equal(commits[2].summary, 'Cherry-picked Feature! Number Two')
   })
 
   it('fails to cherry-pick array of no commits', async () => {
     result = await cherryPick(repository, [])
-    expect(result).toBe(CherryPickResult.UnableToStart)
+    assert.equal(result, CherryPickResult.UnableToStart)
   })
 
   it('fails to cherry-pick when working tree is not clean', async () => {
@@ -212,11 +214,15 @@ describe('git/cherry-pick', () => {
       )
       result = await cherryPick(repository, [featureTip])
     } catch (error) {
-      expect(error.toString()).toContain(
-        'The following untracked working tree files would be overwritten by merge'
+      assert(
+        error
+          .toString()
+          .includes(
+            'The following untracked working tree files would be overwritten by merge'
+          )
       )
     }
-    expect(result).toBe(null)
+    assert.equal(result, null)
   })
 
   it('successfully cherry-picks a merge commit', async () => {
@@ -237,18 +243,18 @@ describe('git/cherry-pick', () => {
     await makeCommit(repository, mergeCommit)
     const mergeBranch = await getBranchOrError(repository, mergeBranchName)
     await switchTo(repository, featureBranchName)
-    expect(await merge(repository, mergeBranch.ref)).toBe(MergeResult.Success)
+    assert.equal(await merge(repository, mergeBranch.ref), MergeResult.Success)
 
     // top commit is a merge commit
     const commits = await getCommits(repository, featureBranch.ref, 7)
-    expect(commits[0].summary).toContain('Merge')
+    assert(commits[0].summary.includes('Merge'))
 
     featureBranch = await getBranchOrError(repository, featureBranchName)
     await switchTo(repository, targetBranchName)
 
     const featureTip = await getCommitOneLine(repository, featureBranch.tip.sha)
     result = await cherryPick(repository, [featureTip])
-    expect(result).toBe(CherryPickResult.CompletedWithoutError)
+    assert.equal(result, CherryPickResult.CompletedWithoutError)
   })
 
   it('successfully cherry-picks a merge commit after a conflict', async () => {
@@ -286,11 +292,11 @@ describe('git/cherry-pick', () => {
     await makeCommit(repository, mergeCommit)
     const mergeBranch = await getBranchOrError(repository, mergeBranchName)
     await switchTo(repository, featureBranchName)
-    expect(await merge(repository, mergeBranch.ref)).toBe(MergeResult.Success)
+    assert.equal(await merge(repository, mergeBranch.ref), MergeResult.Success)
 
     // top commit is a merge commit
     const commits = await getCommits(repository, featureBranch.ref, 7)
-    expect(commits[0].summary).toContain('Merge')
+    assert(commits[0].summary.includes('Merge'))
 
     featureBranch = await getBranchOrError(repository, featureBranchName)
     await switchTo(repository, targetBranchName)
@@ -298,7 +304,7 @@ describe('git/cherry-pick', () => {
     const commitRange = revRangeInclusive(firstSha, featureBranch.tip.sha)
     const commitsInRange = await getCommitsInRange(repository, commitRange)
     result = await cherryPick(repository, commitsInRange!)
-    expect(result).toBe(CherryPickResult.ConflictsEncountered)
+    assert.equal(result, CherryPickResult.ConflictsEncountered)
 
     // resolve conflicts by writing files to disk
     await FSE.writeFile(
@@ -311,7 +317,7 @@ describe('git/cherry-pick', () => {
 
     result = await continueCherryPick(repository, files)
 
-    expect(result).toBe(CherryPickResult.CompletedWithoutError)
+    assert.equal(result, CherryPickResult.CompletedWithoutError)
   })
 
   describe('cherry-picking with conflicts', () => {
@@ -338,13 +344,13 @@ describe('git/cherry-pick', () => {
         featureBranch.tip.sha
       )
       result = await cherryPick(repository, [featureTip])
-      expect(result).toBe(CherryPickResult.ConflictsEncountered)
+      assert.equal(result, CherryPickResult.ConflictsEncountered)
 
       const status = await getStatusOrThrow(repository)
       const conflictedFiles = status.workingDirectory.files.filter(
         f => f.status.kind === AppFileStatusKind.Conflicted
       )
-      expect(conflictedFiles).toHaveLength(1)
+      assert.equal(conflictedFiles.length, 1)
     })
 
     it('successfully continues cherry-picking with conflicts after resolving them by overwriting', async () => {
@@ -353,7 +359,7 @@ describe('git/cherry-pick', () => {
         featureBranch.tip.sha
       )
       result = await cherryPick(repository, [featureTip])
-      expect(result).toBe(CherryPickResult.ConflictsEncountered)
+      assert.equal(result, CherryPickResult.ConflictsEncountered)
 
       const statusAfterCherryPick = await getStatusOrThrow(repository)
       const { files } = statusAfterCherryPick.workingDirectory
@@ -361,7 +367,7 @@ describe('git/cherry-pick', () => {
       // git diff --check warns if conflict markers exist and will exit with
       // non-zero status if conflicts found
       const diffCheckBefore = await exec(['diff', '--check'], repository.path)
-      expect(diffCheckBefore.exitCode).toBeGreaterThan(0)
+      assert(diffCheckBefore.exitCode > 0)
 
       // resolve conflicts by writing files to disk
       await FSE.writeFile(
@@ -371,11 +377,11 @@ describe('git/cherry-pick', () => {
 
       // diff --check to verify no conflicts exist (exitCode should be 0)
       const diffCheckAfter = await exec(['diff', '--check'], repository.path)
-      expect(diffCheckAfter.exitCode).toEqual(0)
+      assert.equal(diffCheckAfter.exitCode, 0)
 
       result = await continueCherryPick(repository, files)
 
-      expect(result).toBe(CherryPickResult.CompletedWithoutError)
+      assert.equal(result, CherryPickResult.CompletedWithoutError)
     })
 
     it('successfully continues cherry-picking with conflicts after resolving them manually', async () => {
@@ -384,7 +390,7 @@ describe('git/cherry-pick', () => {
         featureBranch.tip.sha
       )
       result = await cherryPick(repository, [featureTip])
-      expect(result).toBe(CherryPickResult.ConflictsEncountered)
+      assert.equal(result, CherryPickResult.ConflictsEncountered)
 
       const statusAfterCherryPick = await getStatusOrThrow(repository)
       const { files } = statusAfterCherryPick.workingDirectory
@@ -392,7 +398,7 @@ describe('git/cherry-pick', () => {
       // git diff --check warns if conflict markers exist and will exit with
       // non-zero status if conflicts found
       const diffCheckBefore = await exec(['diff', '--check'], repository.path)
-      expect(diffCheckBefore.exitCode).toBeGreaterThan(0)
+      assert(diffCheckBefore.exitCode > 0)
 
       const manualResolutions = new Map<string, ManualConflictResolution>()
 
@@ -404,7 +410,7 @@ describe('git/cherry-pick', () => {
 
       result = await continueCherryPick(repository, files, manualResolutions)
 
-      expect(result).toBe(CherryPickResult.CompletedWithoutError)
+      assert.equal(result, CherryPickResult.CompletedWithoutError)
     })
 
     it('successfully continues cherry-picking with conflicts after resolving them manually and no changes to commit', async () => {
@@ -413,7 +419,7 @@ describe('git/cherry-pick', () => {
         featureBranch.tip.sha
       )
       result = await cherryPick(repository, [featureTip])
-      expect(result).toBe(CherryPickResult.ConflictsEncountered)
+      assert.equal(result, CherryPickResult.ConflictsEncountered)
 
       const statusAfterCherryPick = await getStatusOrThrow(repository)
       const { files } = statusAfterCherryPick.workingDirectory
@@ -421,7 +427,7 @@ describe('git/cherry-pick', () => {
       // git diff --check warns if conflict markers exist and will exit with
       // non-zero status if conflicts found
       const diffCheckBefore = await exec(['diff', '--check'], repository.path)
-      expect(diffCheckBefore.exitCode).toBeGreaterThan(0)
+      assert(diffCheckBefore.exitCode > 0)
 
       const manualResolutions = new Map<string, ManualConflictResolution>()
 
@@ -433,7 +439,7 @@ describe('git/cherry-pick', () => {
 
       result = await continueCherryPick(repository, files, manualResolutions)
 
-      expect(result).toBe(CherryPickResult.CompletedWithoutError)
+      assert.equal(result, CherryPickResult.CompletedWithoutError)
     })
 
     it('successfully detects cherry-picking with outstanding files not staged', async () => {
@@ -442,16 +448,16 @@ describe('git/cherry-pick', () => {
         featureBranch.tip.sha
       )
       result = await cherryPick(repository, [featureTip])
-      expect(result).toBe(CherryPickResult.ConflictsEncountered)
+      assert.equal(result, CherryPickResult.ConflictsEncountered)
 
       result = await continueCherryPick(repository, [])
-      expect(result).toBe(CherryPickResult.OutstandingFilesNotStaged)
+      assert.equal(result, CherryPickResult.OutstandingFilesNotStaged)
 
       const status = await getStatusOrThrow(repository)
       const conflictedFiles = status.workingDirectory.files.filter(
         f => f.status.kind === AppFileStatusKind.Conflicted
       )
-      expect(conflictedFiles).toHaveLength(1)
+      assert.equal(conflictedFiles.length, 1)
     })
 
     it('successfully continues cherry-picking with additional changes to untracked files', async () => {
@@ -460,7 +466,7 @@ describe('git/cherry-pick', () => {
         featureBranch.tip.sha
       )
       result = await cherryPick(repository, [featureTip])
-      expect(result).toBe(CherryPickResult.ConflictsEncountered)
+      assert.equal(result, CherryPickResult.ConflictsEncountered)
 
       // resolve conflicts by writing files to disk
       await FSE.writeFile(
@@ -478,15 +484,15 @@ describe('git/cherry-pick', () => {
       const { files } = statusAfterCherryPick.workingDirectory
 
       // THING.MD and UNTRACKED_FILE.md should be in working directory
-      expect(files.length).toBe(2)
+      assert.equal(files.length, 2)
 
       result = await continueCherryPick(repository, files)
-      expect(result).toBe(CherryPickResult.CompletedWithoutError)
+      assert.equal(result, CherryPickResult.CompletedWithoutError)
 
       // Only UNTRACKED_FILE.md should be in working directory
       // THING.md committed with cherry pick
       const status = await getStatusOrThrow(repository)
-      expect(status.workingDirectory.files[0].path).toBe('UNTRACKED_FILE.md')
+      assert.equal(status.workingDirectory.files[0].path, 'UNTRACKED_FILE.md')
     })
 
     it('successfully aborts cherry-pick after conflict', async () => {
@@ -495,17 +501,17 @@ describe('git/cherry-pick', () => {
         featureBranch.tip.sha
       )
       result = await cherryPick(repository, [featureTip])
-      expect(result).toBe(CherryPickResult.ConflictsEncountered)
+      assert.equal(result, CherryPickResult.ConflictsEncountered)
 
       // files from cherry pick exist in conflicted state
       const statusAfterConflict = await getStatusOrThrow(repository)
-      expect(statusAfterConflict.workingDirectory.files).toHaveLength(1)
+      assert.equal(statusAfterConflict.workingDirectory.files.length, 1)
 
       await abortCherryPick(repository)
 
       // file from cherry pick removed after abort
       const statusAfterAbort = await getStatusOrThrow(repository)
-      expect(statusAfterAbort.workingDirectory.files).toHaveLength(0)
+      assert.equal(statusAfterAbort.workingDirectory.files.length, 0)
     })
   })
 
@@ -523,7 +529,7 @@ describe('git/cherry-pick', () => {
       result = await cherryPick(repository, [featureTip], p => progress.push(p))
 
       // commit summary set up in before each is "Cherry-picked Feature"
-      expect(progress).toEqual([
+      assert.deepStrictEqual(progress, [
         {
           currentCommitSummary: featureTip.summary,
           kind: 'multiCommitOperation',
@@ -550,8 +556,8 @@ describe('git/cherry-pick', () => {
         progress.push(p)
       )
 
-      expect(result).toBe(CherryPickResult.CompletedWithoutError)
-      expect(progress).toHaveLength(4)
+      assert.equal(result, CherryPickResult.CompletedWithoutError)
+      assert.equal(progress.length, 4)
     })
 
     it('successfully parses progress for multiple commits including a conflict', async () => {
@@ -582,15 +588,15 @@ describe('git/cherry-pick', () => {
       result = await cherryPick(repository, commitsInRange!, p =>
         progress.push(p)
       )
-      expect(result).toBe(CherryPickResult.ConflictsEncountered)
+      assert.equal(result, CherryPickResult.ConflictsEncountered)
       // First commit and second cherry picked and rest are waiting on conflict
       // resolution.
-      expect(progress).toHaveLength(2)
+      assert.equal(progress.length, 2)
 
       // snapshot prepares the progress for the commit after what has
       // already happened.
       const snapshot = await getCherryPickSnapshot(repository)
-      expect(snapshot?.progress.position).toEqual(progress[1].position + 1)
+      assert.equal(snapshot?.progress.position, progress[1].position + 1)
 
       // resolve conflicts and continue
       const statusAfterConflictedCherryPick = await getStatusOrThrow(repository)
@@ -602,17 +608,20 @@ describe('git/cherry-pick', () => {
       result = await continueCherryPick(repository, files, new Map(), p =>
         progress.push(p)
       )
-      expect(result).toBe(CherryPickResult.CompletedWithoutError)
+      assert.equal(result, CherryPickResult.CompletedWithoutError)
       // After 3rd commit resolved, 3rd and 4th were cherry picked
-      expect(progress).toHaveLength(4)
-      expect(progress[0].currentCommitSummary).toEqual('Cherry-picked Feature!')
-      expect(progress[1].currentCommitSummary).toEqual(
+      assert.equal(progress.length, 4)
+      assert.equal(progress[0].currentCommitSummary, 'Cherry-picked Feature!')
+      assert.equal(
+        progress[1].currentCommitSummary,
         'Cherry-picked Feature! Number Two'
       )
-      expect(progress[2].currentCommitSummary).toEqual(
+      assert.equal(
+        progress[2].currentCommitSummary,
         'Cherry-picked Feature! Number Three'
       )
-      expect(progress[3].currentCommitSummary).toEqual(
+      assert.equal(
+        progress[3].currentCommitSummary,
         'Cherry-picked Feature! Number Four'
       )
     })

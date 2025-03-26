@@ -1,3 +1,5 @@
+import { describe, it, beforeEach } from 'node:test'
+import assert from 'node:assert'
 import * as FSE from 'fs-extra'
 import * as Path from 'path'
 import {
@@ -36,13 +38,13 @@ describe('git/reorder', () => {
       initialCommit.sha
     )
 
-    expect(result).toBe(RebaseResult.CompletedWithoutError)
+    assert.equal(result, RebaseResult.CompletedWithoutError)
 
     const log = await getCommits(repository, 'HEAD', 5)
-    expect(log.length).toBe(3)
-    expect(log[2].summary).toBe('initialize')
-    expect(log[1].summary).toBe('second')
-    expect(log[0].summary).toBe('first')
+    assert.equal(log.length, 3)
+    assert.equal(log[2].summary, 'initialize')
+    assert.equal(log[1].summary, 'second')
+    assert.equal(log[0].summary, 'first')
   })
 
   it('moves first and fourth commits after the second one respecting their order in the log', async () => {
@@ -58,13 +60,13 @@ describe('git/reorder', () => {
       initialCommit.sha
     )
 
-    expect(result).toBe(RebaseResult.CompletedWithoutError)
+    assert.equal(result, RebaseResult.CompletedWithoutError)
 
     const log = await getCommits(repository, 'HEAD', 5)
-    expect(log.length).toBe(5)
+    assert.equal(log.length, 5)
 
     const summaries = log.map(c => c.summary)
-    expect(summaries).toEqual([
+    assert.deepStrictEqual(summaries, [
       'third',
       'fourth',
       'first',
@@ -86,11 +88,11 @@ describe('git/reorder', () => {
       initialCommit.sha
     )
 
-    expect(result).toBe(RebaseResult.CompletedWithoutError)
+    assert.equal(result, RebaseResult.CompletedWithoutError)
 
     const log = await getCommits(repository, 'HEAD', 5)
     const summaries = log.map(c => c.summary)
-    expect(summaries).toEqual([
+    assert.deepStrictEqual(summaries, [
       'first',
       'last',
       'third',
@@ -105,13 +107,13 @@ describe('git/reorder', () => {
 
     const result = await reorder(repository, [firstCommit], initialCommit, null)
 
-    expect(result).toBe(RebaseResult.CompletedWithoutError)
+    assert.equal(result, RebaseResult.CompletedWithoutError)
 
     const log = await getCommits(repository, 'HEAD', 5)
-    expect(log.length).toBe(3)
+    assert.equal(log.length, 3)
 
     const summaries = log.map(c => c.summary)
-    expect(summaries).toEqual(['second', 'initialize', 'first'])
+    assert.deepStrictEqual(summaries, ['second', 'initialize', 'first'])
   })
 
   it('handles reordering a conflicting commit', async () => {
@@ -133,7 +135,7 @@ describe('git/reorder', () => {
       initialCommit.sha
     )
 
-    expect(result).toBe(RebaseResult.ConflictsEncountered)
+    assert.equal(result, RebaseResult.ConflictsEncountered)
 
     let status = await getStatusOrThrow(repository)
     let { files } = status.workingDirectory
@@ -161,7 +163,7 @@ describe('git/reorder', () => {
     // This will now conflict with the 'third' commit since it is going to now
     // apply the 'second' commit which now modifies the same lines in the
     // 'second.md' that the previous commit does.
-    expect(continueResult).toBe(RebaseResult.ConflictsEncountered)
+    assert.equal(continueResult, RebaseResult.ConflictsEncountered)
 
     status = await getStatusOrThrow(repository)
     files = status.workingDirectory.files
@@ -183,11 +185,11 @@ describe('git/reorder', () => {
       undefined,
       `cat "${secondMessagePath}" >`
     )
-    expect(continueResult).toBe(RebaseResult.CompletedWithoutError)
+    assert.equal(continueResult, RebaseResult.CompletedWithoutError)
 
     const log = await getCommits(repository, 'HEAD', 5)
     const summaries = log.map(c => c.summary)
-    expect(summaries).toEqual([
+    assert.deepStrictEqual(summaries, [
       'second - fixed',
       'third - fixed',
       'first',
@@ -206,13 +208,13 @@ describe('git/reorder', () => {
       'INVALID INVALID'
     )
 
-    expect(result).toBe(RebaseResult.Error)
+    assert.equal(result, RebaseResult.Error)
 
     // Rebase will not start - As it won't be able retrieve a commits to build a
     // todo and then interactive rebase would fail for bad revision. Added logic
     // to short circuit to prevent unnecessary attempt at an interactive rebase.
     const isRebaseStillOngoing = await getRebaseInternalState(repository)
-    expect(isRebaseStillOngoing).toBeNull()
+    assert(isRebaseStillOngoing === null)
   })
 
   it('returns error on invalid base commit', async () => {
@@ -227,12 +229,12 @@ describe('git/reorder', () => {
       initialCommit.sha
     )
 
-    expect(result).toBe(RebaseResult.Error)
+    assert.equal(result, RebaseResult.Error)
 
     // Rebase should not start - if we did attempt this, it could result in
     // dropping commits.
     const isRebaseStillOngoing = await getRebaseInternalState(repository)
-    expect(isRebaseStillOngoing).toBeNull()
+    assert(isRebaseStillOngoing === null)
   })
 
   it('returns error when no commits are reordered', async () => {
@@ -241,13 +243,13 @@ describe('git/reorder', () => {
 
     const result = await reorder(repository, [], first, initialCommit.sha)
 
-    expect(result).toBe(RebaseResult.Error)
+    assert.equal(result, RebaseResult.Error)
 
     // Rebase should not start - technically there would be no harm in this
     // rebase as it would just replay history, but we should not use reorder to
     // replay history.
     const isRebaseStillOngoing = await getRebaseInternalState(repository)
-    expect(isRebaseStillOngoing).toBeNull()
+    assert(isRebaseStillOngoing === null)
   })
 })
 

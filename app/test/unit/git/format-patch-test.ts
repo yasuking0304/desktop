@@ -1,3 +1,5 @@
+import { describe, it, beforeEach } from 'node:test'
+import assert from 'node:assert'
 import {
   setupTwoCommitRepo,
   setupFixtureRepository,
@@ -21,18 +23,18 @@ describe('formatPatch', () => {
     })
     it('returns a string for a single commit range', async () => {
       const patch = await formatPatch(repository, 'HEAD~', 'HEAD')
-      expect(patch).toBeString()
-      expect(patch).not.toBeEmpty()
+      assert.equal(typeof patch, 'string')
+      assert.notEqual(patch.length, 0, 'Expected patch to be empty')
     })
     it('returns a string for a multi commit range', async () => {
       const patch = await formatPatch(repository, 'HEAD~2', 'HEAD')
-      expect(patch).toBeString()
-      expect(patch).not.toBeEmpty()
+      assert.equal(typeof patch, 'string')
+      assert.notEqual(patch.length, 0, 'Expected patch to be empty')
     })
     it('returns empty string for no range', async () => {
       const patch = await formatPatch(repository, 'HEAD', 'HEAD')
-      expect(patch).toBeString()
-      expect(patch).toBeEmpty()
+      assert.equal(typeof patch, 'string')
+      assert.equal(patch.length, 0, 'Expected patch to be empty')
     })
     describe('applied in a related repo', () => {
       let clonedRepository: Repository
@@ -47,7 +49,7 @@ describe('formatPatch', () => {
         const result = await exec(['apply'], clonedRepository.path, {
           stdin: patch,
         })
-        expect(result).toBeTruthy()
+        assert(result)
       })
     })
   })
@@ -64,7 +66,7 @@ describe('formatPatch', () => {
       firstCommit = stdout.trim()
     })
     it('can create a series of commits from start to HEAD', async () => {
-      expect(await formatPatch(repository, firstCommit, 'HEAD')).toBeString()
+      assert.equal(typeof await formatPatch(repository, firstCommit, 'HEAD'), 'string')
     })
   })
 })

@@ -1,3 +1,5 @@
+import { describe, it } from 'node:test'
+import assert from 'node:assert'
 import { readdir, readFile } from 'fs/promises'
 import { EOL } from 'os'
 import { join } from 'path'
@@ -16,11 +18,11 @@ describe('DesktopFileTransport', () => {
     const d = await createTempDirectory('desktop-logs')
     const t = new DesktopFileTransport({ logDirectory: d })
 
-    expect(await readdir(d)).toBeArrayOfSize(0)
+    assert((await readdir(d)).length === 0)
     await info(t, 'heyo')
     const files = await readdir(d)
-    expect(files).toBeArrayOfSize(1)
-    expect(await readFile(join(d, files[0]), 'utf8')).toEqual(`heyo${EOL}`)
+    assert.equal(files.length, 1)
+    assert.equal(await readFile(join(d, files[0]), 'utf8'), `heyo${EOL}`)
 
     t.close()
   })
@@ -32,7 +34,7 @@ describe('DesktopFileTransport', () => {
     const t = new DesktopFileTransport({ logDirectory: d })
 
     try {
-      expect(await readdir(d)).toBeArrayOfSize(0)
+      assert.equal((await readdir(d)).length, 0)
 
       globalDate.prototype.toISOString = () => '2022-03-10T10:00:00.000Z'
       await info(t, 'heyo')
@@ -40,7 +42,7 @@ describe('DesktopFileTransport', () => {
       globalDate.prototype.toISOString = () => '2022-03-11T11:00:00.000Z'
       await info(t, 'heyo')
 
-      expect(await readdir(d)).toBeArrayOfSize(2)
+      assert.equal((await readdir(d)).length, 2)
 
       t.close()
     } finally {
@@ -48,7 +50,7 @@ describe('DesktopFileTransport', () => {
     }
   })
 
-  it.only('retains a maximum of 14 log files', async () => {
+  it('retains a maximum of 14 log files', async () => {
     const originalToISOString = Date.prototype.toISOString
     const globalDate = global.Date as any
     const d = await createTempDirectory('desktop-logs')
@@ -78,17 +80,17 @@ describe('DesktopFileTransport', () => {
     ]
 
     try {
-      expect(await readdir(d)).toBeArrayOfSize(0)
+      assert.equal((await readdir(d)).length, 0)
       for (const date of dates) {
         globalDate.prototype.toISOString = () => date
         await info(t, 'heyo')
       }
 
       const retainedFiles = await readdir(d)
-      expect(retainedFiles).toBeArrayOfSize(14)
+      assert.equal(retainedFiles.length, 14)
 
       // Retains the newest files (ISO date is lexicographically sortable)
-      expect(retainedFiles.sort()).toEqual([
+      assert.deepStrictEqual(retainedFiles.sort(), [
         '2022-03-07.desktop.development.log',
         '2022-03-08.desktop.development.log',
         '2022-03-09.desktop.development.log',

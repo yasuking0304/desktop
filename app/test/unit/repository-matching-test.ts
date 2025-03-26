@@ -1,3 +1,5 @@
+import { describe, it } from 'node:test'
+import assert from 'node:assert'
 import {
   matchGitHubRepository,
   urlMatchesRemote,
@@ -26,8 +28,8 @@ describe('repository-matching', () => {
         accounts,
         'https://github.com/someuser/somerepo.git'
       )!
-      expect(repo.name).toEqual('somerepo')
-      expect(repo.owner).toEqual('someuser')
+      assert.equal(repo.name, 'somerepo')
+      assert.equal(repo.owner, 'someuser')
     })
 
     it('matches HTTPS URLs without the git extension', () => {
@@ -47,8 +49,8 @@ describe('repository-matching', () => {
         accounts,
         'https://github.com/someuser/somerepo'
       )!
-      expect(repo.name).toBe('somerepo')
-      expect(repo.owner).toBe('someuser')
+      assert.equal(repo.name, 'somerepo')
+      assert.equal(repo.owner, 'someuser')
     })
 
     it('matches git URLs', () => {
@@ -68,8 +70,8 @@ describe('repository-matching', () => {
         accounts,
         'git:github.com/someuser/somerepo.git'
       )!
-      expect(repo.name).toBe('somerepo')
-      expect(repo.owner).toBe('someuser')
+      assert.equal(repo.name, 'somerepo')
+      assert.equal(repo.owner, 'someuser')
     })
 
     it('matches SSH URLs', () => {
@@ -89,8 +91,8 @@ describe('repository-matching', () => {
         accounts,
         'git@github.com:someuser/somerepo.git'
       )!
-      expect(repo.name).toBe('somerepo')
-      expect(repo.owner).toBe('someuser')
+      assert.equal(repo.name, 'somerepo')
+      assert.equal(repo.owner, 'someuser')
     })
 
     it(`doesn't match if there aren't any users with that endpoint`, () => {
@@ -110,7 +112,7 @@ describe('repository-matching', () => {
         accounts,
         'https://github.com/someuser/somerepo.git'
       )
-      expect(repo).toBeNull()
+      assert(repo === null)
     })
   })
 
@@ -126,37 +128,37 @@ describe('repository-matching', () => {
       }
 
       it('does not match null', () => {
-        expect(urlMatchesRemote(null, remoteWithSuffix)).toBe(false)
+        assert.equal(urlMatchesRemote(null, remoteWithSuffix), false)
       })
 
       it('matches cloneURL from API', () => {
         const cloneURL = 'https://github.com/shiftkey/desktop.git'
-        expect(urlMatchesRemote(cloneURL, remoteWithSuffix)).toBe(true)
+        assert.equal(urlMatchesRemote(cloneURL, remoteWithSuffix), true)
       })
 
       it('matches cloneURL from API with different casing', () => {
         const cloneURL = 'https://GITHUB.COM/SHIFTKEY/DESKTOP.git'
-        expect(urlMatchesRemote(cloneURL, remoteWithSuffix)).toBe(true)
+        assert.equal(urlMatchesRemote(cloneURL, remoteWithSuffix), true)
       })
 
       it('matches cloneURL from API without suffix', () => {
         const cloneURL = 'https://github.com/shiftkey/desktop.git'
-        expect(urlMatchesRemote(cloneURL, remote)).toBe(true)
+        assert.equal(urlMatchesRemote(cloneURL, remote), true)
       })
 
       it('matches htmlURL from API', () => {
         const htmlURL = 'https://github.com/shiftkey/desktop'
-        expect(urlMatchesRemote(htmlURL, remoteWithSuffix)).toBe(true)
+        assert.equal(urlMatchesRemote(htmlURL, remoteWithSuffix), true)
       })
 
       it('matches htmlURL from API with different casing', () => {
         const htmlURL = 'https://GITHUB.COM/SHIFTKEY/DESKTOP'
-        expect(urlMatchesRemote(htmlURL, remoteWithSuffix)).toBe(true)
+        assert.equal(urlMatchesRemote(htmlURL, remoteWithSuffix), true)
       })
 
       it('matches htmlURL from API without suffix', () => {
         const htmlURL = 'https://github.com/shiftkey/desktop'
-        expect(urlMatchesRemote(htmlURL, remote)).toBe(true)
+        assert.equal(urlMatchesRemote(htmlURL, remote), true)
       })
     })
 
@@ -166,17 +168,17 @@ describe('repository-matching', () => {
         url: 'git@github.com:shiftkey/desktop.git',
       }
       it('does not match null', () => {
-        expect(urlMatchesRemote(null, remote)).toBe(false)
+        assert.equal(urlMatchesRemote(null, remote), false)
       })
 
       it('matches cloneURL from API', () => {
         const cloneURL = 'https://github.com/shiftkey/desktop.git'
-        expect(urlMatchesRemote(cloneURL, remote)).toBe(true)
+        assert.equal(urlMatchesRemote(cloneURL, remote), true)
       })
 
       it('matches htmlURL from API', () => {
         const htmlURL = 'https://github.com/shiftkey/desktop'
-        expect(urlMatchesRemote(htmlURL, remote)).toBe(true)
+        assert.equal(urlMatchesRemote(htmlURL, remote), true)
       })
     })
   })
@@ -210,36 +212,36 @@ describe('repository-matching', () => {
     }
 
     it('returns true for exact match', () => {
-      expect(
+      assert.equal(
         urlMatchesCloneURL(
           'https://github.com/shiftkey/desktop.git',
           repository
         )
-      ).toBe(true)
+      , true)
     })
 
     it(`returns true when URL doesn't have a .git suffix`, () => {
-      expect(
+      assert.equal(
         urlMatchesCloneURL('https://github.com/shiftkey/desktop', repository)
-      ).toBe(true)
+      , true)
     })
 
     it(`returns false when URL belongs to a different owner`, () => {
-      expect(
+      assert.equal(
         urlMatchesCloneURL(
           'https://github.com/outofambit/desktop.git',
           repository
         )
-      ).toBe(false)
+      , false)
     })
 
     it(`returns false if GitHub repository does't have a cloneURL set`, () => {
-      expect(
+      assert.equal(
         urlMatchesCloneURL(
           'https://github.com/shiftkey/desktop',
           repositoryWithoutCloneURL
         )
-      ).toBe(false)
+      , false)
     })
   })
 })

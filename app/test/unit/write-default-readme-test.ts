@@ -1,3 +1,5 @@
+import { describe, it, beforeEach } from 'node:test'
+import assert from 'node:assert'
 import * as FSE from 'fs-extra'
 import * as path from 'path'
 import { mkdirSync } from '../helpers/temp'
@@ -18,7 +20,7 @@ describe('repository setup', () => {
       await writeDefaultReadme(directory, 'some-repository')
 
       const text = await FSE.readFile(file, 'utf8')
-      expect(text).toBe('# some-repository\n')
+      assert.equal(text, '# some-repository\n')
     })
 
     it('writes a README with description when provided', async () => {
@@ -29,7 +31,7 @@ describe('repository setup', () => {
       )
 
       const text = await FSE.readFile(file, 'utf8')
-      expect(text).toBe('# some-repository\ndescription goes here\n')
+      assert.equal(text, '# some-repository\ndescription goes here\n')
     })
   })
 })

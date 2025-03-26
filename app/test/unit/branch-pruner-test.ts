@@ -1,3 +1,5 @@
+import { describe, it, beforeEach, afterEach } from 'node:test'
+import assert from 'node:assert'
 import { BranchPruner } from '../../src/lib/stores/helpers/branch-pruner'
 import { Repository } from '../../src/models/repository'
 import { GitStoreCache } from '../../src/lib/stores/git-store-cache'
@@ -56,7 +58,7 @@ describe('BranchPruner', () => {
     await branchPruner.runOnce()
     const branchesAfterPruning = await getBranchesFromGit(repo)
 
-    expect(branchesBeforePruning).toEqual(branchesAfterPruning)
+    assert.deepStrictEqual(branchesBeforePruning, branchesAfterPruning)
   })
 
   it('prunes for GitHub repository', async () => {
@@ -82,8 +84,8 @@ describe('BranchPruner', () => {
     await branchPruner.runOnce()
     const branchesAfterPruning = await getBranchesFromGit(repo)
 
-    expect(branchesAfterPruning).not.toContain('deleted-branch-1')
-    expect(branchesAfterPruning).toContain('not-deleted-branch-1')
+    assert.equal(branchesAfterPruning.includes('deleted-branch-1'), false)
+    assert(branchesAfterPruning.includes('not-deleted-branch-1'))
   })
 
   it('does not prune if the last prune date is less than 24 hours ago', async () => {
@@ -109,7 +111,7 @@ describe('BranchPruner', () => {
     await branchPruner.runOnce()
     const branchesAfterPruning = await getBranchesFromGit(repo)
 
-    expect(branchesBeforePruning).toEqual(branchesAfterPruning)
+    assert.deepStrictEqual(branchesBeforePruning, branchesAfterPruning)
   })
 
   it('does not prune if there is no default branch', async () => {
@@ -137,7 +139,7 @@ describe('BranchPruner', () => {
     await branchPruner.runOnce()
     const branchesAfterPruning = await getBranchesFromGit(repo)
 
-    expect(branchesBeforePruning).toEqual(branchesAfterPruning)
+    assert.deepStrictEqual(branchesBeforePruning, branchesAfterPruning)
   })
 
   it('does not prune reserved branches', async () => {
@@ -175,7 +177,7 @@ describe('BranchPruner', () => {
     ]
 
     for (const branch of expectedBranchesAfterPruning) {
-      expect(branchesAfterPruning).toContain(branch)
+      assert(branchesAfterPruning.includes(branch))
     }
   })
 
@@ -204,8 +206,8 @@ describe('BranchPruner', () => {
     await branchPruner.runOnce()
     const branchesAfterPruning = await getBranchesFromGit(repo)
 
-    expect(branchesAfterPruning).toContain('master')
-    expect(branchesAfterPruning).toContain('other-branch')
+    assert(branchesAfterPruning.includes('master'))
+    assert(branchesAfterPruning.includes('other-branch'))
   })
 })
 

@@ -1,10 +1,9 @@
-import Dexie from 'dexie'
-import {
-  indexedDB as fakeIndexedDB,
-  IDBKeyRange as fakeIDBKeyRange,
-} from 'fake-indexeddb'
-Dexie.dependencies.indexedDB = fakeIndexedDB
-Dexie.dependencies.IDBKeyRange = fakeIDBKeyRange
+import 'fake-indexeddb/auto'
+import jsdom from 'global-jsdom'
+
+jsdom(undefined, {
+  url: 'http://localhost',
+})
 
 // shims a bunch of browser specific methods
 // like fetch, requestIdleCallback, etc
@@ -55,3 +54,17 @@ g.ResizeObserver = class ResizeObserver {
 // structuredClone doesn't exist in JSDOM, see:
 // https://github.com/jsdom/jsdom/issues/3363
 global.structuredClone ??= (x: any) => JSON.parse(JSON.stringify(x))
+
+// The following types are part of the WebWorker support in Node.js and are a
+// common source of hangs in tests due to libraries creating them but not
+// properly cleaning them up. See for example
+// https://github.com/facebook/react/issues/20756, and
+// https://github.com/dexie/Dexie.js/pull/1577.
+//
+// We've upgraded Dexie already but react-dom is a bigger beast and we don't
+// need any of them to run our tests so we just delete them here. In fact,
+// this is exactly what the react-16-node-hanging-test-fix patch does, see
+// https://www.npmjs.com/package/react-16-node-hanging-test-fix?activeTab=code
+delete g['MessageChannel']
+delete g['MessagePort']
+delete g['BroadcastChannel']

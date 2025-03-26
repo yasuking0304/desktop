@@ -1,3 +1,5 @@
+import { describe, it, beforeEach } from 'node:test'
+import assert from 'node:assert'
 import { Repository } from '../../../src/models/repository'
 import { setupFixtureRepository } from '../../helpers/repositories'
 import {
@@ -39,7 +41,7 @@ describe('git/fetch', () => {
         resultBranches,
         branchBehind.upstream!
       )
-      expect(branchBehindUpstream.tip.sha).toBe(branchBehind.tip.sha)
+      assert.equal(branchBehindUpstream.tip.sha, branchBehind.tip.sha)
 
       // The branch ahead is still ahead
       const branchAhead = branchWithName(resultBranches, 'branch-ahead')
@@ -47,7 +49,7 @@ describe('git/fetch', () => {
         resultBranches,
         branchAhead.upstream!
       )
-      expect(branchAheadUpstream.tip.sha).not.toBe(branchAhead.tip.sha)
+      assert.notEqual(branchAheadUpstream.tip.sha, branchAhead.tip.sha)
 
       // The branch ahead and behind is still ahead and behind
       const branchAheadAndBehind = branchWithName(
@@ -58,14 +60,14 @@ describe('git/fetch', () => {
         resultBranches,
         branchAheadAndBehind.upstream!
       )
-      expect(branchAheadAndBehindUpstream.tip.sha).not.toBe(
+      assert.notEqual(branchAheadAndBehindUpstream.tip.sha, 
         branchAheadAndBehind.tip.sha
       )
 
       // The main branch hasn't been updated, since it's the current branch
       const mainBranch = branchWithName(resultBranches, 'main')
       const mainUpstream = branchWithName(resultBranches, mainBranch.upstream!)
-      expect(mainUpstream.tip.sha).not.toBe(mainBranch.tip.sha)
+      assert.notEqual(mainUpstream.tip.sha, mainBranch.tip.sha)
 
       // The up-to-date branch is still matching its upstream
       const upToDateBranch = branchWithName(resultBranches, 'branch-up-to-date')
@@ -73,7 +75,7 @@ describe('git/fetch', () => {
         resultBranches,
         upToDateBranch.upstream!
       )
-      expect(upToDateBranchUpstream.tip.sha).toBe(upToDateBranch.tip.sha)
+      assert.equal(upToDateBranchUpstream.tip.sha, upToDateBranch.tip.sha)
     })
 
     // We want to avoid messing with the FETCH_HEAD file. Normally, it shouldn't
@@ -91,7 +93,7 @@ describe('git/fetch', () => {
 
       const currentFetchHead = await FSE.readFile(fetchHeadPath, 'utf-8')
 
-      expect(currentFetchHead).toBe(previousFetchHead)
+      assert.equal(currentFetchHead, previousFetchHead)
     })
   })
 })

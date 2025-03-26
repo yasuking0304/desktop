@@ -1,3 +1,5 @@
+import { describe, it, beforeEach } from 'node:test'
+import assert from 'node:assert'
 import { exec } from 'dugite'
 import * as FSE from 'fs-extra'
 import * as Path from 'path'
@@ -49,11 +51,11 @@ describe('git/rebase', () => {
     })
 
     it('returns a value indicating conflicts were encountered', async () => {
-      expect(result).toBe(RebaseResult.ConflictsEncountered)
+      assert.equal(result, RebaseResult.ConflictsEncountered)
     })
 
     it('status detects REBASE_HEAD', async () => {
-      expect(status.rebaseInternalState).toEqual({
+      assert.deepStrictEqual(status.rebaseInternalState, {
         originalBranchTip,
         baseBranchTip,
         targetBranch: 'this-is-a-feature',
@@ -61,15 +63,16 @@ describe('git/rebase', () => {
     })
 
     it('has conflicted files in working directory', async () => {
-      expect(
+      assert.equal(
         status.workingDirectory.files.filter(
           f => f.status.kind === AppFileStatusKind.Conflicted
-        )
-      ).toHaveLength(2)
+        ).length,
+        2
+      )
     })
 
     it('is a detached HEAD state', async () => {
-      expect(status.currentBranch).toBeUndefined()
+      assert(status.currentBranch === undefined)
     })
   })
 
@@ -97,15 +100,15 @@ describe('git/rebase', () => {
     })
 
     it('REBASE_HEAD is no longer found', async () => {
-      expect(status.rebaseInternalState).toBeNull()
+      assert(status.rebaseInternalState === null)
     })
 
     it('no longer has working directory changes', async () => {
-      expect(status.workingDirectory.files).toHaveLength(0)
+      assert.equal(status.workingDirectory.files.length, 0)
     })
 
     it('returns to the feature branch', async () => {
-      expect(status.currentBranch).toBe(featureBranchName)
+      assert.equal(status.currentBranch, featureBranchName)
     })
   })
 
@@ -141,11 +144,11 @@ describe('git/rebase', () => {
     })
 
     it('indicates that the rebase was not complete', async () => {
-      expect(result).toBe(RebaseResult.OutstandingFilesNotStaged)
+      assert.equal(result, RebaseResult.OutstandingFilesNotStaged)
     })
 
     it('REBASE_HEAD is still found', async () => {
-      expect(status.rebaseInternalState).toEqual({
+      assert.deepStrictEqual(status.rebaseInternalState, {
         originalBranchTip,
         baseBranchTip,
         targetBranch: 'this-is-a-feature',
@@ -153,11 +156,12 @@ describe('git/rebase', () => {
     })
 
     it('still has conflicted files in working directory', async () => {
-      expect(
+      assert.equal(
         status!.workingDirectory.files.filter(
           f => f.status.kind === AppFileStatusKind.Conflicted
-        )
-      ).toHaveLength(2)
+        ).length,
+        2
+      )
     })
   })
 
@@ -188,7 +192,7 @@ describe('git/rebase', () => {
 
       const diffCheckBefore = await exec(['diff', '--check'], repository.path)
 
-      expect(diffCheckBefore.exitCode).toBeGreaterThan(0)
+      assert(diffCheckBefore.exitCode > 0)
 
       // resolve conflicts by writing files to disk
       await FSE.writeFile(
@@ -203,7 +207,7 @@ describe('git/rebase', () => {
 
       const diffCheckAfter = await exec(['diff', '--check'], repository.path)
 
-      expect(diffCheckAfter.exitCode).toEqual(0)
+      assert.equal(diffCheckAfter.exitCode, 0)
 
       result = await continueRebase(repository, files)
 
@@ -211,23 +215,23 @@ describe('git/rebase', () => {
     })
 
     it('returns success', () => {
-      expect(result).toBe(RebaseResult.CompletedWithoutError)
+      assert.equal(result, RebaseResult.CompletedWithoutError)
     })
 
     it('REBASE_HEAD is no longer found', () => {
-      expect(status.rebaseInternalState).toBeNull()
+      assert(status.rebaseInternalState === null)
     })
 
     it('no longer has working directory changes', () => {
-      expect(status.workingDirectory.files).toHaveLength(0)
+      assert.equal(status.workingDirectory.files.length, 0)
     })
 
     it('returns to the feature branch', () => {
-      expect(status.currentBranch).toBe(featureBranchName)
+      assert.equal(status.currentBranch, featureBranchName)
     })
 
     it('branch is now a different ref', () => {
-      expect(status.currentTip).not.toBe(beforeRebaseTip.sha)
+      assert.notEqual(status.currentTip, beforeRebaseTip.sha)
     })
   })
 
@@ -293,25 +297,25 @@ describe('git/rebase', () => {
     })
 
     it('returns success', () => {
-      expect(result).toBe(RebaseResult.CompletedWithoutError)
+      assert.equal(result, RebaseResult.CompletedWithoutError)
     })
 
     it('keeps untracked working directory file out of rebase', () => {
-      expect(status.workingDirectory.files).toHaveLength(1)
+      assert.equal(status.workingDirectory.files.length, 1)
     })
 
     it('has modified but unconflicted file in commit contents', () => {
-      expect(
-        filesInRebasedCommit.find(f => f.path === 'THIRD.md')
-      ).not.toBeUndefined()
+      assert(
+        filesInRebasedCommit.find(f => f.path === 'THIRD.md') !== undefined
+      )
     })
 
     it('returns to the feature branch', () => {
-      expect(status.currentBranch).toBe(featureBranchName)
+      assert.equal(status.currentBranch, featureBranchName)
     })
 
     it('branch is now a different ref', () => {
-      expect(status.currentTip).not.toBe(beforeRebaseTip.sha)
+      assert.notEqual(status.currentTip, beforeRebaseTip.sha)
     })
   })
 
@@ -362,7 +366,7 @@ describe('git/rebase', () => {
     })
 
     it('returns error code indicating that required files were missing', () => {
-      expect(result).toBe(RebaseResult.OutstandingFilesNotStaged)
+      assert.equal(result, RebaseResult.OutstandingFilesNotStaged)
     })
   })
 })

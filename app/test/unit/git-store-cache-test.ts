@@ -1,3 +1,5 @@
+import { describe, it } from 'node:test'
+import assert from 'node:assert'
 import { Repository } from '../../src/models/repository'
 import { GitStoreCache } from '../../src/lib/stores/git-store-cache'
 import { shell } from '../helpers/test-app-shell'
@@ -12,7 +14,7 @@ describe('GitStoreCache', () => {
     const first = cache.get(repository)
     const second = cache.get(repository)
 
-    expect(first).toBe(second)
+    assert.equal(first, second)
   })
 
   it('returns different instance of GitStore after removing', () => {
@@ -23,6 +25,6 @@ describe('GitStoreCache', () => {
     cache.remove(repository)
     const second = cache.get(repository)
 
-    expect(first).not.toBe(second)
+    assert.notEqual(first, second)
   })
 })

@@ -1,3 +1,5 @@
+import { describe, it } from 'node:test'
+import assert from 'node:assert'
 import { RepositoryStateCache } from '../../src/lib/stores/repository-state-cache'
 import { Repository } from '../../src/models/repository'
 import { PullRequest } from '../../src/models/pull-request'
@@ -52,8 +54,8 @@ describe('RepositoryStateCache', () => {
     })
 
     const { branchesState } = cache.get(repository)
-    expect(branchesState.isLoadingPullRequests).toBe(true)
-    expect(branchesState.openPullRequests).toHaveLength(1)
+    assert.equal(branchesState.isLoadingPullRequests, true)
+    assert.equal((branchesState.openPullRequests).length, 1)
   })
 
   it('can update changes state for a repository', () => {
@@ -82,10 +84,10 @@ describe('RepositoryStateCache', () => {
     })
 
     const { changesState } = cache.get(repository)
-    expect(changesState.workingDirectory.includeAll).toBe(true)
-    expect(changesState.workingDirectory.files).toHaveLength(1)
-    expect(changesState.showCoAuthoredBy).toBe(true)
-    expect(changesState.commitMessage!.summary).toBe(summary)
+    assert.equal(changesState.workingDirectory.includeAll, true)
+    assert.equal((changesState.workingDirectory.files).length, 1)
+    assert.equal(changesState.showCoAuthoredBy, true)
+    assert.equal(changesState.commitMessage!.summary, summary)
   })
 
   it('can update compare state for a repository', () => {
@@ -107,8 +109,8 @@ describe('RepositoryStateCache', () => {
     })
 
     const { compareState } = cache.get(repository)
-    expect(compareState.formState.kind).toBe(HistoryTabMode.History)
-    expect(compareState.filterText).toBe(filterText)
-    expect(compareState.commitSHAs).toHaveLength(1)
+    assert.equal(compareState.formState.kind, HistoryTabMode.History)
+    assert.equal(compareState.filterText, filterText)
+    assert.equal((compareState.commitSHAs).length, 1)
   })
 })

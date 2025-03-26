@@ -1,3 +1,5 @@
+import { describe, it, beforeEach } from 'node:test'
+import assert from 'node:assert'
 import * as path from 'path'
 import * as FSE from 'fs-extra'
 import * as os from 'os'
@@ -23,7 +25,7 @@ describe('git/rev-parse', () => {
 
   describe('getRepositoryType', () => {
     it('should return an absolute path when run inside a working directory', async () => {
-      expect(await getRepositoryType(repository.path)).toMatchObject({
+      assert.deepEqual(await getRepositoryType(repository.path), {
         kind: 'regular',
         topLevelWorkingDirectory: repository.path,
       })
@@ -31,7 +33,7 @@ describe('git/rev-parse', () => {
       const subdirPath = path.join(repository.path, 'subdir')
       await FSE.mkdir(subdirPath)
 
-      expect(await getRepositoryType(subdirPath)).toMatchObject({
+      assert.deepEqual(await getRepositoryType(subdirPath), {
         kind: 'regular',
         topLevelWorkingDirectory: repository.path,
       })
@@ -39,7 +41,7 @@ describe('git/rev-parse', () => {
 
     it('should return missing when not run inside a working directory', async () => {
       const result = await getRepositoryType(os.tmpdir())
-      expect(result).toMatchObject({ kind: 'missing' })
+      assert.deepEqual(result, { kind: 'missing' })
     })
 
     it('should return correct path for submodules', async () => {
@@ -68,13 +70,13 @@ describe('git/rev-parse', () => {
         ''
       )
 
-      expect(await getRepositoryType(firstRepoPath)).toMatchObject({
+      assert.deepEqual(await getRepositoryType(firstRepoPath), {
         kind: 'regular',
         topLevelWorkingDirectory: firstRepoPath,
       })
 
       const subModulePath = path.join(firstRepoPath, 'repo2')
-      expect(await getRepositoryType(subModulePath)).toMatchObject({
+      assert.deepEqual(await getRepositoryType(subModulePath), {
         kind: 'regular',
         topLevelWorkingDirectory: subModulePath,
       })
@@ -82,7 +84,7 @@ describe('git/rev-parse', () => {
 
     it('returns regular for default initialized repository', async () => {
       const repository = await setupEmptyRepository()
-      expect(await getRepositoryType(repository.path)).toMatchObject({
+      assert.deepEqual(await getRepositoryType(repository.path), {
         kind: 'regular',
         topLevelWorkingDirectory: repository.path,
       })
@@ -91,14 +93,14 @@ describe('git/rev-parse', () => {
     it('returns bare for initialized bare repository', async () => {
       const path = mkdirSync('no-repository-here')
       await exec(['init', '--bare'], path)
-      expect(await getRepositoryType(path)).toMatchObject({
+      assert.deepEqual(await getRepositoryType(path), {
         kind: 'bare',
       })
     })
 
     it('returns missing for empty directory', async () => {
       const p = mkdirSync('no-actual-repository-here')
-      expect(await getRepositoryType(p)).toMatchObject({
+      assert.deepEqual(await getRepositoryType(p), {
         kind: 'missing',
       })
     })
@@ -107,7 +109,7 @@ describe('git/rev-parse', () => {
       const rootPath = mkdirSync('no-actual-repository-here')
       const missingPath = path.join(rootPath, 'missing-folder')
 
-      expect(await getRepositoryType(missingPath)).toMatchObject({
+      assert.deepEqual(await getRepositoryType(missingPath), {
         kind: 'missing',
       })
     })
@@ -132,9 +134,7 @@ directory=`
       process.env['HOME'] = testHomeDirectory
       process.env['GIT_TEST_ASSUME_DIFFERENT_OWNER'] = '1'
 
-      expect(await getRepositoryType(repository.path)).toMatchObject({
-        kind: 'unsafe',
-      })
+      assert((await getRepositoryType(repository.path)).kind === 'unsafe')
 
       process.env['GIT_TEST_ASSUME_DIFFERENT_OWNER'] = undefined
       process.env['HOME'] = previousHomeValue

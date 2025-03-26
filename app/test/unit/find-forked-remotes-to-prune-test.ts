@@ -1,3 +1,5 @@
+import { describe, it } from 'node:test'
+import assert from 'node:assert'
 import { findForkedRemotesToPrune } from '../../src/lib/stores/helpers/find-forked-remotes-to-prune'
 import { Branch, BranchType } from '../../src/models/branch'
 import { CommitIdentity } from '../../src/models/commit-identity'
@@ -81,9 +83,9 @@ describe('findForkedRemotesToPrune', () => {
     const remotesToPrune = findForkedRemotesToPrune(remotes, [], [])
 
     const names = getNamesFromRemotes(remotesToPrune)
-    expect(names).not.toBeEmpty()
-    expect(names).not.toContain(OriginRemote)
-    expect(names).not.toContain(NonGitHubDesktopRemote)
+    assert.notEqual(names.length, 0, 'Expected names to be empty')
+    assert.equal(names.includes(OriginRemote), false)
+    assert.equal(names.includes(NonGitHubDesktopRemote), false)
   })
 
   it('never prunes remotes with local branches', () => {
@@ -96,9 +98,9 @@ describe('findForkedRemotesToPrune', () => {
 
     const remotesToPrune = findForkedRemotesToPrune(remotes, [], allBranches)
 
-    expect(getNamesFromRemotes(remotesToPrune)).not.toContain(
+    assert.equal(getNamesFromRemotes(remotesToPrune).includes(
       GitHubDesktopRemoteWithLocalBranch
-    )
+    ), false)
   })
 
   it('never prunes remotes with pull requests', () => {
@@ -112,16 +114,16 @@ describe('findForkedRemotesToPrune', () => {
 
     const remotesToPrune = findForkedRemotesToPrune(remotes, openPRs, [])
 
-    expect(getNamesFromRemotes(remotesToPrune)).not.toContain(
+    assert.equal(getNamesFromRemotes(remotesToPrune).includes(
       GitHubDesktopRemoteWithPullRequest
-    )
+    ), false)
   })
 
   it('prunes remotes without pull requests or local branches', () => {
     const remotesToPrune = findForkedRemotesToPrune(remotes, [], [])
 
     const remoteNames = getNamesFromRemotes(remotesToPrune)
-    expect(remoteNames).toContain(GitHubDesktopRemoteWithPullRequest)
-    expect(remoteNames).toContain(GitHubDesktopRemoteWithLocalBranch)
+    assert(remoteNames.includes(GitHubDesktopRemoteWithPullRequest))
+    assert(remoteNames.includes(GitHubDesktopRemoteWithLocalBranch))
   })
 })

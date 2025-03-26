@@ -1,3 +1,5 @@
+import { describe, it, beforeEach } from 'node:test'
+import assert from 'node:assert'
 import {
   fetch,
   pull,
@@ -56,12 +58,12 @@ describe('git/pull', () => {
       })
 
       it('does not create new commit', async () => {
-        expect(newTip.sha).toBe(previousTip.sha)
+        assert.equal(newTip.sha, previousTip.sha)
       })
 
       it('is different from tracking branch', async () => {
         const remoteCommit = await getRefOrError(repository, remoteBranch)
-        expect(remoteCommit.sha).not.toBe(newTip.sha)
+        assert.notEqual(remoteCommit.sha, newTip.sha)
       })
 
       it('remains ahead of tracking branch', async () => {
@@ -69,10 +71,7 @@ describe('git/pull', () => {
 
         const aheadBehind = await getAheadBehind(repository, range)
 
-        expect(aheadBehind).toEqual({
-          ahead: 1,
-          behind: 0,
-        })
+        assert.deepStrictEqual(aheadBehind, { ahead: 1, behind: 0 })
       })
     })
 
@@ -91,22 +90,19 @@ describe('git/pull', () => {
       })
 
       it('does not create new commit', async () => {
-        expect(newTip.sha).toBe(previousTip.sha)
+        assert.equal(newTip.sha, previousTip.sha)
       })
 
       it('is different to tracking branch', async () => {
         const remoteCommit = await getRefOrError(repository, remoteBranch)
-        expect(remoteCommit.sha).not.toBe(newTip.sha)
+        assert.notEqual(remoteCommit.sha, newTip.sha)
       })
 
       it('is ahead of tracking branch', async () => {
         const range = revSymmetricDifference(featureBranch, remoteBranch)
 
         const aheadBehind = await getAheadBehind(repository, range)
-        expect(aheadBehind).toEqual({
-          ahead: 1,
-          behind: 0,
-        })
+        assert.deepStrictEqual(aheadBehind, { ahead: 1, behind: 0 })
       })
     })
 
@@ -125,12 +121,12 @@ describe('git/pull', () => {
       })
 
       it('does not create new commit', async () => {
-        expect(newTip.sha).toBe(previousTip.sha)
+        assert.equal(newTip.sha, previousTip.sha)
       })
 
       it('is different from tracking branch', async () => {
         const remoteCommit = await getRefOrError(repository, remoteBranch)
-        expect(remoteCommit.sha).not.toBe(newTip.sha)
+        assert.notEqual(remoteCommit.sha, newTip.sha)
       })
 
       it('is ahead of tracking branch', async () => {
@@ -138,10 +134,7 @@ describe('git/pull', () => {
 
         const aheadBehind = await getAheadBehind(repository, range)
 
-        expect(aheadBehind).toEqual({
-          ahead: 1,
-          behind: 0,
-        })
+        assert.deepStrictEqual(aheadBehind, { ahead: 1, behind: 0 })
       })
     })
   })
