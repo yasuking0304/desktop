@@ -101,7 +101,7 @@ describe('git/core', () => {
       assert.equal(result.gitError, GitError.ConfigLockFileAlreadyExists)
       const parsedPath = parseConfigLockFilePathFromError(result)
       assert(parsedPath !== null)
-      const absolutePath = resolve(result.path, parsedPath!)
+      const absolutePath = resolve(result.path, parsedPath)
       assert.equal(absolutePath, configLockFilePath)
     })
 

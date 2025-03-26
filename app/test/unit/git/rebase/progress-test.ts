@@ -81,8 +81,8 @@ describe('git/rebase', () => {
     })
 
     it('status detects REBASE_HEAD', () => {
-      assert.notEqual(snapshot, null)
-      const s = snapshot!
+      assert(snapshot !== null)
+      const s = snapshot
       assert.equal(s.commits.length, 1)
       assert.equal(s.commits[0].summary, 'Feature Branch!')
 
@@ -159,8 +159,8 @@ describe('git/rebase', () => {
     })
 
     it('status detects REBASE_HEAD', () => {
-      assert.notEqual(snapshot, null)
-      const s = snapshot!
+      assert(snapshot !== null)
+      const s = snapshot
       assert.equal(s.commits.length, 10)
       assert.equal(s.commits[0].summary, 'Feature Branch First Commit!')
 

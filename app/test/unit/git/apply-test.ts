@@ -155,11 +155,13 @@ describe('git/apply', () => {
       const filePath = 'modified-file.md'
       const diff = await getDiff(filePath)
       const hunkRange = findInteractiveDiffRange(diff.hunks, 4)
+      assert(hunkRange !== null)
+
       const selection = DiffSelection.fromInitialSelection(
         DiffSelectionType.None
       ).withRangeSelection(
-        hunkRange!.from,
-        hunkRange!.to - hunkRange!.from + 1,
+        hunkRange.from,
+        hunkRange.to - hunkRange.from + 1,
         true
       )
 
@@ -219,11 +221,12 @@ describe('git/apply', () => {
       const filePath = 'modified-file.md'
       const diff = await getDiff(filePath)
       const hunkRange = findInteractiveDiffRange(diff.hunks, 16)
+      assert(hunkRange !== null)
       const selection = DiffSelection.fromInitialSelection(
         DiffSelectionType.None
       ).withRangeSelection(
-        hunkRange!.from,
-        hunkRange!.to - hunkRange!.from + 1,
+        hunkRange.from,
+        hunkRange.to - hunkRange.from + 1,
         true
       )
 

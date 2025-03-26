@@ -59,7 +59,8 @@ describe('gitignore', () => {
       assert.equal(commit.exitCode, 0)
 
       const contents = await readGitIgnoreAtRoot(repo)
-      assert.equal(contents!.endsWith('\r\n'), true)
+      assert(contents !== null)
+      assert.equal(contents.endsWith('\r\n'), true)
     })
 
     it('when autocrlf=input, appends LF to file', async () => {
@@ -84,7 +85,8 @@ describe('gitignore', () => {
       assert.equal(commit.exitCode, 0)
 
       const contents = await readGitIgnoreAtRoot(repo)
-      assert.equal(contents!.endsWith('\n'), true)
+      assert(contents !== null)
+      assert.equal(contents.endsWith('\n'), true)
     })
   })
 

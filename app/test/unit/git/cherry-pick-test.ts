@@ -66,8 +66,10 @@ describe('git/cherry-pick', () => {
     )
 
     const commits = await getCommits(repository, targetBranch.ref, 3)
+    assert(cherryPickedCommit !== null)
+
     assert.equal(commits.length, 2)
-    assert.equal(commits[0].summary, cherryPickedCommit!.summary)
+    assert.equal(commits[0].summary, cherryPickedCommit.summary)
     assert.equal(result, CherryPickResult.CompletedWithoutError)
   })
 
@@ -165,7 +167,8 @@ describe('git/cherry-pick', () => {
     // cherry picking 3 (on added in setup, empty, featureBranchCommitTwo)
     const commitRange = revRangeInclusive(firstCommitSha, featureBranch.tip.sha)
     const commitsInRange = await getCommitsInRange(repository, commitRange)
-    result = await cherryPick(repository, commitsInRange!)
+    assert(commitsInRange !== null)
+    result = await cherryPick(repository, commitsInRange)
 
     const commits = await getCommits(repository, targetBranch.ref, 5)
     assert.equal(commits.length, 4) // original commit + 4 cherry picked
@@ -182,7 +185,9 @@ describe('git/cherry-pick', () => {
 
     const commitRange = revRangeInclusive(firstCommitSha, featureBranch.tip.sha)
     const commitsInRange = await getCommitsInRange(repository, commitRange)
-    result = await cherryPick(repository, commitsInRange!)
+    assert(commitsInRange !== null)
+
+    result = await cherryPick(repository, commitsInRange)
 
     const commits = await getCommits(repository, targetBranch.ref, 5)
     assert.equal(commits.length, 5)
@@ -303,7 +308,8 @@ describe('git/cherry-pick', () => {
 
     const commitRange = revRangeInclusive(firstSha, featureBranch.tip.sha)
     const commitsInRange = await getCommitsInRange(repository, commitRange)
-    result = await cherryPick(repository, commitsInRange!)
+    assert(commitsInRange !== null)
+    result = await cherryPick(repository, commitsInRange)
     assert.equal(result, CherryPickResult.ConflictsEncountered)
 
     // resolve conflicts by writing files to disk
@@ -552,7 +558,8 @@ describe('git/cherry-pick', () => {
         featureBranch.tip.sha
       )
       const commitsInRange = await getCommitsInRange(repository, commitRange)
-      result = await cherryPick(repository, commitsInRange!, p =>
+      assert(commitsInRange !== null)
+      result = await cherryPick(repository, commitsInRange, p =>
         progress.push(p)
       )
 
@@ -585,7 +592,8 @@ describe('git/cherry-pick', () => {
         featureBranch.tip.sha
       )
       const commitsInRange = await getCommitsInRange(repository, commitRange)
-      result = await cherryPick(repository, commitsInRange!, p =>
+      assert(commitsInRange !== null)
+      result = await cherryPick(repository, commitsInRange, p =>
         progress.push(p)
       )
       assert.equal(result, CherryPickResult.ConflictsEncountered)
@@ -629,8 +637,9 @@ describe('git/cherry-pick', () => {
 })
 
 async function getCommitOneLine(repository: Repository, commitSha: string) {
-  const { sha, summary } = (await getCommit(repository, commitSha))!
-  return { sha, summary }
+  const commit = await getCommit(repository, commitSha)
+  assert(commit !== null)
+  return { sha: commit.sha, summary: commit.summary }
 }
 
 async function addThreeMoreCommitsOntoFeatureBranch(repository: Repository) {

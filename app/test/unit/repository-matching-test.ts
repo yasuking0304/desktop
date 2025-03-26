@@ -27,7 +27,8 @@ describe('repository-matching', () => {
       const repo = matchGitHubRepository(
         accounts,
         'https://github.com/someuser/somerepo.git'
-      )!
+      )
+      assert(repo !== null)
       assert.equal(repo.name, 'somerepo')
       assert.equal(repo.owner, 'someuser')
     })
@@ -48,7 +49,8 @@ describe('repository-matching', () => {
       const repo = matchGitHubRepository(
         accounts,
         'https://github.com/someuser/somerepo'
-      )!
+      )
+      assert(repo !== null)
       assert.equal(repo.name, 'somerepo')
       assert.equal(repo.owner, 'someuser')
     })
@@ -69,7 +71,8 @@ describe('repository-matching', () => {
       const repo = matchGitHubRepository(
         accounts,
         'git:github.com/someuser/somerepo.git'
-      )!
+      )
+      assert(repo !== null)
       assert.equal(repo.name, 'somerepo')
       assert.equal(repo.owner, 'someuser')
     })
@@ -90,7 +93,8 @@ describe('repository-matching', () => {
       const repo = matchGitHubRepository(
         accounts,
         'git@github.com:someuser/somerepo.git'
-      )!
+      )
+      assert(repo !== null)
       assert.equal(repo.name, 'somerepo')
       assert.equal(repo.owner, 'someuser')
     })

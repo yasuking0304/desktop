@@ -56,8 +56,9 @@ describe('section-list-selection', () => {
           row: 0,
         },
       })
+      assert(selectedRow !== null)
       assert.equal(
-        rowIndexPathEquals(selectedRow!, { section: 2, row: 7 }),
+        rowIndexPathEquals(selectedRow, { section: 2, row: 7 }),
         true
       )
     })
@@ -70,8 +71,9 @@ describe('section-list-selection', () => {
           row: 4,
         },
       })
+      assert(selectedRow !== null)
       assert.equal(
-        rowIndexPathEquals(selectedRow!, { section: 1, row: 0 }),
+        rowIndexPathEquals(selectedRow, { section: 1, row: 0 }),
         true
       )
     })
@@ -84,8 +86,9 @@ describe('section-list-selection', () => {
           row: 0,
         },
       })
+      assert(selectedRow !== null)
       assert.equal(
-        rowIndexPathEquals(selectedRow!, { section: 1, row: 2 }),
+        rowIndexPathEquals(selectedRow, { section: 1, row: 2 }),
         true
       )
     })

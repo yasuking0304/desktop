@@ -92,9 +92,9 @@ describe('git/commit', () => {
 
       const commit = await getCommit(repository, 'HEAD')
       assert(commit !== null)
-      assert.equal(commit!.summary, 'Special commit')
-      assert.equal(commit!.body, '# this is a comment\n')
-      assert.equal(commit!.shortSha, sha)
+      assert.equal(commit.summary, 'Special commit')
+      assert.equal(commit.body, '# this is a comment\n')
+      assert.equal(commit.shortSha, sha)
     })
 
     it('can commit for empty repository', async () => {
@@ -198,11 +198,11 @@ describe('git/commit', () => {
       assert.equal(status.workingDirectory.files.length, 4)
 
       // verify that the file is now tracked
-      const fileChange = status!.workingDirectory.files.find(
+      const fileChange = status.workingDirectory.files.find(
         f => f.path === newFileName
       )
       assert(fileChange !== undefined)
-      assert.equal(fileChange!.status.kind, AppFileStatusKind.Modified)
+      assert.equal(fileChange.status.kind, AppFileStatusKind.Modified)
     })
 
     it('can commit second hunk from modified file', async () => {
@@ -254,7 +254,7 @@ describe('git/commit', () => {
         f => f.path === modifiedFile
       )
       assert(fileChange !== undefined)
-      assert.equal(fileChange!.status.kind, AppFileStatusKind.Modified)
+      assert.equal(fileChange.status.kind, AppFileStatusKind.Modified)
     })
 
     it('can commit single delete from modified file', async () => {
@@ -355,7 +355,7 @@ describe('git/commit', () => {
         f => f.path === modifiedFile
       )
       assert(fileChange !== undefined)
-      assert.equal(fileChange!.status.kind, AppFileStatusKind.Modified)
+      assert.equal(fileChange.status.kind, AppFileStatusKind.Modified)
     })
 
     it('can commit some lines from deleted file', async () => {
@@ -397,7 +397,7 @@ describe('git/commit', () => {
         f => f.path === deletedFile
       )
       assert(fileChange !== undefined)
-      assert.equal(fileChange!.status.kind, AppFileStatusKind.Deleted)
+      assert.equal(fileChange.status.kind, AppFileStatusKind.Deleted)
     })
 
     it('can commit renames with modifications', async () => {
@@ -422,9 +422,10 @@ describe('git/commit', () => {
       assert.equal(sha.length, 7)
 
       const statusAfter = await getStatusOrThrow(repo)
+      assert(statusAfter.currentTip !== undefined)
 
       assert.equal(statusAfter.workingDirectory.files.length, 0)
-      assert.equal(statusAfter.currentTip!.substring(0, 7), sha)
+      assert.equal(statusAfter.currentTip.substring(0, 7), sha)
     })
 
     // The scenario here is that the user has staged a rename (probably using git mv)
@@ -777,7 +778,7 @@ describe('git/commit', () => {
 
       const commit = await getCommit(repo, 'HEAD')
       assert(commit !== null)
-      assert.equal(commit!.summary, 'commit everything')
+      assert.equal(commit.summary, 'commit everything')
     })
 
     it('can commit when a delete is staged and the untracked file exists', async () => {
@@ -803,7 +804,7 @@ describe('git/commit', () => {
       assert(files[0].path.includes('first'))
       assert.equal(files[0].status.kind, AppFileStatusKind.Untracked)
 
-      const toCommit = status!.workingDirectory.withIncludeAllFiles(true)
+      const toCommit = status.workingDirectory.withIncludeAllFiles(true)
 
       const sha = await createCommit(repo, 'commit again!', toCommit.files)
       assert.equal(sha.length, 7)
@@ -814,8 +815,8 @@ describe('git/commit', () => {
 
       const commit = await getCommit(repo, 'HEAD')
       assert(commit !== null)
-      assert.equal(commit!.summary, 'commit again!')
-      assert.equal(commit!.shortSha, sha)
+      assert.equal(commit.summary, 'commit again!')
+      assert.equal(commit.shortSha, sha)
     })
 
     it('file is deleted in index', async () => {
@@ -843,12 +844,13 @@ describe('git/commit', () => {
       assert.equal(files[1].status.kind, AppFileStatusKind.Deleted)
 
       // Commit changes
-      await createCommit(repo!, 'FAIL commit', files)
+      await createCommit(repo, 'FAIL commit', files)
       const afterCommit = await getStatusOrThrow(repo)
+      assert(afterCommit.currentTip !== undefined)
       assert.notEqual(beforeCommit.currentTip, afterCommit.currentTip)
 
       // Verify the file was delete in repo
-      const changesetData = await getChangedFiles(repo, afterCommit.currentTip!)
+      const changesetData = await getChangedFiles(repo, afterCommit.currentTip)
       assert.equal(changesetData.files.length, 2)
       assert.equal(
         changesetData.files[0].status.kind,

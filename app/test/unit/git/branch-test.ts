@@ -133,7 +133,7 @@ describe('git/branch', () => {
         const branches = await getBranchesPointedAt(repository, 'HEAD')
         assert(branches !== null)
         assert.equal(branches.length, 1)
-        assert.equal(branches![0], 'master')
+        assert.equal(branches[0], 'master')
       })
 
       it('finds no branch names', async () => {
@@ -223,8 +223,8 @@ describe('git/branch', () => {
 
       await deleteRemoteBranch(
         mockLocal,
-        { name: localBranch.upstreamRemoteName!, url: '' },
-        localBranch.upstreamWithoutRemote!
+        { name: localBranch.upstreamRemoteName, url: '' },
+        localBranch.upstreamWithoutRemote
       )
 
       assert.equal((await getBranches(mockLocal, localRef)).length, 1)
@@ -264,8 +264,8 @@ describe('git/branch', () => {
 
       await deleteRemoteBranch(
         mockLocal,
-        { name: localBranch.upstreamRemoteName!, url: '' },
-        localBranch.upstreamWithoutRemote!
+        { name: localBranch.upstreamRemoteName, url: '' },
+        localBranch.upstreamWithoutRemote
       )
 
       assert.equal((await getBranches(mockLocal, remoteRef)).length, 0)

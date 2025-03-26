@@ -52,7 +52,8 @@ describe('git/reflog', () => {
         branch => branch.name === 'branch-2'
       )
 
-      await renameBranch(repository, currentBranch!, 'branch-2-test')
+      assert(currentBranch !== undefined)
+      await renameBranch(repository, currentBranch, 'branch-2-test')
 
       const branches = await getRecentBranches(repository, 10)
       assert.equal(branches.includes('branch-2'), false)

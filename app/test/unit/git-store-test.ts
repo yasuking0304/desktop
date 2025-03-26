@@ -35,7 +35,7 @@ describe('GitStore', () => {
 
       assert(commits !== null)
       assert.equal(commits.length, 100)
-      assert.equal(commits![0], '708a46eac512c7b2486da2247f116d11a100b611')
+      assert.equal(commits[0], '708a46eac512c7b2486da2247f116d11a100b611')
     })
   })
 
@@ -124,7 +124,7 @@ describe('GitStore', () => {
 
       firstCommit = await getCommit(repository, 'master')
       assert(firstCommit !== null)
-      assert.equal(firstCommit!.parentSHAs.length, 0)
+      assert.equal(firstCommit.parentSHAs.length, 0)
     })
 
     it('reports the repository is unborn', async () => {
@@ -133,7 +133,8 @@ describe('GitStore', () => {
       await gitStore.loadStatus()
       assert.equal(gitStore.tip.kind, TipState.Valid)
 
-      await gitStore.undoCommit(firstCommit!)
+      assert(firstCommit !== null)
+      await gitStore.undoCommit(firstCommit)
 
       const after = await getStatusOrThrow(repository)
       assert(after.currentTip === undefined)
@@ -142,11 +143,12 @@ describe('GitStore', () => {
     it('pre-fills the commit message', async () => {
       const gitStore = new GitStore(repository, shell, new TestStatsStore())
 
-      await gitStore.undoCommit(firstCommit!)
+      assert(firstCommit !== null)
+      await gitStore.undoCommit(firstCommit)
 
       const newCommitMessage = gitStore.commitMessage
       assert(newCommitMessage !== null)
-      assert.equal(newCommitMessage!.summary, commitMessage)
+      assert.equal(newCommitMessage.summary, commitMessage)
     })
 
     it('clears the undo commit dialog', async () => {
@@ -159,7 +161,8 @@ describe('GitStore', () => {
 
       assert.equal(gitStore.localCommitSHAs.length, 1)
 
-      await gitStore.undoCommit(firstCommit!)
+      assert(firstCommit !== null)
+      await gitStore.undoCommit(firstCommit)
 
       await gitStore.loadStatus()
       assert.equal(gitStore.tip.kind, TipState.Unborn)
@@ -179,7 +182,8 @@ describe('GitStore', () => {
 
       assert.equal(gitStore.localCommitSHAs.length, 1)
 
-      await gitStore.undoCommit(firstCommit!)
+      assert(firstCommit !== null)
+      await gitStore.undoCommit(firstCommit)
 
       // compare the index state to some other tree-ish
       // 4b825dc642cb6eb9a060e54bf8d69288fbee4904 is the magic empty tree
@@ -208,7 +212,7 @@ describe('GitStore', () => {
 
       await FSE.writeFile(filePath, 'SOME WORDS GO HERE\n')
 
-      let status = await getStatusOrThrow(repo!)
+      let status = await getStatusOrThrow(repo)
       let files = status.workingDirectory.files
       assert.equal(files.length, 1)
 
@@ -281,12 +285,14 @@ describe('GitStore', () => {
       assert.equal(gitStore.allBranches.length, 2)
 
       const defaultBranch = gitStore.allBranches.find(b => b.name === 'master')
-      assert.equal(defaultBranch!.upstream, 'origin/master')
+      assert(defaultBranch !== undefined)
+      assert.equal(defaultBranch.upstream, 'origin/master')
 
       const remoteBranch = gitStore.allBranches.find(
         b => b.name === 'origin/some-other-branch'
       )
-      assert.equal(remoteBranch!.type, BranchType.Remote)
+      assert(remoteBranch !== undefined)
+      assert.equal(remoteBranch.type, BranchType.Remote)
     })
 
     it('the tracking branch is not cleared when the remote branch is removed', async () => {
@@ -299,7 +305,8 @@ describe('GitStore', () => {
       const currentBranchBefore = gitStore.allBranches.find(
         b => b.name === 'some-other-branch'
       )
-      assert.equal(currentBranchBefore!.upstream, 'origin/some-other-branch')
+      assert(currentBranchBefore !== undefined)
+      assert.equal(currentBranchBefore.upstream, 'origin/some-other-branch')
 
       // delete the ref in the upstream branch
       await exec(['branch', '-D', 'some-other-branch'], upstream.path)
@@ -313,7 +320,8 @@ describe('GitStore', () => {
       )
 
       // ensure the tracking information is unchanged
-      assert.equal(currentBranchAfter!.upstream, 'origin/some-other-branch')
+      assert(currentBranchAfter !== undefined)
+      assert.equal(currentBranchAfter.upstream, 'origin/some-other-branch')
     })
   })
 })

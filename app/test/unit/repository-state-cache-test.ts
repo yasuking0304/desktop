@@ -87,7 +87,7 @@ describe('RepositoryStateCache', () => {
     assert.equal(changesState.workingDirectory.includeAll, true)
     assert.equal(changesState.workingDirectory.files.length, 1)
     assert.equal(changesState.showCoAuthoredBy, true)
-    assert.equal(changesState.commitMessage!.summary, summary)
+    assert.equal(changesState.commitMessage.summary, summary)
   })
 
   it('can update compare state for a repository', () => {

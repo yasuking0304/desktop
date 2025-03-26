@@ -77,8 +77,9 @@ describe('updateChangedFiles', () => {
         partiallySelectedFile.id
       )
 
+      assert(partialFile !== null)
       assert.equal(
-        partialFile!.selection.getSelectionType(),
+        partialFile.selection.getSelectionType(),
         DiffSelectionType.None
       )
     })
@@ -98,8 +99,9 @@ describe('updateChangedFiles', () => {
         partiallySelectedFile.id
       )
 
+      assert(partialFile !== null)
       assert.equal(
-        partialFile!.selection.getSelectionType(),
+        partialFile.selection.getSelectionType(),
         DiffSelectionType.Partial
       )
     })

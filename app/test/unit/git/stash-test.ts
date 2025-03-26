@@ -146,7 +146,7 @@ describe('git/stash', () => {
       )
 
       assert(actual !== null)
-      assert.equal(actual!.stashSha, lastEntry.stashSha)
+      assert.equal(actual.stashSha, lastEntry.stashSha)
     })
   })
 

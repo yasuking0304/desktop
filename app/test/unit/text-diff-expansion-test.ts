@@ -95,7 +95,7 @@ describe('text-diff-expansion', () => {
     const { textDiff } = await prepareDiff(100, [99])
     const lastHunk = textDiff.hunks.at(-1)
     assert(lastHunk !== undefined)
-    assert.equal(lastHunk!.lines.length, 6)
+    assert.equal(lastHunk.lines.length, 6)
   })
 
   it('expands the initial hunk without reaching the top', async () => {
@@ -107,7 +107,9 @@ describe('text-diff-expansion', () => {
       newContentLines
     )
 
-    const firstHunk = expandedDiff!.hunks[0]
+    assert(expandedDiff !== undefined)
+
+    const firstHunk = expandedDiff.hunks[0]
     assert.equal(firstHunk.header.oldStartLine, 8)
     assert.equal(firstHunk.header.oldLineCount, 26)
     assert.equal(firstHunk.header.newStartLine, 8)
@@ -126,7 +128,9 @@ describe('text-diff-expansion', () => {
       newContentLines
     )
 
-    const firstHunk = expandedDiff!.hunks[0]
+    assert(expandedDiff !== undefined)
+
+    const firstHunk = expandedDiff.hunks[0]
     assert.equal(firstHunk.header.oldStartLine, 1)
     assert.equal(firstHunk.header.oldLineCount, 18)
     assert.equal(firstHunk.header.newStartLine, 1)
@@ -146,7 +150,11 @@ describe('text-diff-expansion', () => {
       newContentLines
     )
 
-    const secondToLastHunk = expandedDiff!.hunks[expandedDiff!.hunks.length - 2]
+    assert(expandedDiff !== undefined)
+
+    const secondToLastHunk = expandedDiff.hunks.at(-2)
+    assert(secondToLastHunk !== undefined)
+
     assert.equal(secondToLastHunk.header.oldStartLine, 13)
     assert.equal(secondToLastHunk.header.oldLineCount, 26)
     assert.equal(secondToLastHunk.header.newStartLine, 13)
@@ -161,8 +169,11 @@ describe('text-diff-expansion', () => {
       'down',
       newContentLines
     )
+    assert(expandedDiff !== undefined)
 
-    const lastHunk = expandedDiff!.hunks[expandedDiff!.hunks.length - 1]
+    const lastHunk = expandedDiff.hunks.at(-1)
+    assert(lastHunk !== undefined)
+
     assert.equal(lastHunk.header.oldStartLine, 88)
     assert.equal(lastHunk.header.oldLineCount, 13)
     assert.equal(lastHunk.header.newStartLine, 88)
@@ -184,10 +195,12 @@ describe('text-diff-expansion', () => {
     // - Third is the dummy hunk at the end
     assert.equal(textDiff.hunks.length, 3)
 
-    // After expanding the hunk, the first two hunks are merged
-    assert.equal(expandedDiff!.hunks.length, 2)
+    assert(expandedDiff !== undefined)
 
-    const firstHunk = expandedDiff!.hunks[0]
+    // After expanding the hunk, the first two hunks are merged
+    assert.equal(expandedDiff.hunks.length, 2)
+
+    const firstHunk = expandedDiff.hunks[0]
     assert.equal(firstHunk.header.oldStartLine, 8)
     assert.equal(firstHunk.header.oldLineCount, 16)
     assert.equal(firstHunk.header.newStartLine, 8)
@@ -201,9 +214,10 @@ describe('text-diff-expansion', () => {
     )
 
     const expandedDiff = expandWholeTextDiff(textDiff, newContentLines)
-    assert.equal(expandedDiff!.hunks.length, 1)
+    assert(expandedDiff !== undefined)
+    assert.equal(expandedDiff.hunks.length, 1)
 
-    const firstHunk = expandedDiff!.hunks[0]
+    const firstHunk = expandedDiff.hunks[0]
     assert.equal(firstHunk.lines.length, 40 + 1) // +1 for the header
 
     let expectedNewLine = 1

@@ -45,14 +45,14 @@ describe('main-process menu', () => {
       assert.equal(template[0].id, 'foo')
 
       const firstSubmenu = template[0]
-        .submenu! as Electron.MenuItemConstructorOptions[]
+        .submenu as Electron.MenuItemConstructorOptions[]
 
       assert.equal(firstSubmenu[0].id, 'foo.Open')
       assert.equal(firstSubmenu[1].id, 'foo.Close')
       assert.equal(firstSubmenu[2].id, 'foo.More')
 
       const secondSubmenu = firstSubmenu[2]
-        .submenu! as Electron.MenuItemConstructorOptions[]
+        .submenu as Electron.MenuItemConstructorOptions[]
 
       assert.equal(secondSubmenu[0].id, 'foo.More.Even more')
     })

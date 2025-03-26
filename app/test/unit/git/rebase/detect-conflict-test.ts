@@ -157,7 +157,7 @@ describe('git/rebase', () => {
 
     it('still has conflicted files in working directory', async () => {
       assert.equal(
-        status!.workingDirectory.files.filter(
+        status.workingDirectory.files.filter(
           f => f.status.kind === AppFileStatusKind.Conflicted
         ).length,
         2
@@ -288,10 +288,9 @@ describe('git/rebase', () => {
 
       status = await getStatusOrThrow(repository)
 
-      const changesetData = await getChangedFiles(
-        repository,
-        status.currentTip!
-      )
+      assert(status.currentTip !== undefined)
+
+      const changesetData = await getChangedFiles(repository, status.currentTip)
 
       filesInRebasedCommit = changesetData.files
     })

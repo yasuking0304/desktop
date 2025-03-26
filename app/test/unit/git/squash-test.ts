@@ -391,5 +391,7 @@ async function makeSquashCommit(
   }
   await makeCommit(repository, commitTree)
 
-  return (await getCommit(repository, 'HEAD'))!
+  const commit = await getCommit(repository, 'HEAD')
+  assert(commit !== null, `Couldn't find HEAD after committing!`)
+  return commit
 }

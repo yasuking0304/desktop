@@ -31,7 +31,7 @@ describe('StatsStore', () => {
       const statsEntry = await statsDb.dailyMeasures.limit(1).first()
 
       assert(statsEntry !== undefined)
-      assert.equal(statsEntry!.active, true)
+      assert.equal(statsEntry.active, true)
     })
   })
 

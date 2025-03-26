@@ -24,7 +24,7 @@ import {
 import { IRemote } from '../../../src/models/remote'
 import { findDefaultRemote } from '../../../src/lib/stores/helpers/find-default-remote'
 import { getStatusOrThrow } from '../../helpers/status'
-import { assertNonNullable } from '../../../src/lib/fatal-error'
+import { assertNonNullable, forceUnwrap } from '../../../src/lib/fatal-error'
 
 describe('git/tag', () => {
   let repository: Repository
@@ -100,14 +100,16 @@ describe('git/tag', () => {
 
     it('returns all the created tags', async () => {
       const commit = await getCommit(repository, 'HEAD')
-      await createTag(repository, 'my-new-tag', commit!.sha)
-      await createTag(repository, 'another-tag', commit!.sha)
+      assert(commit !== null)
+
+      await createTag(repository, 'my-new-tag', commit.sha)
+      await createTag(repository, 'another-tag', commit.sha)
 
       assert.deepStrictEqual(
         await getAllTags(repository),
         new Map([
-          ['my-new-tag', commit!.sha],
-          ['another-tag', commit!.sha],
+          ['my-new-tag', commit.sha],
+          ['another-tag', commit.sha],
         ])
       )
     })
@@ -123,7 +125,10 @@ describe('git/tag', () => {
       repository = await setupLocalForkOfRepository(remoteRepository)
 
       const remotes = await getRemotes(repository)
-      originRemote = findDefaultRemote(remotes)!
+      originRemote = forceUnwrap(
+        "couldn't find origin remote",
+        findDefaultRemote(remotes)
+      )
     })
 
     it('returns an empty array when there are no tags to get pushed', async () => {
@@ -157,14 +162,16 @@ describe('git/tag', () => {
       // Create a tag on a local branch that's not pushed to the remote.
       const branchName = 'new-branch'
       await createBranch(repository, branchName, 'master')
-      const [branch] = await getBranches(repository, `refs/heads/${branchName}`)
+      const branch = (
+        await getBranches(repository, `refs/heads/${branchName}`)
+      ).at(0)
       assertNonNullable(branch, `Could not create branch ${branchName}`)
 
       await FSE.writeFile(path.join(repository.path, 'README.md'), 'Hi world\n')
       const status = await getStatusOrThrow(repository)
       const files = status.workingDirectory.files
 
-      await checkoutBranch(repository, branch!, null)
+      await checkoutBranch(repository, branch, null)
       const commitSha = await createCommit(repository, 'a commit', files)
       await createTag(repository, 'my-new-tag', commitSha)
 

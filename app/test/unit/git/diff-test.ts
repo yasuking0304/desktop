@@ -377,8 +377,8 @@ describe('git/diff', () => {
       const diff = await getTextDiff(repo, files[0])
 
       assert(diff.lineEndingsChange !== undefined)
-      assert.equal(diff.lineEndingsChange!.from, 'LF')
-      assert.equal(diff.lineEndingsChange!.to, 'CRLF')
+      assert.equal(diff.lineEndingsChange.from, 'LF')
+      assert.equal(diff.lineEndingsChange.to, 'CRLF')
     })
   })
 

@@ -29,7 +29,7 @@ describe('DesktopFileTransport', () => {
 
   it('creates a file for each day', async () => {
     const originalToISOString = Date.prototype.toISOString
-    const globalDate = global.Date as any
+    const globalDate = globalThis.Date as any
     const d = await createTempDirectory('desktop-logs')
     const t = new DesktopFileTransport({ logDirectory: d })
 
@@ -52,7 +52,7 @@ describe('DesktopFileTransport', () => {
 
   it('retains a maximum of 14 log files', async () => {
     const originalToISOString = Date.prototype.toISOString
-    const globalDate = global.Date as any
+    const globalDate = globalThis.Date as any
     const d = await createTempDirectory('desktop-logs')
     const t = new DesktopFileTransport({ logDirectory: d })
 

@@ -15,7 +15,7 @@ import { readFileSync } from 'fs'
 
 // These constants are defined by Webpack at build time, but since tests aren't
 // built with Webpack we need to make sure these exist at runtime.
-const g: any = global
+const g: any = globalThis
 g['__WIN32__'] = process.platform === 'win32'
 g['__DARWIN__'] = process.platform === 'darwin'
 g['__LINUX__'] = process.platform === 'linux'
@@ -53,7 +53,7 @@ g.ResizeObserver = class ResizeObserver {
 
 // structuredClone doesn't exist in JSDOM, see:
 // https://github.com/jsdom/jsdom/issues/3363
-global.structuredClone ??= (x: any) => JSON.parse(JSON.stringify(x))
+globalThis.structuredClone ??= (x: any) => JSON.parse(JSON.stringify(x))
 
 // The following types are part of the WebWorker support in Node.js and are a
 // common source of hangs in tests due to libraries creating them but not

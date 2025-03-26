@@ -24,7 +24,7 @@ function assertNext(current: IPageInfo, expected: IPageInfo) {
   )
 
   assert(nextPath !== null)
-  const { pathname, query } = URL.parse(nextPath!, true)
+  const { pathname, query } = URL.parse(nextPath, true)
 
   assert.equal(pathname, '/items')
 

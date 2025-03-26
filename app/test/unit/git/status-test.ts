@@ -45,7 +45,8 @@ describe('git/status', () => {
         )
         assert.equal(conflictedFiles.length, 4)
 
-        const fooFile = files.find(f => f.path === 'foo')!
+        const fooFile = files.find(f => f.path === 'foo')
+        assert(fooFile)
         assert.deepStrictEqual(fooFile.status, {
           kind: AppFileStatusKind.Conflicted,
           entry: {
@@ -72,7 +73,8 @@ describe('git/status', () => {
           conflictMarkerCount: 3,
         })
 
-        const catFile = files.find(f => f.path === 'cat')!
+        const catFile = files.find(f => f.path === 'cat')
+        assert(catFile)
         assert.deepStrictEqual(catFile.status, {
           kind: AppFileStatusKind.Conflicted,
           entry: {

@@ -110,7 +110,8 @@ describe('git/remote', () => {
       const remotes = await getRemotes(repository)
       const result = await findDefaultRemote(remotes)
 
-      assert.equal(result!.name, 'origin')
+      assert(result !== null)
+      assert.equal(result.name, 'origin')
     })
 
     it('returns something when origin removed', async () => {
@@ -123,7 +124,8 @@ describe('git/remote', () => {
       const remotes = await getRemotes(repository)
       const result = await findDefaultRemote(remotes)
 
-      assert.equal(result!.name, 'bassoon')
+      assert(result !== null)
+      assert.equal(result.name, 'bassoon')
     })
 
     it('returns null for new repository', async () => {
@@ -148,7 +150,8 @@ describe('git/remote', () => {
       const remotes = await getRemotes(repository)
       const result = await findDefaultRemote(remotes)
 
-      assert.equal(result!.name, 'origin')
+      assert(result !== null)
+      assert.equal(result.name, 'origin')
     })
   })
 
