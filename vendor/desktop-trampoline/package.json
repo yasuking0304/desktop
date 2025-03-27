@@ -10,16 +10,18 @@
     "build": "tsc",
     "install": "node-gyp rebuild && tsc",
     "lint": "prettier -c **/*.js **/*.md",
-    "lint:fix": "prettier --write **/*.js **/*.md"
+    "lint:fix": "prettier --write **/*.js **/*.md",
+    "test": "node script/test.mjs"
   },
   "dependencies": {
     "node-addon-api": "^7.0.0"
   },
   "devDependencies": {
-    "jest": "^27.5.0",
+    "node-test-github-reporter": "^1.2.0",
+    "tsx": "^4.10.5",
     "node-gyp": "^10.1.0",
     "typescript": "^5.4.5",
-    "prettier": "^2.5.1",
+    "prettier": "^3.3.1",
     "split2": "^4.1.0"
   },
   "binary": {
