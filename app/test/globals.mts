@@ -21,7 +21,7 @@ Object.assign(globalThis, {
     warn: () => {},
     info: () => {},
     debug: () => {},
-  } as IDesktopLogger,
+  },
 
   // The following types are part of the WebWorker support in Node.js and are a
   // common source of hangs in tests due to libraries creating them but not
