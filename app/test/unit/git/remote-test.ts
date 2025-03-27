@@ -180,7 +180,7 @@ describe('git/remote', () => {
       assert.equal(remotes[0].url, newUrl)
     })
     it('returns false for unknown remote name', async () => {
-      await assert.rejects(setRemoteURL(repository, 'none', newUrl))
+      await assert.rejects(() => setRemoteURL(repository, 'none', newUrl))
 
       const remotes = await getRemotes(repository)
       assert.equal(remotes.length, 1)

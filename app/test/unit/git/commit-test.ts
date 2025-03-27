@@ -736,7 +736,7 @@ describe('git/commit', () => {
       it('throws an error', async () => {
         const status = await getStatusOrThrow(repository)
         await assert.rejects(
-          createMergeCommit(repository, status.workingDirectory.files),
+          () => createMergeCommit(repository, status.workingDirectory.files),
           /There are no changes to commit./
         )
       })

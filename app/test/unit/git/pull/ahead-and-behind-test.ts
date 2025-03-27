@@ -155,7 +155,7 @@ describe('git/pull', () => {
       })
 
       it(`throws an error as the user blocks merge commits on pull`, async () => {
-        await assert.rejects(pull(repository, remote))
+        await assert.rejects(() => pull(repository, remote))
       })
     })
   })

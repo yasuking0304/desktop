@@ -406,7 +406,7 @@ describe('git/diff', () => {
         repo = await setupEmptyRepository()
       })
       it('throws since HEAD doesnt exist', async () => {
-        await assert.rejects(getBinaryPaths(repo, 'HEAD', []))
+        await assert.rejects(() => getBinaryPaths(repo, 'HEAD', []))
       })
     })
 

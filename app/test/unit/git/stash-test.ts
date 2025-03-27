@@ -304,7 +304,9 @@ describe('git/stash', () => {
         await FSE.writeFile(readme, generateString())
 
         const entryToApply = desktopEntries[0]
-        await assert.rejects(popStashEntry(repository, entryToApply.stashSha))
+        await assert.rejects(() =>
+          popStashEntry(repository, entryToApply.stashSha)
+        )
       })
     })
   })
