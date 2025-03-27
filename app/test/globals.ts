@@ -29,18 +29,6 @@ g['log'] = {
   debug: () => {},
 } as IDesktopLogger
 
-g.ResizeObserver = class ResizeObserver {
-  public constructor(cb: any) {
-    ;(this as any).cb = cb
-  }
-
-  public observe() {
-    ;(this as any).cb([{ borderBoxSize: { inlineSize: 0, blockSize: 0 } }])
-  }
-
-  public unobserve() {}
-}
-
 // structuredClone doesn't exist in JSDOM, see:
 // https://github.com/jsdom/jsdom/issues/3363
 globalThis.structuredClone ??= (x: any) => JSON.parse(JSON.stringify(x))
