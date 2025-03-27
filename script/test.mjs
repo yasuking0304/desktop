@@ -25,10 +25,13 @@ async function findTestFilesIn(paths) {
   return files
 }
 
+const fileArgs = process.argv.slice(2).filter(a => !a.startsWith('--'))
+const switchArgs = process.argv.slice(2).filter(a => a.startsWith('--'))
+
 const projectRoot = join(import.meta.dirname, '..')
 const files =
-  process.argv.length > 2
-    ? await findTestFilesIn(process.argv.slice(2))
+  fileArgs.length > 0
+    ? await findTestFilesIn(fileArgs)
     : await findTestFilesIn([join(projectRoot, 'app', 'test', 'unit')])
 
 // I would _looooove_ to use the `--env-file` option, but it doesn't override
@@ -45,6 +48,7 @@ const args = [
   ...['--import', 'tsx'],
   ...['--import', './app/test/__mocks__/electron.mjs'],
   ...['--import', './app/test/globals.ts'],
+  ...switchArgs,
   '--test',
   ...reporter('spec'),
   ...(process.env.GITHUB_ACTIONS ? reporter('node-test-github-reporter') : []),
