@@ -8,6 +8,7 @@ const packageInfo = await import('../package.json')
 
 Object.assign(globalThis, {
   __DEV__: false,
+  __TEST__: true,
   __DEV_SECRETS__: false,
   __APP_NAME__: packageInfo.productName,
   __APP_VERSION__: packageInfo.version,
@@ -41,26 +42,7 @@ Object.assign(globalThis, {
 
 mock.module('electron', {
   namedExports: {
-    shell: {
-      trashItem: mock.fn(async () => {}),
-    },
-    remote: {
-      app: {
-        on: mock.fn(() => {}),
-      },
-      autoUpdater: {
-        on: mock.fn(() => {}),
-      },
-      nativeTheme: {
-        addListener: mock.fn(() => {}),
-        removeAllListeners: mock.fn(() => {}),
-        shouldUseDarkColors: true,
-      },
-    },
-    ipcRenderer: {
-      on: mock.fn(x => {}),
-      send: mock.fn(() => {}),
-      invoke: mock.fn(() => {}),
-    },
+    shell: {},
+    ipcRenderer: { on: mock.fn(x => {}) },
   },
 })
