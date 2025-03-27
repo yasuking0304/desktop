@@ -136,7 +136,6 @@
     "@types/request": "^2.0.9",
     "@types/reserved-words": "^0.1.0",
     "@types/semver": "^5.5.0",
-    "@types/setimmediate": "^1.0.4",
     "@types/source-map-support": "^0.5.2",
     "@types/split2": "^4.2.3",
     "@types/strip-ansi": "^3.0.0",

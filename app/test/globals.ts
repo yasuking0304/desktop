@@ -8,7 +8,6 @@ jsdom(undefined, {
 // shims a bunch of browser specific methods
 // like fetch, requestIdleCallback, etc
 import 'airbnb-browser-shims/browser-only'
-import 'setimmediate'
 
 import { join } from 'path'
 import { readFileSync } from 'fs'
