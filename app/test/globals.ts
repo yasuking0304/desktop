@@ -5,10 +5,6 @@ jsdom(undefined, {
   url: 'http://localhost',
 })
 
-// shims a bunch of browser specific methods
-// like fetch, requestIdleCallback, etc
-import 'airbnb-browser-shims/browser-only'
-
 import { join } from 'path'
 import { readFileSync } from 'fs'
 
