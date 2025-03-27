@@ -44,7 +44,7 @@ const args = [
   '--experimental-test-module-mocks',
   ...['--import', 'tsx'],
   ...['--import', './app/test/__mocks__/electron.mjs'],
-  ...['--import', './app/test/globals.ts'],
+  ...['--import', './app/test/globals.mts'],
   ...switchArgs,
   '--test',
   ...reporter('spec'),

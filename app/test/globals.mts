@@ -1,18 +1,9 @@
 import 'fake-indexeddb/auto'
-import jsdom from 'global-jsdom'
-
-jsdom(undefined, {
-  url: 'http://localhost',
-})
-
-import { join } from 'path'
-import { readFileSync } from 'fs'
+import 'global-jsdom/register'
 
 // These constants are defined by Webpack at build time, but since tests aren't
 // built with Webpack we need to make sure these exist at runtime.
-const packageInfo = JSON.parse(
-  readFileSync(join(__dirname, '../package.json'), 'utf8')
-).version
+const packageInfo = await import('../package.json')
 
 Object.assign(globalThis, {
   __DEV__: false,
