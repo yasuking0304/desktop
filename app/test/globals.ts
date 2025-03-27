@@ -29,10 +29,6 @@ g['log'] = {
   debug: () => {},
 } as IDesktopLogger
 
-// structuredClone doesn't exist in JSDOM, see:
-// https://github.com/jsdom/jsdom/issues/3363
-globalThis.structuredClone ??= (x: any) => JSON.parse(JSON.stringify(x))
-
 // The following types are part of the WebWorker support in Node.js and are a
 // common source of hangs in tests due to libraries creating them but not
 // properly cleaning them up. See for example
