@@ -19,7 +19,13 @@
     "lib": ["ES2023", "DOM", "DOM.Iterable"],
     "types": ["node"]
   },
-  "include": ["app/**/*.ts", "app/**/*.tsx", "app/**/*.d.tsx"],
+  "include": [
+    "app/**/*.ts",
+    "app/**/*.tsx",
+    "app/**/*.d.tsx",
+    "app/test/globals.mts",
+    "app/test/globals.mts"
+  ],
   "exclude": [
     "node_modules",
     "app/node_modules",

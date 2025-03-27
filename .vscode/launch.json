@@ -10,9 +10,7 @@
         "--import",
         "tsx",
         "--import",
-        "${workspaceFolder}/app/test/__mocks__/electron.mjs",
-        "--import",
-        "${workspaceFolder}/app/test/globals.ts",
+        "${workspaceFolder}/app/test/globals.mts",
         "--test",
         "${relativeFile}"
       ],
