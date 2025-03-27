@@ -6,6 +6,7 @@
       "request": "launch",
       "name": "Debug current test file",
       "args": [
+        "--disable-warning=ExperimentalWarning",
         "--experimental-test-module-mocks",
         "--import",
         "tsx",
