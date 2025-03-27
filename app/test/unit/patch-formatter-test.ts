@@ -1,4 +1,4 @@
-import { describe, it, beforeEach } from 'node:test'
+import { describe, it } from 'node:test'
 import assert from 'node:assert'
 import * as Path from 'path'
 import * as FSE from 'fs-extra'
@@ -33,15 +33,11 @@ async function parseDiff(diff: string): Promise<ITextDiff> {
 }
 
 describe('patch formatting', () => {
-  let repository: Repository
-
   describe('formatPatchesForModifiedFile', () => {
-    beforeEach(async () => {
-      const testRepoPath = await setupFixtureRepository('repo-with-changes')
-      repository = new Repository(testRepoPath, -1, null, false)
-    })
+    it('creates right patch when first hunk is selected', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'repo-with-changes')
+      const repository = new Repository(testRepoPath, -1, null, false)
 
-    it('creates right patch when first hunk is selected', async () => {
       const modifiedFile = 'modified-file.md'
 
       const unselectedFile = DiffSelection.fromInitialSelection(
@@ -81,7 +77,10 @@ describe('patch formatting', () => {
       assert(patch.includes('@@ -4,10 +4,6 @@'))
     })
 
-    it('creates right patch when second hunk is selected', async () => {
+    it('creates right patch when second hunk is selected', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'repo-with-changes')
+      const repository = new Repository(testRepoPath, -1, null, false)
+
       const modifiedFile = 'modified-file.md'
       const unselectedFile = DiffSelection.fromInitialSelection(
         DiffSelectionType.None
@@ -120,7 +119,10 @@ describe('patch formatting', () => {
       assert(patch.includes('@@ -21,6 +17,10 @@'))
     })
 
-    it('creates right patch when first and third hunk is selected', async () => {
+    it('creates right patch when first and third hunk is selected', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'repo-with-changes')
+      const repository = new Repository(testRepoPath, -1, null, false)
+
       const modifiedFile = 'modified-file.md'
 
       const unselectedFile = DiffSelection.fromInitialSelection(
@@ -159,7 +161,10 @@ describe('patch formatting', () => {
       assert(patch.includes('@@ -31,3 +31,8 @@'))
     })
 
-    it(`creates the right patch when an addition is selected but preceding deletions aren't`, async () => {
+    it(`creates the right patch when an addition is selected but preceding deletions aren't`, async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'repo-with-changes')
+      const repository = new Repository(testRepoPath, -1, null, false)
+
       const modifiedFile = 'modified-file.md'
       await FSE.writeFile(Path.join(repository.path, modifiedFile), 'line 1\n')
 

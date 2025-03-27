@@ -1,4 +1,4 @@
-import { describe, it, beforeEach } from 'node:test'
+import { describe, it } from 'node:test'
 import assert from 'node:assert'
 import { Repository } from '../../../src/models/repository'
 import {
@@ -13,15 +13,14 @@ import {
 import { BranchType } from '../../../src/models/branch'
 
 describe('git/for-each-ref', () => {
-  let repository: Repository
-
   describe('getBranches', () => {
-    beforeEach(async () => {
-      const testRepoPath = await setupFixtureRepository('repo-with-many-refs')
-      repository = new Repository(testRepoPath, -1, null, false)
-    })
+    it('fetches branches using for-each-ref', async t => {
+      const testRepoPath = await setupFixtureRepository(
+        t,
+        'repo-with-many-refs'
+      )
+      const repository = new Repository(testRepoPath, -1, null, false)
 
-    it('fetches branches using for-each-ref', async () => {
       const branches = (await getBranches(repository)).filter(
         b => b.type === BranchType.Local
       )
@@ -50,28 +49,27 @@ describe('git/for-each-ref', () => {
       assert.equal(master.tip.sha, 'b9ccfc3307240b86447bca2bd6c51a4bb4ade493')
     })
 
-    it('should return empty list for empty repo', async () => {
-      const repo = await setupEmptyRepository()
+    it('should return empty list for empty repo', async t => {
+      const repo = await setupEmptyRepository(t)
       const branches = await getBranches(repo)
       assert.equal(branches.length, 0)
     })
 
-    it('should return empty list for directory without a .git directory', async () => {
-      const repo = setupEmptyDirectory()
+    it('should return empty list for directory without a .git directory', async t => {
+      const repo = await setupEmptyDirectory(t)
       const status = await getBranches(repo)
       assert.equal(status.length, 0)
     })
   })
 
   describe('getBranchesDifferingFromUpstream', () => {
-    beforeEach(async () => {
+    it('filters branches differing from upstream using for-each-ref', async t => {
       const testRepoPath = await setupFixtureRepository(
+        t,
         'repo-with-non-updated-branches'
       )
-      repository = new Repository(testRepoPath, -1, null, false)
-    })
+      const repository = new Repository(testRepoPath, -1, null, false)
 
-    it('filters branches differing from upstream using for-each-ref', async () => {
       const branches = await getBranchesDifferingFromUpstream(repository)
 
       const branchRefs = branches.map(branch => branch.ref)

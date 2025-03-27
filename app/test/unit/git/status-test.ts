@@ -1,4 +1,4 @@
-import { describe, it, beforeEach } from 'node:test'
+import { describe, it } from 'node:test'
 import assert from 'node:assert'
 import * as path from 'path'
 import * as FSE from 'fs-extra'
@@ -26,17 +26,10 @@ import { generateString } from '../../helpers/random-data'
 
 describe('git/status', () => {
   describe('getStatus', () => {
-    let repository: Repository
-
     describe('with conflicted repo', () => {
-      let filePath: string
+      it('parses conflicted files with markers', async t => {
+        const repository = await setupConflictedRepoWithMultipleFiles(t)
 
-      beforeEach(async () => {
-        repository = await setupConflictedRepoWithMultipleFiles()
-        filePath = path.join(repository.path, 'foo')
-      })
-
-      it('parses conflicted files with markers', async () => {
         const status = await getStatusOrThrow(repository)
         const files = status.workingDirectory.files
         assert.equal(files.length, 5)
@@ -88,7 +81,9 @@ describe('git/status', () => {
         })
       })
 
-      it('parses conflicted files without markers', async () => {
+      it('parses conflicted files without markers', async t => {
+        const repository = await setupConflictedRepoWithMultipleFiles(t)
+
         const status = await getStatusOrThrow(repository)
         const files = status.workingDirectory.files
         assert.equal(files.length, 5)
@@ -112,8 +107,8 @@ describe('git/status', () => {
         })
       })
 
-      it('parses conflicted files resulting from popping a stash', async () => {
-        const repository = await setupEmptyRepository()
+      it('parses conflicted files resulting from popping a stash', async t => {
+        const repository = await setupEmptyRepository(t)
         const readme = path.join(repository.path, 'README.md')
         await FSE.writeFile(readme, '')
         await exec(['add', 'README.md'], repository.path)
@@ -140,7 +135,10 @@ describe('git/status', () => {
         assert.equal(conflictedFiles.length, 1)
       })
 
-      it('parses resolved files', async () => {
+      it('parses resolved files', async t => {
+        const repository = await setupConflictedRepoWithMultipleFiles(t)
+        const filePath = path.join(repository.path, 'foo')
+
         await FSE.writeFile(filePath, 'b1b2')
         const status = await getStatusOrThrow(repository)
         const files = status.workingDirectory.files
@@ -171,20 +169,17 @@ describe('git/status', () => {
     })
 
     describe('with conflicted images repo', () => {
-      beforeEach(async () => {
+      it('parses conflicted image file on merge', async t => {
         const path = await setupFixtureRepository(
+          t,
           'detect-conflict-in-binary-file'
         )
-        repository = new Repository(path, -1, null, false)
+        const repository = new Repository(path, -1, null, false)
         await exec(['checkout', 'make-a-change'], repository.path)
-      })
 
-      it('parses conflicted image file on merge', async () => {
-        const repo = repository
+        await exec(['merge', 'master'], repository.path)
 
-        await exec(['merge', 'master'], repo.path)
-
-        const status = await getStatusOrThrow(repo)
+        const status = await getStatusOrThrow(repository)
         const files = status.workingDirectory.files
         assert.equal(files.length, 1)
 
@@ -196,15 +191,19 @@ describe('git/status', () => {
         )
       })
 
-      it('parses conflicted image file on merge after removing', async () => {
-        const repo = repository
+      it('parses conflicted image file on merge after removing', async t => {
+        const path = await setupFixtureRepository(
+          t,
+          'detect-conflict-in-binary-file'
+        )
+        const repository = new Repository(path, -1, null, false)
 
-        await exec(['rm', 'my-cool-image.png'], repo.path)
-        await exec(['commit', '-am', 'removed the image'], repo.path)
+        await exec(['rm', 'my-cool-image.png'], repository.path)
+        await exec(['commit', '-am', 'removed the image'], repository.path)
 
-        await exec(['merge', 'master'], repo.path)
+        await exec(['merge', 'master'], repository.path)
 
-        const status = await getStatusOrThrow(repo)
+        const status = await getStatusOrThrow(repository)
         const files = status.workingDirectory.files
         assert.equal(files.length, 1)
 
@@ -218,12 +217,10 @@ describe('git/status', () => {
     })
 
     describe('with unconflicted repo', () => {
-      beforeEach(async () => {
-        const testRepoPath = await setupFixtureRepository('test-repo')
-        repository = new Repository(testRepoPath, -1, null, false)
-      })
+      it('parses changed files', async t => {
+        const testRepoPath = await setupFixtureRepository(t, 'test-repo')
+        const repository = new Repository(testRepoPath, -1, null, false)
 
-      it('parses changed files', async () => {
         await FSE.writeFile(
           path.join(repository.path, 'README.md'),
           'Hi world\n'
@@ -238,14 +235,17 @@ describe('git/status', () => {
         assert.equal(file.status.kind, AppFileStatusKind.Modified)
       })
 
-      it('returns an empty array when there are no changes', async () => {
+      it('returns an empty array when there are no changes', async t => {
+        const testRepoPath = await setupFixtureRepository(t, 'test-repo')
+        const repository = new Repository(testRepoPath, -1, null, false)
+
         const status = await getStatusOrThrow(repository)
         const files = status.workingDirectory.files
         assert.equal(files.length, 0)
       })
 
-      it('reflects renames', async () => {
-        const repo = await setupEmptyRepository()
+      it('reflects renames', async t => {
+        const repo = await setupEmptyRepository(t)
 
         await FSE.writeFile(path.join(repo.path, 'foo'), 'foo\n')
 
@@ -266,11 +266,12 @@ describe('git/status', () => {
         })
       })
 
-      it('reflects copies', async () => {
+      it('reflects copies', async t => {
         const testRepoPath = await setupFixtureRepository(
+          t,
           'copy-detection-status'
         )
-        repository = new Repository(testRepoPath, -1, null, false)
+        const repository = new Repository(testRepoPath, -1, null, false)
 
         // Git 2.18 now uses a new config value to handle detecting copies, so
         // users who have this enabled will see this. For reference, Desktop does
@@ -296,16 +297,19 @@ describe('git/status', () => {
         })
       })
 
-      it('returns null for directory without a .git directory', async () => {
-        repository = setupEmptyDirectory()
+      it('returns null for directory without a .git directory', async t => {
+        const repository = await setupEmptyDirectory(t)
         const status = await getStatus(repository)
         assert(status === null)
       })
     })
     describe('with submodules', () => {
-      it('returns the submodule status', async () => {
-        const repoPath = await setupFixtureRepository('submodule-basic-setup')
-        repository = new Repository(repoPath, -1, null, false)
+      it('returns the submodule status', async t => {
+        const repoPath = await setupFixtureRepository(
+          t,
+          'submodule-basic-setup'
+        )
+        const repository = new Repository(repoPath, -1, null, false)
 
         const submodulePath = path.join(repoPath, 'foo', 'submodule')
         const checkSubmoduleChanges = async (changes: {

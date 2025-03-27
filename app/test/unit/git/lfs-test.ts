@@ -17,16 +17,16 @@ import {
 
 describe('git-lfs', () => {
   describe('isUsingLFS', () => {
-    it('returns false for repository not using LFS', async () => {
-      const path = await setupFixtureRepository('test-repo')
+    it('returns false for repository not using LFS', async t => {
+      const path = await setupFixtureRepository(t, 'test-repo')
       const repository = new Repository(path, -1, null, false)
 
       const usingLFS = await isUsingLFS(repository)
       assert.equal(usingLFS, false)
     })
 
-    it('returns true if LFS is tracking a path', async () => {
-      const path = await setupFixtureRepository('test-repo')
+    it('returns true if LFS is tracking a path', async t => {
+      const path = await setupFixtureRepository(t, 'test-repo')
       const repository = new Repository(path, -1, null, false)
 
       await exec(['lfs', 'track', '*.psd'], repository.path)
@@ -37,8 +37,8 @@ describe('git-lfs', () => {
   })
 
   describe('isTrackedByLFS', () => {
-    it('returns false for repository not using LFS', async () => {
-      const repository = await setupEmptyRepository()
+    it('returns false for repository not using LFS', async t => {
+      const repository = await setupEmptyRepository(t)
 
       const file = 'README.md'
       const readme = Path.join(repository.path, file)
@@ -48,8 +48,8 @@ describe('git-lfs', () => {
       assert.equal(found, false)
     })
 
-    it('returns true after tracking file in Git LFS', async () => {
-      const repository = await setupEmptyRepository()
+    it('returns true after tracking file in Git LFS', async t => {
+      const repository = await setupEmptyRepository(t)
 
       const file = 'README.md'
       const readme = Path.join(repository.path, file)
@@ -61,8 +61,8 @@ describe('git-lfs', () => {
       assert.equal(found, true)
     })
 
-    it('returns true after tracking file with character issues in Git LFS', async () => {
-      const repository = await setupEmptyRepository()
+    it('returns true after tracking file with character issues in Git LFS', async t => {
+      const repository = await setupEmptyRepository(t)
 
       const file =
         'Top Ten Worst Repositories to host on GitHub - Carlos Martín Nieto.md'
@@ -77,8 +77,8 @@ describe('git-lfs', () => {
   })
 
   describe('filesNotTrackedByLFS', () => {
-    it('returns files not listed in Git LFS', async () => {
-      const repository = await setupEmptyRepository()
+    it('returns files not listed in Git LFS', async t => {
+      const repository = await setupEmptyRepository(t)
       await exec(['lfs', 'track', '*.md'], repository.path)
 
       const videoFile = 'some-video-file.mp4'
@@ -89,8 +89,8 @@ describe('git-lfs', () => {
       assert(notFound.includes(videoFile))
     })
 
-    it('skips files that are tracked by Git LFS', async () => {
-      const repository = await setupEmptyRepository()
+    it('skips files that are tracked by Git LFS', async t => {
+      const repository = await setupEmptyRepository(t)
       await exec(['lfs', 'track', '*.png'], repository.path)
 
       const photoFile = 'some-cool-photo.png'
@@ -100,8 +100,8 @@ describe('git-lfs', () => {
       assert.equal(notFound.length, 0)
     })
 
-    it('skips files in a subfolder that are tracked', async () => {
-      const repository = await setupEmptyRepository()
+    it('skips files in a subfolder that are tracked', async t => {
+      const repository = await setupEmptyRepository(t)
       await exec(['lfs', 'track', '*.png'], repository.path)
 
       const photoFileInDirectory = 'app/src/some-cool-photo.png'
@@ -112,8 +112,8 @@ describe('git-lfs', () => {
       assert.equal(notFound.length, 0)
     })
 
-    it('skips files in a subfolder where the rule only covers the subdirectory', async () => {
-      const repository = await setupEmptyRepository()
+    it('skips files in a subfolder where the rule only covers the subdirectory', async t => {
+      const repository = await setupEmptyRepository(t)
       await exec(['lfs', 'track', 'app/src/*.png'], repository.path)
 
       const photoFileInDirectory = 'app/src/some-cool-photo.png'

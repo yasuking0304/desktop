@@ -3,19 +3,13 @@
 /** Module for creating and managing temporary directories and files, using the
  * `temp` Node module
  */
-import * as temp from 'temp'
-import { promisify } from 'util'
-const _temp = temp.track()
+import { mkdtemp, rm } from 'fs/promises'
+import { tmpdir } from 'os'
+import { join } from 'path'
+import { TestContext } from 'node:test'
 
-/**
- * Open a new temporary directory, specifying the prefix/suffix options the
- * directory should use
- */
-export const mkdirSync = _temp.mkdirSync
-/**
- * Open a new temporary file, specifying the prefix/suffix options the file
- * should use
- */
-export const openSync = _temp.openSync
-
-export const createTempDirectory = promisify(_temp.mkdir.bind(_temp))
+export const createTempDirectory = (t: TestContext) =>
+  mkdtemp(join(tmpdir(), 'desktop-test-')).then(path => {
+    t.after(() => rm(path, { recursive: true }))
+    return path
+  })

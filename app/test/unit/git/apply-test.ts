@@ -1,4 +1,4 @@
-import { describe, it, beforeEach } from 'node:test'
+import { describe, it } from 'node:test'
 import assert from 'node:assert'
 import { exec } from 'dugite'
 import {
@@ -32,11 +32,9 @@ import { structuredPatch } from 'diff'
 describe('git/apply', () => {
   describe('checkPatch()', () => {
     describe('on related repository without conflicts', () => {
-      let repository: Repository
-      let patch: string
-      beforeEach(async () => {
-        const originalRepo = await setupTwoCommitRepo()
-        repository = await cloneLocalRepository(originalRepo)
+      it('returns true', async t => {
+        const originalRepo = await setupTwoCommitRepo(t)
+        const repository = await cloneLocalRepository(t, originalRepo)
         await makeCommit(originalRepo, {
           entries: [{ path: 'just-okay-file', contents: 'okay' }],
         })
@@ -44,38 +42,30 @@ describe('git/apply', () => {
           ['format-patch', '--stdout', 'HEAD~'],
           originalRepo.path
         )
-        patch = result.stdout
-      })
-      it('returns true', async () => {
+        const patch = result.stdout
         assert.equal(await checkPatch(repository, patch), true)
       })
     })
     describe('on a related repo with conflicts', () => {
-      let repository: Repository
-      let patch: string
-      beforeEach(async () => {
-        const originalRepo = await setupTwoCommitRepo()
+      it('returns false', async t => {
+        const originalRepo = await setupTwoCommitRepo(t)
         const result = await exec(
           ['format-patch', '--stdout', 'HEAD~'],
           originalRepo.path
         )
-        patch = result.stdout
-        repository = await cloneLocalRepository(originalRepo)
+        const patch = result.stdout
+        const repository = await cloneLocalRepository(t, originalRepo)
         await makeCommit(repository, {
           entries: [{ path: 'good-file', contents: 'okay' }],
         })
-      })
-      it('returns false', async () => {
+
         assert.equal(await checkPatch(repository, patch), false)
       })
     })
   })
 
   describe('discardChangesFromSelection()', () => {
-    let repository: Repository
-    let testRepoPath: string
-
-    async function getDiff(filePath: string) {
+    async function getDiff(repository: Repository, filePath: string) {
       const file = new WorkingDirectoryFileChange(
         filePath,
         { kind: AppFileStatusKind.Modified },
@@ -84,14 +74,12 @@ describe('git/apply', () => {
       return (await getWorkingDirectoryDiff(repository, file)) as ITextDiff
     }
 
-    beforeEach(async () => {
-      testRepoPath = await setupFixtureRepository('repo-with-changes')
-      repository = new Repository(testRepoPath, -1, null, false)
-    })
+    it('does not change the file when an empty selection is passed', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'repo-with-changes')
+      const repository = new Repository(testRepoPath, -1, null, false)
 
-    it('does not change the file when an empty selection is passed', async () => {
       const filePath = 'modified-file.md'
-      const previousDiff = await getDiff(filePath)
+      const previousDiff = await getDiff(repository, filePath)
 
       await discardChangesFromSelection(
         repository,
@@ -100,28 +88,34 @@ describe('git/apply', () => {
         DiffSelection.fromInitialSelection(DiffSelectionType.None)
       )
 
-      const diff = await getDiff(filePath)
+      const diff = await getDiff(repository, filePath)
 
       assert.equal(diff.text, previousDiff.text)
     })
 
-    it('discards all file changes when a full selection is passed', async () => {
+    it('discards all file changes when a full selection is passed', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'repo-with-changes')
+      const repository = new Repository(testRepoPath, -1, null, false)
+
       const filePath = 'modified-file.md'
       await discardChangesFromSelection(
         repository,
         filePath,
-        await getDiff(filePath),
+        await getDiff(repository, filePath),
         DiffSelection.fromInitialSelection(DiffSelectionType.All)
       )
 
-      const diff = await getDiff(filePath)
+      const diff = await getDiff(repository, filePath)
 
       // Check that the file has no local changes.
       assert.equal(diff.text, '')
       assert(diff.hunks.length === 0)
     })
 
-    it('re-adds a single removed line', async () => {
+    it('re-adds a single removed line', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'repo-with-changes')
+      const repository = new Repository(testRepoPath, -1, null, false)
+
       const filePath = 'modified-file.md'
       const selection = DiffSelection.fromInitialSelection(
         DiffSelectionType.None
@@ -135,7 +129,7 @@ describe('git/apply', () => {
       await discardChangesFromSelection(
         repository,
         filePath,
-        await getDiff(filePath),
+        await getDiff(repository, filePath),
         selection
       )
 
@@ -151,9 +145,12 @@ describe('git/apply', () => {
       )
     })
 
-    it('re-adds a removed hunk', async () => {
+    it('re-adds a removed hunk', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'repo-with-changes')
+      const repository = new Repository(testRepoPath, -1, null, false)
+
       const filePath = 'modified-file.md'
-      const diff = await getDiff(filePath)
+      const diff = await getDiff(repository, filePath)
       const hunkRange = findInteractiveDiffRange(diff.hunks, 4)
       assert(hunkRange !== null)
 
@@ -187,7 +184,10 @@ describe('git/apply', () => {
       )
     })
 
-    it('removes an added line', async () => {
+    it('removes an added line', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'repo-with-changes')
+      const repository = new Repository(testRepoPath, -1, null, false)
+
       const filePath = 'modified-file.md'
       const selection = DiffSelection.fromInitialSelection(
         DiffSelectionType.None
@@ -201,7 +201,7 @@ describe('git/apply', () => {
       await discardChangesFromSelection(
         repository,
         filePath,
-        await getDiff(filePath),
+        await getDiff(repository, filePath),
         selection
       )
 
@@ -217,9 +217,12 @@ describe('git/apply', () => {
       )
     })
 
-    it('removes an added hunk', async () => {
+    it('removes an added hunk', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'repo-with-changes')
+      const repository = new Repository(testRepoPath, -1, null, false)
+
       const filePath = 'modified-file.md'
-      const diff = await getDiff(filePath)
+      const diff = await getDiff(repository, filePath)
       const hunkRange = findInteractiveDiffRange(diff.hunks, 16)
       assert(hunkRange !== null)
       const selection = DiffSelection.fromInitialSelection(
@@ -238,7 +241,7 @@ describe('git/apply', () => {
       await discardChangesFromSelection(
         repository,
         filePath,
-        await getDiff(filePath),
+        await getDiff(repository, filePath),
         selection
       )
 

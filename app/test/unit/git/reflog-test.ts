@@ -1,4 +1,4 @@
-import { describe, it, beforeEach } from 'node:test'
+import { describe, it } from 'node:test'
 import assert from 'node:assert'
 import { Repository } from '../../../src/models/repository'
 import {
@@ -26,15 +26,11 @@ async function createAndCheckout(
 }
 
 describe('git/reflog', () => {
-  let repository: Repository
-
-  beforeEach(async () => {
-    const testRepoPath = await setupFixtureRepository('test-repo')
-    repository = new Repository(testRepoPath, -1, null, false)
-  })
-
   describe('getRecentBranches', () => {
-    it('returns the recently checked out branches', async () => {
+    it('returns the recently checked out branches', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'test-repo')
+      const repository = new Repository(testRepoPath, -1, null, false)
+
       await createAndCheckout(repository, 'branch-1')
       await createAndCheckout(repository, 'branch-2')
 
@@ -43,7 +39,10 @@ describe('git/reflog', () => {
       assert(branches.includes('branch-2'))
     })
 
-    it('works after renaming a branch', async () => {
+    it('works after renaming a branch', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'test-repo')
+      const repository = new Repository(testRepoPath, -1, null, false)
+
       await createAndCheckout(repository, 'branch-1')
       await createAndCheckout(repository, 'branch-2')
 
@@ -61,7 +60,10 @@ describe('git/reflog', () => {
       assert(branches.includes('branch-2-test'))
     })
 
-    it('returns a limited number of branches', async () => {
+    it('returns a limited number of branches', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'test-repo')
+      const repository = new Repository(testRepoPath, -1, null, false)
+
       await createAndCheckout(repository, 'branch-1')
       await createAndCheckout(repository, 'branch-2')
       await createAndCheckout(repository, 'branch-3')
@@ -75,7 +77,10 @@ describe('git/reflog', () => {
   })
 
   describe('getBranchCheckouts', () => {
-    it('returns does not return the branches that were checked out before a specific date', async () => {
+    it('returns does not return the branches that were checked out before a specific date', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'test-repo')
+      const repository = new Repository(testRepoPath, -1, null, false)
+
       await createAndCheckout(repository, 'branch-1')
       await createAndCheckout(repository, 'branch-2')
 
@@ -86,7 +91,10 @@ describe('git/reflog', () => {
       assert.equal(branches.size, 0)
     })
 
-    it('returns all branches checked out after a specific date', async () => {
+    it('returns all branches checked out after a specific date', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'test-repo')
+      const repository = new Repository(testRepoPath, -1, null, false)
+
       await createBranch(repository, 'never-checked-out', null)
       await createAndCheckout(repository, 'branch-1')
       await createAndCheckout(repository, 'branch-2')
@@ -98,7 +106,10 @@ describe('git/reflog', () => {
       assert.equal(branches.size, 2)
     })
 
-    it('returns empty when current branch is orphaned', async () => {
+    it('returns empty when current branch is orphaned', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'test-repo')
+      const repository = new Repository(testRepoPath, -1, null, false)
+
       const result = await exec(
         ['checkout', '--orphan', 'orphan-branch'],
         repository.path

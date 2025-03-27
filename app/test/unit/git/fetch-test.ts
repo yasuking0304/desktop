@@ -1,4 +1,4 @@
-import { describe, it, beforeEach } from 'node:test'
+import { describe, it } from 'node:test'
 import assert from 'node:assert'
 import { Repository } from '../../../src/models/repository'
 import { setupFixtureRepository } from '../../helpers/repositories'
@@ -16,17 +16,14 @@ function branchWithName(branches: ReadonlyArray<Branch>, name: string) {
 }
 
 describe('git/fetch', () => {
-  let repository: Repository
-
   describe('fastForwardBranches', () => {
-    beforeEach(async () => {
+    it('fast-forwards branches using fetch', async t => {
       const testRepoPath = await setupFixtureRepository(
+        t,
         'repo-with-non-updated-branches'
       )
-      repository = new Repository(testRepoPath, -1, null, false)
-    })
+      const repository = new Repository(testRepoPath, -1, null, false)
 
-    it('fast-forwards branches using fetch', async () => {
       const eligibleBranches = await getBranchesDifferingFromUpstream(
         repository
       )
@@ -92,7 +89,13 @@ describe('git/fetch', () => {
     // We want to avoid messing with the FETCH_HEAD file. Normally, it shouldn't
     // be something users would rely on, but we want to be good gitizens
     // (:badpundog:) when possible.
-    it('does not change FETCH_HEAD after fast-forwarding branches with fetch', async () => {
+    it('does not change FETCH_HEAD after fast-forwarding branches with fetch', async t => {
+      const testRepoPath = await setupFixtureRepository(
+        t,
+        'repo-with-non-updated-branches'
+      )
+      const repository = new Repository(testRepoPath, -1, null, false)
+
       const eligibleBranches = await getBranchesDifferingFromUpstream(
         repository
       )

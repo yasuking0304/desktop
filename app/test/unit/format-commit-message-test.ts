@@ -4,8 +4,8 @@ import { formatCommitMessage } from '../../src/lib/format-commit-message'
 import { setupEmptyRepository } from '../helpers/repositories'
 
 describe('formatCommitMessage', () => {
-  it('always adds trailing newline', async () => {
-    const repo = await setupEmptyRepository()
+  it('always adds trailing newline', async t => {
+    const repo = await setupEmptyRepository(t)
 
     assert.equal(
       await formatCommitMessage(repo, { summary: 'test', description: null }),
@@ -17,32 +17,32 @@ describe('formatCommitMessage', () => {
     )
   })
 
-  it('omits description when null', async () => {
-    const repo = await setupEmptyRepository()
+  it('omits description when null', async t => {
+    const repo = await setupEmptyRepository(t)
     assert.equal(
       await formatCommitMessage(repo, { summary: 'test', description: null }),
       'test\n'
     )
   })
 
-  it('omits description when empty string', async () => {
-    const repo = await setupEmptyRepository()
+  it('omits description when empty string', async t => {
+    const repo = await setupEmptyRepository(t)
     assert.equal(
       await formatCommitMessage(repo, { summary: 'test', description: '' }),
       'test\n'
     )
   })
 
-  it('adds two newlines between summary and description', async () => {
-    const repo = await setupEmptyRepository()
+  it('adds two newlines between summary and description', async t => {
+    const repo = await setupEmptyRepository(t)
     assert.equal(
       await formatCommitMessage(repo, { summary: 'foo', description: 'bar' }),
       'foo\n\nbar\n'
     )
   })
 
-  it('appends trailers to a summary-only message', async () => {
-    const repo = await setupEmptyRepository()
+  it('appends trailers to a summary-only message', async t => {
+    const repo = await setupEmptyRepository(t)
     const trailers = [
       { token: 'Co-Authored-By', value: 'Markus Olsson <niik@github.com>' },
       { token: 'Signed-Off-By', value: 'nerdneha <nerdneha@github.com>' },
@@ -59,8 +59,8 @@ describe('formatCommitMessage', () => {
     )
   })
 
-  it('appends trailers to a regular message', async () => {
-    const repo = await setupEmptyRepository()
+  it('appends trailers to a regular message', async t => {
+    const repo = await setupEmptyRepository(t)
     const trailers = [
       { token: 'Co-Authored-By', value: 'Markus Olsson <niik@github.com>' },
       { token: 'Signed-Off-By', value: 'nerdneha <nerdneha@github.com>' },
@@ -78,8 +78,8 @@ describe('formatCommitMessage', () => {
   })
 
   // note, this relies on the default git config
-  it('merges duplicate trailers', async () => {
-    const repo = await setupEmptyRepository()
+  it('merges duplicate trailers', async t => {
+    const repo = await setupEmptyRepository(t)
     const trailers = [
       { token: 'Co-Authored-By', value: 'Markus Olsson <niik@github.com>' },
       { token: 'Signed-Off-By', value: 'nerdneha <nerdneha@github.com>' },
@@ -97,8 +97,8 @@ describe('formatCommitMessage', () => {
   })
 
   // note, this relies on the default git config
-  it('fixes up malformed trailers when trailers are given', async () => {
-    const repo = await setupEmptyRepository()
+  it('fixes up malformed trailers when trailers are given', async t => {
+    const repo = await setupEmptyRepository(t)
     const trailers = [
       { token: 'Signed-Off-By', value: 'nerdneha <nerdneha@github.com>' },
     ]
@@ -117,8 +117,8 @@ describe('formatCommitMessage', () => {
   })
 
   // note, this relies on the default git config
-  it("doesn't treat --- as end of commit message", async () => {
-    const repo = await setupEmptyRepository()
+  it("doesn't treat --- as end of commit message", async t => {
+    const repo = await setupEmptyRepository(t)
     const trailers = [
       { token: 'Signed-Off-By', value: 'nerdneha <nerdneha@github.com>' },
     ]

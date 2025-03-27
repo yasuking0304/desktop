@@ -17,16 +17,16 @@ import { setupLocalConfig } from '../../helpers/local-config'
 
 describe('gitignore', () => {
   describe('readGitIgnoreAtRoot', () => {
-    it('returns null when .gitignore does not exist on disk', async () => {
-      const repo = await setupEmptyRepository()
+    it('returns null when .gitignore does not exist on disk', async t => {
+      const repo = await setupEmptyRepository(t)
 
       const gitignore = await readGitIgnoreAtRoot(repo)
 
       assert(gitignore === null)
     })
 
-    it('reads contents from disk', async () => {
-      const repo = await setupEmptyRepository()
+    it('reads contents from disk', async t => {
+      const repo = await setupEmptyRepository(t)
       const path = repo.path
 
       const expected = 'node_modules\nyarn-error.log\n'
@@ -39,8 +39,8 @@ describe('gitignore', () => {
       assert.equal(gitignore, expected)
     })
 
-    it('when autocrlf=true and safecrlf=true, appends CRLF to file', async () => {
-      const repo = await setupEmptyRepository()
+    it('when autocrlf=true and safecrlf=true, appends CRLF to file', async t => {
+      const repo = await setupEmptyRepository(t)
 
       await setupLocalConfig(repo, [
         ['core.autocrlf', 'true'],
@@ -63,8 +63,8 @@ describe('gitignore', () => {
       assert.equal(contents.endsWith('\r\n'), true)
     })
 
-    it('when autocrlf=input, appends LF to file', async () => {
-      const repo = await setupEmptyRepository()
+    it('when autocrlf=input, appends LF to file', async t => {
+      const repo = await setupEmptyRepository(t)
 
       setupLocalConfig(repo, [
         // ensure this repository only ever sticks to LF
@@ -91,8 +91,8 @@ describe('gitignore', () => {
   })
 
   describe('saveGitIgnore', () => {
-    it(`creates gitignore file when it doesn't exist`, async () => {
-      const repo = await setupEmptyRepository()
+    it(`creates gitignore file when it doesn't exist`, async t => {
+      const repo = await setupEmptyRepository(t)
 
       await saveGitIgnore(repo, 'node_modules\n')
 
@@ -101,8 +101,8 @@ describe('gitignore', () => {
       assert.equal(exists, true)
     })
 
-    it('deletes gitignore file when no entries provided', async () => {
-      const repo = await setupEmptyRepository()
+    it('deletes gitignore file when no entries provided', async t => {
+      const repo = await setupEmptyRepository(t)
       const path = repo.path
 
       const ignoreFile = `${path}/.gitignore`
@@ -115,8 +115,8 @@ describe('gitignore', () => {
       assert.equal(exists, false)
     })
 
-    it('applies rule correctly to repository', async () => {
-      const repo = await setupEmptyRepository()
+    it('applies rule correctly to repository', async t => {
+      const repo = await setupEmptyRepository(t)
 
       const path = repo.path
 
@@ -146,8 +146,8 @@ describe('gitignore', () => {
   })
 
   describe('appendIgnoreRule', () => {
-    it('appends one rule', async () => {
-      const repo = await setupEmptyRepository()
+    it('appends one rule', async t => {
+      const repo = await setupEmptyRepository(t)
 
       await setupLocalConfig(repo, [['core.autocrlf', 'true']])
 
@@ -164,8 +164,8 @@ describe('gitignore', () => {
       assert.equal(gitignore.toString('utf8'), expected)
     })
 
-    it('appends multiple rules', async () => {
-      const repo = await setupEmptyRepository()
+    it('appends multiple rules', async t => {
+      const repo = await setupEmptyRepository(t)
 
       await setupLocalConfig(repo, [['core.autocrlf', 'true']])
 
@@ -182,8 +182,8 @@ describe('gitignore', () => {
       assert.equal(gitignore.toString('utf8'), expected)
     })
 
-    it('appends one file containing special characters', async () => {
-      const repo = await setupEmptyRepository()
+    it('appends one file containing special characters', async t => {
+      const repo = await setupEmptyRepository(t)
 
       await setupLocalConfig(repo, [['core.autocrlf', 'true']])
 

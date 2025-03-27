@@ -1,4 +1,4 @@
-import { describe, it, beforeEach } from 'node:test'
+import { describe, it, TestContext } from 'node:test'
 import assert from 'node:assert'
 import {
   fetch,
@@ -6,8 +6,6 @@ import {
   getAheadBehind,
   revSymmetricDifference,
 } from '../../../../src/lib/git'
-import { Commit } from '../../../../src/models/commit'
-import { Repository } from '../../../../src/models/repository'
 import { createRepository } from '../../../helpers/repository-builder-pull-test'
 import {
   cloneRepository,
@@ -23,11 +21,9 @@ const remoteBranch = `${remote.name}/${featureBranch}`
 
 describe('git/pull', () => {
   describe('ahead and behind of tracking branch', () => {
-    let repository: Repository
-
-    beforeEach(async () => {
-      const remoteRepository = await createRepository(featureBranch)
-      repository = await cloneRepository(remoteRepository)
+    const setup = async (t: TestContext) => {
+      const remoteRepository = await createRepository(t, featureBranch)
+      const repository = await cloneRepository(t, remoteRepository)
 
       // make a commits to both remote and local so histories diverge
 
@@ -55,36 +51,43 @@ describe('git/pull', () => {
 
       await makeCommit(repository, changesForLocalRepository)
       await fetch(repository, remote)
-    })
+
+      return repository
+    }
 
     describe('with pull.rebase=false and pull.ff=false set in config', () => {
-      let previousTip: Commit
-      let newTip: Commit
-
-      beforeEach(async () => {
+      const setupConfig = async (t: TestContext) => {
+        const repository = await setup(t)
         await setupLocalConfig(repository, [
           ['pull.rebase', 'false'],
           ['pull.ff', 'false'],
         ])
 
-        previousTip = await getTipOrError(repository)
+        const previousTip = await getTipOrError(repository)
 
         await pull(repository, remote)
 
-        newTip = await getTipOrError(repository)
-      })
+        const newTip = await getTipOrError(repository)
+        return { repository, previousTip, newTip }
+      }
 
-      it('creates a merge commit', async () => {
+      it('creates a merge commit', async t => {
+        const { previousTip, newTip } = await setupConfig(t)
+
         assert.notEqual(newTip.sha, previousTip.sha)
         assert.equal(newTip.parentSHAs.length, 2)
       })
 
-      it('is different from remote branch', async () => {
+      it('is different from remote branch', async t => {
+        const { repository, newTip } = await setupConfig(t)
+
         const remoteCommit = await getRefOrError(repository, remoteBranch)
         assert.notEqual(remoteCommit.sha, newTip.sha)
       })
 
-      it('is ahead of tracking branch', async () => {
+      it('is ahead of tracking branch', async t => {
+        const { repository } = await setupConfig(t)
+
         const range = revSymmetricDifference(featureBranch, remoteBranch)
 
         const aheadBehind = await getAheadBehind(repository, range)
@@ -93,25 +96,28 @@ describe('git/pull', () => {
     })
 
     describe('with pull.rebase=false set in config', () => {
-      let previousTip: Commit
-      let newTip: Commit
-
-      beforeEach(async () => {
+      const setupConfig = async (t: TestContext) => {
+        const repository = await setup(t)
         await setupLocalConfig(repository, [['pull.rebase', 'false']])
 
-        previousTip = await getTipOrError(repository)
+        const previousTip = await getTipOrError(repository)
 
         await pull(repository, remote)
 
-        newTip = await getTipOrError(repository)
-      })
+        const newTip = await getTipOrError(repository)
 
-      it('creates a merge commit', async () => {
+        return { repository, previousTip, newTip }
+      }
+
+      it('creates a merge commit', async t => {
+        const { previousTip, newTip } = await setupConfig(t)
         assert.notEqual(newTip.sha, previousTip.sha)
         assert.equal(newTip.parentSHAs.length, 2)
       })
 
-      it('is ahead of tracking branch', async () => {
+      it('is ahead of tracking branch', async t => {
+        const { repository } = await setupConfig(t)
+
         const range = revSymmetricDifference(featureBranch, remoteBranch)
 
         const aheadBehind = await getAheadBehind(repository, range)
@@ -120,25 +126,28 @@ describe('git/pull', () => {
     })
 
     describe('with pull.rebase=true set in config', () => {
-      let previousTip: Commit
-      let newTip: Commit
-
-      beforeEach(async () => {
+      const setupConfig = async (t: TestContext) => {
+        const repository = await setup(t)
         await setupLocalConfig(repository, [['pull.rebase', 'true']])
 
-        previousTip = await getTipOrError(repository)
+        const previousTip = await getTipOrError(repository)
 
         await pull(repository, remote)
 
-        newTip = await getTipOrError(repository)
-      })
+        const newTip = await getTipOrError(repository)
 
-      it('does not create a merge commit', async () => {
+        return { repository, previousTip, newTip }
+      }
+
+      it('does not create a merge commit', async t => {
+        const { previousTip, newTip } = await setupConfig(t)
+
         assert.notEqual(newTip.sha, previousTip.sha)
         assert.equal(newTip.parentSHAs.length, 1)
       })
 
-      it('is ahead of tracking branch', async () => {
+      it('is ahead of tracking branch', async t => {
+        const { repository } = await setupConfig(t)
         const range = revSymmetricDifference(featureBranch, remoteBranch)
 
         const aheadBehind = await getAheadBehind(repository, range)
@@ -147,14 +156,12 @@ describe('git/pull', () => {
     })
 
     describe('with pull.rebase=false and pull.ff=only set in config', () => {
-      beforeEach(async () => {
+      it(`throws an error as the user blocks merge commits on pull`, async t => {
+        const repository = await setup(t)
         await setupLocalConfig(repository, [
           ['pull.rebase', 'false'],
           ['pull.ff', 'only'],
         ])
-      })
-
-      it(`throws an error as the user blocks merge commits on pull`, async () => {
         await assert.rejects(() => pull(repository, remote))
       })
     })

@@ -1,4 +1,4 @@
-import { describe, it, beforeEach } from 'node:test'
+import { describe, it } from 'node:test'
 import assert from 'node:assert'
 import * as FSE from 'fs-extra'
 import * as Path from 'path'
@@ -19,15 +19,10 @@ import { getTempFilePath } from '../../../src/lib/file-system'
 import { reorder } from '../../../src/lib/git/reorder'
 
 describe('git/reorder', () => {
-  let repository: Repository
-  let initialCommit: Commit
+  it('moves second commit before the first one', async t => {
+    const repository = await setupEmptyRepositoryDefaultMain(t)
+    const initialCommit = await makeSampleCommit(repository, 'initialize')
 
-  beforeEach(async () => {
-    repository = await setupEmptyRepositoryDefaultMain()
-    initialCommit = await makeSampleCommit(repository, 'initialize')
-  })
-
-  it('moves second commit before the first one', async () => {
     const firstCommit = await makeSampleCommit(repository, 'first')
     const secondCommit = await makeSampleCommit(repository, 'second')
 
@@ -47,7 +42,10 @@ describe('git/reorder', () => {
     assert.equal(log[0].summary, 'first')
   })
 
-  it('moves first and fourth commits after the second one respecting their order in the log', async () => {
+  it('moves first and fourth commits after the second one respecting their order in the log', async t => {
+    const repository = await setupEmptyRepositoryDefaultMain(t)
+    const initialCommit = await makeSampleCommit(repository, 'initialize')
+
     const firstCommit = await makeSampleCommit(repository, 'first')
     await makeSampleCommit(repository, 'second')
     const thirdCommit = await makeSampleCommit(repository, 'third')
@@ -75,7 +73,10 @@ describe('git/reorder', () => {
     ])
   })
 
-  it('moves first commit after the last one', async () => {
+  it('moves first commit after the last one', async t => {
+    const repository = await setupEmptyRepositoryDefaultMain(t)
+    const initialCommit = await makeSampleCommit(repository, 'initialize')
+
     const firstCommit = await makeSampleCommit(repository, 'first')
     await makeSampleCommit(repository, 'second')
     await makeSampleCommit(repository, 'third')
@@ -101,7 +102,10 @@ describe('git/reorder', () => {
     ])
   })
 
-  it('reorders using the root of the branch if last retained commit is null', async () => {
+  it('reorders using the root of the branch if last retained commit is null', async t => {
+    const repository = await setupEmptyRepositoryDefaultMain(t)
+    const initialCommit = await makeSampleCommit(repository, 'initialize')
+
     const firstCommit = await makeSampleCommit(repository, 'first')
     await makeSampleCommit(repository, 'second')
 
@@ -116,7 +120,10 @@ describe('git/reorder', () => {
     assert.deepStrictEqual(summaries, ['second', 'initialize', 'first'])
   })
 
-  it('handles reordering a conflicting commit', async () => {
+  it('handles reordering a conflicting commit', async t => {
+    const repository = await setupEmptyRepositoryDefaultMain(t)
+    const initialCommit = await makeSampleCommit(repository, 'initialize')
+
     await makeSampleCommit(repository, 'first')
 
     // make a commit with a commit message 'second' and adding file 'second.md'
@@ -197,7 +204,10 @@ describe('git/reorder', () => {
     ])
   })
 
-  it('returns error on invalid lastRetainedCommitRef', async () => {
+  it('returns error on invalid lastRetainedCommitRef', async t => {
+    const repository = await setupEmptyRepositoryDefaultMain(t)
+    await makeSampleCommit(repository, 'initialize')
+
     const firstCommit = await makeSampleCommit(repository, 'first')
     const secondCommit = await makeSampleCommit(repository, 'second')
 
@@ -217,7 +227,10 @@ describe('git/reorder', () => {
     assert(isRebaseStillOngoing === null)
   })
 
-  it('returns error on invalid base commit', async () => {
+  it('returns error on invalid base commit', async t => {
+    const repository = await setupEmptyRepositoryDefaultMain(t)
+    const initialCommit = await makeSampleCommit(repository, 'initialize')
+
     await makeSampleCommit(repository, 'first')
     const secondCommit = await makeSampleCommit(repository, 'second')
 
@@ -237,7 +250,10 @@ describe('git/reorder', () => {
     assert(isRebaseStillOngoing === null)
   })
 
-  it('returns error when no commits are reordered', async () => {
+  it('returns error when no commits are reordered', async t => {
+    const repository = await setupEmptyRepositoryDefaultMain(t)
+    const initialCommit = await makeSampleCommit(repository, 'initialize')
+
     const first = await makeSampleCommit(repository, 'first')
     await makeSampleCommit(repository, 'second')
 

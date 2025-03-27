@@ -35,8 +35,8 @@ describe('BranchPruner', () => {
 
   afterEach(() => repositoriesDb.delete())
 
-  it('does nothing on non GitHub repositories', async () => {
-    const path = await setupFixtureRepository('branch-prune-tests')
+  it('does nothing on non GitHub repositories', async t => {
+    const path = await setupFixtureRepository(t, 'branch-prune-tests')
 
     const repo = await setupRepository(
       path,
@@ -61,10 +61,10 @@ describe('BranchPruner', () => {
     assert.deepStrictEqual(branchesBeforePruning, branchesAfterPruning)
   })
 
-  it('prunes for GitHub repository', async () => {
+  it('prunes for GitHub repository', async t => {
     const lastPruneDate = new Date(offsetFromNow(-1, 'day'))
 
-    const path = await setupFixtureRepository('branch-prune-tests')
+    const path = await setupFixtureRepository(t, 'branch-prune-tests')
     const repo = await setupRepository(
       path,
       repositoriesStore,
@@ -88,9 +88,9 @@ describe('BranchPruner', () => {
     assert(branchesAfterPruning.includes('not-deleted-branch-1'))
   })
 
-  it('does not prune if the last prune date is less than 24 hours ago', async () => {
+  it('does not prune if the last prune date is less than 24 hours ago', async t => {
     const lastPruneDate = new Date(offsetFromNow(-4, 'hours'))
-    const path = await setupFixtureRepository('branch-prune-tests')
+    const path = await setupFixtureRepository(t, 'branch-prune-tests')
     const repo = await setupRepository(
       path,
       repositoriesStore,
@@ -114,9 +114,9 @@ describe('BranchPruner', () => {
     assert.deepStrictEqual(branchesBeforePruning, branchesAfterPruning)
   })
 
-  it('does not prune if there is no default branch', async () => {
+  it('does not prune if there is no default branch', async t => {
     const lastPruneDate = new Date(offsetFromNow(-1, 'day'))
-    const repoPath = await setupFixtureRepository('branch-prune-tests')
+    const repoPath = await setupFixtureRepository(t, 'branch-prune-tests')
     FSE.unlink(path.join(repoPath, '.git', 'refs', 'remotes', 'origin', 'HEAD'))
 
     const repo = await setupRepository(
@@ -142,10 +142,10 @@ describe('BranchPruner', () => {
     assert.deepStrictEqual(branchesBeforePruning, branchesAfterPruning)
   })
 
-  it('does not prune reserved branches', async () => {
+  it('does not prune reserved branches', async t => {
     const lastPruneDate = new Date(offsetFromNow(-1, 'day'))
 
-    const path = await setupFixtureRepository('branch-prune-tests')
+    const path = await setupFixtureRepository(t, 'branch-prune-tests')
     const repo = await setupRepository(
       path,
       repositoriesStore,
@@ -181,8 +181,8 @@ describe('BranchPruner', () => {
     }
   })
 
-  it('never prunes a branch that lacks an upstream', async () => {
-    const path = await createPrunedRepository()
+  it('never prunes a branch that lacks an upstream', async t => {
+    const path = await createPrunedRepository(t)
 
     const lastPruneDate = new Date(offsetFromNow(-1, 'day'))
 

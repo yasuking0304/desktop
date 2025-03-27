@@ -1,4 +1,4 @@
-import { describe, it, beforeEach } from 'node:test'
+import { describe, it } from 'node:test'
 import assert from 'node:assert'
 import * as path from 'path'
 import * as FSE from 'fs-extra'
@@ -36,6 +36,7 @@ import { getStatusOrThrow } from '../../helpers/status'
 import { GitError as DugiteError, exec } from 'dugite'
 import { makeCommit, switchTo } from '../../helpers/repository-scaffolding'
 import { writeFile } from 'fs/promises'
+import { join } from 'node:path'
 
 async function getTextDiff(
   repo: Repository,
@@ -47,15 +48,13 @@ async function getTextDiff(
 }
 
 describe('git/diff', () => {
-  let repository: Repository
-
-  beforeEach(async () => {
-    const testRepoPath = await setupFixtureRepository('repo-with-image-changes')
-    repository = new Repository(testRepoPath, -1, null, false)
-  })
-
   describe('getWorkingDirectoryImage', () => {
-    it('retrieves valid image for new file', async () => {
+    it('retrieves valid image for new file', async t => {
+      const testRepoPath = await setupFixtureRepository(
+        t,
+        'repo-with-image-changes'
+      )
+      const repository = new Repository(testRepoPath, -1, null, false)
       const diffSelection = DiffSelection.fromInitialSelection(
         DiffSelectionType.All
       )
@@ -70,7 +69,12 @@ describe('git/diff', () => {
       assert(/A2HkbLsBYSgAAAABJRU5ErkJggg==$/.test(current.contents))
     })
 
-    it('retrieves valid images for modified file', async () => {
+    it('retrieves valid images for modified file', async t => {
+      const testRepoPath = await setupFixtureRepository(
+        t,
+        'repo-with-image-changes'
+      )
+      const repository = new Repository(testRepoPath, -1, null, false)
       const diffSelection = DiffSelection.fromInitialSelection(
         DiffSelectionType.All
       )
@@ -86,7 +90,12 @@ describe('git/diff', () => {
   })
 
   describe('getBlobImage', () => {
-    it('retrieves valid image for modified file', async () => {
+    it('retrieves valid image for modified file', async t => {
+      const testRepoPath = await setupFixtureRepository(
+        t,
+        'repo-with-image-changes'
+      )
+      const repository = new Repository(testRepoPath, -1, null, false)
       const diffSelection = DiffSelection.fromInitialSelection(
         DiffSelectionType.All
       )
@@ -105,7 +114,12 @@ describe('git/diff', () => {
       )
     })
 
-    it('retrieves valid images for deleted file', async () => {
+    it('retrieves valid images for deleted file', async t => {
+      const testRepoPath = await setupFixtureRepository(
+        t,
+        'repo-with-image-changes'
+      )
+      const repository = new Repository(testRepoPath, -1, null, false)
       const diffSelection = DiffSelection.fromInitialSelection(
         DiffSelectionType.All
       )
@@ -126,7 +140,12 @@ describe('git/diff', () => {
   })
 
   describe('imageDiff', () => {
-    it('changes for images are set', async () => {
+    it('changes for images are set', async t => {
+      const testRepoPath = await setupFixtureRepository(
+        t,
+        'repo-with-image-changes'
+      )
+      const repository = new Repository(testRepoPath, -1, null, false)
       const diffSelection = DiffSelection.fromInitialSelection(
         DiffSelectionType.All
       )
@@ -144,9 +163,9 @@ describe('git/diff', () => {
       assert(imageDiff.current !== undefined)
     })
 
-    it('changes for text are not set', async () => {
-      const testRepoPath = await setupFixtureRepository('repo-with-changes')
-      repository = new Repository(testRepoPath, -1, null, false)
+    it('changes for text are not set', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'repo-with-changes')
+      const repository = new Repository(testRepoPath, -1, null, false)
 
       const diffSelection = DiffSelection.fromInitialSelection(
         DiffSelectionType.All
@@ -163,12 +182,10 @@ describe('git/diff', () => {
   })
 
   describe('getWorkingDirectoryDiff', () => {
-    beforeEach(async () => {
-      const testRepoPath = await setupFixtureRepository('repo-with-changes')
-      repository = new Repository(testRepoPath, -1, null, false)
-    })
+    it('counts lines for new file', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'repo-with-changes')
+      const repository = new Repository(testRepoPath, -1, null, false)
 
-    it('counts lines for new file', async () => {
       const diffSelection = DiffSelection.fromInitialSelection(
         DiffSelectionType.All
       )
@@ -191,7 +208,10 @@ describe('git/diff', () => {
       )
     })
 
-    it('counts lines for modified file', async () => {
+    it('counts lines for modified file', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'repo-with-changes')
+      const repository = new Repository(testRepoPath, -1, null, false)
+
       const diffSelection = DiffSelection.fromInitialSelection(
         DiffSelectionType.All
       )
@@ -219,7 +239,10 @@ describe('git/diff', () => {
       assert(second.lines[7].text.includes('+'))
     })
 
-    it('counts lines for staged file', async () => {
+    it('counts lines for staged file', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'repo-with-changes')
+      const repository = new Repository(testRepoPath, -1, null, false)
+
       const diffSelection = DiffSelection.fromInitialSelection(
         DiffSelectionType.All
       )
@@ -255,8 +278,11 @@ describe('git/diff', () => {
       assert(second.lines[7].text.includes('+vel sagittis nisl rutrum.'))
     })
 
-    it('displays a binary diff for a docx file', async () => {
-      const repositoryPath = await setupFixtureRepository('diff-rendering-docx')
+    it('displays a binary diff for a docx file', async t => {
+      const repositoryPath = await setupFixtureRepository(
+        t,
+        'diff-rendering-docx'
+      )
       const repo = new Repository(repositoryPath, -1, null, false)
 
       const status = await getStatusOrThrow(repo)
@@ -269,8 +295,8 @@ describe('git/diff', () => {
       assert.equal(diff.kind, DiffType.Binary)
     })
 
-    it('is empty for a renamed file', async () => {
-      const repo = await setupEmptyRepository()
+    it('is empty for a renamed file', async t => {
+      const repo = await setupEmptyRepository(t)
 
       await FSE.writeFile(path.join(repo.path, 'foo'), 'foo\n')
 
@@ -292,8 +318,8 @@ describe('git/diff', () => {
     // with high similarity. If we don't take the rename into account
     // when generating the diffs we'd be looking at a diff with only
     // additions.
-    it('only shows modifications after move for a renamed and modified file', async () => {
-      const repo = await setupEmptyRepository()
+    it('only shows modifications after move for a renamed and modified file', async t => {
+      const repo = await setupEmptyRepository(t)
 
       await FSE.writeFile(path.join(repo.path, 'foo'), 'foo\n')
 
@@ -318,8 +344,8 @@ describe('git/diff', () => {
       assert.equal(first.lines[2].text, '+bar')
     })
 
-    it('handles unborn repository with mixed state', async () => {
-      const repo = await setupEmptyRepository()
+    it('handles unborn repository with mixed state', async t => {
+      const repo = await setupEmptyRepository(t)
 
       await FSE.writeFile(
         path.join(repo.path, 'foo'),
@@ -346,8 +372,8 @@ describe('git/diff', () => {
   })
 
   describe('getWorkingDirectoryDiff/line-endings', () => {
-    it('displays line endings change from LF to CRLF', async () => {
-      const repo = await setupEmptyRepository()
+    it('displays line endings change from LF to CRLF', async t => {
+      const repo = await setupEmptyRepository(t)
       const filePath = path.join(repo.path, 'foo')
 
       let lineEnding = '\r\n'
@@ -383,8 +409,8 @@ describe('git/diff', () => {
   })
 
   describe('getWorkingDirectoryDiff/unicode', () => {
-    it('displays unicode characters', async () => {
-      const repo = await setupEmptyRepository()
+    it('displays unicode characters', async t => {
+      const repo = await setupEmptyRepository(t)
       const filePath = path.join(repo.path, 'foo')
 
       const testString = 'here are some cool characters: • é  漢字'
@@ -401,19 +427,15 @@ describe('git/diff', () => {
 
   describe('getBinaryPaths', () => {
     describe('in empty repo', () => {
-      let repo: Repository
-      beforeEach(async () => {
-        repo = await setupEmptyRepository()
-      })
-      it('throws since HEAD doesnt exist', async () => {
+      it('throws since HEAD doesnt exist', async t => {
+        const repo = await setupEmptyRepository(t)
         await assert.rejects(() => getBinaryPaths(repo, 'HEAD', []))
       })
     })
 
     describe('with files using binary merge driver', () => {
-      let repo: Repository
-      beforeEach(async () => {
-        repo = await setupEmptyRepository()
+      it('includes plain text files using binary driver', async t => {
+        const repo = await setupEmptyRepository(t)
         writeFile(path.join(repo.path, 'foo.bin'), 'foo\n')
         writeFile(
           path.join(repo.path, '.gitattributes'),
@@ -430,8 +452,7 @@ describe('git/diff', () => {
         await git(['merge', 'branch-a'], repo.path, '', {
           expectedErrors: new Set([DugiteError.MergeConflicts]),
         })
-      })
-      it('includes plain text files using binary driver', async () => {
+
         assert.deepStrictEqual(
           await getBinaryPaths(repo, 'MERGE_HEAD', [
             {
@@ -447,24 +468,22 @@ describe('git/diff', () => {
     })
 
     describe('in repo with text only files', () => {
-      let repo: Repository
-      beforeEach(async () => {
-        const testRepoPath = await setupFixtureRepository('repo-with-changes')
-        repo = new Repository(testRepoPath, -1, null, false)
-      })
-      it('returns an empty array', async () => {
+      it('returns an empty array', async t => {
+        const testRepoPath = await setupFixtureRepository(
+          t,
+          'repo-with-changes'
+        )
+        const repo = new Repository(testRepoPath, -1, null, false)
         assert.equal((await getBinaryPaths(repo, 'HEAD', [])).length, 0)
       })
     })
-    describe('in repo with image changes', () => {
-      let repo: Repository
-      beforeEach(async () => {
+    describe('in repo with image changes', t => {
+      it('returns all changed image files', async t => {
         const testRepoPath = await setupFixtureRepository(
+          t,
           'repo-with-image-changes'
         )
-        repo = new Repository(testRepoPath, -1, null, false)
-      })
-      it('returns all changed image files', async () => {
+        const repo = new Repository(testRepoPath, -1, null, false)
         assert.deepStrictEqual(await getBinaryPaths(repo, 'HEAD', []), [
           'modified-image.jpg',
           'new-animated-image.gif',
@@ -473,16 +492,15 @@ describe('git/diff', () => {
       })
     })
     describe('in repo with merge conflicts on image files', () => {
-      let repo: Repository
-      beforeEach(async () => {
+      it('returns all conflicted image files', async t => {
         const testRepoPath = await setupFixtureRepository(
+          t,
           'detect-conflict-in-binary-file'
         )
-        repo = new Repository(testRepoPath, -1, null, false)
+        const repo = new Repository(testRepoPath, -1, null, false)
         await exec(['checkout', 'make-a-change'], repo.path)
         await exec(['merge', 'master'], repo.path)
-      })
-      it('returns all conflicted image files', async () => {
+
         assert.deepStrictEqual(await getBinaryPaths(repo, 'MERGE_HEAD', []), [
           'my-cool-image.png',
         ])
@@ -491,10 +509,11 @@ describe('git/diff', () => {
   })
 
   describe('with submodules', () => {
-    const submoduleRelativePath: string = path.join('foo', 'submodule')
-    let submodulePath: string
+    const getSubmodulePath = (repoPath: string, ...components: string[]) => {
+      return join(repoPath, 'foo', 'submodule', ...components)
+    }
 
-    const getSubmoduleDiff = async () => {
+    const getSubmoduleDiff = async (repository: Repository) => {
       const status = await getStatusOrThrow(repository)
       const file = status.workingDirectory.files[0]
       const diff = await getWorkingDirectoryDiff(repository, file)
@@ -503,27 +522,27 @@ describe('git/diff', () => {
       return diff as ISubmoduleDiff
     }
 
-    beforeEach(async () => {
-      const repoPath = await setupFixtureRepository('submodule-basic-setup')
-      repository = new Repository(repoPath, -1, null, false)
-      submodulePath = path.join(repoPath, submoduleRelativePath)
-    })
+    it('can get the diff for a submodule with the right paths', async t => {
+      const repoPath = await setupFixtureRepository(t, 'submodule-basic-setup')
+      const repository = new Repository(repoPath, -1, null, false)
 
-    it('can get the diff for a submodule with the right paths', async () => {
       // Just make any change to the submodule to get a diff
-      await FSE.writeFile(path.join(submodulePath, 'README.md'), 'hello\n')
+      await FSE.writeFile(getSubmodulePath(repoPath, 'README.md'), 'hello\n')
 
-      const diff = await getSubmoduleDiff()
-      assert.equal(diff.fullPath, submodulePath)
+      const diff = await getSubmoduleDiff(repository)
+      assert.equal(diff.fullPath, getSubmodulePath(repoPath))
       // Even on Windows, the path separator is '/' for this specific attribute
       assert.equal(diff.path, 'foo/submodule')
     })
 
-    it('can get the diff for a submodule with only modified changes', async () => {
-      // Modify README.md file. Now the submodule has modified changes.
-      await FSE.writeFile(path.join(submodulePath, 'README.md'), 'hello\n')
+    it('can get the diff for a submodule with only modified changes', async t => {
+      const repoPath = await setupFixtureRepository(t, 'submodule-basic-setup')
+      const repository = new Repository(repoPath, -1, null, false)
 
-      const diff = await getSubmoduleDiff()
+      // Modify README.md file. Now the submodule has modified changes.
+      await FSE.writeFile(getSubmodulePath(repoPath, 'README.md'), 'hello\n')
+
+      const diff = await getSubmoduleDiff(repository)
       assert(diff.oldSHA === null)
       assert(diff.newSHA === null)
       assert.equal(diff.status.commitChanged, false)
@@ -531,11 +550,14 @@ describe('git/diff', () => {
       assert.equal(diff.status.untrackedChanges, false)
     })
 
-    it('can get the diff for a submodule with only untracked changes', async () => {
-      // Create NEW.md file. Now the submodule has untracked changes.
-      await FSE.writeFile(path.join(submodulePath, 'NEW.md'), 'hello\n')
+    it('can get the diff for a submodule with only untracked changes', async t => {
+      const repoPath = await setupFixtureRepository(t, 'submodule-basic-setup')
+      const repository = new Repository(repoPath, -1, null, false)
 
-      const diff = await getSubmoduleDiff()
+      // Create NEW.md file. Now the submodule has untracked changes.
+      await FSE.writeFile(getSubmodulePath(repoPath, 'NEW.md'), 'hello\n')
+
+      const diff = await getSubmoduleDiff(repository)
       assert(diff.oldSHA === null)
       assert(diff.newSHA === null)
       assert.equal(diff.status.commitChanged, false)
@@ -543,12 +565,15 @@ describe('git/diff', () => {
       assert.equal(diff.status.untrackedChanges, true)
     })
 
-    it('can get the diff for a submodule a commit change', async () => {
-      // Make a change and commit it. Now the submodule has a commit change.
-      await FSE.writeFile(path.join(submodulePath, 'README.md'), 'hello\n')
-      await exec(['commit', '-a', '-m', 'test'], submodulePath)
+    it('can get the diff for a submodule a commit change', async t => {
+      const repoPath = await setupFixtureRepository(t, 'submodule-basic-setup')
+      const repository = new Repository(repoPath, -1, null, false)
 
-      const diff = await getSubmoduleDiff()
+      // Make a change and commit it. Now the submodule has a commit change.
+      await FSE.writeFile(getSubmodulePath(repoPath, 'README.md'), 'hello\n')
+      await exec(['commit', '-a', '-m', 'test'], getSubmodulePath(repoPath))
+
+      const diff = await getSubmoduleDiff(repository)
       assert(diff.oldSHA !== null)
       assert(diff.newSHA !== null)
       assert.equal(diff.status.commitChanged, true)
@@ -556,13 +581,16 @@ describe('git/diff', () => {
       assert.equal(diff.status.untrackedChanges, false)
     })
 
-    it('can get the diff for a submodule a all kinds of changes', async () => {
-      await FSE.writeFile(path.join(submodulePath, 'README.md'), 'hello\n')
-      await exec(['commit', '-a', '-m', 'test'], submodulePath)
-      await FSE.writeFile(path.join(submodulePath, 'README.md'), 'bye\n')
-      await FSE.writeFile(path.join(submodulePath, 'NEW.md'), 'new!!\n')
+    it('can get the diff for a submodule a all kinds of changes', async t => {
+      const repoPath = await setupFixtureRepository(t, 'submodule-basic-setup')
+      const repository = new Repository(repoPath, -1, null, false)
 
-      const diff = await getSubmoduleDiff()
+      await FSE.writeFile(getSubmodulePath(repoPath, 'README.md'), 'hello\n')
+      await exec(['commit', '-a', '-m', 'test'], getSubmodulePath(repoPath))
+      await FSE.writeFile(getSubmodulePath(repoPath, 'README.md'), 'bye\n')
+      await FSE.writeFile(getSubmodulePath(repoPath, 'NEW.md'), 'new!!\n')
+
+      const diff = await getSubmoduleDiff(repository)
       assert(diff.oldSHA !== null)
       assert(diff.newSHA !== null)
       assert.equal(diff.status.commitChanged, true)
@@ -572,7 +600,10 @@ describe('git/diff', () => {
   })
 
   describe('getBranchMergeBaseChangedFiles', () => {
-    it('loads the files changed between two branches if merged', async () => {
+    it('loads the files changed between two branches if merged', async t => {
+      const repoPath = await setupFixtureRepository(t, 'submodule-basic-setup')
+      const repository = new Repository(repoPath, -1, null, false)
+
       // create feature branch from initial master commit
       await exec(['branch', 'feature-branch'], repository.path)
 
@@ -621,7 +652,10 @@ describe('git/diff', () => {
       assert.equal(changesetData.files[0].path, 'feature.md')
     })
 
-    it('returns null for unrelated histories', async () => {
+    it('returns null for unrelated histories', async t => {
+      const repoPath = await setupFixtureRepository(t, 'submodule-basic-setup')
+      const repository = new Repository(repoPath, -1, null, false)
+
       // create a second branch that's orphaned from our current branch
       await exec(['checkout', '--orphan', 'orphaned-branch'], repository.path)
 
@@ -643,7 +677,10 @@ describe('git/diff', () => {
   })
 
   describe('getBranchMergeBaseDiff', () => {
-    it('loads the diff of a file between two branches if merged', async () => {
+    it('loads the diff of a file between two branches if merged', async t => {
+      const repoPath = await setupFixtureRepository(t, 'submodule-basic-setup')
+      const repository = new Repository(repoPath, -1, null, false)
+
       // Add foo.md to master
       const fooPath = path.join(repository.path, 'foo.md')
       await FSE.writeFile(fooPath, 'foo\n')

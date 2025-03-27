@@ -1,4 +1,4 @@
-import { describe, it, beforeEach } from 'node:test'
+import { describe, it, TestContext } from 'node:test'
 import assert from 'node:assert'
 import * as FSE from 'fs-extra'
 import * as path from 'path'
@@ -20,35 +20,30 @@ import {
   StashedChangesLoadStates,
 } from '../../../src/models/stash-entry'
 import { generateString } from '../../helpers/random-data'
+import { join } from 'node:path'
 
 describe('git/stash', () => {
   describe('getStash', () => {
-    let repository: Repository
-    let readme: string
-
-    beforeEach(async () => {
-      repository = await setupEmptyRepository()
-      readme = path.join(repository.path, 'README.md')
-      await FSE.writeFile(readme, '')
-      await exec(['add', 'README.md'], repository.path)
-      await exec(['commit', '-m', 'initial commit'], repository.path)
-    })
-
-    it('handles unborn repo by returning empty list', async () => {
-      const repo = await setupEmptyRepository()
-
+    it('handles unborn repo by returning empty list', async t => {
+      const repo = await setupEmptyRepository(t)
       const stash = await getStashes(repo)
 
       assert.equal(stash.desktopEntries.length, 0)
     })
 
-    it('returns an empty list when no stash entries have been created', async () => {
-      const stash = await getStashes(repository)
+    it('returns an empty list when no stash entries have been created', async t => {
+      const stash = await getStashes(await setupEmptyRepository(t))
 
       assert.equal(stash.desktopEntries.length, 0)
     })
 
-    it('returns all stash entries created by Desktop', async () => {
+    it('returns all stash entries created by Desktop', async t => {
+      const repository = await setupEmptyRepository(t)
+      const readme = path.join(repository.path, 'README.md')
+      await FSE.writeFile(readme, '')
+      await exec(['add', 'README.md'], repository.path)
+      await exec(['commit', '-m', 'initial commit'], repository.path)
+
       await generateTestStashEntry(repository, 'master', false)
       await generateTestStashEntry(repository, 'master', false)
       await generateTestStashEntry(repository, 'master', true)
@@ -62,19 +57,22 @@ describe('git/stash', () => {
   })
 
   describe('createDesktopStashEntry', () => {
-    let repository: Repository
-    let readme: string
-
-    beforeEach(async () => {
-      repository = await setupEmptyRepository()
-      readme = path.join(repository.path, 'README.md')
+    const setup = async (t: TestContext) => {
+      const repository = await setupEmptyRepository(t)
+      const readme = join(repository.path, 'README.md')
       await FSE.writeFile(readme, '')
       await exec(['add', 'README.md'], repository.path)
       await exec(['commit', '-m', 'initial commit'], repository.path)
-    })
 
-    it('creates a stash entry when repo is not unborn or in any kind of conflict or rebase state', async () => {
-      await FSE.appendFile(readme, 'just testing stuff')
+      return repository
+    }
+
+    it('creates a stash entry when repo is not unborn or in any kind of conflict or rebase state', async t => {
+      const repository = await setup(t)
+      await FSE.appendFile(
+        join(repository.path, 'README.md'),
+        'just testing stuff'
+      )
 
       await createDesktopStashEntry(repository, 'master', [])
 
@@ -85,7 +83,8 @@ describe('git/stash', () => {
       assert.equal(entries[0].branchName, 'master')
     })
 
-    it('stashes untracked files and removes them from the working directory', async () => {
+    it('stashes untracked files and removes them from the working directory', async t => {
+      const repository = await setup(t)
       const untrackedFile = path.join(repository.path, 'not-tracked.txt')
       FSE.writeFile(untrackedFile, 'some untracked file')
 
@@ -109,18 +108,17 @@ describe('git/stash', () => {
   })
 
   describe('getLastDesktopStashEntryForBranch', () => {
-    let repository: Repository
-    let readme: string
-
-    beforeEach(async () => {
-      repository = await setupEmptyRepository()
-      readme = path.join(repository.path, 'README.md')
-      await FSE.writeFile(readme, '')
+    const setup = async (t: TestContext) => {
+      const repository = await setupEmptyRepository(t)
+      await FSE.writeFile(join(repository.path, 'README.md'), '')
       await exec(['add', 'README.md'], repository.path)
       await exec(['commit', '-m', 'initial commit'], repository.path)
-    })
 
-    it('returns null when no stash entries exist for branch', async () => {
+      return repository
+    }
+
+    it('returns null when no stash entries exist for branch', async t => {
+      const repository = await setup(t)
       await generateTestStashEntry(repository, 'some-other-branch', true)
 
       const entry = await getLastDesktopStashEntryForBranch(
@@ -131,7 +129,8 @@ describe('git/stash', () => {
       assert(entry === null)
     })
 
-    it('returns last entry made for branch', async () => {
+    it('returns last entry made for branch', async t => {
+      const repository = await setup(t)
       const branchName = 'master'
       await generateTestStashEntry(repository, branchName, true)
       await generateTestStashEntry(repository, branchName, true)
@@ -161,18 +160,19 @@ describe('git/stash', () => {
   })
 
   describe('dropDesktopStashEntry', () => {
-    let repository: Repository
-    let readme: string
-
-    beforeEach(async () => {
-      repository = await setupEmptyRepository()
-      readme = path.join(repository.path, 'README.md')
+    const setup = async (t: TestContext) => {
+      const repository = await setupEmptyRepository(t)
+      const readme = join(repository.path, 'README.md')
       await FSE.writeFile(readme, '')
       await exec(['add', 'README.md'], repository.path)
       await exec(['commit', '-m', 'initial commit'], repository.path)
-    })
 
-    it('removes the entry identified by `stashSha`', async () => {
+      return repository
+    }
+
+    it('removes the entry identified by `stashSha`', async t => {
+      const repository = await setup(t)
+
       await generateTestStashEntry(repository, 'master', true)
       await generateTestStashEntry(repository, 'master', true)
 
@@ -191,7 +191,9 @@ describe('git/stash', () => {
       assert.notEqual(entries[0].stashSha, stashToDelete)
     })
 
-    it('does not fail when attempting to delete when stash is empty', async () => {
+    it('does not fail when attempting to delete when stash is empty', async t => {
+      const repository = await setup(t)
+
       let didFail = false
       const doesNotExist: IStashEntry = {
         name: 'refs/stash@{0}',
@@ -211,7 +213,9 @@ describe('git/stash', () => {
       assert.equal(didFail, false)
     })
 
-    it("does not fail when attempting to delete stash entry that doesn't exist", async () => {
+    it("does not fail when attempting to delete stash entry that doesn't exist", async t => {
+      const repository = await setup(t)
+
       let didFail = false
       const doesNotExist: IStashEntry = {
         name: 'refs/stash@{4}',
@@ -236,18 +240,20 @@ describe('git/stash', () => {
   })
 
   describe('popStashEntry', () => {
-    let repository: Repository
-    let readme: string
-
-    beforeEach(async () => {
-      repository = await setupEmptyRepository()
-      readme = path.join(repository.path, 'README.md')
+    const setup = async (t: TestContext) => {
+      const repository = await setupEmptyRepository(t)
+      const readme = path.join(repository.path, 'README.md')
       await FSE.writeFile(readme, '')
       await exec(['add', 'README.md'], repository.path)
       await exec(['commit', '-m', 'initial commit'], repository.path)
-    })
+
+      return repository
+    }
+
     describe('without any conflicts', () => {
-      it('restores changes back to the working directory', async () => {
+      it('restores changes back to the working directory', async t => {
+        const repository = await setup(t)
+
         await generateTestStashEntry(repository, 'master', true)
         const stash = await getStashes(repository)
         const { desktopEntries } = stash
@@ -267,7 +273,9 @@ describe('git/stash', () => {
     })
 
     describe('when there are (resolvable) conflicts', () => {
-      it('restores changes and drops stash', async () => {
+      it('restores changes and drops stash', async t => {
+        const repository = await setup(t)
+
         await generateTestStashEntry(repository, 'master', true)
         const stash = await getStashes(repository)
         const { desktopEntries } = stash
@@ -294,7 +302,9 @@ describe('git/stash', () => {
     })
 
     describe('when there are unresolvable conflicts', () => {
-      it('throws an error', async () => {
+      it('throws an error', async t => {
+        const repository = await setup(t)
+
         await generateTestStashEntry(repository, 'master', true)
         const stash = await getStashes(repository)
         const { desktopEntries } = stash

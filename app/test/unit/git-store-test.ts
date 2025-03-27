@@ -1,4 +1,4 @@
-import { describe, it, beforeEach } from 'node:test'
+import { describe, it, TestContext } from 'node:test'
 import assert from 'node:assert'
 import * as FSE from 'fs-extra'
 import * as Path from 'path'
@@ -12,7 +12,6 @@ import {
 import { GitStore } from '../../src/lib/stores'
 import { AppFileStatusKind } from '../../src/models/status'
 import { Repository } from '../../src/models/repository'
-import { Commit } from '../../src/models/commit'
 import { TipState, IValidBranch } from '../../src/models/tip'
 import { getCommit, getRemotes } from '../../src/lib/git'
 import { getStatusOrThrow } from '../helpers/status'
@@ -26,8 +25,11 @@ import { TestStatsStore } from '../helpers/test-stats-store'
 
 describe('GitStore', () => {
   describe('loadCommitBatch', () => {
-    it('includes HEAD when loading commits', async () => {
-      const path = await setupFixtureRepository('repository-with-105-commits')
+    it('includes HEAD when loading commits', async t => {
+      const path = await setupFixtureRepository(
+        t,
+        'repository-with-105-commits'
+      )
       const repo = new Repository(path, -1, null, false)
       const gitStore = new GitStore(repo, shell, new TestStatsStore())
 
@@ -39,8 +41,8 @@ describe('GitStore', () => {
     })
   })
 
-  it('can discard changes from a repository', async () => {
-    const repo = await setupEmptyRepository()
+  it('can discard changes from a repository', async t => {
+    const repo = await setupEmptyRepository(t)
     const gitStore = new GitStore(repo, shell, new TestStatsStore())
 
     const readmeFile = 'README.md'
@@ -77,8 +79,8 @@ describe('GitStore', () => {
     assert.equal(files.length, 1)
   })
 
-  it('can discard a renamed file', async () => {
-    const repo = await setupEmptyRepository()
+  it('can discard a renamed file', async t => {
+    const repo = await setupEmptyRepository(t)
     const gitStore = new GitStore(repo, shell, new TestStatsStore())
 
     const file = 'README.md'
@@ -105,14 +107,9 @@ describe('GitStore', () => {
   })
 
   describe('undo first commit', () => {
-    let repository: Repository
-    let firstCommit: Commit | null = null
-
     const commitMessage = 'added file'
-
-    beforeEach(async () => {
-      debugger
-      repository = await setupEmptyRepository()
+    const setupRepo = async (t: TestContext) => {
+      const repository = await setupEmptyRepository(t)
 
       const file = 'README.md'
       const filePath = Path.join(repository.path, file)
@@ -122,12 +119,15 @@ describe('GitStore', () => {
       await exec(['add', file], repository.path)
       await exec(['commit', '-m', commitMessage], repository.path)
 
-      firstCommit = await getCommit(repository, 'master')
+      const firstCommit = await getCommit(repository, 'master')
       assert(firstCommit !== null)
       assert.equal(firstCommit.parentSHAs.length, 0)
-    })
 
-    it('reports the repository is unborn', async () => {
+      return { repository, firstCommit }
+    }
+
+    it('reports the repository is unborn', async t => {
+      const { repository, firstCommit } = await setupRepo(t)
       const gitStore = new GitStore(repository, shell, new TestStatsStore())
 
       await gitStore.loadStatus()
@@ -140,7 +140,9 @@ describe('GitStore', () => {
       assert(after.currentTip === undefined)
     })
 
-    it('pre-fills the commit message', async () => {
+    it('pre-fills the commit message', async t => {
+      const { repository, firstCommit } = await setupRepo(t)
+
       const gitStore = new GitStore(repository, shell, new TestStatsStore())
 
       assert(firstCommit !== null)
@@ -151,7 +153,9 @@ describe('GitStore', () => {
       assert.equal(newCommitMessage.summary, commitMessage)
     })
 
-    it('clears the undo commit dialog', async () => {
+    it('clears the undo commit dialog', async t => {
+      const { repository, firstCommit } = await setupRepo(t)
+
       const gitStore = new GitStore(repository, shell, new TestStatsStore())
 
       await gitStore.loadStatus()
@@ -172,7 +176,9 @@ describe('GitStore', () => {
       assert.equal(gitStore.localCommitSHAs.length, 0)
     })
 
-    it('has no staged files', async () => {
+    it('has no staged files', async t => {
+      const { repository, firstCommit } = await setupRepo(t)
+
       const gitStore = new GitStore(repository, shell, new TestStatsStore())
 
       await gitStore.loadStatus()
@@ -202,8 +208,8 @@ describe('GitStore', () => {
   })
 
   describe('repository with HEAD file', () => {
-    it('can discard modified change cleanly', async () => {
-      const path = await setupFixtureRepository('repository-with-HEAD-file')
+    it('can discard modified change cleanly', async t => {
+      const path = await setupFixtureRepository(t, 'repository-with-HEAD-file')
       const repo = new Repository(path, 1, null, false)
       const gitStore = new GitStore(repo, shell, new TestStatsStore())
 
@@ -225,10 +231,8 @@ describe('GitStore', () => {
   })
 
   describe('loadBranches', () => {
-    let upstream: Repository
-    let repository: Repository
-    beforeEach(async () => {
-      upstream = await setupEmptyRepository()
+    const setupRepositories = async (t: TestContext) => {
+      const upstream = await setupEmptyRepository(t)
       await makeCommit(upstream, {
         commitMessage: 'first commit',
         entries: [
@@ -270,15 +274,19 @@ describe('GitStore', () => {
       // move this repository back to `master` before cloning
       await switchTo(upstream, 'master')
 
-      repository = await cloneLocalRepository(upstream)
-    })
+      const repository = await cloneLocalRepository(t, upstream)
 
-    it('has a remote defined', async () => {
+      return { upstream, repository }
+    }
+
+    it('has a remote defined', async t => {
+      const { repository } = await setupRepositories(t)
       const remotes = await getRemotes(repository)
       assert.equal(remotes.length, 1)
     })
 
-    it('will merge a local and remote branch when tracking branch set', async () => {
+    it('will merge a local and remote branch when tracking branch set', async t => {
+      const { repository } = await setupRepositories(t)
       const gitStore = new GitStore(repository, shell, new TestStatsStore())
       await gitStore.loadBranches()
 
@@ -295,7 +303,8 @@ describe('GitStore', () => {
       assert.equal(remoteBranch.type, BranchType.Remote)
     })
 
-    it('the tracking branch is not cleared when the remote branch is removed', async () => {
+    it('the tracking branch is not cleared when the remote branch is removed', async t => {
+      const { repository, upstream } = await setupRepositories(t)
       // checkout the other branch after cloning
       await exec(['checkout', 'some-other-branch'], repository.path)
 

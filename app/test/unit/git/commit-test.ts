@@ -1,4 +1,4 @@
-import { describe, it, beforeEach } from 'node:test'
+import { describe, it, TestContext } from 'node:test'
 import assert from 'node:assert'
 import * as path from 'path'
 import * as FSE from 'fs-extra'
@@ -48,15 +48,10 @@ async function getTextDiff(
 }
 
 describe('git/commit', () => {
-  let repository: Repository
-
-  beforeEach(async () => {
-    const testRepoPath = await setupFixtureRepository('test-repo')
-    repository = new Repository(testRepoPath, -1, null, false)
-  })
-
   describe('createCommit normal', () => {
-    it('commits the given files', async () => {
+    it('commits the given files', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'test-repo')
+      const repository = new Repository(testRepoPath, -1, null, false)
       await FSE.writeFile(path.join(repository.path, 'README.md'), 'Hi world\n')
 
       let status = await getStatusOrThrow(repository)
@@ -76,7 +71,10 @@ describe('git/commit', () => {
       assert.equal(commits[0].sha.substring(0, 7), sha)
     })
 
-    it('commit does not strip commentary by default', async () => {
+    it('commit does not strip commentary by default', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'test-repo')
+      const repository = new Repository(testRepoPath, -1, null, false)
+
       await FSE.writeFile(path.join(repository.path, 'README.md'), 'Hi world\n')
 
       const status = await getStatusOrThrow(repository)
@@ -97,8 +95,8 @@ describe('git/commit', () => {
       assert.equal(commit.shortSha, sha)
     })
 
-    it('can commit for empty repository', async () => {
-      const repo = await setupEmptyRepository()
+    it('can commit for empty repository', async t => {
+      const repo = await setupEmptyRepository(t)
 
       await FSE.writeFile(path.join(repo.path, 'foo'), 'foo\n')
       await FSE.writeFile(path.join(repo.path, 'bar'), 'bar\n')
@@ -131,8 +129,8 @@ describe('git/commit', () => {
       assert.equal(history[0].body, 'this is a description\n')
     })
 
-    it('can commit renames', async () => {
-      const repo = await setupEmptyRepository()
+    it('can commit renames', async t => {
+      const repo = await setupEmptyRepository(t)
 
       await FSE.writeFile(path.join(repo.path, 'foo'), 'foo\n')
 
@@ -157,12 +155,10 @@ describe('git/commit', () => {
   })
 
   describe('createCommit partials', () => {
-    beforeEach(async () => {
-      const testRepoPath = await setupFixtureRepository('repo-with-changes')
-      repository = new Repository(testRepoPath, -1, null, false)
-    })
+    it('can commit some lines from new file', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'repo-with-changes')
+      const repository = new Repository(testRepoPath, -1, null, false)
 
-    it('can commit some lines from new file', async () => {
       const previousTip = (await getCommits(repository, 'HEAD', 1))[0]
 
       const newFileName = 'new-file.md'
@@ -205,7 +201,10 @@ describe('git/commit', () => {
       assert.equal(fileChange.status.kind, AppFileStatusKind.Modified)
     })
 
-    it('can commit second hunk from modified file', async () => {
+    it('can commit second hunk from modified file', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'repo-with-changes')
+      const repository = new Repository(testRepoPath, -1, null, false)
+
       const previousTip = (await getCommits(repository, 'HEAD', 1))[0]
 
       const modifiedFile = 'modified-file.md'
@@ -257,7 +256,10 @@ describe('git/commit', () => {
       assert.equal(fileChange.status.kind, AppFileStatusKind.Modified)
     })
 
-    it('can commit single delete from modified file', async () => {
+    it('can commit single delete from modified file', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'repo-with-changes')
+      const repository = new Repository(testRepoPath, -1, null, false)
+
       const previousTip = (await getCommits(repository, 'HEAD', 1))[0]
 
       const fileName = 'modified-file.md'
@@ -301,7 +303,10 @@ describe('git/commit', () => {
       assert.equal(changesetData.files[0].path, fileName)
     })
 
-    it('can commit multiple hunks from modified file', async () => {
+    it('can commit multiple hunks from modified file', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'repo-with-changes')
+      const repository = new Repository(testRepoPath, -1, null, false)
+
       const previousTip = (await getCommits(repository, 'HEAD', 1))[0]
 
       const modifiedFile = 'modified-file.md'
@@ -358,7 +363,10 @@ describe('git/commit', () => {
       assert.equal(fileChange.status.kind, AppFileStatusKind.Modified)
     })
 
-    it('can commit some lines from deleted file', async () => {
+    it('can commit some lines from deleted file', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'repo-with-changes')
+      const repository = new Repository(testRepoPath, -1, null, false)
+
       const previousTip = (await getCommits(repository, 'HEAD', 1))[0]
 
       const deletedFile = 'deleted-file.md'
@@ -400,8 +408,8 @@ describe('git/commit', () => {
       assert.equal(fileChange.status.kind, AppFileStatusKind.Deleted)
     })
 
-    it('can commit renames with modifications', async () => {
-      const repo = await setupEmptyRepository()
+    it('can commit renames with modifications', async t => {
+      const repo = await setupEmptyRepository(t)
 
       await FSE.writeFile(path.join(repo.path, 'foo'), 'foo\n')
 
@@ -431,8 +439,8 @@ describe('git/commit', () => {
     // The scenario here is that the user has staged a rename (probably using git mv)
     // and then added some lines to the newly renamed file and they only want to
     // commit one of these lines.
-    it('can commit renames with partially selected modifications', async () => {
-      const repo = await setupEmptyRepository()
+    it('can commit renames with partially selected modifications', async t => {
+      const repo = await setupEmptyRepository(t)
 
       await FSE.writeFile(path.join(repo.path, 'foo'), 'line1\n')
 
@@ -476,8 +484,8 @@ describe('git/commit', () => {
   })
 
   describe('createCommit with a merge conflict', () => {
-    it('creates a merge commit', async () => {
-      const repo = await setupConflictedRepo()
+    it('creates a merge commit', async t => {
+      const repo = await setupConflictedRepo(t)
       const filePath = path.join(repo.path, 'foo')
 
       const inMerge = await FSE.pathExists(
@@ -518,12 +526,10 @@ describe('git/commit', () => {
 
   describe('createMergeCommit', () => {
     describe('with a simple merge conflict', () => {
-      let repository: Repository
       describe('with a merge conflict', () => {
-        beforeEach(async () => {
-          repository = await setupConflictedRepo()
-        })
-        it('creates a merge commit', async () => {
+        it('creates a merge commit', async t => {
+          const repository = await setupConflictedRepo(t)
+
           const status = await getStatusOrThrow(repository)
           const trackedFiles = status.workingDirectory.files.filter(
             f => f.status.kind !== AppFileStatusKind.Untracked
@@ -537,11 +543,9 @@ describe('git/commit', () => {
     })
 
     describe('with a merge conflict and manual resolutions', () => {
-      let repository: Repository
-      beforeEach(async () => {
-        repository = await setupConflictedRepoWithMultipleFiles()
-      })
-      it('keeps files chosen to be added and commits', async () => {
+      it('keeps files chosen to be added and commits', async t => {
+        const repository = await setupConflictedRepoWithMultipleFiles(t)
+
         const status = await getStatusOrThrow(repository)
         const trackedFiles = status.workingDirectory.files.filter(
           f => f.status.kind !== AppFileStatusKind.Untracked
@@ -563,7 +567,9 @@ describe('git/commit', () => {
         assert.equal(newStatus.workingDirectory.files.length, 1)
       })
 
-      it('deletes files chosen to be removed and commits', async () => {
+      it('deletes files chosen to be removed and commits', async t => {
+        const repository = await setupConflictedRepoWithMultipleFiles(t)
+
         const status = await getStatusOrThrow(repository)
         const trackedFiles = status.workingDirectory.files.filter(
           f => f.status.kind !== AppFileStatusKind.Untracked
@@ -585,7 +591,9 @@ describe('git/commit', () => {
         assert.equal(newStatus.workingDirectory.files.length, 1)
       })
 
-      it('checks out our content for file added in both branches', async () => {
+      it('checks out our content for file added in both branches', async t => {
+        const repository = await setupConflictedRepoWithMultipleFiles(t)
+
         const status = await getStatusOrThrow(repository)
         const trackedFiles = status.workingDirectory.files.filter(
           f => f.status.kind !== AppFileStatusKind.Untracked
@@ -607,7 +615,9 @@ describe('git/commit', () => {
         assert.equal(newStatus.workingDirectory.files.length, 1)
       })
 
-      it('checks out their content for file added in both branches', async () => {
+      it('checks out their content for file added in both branches', async t => {
+        const repository = await setupConflictedRepoWithMultipleFiles(t)
+
         const status = await getStatusOrThrow(repository)
         const trackedFiles = status.workingDirectory.files.filter(
           f => f.status.kind !== AppFileStatusKind.Untracked
@@ -630,36 +640,38 @@ describe('git/commit', () => {
       })
 
       describe('binary file conflicts', () => {
-        let fileName: string
-        let fileContentsOurs: string, fileContentsTheirs: string
-        beforeEach(async () => {
+        const setup = async (t: TestContext) => {
           const repoPath = await setupFixtureRepository(
+            t,
             'detect-conflict-in-binary-file'
           )
-          repository = new Repository(repoPath, -1, null, false)
-          fileName = 'my-cool-image.png'
+          const repository = new Repository(repoPath, -1, null, false)
+          const fileName = 'my-cool-image.png'
 
           await exec(['checkout', 'master'], repoPath)
 
-          fileContentsTheirs = await FSE.readFile(
+          const fileContentsTheirs = await FSE.readFile(
             path.join(repoPath, fileName),
             'utf8'
           )
 
           await exec(['checkout', 'make-a-change'], repoPath)
 
-          fileContentsOurs = await FSE.readFile(
+          const fileContentsOurs = await FSE.readFile(
             path.join(repoPath, fileName),
             'utf8'
           )
-        })
 
-        it('chooses `their` version of a file and commits', async () => {
-          const repo = repository
+          return { repository, fileContentsTheirs, fileContentsOurs }
+        }
 
-          await exec(['merge', 'master'], repo.path)
+        it('chooses `their` version of a file and commits', async t => {
+          const { repository, fileContentsTheirs, fileContentsOurs } =
+            await setup(t)
 
-          const status = await getStatusOrThrow(repo)
+          await exec(['merge', 'master'], repository.path)
+
+          const status = await getStatusOrThrow(repository)
           const files = status.workingDirectory.files
           assert.equal(files.length, 1)
 
@@ -688,12 +700,12 @@ describe('git/commit', () => {
           assert.equal(fileContents, fileContentsTheirs)
         })
 
-        it('chooses `our` version of a file and commits', async () => {
-          const repo = repository
+        it('chooses `our` version of a file and commits', async t => {
+          const { repository, fileContentsOurs } = await setup(t)
 
-          await exec(['merge', 'master'], repo.path)
+          await exec(['merge', 'master'], repository.path)
 
-          const status = await getStatusOrThrow(repo)
+          const status = await getStatusOrThrow(repository)
           const files = status.workingDirectory.files
           assert.equal(files.length, 1)
 
@@ -724,16 +736,13 @@ describe('git/commit', () => {
     })
 
     describe('with no changes', () => {
-      let repository: Repository
-      beforeEach(async () => {
-        repository = new Repository(
-          await setupFixtureRepository('test-repo'),
+      it('throws an error', async t => {
+        const repository = new Repository(
+          await setupFixtureRepository(t, 'test-repo'),
           -1,
           null,
           false
         )
-      })
-      it('throws an error', async () => {
         const status = await getStatusOrThrow(repository)
         await assert.rejects(
           () => createMergeCommit(repository, status.workingDirectory.files),
@@ -744,11 +753,11 @@ describe('git/commit', () => {
   })
 
   describe('index corner cases', () => {
-    it('can commit when staged new file is then deleted', async () => {
+    it('can commit when staged new file is then deleted', async t => {
       let status,
         files = null
 
-      const repo = await setupEmptyRepository()
+      const repo = await setupEmptyRepository(t)
 
       const firstPath = path.join(repo.path, 'first')
       const secondPath = path.join(repo.path, 'second')
@@ -781,11 +790,11 @@ describe('git/commit', () => {
       assert.equal(commit.summary, 'commit everything')
     })
 
-    it('can commit when a delete is staged and the untracked file exists', async () => {
+    it('can commit when a delete is staged and the untracked file exists', async t => {
       let status,
         files = null
 
-      const repo = await setupEmptyRepository()
+      const repo = await setupEmptyRepository(t)
 
       const firstPath = path.join(repo.path, 'first')
       await FSE.writeFile(firstPath, 'line1\n')
@@ -819,8 +828,8 @@ describe('git/commit', () => {
       assert.equal(commit.shortSha, sha)
     })
 
-    it('file is deleted in index', async () => {
-      const repo = await setupEmptyRepository()
+    it('file is deleted in index', async t => {
+      const repo = await setupEmptyRepository(t)
       await FSE.writeFile(path.join(repo.path, 'secret'), 'contents\n')
       await FSE.writeFile(path.join(repo.path, '.gitignore'), '')
 

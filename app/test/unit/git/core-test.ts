@@ -1,7 +1,6 @@
-import { describe, it, beforeEach } from 'node:test'
+import { describe, it } from 'node:test'
 import assert from 'node:assert'
 import { GitError } from 'dugite'
-import { Repository } from '../../../src/models/repository'
 import {
   git,
   parseConfigLockFilePathFromError,
@@ -12,20 +11,15 @@ import { join, resolve } from 'path'
 import { copy } from 'fs-extra'
 
 describe('git/core', () => {
-  let repository: Repository
-
-  beforeEach(async () => {
-    const testRepoPath = await setupFixtureRepository('test-repo')
-    repository = new Repository(testRepoPath, -1, null, false)
-  })
-
   describe('error handling', () => {
-    it('does not throw for errors that were expected', async () => {
+    it('does not throw for errors that were expected', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'test-repo')
+
       const args = ['rev-list', '--left-right', '--count', 'some-ref', '--']
 
       let threw = false
       try {
-        const result = await git(args, repository.path, 'test', {
+        const result = await git(args, testRepoPath, 'test', {
           expectedErrors: new Set([GitError.BadRevision]),
         })
         assert.equal(result.gitError, GitError.BadRevision)
@@ -36,12 +30,14 @@ describe('git/core', () => {
       assert.equal(threw, false)
     })
 
-    it('throws for errors that were not expected', async () => {
+    it('throws for errors that were not expected', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'test-repo')
+
       const args = ['rev-list', '--left-right', '--count', 'some-ref', '--']
 
       let threw = false
       try {
-        await git(args, repository.path, 'test', {
+        await git(args, testRepoPath, 'test', {
           expectedErrors: new Set([GitError.SSHKeyAuditUnverified]),
         })
       } catch (e) {
@@ -53,12 +49,13 @@ describe('git/core', () => {
   })
 
   describe('exit code handling', () => {
-    it('does not throw for exit codes that were expected', async () => {
+    it('does not throw for exit codes that were expected', async t => {
+      const repoPath = await setupFixtureRepository(t, 'test-repo')
       const args = ['rev-list', '--left-right', '--count', 'some-ref', '--']
 
       let threw = false
       try {
-        const result = await git(args, repository.path, 'test', {
+        const result = await git(args, repoPath, 'test', {
           successExitCodes: new Set([128]),
         })
         assert.equal(result.exitCode, 128)
@@ -69,12 +66,13 @@ describe('git/core', () => {
       assert.equal(threw, false)
     })
 
-    it('throws for exit codes that were not expected', async () => {
+    it('throws for exit codes that were not expected', async t => {
+      const repoPath = await setupFixtureRepository(t, 'test-repo')
       const args = ['rev-list', '--left-right', '--count', 'some-ref', '--']
 
       let threw = false
       try {
-        await git(args, repository.path, 'test', {
+        await git(args, repoPath, 'test', {
           successExitCodes: new Set([2]),
         })
       } catch (e) {
@@ -86,14 +84,16 @@ describe('git/core', () => {
   })
 
   describe('config lock file error handling', () => {
-    it('can parse lock file path from stderr', async () => {
-      const configFilePath = join(repository.path, '.git', 'config')
+    it('can parse lock file path from stderr', async t => {
+      const repoPath = await setupFixtureRepository(t, 'test-repo')
+
+      const configFilePath = join(repoPath, '.git', 'config')
       const configLockFilePath = `${configFilePath}.lock`
 
       await copy(configFilePath, configLockFilePath)
 
       const args = ['config', '--local', 'user.name', 'niik']
-      const result = await git(args, repository.path, 'test', {
+      const result = await git(args, repoPath, 'test', {
         expectedErrors: new Set([GitError.ConfigLockFileAlreadyExists]),
       })
 
