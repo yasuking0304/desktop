@@ -43,7 +43,6 @@ const args = [
   '--disable-warning=ExperimentalWarning',
   '--experimental-test-module-mocks',
   ...['--import', 'tsx'],
-  ...['--import', './app/test/__mocks__/electron.mjs'],
   ...['--import', './app/test/globals.mts'],
   ...switchArgs,
   '--test',

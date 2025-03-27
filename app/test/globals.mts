@@ -1,5 +1,6 @@
 import 'fake-indexeddb/auto'
 import 'global-jsdom/register'
+import { mock } from 'node:test'
 
 // These constants are defined by Webpack at build time, but since tests aren't
 // built with Webpack we need to make sure these exist at runtime.
@@ -36,4 +37,30 @@ Object.assign(globalThis, {
   MessageChannel: undefined,
   MessagePort: undefined,
   BroadcastChannel: undefined,
+})
+
+mock.module('electron', {
+  namedExports: {
+    shell: {
+      trashItem: mock.fn(async () => {}),
+    },
+    remote: {
+      app: {
+        on: mock.fn(() => {}),
+      },
+      autoUpdater: {
+        on: mock.fn(() => {}),
+      },
+      nativeTheme: {
+        addListener: mock.fn(() => {}),
+        removeAllListeners: mock.fn(() => {}),
+        shouldUseDarkColors: true,
+      },
+    },
+    ipcRenderer: {
+      on: mock.fn(x => {}),
+      send: mock.fn(() => {}),
+      invoke: mock.fn(() => {}),
+    },
+  },
 })
