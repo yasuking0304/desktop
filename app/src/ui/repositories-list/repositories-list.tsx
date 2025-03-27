@@ -170,11 +170,11 @@ export class RepositoriesList extends React.Component<
     if (kind === 'enterprise') {
       return enableMultipleEnterpriseAccounts() ? group.host : 'Enterprise'
     } else if (kind === 'other') {
-        return t('common.other', 'Other')
+      return t('common.other', 'Other')
     } else if (kind === 'dotcom') {
       return group.owner.login
     } else if (kind === 'recent') {
-        return t('common.recent', 'Recent')
+      return t('common.recent', 'Recent')
     } else {
       assertNever(kind, `Unknown repository group kind ${kind}`)
     }
