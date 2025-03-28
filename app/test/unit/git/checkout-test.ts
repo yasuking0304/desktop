@@ -11,21 +11,9 @@ import { GitStore } from '../../../src/lib/stores'
 import { Branch, BranchType } from '../../../src/models/branch'
 import { getStatusOrThrow } from '../../helpers/status'
 import { exec } from 'dugite'
-import { StatsStore, StatsDatabase } from '../../../src/lib/stats'
-import { UiActivityMonitor } from '../../../src/ui/lib/ui-activity-monitor'
-import { fakePost } from '../../fake-stats-post'
+import { TestStatsStore } from '../../helpers/test-stats-store'
 
 describe('git/checkout', () => {
-  let statsStore: StatsStore
-
-  beforeEach(() => {
-    statsStore = new StatsStore(
-      new StatsDatabase('test-StatsDatabase'),
-      new UiActivityMonitor(),
-      fakePost
-    )
-  })
-
   it('throws when invalid characters are used for branch name', async () => {
     const repository = await setupEmptyRepository()
 
@@ -68,7 +56,7 @@ describe('git/checkout', () => {
 
     await checkoutBranch(repository, branches[0], null)
 
-    const store = new GitStore(repository, shell, statsStore)
+    const store = new GitStore(repository, shell, new TestStatsStore())
     await store.loadStatus()
     const tip = store.tip
 
@@ -103,7 +91,7 @@ describe('git/checkout', () => {
 
     await checkoutBranch(repository, firstRemoteBranch, null)
 
-    const store = new GitStore(repository, shell, statsStore)
+    const store = new GitStore(repository, shell, new TestStatsStore())
     await store.loadStatus()
     const tip = store.tip
 

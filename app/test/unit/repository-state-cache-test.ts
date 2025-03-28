@@ -10,9 +10,7 @@ import {
 import { DiffSelection, DiffSelectionType } from '../../src/models/diff'
 import { HistoryTabMode, IDisplayHistory } from '../../src/lib/app-state'
 import { gitHubRepoFixture } from '../helpers/github-repo-builder'
-import { StatsDatabase, StatsStore } from '../../src/lib/stats'
-import { UiActivityMonitor } from '../../src/ui/lib/ui-activity-monitor'
-import { fakePost } from '../fake-stats-post'
+import { TestStatsStore } from '../helpers/test-stats-store'
 
 function createSamplePullRequest(gitHubRepository: GitHubRepository) {
   return new PullRequest(
@@ -36,27 +34,15 @@ function createSamplePullRequest(gitHubRepository: GitHubRepository) {
 }
 
 describe('RepositoryStateCache', () => {
-  let repository: Repository
-  let statsStore: StatsStore
-
-  beforeEach(() => {
-    repository = new Repository('/something/path', 1, null, false)
-
-    statsStore = new StatsStore(
-      new StatsDatabase('test-StatsDatabase'),
-      new UiActivityMonitor(),
-      fakePost
-    )
-  })
-
   it('can update branches state for a repository', () => {
+    const repository = new Repository('/something/path', 1, null, false)
     const gitHubRepository = gitHubRepoFixture({
       name: 'desktop',
       owner: 'desktop',
     })
     const firstPullRequest = createSamplePullRequest(gitHubRepository)
 
-    const cache = new RepositoryStateCache(statsStore)
+    const cache = new RepositoryStateCache(new TestStatsStore())
 
     cache.updateBranchesState(repository, () => {
       return {
@@ -71,6 +57,7 @@ describe('RepositoryStateCache', () => {
   })
 
   it('can update changes state for a repository', () => {
+    const repository = new Repository('/something/path', 1, null, false)
     const files = [
       new WorkingDirectoryFileChange(
         'README.md',
@@ -81,7 +68,7 @@ describe('RepositoryStateCache', () => {
 
     const summary = 'Hello world!'
 
-    const cache = new RepositoryStateCache(statsStore)
+    const cache = new RepositoryStateCache(new TestStatsStore())
 
     cache.updateChangesState(repository, () => {
       return {
@@ -102,9 +89,10 @@ describe('RepositoryStateCache', () => {
   })
 
   it('can update compare state for a repository', () => {
+    const repository = new Repository('/something/path', 1, null, false)
     const filterText = 'my-cool-branch'
 
-    const cache = new RepositoryStateCache(statsStore)
+    const cache = new RepositoryStateCache(new TestStatsStore())
 
     cache.updateCompareState(repository, () => {
       const newState: IDisplayHistory = {
