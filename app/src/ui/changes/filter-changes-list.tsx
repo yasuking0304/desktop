@@ -1015,7 +1015,9 @@ export class FilterChangesList extends React.Component<
     filesSelected: ReadonlyArray<WorkingDirectoryFileChange>,
     mustOverrideExistingMessage: boolean
   ) => {
-    this.props.dispatcher.recordGenerateCommitMessageButtonClicked()
+    this.props.dispatcher.incrementMetric(
+      'generateCommitMessageButtonClickCount'
+    )
 
     return mustOverrideExistingMessage
       ? this.props.dispatcher.promptOverrideWithGeneratedCommitMessage(

@@ -2514,10 +2514,6 @@ export class Dispatcher {
     this.statsStore.recordAddExistingRepository()
   }
 
-  public recordGenerateCommitMessageButtonClicked() {
-    this.statsStore.increment('generateCommitMessageButtonClickCount')
-  }
-
   // TODO: more rebase-related actions
 
   /**
