@@ -3346,6 +3346,10 @@ export class AppStore extends TypedBaseStore<IAppState> {
       this.statsStore.increment('partialCommits')
     }
 
+    if (context.messageGeneratedByCopilot === true) {
+      this.statsStore.increment('generateCommitMessageUsedVerbatimCount')
+    }
+
     if (isAmend) {
       this.statsStore.recordAmendCommitSuccessful(selectedFiles.length > 0)
     }
@@ -5459,6 +5463,8 @@ export class AppStore extends TypedBaseStore<IAppState> {
           timestamp: Date.now(),
           generatedByCopilot: true,
         })
+
+        this.statsStore.increment('generateCommitMessageCount')
       } catch (e) {
         this.emitError(
           new ErrorWithMetadata(e, {

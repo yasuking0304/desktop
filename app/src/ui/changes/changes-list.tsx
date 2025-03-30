@@ -901,8 +901,12 @@ export class ChangesList extends React.Component<
   private onGenerateCommitMessage = (
     filesSelected: ReadonlyArray<WorkingDirectoryFileChange>,
     mustOverrideExistingMessage: boolean
-  ) =>
-    mustOverrideExistingMessage
+  ) => {
+    this.props.dispatcher.incrementMetric(
+      'generateCommitMessageButtonClickCount'
+    )
+
+    return mustOverrideExistingMessage
       ? this.props.dispatcher.promptOverrideWithGeneratedCommitMessage(
           this.props.repository,
           filesSelected
@@ -911,6 +915,7 @@ export class ChangesList extends React.Component<
           this.props.repository,
           filesSelected
         )
+  }
 
   private onShowPopup = (p: Popup) => this.props.dispatcher.showPopup(p)
   private onShowFoldout = (f: Foldout) => this.props.dispatcher.showFoldout(f)

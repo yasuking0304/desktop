@@ -238,6 +238,9 @@ const DefaultDailyMeasures: IDailyMeasures = {
   submoduleDiffViewedFromHistoryCount: 0,
   openSubmoduleFromDiffCount: 0,
   previewedPullRequestCount: 0,
+  generateCommitMessageButtonClickCount: 0,
+  generateCommitMessageCount: 0,
+  generateCommitMessageUsedVerbatimCount: 0,
 }
 
 // A subtype of IDailyMeasures filtered to contain only its numeric properties
