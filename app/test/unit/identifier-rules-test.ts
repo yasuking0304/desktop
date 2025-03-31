@@ -33,17 +33,17 @@ describe('Identifier rules', () => {
     })
 
     it('returns true if the value consists of allowed characters', () => {
-      assert.equal(gitAuthorNameIsValid('this is great'), true)
+      assert(gitAuthorNameIsValid('this is great'))
     })
 
     it('returns true if the value contains allowed characters with disallowed characters', () => {
       const allowed = `;hi. there;${String.fromCharCode(31)}`
-      assert.equal(gitAuthorNameIsValid(allowed), true)
+      assert(gitAuthorNameIsValid(allowed))
     })
 
     it('returns true if the value contains ASCII characters whose code point is greater than 32', () => {
       const allowed = String.fromCharCode(33)
-      assert.equal(gitAuthorNameIsValid(allowed), true)
+      assert(gitAuthorNameIsValid(allowed))
     })
   })
 })

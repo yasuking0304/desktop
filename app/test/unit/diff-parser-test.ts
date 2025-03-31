@@ -332,7 +332,7 @@ Binary files /dev/null and b/IMG_2306.CR2 differ
     const parser = new DiffParser()
     const diff = parser.parse(diffText)
     assert.equal(diff.hunks.length, 0)
-    assert.equal(diff.isBinary, true)
+    assert(diff.isBinary)
   })
 
   it('parses diff of empty file', () => {

@@ -45,7 +45,7 @@ describe('PopupManager', () => {
       popupManager.addPopup({ type: PopupType.About })
 
       const isAPopupOpen = popupManager.isAPopupOpen
-      assert.equal(isAPopupOpen, true)
+      assert(isAPopupOpen)
     })
   })
 
@@ -74,20 +74,14 @@ describe('PopupManager', () => {
       const popupManager = new PopupManager()
       popupManager.addPopup({ type: PopupType.About })
 
-      const areThereAboutPopups = popupManager.areTherePopupsOfType(
-        PopupType.About
-      )
-      assert.equal(areThereAboutPopups, true)
+      assert(popupManager.areTherePopupsOfType(PopupType.About))
     })
 
     it('returns false if there are no popups of that type', () => {
       const popupManager = new PopupManager()
       popupManager.addPopup({ type: PopupType.About })
 
-      const areThereSignInPopups = popupManager.areTherePopupsOfType(
-        PopupType.SignIn
-      )
-      assert.equal(areThereSignInPopups, false)
+      assert(popupManager.areTherePopupsOfType(PopupType.SignIn))
     })
   })
 
