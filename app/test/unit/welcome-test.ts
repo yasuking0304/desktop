@@ -14,17 +14,17 @@ describe('Welcome', () => {
     })
 
     it('defaults to false when no value found', () => {
-      assert.equal(hasShownWelcomeFlow(), false)
+      assert(!hasShownWelcomeFlow())
     })
 
     it('returns false for some non-numeric value', () => {
       localStorage.setItem(key, 'a')
-      assert.equal(hasShownWelcomeFlow(), false)
+      assert(!hasShownWelcomeFlow())
     })
 
     it('returns false when zero found', () => {
       localStorage.setItem(key, '0')
-      assert.equal(hasShownWelcomeFlow(), false)
+      assert(!hasShownWelcomeFlow())
     })
 
     it('returns true when one found', () => {

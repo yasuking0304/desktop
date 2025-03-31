@@ -174,7 +174,7 @@ describe('await parseRepoRules', () => {
   it('is not enforced when no rules are provided', async () => {
     const rules: IAPIRepoRule[] = []
     const repoRulesInfo = await parseRepoRules(rules, rulesets, repo)
-    assert.equal(repoRulesInfo.creationRestricted, false)
+    assert(!repoRulesInfo.creationRestricted)
   })
 })
 
@@ -183,7 +183,7 @@ describe('repo metadata rules', () => {
     it('shows no rules and passes everything when no rules are provided', async () => {
       const rules: IAPIRepoRule[] = []
       const repoRulesInfo = await parseRepoRules(rules, rulesets, repo)
-      assert.equal(repoRulesInfo.commitMessagePatterns.hasRules, false)
+      assert(!repoRulesInfo.commitMessagePatterns.hasRules)
 
       const failedRules =
         repoRulesInfo.commitMessagePatterns.getFailedRules('abc')

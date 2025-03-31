@@ -84,8 +84,8 @@ describe('findForkedRemotesToPrune', () => {
 
     const names = getNamesFromRemotes(remotesToPrune)
     assert.notEqual(names.length, 0, 'Expected names to be empty')
-    assert.equal(names.includes(OriginRemote), false)
-    assert.equal(names.includes(NonGitHubDesktopRemote), false)
+    assert(!names.includes(OriginRemote))
+    assert(!names.includes(NonGitHubDesktopRemote))
   })
 
   it('never prunes remotes with local branches', () => {

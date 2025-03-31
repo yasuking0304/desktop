@@ -116,25 +116,25 @@ describe('git/config', () => {
       it('treats "false" as false', async () => {
         await setGlobalConfigValue(key, 'false', env)
         const value = await getGlobalBooleanConfigValue(key, env)
-        assert.equal(value, false)
+        assert.strictEqual(value, false)
       })
 
       it('treats "off" as false', async () => {
         await setGlobalConfigValue(key, 'off', env)
         const value = await getGlobalBooleanConfigValue(key, env)
-        assert.equal(value, false)
+        assert.strictEqual(value, false)
       })
 
       it('treats "no" as false', async () => {
         await setGlobalConfigValue(key, 'no', env)
         const value = await getGlobalBooleanConfigValue(key, env)
-        assert.equal(value, false)
+        assert.strictEqual(value, false)
       })
 
       it('treats "0" as false', async () => {
         await setGlobalConfigValue(key, '0', env)
         const value = await getGlobalBooleanConfigValue(key, env)
-        assert.equal(value, false)
+        assert.strictEqual(value, false)
       })
 
       it('treats "true" as true', async () => {

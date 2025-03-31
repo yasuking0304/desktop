@@ -60,7 +60,7 @@ describe('gitignore', () => {
 
       const contents = await readGitIgnoreAtRoot(repo)
       assert(contents !== null)
-      assert.equal(contents.endsWith('\r\n'), true)
+      assert(contents.endsWith('\r\n'))
     })
 
     it('when autocrlf=input, appends LF to file', async () => {
@@ -86,7 +86,7 @@ describe('gitignore', () => {
 
       const contents = await readGitIgnoreAtRoot(repo)
       assert(contents !== null)
-      assert.equal(contents.endsWith('\n'), true)
+      assert(contents.endsWith('\n'))
     })
   })
 
@@ -98,7 +98,7 @@ describe('gitignore', () => {
 
       const exists = await FSE.pathExists(`${repo.path}/.gitignore`)
 
-      assert.equal(exists, true)
+      assert(exists)
     })
 
     it('deletes gitignore file when no entries provided', async () => {
@@ -112,7 +112,7 @@ describe('gitignore', () => {
       await saveGitIgnore(repo, '')
 
       const exists = await FSE.pathExists(ignoreFile)
-      assert.equal(exists, false)
+      assert(!exists)
     })
 
     it('applies rule correctly to repository', async () => {

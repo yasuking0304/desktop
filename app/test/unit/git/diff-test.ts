@@ -526,9 +526,9 @@ describe('git/diff', () => {
       const diff = await getSubmoduleDiff()
       assert(diff.oldSHA === null)
       assert(diff.newSHA === null)
-      assert.equal(diff.status.commitChanged, false)
+      assert(!diff.status.commitChanged)
       assert.equal(diff.status.modifiedChanges, true)
-      assert.equal(diff.status.untrackedChanges, false)
+      assert(!diff.status.untrackedChanges)
     })
 
     it('can get the diff for a submodule with only untracked changes', async () => {
@@ -538,8 +538,8 @@ describe('git/diff', () => {
       const diff = await getSubmoduleDiff()
       assert(diff.oldSHA === null)
       assert(diff.newSHA === null)
-      assert.equal(diff.status.commitChanged, false)
-      assert.equal(diff.status.modifiedChanges, false)
+      assert(!diff.status.commitChanged)
+      assert(!diff.status.modifiedChanges)
       assert.equal(diff.status.untrackedChanges, true)
     })
 
@@ -552,8 +552,8 @@ describe('git/diff', () => {
       assert(diff.oldSHA !== null)
       assert(diff.newSHA !== null)
       assert.equal(diff.status.commitChanged, true)
-      assert.equal(diff.status.modifiedChanges, false)
-      assert.equal(diff.status.untrackedChanges, false)
+      assert(!diff.status.modifiedChanges)
+      assert(!diff.status.untrackedChanges)
     })
 
     it('can get the diff for a submodule a all kinds of changes', async () => {
@@ -698,7 +698,7 @@ describe('git/diff', () => {
         return
       }
 
-      assert.equal(diff.text.includes('bar'), false)
+      assert(!diff.text.includes('bar'))
       assert(diff.text.includes('feature'))
     })
   })

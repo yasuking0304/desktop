@@ -36,8 +36,7 @@ describe('PopupManager', () => {
   describe('isAPopupOpen', () => {
     it('returns false when no popups added', () => {
       const popupManager = new PopupManager()
-      const isAPopupOpen = popupManager.isAPopupOpen
-      assert.equal(isAPopupOpen, false)
+      assert(!popupManager.isAPopupOpen)
     })
 
     it('returns last added popup', () => {
