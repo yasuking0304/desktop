@@ -32,15 +32,10 @@ describe('git/checkout', () => {
       ref: '',
     }
 
-    let errorRaised = false
-    try {
-      await checkoutBranch(repository, branch, null)
-    } catch (error) {
-      errorRaised = true
-      assert.equal(error.message, 'fatal: invalid reference: ..\n')
-    }
-
-    assert.equal(errorRaised, true)
+    await assert.rejects(
+      checkoutBranch(repository, branch, null),
+      /fatal: invalid reference: ..\n/
+    )
   })
 
   it('can checkout a valid branch name in an existing repository', async () => {
@@ -122,16 +117,10 @@ describe('git/checkout', () => {
 
     await createBranch(repository, expectedBranch, null)
 
-    let errorRaised = false
-
-    try {
-      await checkoutBranch(repository, remoteBranch, null)
-    } catch (error) {
-      errorRaised = true
-      assert.equal(error.message, 'A branch with that name already exists.')
-    }
-
-    assert.equal(errorRaised, true)
+    await assert.rejects(
+      checkoutBranch(repository, remoteBranch, null),
+      /A branch with that name already exists./
+    )
   })
 
   describe('with submodules', () => {
