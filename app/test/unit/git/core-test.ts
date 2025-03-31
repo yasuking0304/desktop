@@ -22,66 +22,38 @@ describe('git/core', () => {
   describe('error handling', () => {
     it('does not throw for errors that were expected', async () => {
       const args = ['rev-list', '--left-right', '--count', 'some-ref', '--']
-
-      let threw = false
-      try {
-        const result = await git(args, repository.path, 'test', {
-          expectedErrors: new Set([GitError.BadRevision]),
-        })
-        assert.equal(result.gitError, GitError.BadRevision)
-      } catch (e) {
-        threw = true
-      }
-
-      assert.equal(threw, false)
+      const result = await git(args, repository.path, 'test', {
+        expectedErrors: new Set([GitError.BadRevision]),
+      })
+      assert.equal(result.gitError, GitError.BadRevision)
     })
 
     it('throws for errors that were not expected', async () => {
       const args = ['rev-list', '--left-right', '--count', 'some-ref', '--']
-
-      let threw = false
-      try {
-        await git(args, repository.path, 'test', {
+      await assert.rejects(
+        git(args, repository.path, 'test', {
           expectedErrors: new Set([GitError.SSHKeyAuditUnverified]),
         })
-      } catch (e) {
-        threw = true
-      }
-
-      assert.equal(threw, true)
+      )
     })
   })
 
   describe('exit code handling', () => {
     it('does not throw for exit codes that were expected', async () => {
       const args = ['rev-list', '--left-right', '--count', 'some-ref', '--']
-
-      let threw = false
-      try {
-        const result = await git(args, repository.path, 'test', {
-          successExitCodes: new Set([128]),
-        })
-        assert.equal(result.exitCode, 128)
-      } catch (e) {
-        threw = true
-      }
-
-      assert.equal(threw, false)
+      const result = await git(args, repository.path, 'test', {
+        successExitCodes: new Set([128]),
+      })
+      assert.equal(result.exitCode, 128)
     })
 
     it('throws for exit codes that were not expected', async () => {
       const args = ['rev-list', '--left-right', '--count', 'some-ref', '--']
-
-      let threw = false
-      try {
-        await git(args, repository.path, 'test', {
+      await assert.rejects(
+        git(args, repository.path, 'test', {
           successExitCodes: new Set([2]),
         })
-      } catch (e) {
-        threw = true
-      }
-
-      assert.equal(threw, true)
+      )
     })
   })
 
