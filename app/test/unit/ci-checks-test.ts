@@ -14,8 +14,8 @@ describe('getCheckRunsGroupedByActionWorkflowNameAndEvent', () => {
     ]
     const groups = getCheckRunsGroupedByActionWorkflowNameAndEvent(checkRuns)
     const groupNames = [...groups.keys()]
-    assert.equal(groupNames.includes('test1'), true)
-    assert.equal(groupNames.includes('test2'), true)
+    assert(groupNames.includes('test1'))
+    assert(groupNames.includes('test2'))
   })
 
   it('groups any check run without an actions workflow name into Other', () => {
@@ -25,8 +25,8 @@ describe('getCheckRunsGroupedByActionWorkflowNameAndEvent', () => {
     ]
     const groups = getCheckRunsGroupedByActionWorkflowNameAndEvent(checkRuns)
     const groupNames = [...groups.keys()]
-    assert.equal(groupNames.includes('test1'), true)
-    assert.equal(groupNames.includes('Other'), true)
+    assert(groupNames.includes('test1'))
+    assert(groupNames.includes('Other'))
   })
 
   it('groups any check run without an actions workflow name with an app name of "GitHub Code Scanning" into "Code scanning results"', () => {
@@ -37,9 +37,9 @@ describe('getCheckRunsGroupedByActionWorkflowNameAndEvent', () => {
     ]
     const groups = getCheckRunsGroupedByActionWorkflowNameAndEvent(checkRuns)
     const groupNames = [...groups.keys()]
-    assert.equal(groupNames.includes('test1'), true)
-    assert.equal(groupNames.includes('Other'), true)
-    assert.equal(groupNames.includes('Code scanning results'), true)
+    assert(groupNames.includes('test1'))
+    assert(groupNames.includes('Other'))
+    assert(groupNames.includes('Code scanning results'))
   })
 
   it('groups by actions event type if more than one event type', () => {
@@ -51,27 +51,27 @@ describe('getCheckRunsGroupedByActionWorkflowNameAndEvent', () => {
     let groupNames = [...groups.keys()]
 
     // no event types
-    assert.equal(groupNames.includes('test1'), true)
-    assert.equal(groupNames.includes('test2'), true)
+    assert(groupNames.includes('test1'))
+    assert(groupNames.includes('test2'))
 
     checkRuns.push(buildMockCheckRun('1', '', 'test3', 'pull_request'))
     groups = getCheckRunsGroupedByActionWorkflowNameAndEvent(checkRuns)
     groupNames = [...groups.keys()]
 
     // only one event
-    assert.equal(groupNames.includes('test1'), true)
-    assert.equal(groupNames.includes('test2'), true)
-    assert.equal(groupNames.includes('test3'), true)
+    assert(groupNames.includes('test1'))
+    assert(groupNames.includes('test2'))
+    assert(groupNames.includes('test3'))
 
     checkRuns.push(buildMockCheckRun('1', '', 'test4', 'push'))
     groups = getCheckRunsGroupedByActionWorkflowNameAndEvent(checkRuns)
     groupNames = [...groups.keys()]
 
     // two event types for test3 and test4
-    assert.equal(groupNames.includes('test1'), true)
-    assert.equal(groupNames.includes('test2'), true)
-    assert.equal(groupNames.includes('test3 (pull_request)'), true)
-    assert.equal(groupNames.includes('test4 (push)'), true)
+    assert(groupNames.includes('test1'))
+    assert(groupNames.includes('test2'))
+    assert(groupNames.includes('test3 (pull_request)'))
+    assert(groupNames.includes('test4 (push)'))
   })
 })
 

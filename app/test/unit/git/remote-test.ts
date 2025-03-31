@@ -36,10 +36,10 @@ describe('git/remote', () => {
       setConfigValue(repository, 'remote.bassoon.partialclonefilter', 'foo')
 
       assert.equal(result[0].name, 'bassoon')
-      assert.equal(result[0].url.endsWith(nwo), true)
+      assert(result[0].url.endsWith(nwo))
 
       assert.equal(result[1].name, 'origin')
-      assert.equal(result[1].url.endsWith(nwo), true)
+      assert(result[1].url.endsWith(nwo))
 
       assert.equal(result[2].name, 'spaces-in-path')
       assert.equal(result[2].url, '/path/with spaces/foo')

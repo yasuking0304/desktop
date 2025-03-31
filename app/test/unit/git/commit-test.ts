@@ -483,7 +483,7 @@ describe('git/commit', () => {
       const inMerge = await FSE.pathExists(
         path.join(repo.path, '.git', 'MERGE_HEAD')
       )
-      assert.equal(inMerge, true)
+      assert(inMerge)
 
       await FSE.writeFile(filePath, 'b1b2')
 

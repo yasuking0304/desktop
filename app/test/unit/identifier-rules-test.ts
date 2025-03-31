@@ -18,7 +18,7 @@ describe('Identifier rules', () => {
     })
 
     it('returns true for empty strings', () => {
-      assert.equal(gitAuthorNameIsValid(''), true)
+      assert(gitAuthorNameIsValid(''))
     })
 
     it('returns false when name consists only of ascii character codes 0-32 inclusive', () => {
