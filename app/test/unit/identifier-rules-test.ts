@@ -6,7 +6,7 @@ describe('Identifier rules', () => {
   describe('gitAuthorNameIsValid', () => {
     it('returns any value that is a disallowed character', () => {
       assert(!gitAuthorNameIsValid('.'))
-      assert.equal(gitAuthorNameIsValid(','), false)
+      assert(!gitAuthorNameIsValid(','))
       assert(!gitAuthorNameIsValid(':'))
       assert(!gitAuthorNameIsValid(';'))
       assert(!gitAuthorNameIsValid('<'))

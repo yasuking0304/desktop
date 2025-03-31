@@ -80,7 +80,7 @@ describe('PopupManager', () => {
       const popupManager = new PopupManager()
       popupManager.addPopup({ type: PopupType.About })
 
-      assert(popupManager.areTherePopupsOfType(PopupType.SignIn))
+      assert(!popupManager.areTherePopupsOfType(PopupType.SignIn))
     })
   })
 

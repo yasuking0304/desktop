@@ -72,7 +72,7 @@ describe('RepositoriesStore', () => {
       const repositories = await repositoriesStore.getAll()
       const repo = repositories[0]
       assertIsRepositoryWithGitHubRepository(repo)
-      assert.equal(repo.gitHubRepository.isPrivate, true)
+      assert(repo.gitHubRepository.isPrivate)
       assert(!repo.gitHubRepository.fork)
       assert.equal(
         repo.gitHubRepository.htmlURL,

@@ -527,7 +527,7 @@ describe('git/diff', () => {
       assert(diff.oldSHA === null)
       assert(diff.newSHA === null)
       assert(!diff.status.commitChanged)
-      assert.equal(diff.status.modifiedChanges, true)
+      assert(diff.status.modifiedChanges)
       assert(!diff.status.untrackedChanges)
     })
 
@@ -540,7 +540,7 @@ describe('git/diff', () => {
       assert(diff.newSHA === null)
       assert(!diff.status.commitChanged)
       assert(!diff.status.modifiedChanges)
-      assert.equal(diff.status.untrackedChanges, true)
+      assert(diff.status.untrackedChanges)
     })
 
     it('can get the diff for a submodule a commit change', async () => {
@@ -551,7 +551,7 @@ describe('git/diff', () => {
       const diff = await getSubmoduleDiff()
       assert(diff.oldSHA !== null)
       assert(diff.newSHA !== null)
-      assert.equal(diff.status.commitChanged, true)
+      assert(diff.status.commitChanged)
       assert(!diff.status.modifiedChanges)
       assert(!diff.status.untrackedChanges)
     })
@@ -565,9 +565,9 @@ describe('git/diff', () => {
       const diff = await getSubmoduleDiff()
       assert(diff.oldSHA !== null)
       assert(diff.newSHA !== null)
-      assert.equal(diff.status.commitChanged, true)
-      assert.equal(diff.status.modifiedChanges, true)
-      assert.equal(diff.status.untrackedChanges, true)
+      assert(diff.status.commitChanged)
+      assert(diff.status.modifiedChanges)
+      assert(diff.status.untrackedChanges)
     })
   })
 

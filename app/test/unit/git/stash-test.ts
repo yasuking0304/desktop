@@ -201,7 +201,9 @@ describe('git/stash', () => {
         files: { kind: StashedChangesLoadStates.NotLoaded },
       }
 
-      await dropDesktopStashEntry(repository, doesNotExist.stashSha)
+      await assert.doesNotReject(
+        dropDesktopStashEntry(repository, doesNotExist.stashSha)
+      )
     })
 
     it("does not fail when attempting to delete stash entry that doesn't exist", async () => {
@@ -217,7 +219,7 @@ describe('git/stash', () => {
       await generateTestStashEntry(repository, 'master', true)
       await generateTestStashEntry(repository, 'master', true)
 
-      await assert.rejects(
+      await assert.doesNotReject(
         dropDesktopStashEntry(repository, doesNotExist.stashSha)
       )
     })

@@ -18,8 +18,8 @@ describe('round', () => {
   })
 
   it("doesn't attempt to round infinity", () => {
-    assert.equal(Number.isFinite(round(Infinity, 1)), false)
-    assert.equal(Number.isFinite(round(-Infinity, 1)), false)
+    assert(!Number.isFinite(round(Infinity, 1)))
+    assert(!Number.isFinite(round(-Infinity, 1)))
   })
 
   it("doesn't attempt to round to less than zero decimals", () => {

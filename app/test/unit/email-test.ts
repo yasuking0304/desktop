@@ -271,8 +271,8 @@ describe('emails', () => {
         'free'
       )
 
-      assert.equal(isAttributableEmailFor(account, 'personal@gmail.com'), true)
-      assert.equal(isAttributableEmailFor(account, 'company@github.com'), true)
+      assert(isAttributableEmailFor(account, 'personal@gmail.com'))
+      assert(isAttributableEmailFor(account, 'company@github.com'))
       assert.equal(
         isAttributableEmailFor(account, 'niik@users.noreply.github.com'),
         true
@@ -330,7 +330,7 @@ describe('emails', () => {
         'free'
       )
 
-      assert.equal(isAttributableEmailFor(account, 'niik@github.com'), true)
+      assert(isAttributableEmailFor(account, 'niik@github.com'))
       assert.equal(
         isAttributableEmailFor(account, 'niik@users.noreply.github.com'),
         true
