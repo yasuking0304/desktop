@@ -29,9 +29,7 @@ describe('StatsStore', () => {
     // from the StatsStore has completed before we try reading the table.
     await statsDb.transaction('rw!', statsDb.dailyMeasures, async () => {
       const statsEntry = await statsDb.dailyMeasures.limit(1).first()
-
-      assert(statsEntry !== undefined)
-      assert.equal(statsEntry.active, true)
+      assert(statsEntry?.active === true)
     })
   })
 

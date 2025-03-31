@@ -29,7 +29,7 @@ describe('Welcome', () => {
 
     it('returns true when one found', () => {
       localStorage.setItem(key, '1')
-      assert.equal(hasShownWelcomeFlow(), true)
+      assert(hasShownWelcomeFlow())
     })
   })
 

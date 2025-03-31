@@ -54,7 +54,7 @@ describe('RepositoryStateCache', () => {
     })
 
     const { branchesState } = cache.get(repository)
-    assert.equal(branchesState.isLoadingPullRequests, true)
+    assert(branchesState.isLoadingPullRequests)
     assert.equal(branchesState.openPullRequests.length, 1)
   })
 
@@ -84,9 +84,9 @@ describe('RepositoryStateCache', () => {
     })
 
     const { changesState } = cache.get(repository)
-    assert.equal(changesState.workingDirectory.includeAll, true)
+    assert(changesState.workingDirectory.includeAll)
     assert.equal(changesState.workingDirectory.files.length, 1)
-    assert.equal(changesState.showCoAuthoredBy, true)
+    assert(changesState.showCoAuthoredBy)
     assert.equal(changesState.commitMessage.summary, summary)
   })
 
