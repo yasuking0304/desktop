@@ -18,7 +18,7 @@ describe('DesktopFileTransport', () => {
     const d = await createTempDirectory('desktop-logs')
     const t = new DesktopFileTransport({ logDirectory: d })
 
-    assert((await readdir(d)).length === 0)
+    assert.equal((await readdir(d)).length, 0)
     await info(t, 'heyo')
     const files = await readdir(d)
     assert.equal(files.length, 1)
