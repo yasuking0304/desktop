@@ -98,11 +98,10 @@ describe('findForkedRemotesToPrune', () => {
 
     const remotesToPrune = findForkedRemotesToPrune(remotes, [], allBranches)
 
-    assert.equal(
-      getNamesFromRemotes(remotesToPrune).includes(
+    assert(
+      !getNamesFromRemotes(remotesToPrune).includes(
         GitHubDesktopRemoteWithLocalBranch
-      ),
-      false
+      )
     )
   })
 
@@ -117,11 +116,10 @@ describe('findForkedRemotesToPrune', () => {
 
     const remotesToPrune = findForkedRemotesToPrune(remotes, openPRs, [])
 
-    assert.equal(
-      getNamesFromRemotes(remotesToPrune).includes(
+    assert(
+      !getNamesFromRemotes(remotesToPrune).includes(
         GitHubDesktopRemoteWithPullRequest
-      ),
-      false
+      )
     )
   })
 
