@@ -21,7 +21,7 @@ describe('ssh-wrapper', () => {
   }
 
   it('can be executed by current process', async () =>
-    assert.doesNotThrow(async () => await access(sshWrapperPath, constants.X_OK)))
+    await assert.doesNotReject(access(sshWrapperPath, constants.X_OK)))
 
   it('attempts to use ssh-askpass program', async () => {
     // Try to connect to github.com with a non-existent known_hosts file to force
