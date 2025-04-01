@@ -103,7 +103,7 @@ jobs:
       - name: Run desktop-trampoline tests
         run: |
           cd vendor/desktop-trampoline
-          yarn build
+          yarn install
           yarn test
       - name: Build production app
         run: yarn build:prod
