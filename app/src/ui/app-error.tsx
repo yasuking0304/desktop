@@ -131,8 +131,9 @@ export class AppError extends React.Component<IAppErrorProps, IAppErrorState> {
         <>
           <p>{e.message}</p>
           <p>
-            Upgrade your plan:{' '}
-            <LinkButton uri={copilotPlansURL}>{copilotPlansURL}</LinkButton>
+            <LinkButton uri={copilotPlansURL}>
+              Upgrade to increase your limit.
+            </LinkButton>
           </p>
         </>
       )
