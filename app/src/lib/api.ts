@@ -1877,29 +1877,30 @@ export class API {
       const retryAfter = response.headers.get('Retry-After')
       if (retryAfter) {
         throw new CopilotError(
-          `Rate limited, retry after ${retryAfter} seconds`,
+          `Rate limited, retry after ${retryAfter} seconds.`,
           response.status
         )
       } else {
         throw new CopilotError(
-          'Rate limited, try again in a few minutes',
+          'Rate limited, try again in a few minutes.',
           response.status
         )
       }
     } else if (response.status === HttpStatusCode.PaymentRequired) {
-      const errorMsg = (await response.text()) || 'You have exceeded your quota'
+      const errorMsg =
+        (await response.text()) || 'You have reached your quota limit.'
 
       throw new CopilotError(errorMsg, response.status)
     } else if (response.status === HttpStatusCode.Unauthorized) {
       throw new CopilotError(
-        'Unauthorized: error with authentication',
+        'Unauthorized: error with authentication.',
         response.status
       )
     } else if (response.status === HttpStatusCode.Forbidden) {
       const body = await response.text()
       if (body.includes('unauthorized: not licensed to use Copilot')) {
         throw new CopilotError(
-          'Unauthorized: not licensed to use Copilot',
+          'Unauthorized: not licensed to use Copilot.',
           response.status
         )
       } else if (
@@ -1909,28 +1910,28 @@ export class API {
         )
       ) {
         throw new CopilotError(
-          'Unauthorized: not authorized to use this Copilot feature',
+          'Unauthorized: not authorized to use this Copilot feature.',
           response.status
         )
       } else if (
         body.includes('integration does not have GitHub chat enabled')
       ) {
         throw new CopilotError(
-          'Integration does not have GitHub chat enabled',
+          'Integration does not have GitHub chat enabled.',
           response.status
         )
       } else {
-        throw new CopilotError('Unauthorized: unknown', response.status)
+        throw new CopilotError('Unauthorized: unknown.', response.status)
       }
     } else if (response.status === 466) {
       throw new CopilotError(
-        'Client issue: unsupported API version',
+        'Client issue: unsupported API version.',
         response.status
       )
     } else if (response.status >= HttpStatusCode.BadRequest) {
       const internalError = `Internal server error, code: ${
         response.status
-      }, request ID: ${response.headers.get('X-Github-Request-Id')}`
+      }, request ID: ${response.headers.get('X-Github-Request-Id')}.`
       throw new CopilotError(internalError, response.status)
     }
 
