@@ -80,11 +80,7 @@ describe('DesktopFileTransport', () => {
       await info(transport, 'heyo')
     }
 
-    console.log('FILETRANSPORT:readdir')
-
     const retainedFiles = await readdir(d)
-
-    console.log('FILETRANSPORT:readdir done')
 
     // Retains the newest files (ISO date is lexicographically sortable)
     assert.deepStrictEqual(retainedFiles.sort(), [
