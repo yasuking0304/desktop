@@ -1,3 +1,5 @@
+import { describe, it } from 'node:test'
+import assert from 'node:assert'
 import * as FSE from 'fs-extra'
 import * as Path from 'path'
 
@@ -11,7 +13,7 @@ describe('git/git-attributes', () => {
       await writeGitAttributes(repo.path)
       const expectedPath = Path.join(repo.path, '.gitattributes')
       const contents = await FSE.readFile(expectedPath, 'utf8')
-      expect(contents).toContain('* text=auto')
+      assert(contents.includes('* text=auto'))
     })
   })
 })

@@ -1,3 +1,5 @@
+import { describe, it, beforeEach } from 'node:test'
+import assert from 'node:assert'
 import * as path from 'path'
 
 import { Repository } from '../../../src/models/repository'
@@ -27,7 +29,7 @@ describe('git/reset', () => {
       await reset(repository, GitResetMode.Hard, 'HEAD')
 
       const status = await getStatusOrThrow(repository)
-      expect(status.workingDirectory.files).toHaveLength(0)
+      assert.equal(status.workingDirectory.files.length, 0)
     })
   })
 
@@ -50,7 +52,7 @@ describe('git/reset', () => {
       await exec(['checkout-index', '-f', '-u', '-q', '--', fileName], repoPath)
 
       const status = await getStatusOrThrow(repository)
-      expect(status.workingDirectory.files).toHaveLength(0)
+      assert.equal(status.workingDirectory.files.length, 0)
     })
   })
 })

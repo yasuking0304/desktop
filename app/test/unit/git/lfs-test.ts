@@ -1,3 +1,5 @@
+import { describe, it } from 'node:test'
+import assert from 'node:assert'
 import * as Path from 'path'
 import { writeFile } from 'fs-extra'
 
@@ -20,7 +22,7 @@ describe('git-lfs', () => {
       const repository = new Repository(path, -1, null, false)
 
       const usingLFS = await isUsingLFS(repository)
-      expect(usingLFS).toBe(false)
+      assert(!usingLFS)
     })
 
     it('returns true if LFS is tracking a path', async () => {
@@ -30,7 +32,7 @@ describe('git-lfs', () => {
       await exec(['lfs', 'track', '*.psd'], repository.path)
 
       const usingLFS = await isUsingLFS(repository)
-      expect(usingLFS).toBe(true)
+      assert(usingLFS)
     })
   })
 
@@ -43,7 +45,7 @@ describe('git-lfs', () => {
       await writeFile(readme, 'Hello world!')
 
       const found = await isTrackedByLFS(repository, file)
-      expect(found).toBe(false)
+      assert(!found)
     })
 
     it('returns true after tracking file in Git LFS', async () => {
@@ -56,7 +58,7 @@ describe('git-lfs', () => {
       await exec(['lfs', 'track', '*.md'], repository.path)
 
       const found = await isTrackedByLFS(repository, file)
-      expect(found).toBe(true)
+      assert(found)
     })
 
     it('returns true after tracking file with character issues in Git LFS', async () => {
@@ -70,7 +72,7 @@ describe('git-lfs', () => {
       await exec(['lfs', 'track', '*.md'], repository.path)
 
       const found = await isTrackedByLFS(repository, file)
-      expect(found).toBe(true)
+      assert(found)
     })
   })
 
@@ -83,8 +85,8 @@ describe('git-lfs', () => {
 
       const notFound = await filesNotTrackedByLFS(repository, [videoFile])
 
-      expect(notFound).toHaveLength(1)
-      expect(notFound).toContain(videoFile)
+      assert.equal(notFound.length, 1)
+      assert(notFound.includes(videoFile))
     })
 
     it('skips files that are tracked by Git LFS', async () => {
@@ -95,7 +97,7 @@ describe('git-lfs', () => {
 
       const notFound = await filesNotTrackedByLFS(repository, [photoFile])
 
-      expect(notFound).toHaveLength(0)
+      assert.equal(notFound.length, 0)
     })
 
     it('skips files in a subfolder that are tracked', async () => {
@@ -107,7 +109,7 @@ describe('git-lfs', () => {
         photoFileInDirectory,
       ])
 
-      expect(notFound).toHaveLength(0)
+      assert.equal(notFound.length, 0)
     })
 
     it('skips files in a subfolder where the rule only covers the subdirectory', async () => {
@@ -119,7 +121,7 @@ describe('git-lfs', () => {
         photoFileInDirectory,
       ])
 
-      expect(notFound).toHaveLength(0)
+      assert.equal(notFound.length, 0)
     })
   })
 })

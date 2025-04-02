@@ -1,3 +1,5 @@
+import { describe, it, beforeEach } from 'node:test'
+import assert from 'node:assert'
 import { Repository } from '../../../src/models/repository'
 import { setupFixtureRepository } from '../../helpers/repositories'
 import {
@@ -35,45 +37,56 @@ describe('git/fetch', () => {
 
       // Only the branch behind was updated to match its upstream
       const branchBehind = branchWithName(resultBranches, 'branch-behind')
+      assert(branchBehind.upstream !== null)
+
       const branchBehindUpstream = branchWithName(
         resultBranches,
-        branchBehind.upstream!
+        branchBehind.upstream
       )
-      expect(branchBehindUpstream.tip.sha).toBe(branchBehind.tip.sha)
+      assert.equal(branchBehindUpstream.tip.sha, branchBehind.tip.sha)
 
       // The branch ahead is still ahead
       const branchAhead = branchWithName(resultBranches, 'branch-ahead')
+      assert(branchAhead.upstream !== null)
+
       const branchAheadUpstream = branchWithName(
         resultBranches,
-        branchAhead.upstream!
+        branchAhead.upstream
       )
-      expect(branchAheadUpstream.tip.sha).not.toBe(branchAhead.tip.sha)
+
+      assert.notEqual(branchAheadUpstream.tip.sha, branchAhead.tip.sha)
 
       // The branch ahead and behind is still ahead and behind
       const branchAheadAndBehind = branchWithName(
         resultBranches,
         'branch-ahead-and-behind'
       )
+      assert(branchAheadAndBehind.upstream !== null)
+
       const branchAheadAndBehindUpstream = branchWithName(
         resultBranches,
-        branchAheadAndBehind.upstream!
+        branchAheadAndBehind.upstream
       )
-      expect(branchAheadAndBehindUpstream.tip.sha).not.toBe(
+      assert.notEqual(
+        branchAheadAndBehindUpstream.tip.sha,
         branchAheadAndBehind.tip.sha
       )
 
       // The main branch hasn't been updated, since it's the current branch
       const mainBranch = branchWithName(resultBranches, 'main')
-      const mainUpstream = branchWithName(resultBranches, mainBranch.upstream!)
-      expect(mainUpstream.tip.sha).not.toBe(mainBranch.tip.sha)
+      assert(mainBranch.upstream !== null)
+
+      const mainUpstream = branchWithName(resultBranches, mainBranch.upstream)
+      assert.notEqual(mainUpstream.tip.sha, mainBranch.tip.sha)
 
       // The up-to-date branch is still matching its upstream
       const upToDateBranch = branchWithName(resultBranches, 'branch-up-to-date')
+      assert(upToDateBranch.upstream !== null)
       const upToDateBranchUpstream = branchWithName(
         resultBranches,
-        upToDateBranch.upstream!
+        upToDateBranch.upstream
       )
-      expect(upToDateBranchUpstream.tip.sha).toBe(upToDateBranch.tip.sha)
+      assert.equal(upToDateBranchUpstream.tip.sha, upToDateBranch.tip.sha)
     })
 
     // We want to avoid messing with the FETCH_HEAD file. Normally, it shouldn't
@@ -91,7 +104,7 @@ describe('git/fetch', () => {
 
       const currentFetchHead = await FSE.readFile(fetchHeadPath, 'utf-8')
 
-      expect(currentFetchHead).toBe(previousFetchHead)
+      assert.equal(currentFetchHead, previousFetchHead)
     })
   })
 })

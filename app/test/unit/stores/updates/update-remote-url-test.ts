@@ -1,3 +1,5 @@
+import { describe, it } from 'node:test'
+import assert from 'node:assert'
 import { GitStore, RepositoriesStore } from '../../../../src/lib/stores'
 import { TestRepositoriesDatabase } from '../../../helpers/databases'
 import {
@@ -51,27 +53,31 @@ describe('Update remote url', () => {
     await addRemote(repository, 'origin', remoteUrl || apiRepo.clone_url)
     gitStore = new GitStore(repository, shell, new TestStatsStore())
     await gitStore.loadRemotes()
-    const gitHubRepository = repository.gitHubRepository!
+    const { gitHubRepository } = repository
 
     return { gitHubRepository, gitStore }
   }
 
   it("updates the repository's remote url when the github url changes", async () => {
     const { gitHubRepository, gitStore } = await createRepository(apiRepository)
-    const originalUrl = gitStore.currentRemote!.url
+    assert(gitStore.currentRemote !== null)
+
+    const originalUrl = gitStore.currentRemote.url
     const updatedUrl = 'https://github.com/my-user/my-updated-repo'
     const updatedApiRepository = { ...apiRepository, clone_url: updatedUrl }
     await updateRemoteUrl(gitStore, gitHubRepository, updatedApiRepository)
-    expect(originalUrl).not.toBe(updatedUrl)
-    expect(gitStore.currentRemote!.url).toBe(updatedUrl)
+    assert.notEqual(originalUrl, updatedUrl)
+    assert.equal(gitStore.currentRemote.url, updatedUrl)
   })
 
   it("doesn't update the repository's remote url when the github url is the same", async () => {
     const { gitHubRepository, gitStore } = await createRepository(apiRepository)
-    const originalUrl = gitStore.currentRemote!.url
-    expect(originalUrl).not.toBeEmpty()
+    assert(gitStore.currentRemote !== null)
+    const originalUrl = gitStore.currentRemote.url
+    assert.notEqual(originalUrl.length, 0, 'Expected originalUrl to be empty')
     await updateRemoteUrl(gitStore, gitHubRepository, apiRepository)
-    expect(gitStore.currentRemote!.url).toBe(originalUrl)
+    assert(gitStore.currentRemote !== null)
+    assert.equal(gitStore.currentRemote.url, originalUrl)
   })
 
   it("doesn't update repository's remote url if protocols don't match", async () => {
@@ -87,7 +93,8 @@ describe('Update remote url', () => {
     const updatedApiRepository = { ...apiRepository, clone_url: updatedUrl }
 
     await updateRemoteUrl(gitStore, gitHubRepository, updatedApiRepository)
-    expect(gitStore.currentRemote!.url).toBe(originalUrl)
+    assert(gitStore.currentRemote !== null)
+    assert.equal(gitStore.currentRemote.url, originalUrl)
   })
 
   it("doesn't update the repository's remote url if it differs from the default from the github API", async () => {
@@ -101,6 +108,7 @@ describe('Update remote url', () => {
     const updatedApiRepository = { ...apiRepository, clone_url: updatedUrl }
 
     await updateRemoteUrl(gitStore, gitHubRepository, updatedApiRepository)
-    expect(gitStore.currentRemote!.url).toBe(originalUrl)
+    assert(gitStore.currentRemote !== null)
+    assert.equal(gitStore.currentRemote.url, originalUrl)
   })
 })

@@ -1,3 +1,5 @@
+import { describe, it, beforeEach } from 'node:test'
+import assert from 'node:assert'
 import { Repository } from '../../../src/models/repository'
 import { getChangedFiles, getCommits } from '../../../src/lib/git'
 import { setupFixtureRepository } from '../../helpers/repositories'
@@ -15,19 +17,19 @@ describe('git/log', () => {
   describe('getCommits', () => {
     it('loads history', async () => {
       const commits = await getCommits(repository, 'HEAD', 100)
-      expect(commits).toHaveLength(5)
+      assert.equal(commits.length, 5)
 
       const firstCommit = commits[commits.length - 1]
-      expect(firstCommit.summary).toBe('first')
-      expect(firstCommit.sha).toBe('7cd6640e5b6ca8dbfd0b33d0281ebe702127079c')
-      expect(firstCommit.shortSha).toBe('7cd6640')
+      assert.equal(firstCommit.summary, 'first')
+      assert.equal(firstCommit.sha, '7cd6640e5b6ca8dbfd0b33d0281ebe702127079c')
+      assert.equal(firstCommit.shortSha, '7cd6640')
     })
 
     it('handles repository with HEAD file on disk', async () => {
       const path = await setupFixtureRepository('repository-with-HEAD-file')
       const repo = new Repository(path, 1, null, false)
       const commits = await getCommits(repo, 'HEAD', 100)
-      expect(commits).toHaveLength(2)
+      assert.equal(commits.length, 2)
     })
 
     it('handles repository with signed commit and log.showSignature set', async () => {
@@ -41,21 +43,18 @@ describe('git/log', () => {
 
       const commits = await getCommits(repository, 'HEAD', 100)
 
-      expect(commits).toHaveLength(1)
-      expect(commits[0].sha).toBe('415e4987158c49c383ce7114e0ef00ebf4b070c1')
-      expect(commits[0].shortSha).toBe('415e498')
+      assert.equal(commits.length, 1)
+      assert.equal(commits[0].sha, '415e4987158c49c383ce7114e0ef00ebf4b070c1')
+      assert.equal(commits[0].shortSha, '415e498')
     })
 
     it('parses tags', async () => {
       const commits = await getCommits(repository, 'HEAD', 100)
-      expect(commits).toBeArrayOfSize(5)
+      assert.equal(commits.length, 5)
 
-      expect(commits[0].tags).toIncludeSameMembers(['important'])
-      expect(commits[1].tags).toIncludeSameMembers([
-        'tentative',
-        'less-important',
-      ])
-      expect(commits[2].tags).toBeArrayOfSize(0)
+      assert.deepStrictEqual(commits[0].tags, ['important'])
+      assert.deepStrictEqual(commits[1].tags, ['tentative', 'less-important'])
+      assert.equal(commits[2].tags.length, 0)
     })
   })
 
@@ -65,9 +64,9 @@ describe('git/log', () => {
         repository,
         '7cd6640e5b6ca8dbfd0b33d0281ebe702127079c'
       )
-      expect(changesetData.files).toHaveLength(1)
-      expect(changesetData.files[0].path).toBe('README.md')
-      expect(changesetData.files[0].status.kind).toBe(AppFileStatusKind.New)
+      assert.equal(changesetData.files.length, 1)
+      assert.equal(changesetData.files[0].path, 'README.md')
+      assert.equal(changesetData.files[0].status.kind, AppFileStatusKind.New)
     })
 
     it('detects renames', async () => {
@@ -77,25 +76,25 @@ describe('git/log', () => {
       repository = new Repository(testRepoPath, -1, null, false)
 
       const first = await getChangedFiles(repository, '55bdecb')
-      expect(first.files).toHaveLength(1)
+      assert.equal(first.files.length, 1)
 
-      expect(first.files[0].path).toBe('NEWER.md')
-      expect(first.files[0].status).toEqual({
+      assert.equal(first.files[0].path, 'NEWER.md')
+      assert.deepStrictEqual(first.files[0].status, {
         kind: AppFileStatusKind.Renamed,
         oldPath: 'NEW.md',
-        renameIncludesModifications: true,
         submoduleStatus: undefined,
+        renameIncludesModifications: true,
       })
 
       const second = await getChangedFiles(repository, 'c898ca8')
-      expect(second.files).toHaveLength(1)
+      assert.equal(second.files.length, 1)
 
-      expect(second.files[0].path).toBe('NEW.md')
-      expect(second.files[0].status).toEqual({
+      assert.equal(second.files[0].path, 'NEW.md')
+      assert.deepStrictEqual(second.files[0].status, {
         kind: AppFileStatusKind.Renamed,
         oldPath: 'OLD.md',
-        renameIncludesModifications: false,
         submoduleStatus: undefined,
+        renameIncludesModifications: false,
       })
     })
 
@@ -109,18 +108,18 @@ describe('git/log', () => {
       await setupLocalConfig(repository, [['diff.renames', 'copies']])
 
       const changesetData = await getChangedFiles(repository, 'a500bf415')
-      expect(changesetData.files).toHaveLength(2)
+      assert.equal(changesetData.files.length, 2)
 
-      expect(changesetData.files[0].path).toBe('duplicate-with-edits.md')
-      expect(changesetData.files[0].status).toEqual({
+      assert.equal(changesetData.files[0].path, 'duplicate-with-edits.md')
+      assert.deepStrictEqual(changesetData.files[0].status, {
         kind: AppFileStatusKind.Copied,
         oldPath: 'initial.md',
         renameIncludesModifications: false,
         submoduleStatus: undefined,
       })
 
-      expect(changesetData.files[1].path).toBe('duplicate.md')
-      expect(changesetData.files[1].status).toEqual({
+      assert.equal(changesetData.files[1].path, 'duplicate.md')
+      assert.deepStrictEqual(changesetData.files[1].status, {
         kind: AppFileStatusKind.Copied,
         oldPath: 'initial.md',
         renameIncludesModifications: false,
@@ -130,9 +129,10 @@ describe('git/log', () => {
 
     it('handles commit when HEAD exists on disk', async () => {
       const changesetData = await getChangedFiles(repository, 'HEAD')
-      expect(changesetData.files).toHaveLength(1)
-      expect(changesetData.files[0].path).toBe('README.md')
-      expect(changesetData.files[0].status.kind).toBe(
+      assert.equal(changesetData.files.length, 1)
+      assert.equal(changesetData.files[0].path, 'README.md')
+      assert.equal(
+        changesetData.files[0].status.kind,
         AppFileStatusKind.Modified
       )
     })
@@ -143,8 +143,8 @@ describe('git/log', () => {
     repository = new Repository(repoPath, -1, null, false)
 
     const changesetData = await getChangedFiles(repository, 'HEAD')
-    expect(changesetData.files).toHaveLength(2)
-    expect(changesetData.files[1].path).toBe('foo/submodule')
-    expect(changesetData.files[1].status.submoduleStatus).not.toBeUndefined()
+    assert.equal(changesetData.files.length, 2)
+    assert.equal(changesetData.files[1].path, 'foo/submodule')
+    assert(changesetData.files[1].status.submoduleStatus !== undefined)
   })
 })

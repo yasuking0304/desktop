@@ -1,3 +1,5 @@
+import { describe, it } from 'node:test'
+import assert from 'node:assert'
 import { setupEmptyRepository } from '../helpers/repositories'
 import { writeFile } from 'fs-extra'
 import { join } from 'path'
@@ -25,8 +27,8 @@ describe('parseFilesToBeOverwritten', () => {
       expectedErrors: new Set([DugiteError.MergeWithLocalChanges]),
     })
 
-    expect(result.gitError).toBe(DugiteError.MergeWithLocalChanges)
-    expect(parseFilesToBeOverwritten(result.stderr)).toEqual(['a', 'b'])
+    assert.equal(result.gitError, DugiteError.MergeWithLocalChanges)
+    assert.deepStrictEqual(parseFilesToBeOverwritten(result.stderr), ['a', 'b'])
   })
 
   it("isn't able to parse files from pull rebase error", async () => {
@@ -47,8 +49,8 @@ describe('parseFilesToBeOverwritten', () => {
       expectedErrors: new Set([DugiteError.RebaseWithLocalChanges]),
     })
 
-    expect(result.gitError).toBe(DugiteError.RebaseWithLocalChanges)
-    expect(parseFilesToBeOverwritten(result.stderr)).toEqual([])
+    assert.equal(result.gitError, DugiteError.RebaseWithLocalChanges)
+    assert.deepStrictEqual(parseFilesToBeOverwritten(result.stderr), [])
   })
 
   it('parses files from merge error', async () => {
@@ -68,8 +70,8 @@ describe('parseFilesToBeOverwritten', () => {
       expectedErrors: new Set([DugiteError.MergeWithLocalChanges]),
     })
 
-    expect(result.gitError).toBe(DugiteError.MergeWithLocalChanges)
-    expect(parseFilesToBeOverwritten(result.stderr)).toEqual(['a', 'b'])
+    assert.equal(result.gitError, DugiteError.MergeWithLocalChanges)
+    assert.deepStrictEqual(parseFilesToBeOverwritten(result.stderr), ['a', 'b'])
   })
 
   it('parses files from checkout error', async () => {
@@ -95,7 +97,7 @@ describe('parseFilesToBeOverwritten', () => {
       expectedErrors: new Set([DugiteError.LocalChangesOverwritten]),
     })
 
-    expect(result.gitError).toBe(DugiteError.LocalChangesOverwritten)
-    expect(parseFilesToBeOverwritten(result.stderr)).toEqual(['a', 'b'])
+    assert.equal(result.gitError, DugiteError.LocalChangesOverwritten)
+    assert.deepStrictEqual(parseFilesToBeOverwritten(result.stderr), ['a', 'b'])
   })
 })

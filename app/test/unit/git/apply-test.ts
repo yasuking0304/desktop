@@ -1,3 +1,5 @@
+import { describe, it, beforeEach } from 'node:test'
+import assert from 'node:assert'
 import { exec } from 'dugite'
 import {
   setupTwoCommitRepo,
@@ -23,9 +25,9 @@ import {
   ITextDiff,
 } from '../../../src/models/diff'
 import { findInteractiveDiffRange } from '../../../src/ui/diff/diff-explorer'
-import { diffStringsUnified } from 'jest-diff'
 import * as FSE from 'fs-extra'
 import * as Path from 'path'
+import { structuredPatch } from 'diff'
 
 describe('git/apply', () => {
   describe('checkPatch()', () => {
@@ -45,7 +47,7 @@ describe('git/apply', () => {
         patch = result.stdout
       })
       it('returns true', async () => {
-        expect(await checkPatch(repository, patch)).toBe(true)
+        assert.equal(await checkPatch(repository, patch), true)
       })
     })
     describe('on a related repo with conflicts', () => {
@@ -64,7 +66,7 @@ describe('git/apply', () => {
         })
       })
       it('returns false', async () => {
-        expect(await checkPatch(repository, patch)).toBe(false)
+        assert.equal(await checkPatch(repository, patch), false)
       })
     })
   })
@@ -100,7 +102,7 @@ describe('git/apply', () => {
 
       const diff = await getDiff(filePath)
 
-      expect(diff.text).toEqual(previousDiff.text)
+      assert.equal(diff.text, previousDiff.text)
     })
 
     it('discards all file changes when a full selection is passed', async () => {
@@ -115,8 +117,8 @@ describe('git/apply', () => {
       const diff = await getDiff(filePath)
 
       // Check that the file has no local changes.
-      expect(diff.text).toEqual('')
-      expect(diff.hunks).toEqual([])
+      assert.equal(diff.text, '')
+      assert.equal(diff.hunks.length, 0)
     })
 
     it('re-adds a single removed line', async () => {
@@ -142,22 +144,24 @@ describe('git/apply', () => {
         'utf8'
       )
 
-      expect(getDifference(previousContents, fileContents))
-        .toMatchInlineSnapshot(`
-"@@ -7,0 +7,1 @@
-+ Aliquam leo ipsum, laoreet sed libero at, mollis pulvinar arcu. Nullam porttitor"
-`)
+      assert.equal(
+        getDifference(previousContents, fileContents),
+        `@@ -7,0 +7,1 @@
++Aliquam leo ipsum, laoreet sed libero at, mollis pulvinar arcu. Nullam porttitor`
+      )
     })
 
     it('re-adds a removed hunk', async () => {
       const filePath = 'modified-file.md'
       const diff = await getDiff(filePath)
       const hunkRange = findInteractiveDiffRange(diff.hunks, 4)
+      assert(hunkRange !== null)
+
       const selection = DiffSelection.fromInitialSelection(
         DiffSelectionType.None
       ).withRangeSelection(
-        hunkRange!.from,
-        hunkRange!.to - hunkRange!.from + 1,
+        hunkRange.from,
+        hunkRange.to - hunkRange.from + 1,
         true
       )
 
@@ -173,14 +177,14 @@ describe('git/apply', () => {
         'utf8'
       )
 
-      expect(getDifference(previousContents, fileContents))
-        .toMatchInlineSnapshot(`
-"@@ -7,0 +7,4 @@
-+ Aliquam leo ipsum, laoreet sed libero at, mollis pulvinar arcu. Nullam porttitor
-+ nisl eget hendrerit vestibulum. Curabitur ornare id neque ac tristique. Cras in
-+ eleifend mi.
-+"
-`)
+      assert.equal(
+        getDifference(previousContents, fileContents),
+        `@@ -7,0 +7,4 @@
++Aliquam leo ipsum, laoreet sed libero at, mollis pulvinar arcu. Nullam porttitor
++nisl eget hendrerit vestibulum. Curabitur ornare id neque ac tristique. Cras in
++eleifend mi.
++`
+      )
     })
 
     it('removes an added line', async () => {
@@ -206,26 +210,25 @@ describe('git/apply', () => {
         'utf8'
       )
 
-      expect(getDifference(previousContents, fileContents))
-        .toMatchInlineSnapshot(`
-"@@ -21,1 +21,0 @@
-- nisl eget hendrerit vestibulum. Curabitur ornare id neque ac tristique. Cras in"
-`)
+      assert.equal(
+        getDifference(previousContents, fileContents),
+        `@@ -21,1 +21,0 @@
+-nisl eget hendrerit vestibulum. Curabitur ornare id neque ac tristique. Cras in`
+      )
     })
 
     it('removes an added hunk', async () => {
       const filePath = 'modified-file.md'
       const diff = await getDiff(filePath)
       const hunkRange = findInteractiveDiffRange(diff.hunks, 16)
+      assert(hunkRange !== null)
       const selection = DiffSelection.fromInitialSelection(
         DiffSelectionType.None
       ).withRangeSelection(
-        hunkRange!.from,
-        hunkRange!.to - hunkRange!.from + 1,
+        hunkRange.from,
+        hunkRange.to - hunkRange.from + 1,
         true
       )
-
-      console.log('diff', hunkRange)
 
       const previousContents = await FSE.readFile(
         Path.join(repository.path, filePath),
@@ -244,36 +247,34 @@ describe('git/apply', () => {
         'utf8'
       )
 
-      expect(getDifference(previousContents, fileContents))
-        .toMatchInlineSnapshot(`
-"@@ -20,4 +20,0 @@
-- Aliquam leo ipsum, laoreet sed libero at, mollis pulvinar arcu. Nullam porttitor
-- nisl eget hendrerit vestibulum. Curabitur ornare id neque ac tristique. Cras in
-- eleifend mi.
--"
-`)
+      assert.equal(
+        getDifference(previousContents, fileContents),
+        `@@ -20,4 +20,0 @@
+-Aliquam leo ipsum, laoreet sed libero at, mollis pulvinar arcu. Nullam porttitor
+-nisl eget hendrerit vestibulum. Curabitur ornare id neque ac tristique. Cras in
+-eleifend mi.
+-`
+      )
     })
   })
 })
-
-const noColor = (str: string) => str
 
 /**
  * Returns a diff-style string with the line differences between two strings.
  */
 function getDifference(before: string, after: string) {
-  return diffStringsUnified(
+  return structuredPatch(
+    'before',
+    'after',
     before.replace(/\r\n/g, '\n'),
     after.replace(/\r\n/g, '\n'),
-    {
-      omitAnnotationLines: true,
-      contextLines: 0,
-      expand: false,
-      aColor: noColor,
-      bColor: noColor,
-      changeColor: noColor,
-      commonColor: noColor,
-      patchColor: noColor,
-    }
+    undefined,
+    undefined,
+    { context: 0 }
   )
+    .hunks.flatMap(hunk => [
+      `@@ -${hunk.oldStart},${hunk.oldLines} +${hunk.newStart},${hunk.newLines} @@`,
+      ...hunk.lines,
+    ])
+    .join('\n')
 }

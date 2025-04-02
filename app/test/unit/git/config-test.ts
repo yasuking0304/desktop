@@ -1,3 +1,5 @@
+import { describe, it, beforeEach } from 'node:test'
+import assert from 'node:assert'
 import { exec } from 'dugite'
 import * as Path from 'path'
 
@@ -26,42 +28,50 @@ describe('git/config', () => {
   describe('config', () => {
     it('looks up config values', async () => {
       const bare = await getConfigValue(repository, 'core.bare')
-      expect(bare).toBe('false')
+      assert.equal(bare, 'false')
     })
 
     it('returns null for undefined values', async () => {
       const value = await getConfigValue(repository, 'core.the-meaning-of-life')
-      expect(value).toBeNull()
+      assert(value === null)
     })
   })
 
   describe('GIT_CONFIG_PARAMETERS', () => {
     it('picks them up', async () => {
-      expect(
-        await git(['config', 'desktop.test'], repository.path, '', {
-          successExitCodes: new Set([1]),
-        }).then(x => x.stdout)
-      ).toBeEmpty()
-      expect(
-        await git(['config', 'desktop.test'], repository.path, '', {
-          env: {
-            GIT_CONFIG_PARAMETERS: "'desktop.test=1'",
-          },
-        }).then(x => x.stdout)
-      ).toEqual('1\n')
+      const withoutEnvOutput = await git(
+        ['config', 'desktop.test'],
+        repository.path,
+        '',
+        { successExitCodes: new Set([1]) }
+      ).then(x => x.stdout)
+
+      assert.equal(
+        withoutEnvOutput.length,
+        0,
+        'Expected withoutEnvOutput to be empty'
+      )
+      const withEnvOutput = await git(
+        ['config', 'desktop.test'],
+        repository.path,
+        '',
+        { env: { GIT_CONFIG_PARAMETERS: "'desktop.test=1'" } }
+      ).then(x => x.stdout)
+
+      assert.equal(withEnvOutput, '1\n')
     })
 
     it('takes precedence over GIT_CONFIG_*', async () => {
-      expect(
-        await git(['config', 'user.name'], repository.path, '', {
-          env: {
-            GIT_CONFIG_PARAMETERS: "'user.name=foobar'",
-            GIT_CONFIG_COUNT: '1',
-            GIT_CONFIG_KEY_0: 'user.name',
-            GIT_CONFIG_VALUE_0: 'baz',
-          },
-        }).then(x => x.stdout)
-      ).toEqual('foobar\n')
+      const output = await git(['config', 'user.name'], repository.path, '', {
+        env: {
+          GIT_CONFIG_PARAMETERS: "'user.name=foobar'",
+          GIT_CONFIG_COUNT: '1',
+          GIT_CONFIG_KEY_0: 'user.name',
+          GIT_CONFIG_VALUE_0: 'baz',
+        },
+      }).then(x => x.stdout)
+
+      assert.equal(output, 'foobar\n')
     })
   })
 
@@ -81,7 +91,7 @@ describe('git/config', () => {
 
       it('gets the config path', async () => {
         const path = await getGlobalConfigPath(env)
-        expect(path).toBe(await realpath(expectedConfigPath))
+        assert.equal(path, await realpath(expectedConfigPath))
       })
     })
 
@@ -96,7 +106,7 @@ describe('git/config', () => {
       it('will replace all entries for a global value', async () => {
         await setGlobalConfigValue(key, 'the correct value', env)
         const value = await getGlobalConfigValue(key, env)
-        expect(value).toBe('the correct value')
+        assert.equal(value, 'the correct value')
       })
     })
 
@@ -106,49 +116,49 @@ describe('git/config', () => {
       it('treats "false" as false', async () => {
         await setGlobalConfigValue(key, 'false', env)
         const value = await getGlobalBooleanConfigValue(key, env)
-        expect(value).toBeFalse()
+        assert.strictEqual(value, false)
       })
 
       it('treats "off" as false', async () => {
         await setGlobalConfigValue(key, 'off', env)
         const value = await getGlobalBooleanConfigValue(key, env)
-        expect(value).toBeFalse()
+        assert.strictEqual(value, false)
       })
 
       it('treats "no" as false', async () => {
         await setGlobalConfigValue(key, 'no', env)
         const value = await getGlobalBooleanConfigValue(key, env)
-        expect(value).toBeFalse()
+        assert.strictEqual(value, false)
       })
 
       it('treats "0" as false', async () => {
         await setGlobalConfigValue(key, '0', env)
         const value = await getGlobalBooleanConfigValue(key, env)
-        expect(value).toBeFalse()
+        assert.strictEqual(value, false)
       })
 
       it('treats "true" as true', async () => {
         await setGlobalConfigValue(key, 'true', env)
         const value = await getGlobalBooleanConfigValue(key, env)
-        expect(value).toBeTrue()
+        assert.strictEqual(value, true)
       })
 
       it('treats "yes" as true', async () => {
         await setGlobalConfigValue(key, 'yes', env)
         const value = await getGlobalBooleanConfigValue(key, env)
-        expect(value).toBeTrue()
+        assert.strictEqual(value, true)
       })
 
       it('treats "on" as true', async () => {
         await setGlobalConfigValue(key, 'on', env)
         const value = await getGlobalBooleanConfigValue(key, env)
-        expect(value).toBeTrue()
+        assert.strictEqual(value, true)
       })
 
       it('treats "1" as true', async () => {
         await setGlobalConfigValue(key, '1', env)
         const value = await getGlobalBooleanConfigValue(key, env)
-        expect(value).toBeTrue()
+        assert.strictEqual(value, true)
       })
     })
   })

@@ -1,3 +1,5 @@
+import { describe, it, beforeEach } from 'node:test'
+import assert from 'node:assert'
 import { Repository } from '../../../src/models/repository'
 import {
   getBranches,
@@ -37,8 +39,8 @@ describe('git/reflog', () => {
       await createAndCheckout(repository, 'branch-2')
 
       const branches = await getRecentBranches(repository, 10)
-      expect(branches).toContain('branch-1')
-      expect(branches).toContain('branch-2')
+      assert(branches.includes('branch-1'))
+      assert(branches.includes('branch-2'))
     })
 
     it('works after renaming a branch', async () => {
@@ -50,12 +52,13 @@ describe('git/reflog', () => {
         branch => branch.name === 'branch-2'
       )
 
-      await renameBranch(repository, currentBranch!, 'branch-2-test')
+      assert(currentBranch !== undefined)
+      await renameBranch(repository, currentBranch, 'branch-2-test')
 
       const branches = await getRecentBranches(repository, 10)
-      expect(branches).not.toContain('branch-2')
-      expect(branches).toContain('branch-1')
-      expect(branches).toContain('branch-2-test')
+      assert(!branches.includes('branch-2'))
+      assert(branches.includes('branch-1'))
+      assert(branches.includes('branch-2-test'))
     })
 
     it('returns a limited number of branches', async () => {
@@ -65,9 +68,9 @@ describe('git/reflog', () => {
       await createAndCheckout(repository, 'branch-4')
 
       const branches = await getRecentBranches(repository, 2)
-      expect(branches).toHaveLength(2)
-      expect(branches).toContain('branch-4')
-      expect(branches).toContain('branch-3')
+      assert.equal(branches.length, 2)
+      assert(branches.includes('branch-4'))
+      assert(branches.includes('branch-3'))
     })
   })
 
@@ -80,7 +83,7 @@ describe('git/reflog', () => {
         repository,
         new Date(offsetFromNow(1, 'day'))
       )
-      expect(branches.size).toBe(0)
+      assert.equal(branches.size, 0)
     })
 
     it('returns all branches checked out after a specific date', async () => {
@@ -92,7 +95,7 @@ describe('git/reflog', () => {
         repository,
         new Date(offsetFromNow(-1, 'hour'))
       )
-      expect(branches.size).toBe(2)
+      assert.equal(branches.size, 2)
     })
 
     it('returns empty when current branch is orphaned', async () => {
@@ -100,13 +103,13 @@ describe('git/reflog', () => {
         ['checkout', '--orphan', 'orphan-branch'],
         repository.path
       )
-      expect(result.exitCode).toBe(0)
+      assert.equal(result.exitCode, 0)
 
       const branches = await getBranchCheckouts(
         repository,
         new Date(offsetFromNow(-1, 'hour'))
       )
-      expect(branches.size).toBe(0)
+      assert.equal(branches.size, 0)
     })
   })
 })

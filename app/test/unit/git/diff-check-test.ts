@@ -1,3 +1,5 @@
+import { describe, it, beforeEach } from 'node:test'
+import assert from 'node:assert'
 import { Repository } from '../../../src/models/repository'
 import {
   setupConflictedRepo,
@@ -16,7 +18,8 @@ describe('getFilesWithConflictMarkers', () => {
     })
 
     it('finds one conflicted file', async () => {
-      expect(await getFilesWithConflictMarkers(repository.path)).toEqual(
+      assert.deepStrictEqual(
+        await getFilesWithConflictMarkers(repository.path),
         new Map([['foo', 3]])
       )
     })
@@ -27,7 +30,8 @@ describe('getFilesWithConflictMarkers', () => {
       repository = await setupConflictedRepoWithMultipleFiles()
     })
     it('finds multiple conflicted files', async () => {
-      expect(await getFilesWithConflictMarkers(repository.path)).toEqual(
+      assert.deepStrictEqual(
+        await getFilesWithConflictMarkers(repository.path),
         new Map([
           ['baz', 3],
           ['cat', 3],
@@ -42,10 +46,8 @@ describe('getFilesWithConflictMarkers', () => {
       repository = await setupEmptyRepository()
     })
 
-    it('finds one conflicted file', async () => {
-      expect(await getFilesWithConflictMarkers(repository.path)).toEqual(
-        new Map()
-      )
+    it('finds no conflicted files', async () => {
+      assert((await getFilesWithConflictMarkers(repository.path)).size === 0)
     })
   })
 })

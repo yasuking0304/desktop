@@ -1,3 +1,5 @@
+import { describe, it, beforeEach } from 'node:test'
+import assert from 'node:assert'
 import * as path from 'path'
 import * as FSE from 'fs-extra'
 import { Repository } from '../../../src/models/repository'
@@ -22,7 +24,7 @@ import {
 import { IRemote } from '../../../src/models/remote'
 import { findDefaultRemote } from '../../../src/lib/stores/helpers/find-default-remote'
 import { getStatusOrThrow } from '../../helpers/status'
-import { assertNonNullable } from '../../../src/lib/fatal-error'
+import { assertNonNullable, forceUnwrap } from '../../../src/lib/fatal-error'
 
 describe('git/tag', () => {
   let repository: Repository
@@ -37,16 +39,16 @@ describe('git/tag', () => {
       await createTag(repository, 'my-new-tag', 'HEAD')
 
       const commit = await getCommit(repository, 'HEAD')
-      expect(commit).not.toBeNull()
-      expect(commit!.tags).toEqual(['my-new-tag'])
+      assert(commit !== null)
+      assert.deepStrictEqual(commit.tags, ['my-new-tag'])
     })
 
     it('creates a tag with the a comma in it', async () => {
       await createTag(repository, 'my-new-tag,has-a-comma', 'HEAD')
 
       const commit = await getCommit(repository, 'HEAD')
-      expect(commit).not.toBeNull()
-      expect(commit!.tags).toEqual(['my-new-tag,has-a-comma'])
+      assert(commit !== null)
+      assert.deepStrictEqual(commit.tags, ['my-new-tag,has-a-comma'])
     })
 
     it('creates multiple tags', async () => {
@@ -54,8 +56,8 @@ describe('git/tag', () => {
       await createTag(repository, 'another-tag', 'HEAD')
 
       const commit = await getCommit(repository, 'HEAD')
-      expect(commit).not.toBeNull()
-      expect(commit!.tags).toEqual(['my-new-tag', 'another-tag'])
+      assert(commit !== null)
+      assert.deepStrictEqual(commit.tags, ['my-new-tag', 'another-tag'])
     })
 
     it('creates a tag on a specified commit', async () => {
@@ -66,14 +68,15 @@ describe('git/tag', () => {
 
       const commit = await getCommit(repository, commitSha)
 
-      expect(commit).not.toBeNull()
-      expect(commit!.tags).toEqual(['my-new-tag'])
+      assert(commit !== null)
+      assert.deepStrictEqual(commit.tags, ['my-new-tag'])
     })
 
     it('fails when creating a tag with a name that already exists', async () => {
       await createTag(repository, 'my-new-tag', 'HEAD')
 
-      expect(createTag(repository, 'my-new-tag', 'HEAD')).rejects.toThrow(
+      await assert.rejects(
+        createTag(repository, 'my-new-tag', 'HEAD'),
         /already exists/i
       )
     })
@@ -85,25 +88,27 @@ describe('git/tag', () => {
       await deleteTag(repository, 'my-new-tag')
 
       const commit = await getCommit(repository, 'HEAD')
-      expect(commit).not.toBeNull()
-      expect(commit!.tags).toEqual([])
+      assert.equal(commit?.tags.length, 0)
     })
   })
 
   describe('getAllTags', () => {
-    it('returns an empty array when the repository has no tags', async () => {
-      expect(await getAllTags(repository)).toEqual(new Map())
+    it('returns an empty map when the repository has no tags', async () => {
+      assert((await getAllTags(repository)).size === 0)
     })
 
     it('returns all the created tags', async () => {
       const commit = await getCommit(repository, 'HEAD')
-      await createTag(repository, 'my-new-tag', commit!.sha)
-      await createTag(repository, 'another-tag', commit!.sha)
+      assert(commit !== null)
 
-      expect(await getAllTags(repository)).toEqual(
+      await createTag(repository, 'my-new-tag', commit.sha)
+      await createTag(repository, 'another-tag', commit.sha)
+
+      assert.deepStrictEqual(
+        await getAllTags(repository),
         new Map([
-          ['my-new-tag', commit!.sha],
-          ['another-tag', commit!.sha],
+          ['my-new-tag', commit.sha],
+          ['another-tag', commit.sha],
         ])
       )
     })
@@ -119,19 +124,24 @@ describe('git/tag', () => {
       repository = await setupLocalForkOfRepository(remoteRepository)
 
       const remotes = await getRemotes(repository)
-      originRemote = findDefaultRemote(remotes)!
+      originRemote = forceUnwrap(
+        "couldn't find origin remote",
+        findDefaultRemote(remotes)
+      )
     })
 
     it('returns an empty array when there are no tags to get pushed', async () => {
-      expect(
-        await fetchTagsToPush(repository, originRemote, 'master')
-      ).toIncludeAllMembers([])
+      assert.equal(
+        (await fetchTagsToPush(repository, originRemote, 'master')).length,
+        0
+      )
     })
 
     it("returns local tags that haven't been pushed", async () => {
       await createTag(repository, 'my-new-tag', 'HEAD')
 
-      expect(await fetchTagsToPush(repository, originRemote, 'master')).toEqual(
+      assert.deepStrictEqual(
+        await fetchTagsToPush(repository, originRemote, 'master'),
         ['my-new-tag']
       )
     })
@@ -141,7 +151,8 @@ describe('git/tag', () => {
 
       await push(repository, originRemote, 'master', null, ['my-new-tag'])
 
-      expect(await fetchTagsToPush(repository, originRemote, 'master')).toEqual(
+      assert.deepStrictEqual(
+        await fetchTagsToPush(repository, originRemote, 'master'),
         []
       )
     })
@@ -150,18 +161,21 @@ describe('git/tag', () => {
       // Create a tag on a local branch that's not pushed to the remote.
       const branchName = 'new-branch'
       await createBranch(repository, branchName, 'master')
-      const [branch] = await getBranches(repository, `refs/heads/${branchName}`)
+      const branch = (
+        await getBranches(repository, `refs/heads/${branchName}`)
+      ).at(0)
       assertNonNullable(branch, `Could not create branch ${branchName}`)
 
       await FSE.writeFile(path.join(repository.path, 'README.md'), 'Hi world\n')
       const status = await getStatusOrThrow(repository)
       const files = status.workingDirectory.files
 
-      await checkoutBranch(repository, branch!, null)
+      await checkoutBranch(repository, branch, null)
       const commitSha = await createCommit(repository, 'a commit', files)
       await createTag(repository, 'my-new-tag', commitSha)
 
-      expect(await fetchTagsToPush(repository, originRemote, 'master')).toEqual(
+      assert.deepStrictEqual(
+        await fetchTagsToPush(repository, originRemote, 'master'),
         []
       )
     })
@@ -179,7 +193,8 @@ describe('git/tag', () => {
 
       await createTag(repository, 'my-new-tag', 'HEAD')
 
-      expect(await fetchTagsToPush(repository, originRemote, 'master')).toEqual(
+      assert.deepStrictEqual(
+        await fetchTagsToPush(repository, originRemote, 'master'),
         ['my-new-tag']
       )
     })
