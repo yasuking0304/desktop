@@ -100,6 +100,11 @@ jobs:
         env:
           npm_config_arch: ${{ matrix.arch }}
           TARGET_ARCH: ${{ matrix.arch }}
+      - name: Run desktop-trampoline tests
+        run: |
+          cd vendor/desktop-trampoline
+          yarn install
+          yarn test
       - name: Build production app
         run: yarn build:prod
         env:
