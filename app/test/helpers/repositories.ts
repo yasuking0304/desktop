@@ -6,8 +6,10 @@ import { Repository } from '../../src/models/repository'
 import { exec } from 'dugite'
 import { makeCommit, switchTo } from './repository-scaffolding'
 import { writeFile } from 'fs-extra'
-import { git } from '../../src/lib/git'
+import { DefaultGitDescription, git } from '../../src/lib/git'
 import { TestContext } from 'node:test'
+import { mkdir } from 'fs/promises'
+import { join } from 'path'
 
 /**
  * Set up the named fixture repository to be used in a test.
@@ -58,10 +60,35 @@ export async function setupFixtureRepository(
  * @returns the new local repository
  */
 export async function setupEmptyRepository(
-  t: TestContext
+  t: TestContext,
+  defaultBranchName = 'master'
 ): Promise<Repository> {
   const repoPath = await createTempDirectory(t)
-  await exec(['init'], repoPath)
+
+  await mkdir(join(repoPath, '.git'))
+  await mkdir(join(repoPath, '.git/objects'))
+  await mkdir(join(repoPath, '.git/refs'))
+  await mkdir(join(repoPath, '.git/refs/tags'))
+  await mkdir(join(repoPath, '.git/refs/heads'))
+  await mkdir(join(repoPath, '.git/info'))
+
+  const headRef = `ref: refs/heads/${defaultBranchName}\n`
+
+  await Promise.all([
+    writeFile(join(repoPath, '.git/HEAD'), headRef),
+    writeFile(
+      join(repoPath, '.git/config'),
+      `[core]
+repositoryformatversion = 0
+filemode = true
+bare = false
+logallrefupdates = true
+ignorecase = ${process.platform === 'linux' ? 'true' : 'false'}
+precomposeunicode = true
+`
+    ),
+    writeFile(join(repoPath, '.git/description'), DefaultGitDescription),
+  ])
 
   return new Repository(repoPath, -1, null, false)
 }
@@ -72,14 +99,8 @@ export async function setupEmptyRepository(
  *
  * @returns the new local repository
  */
-export async function setupEmptyRepositoryDefaultMain(
-  t: TestContext
-): Promise<Repository> {
-  const repoPath = await createTempDirectory(t)
-  await exec(['init', '-b', 'main'], repoPath)
-
-  return new Repository(repoPath, -1, null, false)
-}
+export const setupEmptyRepositoryDefaultMain = (t: TestContext) =>
+  setupEmptyRepository(t, 'main')
 
 /**
  * Initialize a new, empty folder that is incorrectly associated with a Git
