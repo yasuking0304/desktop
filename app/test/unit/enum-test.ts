@@ -28,7 +28,7 @@ describe('parseEnumValue', () => {
 
     const child = Object.create(parent)
 
-    assert.equal('foo' in child, true)
+    assert('foo' in child)
     assert.equal(child.foo, 'bar')
     assert.equal(parseEnumValue(child, 'bar'), undefined)
   })

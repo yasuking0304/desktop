@@ -81,10 +81,10 @@ describe('git/for-each-ref', () => {
       assert(branchRefs.includes('refs/heads/branch-ahead-and-behind'))
 
       // `main` is the current branch, and shouldn't be included
-      assert.equal(branchRefs.includes('refs/heads/main'), false)
+      assert(!branchRefs.includes('refs/heads/main'))
 
       // Branches that are up to date shouldn't be included
-      assert.equal(branchRefs.includes('refs/heads/branch-up-to-date'), false)
+      assert(!branchRefs.includes('refs/heads/branch-up-to-date'))
     })
   })
 })

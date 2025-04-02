@@ -194,7 +194,6 @@ describe('git/stash', () => {
     it('does not fail when attempting to delete when stash is empty', async t => {
       const repository = await setup(t)
 
-      let didFail = false
       const doesNotExist: IStashEntry = {
         name: 'refs/stash@{0}',
         branchName: 'master',
@@ -204,19 +203,13 @@ describe('git/stash', () => {
         files: { kind: StashedChangesLoadStates.NotLoaded },
       }
 
-      try {
-        await dropDesktopStashEntry(repository, doesNotExist.stashSha)
-      } catch {
-        didFail = true
-      }
-
-      assert.equal(didFail, false)
+      await assert.doesNotReject(
+        dropDesktopStashEntry(repository, doesNotExist.stashSha)
+      )
     })
 
     it("does not fail when attempting to delete stash entry that doesn't exist", async t => {
       const repository = await setup(t)
-
-      let didFail = false
       const doesNotExist: IStashEntry = {
         name: 'refs/stash@{4}',
         branchName: 'master',
@@ -229,13 +222,9 @@ describe('git/stash', () => {
       await generateTestStashEntry(repository, 'master', true)
       await generateTestStashEntry(repository, 'master', true)
 
-      try {
-        await dropDesktopStashEntry(repository, doesNotExist.stashSha)
-      } catch {
-        didFail = true
-      }
-
-      assert.equal(didFail, false)
+      await assert.doesNotReject(
+        dropDesktopStashEntry(repository, doesNotExist.stashSha)
+      )
     })
   })
 
@@ -297,7 +286,7 @@ describe('git/stash', () => {
         assert.equal(files.length, 1)
 
         const stashAfter = await getStashes(repository)
-        assert.equal(stashAfter.desktopEntries.includes(entryToApply), false)
+        assert(!stashAfter.desktopEntries.includes(entryToApply))
       })
     })
 

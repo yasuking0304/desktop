@@ -36,8 +36,7 @@ describe('PopupManager', () => {
   describe('isAPopupOpen', () => {
     it('returns false when no popups added', () => {
       const popupManager = new PopupManager()
-      const isAPopupOpen = popupManager.isAPopupOpen
-      assert.equal(isAPopupOpen, false)
+      assert(!popupManager.isAPopupOpen)
     })
 
     it('returns last added popup', () => {
@@ -45,7 +44,7 @@ describe('PopupManager', () => {
       popupManager.addPopup({ type: PopupType.About })
 
       const isAPopupOpen = popupManager.isAPopupOpen
-      assert.equal(isAPopupOpen, true)
+      assert(isAPopupOpen)
     })
   })
 
@@ -74,20 +73,14 @@ describe('PopupManager', () => {
       const popupManager = new PopupManager()
       popupManager.addPopup({ type: PopupType.About })
 
-      const areThereAboutPopups = popupManager.areTherePopupsOfType(
-        PopupType.About
-      )
-      assert.equal(areThereAboutPopups, true)
+      assert(popupManager.areTherePopupsOfType(PopupType.About))
     })
 
     it('returns false if there are no popups of that type', () => {
       const popupManager = new PopupManager()
       popupManager.addPopup({ type: PopupType.About })
 
-      const areThereSignInPopups = popupManager.areTherePopupsOfType(
-        PopupType.SignIn
-      )
-      assert.equal(areThereSignInPopups, false)
+      assert(!popupManager.areTherePopupsOfType(PopupType.SignIn))
     })
   })
 
@@ -101,7 +94,7 @@ describe('PopupManager', () => {
       assert.equal(popupsOfType.length, 1)
       assert(currentPopup !== null)
       assert.equal(currentPopup.type, PopupType.About)
-      assert(currentPopup.id?.length === 36)
+      assert.equal(currentPopup.id?.length, 36)
     })
 
     it('does not add multiple popups of the same kind to the stack', () => {
@@ -161,7 +154,7 @@ describe('PopupManager', () => {
       assert.equal(popupsOfType.length, 1)
       assert(currentPopup !== null)
       assert.equal(currentPopup?.type, PopupType.Error)
-      assert(currentPopup.id?.length === 36)
+      assert.equal(currentPopup.id?.length, 36)
     })
 
     it('adds multiple popups of type error to the stack', () => {

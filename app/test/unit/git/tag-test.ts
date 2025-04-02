@@ -98,8 +98,7 @@ describe('git/tag', () => {
       await deleteTag(repository, 'my-new-tag')
 
       const commit = await getCommit(repository, 'HEAD')
-      assert(commit !== null)
-      assert(commit.tags.length === 0)
+      assert.equal(commit?.tags.length, 0)
     })
   })
 

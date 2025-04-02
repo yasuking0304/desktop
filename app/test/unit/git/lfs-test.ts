@@ -22,7 +22,7 @@ describe('git-lfs', () => {
       const repository = new Repository(path, -1, null, false)
 
       const usingLFS = await isUsingLFS(repository)
-      assert.equal(usingLFS, false)
+      assert(!usingLFS)
     })
 
     it('returns true if LFS is tracking a path', async t => {
@@ -32,7 +32,7 @@ describe('git-lfs', () => {
       await exec(['lfs', 'track', '*.psd'], repository.path)
 
       const usingLFS = await isUsingLFS(repository)
-      assert.equal(usingLFS, true)
+      assert(usingLFS)
     })
   })
 
@@ -45,7 +45,7 @@ describe('git-lfs', () => {
       await writeFile(readme, 'Hello world!')
 
       const found = await isTrackedByLFS(repository, file)
-      assert.equal(found, false)
+      assert(!found)
     })
 
     it('returns true after tracking file in Git LFS', async t => {
@@ -58,7 +58,7 @@ describe('git-lfs', () => {
       await exec(['lfs', 'track', '*.md'], repository.path)
 
       const found = await isTrackedByLFS(repository, file)
-      assert.equal(found, true)
+      assert(found)
     })
 
     it('returns true after tracking file with character issues in Git LFS', async t => {
@@ -72,7 +72,7 @@ describe('git-lfs', () => {
       await exec(['lfs', 'track', '*.md'], repository.path)
 
       const found = await isTrackedByLFS(repository, file)
-      assert.equal(found, true)
+      assert(found)
     })
   })
 

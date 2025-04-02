@@ -109,7 +109,7 @@ describe('git/apply', () => {
 
       // Check that the file has no local changes.
       assert.equal(diff.text, '')
-      assert(diff.hunks.length === 0)
+      assert.equal(diff.hunks.length, 0)
     })
 
     it('re-adds a single removed line', async t => {

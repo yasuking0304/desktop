@@ -84,7 +84,7 @@ describe('BranchPruner', () => {
     await branchPruner.runOnce()
     const branchesAfterPruning = await getBranchesFromGit(repo)
 
-    assert.equal(branchesAfterPruning.includes('deleted-branch-1'), false)
+    assert(!branchesAfterPruning.includes('deleted-branch-1'))
     assert(branchesAfterPruning.includes('not-deleted-branch-1'))
   })
 

@@ -1,15 +1,17 @@
-const { stat, access } = require('fs').promises
-const { constants } = require('fs')
-const { execFile } = require('child_process')
-const { promisify } = require('util')
-const { getSSHWrapperPath } = require('../index')
+import { stat, access } from 'fs/promises'
+import { constants } from 'fs'
+import { execFile } from 'child_process'
+import { promisify } from 'util'
+import { getSSHWrapperPath } from '../index'
+import assert from 'node:assert'
+import { describe, it } from 'node:test'
 
 const sshWrapperPath = getSSHWrapperPath()
 const run = promisify(execFile)
 
 describe('ssh-wrapper', () => {
   it('exists and is a regular file', async () =>
-    expect((await stat(sshWrapperPath)).isFile()).toBe(true))
+    assert.equal(((await stat(sshWrapperPath)).isFile()), true))
 
   // On Windows, the binary generated is just useless, so no point to test it.
   // Also, this won't be used on Linux (for now at least), so don't bother to
@@ -18,8 +20,8 @@ describe('ssh-wrapper', () => {
     return
   }
 
-  it('can be executed by current process', () =>
-    access(sshWrapperPath, constants.X_OK))
+  it('can be executed by current process', async () =>
+    assert.doesNotThrow(async () => await access(sshWrapperPath, constants.X_OK)))
 
   it('attempts to use ssh-askpass program', async () => {
     // Try to connect to github.com with a non-existent known_hosts file to force
@@ -35,7 +37,7 @@ describe('ssh-wrapper', () => {
       }
     )
 
-    expect(result.stderr).toMatch(
+    assert.match(result.stderr,
       /ssh_askpass: exec\(\/path\/to\/fake\/ssh-askpass\): No such file or directory/
     )
   })

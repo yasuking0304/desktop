@@ -16,35 +16,21 @@ describe('git/core', () => {
       const testRepoPath = await setupFixtureRepository(t, 'test-repo')
 
       const args = ['rev-list', '--left-right', '--count', 'some-ref', '--']
-
-      let threw = false
-      try {
-        const result = await git(args, testRepoPath, 'test', {
-          expectedErrors: new Set([GitError.BadRevision]),
-        })
-        assert.equal(result.gitError, GitError.BadRevision)
-      } catch (e) {
-        threw = true
-      }
-
-      assert.equal(threw, false)
+      const result = await git(args, testRepoPath, 'test', {
+        expectedErrors: new Set([GitError.BadRevision]),
+      })
+      assert.equal(result.gitError, GitError.BadRevision)
     })
 
     it('throws for errors that were not expected', async t => {
       const testRepoPath = await setupFixtureRepository(t, 'test-repo')
 
       const args = ['rev-list', '--left-right', '--count', 'some-ref', '--']
-
-      let threw = false
-      try {
-        await git(args, testRepoPath, 'test', {
+      await assert.rejects(
+        git(args, testRepoPath, 'test', {
           expectedErrors: new Set([GitError.SSHKeyAuditUnverified]),
         })
-      } catch (e) {
-        threw = true
-      }
-
-      assert.equal(threw, true)
+      )
     })
   })
 
@@ -52,34 +38,18 @@ describe('git/core', () => {
     it('does not throw for exit codes that were expected', async t => {
       const repoPath = await setupFixtureRepository(t, 'test-repo')
       const args = ['rev-list', '--left-right', '--count', 'some-ref', '--']
-
-      let threw = false
-      try {
-        const result = await git(args, repoPath, 'test', {
-          successExitCodes: new Set([128]),
-        })
-        assert.equal(result.exitCode, 128)
-      } catch (e) {
-        threw = true
-      }
-
-      assert.equal(threw, false)
+      const result = await git(args, repoPath, 'test', {
+        successExitCodes: new Set([128]),
+      })
+      assert.equal(result.exitCode, 128)
     })
 
     it('throws for exit codes that were not expected', async t => {
       const repoPath = await setupFixtureRepository(t, 'test-repo')
       const args = ['rev-list', '--left-right', '--count', 'some-ref', '--']
-
-      let threw = false
-      try {
-        await git(args, repoPath, 'test', {
-          successExitCodes: new Set([2]),
-        })
-      } catch (e) {
-        threw = true
-      }
-
-      assert.equal(threw, true)
+      await assert.rejects(
+        git(args, repoPath, 'test', { successExitCodes: new Set([2]) })
+      )
     })
   })
 

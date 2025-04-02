@@ -142,15 +142,15 @@ describe('repository list grouping', () => {
     assert.equal(grouped[2].items.length, 2)
 
     assert.equal(grouped[0].items[0].text[0], 'repo')
-    assert.equal(grouped[0].items[0].needsDisambiguation, false)
+    assert(!grouped[0].items[0].needsDisambiguation)
 
     assert.equal(grouped[1].items[0].text[0], 'repo')
-    assert.equal(grouped[1].items[0].needsDisambiguation, false)
+    assert(!grouped[1].items[0].needsDisambiguation)
 
     assert.equal(grouped[2].items[0].text[0], 'enterprise-repo')
-    assert.equal(grouped[2].items[0].needsDisambiguation, true)
+    assert(grouped[2].items[0].needsDisambiguation)
 
     assert.equal(grouped[2].items[1].text[0], 'enterprise-repo')
-    assert.equal(grouped[2].items[1].needsDisambiguation, true)
+    assert(grouped[2].items[1].needsDisambiguation)
   })
 })

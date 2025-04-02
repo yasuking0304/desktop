@@ -151,7 +151,7 @@ describe('await parseRepoRules', () => {
     // the creation rule references ruleset ID 1, which has a bypass of 'never'
     const rules = [creationRule]
     const result = await parseRepoRules(rules, rulesets, repo)
-    assert.equal(result.creationRestricted, true)
+    assert(result.creationRestricted)
   })
 
   it('can bypass when bypass is "always"', async () => {
@@ -164,17 +164,17 @@ describe('await parseRepoRules', () => {
   it('cannot bypass when at least one bypass mode is "never" or "pull_requests_only"', async () => {
     const rules = [creationRule, creationBypassAlwaysRule]
     const result = await parseRepoRules(rules, rulesets, repo)
-    assert.equal(result.creationRestricted, true)
+    assert(result.creationRestricted)
 
     const rules2 = [creationRule, creationBypassPullRequestsOnlyRule]
     const result2 = await parseRepoRules(rules2, rulesets, repo)
-    assert.equal(result2.creationRestricted, true)
+    assert(result2.creationRestricted)
   })
 
   it('is not enforced when no rules are provided', async () => {
     const rules: IAPIRepoRule[] = []
     const repoRulesInfo = await parseRepoRules(rules, rulesets, repo)
-    assert.equal(repoRulesInfo.creationRestricted, false)
+    assert(!repoRulesInfo.creationRestricted)
   })
 })
 
@@ -183,7 +183,7 @@ describe('repo metadata rules', () => {
     it('shows no rules and passes everything when no rules are provided', async () => {
       const rules: IAPIRepoRule[] = []
       const repoRulesInfo = await parseRepoRules(rules, rulesets, repo)
-      assert.equal(repoRulesInfo.commitMessagePatterns.hasRules, false)
+      assert(!repoRulesInfo.commitMessagePatterns.hasRules)
 
       const failedRules =
         repoRulesInfo.commitMessagePatterns.getFailedRules('abc')
@@ -193,7 +193,7 @@ describe('repo metadata rules', () => {
     it('has correct matching logic for StartsWith rule', async () => {
       const rules = [commitMessagePatternStartsWithRule]
       const repoRulesInfo = await parseRepoRules(rules, rulesets, repo)
-      assert.equal(repoRulesInfo.commitMessagePatterns.hasRules, true)
+      assert(repoRulesInfo.commitMessagePatterns.hasRules)
 
       const failedRules =
         repoRulesInfo.commitMessagePatterns.getFailedRules('def')

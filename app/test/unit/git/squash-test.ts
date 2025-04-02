@@ -203,8 +203,8 @@ describe('git/cherry-pick', () => {
     assert(squashedFilePaths.includes('first.md'))
     assert(squashedFilePaths.includes('third.md'))
     assert(squashedFilePaths.includes('fifth.md'))
-    assert.equal(squashedFilePaths.includes('second.md'), false)
-    assert.equal(squashedFilePaths.includes('fourth.md'), false)
+    assert(!squashedFilePaths.includes('second.md'))
+    assert(!squashedFilePaths.includes('fourth.md'))
   })
 
   it('handles squashing a conflicting commit', async t => {
@@ -343,8 +343,7 @@ describe('git/cherry-pick', () => {
     // Rebase will not start - As it won't be able retrieve a commits to build a
     // todo and then interactive rebase would fail for bad revision. Added logic
     // to short circuit to prevent unnecessary attempt at an interactive rebase.
-    const isRebaseStillOngoing = await getRebaseInternalState(repository)
-    assert.equal(isRebaseStillOngoing !== null, false)
+    assert.equal(await getRebaseInternalState(repository), null)
   })
 
   it('returns error on invalid commit to squashOnto', async t => {
@@ -367,8 +366,7 @@ describe('git/cherry-pick', () => {
 
     // Rebase should not start - if we did attempt this, it could result in
     // dropping commits.
-    const isRebaseStillOngoing = await getRebaseInternalState(repository)
-    assert.equal(isRebaseStillOngoing !== null, false)
+    assert.equal(await getRebaseInternalState(repository), null)
   })
 
   it('returns error on empty toSquash', async t => {
@@ -391,8 +389,7 @@ describe('git/cherry-pick', () => {
     // Rebase should not start - technically there would be no harm in this
     // rebase as it would just replay history, but we should not use squash to
     // replay history.
-    const isRebaseStillOngoing = await getRebaseInternalState(repository)
-    assert.equal(isRebaseStillOngoing !== null, false)
+    assert.equal(await getRebaseInternalState(repository), null)
   })
 })
 

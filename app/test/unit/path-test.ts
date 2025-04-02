@@ -36,7 +36,7 @@ describe('path', () => {
         const dirName =
           '/Users/The Kong #2/AppData/Local/GitHubDesktop/app-1.0.4/resources/app'
         const uri = encodePathAsUrl(dirName, 'index.html')
-        assert.equal(uri.startsWith('file:///Users/The%20Kong%20%232/'), true)
+        assert(uri.startsWith('file:///Users/The%20Kong%20%232/'))
       })
     }
   })

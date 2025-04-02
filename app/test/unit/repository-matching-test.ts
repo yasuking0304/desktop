@@ -132,37 +132,37 @@ describe('repository-matching', () => {
       }
 
       it('does not match null', () => {
-        assert.equal(urlMatchesRemote(null, remoteWithSuffix), false)
+        assert(!urlMatchesRemote(null, remoteWithSuffix))
       })
 
       it('matches cloneURL from API', () => {
         const cloneURL = 'https://github.com/shiftkey/desktop.git'
-        assert.equal(urlMatchesRemote(cloneURL, remoteWithSuffix), true)
+        assert(urlMatchesRemote(cloneURL, remoteWithSuffix))
       })
 
       it('matches cloneURL from API with different casing', () => {
         const cloneURL = 'https://GITHUB.COM/SHIFTKEY/DESKTOP.git'
-        assert.equal(urlMatchesRemote(cloneURL, remoteWithSuffix), true)
+        assert(urlMatchesRemote(cloneURL, remoteWithSuffix))
       })
 
       it('matches cloneURL from API without suffix', () => {
         const cloneURL = 'https://github.com/shiftkey/desktop.git'
-        assert.equal(urlMatchesRemote(cloneURL, remote), true)
+        assert(urlMatchesRemote(cloneURL, remote))
       })
 
       it('matches htmlURL from API', () => {
         const htmlURL = 'https://github.com/shiftkey/desktop'
-        assert.equal(urlMatchesRemote(htmlURL, remoteWithSuffix), true)
+        assert(urlMatchesRemote(htmlURL, remoteWithSuffix))
       })
 
       it('matches htmlURL from API with different casing', () => {
         const htmlURL = 'https://GITHUB.COM/SHIFTKEY/DESKTOP'
-        assert.equal(urlMatchesRemote(htmlURL, remoteWithSuffix), true)
+        assert(urlMatchesRemote(htmlURL, remoteWithSuffix))
       })
 
       it('matches htmlURL from API without suffix', () => {
         const htmlURL = 'https://github.com/shiftkey/desktop'
-        assert.equal(urlMatchesRemote(htmlURL, remote), true)
+        assert(urlMatchesRemote(htmlURL, remote))
       })
     })
 
@@ -172,17 +172,17 @@ describe('repository-matching', () => {
         url: 'git@github.com:shiftkey/desktop.git',
       }
       it('does not match null', () => {
-        assert.equal(urlMatchesRemote(null, remote), false)
+        assert(!urlMatchesRemote(null, remote))
       })
 
       it('matches cloneURL from API', () => {
         const cloneURL = 'https://github.com/shiftkey/desktop.git'
-        assert.equal(urlMatchesRemote(cloneURL, remote), true)
+        assert(urlMatchesRemote(cloneURL, remote))
       })
 
       it('matches htmlURL from API', () => {
         const htmlURL = 'https://github.com/shiftkey/desktop'
-        assert.equal(urlMatchesRemote(htmlURL, remote), true)
+        assert(urlMatchesRemote(htmlURL, remote))
       })
     })
   })

@@ -545,9 +545,9 @@ describe('git/diff', () => {
       const diff = await getSubmoduleDiff(repository)
       assert(diff.oldSHA === null)
       assert(diff.newSHA === null)
-      assert.equal(diff.status.commitChanged, false)
-      assert.equal(diff.status.modifiedChanges, true)
-      assert.equal(diff.status.untrackedChanges, false)
+      assert(!diff.status.commitChanged)
+      assert(diff.status.modifiedChanges)
+      assert(!diff.status.untrackedChanges)
     })
 
     it('can get the diff for a submodule with only untracked changes', async t => {
@@ -560,9 +560,9 @@ describe('git/diff', () => {
       const diff = await getSubmoduleDiff(repository)
       assert(diff.oldSHA === null)
       assert(diff.newSHA === null)
-      assert.equal(diff.status.commitChanged, false)
-      assert.equal(diff.status.modifiedChanges, false)
-      assert.equal(diff.status.untrackedChanges, true)
+      assert(!diff.status.commitChanged)
+      assert(!diff.status.modifiedChanges)
+      assert(diff.status.untrackedChanges)
     })
 
     it('can get the diff for a submodule a commit change', async t => {
@@ -576,9 +576,9 @@ describe('git/diff', () => {
       const diff = await getSubmoduleDiff(repository)
       assert(diff.oldSHA !== null)
       assert(diff.newSHA !== null)
-      assert.equal(diff.status.commitChanged, true)
-      assert.equal(diff.status.modifiedChanges, false)
-      assert.equal(diff.status.untrackedChanges, false)
+      assert(diff.status.commitChanged)
+      assert(!diff.status.modifiedChanges)
+      assert(!diff.status.untrackedChanges)
     })
 
     it('can get the diff for a submodule a all kinds of changes', async t => {
@@ -593,9 +593,9 @@ describe('git/diff', () => {
       const diff = await getSubmoduleDiff(repository)
       assert(diff.oldSHA !== null)
       assert(diff.newSHA !== null)
-      assert.equal(diff.status.commitChanged, true)
-      assert.equal(diff.status.modifiedChanges, true)
-      assert.equal(diff.status.untrackedChanges, true)
+      assert(diff.status.commitChanged)
+      assert(diff.status.modifiedChanges)
+      assert(diff.status.untrackedChanges)
     })
   })
 
@@ -735,7 +735,7 @@ describe('git/diff', () => {
         return
       }
 
-      assert.equal(diff.text.includes('bar'), false)
+      assert(!diff.text.includes('bar'))
       assert(diff.text.includes('feature'))
     })
   })
