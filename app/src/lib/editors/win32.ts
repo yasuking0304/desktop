@@ -481,10 +481,11 @@ const editors: WindowsExternalEditor[] = [
     name: 'Cursor',
     registryKeys: [
       CurrentUserUninstallKey('62625861-8486-5be9-9e46-1da50df5f8ff'),
+      CurrentUserUninstallKey('{DADADADA-ADAD-ADAD-ADAD-ADADADADADAD}}_is1'),
     ],
     installLocationRegistryKey: 'DisplayIcon',
-    displayNamePrefixes: ['Cursor'],
-    publishers: ['Cursor AI, Inc.'],
+    displayNamePrefixes: ['Cursor', 'Cursor (User)'],
+    publishers: ['Cursor AI, Inc.', 'Anysphere'],
   },
   {
     name: 'Windsurf',
