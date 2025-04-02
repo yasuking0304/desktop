@@ -14,23 +14,23 @@ const format = (msg: string, lvl: string) => ({ [MESSAGE]: msg, [LEVEL]: lvl })
 const info = (t: DesktopFileTransport, m: string) => write(t, format(m, 'info'))
 
 describe('DesktopFileTransport', () => {
-  it('creates a file on demand', async () => {
-    const d = await createTempDirectory('desktop-logs')
-    const t = new DesktopFileTransport({ logDirectory: d })
+  it('creates a file on demand', async t => {
+    const d = await createTempDirectory(t)
+    const transport = new DesktopFileTransport({ logDirectory: d })
 
     assert.equal((await readdir(d)).length, 0)
-    await info(t, 'heyo')
+    await info(transport, 'heyo')
     const files = await readdir(d)
     assert.equal(files.length, 1)
     assert.equal(await readFile(join(d, files[0]), 'utf8'), `heyo${EOL}`)
 
-    t.close()
+    await promisify(transport.close).call(transport)
   })
 
   it('creates a file for each day', async t => {
     t.mock.timers.enable({ apis: ['Date'] })
 
-    const d = await createTempDirectory('desktop-logs')
+    const d = await createTempDirectory(t)
     const transport = new DesktopFileTransport({ logDirectory: d })
 
     assert.equal((await readdir(d)).length, 0)
@@ -43,12 +43,12 @@ describe('DesktopFileTransport', () => {
 
     assert.equal((await readdir(d)).length, 2)
 
-    transport.close()
+    await promisify(transport.close).call(transport)
   })
 
   it('retains a maximum of 14 log files', async t => {
     t.mock.timers.enable({ apis: ['Date'] })
-    const d = await createTempDirectory('desktop-logs')
+    const d = await createTempDirectory(t)
     const transport = new DesktopFileTransport({ logDirectory: d })
 
     const dates = [
@@ -100,6 +100,6 @@ describe('DesktopFileTransport', () => {
       '2022-03-20.desktop.development.log',
     ])
 
-    transport.close()
+    await promisify(transport.close).call(transport)
   })
 })

@@ -1,4 +1,4 @@
-import { describe, it, beforeEach } from 'node:test'
+import { describe, it } from 'node:test'
 import assert from 'node:assert'
 import * as FSE from 'fs-extra'
 import * as Path from 'path'
@@ -20,15 +20,10 @@ import { getStatusOrThrow } from '../../helpers/status'
 import { getTempFilePath } from '../../../src/lib/file-system'
 
 describe('git/cherry-pick', () => {
-  let repository: Repository
-  let initialCommit: Commit
+  it('squashes one commit onto the next (non-conflicting)', async t => {
+    const repository = await setupEmptyRepositoryDefaultMain(t)
+    const initialCommit = await makeSquashCommit(repository, 'initialize')
 
-  beforeEach(async () => {
-    repository = await setupEmptyRepositoryDefaultMain()
-    initialCommit = await makeSquashCommit(repository, 'initialize')
-  })
-
-  it('squashes one commit onto the next (non-conflicting)', async () => {
     const firstCommit = await makeSquashCommit(repository, 'first')
     const secondCommit = await makeSquashCommit(repository, 'second')
 
@@ -60,7 +55,10 @@ describe('git/cherry-pick', () => {
     assert(squashedFilePaths.includes('second.md'))
   })
 
-  it('returns error when squashOnto is in the toSquash array', async () => {
+  it('returns error when squashOnto is in the toSquash array', async t => {
+    const repository = await setupEmptyRepositoryDefaultMain(t)
+    const initialCommit = await makeSquashCommit(repository, 'initialize')
+
     const firstCommit = await makeSquashCommit(repository, 'first')
     const secondCommit = await makeSquashCommit(repository, 'second')
 
@@ -75,7 +73,10 @@ describe('git/cherry-pick', () => {
     assert.equal(result, RebaseResult.Error)
   })
 
-  it('squashes multiple commit onto one (non-conflicting)', async () => {
+  it('squashes multiple commit onto one (non-conflicting)', async t => {
+    const repository = await setupEmptyRepositoryDefaultMain(t)
+    const initialCommit = await makeSquashCommit(repository, 'initialize')
+
     const firstCommit = await makeSquashCommit(repository, 'first')
     const secondCommit = await makeSquashCommit(repository, 'second')
     const thirdCommit = await makeSquashCommit(repository, 'third')
@@ -111,7 +112,10 @@ describe('git/cherry-pick', () => {
     assert(squashedFilePaths.includes('fourth.md'))
   })
 
-  it('squashes using the root of the branch if last retained commit is null', async () => {
+  it('squashes using the root of the branch if last retained commit is null', async t => {
+    const repository = await setupEmptyRepositoryDefaultMain(t)
+    const initialCommit = await makeSquashCommit(repository, 'initialize')
+
     const firstCommit = await makeSquashCommit(repository, 'first')
     const secondCommit = await makeSquashCommit(repository, 'second')
 
@@ -147,7 +151,10 @@ describe('git/cherry-pick', () => {
     assert(squashedFilePaths.includes('second.md'))
   })
 
-  it('squashes multiple commit non-sequential commits (reorders, non-conflicting)', async () => {
+  it('squashes multiple commit non-sequential commits (reorders, non-conflicting)', async t => {
+    const repository = await setupEmptyRepositoryDefaultMain(t)
+    const initialCommit = await makeSquashCommit(repository, 'initialize')
+
     const firstCommit = await makeSquashCommit(repository, 'first')
     await makeSquashCommit(repository, 'second')
     const thirdCommit = await makeSquashCommit(repository, 'third')
@@ -200,7 +207,10 @@ describe('git/cherry-pick', () => {
     assert(!squashedFilePaths.includes('fourth.md'))
   })
 
-  it('handles squashing a conflicting commit', async () => {
+  it('handles squashing a conflicting commit', async t => {
+    const repository = await setupEmptyRepositoryDefaultMain(t)
+    const initialCommit = await makeSquashCommit(repository, 'initialize')
+
     const firstCommit = await makeSquashCommit(repository, 'first')
 
     // make a commit with a commit message 'second' and adding file 'second.md'
@@ -290,7 +300,10 @@ describe('git/cherry-pick', () => {
     assert(squashedFilePaths.includes('second.md'))
   })
 
-  it('squashes with default merged commit message/description if commit message not provided', async () => {
+  it('squashes with default merged commit message/description if commit message not provided', async t => {
+    const repository = await setupEmptyRepositoryDefaultMain(t)
+    const initialCommit = await makeSquashCommit(repository, 'initialize')
+
     const firstCommit = await makeSquashCommit(repository, 'first')
     const secondCommit = await makeSquashCommit(repository, 'second')
 
@@ -310,7 +323,10 @@ describe('git/cherry-pick', () => {
     assert.equal(log.length, 2)
   })
 
-  it('returns error on invalid lastRetainedCommitRef', async () => {
+  it('returns error on invalid lastRetainedCommitRef', async t => {
+    const repository = await setupEmptyRepositoryDefaultMain(t)
+    await makeSquashCommit(repository, 'initialize')
+
     const firstCommit = await makeSquashCommit(repository, 'first')
     const secondCommit = await makeSquashCommit(repository, 'second')
 
@@ -330,7 +346,10 @@ describe('git/cherry-pick', () => {
     assert.equal(await getRebaseInternalState(repository), null)
   })
 
-  it('returns error on invalid commit to squashOnto', async () => {
+  it('returns error on invalid commit to squashOnto', async t => {
+    const repository = await setupEmptyRepositoryDefaultMain(t)
+    const initialCommit = await makeSquashCommit(repository, 'initialize')
+
     await makeSquashCommit(repository, 'first')
     const secondCommit = await makeSquashCommit(repository, 'second')
 
@@ -350,7 +369,10 @@ describe('git/cherry-pick', () => {
     assert.equal(await getRebaseInternalState(repository), null)
   })
 
-  it('returns error on empty toSquash', async () => {
+  it('returns error on empty toSquash', async t => {
+    const repository = await setupEmptyRepositoryDefaultMain(t)
+    const initialCommit = await makeSquashCommit(repository, 'initialize')
+
     const first = await makeSquashCommit(repository, 'first')
     await makeSquashCommit(repository, 'second')
 

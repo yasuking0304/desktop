@@ -1,4 +1,4 @@
-import { describe, it, beforeEach } from 'node:test'
+import { describe, it, TestContext } from 'node:test'
 import assert from 'node:assert'
 import * as path from 'path'
 import * as FSE from 'fs-extra'
@@ -21,21 +21,16 @@ import {
   setupFixtureRepository,
   setupLocalForkOfRepository,
 } from '../../helpers/repositories'
-import { IRemote } from '../../../src/models/remote'
 import { findDefaultRemote } from '../../../src/lib/stores/helpers/find-default-remote'
 import { getStatusOrThrow } from '../../helpers/status'
 import { assertNonNullable, forceUnwrap } from '../../../src/lib/fatal-error'
 
 describe('git/tag', () => {
-  let repository: Repository
-
-  beforeEach(async () => {
-    const testRepoPath = await setupFixtureRepository('test-repo')
-    repository = new Repository(testRepoPath, -1, null, false)
-  })
-
   describe('createTag', () => {
-    it('creates a tag with the given name', async () => {
+    it('creates a tag with the given name', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'test-repo')
+      const repository = new Repository(testRepoPath, -1, null, false)
+
       await createTag(repository, 'my-new-tag', 'HEAD')
 
       const commit = await getCommit(repository, 'HEAD')
@@ -43,7 +38,10 @@ describe('git/tag', () => {
       assert.deepStrictEqual(commit.tags, ['my-new-tag'])
     })
 
-    it('creates a tag with the a comma in it', async () => {
+    it('creates a tag with the a comma in it', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'test-repo')
+      const repository = new Repository(testRepoPath, -1, null, false)
+
       await createTag(repository, 'my-new-tag,has-a-comma', 'HEAD')
 
       const commit = await getCommit(repository, 'HEAD')
@@ -51,7 +49,10 @@ describe('git/tag', () => {
       assert.deepStrictEqual(commit.tags, ['my-new-tag,has-a-comma'])
     })
 
-    it('creates multiple tags', async () => {
+    it('creates multiple tags', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'test-repo')
+      const repository = new Repository(testRepoPath, -1, null, false)
+
       await createTag(repository, 'my-new-tag', 'HEAD')
       await createTag(repository, 'another-tag', 'HEAD')
 
@@ -60,7 +61,10 @@ describe('git/tag', () => {
       assert.deepStrictEqual(commit.tags, ['my-new-tag', 'another-tag'])
     })
 
-    it('creates a tag on a specified commit', async () => {
+    it('creates a tag on a specified commit', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'test-repo')
+      const repository = new Repository(testRepoPath, -1, null, false)
+
       const commits = await getCommits(repository, 'HEAD', 2)
       const commitSha = commits[1].sha
 
@@ -72,7 +76,10 @@ describe('git/tag', () => {
       assert.deepStrictEqual(commit.tags, ['my-new-tag'])
     })
 
-    it('fails when creating a tag with a name that already exists', async () => {
+    it('fails when creating a tag with a name that already exists', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'test-repo')
+      const repository = new Repository(testRepoPath, -1, null, false)
+
       await createTag(repository, 'my-new-tag', 'HEAD')
 
       await assert.rejects(
@@ -83,7 +90,10 @@ describe('git/tag', () => {
   })
 
   describe('deleteTag', () => {
-    it('deletes a tag with the given name', async () => {
+    it('deletes a tag with the given name', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'test-repo')
+      const repository = new Repository(testRepoPath, -1, null, false)
+
       await createTag(repository, 'my-new-tag', 'HEAD')
       await deleteTag(repository, 'my-new-tag')
 
@@ -93,11 +103,17 @@ describe('git/tag', () => {
   })
 
   describe('getAllTags', () => {
-    it('returns an empty map when the repository has no tags', async () => {
+    it('returns an empty map when the repository has no tags', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'test-repo')
+      const repository = new Repository(testRepoPath, -1, null, false)
+
       assert((await getAllTags(repository)).size === 0)
     })
 
-    it('returns all the created tags', async () => {
+    it('returns all the created tags', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'test-repo')
+      const repository = new Repository(testRepoPath, -1, null, false)
+
       const commit = await getCommit(repository, 'HEAD')
       assert(commit !== null)
 
@@ -115,29 +131,30 @@ describe('git/tag', () => {
   })
 
   describe('fetchTagsToPush', () => {
-    let remoteRepository: Repository
-    let originRemote: IRemote
-
-    beforeEach(async () => {
-      const path = await setupFixtureRepository('test-repo-with-tags')
-      remoteRepository = new Repository(path, -1, null, false)
-      repository = await setupLocalForkOfRepository(remoteRepository)
+    const setup = async (t: TestContext) => {
+      const path = await setupFixtureRepository(t, 'test-repo-with-tags')
+      const remoteRepository = new Repository(path, -1, null, false)
+      const repository = await setupLocalForkOfRepository(t, remoteRepository)
 
       const remotes = await getRemotes(repository)
-      originRemote = forceUnwrap(
+      const originRemote = forceUnwrap(
         "couldn't find origin remote",
         findDefaultRemote(remotes)
       )
-    })
 
-    it('returns an empty array when there are no tags to get pushed', async () => {
+      return { repository, originRemote, remoteRepository }
+    }
+
+    it('returns an empty array when there are no tags to get pushed', async t => {
+      const { repository, originRemote } = await setup(t)
       assert.equal(
         (await fetchTagsToPush(repository, originRemote, 'master')).length,
         0
       )
     })
 
-    it("returns local tags that haven't been pushed", async () => {
+    it("returns local tags that haven't been pushed", async t => {
+      const { repository, originRemote } = await setup(t)
       await createTag(repository, 'my-new-tag', 'HEAD')
 
       assert.deepStrictEqual(
@@ -146,7 +163,8 @@ describe('git/tag', () => {
       )
     })
 
-    it('returns an empty array after pushing the tag', async () => {
+    it('returns an empty array after pushing the tag', async t => {
+      const { repository, originRemote } = await setup(t)
       await createTag(repository, 'my-new-tag', 'HEAD')
 
       await push(repository, originRemote, 'master', null, ['my-new-tag'])
@@ -157,7 +175,8 @@ describe('git/tag', () => {
       )
     })
 
-    it('does not return a tag created on a non-pushed branch', async () => {
+    it('does not return a tag created on a non-pushed branch', async t => {
+      const { repository, originRemote } = await setup(t)
       // Create a tag on a local branch that's not pushed to the remote.
       const branchName = 'new-branch'
       await createBranch(repository, branchName, 'master')
@@ -180,9 +199,10 @@ describe('git/tag', () => {
       )
     })
 
-    it('returns unpushed tags even if it fails to push the branch', async () => {
+    it('returns unpushed tags even if it fails to push the branch', async t => {
       // Create a new commit on the remote repository so the `git push` command
       // that fetchUnpushedTags() does fails.
+      const { repository, originRemote, remoteRepository } = await setup(t)
       await FSE.writeFile(
         path.join(remoteRepository.path, 'README.md'),
         'Hi world\n'

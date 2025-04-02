@@ -1240,13 +1240,6 @@
   resolved "https://registry.yarnpkg.com/@types/strip-ansi/-/strip-ansi-3.0.0.tgz#9b63d453a6b54aa849182207711a08be8eea48ae"
   integrity sha1-m2PUU6a1SqhJGCIHcRoIvo7qSK4=
 
-"@types/temp@^0.8.29":
-  version "0.8.31"
-  resolved "https://registry.yarnpkg.com/@types/temp/-/temp-0.8.31.tgz#8518b6fb4c7d7cf106c78e5d88d3cff88d508f97"
-  integrity sha512-zlQRhRYRTuO1lNF0WIYshou/BaVPslf6Rg6jm6sykKn9G/8gOKtlAXtWAZzyQl762XBtpdhsoP5WuN902OQ6RQ==
-  dependencies:
-    "@types/node" "*"
-
 "@types/tern@*":
   version "0.23.3"
   resolved "https://registry.yarnpkg.com/@types/tern/-/tern-0.23.3.tgz#4b54538f04a88c9ff79de1f6f94f575a7f339460"

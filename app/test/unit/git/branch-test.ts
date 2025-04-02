@@ -1,4 +1,4 @@
-import { describe, it, beforeEach } from 'node:test'
+import { describe, it } from 'node:test'
 import assert from 'node:assert'
 import { shell } from '../../helpers/test-app-shell'
 import {
@@ -30,8 +30,8 @@ import { TestStatsStore } from '../../helpers/test-stats-store'
 
 describe('git/branch', () => {
   describe('tip', () => {
-    it('returns unborn for new repository', async () => {
-      const repository = await setupEmptyRepository()
+    it('returns unborn for new repository', async t => {
+      const repository = await setupEmptyRepository(t)
 
       const store = new GitStore(repository, shell, new TestStatsStore())
       await store.loadStatus()
@@ -42,8 +42,8 @@ describe('git/branch', () => {
       assert.equal(unborn.ref, 'master')
     })
 
-    it('returns correct ref if checkout occurs', async () => {
-      const repository = await setupEmptyRepository()
+    it('returns correct ref if checkout occurs', async t => {
+      const repository = await setupEmptyRepository(t)
 
       await exec(['checkout', '-b', 'not-master'], repository.path)
 
@@ -56,8 +56,8 @@ describe('git/branch', () => {
       assert.equal(unborn.ref, 'not-master')
     })
 
-    it('returns detached for arbitrary checkout', async () => {
-      const path = await setupFixtureRepository('detached-head')
+    it('returns detached for arbitrary checkout', async t => {
+      const path = await setupFixtureRepository(t, 'detached-head')
       const repository = new Repository(path, -1, null, false)
 
       const store = new GitStore(repository, shell, new TestStatsStore())
@@ -72,8 +72,8 @@ describe('git/branch', () => {
       )
     })
 
-    it('returns current branch when on a valid HEAD', async () => {
-      const path = await setupFixtureRepository('repo-with-many-refs')
+    it('returns current branch when on a valid HEAD', async t => {
+      const path = await setupFixtureRepository(t, 'repo-with-many-refs')
       const repository = new Repository(path, -1, null, false)
 
       const store = new GitStore(repository, shell, new TestStatsStore())
@@ -89,8 +89,8 @@ describe('git/branch', () => {
       )
     })
 
-    it('returns non-origin remote', async () => {
-      const path = await setupFixtureRepository('repo-with-multiple-remotes')
+    it('returns non-origin remote', async t => {
+      const path = await setupFixtureRepository(t, 'repo-with-multiple-remotes')
       const repository = new Repository(path, -1, null, false)
 
       const store = new GitStore(repository, shell, new TestStatsStore())
@@ -104,8 +104,8 @@ describe('git/branch', () => {
   })
 
   describe('upstreamWithoutRemote', () => {
-    it('returns the upstream name without the remote prefix', async () => {
-      const path = await setupFixtureRepository('repo-with-multiple-remotes')
+    it('returns the upstream name without the remote prefix', async t => {
+      const path = await setupFixtureRepository(t, 'repo-with-multiple-remotes')
       const repository = new Repository(path, -1, null, false)
 
       const store = new GitStore(repository, shell, new TestStatsStore())
@@ -122,39 +122,44 @@ describe('git/branch', () => {
   })
 
   describe('getBranchesPointedAt', () => {
-    let repository: Repository
     describe('in a local repo', () => {
-      beforeEach(async () => {
-        const path = await setupFixtureRepository('test-repo')
-        repository = new Repository(path, -1, null, false)
-      })
+      it('finds one branch name', async t => {
+        const path = await setupFixtureRepository(t, 'test-repo')
+        const repository = new Repository(path, -1, null, false)
 
-      it('finds one branch name', async () => {
         const branches = await getBranchesPointedAt(repository, 'HEAD')
         assert(branches !== null)
         assert.equal(branches.length, 1)
         assert.equal(branches[0], 'master')
       })
 
-      it('finds no branch names', async () => {
+      it('finds no branch names', async t => {
+        const path = await setupFixtureRepository(t, 'test-repo')
+        const repository = new Repository(path, -1, null, false)
+
         const branches = await getBranchesPointedAt(repository, 'HEAD^')
         assert(branches !== null)
         assert.equal(branches.length, 0)
       })
 
-      it('returns null on a malformed committish', async () => {
+      it('returns null on a malformed committish', async t => {
+        const path = await setupFixtureRepository(t, 'test-repo')
+        const repository = new Repository(path, -1, null, false)
+
         const branches = await getBranchesPointedAt(repository, 'MERGE_HEAD')
         assert(branches === null)
       })
     })
 
     describe('in a repo with identical branches', () => {
-      beforeEach(async () => {
-        const path = await setupFixtureRepository('repo-with-multiple-remotes')
-        repository = new Repository(path, -1, null, false)
+      it('finds multiple branch names', async t => {
+        const path = await setupFixtureRepository(
+          t,
+          'repo-with-multiple-remotes'
+        )
+        const repository = new Repository(path, -1, null, false)
         await createBranch(repository, 'other-branch', null)
-      })
-      it('finds multiple branch names', async () => {
+
         const branches = await getBranchesPointedAt(repository, 'HEAD')
         assert(branches !== null)
         assert.equal(branches.length, 2)
@@ -165,14 +170,10 @@ describe('git/branch', () => {
   })
 
   describe('deleteLocalBranch', () => {
-    let repository: Repository
+    it('deletes local branches', async t => {
+      const path = await setupFixtureRepository(t, 'test-repo')
+      const repository = new Repository(path, -1, null, false)
 
-    beforeEach(async () => {
-      const path = await setupFixtureRepository('test-repo')
-      repository = new Repository(path, -1, null, false)
-    })
-
-    it('deletes local branches', async () => {
       const name = 'test-branch'
       await createBranch(repository, name, null)
       const [branch] = await getBranches(repository, `refs/heads/${name}`)
@@ -190,21 +191,17 @@ describe('git/branch', () => {
   })
 
   describe('deleteRemoteBranch', () => {
-    let mockRemote: Repository
+    it('delete a local branches upstream branch', async t => {
+      const path = await setupFixtureRepository(t, 'test-repo')
+      const mockRemote = new Repository(path, -1, null, false)
 
-    beforeEach(async () => {
-      const path = await setupFixtureRepository('test-repo')
-      mockRemote = new Repository(path, -1, null, false)
-    })
-
-    it('delete a local branches upstream branch', async () => {
       const name = 'test-branch'
       const branch = await createBranch(mockRemote, name, null)
       const localRef = `refs/heads/${name}`
 
       assert(branch !== null)
 
-      const mockLocal = await setupLocalForkOfRepository(mockRemote)
+      const mockLocal = await setupLocalForkOfRepository(t, mockRemote)
 
       const remoteRef = `refs/remotes/origin/${name}`
       const [remoteBranch] = await getBranches(mockLocal, remoteRef)
@@ -232,7 +229,10 @@ describe('git/branch', () => {
       assert.equal((await getBranches(mockRemote, localRef)).length, 0)
     })
 
-    it('handles attempted delete of removed remote branch', async () => {
+    it('handles attempted delete of removed remote branch', async t => {
+      const path = await setupFixtureRepository(t, 'test-repo')
+      const mockRemote = new Repository(path, -1, null, false)
+
       const name = 'test-branch'
       const branch = await createBranch(mockRemote, name, null)
       const localRef = `refs/heads/${name}`
@@ -240,7 +240,7 @@ describe('git/branch', () => {
       assert(branch !== null)
       assert.equal((await getBranches(mockRemote, localRef)).length, 1)
 
-      const mockLocal = await setupLocalForkOfRepository(mockRemote)
+      const mockLocal = await setupLocalForkOfRepository(t, mockRemote)
 
       const remoteRef = `refs/remotes/origin/${name}`
       const [remoteBranch] = await getBranches(mockLocal, remoteRef)

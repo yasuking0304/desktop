@@ -9,8 +9,8 @@ import { GitError as DugiteError } from 'dugite'
 import { parseFilesToBeOverwritten } from '../../src/ui/lib/parse-files-to-be-overwritten'
 
 describe('parseFilesToBeOverwritten', () => {
-  it('parses files from pull error', async () => {
-    const parent = await setupEmptyRepository()
+  it('parses files from pull error', async t => {
+    const parent = await setupEmptyRepository(t)
     await writeFile(join(parent.path, 'a'), '1')
     await writeFile(join(parent.path, 'b'), '2')
     await git(['add', 'a', 'b'], parent.path, 'add')
@@ -21,7 +21,7 @@ describe('parseFilesToBeOverwritten', () => {
     await git(['add', 'a', 'b'], parent.path, 'add')
     await git(['commit', '-m', 'second'], parent.path, 'add')
 
-    const fork = await cloneLocalRepository(parent)
+    const fork = await cloneLocalRepository(t, parent)
     await git(['reset', 'HEAD^'], fork.path, 'reset')
     const result = await git(['pull'], fork.path, 'pull', {
       expectedErrors: new Set([DugiteError.MergeWithLocalChanges]),
@@ -31,8 +31,8 @@ describe('parseFilesToBeOverwritten', () => {
     assert.deepStrictEqual(parseFilesToBeOverwritten(result.stderr), ['a', 'b'])
   })
 
-  it("isn't able to parse files from pull rebase error", async () => {
-    const parent = await setupEmptyRepository()
+  it("isn't able to parse files from pull rebase error", async t => {
+    const parent = await setupEmptyRepository(t)
     await writeFile(join(parent.path, 'a'), '1')
     await writeFile(join(parent.path, 'b'), '2')
     await git(['add', 'a', 'b'], parent.path, 'add')
@@ -43,7 +43,7 @@ describe('parseFilesToBeOverwritten', () => {
     await git(['add', 'a', 'b'], parent.path, 'add')
     await git(['commit', '-m', 'second'], parent.path, 'add')
 
-    const fork = await cloneLocalRepository(parent)
+    const fork = await cloneLocalRepository(t, parent)
     await git(['reset', 'HEAD^'], fork.path, 'reset')
     const result = await git(['pull', '--rebase'], fork.path, 'pull', {
       expectedErrors: new Set([DugiteError.RebaseWithLocalChanges]),
@@ -53,8 +53,8 @@ describe('parseFilesToBeOverwritten', () => {
     assert.deepStrictEqual(parseFilesToBeOverwritten(result.stderr), [])
   })
 
-  it('parses files from merge error', async () => {
-    const repo = await setupEmptyRepository()
+  it('parses files from merge error', async t => {
+    const repo = await setupEmptyRepository(t)
     await writeFile(join(repo.path, 'a'), '1')
     await writeFile(join(repo.path, 'b'), '2')
     await git(['add', 'a', 'b'], repo.path, 'add')
@@ -74,8 +74,8 @@ describe('parseFilesToBeOverwritten', () => {
     assert.deepStrictEqual(parseFilesToBeOverwritten(result.stderr), ['a', 'b'])
   })
 
-  it('parses files from checkout error', async () => {
-    const repo = await setupEmptyRepository()
+  it('parses files from checkout error', async t => {
+    const repo = await setupEmptyRepository(t)
     await writeFile(join(repo.path, 'a'), '1')
     await writeFile(join(repo.path, 'b'), '2')
     await git(['add', 'a', 'b'], repo.path, 'add')

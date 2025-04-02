@@ -1,4 +1,4 @@
-import { describe, it, beforeEach } from 'node:test'
+import { describe, it } from 'node:test'
 import assert from 'node:assert'
 import { Repository } from '../../../src/models/repository'
 import { getChangedFiles, getCommits } from '../../../src/lib/git'
@@ -7,15 +7,14 @@ import { AppFileStatusKind } from '../../../src/models/status'
 import { setupLocalConfig } from '../../helpers/local-config'
 
 describe('git/log', () => {
-  let repository: Repository
-
-  beforeEach(async () => {
-    const testRepoPath = await setupFixtureRepository('test-repo-with-tags')
-    repository = new Repository(testRepoPath, -1, null, false)
-  })
-
   describe('getCommits', () => {
-    it('loads history', async () => {
+    it('loads history', async t => {
+      const testRepoPath = await setupFixtureRepository(
+        t,
+        'test-repo-with-tags'
+      )
+      const repository = new Repository(testRepoPath, -1, null, false)
+
       const commits = await getCommits(repository, 'HEAD', 100)
       assert.equal(commits.length, 5)
 
@@ -25,15 +24,15 @@ describe('git/log', () => {
       assert.equal(firstCommit.shortSha, '7cd6640')
     })
 
-    it('handles repository with HEAD file on disk', async () => {
-      const path = await setupFixtureRepository('repository-with-HEAD-file')
+    it('handles repository with HEAD file on disk', async t => {
+      const path = await setupFixtureRepository(t, 'repository-with-HEAD-file')
       const repo = new Repository(path, 1, null, false)
       const commits = await getCommits(repo, 'HEAD', 100)
       assert.equal(commits.length, 2)
     })
 
-    it('handles repository with signed commit and log.showSignature set', async () => {
-      const path = await setupFixtureRepository('just-doing-some-signing')
+    it('handles repository with signed commit and log.showSignature set', async t => {
+      const path = await setupFixtureRepository(t, 'just-doing-some-signing')
       const repository = new Repository(path, 1, null, false)
 
       // ensure the default config is to try and show signatures
@@ -48,7 +47,13 @@ describe('git/log', () => {
       assert.equal(commits[0].shortSha, '415e498')
     })
 
-    it('parses tags', async () => {
+    it('parses tags', async t => {
+      const testRepoPath = await setupFixtureRepository(
+        t,
+        'test-repo-with-tags'
+      )
+      const repository = new Repository(testRepoPath, -1, null, false)
+
       const commits = await getCommits(repository, 'HEAD', 100)
       assert.equal(commits.length, 5)
 
@@ -59,7 +64,13 @@ describe('git/log', () => {
   })
 
   describe('getChangedFiles', () => {
-    it('loads the files changed in the commit', async () => {
+    it('loads the files changed in the commit', async t => {
+      const testRepoPath = await setupFixtureRepository(
+        t,
+        'test-repo-with-tags'
+      )
+      const repository = new Repository(testRepoPath, -1, null, false)
+
       const changesetData = await getChangedFiles(
         repository,
         '7cd6640e5b6ca8dbfd0b33d0281ebe702127079c'
@@ -69,11 +80,12 @@ describe('git/log', () => {
       assert.equal(changesetData.files[0].status.kind, AppFileStatusKind.New)
     })
 
-    it('detects renames', async () => {
+    it('detects renames', async t => {
       const testRepoPath = await setupFixtureRepository(
+        t,
         'rename-history-detection'
       )
-      repository = new Repository(testRepoPath, -1, null, false)
+      const repository = new Repository(testRepoPath, -1, null, false)
 
       const first = await getChangedFiles(repository, '55bdecb')
       assert.equal(first.files.length, 1)
@@ -98,11 +110,12 @@ describe('git/log', () => {
       })
     })
 
-    it('detect copies', async () => {
+    it('detect copies', async t => {
       const testRepoPath = await setupFixtureRepository(
+        t,
         'copies-history-detection'
       )
-      repository = new Repository(testRepoPath, -1, null, false)
+      const repository = new Repository(testRepoPath, -1, null, false)
 
       // ensure the test repository is configured to detect copies
       await setupLocalConfig(repository, [['diff.renames', 'copies']])
@@ -127,7 +140,13 @@ describe('git/log', () => {
       })
     })
 
-    it('handles commit when HEAD exists on disk', async () => {
+    it('handles commit when HEAD exists on disk', async t => {
+      const testRepoPath = await setupFixtureRepository(
+        t,
+        'test-repo-with-tags'
+      )
+      const repository = new Repository(testRepoPath, -1, null, false)
+
       const changesetData = await getChangedFiles(repository, 'HEAD')
       assert.equal(changesetData.files.length, 1)
       assert.equal(changesetData.files[0].path, 'README.md')
@@ -138,9 +157,9 @@ describe('git/log', () => {
     })
   })
 
-  it('detects submodule changes within commits', async () => {
-    const repoPath = await setupFixtureRepository('submodule-basic-setup')
-    repository = new Repository(repoPath, -1, null, false)
+  it('detects submodule changes within commits', async t => {
+    const repoPath = await setupFixtureRepository(t, 'submodule-basic-setup')
+    const repository = new Repository(repoPath, -1, null, false)
 
     const changesetData = await getChangedFiles(repository, 'HEAD')
     assert.equal(changesetData.files.length, 2)

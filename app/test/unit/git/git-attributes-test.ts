@@ -8,8 +8,8 @@ import { writeGitAttributes } from '../../../src/ui/add-repository/git-attribute
 
 describe('git/git-attributes', () => {
   describe('writeGitAttributes', () => {
-    it('initializes a .gitattributes file', async () => {
-      const repo = await setupEmptyRepository()
+    it('initializes a .gitattributes file', async t => {
+      const repo = await setupEmptyRepository(t)
       await writeGitAttributes(repo.path)
       const expectedPath = Path.join(repo.path, '.gitattributes')
       const contents = await FSE.readFile(expectedPath, 'utf8')

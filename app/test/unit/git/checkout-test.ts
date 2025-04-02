@@ -16,8 +16,8 @@ import { exec } from 'dugite'
 import { TestStatsStore } from '../../helpers/test-stats-store'
 
 describe('git/checkout', () => {
-  it('throws when invalid characters are used for branch name', async () => {
-    const repository = await setupEmptyRepository()
+  it('throws when invalid characters are used for branch name', async t => {
+    const repository = await setupEmptyRepository(t)
 
     const branch: Branch = {
       name: '..',
@@ -38,8 +38,8 @@ describe('git/checkout', () => {
     )
   })
 
-  it('can checkout a valid branch name in an existing repository', async () => {
-    const path = await setupFixtureRepository('repo-with-many-refs')
+  it('can checkout a valid branch name in an existing repository', async t => {
+    const path = await setupFixtureRepository(t, 'repo-with-many-refs')
     const repository = new Repository(path, -1, null, false)
 
     const branches = await getBranches(
@@ -63,8 +63,8 @@ describe('git/checkout', () => {
     assert.equal(validBranch.branch.name, 'commit-with-long-description')
   })
 
-  it('can checkout a branch when it exists on multiple remotes', async () => {
-    const path = await setupFixtureRepository('checkout-test-cases')
+  it('can checkout a branch when it exists on multiple remotes', async t => {
+    const path = await setupFixtureRepository(t, 'checkout-test-cases')
     const repository = new Repository(path, -1, null, false)
 
     const expectedBranch = 'first'
@@ -100,8 +100,8 @@ describe('git/checkout', () => {
     assert.equal(validBranch.branch.upstreamRemoteName, 'first-remote')
   })
 
-  it('will fail when an existing branch matches the remote branch', async () => {
-    const path = await setupFixtureRepository('checkout-test-cases')
+  it('will fail when an existing branch matches the remote branch', async t => {
+    const path = await setupFixtureRepository(t, 'checkout-test-cases')
     const repository = new Repository(path, -1, null, false)
 
     const expectedBranch = 'first'
@@ -124,8 +124,8 @@ describe('git/checkout', () => {
   })
 
   describe('with submodules', () => {
-    it('cleans up an submodule that no longer exists', async () => {
-      const path = await setupFixtureRepository('test-submodule-checkouts')
+    it('cleans up an submodule that no longer exists', async t => {
+      const path = await setupFixtureRepository(t, 'test-submodule-checkouts')
       const repository = new Repository(path, -1, null, false)
 
       // put the repository into a known good state
@@ -148,8 +148,8 @@ describe('git/checkout', () => {
       assert.equal(status.workingDirectory.files.length, 0)
     })
 
-    it('updates a changed submodule reference', async () => {
-      const path = await setupFixtureRepository('test-submodule-checkouts')
+    it('updates a changed submodule reference', async t => {
+      const path = await setupFixtureRepository(t, 'test-submodule-checkouts')
       const repository = new Repository(path, -1, null, false)
 
       // put the repository into a known good state

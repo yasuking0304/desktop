@@ -1,4 +1,4 @@
-import { describe, it, beforeEach } from 'node:test'
+import { describe, it, TestContext } from 'node:test'
 import assert from 'node:assert'
 import {
   fetch,
@@ -6,8 +6,6 @@ import {
   getAheadBehind,
   revSymmetricDifference,
 } from '../../../../src/lib/git'
-import { Commit } from '../../../../src/models/commit'
-import { Repository } from '../../../../src/models/repository'
 import { createRepository } from '../../../helpers/repository-builder-pull-test'
 import {
   cloneRepository,
@@ -23,11 +21,9 @@ const remoteBranch = `${remote.name}/${featureBranch}`
 
 describe('git/pull', () => {
   describe('only ahead of tracking branch', () => {
-    let repository: Repository
-
-    beforeEach(async () => {
-      const remoteRepository = await createRepository(featureBranch)
-      repository = await cloneRepository(remoteRepository)
+    const setup = async (t: TestContext, pullFFConfig?: string) => {
+      const remoteRepository = await createRepository(t, featureBranch)
+      const repository = await cloneRepository(t, remoteRepository)
 
       // add a commit to the local branch so that it is now "ahead"
 
@@ -43,30 +39,36 @@ describe('git/pull', () => {
 
       await makeCommit(repository, changesForLocalRepository)
       await fetch(repository, remote)
-    })
+
+      if (pullFFConfig) {
+        await setupLocalConfig(repository, [['pull.ff', pullFFConfig]])
+      }
+
+      const previousTip = await getTipOrError(repository)
+
+      await pull(repository, remote)
+
+      const newTip = await getTipOrError(repository)
+
+      return { repository, previousTip, newTip }
+    }
 
     describe('by default', () => {
-      let previousTip: Commit
-      let newTip: Commit
-
-      beforeEach(async () => {
-        previousTip = await getTipOrError(repository)
-
-        await pull(repository, remote)
-
-        newTip = await getTipOrError(repository)
-      })
-
-      it('does not create new commit', async () => {
+      it('does not create new commit', async t => {
+        const { previousTip, newTip } = await setup(t)
         assert.equal(newTip.sha, previousTip.sha)
       })
 
-      it('is different from tracking branch', async () => {
+      it('is different from tracking branch', async t => {
+        const { newTip, repository } = await setup(t)
+
         const remoteCommit = await getRefOrError(repository, remoteBranch)
         assert.notEqual(remoteCommit.sha, newTip.sha)
       })
 
-      it('remains ahead of tracking branch', async () => {
+      it('remains ahead of tracking branch', async t => {
+        const { repository } = await setup(t)
+
         const range = revSymmetricDifference(featureBranch, remoteBranch)
 
         const aheadBehind = await getAheadBehind(repository, range)
@@ -76,29 +78,21 @@ describe('git/pull', () => {
     })
 
     describe('with pull.ff=false set in config', () => {
-      let previousTip: Commit
-      let newTip: Commit
-
-      beforeEach(async () => {
-        await setupLocalConfig(repository, [['pull.ff', 'false']])
-
-        previousTip = await getTipOrError(repository)
-
-        await pull(repository, remote)
-
-        newTip = await getTipOrError(repository)
-      })
-
-      it('does not create new commit', async () => {
+      it('does not create new commit', async t => {
+        const { previousTip, newTip } = await setup(t, 'false')
         assert.equal(newTip.sha, previousTip.sha)
       })
 
-      it('is different to tracking branch', async () => {
+      it('is different to tracking branch', async t => {
+        const { newTip, repository } = await setup(t, 'false')
+
         const remoteCommit = await getRefOrError(repository, remoteBranch)
         assert.notEqual(remoteCommit.sha, newTip.sha)
       })
 
-      it('is ahead of tracking branch', async () => {
+      it('is ahead of tracking branch', async t => {
+        const { repository } = await setup(t, 'false')
+
         const range = revSymmetricDifference(featureBranch, remoteBranch)
 
         const aheadBehind = await getAheadBehind(repository, range)
@@ -107,29 +101,21 @@ describe('git/pull', () => {
     })
 
     describe('with pull.ff=only set in config', () => {
-      let previousTip: Commit
-      let newTip: Commit
-
-      beforeEach(async () => {
-        await setupLocalConfig(repository, [['pull.ff', 'only']])
-
-        previousTip = await getTipOrError(repository)
-
-        await pull(repository, remote)
-
-        newTip = await getTipOrError(repository)
-      })
-
-      it('does not create new commit', async () => {
+      it('does not create new commit', async t => {
+        const { previousTip, newTip } = await setup(t, 'only')
         assert.equal(newTip.sha, previousTip.sha)
       })
 
-      it('is different from tracking branch', async () => {
+      it('is different from tracking branch', async t => {
+        const { repository, newTip } = await setup(t, 'only')
+
         const remoteCommit = await getRefOrError(repository, remoteBranch)
         assert.notEqual(remoteCommit.sha, newTip.sha)
       })
 
-      it('is ahead of tracking branch', async () => {
+      it('is ahead of tracking branch', async t => {
+        const { repository } = await setup(t, 'only')
+
         const range = revSymmetricDifference(featureBranch, remoteBranch)
 
         const aheadBehind = await getAheadBehind(repository, range)

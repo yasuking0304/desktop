@@ -1,4 +1,4 @@
-import { describe, it, beforeEach } from 'node:test'
+import { describe, it, TestContext } from 'node:test'
 import assert from 'node:assert'
 import { exec } from 'dugite'
 import * as Path from 'path'
@@ -13,32 +13,32 @@ import {
   git,
 } from '../../../src/lib/git'
 
-import { mkdirSync } from '../../helpers/temp'
 import { setupFixtureRepository } from '../../helpers/repositories'
 import { realpath } from 'fs/promises'
+import { createTempDirectory } from '../../helpers/temp'
 
 describe('git/config', () => {
-  let repository: Repository
-
-  beforeEach(async () => {
-    const testRepoPath = await setupFixtureRepository('test-repo')
-    repository = new Repository(testRepoPath, -1, null, false)
-  })
-
   describe('config', () => {
-    it('looks up config values', async () => {
+    it('looks up config values', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'test-repo')
+      const repository = new Repository(testRepoPath, -1, null, false)
       const bare = await getConfigValue(repository, 'core.bare')
       assert.equal(bare, 'false')
     })
 
-    it('returns null for undefined values', async () => {
+    it('returns null for undefined values', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'test-repo')
+      const repository = new Repository(testRepoPath, -1, null, false)
       const value = await getConfigValue(repository, 'core.the-meaning-of-life')
       assert(value === null)
     })
   })
 
   describe('GIT_CONFIG_PARAMETERS', () => {
-    it('picks them up', async () => {
+    it('picks them up', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'test-repo')
+      const repository = new Repository(testRepoPath, -1, null, false)
+
       const withoutEnvOutput = await git(
         ['config', 'desktop.test'],
         repository.path,
@@ -61,7 +61,10 @@ describe('git/config', () => {
       assert.equal(withEnvOutput, '1\n')
     })
 
-    it('takes precedence over GIT_CONFIG_*', async () => {
+    it('takes precedence over GIT_CONFIG_*', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'test-repo')
+      const repository = new Repository(testRepoPath, -1, null, false)
+
       const output = await git(['config', 'user.name'], repository.path, '', {
         env: {
           GIT_CONFIG_PARAMETERS: "'user.name=foobar'",
@@ -76,34 +79,36 @@ describe('git/config', () => {
   })
 
   describe('global config', () => {
-    const HOME = mkdirSync('global-config-here')
-    const env = { HOME }
-    const expectedConfigPath = Path.normalize(Path.join(HOME, '.gitconfig'))
+    const setup = async (t: TestContext) => {
+      const HOME = await createTempDirectory(t)
+      const env = { HOME }
+      const expectedConfigPath = Path.normalize(Path.join(HOME, '.gitconfig'))
+      const baseArgs = ['config', '-f', expectedConfigPath]
 
-    const baseArgs = ['config', '-f', expectedConfigPath]
+      return { env, expectedConfigPath, baseArgs }
+    }
 
     describe('getGlobalConfigPath', () => {
-      beforeEach(async () => {
+      it('gets the config path', async t => {
+        const { env, expectedConfigPath, baseArgs } = await setup(t)
+
         // getGlobalConfigPath requires at least one entry, so the
         // test needs to setup an existing config value
         await exec([...baseArgs, 'user.name', 'bar'], __dirname)
-      })
 
-      it('gets the config path', async () => {
         const path = await getGlobalConfigPath(env)
         assert.equal(path, await realpath(expectedConfigPath))
       })
     })
 
     describe('setGlobalConfigValue', () => {
-      const key = 'foo.bar'
+      it('will replace all entries for a global value', async t => {
+        const { env, baseArgs } = await setup(t)
+        const key = 'foo.bar'
 
-      beforeEach(async () => {
         await exec([...baseArgs, '--add', key, 'first'], __dirname)
         await exec([...baseArgs, '--add', key, 'second'], __dirname)
-      })
 
-      it('will replace all entries for a global value', async () => {
         await setGlobalConfigValue(key, 'the correct value', env)
         const value = await getGlobalConfigValue(key, env)
         assert.equal(value, 'the correct value')
@@ -113,49 +118,65 @@ describe('git/config', () => {
     describe('getGlobalBooleanConfigValue', () => {
       const key = 'foo.bar'
 
-      it('treats "false" as false', async () => {
+      it('treats "false" as false', async t => {
+        const { env } = await setup(t)
+
         await setGlobalConfigValue(key, 'false', env)
         const value = await getGlobalBooleanConfigValue(key, env)
         assert.strictEqual(value, false)
       })
 
-      it('treats "off" as false', async () => {
+      it('treats "off" as false', async t => {
+        const { env } = await setup(t)
+
         await setGlobalConfigValue(key, 'off', env)
         const value = await getGlobalBooleanConfigValue(key, env)
         assert.strictEqual(value, false)
       })
 
-      it('treats "no" as false', async () => {
+      it('treats "no" as false', async t => {
+        const { env } = await setup(t)
+
         await setGlobalConfigValue(key, 'no', env)
         const value = await getGlobalBooleanConfigValue(key, env)
         assert.strictEqual(value, false)
       })
 
-      it('treats "0" as false', async () => {
+      it('treats "0" as false', async t => {
+        const { env } = await setup(t)
+
         await setGlobalConfigValue(key, '0', env)
         const value = await getGlobalBooleanConfigValue(key, env)
         assert.strictEqual(value, false)
       })
 
-      it('treats "true" as true', async () => {
+      it('treats "true" as true', async t => {
+        const { env } = await setup(t)
+
         await setGlobalConfigValue(key, 'true', env)
         const value = await getGlobalBooleanConfigValue(key, env)
         assert.strictEqual(value, true)
       })
 
-      it('treats "yes" as true', async () => {
+      it('treats "yes" as true', async t => {
+        const { env } = await setup(t)
+
         await setGlobalConfigValue(key, 'yes', env)
         const value = await getGlobalBooleanConfigValue(key, env)
         assert.strictEqual(value, true)
       })
 
-      it('treats "on" as true', async () => {
+      it('treats "on" as true', async t => {
+        const { env } = await setup(t)
+
         await setGlobalConfigValue(key, 'on', env)
         const value = await getGlobalBooleanConfigValue(key, env)
         assert.strictEqual(value, true)
       })
 
-      it('treats "1" as true', async () => {
+      it('treats "1" as true', async t => {
+        const { env } = await setup(t)
+
         await setGlobalConfigValue(key, '1', env)
         const value = await getGlobalBooleanConfigValue(key, env)
         assert.strictEqual(value, true)

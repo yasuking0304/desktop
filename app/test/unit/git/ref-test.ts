@@ -22,14 +22,14 @@ describe('git/refs', () => {
   })
 
   describe('getSymbolicRef', () => {
-    it('resolves a valid symbolic ref', async () => {
-      const repo = await setupEmptyRepository()
+    it('resolves a valid symbolic ref', async t => {
+      const repo = await setupEmptyRepository(t)
       const ref = await getSymbolicRef(repo, 'HEAD')
       assert.equal(ref, 'refs/heads/master')
     })
 
-    it('does not resolve a missing ref', async () => {
-      const repo = await setupEmptyRepository()
+    it('does not resolve a missing ref', async t => {
+      const repo = await setupEmptyRepository(t)
       const ref = await getSymbolicRef(repo, 'FOO')
       assert(ref === null)
     })
