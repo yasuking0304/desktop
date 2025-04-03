@@ -1,3 +1,5 @@
+import { describe, it } from 'node:test'
+import assert from 'node:assert'
 import * as path from 'path'
 
 import { Repository } from '../../../src/models/repository'
@@ -9,15 +11,11 @@ import { exec } from 'dugite'
 import * as FSE from 'fs-extra'
 
 describe('git/reset', () => {
-  let repository: Repository
-
-  beforeEach(async () => {
-    const testRepoPath = await setupFixtureRepository('test-repo')
-    repository = new Repository(testRepoPath, -1, null, false)
-  })
-
   describe('reset', () => {
-    it('can hard reset a repository', async () => {
+    it('can hard reset a repository', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'test-repo')
+      const repository = new Repository(testRepoPath, -1, null, false)
+
       const repoPath = repository.path
       const fileName = 'README.md'
       const filePath = path.join(repoPath, fileName)
@@ -27,12 +25,15 @@ describe('git/reset', () => {
       await reset(repository, GitResetMode.Hard, 'HEAD')
 
       const status = await getStatusOrThrow(repository)
-      expect(status.workingDirectory.files).toHaveLength(0)
+      assert.equal(status.workingDirectory.files.length, 0)
     })
   })
 
   describe('resetPaths', () => {
-    it.skip('resets discarded staged file', async () => {
+    it.skip('resets discarded staged file', async t => {
+      const testRepoPath = await setupFixtureRepository(t, 'test-repo')
+      const repository = new Repository(testRepoPath, -1, null, false)
+
       const repoPath = repository.path
       const fileName = 'README.md'
       const filePath = path.join(repoPath, fileName)
@@ -50,7 +51,7 @@ describe('git/reset', () => {
       await exec(['checkout-index', '-f', '-u', '-q', '--', fileName], repoPath)
 
       const status = await getStatusOrThrow(repository)
-      expect(status.workingDirectory.files).toHaveLength(0)
+      assert.equal(status.workingDirectory.files.length, 0)
     })
   })
 })

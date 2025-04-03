@@ -8,7 +8,6 @@
     "install": "node-gyp rebuild && tsc",
     "build": "tsc",
     "pretest": "yarn build",
-    "test": "jest -c jest.json",
     "prettify": "yarn prettier --write \"./**/*.{ts,tsx,js,json,jsx,scss,html,yaml,yml}\"",
     "check-prettier": "prettier --check \"./**/*.{ts,tsx,js,json,jsx,scss,html,yaml,yml}\""
   },

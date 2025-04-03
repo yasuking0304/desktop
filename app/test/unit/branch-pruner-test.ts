@@ -1,3 +1,5 @@
+import { describe, it, beforeEach, afterEach } from 'node:test'
+import assert from 'node:assert'
 import { BranchPruner } from '../../src/lib/stores/helpers/branch-pruner'
 import { Repository } from '../../src/models/repository'
 import { GitStoreCache } from '../../src/lib/stores/git-store-cache'
@@ -33,8 +35,8 @@ describe('BranchPruner', () => {
 
   afterEach(() => repositoriesDb.delete())
 
-  it('does nothing on non GitHub repositories', async () => {
-    const path = await setupFixtureRepository('branch-prune-tests')
+  it('does nothing on non GitHub repositories', async t => {
+    const path = await setupFixtureRepository(t, 'branch-prune-tests')
 
     const repo = await setupRepository(
       path,
@@ -56,13 +58,13 @@ describe('BranchPruner', () => {
     await branchPruner.runOnce()
     const branchesAfterPruning = await getBranchesFromGit(repo)
 
-    expect(branchesBeforePruning).toEqual(branchesAfterPruning)
+    assert.deepStrictEqual(branchesBeforePruning, branchesAfterPruning)
   })
 
-  it('prunes for GitHub repository', async () => {
+  it('prunes for GitHub repository', async t => {
     const lastPruneDate = new Date(offsetFromNow(-1, 'day'))
 
-    const path = await setupFixtureRepository('branch-prune-tests')
+    const path = await setupFixtureRepository(t, 'branch-prune-tests')
     const repo = await setupRepository(
       path,
       repositoriesStore,
@@ -82,13 +84,13 @@ describe('BranchPruner', () => {
     await branchPruner.runOnce()
     const branchesAfterPruning = await getBranchesFromGit(repo)
 
-    expect(branchesAfterPruning).not.toContain('deleted-branch-1')
-    expect(branchesAfterPruning).toContain('not-deleted-branch-1')
+    assert(!branchesAfterPruning.includes('deleted-branch-1'))
+    assert(branchesAfterPruning.includes('not-deleted-branch-1'))
   })
 
-  it('does not prune if the last prune date is less than 24 hours ago', async () => {
+  it('does not prune if the last prune date is less than 24 hours ago', async t => {
     const lastPruneDate = new Date(offsetFromNow(-4, 'hours'))
-    const path = await setupFixtureRepository('branch-prune-tests')
+    const path = await setupFixtureRepository(t, 'branch-prune-tests')
     const repo = await setupRepository(
       path,
       repositoriesStore,
@@ -109,12 +111,12 @@ describe('BranchPruner', () => {
     await branchPruner.runOnce()
     const branchesAfterPruning = await getBranchesFromGit(repo)
 
-    expect(branchesBeforePruning).toEqual(branchesAfterPruning)
+    assert.deepStrictEqual(branchesBeforePruning, branchesAfterPruning)
   })
 
-  it('does not prune if there is no default branch', async () => {
+  it('does not prune if there is no default branch', async t => {
     const lastPruneDate = new Date(offsetFromNow(-1, 'day'))
-    const repoPath = await setupFixtureRepository('branch-prune-tests')
+    const repoPath = await setupFixtureRepository(t, 'branch-prune-tests')
     FSE.unlink(path.join(repoPath, '.git', 'refs', 'remotes', 'origin', 'HEAD'))
 
     const repo = await setupRepository(
@@ -137,13 +139,13 @@ describe('BranchPruner', () => {
     await branchPruner.runOnce()
     const branchesAfterPruning = await getBranchesFromGit(repo)
 
-    expect(branchesBeforePruning).toEqual(branchesAfterPruning)
+    assert.deepStrictEqual(branchesBeforePruning, branchesAfterPruning)
   })
 
-  it('does not prune reserved branches', async () => {
+  it('does not prune reserved branches', async t => {
     const lastPruneDate = new Date(offsetFromNow(-1, 'day'))
 
-    const path = await setupFixtureRepository('branch-prune-tests')
+    const path = await setupFixtureRepository(t, 'branch-prune-tests')
     const repo = await setupRepository(
       path,
       repositoriesStore,
@@ -175,12 +177,12 @@ describe('BranchPruner', () => {
     ]
 
     for (const branch of expectedBranchesAfterPruning) {
-      expect(branchesAfterPruning).toContain(branch)
+      assert(branchesAfterPruning.includes(branch))
     }
   })
 
-  it('never prunes a branch that lacks an upstream', async () => {
-    const path = await createPrunedRepository()
+  it('never prunes a branch that lacks an upstream', async t => {
+    const path = await createPrunedRepository(t)
 
     const lastPruneDate = new Date(offsetFromNow(-1, 'day'))
 
@@ -204,8 +206,8 @@ describe('BranchPruner', () => {
     await branchPruner.runOnce()
     const branchesAfterPruning = await getBranchesFromGit(repo)
 
-    expect(branchesAfterPruning).toContain('master')
-    expect(branchesAfterPruning).toContain('other-branch')
+    assert(branchesAfterPruning.includes('master'))
+    assert(branchesAfterPruning.includes('other-branch'))
   })
 })
 

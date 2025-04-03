@@ -65,11 +65,11 @@ describe('desktop-trampoline', () => {
   it('exists and is a regular file', async () =>
     assert.equal((await stat(askPassTrampolinePath)).isFile(), true))
 
-  it('can be executed by current process', () =>
-    assert.doesNotReject(access(askPassTrampolinePath, constants.X_OK)))
+  it('can be executed by current process', async () =>
+    await assert.doesNotReject(access(askPassTrampolinePath, constants.X_OK)))
 
-  it('fails when required environment variables are missing', () =>
-    assert.rejects(execFile(askPassTrampolinePath, ['Username'])))
+  it('fails when required environment variables are missing', async () =>
+    await assert.rejects(execFile(askPassTrampolinePath, ['Username'])))
 
 
   it('forwards arguments and valid environment variables correctly', async () => {

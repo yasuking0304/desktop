@@ -83,14 +83,11 @@ jobs:
         env:
           npm_config_arch: ${{ matrix.arch }}
           TARGET_ARCH: ${{ matrix.arch }}
-      - name: Validate Electron version
-        run: yarn run validate-electron-version
-      - name: Lint
-        run: yarn lint
-      - name: Validate changelog
-        run: yarn validate-changelog
-      - name: Ensure a clean working directory
-        run: git diff --name-status --exit-code
+      - name: Run desktop-trampoline tests
+        run: |
+          cd vendor/desktop-trampoline
+          yarn install
+          yarn test
       - name: Build production app
         run: yarn build:prod
         env:

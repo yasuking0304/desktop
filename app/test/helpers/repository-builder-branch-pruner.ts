@@ -10,9 +10,10 @@ import {
 import { IAPIFullRepository, getDotComAPIEndpoint } from '../../src/lib/api'
 import { shell } from './test-app-shell'
 import { TestStatsStore } from './test-stats-store'
+import { TestContext } from 'node:test'
 
-export async function createRepository() {
-  const repo = await setupEmptyRepository()
+export async function createRepository(t: TestContext) {
+  const repo = await setupEmptyRepository(t)
 
   const firstCommit = {
     entries: [

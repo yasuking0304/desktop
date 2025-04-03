@@ -146,11 +146,13 @@
       }
 
       .changes-list-check-all {
+        flex-grow: 1;
+
         input {
           margin-right: 7px;
         }
         label {
-          text-align: right;
+          text-align: left;
           padding: 0;
           position: unset;
         }

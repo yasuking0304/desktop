@@ -1,3 +1,5 @@
+import { describe, it } from 'node:test'
+import assert from 'node:assert'
 import * as path from 'path'
 import * as FSE from 'fs-extra'
 import { exec } from 'dugite'
@@ -24,84 +26,89 @@ import { generateString } from '../../helpers/random-data'
 
 describe('git/status', () => {
   describe('getStatus', () => {
-    let repository: Repository
-
     describe('with conflicted repo', () => {
-      let filePath: string
+      it('parses conflicted files with markers', async t => {
+        const repository = await setupConflictedRepoWithMultipleFiles(t)
 
-      beforeEach(async () => {
-        repository = await setupConflictedRepoWithMultipleFiles()
-        filePath = path.join(repository.path, 'foo')
-      })
-
-      it('parses conflicted files with markers', async () => {
         const status = await getStatusOrThrow(repository)
         const files = status.workingDirectory.files
-        expect(files).toHaveLength(5)
+        assert.equal(files.length, 5)
         const conflictedFiles = files.filter(
           f => f.status.kind === AppFileStatusKind.Conflicted
         )
-        expect(conflictedFiles).toHaveLength(4)
+        assert.equal(conflictedFiles.length, 4)
 
-        const fooFile = files.find(f => f.path === 'foo')!
-        expect(fooFile.status).toEqual({
+        const fooFile = files.find(f => f.path === 'foo')
+        assert(fooFile)
+        assert.deepStrictEqual(fooFile.status, {
           kind: AppFileStatusKind.Conflicted,
           entry: {
             kind: 'conflicted',
             action: UnmergedEntrySummary.BothModified,
             them: GitStatusEntry.UpdatedButUnmerged,
             us: GitStatusEntry.UpdatedButUnmerged,
+            submoduleStatus: undefined,
           },
           conflictMarkerCount: 3,
         })
 
-        const bazFile = files.find(f => f.path === 'baz')!
-        expect(bazFile.status).toEqual({
+        const bazFile = files.find(f => f.path === 'baz')
+        assert(bazFile)
+        assert.deepStrictEqual(bazFile.status, {
           kind: AppFileStatusKind.Conflicted,
           entry: {
             kind: 'conflicted',
             action: UnmergedEntrySummary.BothAdded,
             them: GitStatusEntry.Added,
             us: GitStatusEntry.Added,
+            submoduleStatus: undefined,
           },
           conflictMarkerCount: 3,
         })
 
-        const catFile = files.find(f => f.path === 'cat')!
-        expect(catFile.status).toEqual({
+        const catFile = files.find(f => f.path === 'cat')
+        assert(catFile)
+        assert.deepStrictEqual(catFile.status, {
           kind: AppFileStatusKind.Conflicted,
           entry: {
             kind: 'conflicted',
             action: UnmergedEntrySummary.BothAdded,
             them: GitStatusEntry.Added,
             us: GitStatusEntry.Added,
+            submoduleStatus: undefined,
           },
           conflictMarkerCount: 3,
         })
       })
 
-      it('parses conflicted files without markers', async () => {
+      it('parses conflicted files without markers', async t => {
+        const repository = await setupConflictedRepoWithMultipleFiles(t)
+
         const status = await getStatusOrThrow(repository)
         const files = status.workingDirectory.files
-        expect(files).toHaveLength(5)
-        expect(
+        assert.equal(files.length, 5)
+        assert.equal(
           files.filter(f => f.status.kind === AppFileStatusKind.Conflicted)
-        ).toHaveLength(4)
+            .length,
+          4
+        )
 
-        const barFile = files.find(f => f.path === 'bar')!
-        expect(barFile.status).toEqual({
+        const barFile = files.find(f => f.path === 'bar')
+        assert(barFile)
+        assert.deepStrictEqual(barFile.status, {
           kind: AppFileStatusKind.Conflicted,
           entry: {
             kind: 'conflicted',
             action: UnmergedEntrySummary.DeletedByThem,
             us: GitStatusEntry.UpdatedButUnmerged,
             them: GitStatusEntry.Deleted,
+            submoduleStatus: undefined,
           },
         })
       })
 
-      it('parses conflicted files resulting from popping a stash', async () => {
-        const repository = await setupEmptyRepository()
+      it('parses conflicted files resulting from popping a stash', async t => {
+        const repository = await setupEmptyRepository(t)
         const readme = path.join(repository.path, 'README.md')
         await FSE.writeFile(readme, '')
         await exec(['add', 'README.md'], repository.path)
@@ -120,34 +127,41 @@ describe('git/status', () => {
 
         const status = await getStatusOrThrow(repository)
         const files = status.workingDirectory.files
-        expect(files).toHaveLength(1)
+        assert.equal(files.length, 1)
 
         const conflictedFiles = files.filter(
           f => f.status.kind === AppFileStatusKind.Conflicted
         )
-        expect(conflictedFiles).toHaveLength(1)
+        assert.equal(conflictedFiles.length, 1)
       })
 
-      it('parses resolved files', async () => {
+      it('parses resolved files', async t => {
+        const repository = await setupConflictedRepoWithMultipleFiles(t)
+        const filePath = path.join(repository.path, 'foo')
+
         await FSE.writeFile(filePath, 'b1b2')
         const status = await getStatusOrThrow(repository)
         const files = status.workingDirectory.files
 
-        expect(files).toHaveLength(5)
+        assert.equal(files.length, 5)
 
         // all files are now considered conflicted
-        expect(
+        assert.equal(
           files.filter(f => f.status.kind === AppFileStatusKind.Conflicted)
-        ).toHaveLength(4)
+            .length,
+          4
+        )
 
         const file = files.find(f => f.path === 'foo')
-        expect(file!.status).toEqual({
+        assert(file)
+        assert.deepStrictEqual(file.status, {
           kind: AppFileStatusKind.Conflicted,
           entry: {
             kind: 'conflicted',
             action: UnmergedEntrySummary.BothModified,
             them: GitStatusEntry.UpdatedButUnmerged,
             us: GitStatusEntry.UpdatedButUnmerged,
+            submoduleStatus: undefined,
           },
           conflictMarkerCount: 0,
         })
@@ -155,57 +169,58 @@ describe('git/status', () => {
     })
 
     describe('with conflicted images repo', () => {
-      beforeEach(async () => {
+      it('parses conflicted image file on merge', async t => {
         const path = await setupFixtureRepository(
+          t,
           'detect-conflict-in-binary-file'
         )
-        repository = new Repository(path, -1, null, false)
+        const repository = new Repository(path, -1, null, false)
         await exec(['checkout', 'make-a-change'], repository.path)
-      })
 
-      it('parses conflicted image file on merge', async () => {
-        const repo = repository
+        await exec(['merge', 'master'], repository.path)
 
-        await exec(['merge', 'master'], repo.path)
-
-        const status = await getStatusOrThrow(repo)
+        const status = await getStatusOrThrow(repository)
         const files = status.workingDirectory.files
-        expect(files).toHaveLength(1)
+        assert.equal(files.length, 1)
 
         const file = files[0]
-        expect(file.status.kind).toBe(AppFileStatusKind.Conflicted)
-        expect(
-          isConflictedFile(file.status) && isManualConflict(file.status)
-        ).toBe(true)
+        assert.equal(file.status.kind, AppFileStatusKind.Conflicted)
+        assert.equal(
+          isConflictedFile(file.status) && isManualConflict(file.status),
+          true
+        )
       })
 
-      it('parses conflicted image file on merge after removing', async () => {
-        const repo = repository
+      it('parses conflicted image file on merge after removing', async t => {
+        const path = await setupFixtureRepository(
+          t,
+          'detect-conflict-in-binary-file'
+        )
+        const repository = new Repository(path, -1, null, false)
 
-        await exec(['rm', 'my-cool-image.png'], repo.path)
-        await exec(['commit', '-am', 'removed the image'], repo.path)
+        await exec(['rm', 'my-cool-image.png'], repository.path)
+        await exec(['commit', '-am', 'removed the image'], repository.path)
 
-        await exec(['merge', 'master'], repo.path)
+        await exec(['merge', 'master'], repository.path)
 
-        const status = await getStatusOrThrow(repo)
+        const status = await getStatusOrThrow(repository)
         const files = status.workingDirectory.files
-        expect(files).toHaveLength(1)
+        assert.equal(files.length, 1)
 
         const file = files[0]
-        expect(file.status.kind).toBe(AppFileStatusKind.Conflicted)
-        expect(
-          isConflictedFile(file.status) && isManualConflict(file.status)
-        ).toBe(true)
+        assert.equal(file.status.kind, AppFileStatusKind.Conflicted)
+        assert.equal(
+          isConflictedFile(file.status) && isManualConflict(file.status),
+          true
+        )
       })
     })
 
     describe('with unconflicted repo', () => {
-      beforeEach(async () => {
-        const testRepoPath = await setupFixtureRepository('test-repo')
-        repository = new Repository(testRepoPath, -1, null, false)
-      })
+      it('parses changed files', async t => {
+        const testRepoPath = await setupFixtureRepository(t, 'test-repo')
+        const repository = new Repository(testRepoPath, -1, null, false)
 
-      it('parses changed files', async () => {
         await FSE.writeFile(
           path.join(repository.path, 'README.md'),
           'Hi world\n'
@@ -213,21 +228,24 @@ describe('git/status', () => {
 
         const status = await getStatusOrThrow(repository)
         const files = status.workingDirectory.files
-        expect(files).toHaveLength(1)
+        assert.equal(files.length, 1)
 
         const file = files[0]
-        expect(file.path).toBe('README.md')
-        expect(file.status.kind).toBe(AppFileStatusKind.Modified)
+        assert.equal(file.path, 'README.md')
+        assert.equal(file.status.kind, AppFileStatusKind.Modified)
       })
 
-      it('returns an empty array when there are no changes', async () => {
+      it('returns an empty array when there are no changes', async t => {
+        const testRepoPath = await setupFixtureRepository(t, 'test-repo')
+        const repository = new Repository(testRepoPath, -1, null, false)
+
         const status = await getStatusOrThrow(repository)
         const files = status.workingDirectory.files
-        expect(files).toHaveLength(0)
+        assert.equal(files.length, 0)
       })
 
-      it('reflects renames', async () => {
-        const repo = await setupEmptyRepository()
+      it('reflects renames', async t => {
+        const repo = await setupEmptyRepository(t)
 
         await FSE.writeFile(path.join(repo.path, 'foo'), 'foo\n')
 
@@ -238,9 +256,9 @@ describe('git/status', () => {
         const status = await getStatusOrThrow(repo)
         const files = status.workingDirectory.files
 
-        expect(files).toHaveLength(1)
-        expect(files[0].path).toBe('bar')
-        expect(files[0].status).toEqual({
+        assert.equal(files.length, 1)
+        assert.equal(files[0].path, 'bar')
+        assert.deepStrictEqual(files[0].status, {
           kind: AppFileStatusKind.Renamed,
           oldPath: 'foo',
           renameIncludesModifications: false,
@@ -248,11 +266,12 @@ describe('git/status', () => {
         })
       })
 
-      it('reflects copies', async () => {
+      it('reflects copies', async t => {
         const testRepoPath = await setupFixtureRepository(
+          t,
           'copy-detection-status'
         )
-        repository = new Repository(testRepoPath, -1, null, false)
+        const repository = new Repository(testRepoPath, -1, null, false)
 
         // Git 2.18 now uses a new config value to handle detecting copies, so
         // users who have this enabled will see this. For reference, Desktop does
@@ -264,30 +283,33 @@ describe('git/status', () => {
         const status = await getStatusOrThrow(repository)
         const files = status.workingDirectory.files
 
-        expect(files).toHaveLength(2)
+        assert.equal(files.length, 2)
 
-        expect(files[0].status.kind).toBe(AppFileStatusKind.Modified)
-        expect(files[0].path).toBe('CONTRIBUTING.md')
+        assert.equal(files[0].status.kind, AppFileStatusKind.Modified)
+        assert.equal(files[0].path, 'CONTRIBUTING.md')
 
-        expect(files[1].path).toBe('docs/OVERVIEW.md')
-        expect(files[1].status).toEqual({
+        assert.equal(files[1].path, 'docs/OVERVIEW.md')
+        assert.deepStrictEqual(files[1].status, {
           kind: AppFileStatusKind.Copied,
           oldPath: 'CONTRIBUTING.md',
-          renameIncludesModifications: false,
           submoduleStatus: undefined,
+          renameIncludesModifications: false,
         })
       })
 
-      it('returns null for directory without a .git directory', async () => {
-        repository = setupEmptyDirectory()
+      it('returns null for directory without a .git directory', async t => {
+        const repository = await setupEmptyDirectory(t)
         const status = await getStatus(repository)
-        expect(status).toBeNull()
+        assert(status === null)
       })
     })
     describe('with submodules', () => {
-      it('returns the submodule status', async () => {
-        const repoPath = await setupFixtureRepository('submodule-basic-setup')
-        repository = new Repository(repoPath, -1, null, false)
+      it('returns the submodule status', async t => {
+        const repoPath = await setupFixtureRepository(
+          t,
+          'submodule-basic-setup'
+        )
+        const repository = new Repository(repoPath, -1, null, false)
 
         const submodulePath = path.join(repoPath, 'foo', 'submodule')
         const checkSubmoduleChanges = async (changes: {
@@ -297,18 +319,21 @@ describe('git/status', () => {
         }) => {
           const status = await getStatusOrThrow(repository)
           const files = status.workingDirectory.files
-          expect(files).toHaveLength(1)
+          assert.equal(files.length, 1)
 
           const file = files[0]
-          expect(file.path).toBe('foo/submodule')
-          expect(file.status.kind).toBe(AppFileStatusKind.Modified)
-          expect(file.status.submoduleStatus?.modifiedChanges).toBe(
+          assert.equal(file.path, 'foo/submodule')
+          assert.equal(file.status.kind, AppFileStatusKind.Modified)
+          assert.equal(
+            file.status.submoduleStatus?.modifiedChanges,
             changes.modifiedChanges
           )
-          expect(file.status.submoduleStatus?.untrackedChanges).toBe(
+          assert.equal(
+            file.status.submoduleStatus?.untrackedChanges,
             changes.untrackedChanges
           )
-          expect(file.status.submoduleStatus?.commitChanged).toBe(
+          assert.equal(
+            file.status.submoduleStatus?.commitChanged,
             changes.commitChanged
           )
         }
