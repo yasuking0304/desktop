@@ -1871,6 +1871,11 @@ export class API {
           type: 'json_object',
         },
       },
+      customHeaders: {
+        'X-Initiator': 'user',
+        'X-Interaction-ID': uuid(),
+        'X-Interaction-Type': 'generateCommitMessage',
+      },
     })
 
     if (response.status === HttpStatusCode.TooManyRequests) {
