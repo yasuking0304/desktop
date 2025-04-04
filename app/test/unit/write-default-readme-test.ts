@@ -1,27 +1,27 @@
+import { describe, it } from 'node:test'
+import assert from 'node:assert'
 import * as FSE from 'fs-extra'
 import * as path from 'path'
-import { mkdirSync } from '../helpers/temp'
 
 import { writeDefaultReadme } from '../../src/ui/add-repository/write-default-readme'
+import { createTempDirectory } from '../helpers/temp'
 
 describe('repository setup', () => {
   describe('writeDefaultReadme', () => {
-    let directory: string
-    let file: string
+    it('writes a default README without a description', async t => {
+      const directory = await createTempDirectory(t)
+      const file = path.join(directory, 'README.md')
 
-    beforeEach(() => {
-      directory = mkdirSync('new-readme')
-      file = path.join(directory, 'README.md')
-    })
-
-    it('writes a default README without a description', async () => {
       await writeDefaultReadme(directory, 'some-repository')
 
       const text = await FSE.readFile(file, 'utf8')
-      expect(text).toBe('# some-repository\n')
+      assert.equal(text, '# some-repository\n')
     })
 
-    it('writes a README with description when provided', async () => {
+    it('writes a README with description when provided', async t => {
+      const directory = await createTempDirectory(t)
+      const file = path.join(directory, 'README.md')
+
       await writeDefaultReadme(
         directory,
         'some-repository',
@@ -29,7 +29,7 @@ describe('repository setup', () => {
       )
 
       const text = await FSE.readFile(file, 'utf8')
-      expect(text).toBe('# some-repository\ndescription goes here\n')
+      assert.equal(text, '# some-repository\ndescription goes here\n')
     })
   })
 })

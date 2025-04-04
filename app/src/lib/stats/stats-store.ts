@@ -238,13 +238,17 @@ const DefaultDailyMeasures: IDailyMeasures = {
   submoduleDiffViewedFromHistoryCount: 0,
   openSubmoduleFromDiffCount: 0,
   previewedPullRequestCount: 0,
+  typedInChangesFilterCount: 0,
+  appliesIncludedInCommitFilterCount: 0,
+  adjustedFiltersForHiddenChangesCount: 0,
+  enterpriseAccountCount: 0,
   generateCommitMessageButtonClickCount: 0,
   generateCommitMessageCount: 0,
   generateCommitMessageUsedVerbatimCount: 0,
 }
 
 // A subtype of IDailyMeasures filtered to contain only its numeric properties
-type NumericMeasures = {
+export type NumericMeasures = {
   [P in keyof IDailyMeasures as IDailyMeasures[P] extends number
     ? P
     : never]: IDailyMeasures[P]
@@ -419,13 +423,7 @@ type DailyStats = ICalculatedStats &
  *
  */
 export interface IStatsStore {
-  increment: (
-    metric:
-      | 'mergeAbortedAfterConflictsCount'
-      | 'rebaseAbortedAfterConflictsCount'
-      | 'mergeSuccessAfterConflictsCount'
-      | 'rebaseSuccessAfterConflictsCount'
-  ) => void
+  increment: (k: keyof NumericMeasures, n?: number) => Promise<void>
 }
 
 const defaultPostImplementation = (body: Record<string, any>) =>
@@ -672,6 +670,7 @@ export class StatsStore implements IStatsStore {
     return {
       dotComAccount: accounts.some(isDotComAccount),
       enterpriseAccount: accounts.some(isEnterpriseAccount),
+      enterpriseAccountCount: accounts.filter(isEnterpriseAccount).length,
     }
   }
 
@@ -983,9 +982,6 @@ export class StatsStore implements IStatsStore {
       ])
     }
   }
-
-  public recordTagCreated = (numCreatedTags: number) =>
-    this.increment('tagsCreated', numCreatedTags)
 
   private recordSquashUndone = () => this.increment('squashUndoneCount')
 

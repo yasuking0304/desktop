@@ -1035,6 +1035,7 @@ export class ChangesList extends React.Component<
             >
               <Checkbox
                 ref={this.includeAllCheckBoxRef}
+                className="changes-list-check-all"
                 label={filesDescription}
                 value={includeAllValue}
                 onChange={this.onIncludeAllChanged}

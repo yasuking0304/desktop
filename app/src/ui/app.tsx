@@ -185,6 +185,7 @@ import { webUtils } from 'electron'
 import { showTestUI } from './lib/test-ui-components/test-ui-components'
 import { ConfirmCommitFilteredChanges } from './changes/confirm-commit-filtered-changes-dialog'
 import { AboutTestDialog } from './about/about-test-dialog'
+import { enableMultipleEnterpriseAccounts } from '../lib/feature-flag'
 import { GenerateCommitMessageOverrideWarning } from './generate-commit-message/generate-commit-message-override-warning'
 import { GenerateCommitMessageDisclaimer } from './generate-commit-message/generate-commit-message-disclaimer'
 
@@ -255,6 +256,17 @@ export class App extends React.Component<IAppProps, IAppState> {
   private getOnPopupDismissedFn = memoizeOne((popupId: string) => {
     return () => this.onPopupDismissed(popupId)
   })
+
+  /**
+   * Helper method to mimic the behavior prior to us supporting multiple
+   * enterprise accounts. Takes a list of accounts and returns the first
+   * dotcom account (if any) followed by the first enterprise account (if any)
+   */
+  private oneAccountPerKind = memoizeOne((accounts: ReadonlyArray<Account>) =>
+    [accounts.find(isDotComAccount), accounts.find(isEnterpriseAccount)].filter(
+      x => x !== undefined
+    )
+  )
 
   public constructor(props: IAppProps) {
     super(props)
@@ -613,14 +625,6 @@ export class App extends React.Component<IAppProps, IAppState> {
     updateStore.checkForUpdates(inBackground, skipGuidCheck)
   }
 
-  private getDotComAccount(): Account | null {
-    return this.state.accounts.find(isDotComAccount) ?? null
-  }
-
-  private getEnterpriseAccount(): Account | null {
-    return this.state.accounts.find(isEnterpriseAccount) ?? null
-  }
-
   private updateBranchWithContributionTargetBranch() {
     const { selectedState } = this.state
     if (
@@ -801,9 +805,10 @@ export class App extends React.Component<IAppProps, IAppState> {
   }
 
   private showCreateTutorialRepositoryPopup = () => {
-    const account = this.getDotComAccount() || this.getEnterpriseAccount()
+    const account =
+      this.state.accounts.find(isDotComAccount) ?? this.state.accounts.at(0)
 
-    if (account === null) {
+    if (!account) {
       return
     }
 
@@ -1565,7 +1570,6 @@ export class App extends React.Component<IAppProps, IAppState> {
             onEditGlobalGitConfig={this.editGlobalGitConfig}
             underlineLinks={this.state.underlineLinks}
             showDiffCheckMarks={this.state.showDiffCheckMarks}
-            canFilterChanges={this.state.canFilterChanges}
           />
         )
       case PopupType.RepositorySettings: {
@@ -3204,23 +3208,27 @@ export class App extends React.Component<IAppProps, IAppState> {
   }
 
   private renderRepository() {
-    const state = this.state
+    const accounts = enableMultipleEnterpriseAccounts()
+      ? this.state.accounts
+      : this.oneAccountPerKind(this.state.accounts)
+
     if (this.inNoRepositoriesViewState()) {
       return (
         <NoRepositoriesView
-          dotComAccount={this.getDotComAccount()}
-          enterpriseAccount={this.getEnterpriseAccount()}
+          accounts={accounts}
           onCreate={this.showCreateRepository}
           onClone={this.showCloneRepo}
           onAdd={this.showAddLocalRepo}
           onCreateTutorialRepository={this.showCreateTutorialRepositoryPopup}
           onResumeTutorialRepository={this.onResumeTutorialRepository}
           tutorialPaused={this.isTutorialPaused()}
-          apiRepositories={state.apiRepositories}
+          apiRepositories={this.state.apiRepositories}
           onRefreshRepositories={this.onRefreshRepositories}
         />
       )
     }
+
+    const state = this.state
 
     const selectedState = state.selectedState
     if (!selectedState) {
@@ -3283,7 +3291,6 @@ export class App extends React.Component<IAppProps, IAppState> {
           showCommitLengthWarning={this.state.showCommitLengthWarning}
           onCherryPick={this.startCherryPickWithoutBranch}
           pullRequestSuggestedNextAction={state.pullRequestSuggestedNextAction}
-          canFilterChanges={state.canFilterChanges}
         />
       )
     } else if (selectedState.type === SelectionType.CloningRepository) {
@@ -3463,8 +3470,8 @@ export class App extends React.Component<IAppProps, IAppState> {
    * be able to be detected.
    */
   private async checkIfThankYouIsInOrder(): Promise<void> {
-    const dotComAccount = this.getDotComAccount()
-    if (dotComAccount === null) {
+    const dotComAccount = this.state.accounts.find(isDotComAccount)
+    if (!dotComAccount) {
       // The user is not signed in or is a GHE user who should not have any.
       return
     }
@@ -3502,7 +3509,7 @@ export class App extends React.Component<IAppProps, IAppState> {
       // Grab emoji's by reference because we could still be loading emoji's
       emoji: this.state.emoji,
       onOpenCard: () =>
-        this.openThankYouCard(userContributions, displayVersion),
+        this.openThankYouCard(userContributions, displayVersion, dotComAccount),
       onThrowCardAway: () => {
         updateLastThankYou(
           this.props.dispatcher,
@@ -3517,15 +3524,10 @@ export class App extends React.Component<IAppProps, IAppState> {
 
   private openThankYouCard = (
     userContributions: ReadonlyArray<ReleaseNote>,
-    latestVersion: string | null = null
+    latestVersion: string | null = null,
+    account: Account
   ) => {
-    const dotComAccount = this.getDotComAccount()
-
-    if (dotComAccount === null) {
-      // The user is not signed in or is a GHE user who should not have any.
-      return
-    }
-    const { friendlyName } = dotComAccount
+    const { friendlyName } = account
 
     this.props.dispatcher.showPopup({
       type: PopupType.ThankYou,

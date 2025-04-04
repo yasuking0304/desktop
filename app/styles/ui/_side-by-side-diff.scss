@@ -43,7 +43,7 @@
       }
 
       &.context .after {
-        border-right: calc(var(--hunk-handle-width) / 2) solid var(--diff-border-color);
+        border-left: calc(var(--hunk-handle-width) / 2) solid var(--diff-border-color);
       }
 
       &.has-check-all-control.context .before {
