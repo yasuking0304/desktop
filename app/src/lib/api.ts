@@ -1990,6 +1990,9 @@ export function getEnterpriseAPIURL(endpoint: string): string {
   return `${parsed.protocol}//${parsed.hostname}/api/v3`
 }
 
+export const getAPIEndpoint = (endpoint: string) =>
+  isDotCom(endpoint) ? getDotComAPIEndpoint() : getEnterpriseAPIURL(endpoint)
+
 /** Get github.com's API endpoint. */
 export function getDotComAPIEndpoint(): string {
   // NOTE:
