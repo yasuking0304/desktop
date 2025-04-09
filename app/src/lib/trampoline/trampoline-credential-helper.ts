@@ -102,14 +102,13 @@ async function getCredential(cred: Credential, store: Store, token: string) {
   const accounts = await store.getAll()
 
   const hasDotComAccount = accounts.some(a => isDotCom(a.endpoint))
-  const hasEnterpriseAccount = accounts.some(a => !isDotCom(a.endpoint))
 
   // If it appears as if the endpoint is a GitHub host and we don't have an
-  // account for it (since we currently only allow one GitHub.com account and
-  // one Enterprise account) we prompt the user to sign in.
+  // account for it (since we currently only allow one GitHub.com account
   if (
     (endpointKind === 'github.com' && !hasDotComAccount) ||
-    (endpointKind === 'enterprise' && !hasEnterpriseAccount)
+    endpointKind === 'ghe.com' ||
+    endpointKind === 'enterprise'
   ) {
     if (getIsBackgroundTaskEnvironment(token)) {
       debug('background task environment, skipping prompt')
