@@ -28,6 +28,7 @@ import {
   RowIndexPath,
   rowIndexPathEquals,
   rowIndexPathToGlobalIndex,
+  rowListIncludesIndexPath,
 } from './list-row-index-path'
 import { range } from '../../../lib/range'
 import { sendNonFatalException } from '../../../lib/helpers/non-fatal-exception'
@@ -1133,7 +1134,7 @@ export class SectionList extends React.Component<
     const customClasses = new Array<string>()
     rowCustomClassNameMap.forEach(
       (rows: ReadonlyArray<RowIndexPath>, className: string) => {
-        if (rows.includes(rowIndex)) {
+        if (rowListIncludesIndexPath(rows, rowIndex)) {
           customClasses.push(className)
         }
       }
@@ -1521,7 +1522,10 @@ export class SectionList extends React.Component<
         (__DARWIN__ && event.button === 0 && event.ctrlKey)
 
       // prevent the right-click event from changing the selection if not necessary
-      if (isRightClick && this.props.selectedRows.includes(row)) {
+      if (
+        isRightClick &&
+        rowListIncludesIndexPath(this.props.selectedRows, row)
+      ) {
         return
       }
 
@@ -1566,7 +1570,7 @@ export class SectionList extends React.Component<
          */
         if (this.props.onSelectionChanged) {
           let newSelection: ReadonlyArray<RowIndexPath>
-          if (this.props.selectedRows.includes(row)) {
+          if (rowListIncludesIndexPath(this.props.selectedRows, row)) {
             // remove the ability to deselect the last item
             if (this.props.selectedRows.length === 1) {
               return
@@ -1587,7 +1591,7 @@ export class SectionList extends React.Component<
         (this.props.selectionMode === 'range' ||
           this.props.selectionMode === 'multi') &&
         this.props.selectedRows.length > 1 &&
-        this.props.selectedRows.includes(row)
+        rowListIncludesIndexPath(this.props.selectedRows, row)
       ) {
         // Do nothing. Multiple rows are already selected. We assume the user is
         // pressing down on multiple and may desire to start dragging. We will
@@ -1618,7 +1622,10 @@ export class SectionList extends React.Component<
       event.button === 2 || (__DARWIN__ && event.button === 0 && event.ctrlKey)
 
     // prevent the right-click event from changing the selection if not necessary
-    if (isRightClick && this.props.selectedRows.includes(row)) {
+    if (
+      isRightClick &&
+      rowListIncludesIndexPath(this.props.selectedRows, row)
+    ) {
       return
     }
 
@@ -1628,7 +1635,7 @@ export class SectionList extends React.Component<
       !event.shiftKey &&
       !multiSelectKey &&
       this.props.selectedRows.length > 1 &&
-      this.props.selectedRows.includes(row) &&
+      rowListIncludesIndexPath(this.props.selectedRows, row) &&
       (this.props.selectionMode === 'range' ||
         this.props.selectionMode === 'multi')
     ) {
