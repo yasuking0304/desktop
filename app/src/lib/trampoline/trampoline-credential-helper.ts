@@ -26,7 +26,7 @@ import {
 } from '../generic-git-auth'
 import { urlWithoutCredentials } from './url-without-credentials'
 import { trampolineUIHelper as ui } from './trampoline-ui-helper'
-import { getDotComAPIEndpoint, getEnterpriseAPIURL, isGitHubHost } from '../api'
+import { getAPIEndpoint, isGitHubHost } from '../api'
 import { isDotCom, isGHE, isGist } from '../endpoint-capabilities'
 
 type Credential = Map<string, string>
@@ -102,9 +102,7 @@ async function getCredential(cred: Credential, store: Store, token: string) {
   const accounts = await store.getAll()
 
   const endpoint = `${getCredentialUrl(cred)}`
-  const apiEndpoint = isDotCom(endpoint)
-    ? getDotComAPIEndpoint()
-    : getEnterpriseAPIURL(endpoint)
+  const apiEndpoint = getAPIEndpoint(endpoint)
 
   // If it appears as if the endpoint is a GitHub host and we don't have an
   // account for that endpoint then we should prompt the user to sign in.
