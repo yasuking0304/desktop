@@ -26,7 +26,7 @@ import {
 } from '../generic-git-auth'
 import { urlWithoutCredentials } from './url-without-credentials'
 import { trampolineUIHelper as ui } from './trampoline-ui-helper'
-import { isGitHubHost } from '../api'
+import { getDotComAPIEndpoint, getEnterpriseAPIURL, isGitHubHost } from '../api'
 import { isDotCom, isGHE, isGist } from '../endpoint-capabilities'
 
 type Credential = Map<string, string>
@@ -101,21 +101,22 @@ async function getCredential(cred: Credential, store: Store, token: string) {
   const endpointKind = await getEndpointKind(cred, store)
   const accounts = await store.getAll()
 
-  const hasDotComAccount = accounts.some(a => isDotCom(a.endpoint))
+  const endpoint = `${getCredentialUrl(cred)}`
+  const apiEndpoint = isDotCom(endpoint)
+    ? getDotComAPIEndpoint()
+    : getEnterpriseAPIURL(endpoint)
 
   // If it appears as if the endpoint is a GitHub host and we don't have an
-  // account for it (since we currently only allow one GitHub.com account
+  // account for that endpoint then we should prompt the user to sign in.
   if (
-    (endpointKind === 'github.com' && !hasDotComAccount) ||
-    endpointKind === 'ghe.com' ||
-    endpointKind === 'enterprise'
+    endpointKind !== 'generic' &&
+    !accounts.some(a => a.endpoint === apiEndpoint)
   ) {
     if (getIsBackgroundTaskEnvironment(token)) {
       debug('background task environment, skipping prompt')
       return undefined
     }
 
-    const endpoint = `${getCredentialUrl(cred)}`
     const account = await ui.promptForGitHubSignIn(endpoint)
 
     if (!account) {
