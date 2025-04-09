@@ -635,3 +635,9 @@ dialog {
     margin-right: var(--spacing-half);
   }
 }
+
+dialog#invalidated-token {
+  .dialog-content .ref-component {
+    white-space: nowrap;
+  }
+}
