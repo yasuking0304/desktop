@@ -1,5 +1,13 @@
 {
   "releases": {
+    "3.4.19-beta2": [
+      "[Fixed] Right-clicking on selected files will keep those files selected in the changes list - #20319",
+      "[Fixed] Let credential helper prompt for the specific enterprise account used in a given repository - #20318",
+      "[Fixed] Fix invalidated token dialog styling - #20317",
+      "[Fixed] Fix indentation bug in split diff view - #18800. Thanks @iamarjunsuresh!",
+      "[Fixed] Initialize Integrations settings when opening it from a no-changes screen - #19807. Thanks @iamarjunsuresh!",
+      "[Improved] Return changes check all label to full row width for expanded click target area - #20282"
+    ],
     "3.4.19-beta1": [
       "[New] Add support for multiple enterprise accounts - #20227",
       "[New] Users can filter the changed files list - #20220",
