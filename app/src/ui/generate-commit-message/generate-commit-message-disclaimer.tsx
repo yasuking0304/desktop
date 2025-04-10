@@ -42,7 +42,7 @@ export class GenerateCommitMessageDisclaimer extends React.Component<IGenerateCo
             Copilot is powered by AI, so mistakes are possible. Review and edit
             the generated message carefully before use.{' '}
             <LinkButton uri="https://gh.io/copilot-for-desktop-transparency">
-              Learn more about GitHub Copilot.
+              Learn more about Copilot in GitHub Desktop.
             </LinkButton>
           </p>
         </DialogContent>
