@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { Dialog, DialogContent, DialogFooter } from '../dialog'
 import { Dispatcher } from '../dispatcher'
-import { Row } from '../lib/row'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
 import { t } from 'i18next'
 import { Account, isEnterpriseAccount } from '../../models/account'
@@ -41,18 +40,16 @@ export class InvalidatedToken extends React.Component<IInvalidatedTokenProps> {
         onDismissed={this.props.onDismissed}
       >
         <DialogContent>
-          <Row>
-            {t(
-              'invalidated-token.token-has-been-invalidated-1',
-              `Your account token has been invalidated and you have been
-                signed out from your `
-            )}
-            <Ref>{account.friendlyEndpoint}</Ref>
-            {t(
-              'invalidated-token.token-has-been-invalidated-2',
-              `account. Do you want to sign in again?`
-            )}
-          </Row>
+          {t(
+            'invalidated-token.token-has-been-invalidated-1',
+            `Your account token has been invalidated and you have been
+              signed out from your `
+          )}
+          <Ref>{account.friendlyEndpoint}</Ref>
+          {t(
+            'invalidated-token.token-has-been-invalidated-2',
+            `account. Do you want to sign in again?`
+          )}
         </DialogContent>
         <DialogFooter>
           <OkCancelButtonGroup
