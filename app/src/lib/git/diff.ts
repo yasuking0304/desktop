@@ -140,7 +140,7 @@ export async function getCommitDiff(
     encoding: 'buffer',
   })
 
-  return buildDiff(stdout, repository, file, commitish)
+  return buildDiff(stdout, repository, file, commitish, commitish)
 }
 
 /**
@@ -179,7 +179,7 @@ export async function getBranchMergeBaseDiff(
     encoding: 'buffer',
   })
 
-  return buildDiff(result.stdout, repository, file, latestCommit)
+  return buildDiff(result.stdout, repository, file, latestCommit, latestCommit)
 }
 
 /**
@@ -197,6 +197,7 @@ export async function getCommitRangeDiff(
     throw new Error('No commits to diff...')
   }
 
+  const oldestCommit = useNullTreeSHA ? NullTreeSHA : commits[0]
   const oldestCommitRef = useNullTreeSHA ? NullTreeSHA : `${commits[0]}^`
   const latestCommit = commits.at(-1) ?? '' // can't be undefined since commits.length > 0
   const args = [
@@ -237,7 +238,7 @@ export async function getCommitRangeDiff(
     )
   }
 
-  return buildDiff(result.stdout, repository, file, latestCommit)
+  return buildDiff(result.stdout, repository, file, latestCommit, oldestCommit)
 }
 
 /**
@@ -392,12 +393,13 @@ export async function getWorkingDirectoryDiff(
   )
   const lineEndingsChange = parseLineEndingsWarning(stderr)
 
-  return buildDiff(stdout, repository, file, 'HEAD', lineEndingsChange)
+  return buildDiff(stdout, repository, file, 'HEAD', 'HEAD', lineEndingsChange)
 }
 
 async function getImageDiff(
   repository: Repository,
   file: FileChange,
+  newestCommitish: string,
   oldestCommitish: string
 ): Promise<IImageDiff> {
   let current: Image | undefined = undefined
@@ -432,7 +434,7 @@ async function getImageDiff(
   } else {
     // File status can't be conflicted for a file in a commit
     if (file.status.kind !== AppFileStatusKind.Deleted) {
-      current = await getBlobImage(repository, file.path, oldestCommitish)
+      current = await getBlobImage(repository, file.path, newestCommitish)
     }
 
     // File status can't be conflicted for a file in a commit
@@ -475,6 +477,7 @@ export async function convertDiff(
   repository: Repository,
   file: FileChange,
   diff: IRawDiff,
+  newestCommitish: string,
   oldestCommitish: string,
   lineEndingsChange?: LineEndingsChange
 ): Promise<IDiff> {
@@ -487,7 +490,7 @@ export async function convertDiff(
         kind: DiffType.Binary,
       }
     } else {
-      return getImageDiff(repository, file, oldestCommitish)
+      return getImageDiff(repository, file, newestCommitish, oldestCommitish)
     }
   }
 
@@ -631,6 +634,7 @@ async function buildDiff(
   buffer: Buffer,
   repository: Repository,
   file: FileChange,
+  newestCommitish: string,
   oldestCommitish: string,
   lineEndingsChange?: LineEndingsChange
 ): Promise<IDiff> {
@@ -666,7 +670,14 @@ async function buildDiff(
     return largeTextDiff
   }
 
-  return convertDiff(repository, file, diff, oldestCommitish, lineEndingsChange)
+  return convertDiff(
+    repository,
+    file,
+    diff,
+    newestCommitish,
+    oldestCommitish,
+    lineEndingsChange
+  )
 }
 
 /**
