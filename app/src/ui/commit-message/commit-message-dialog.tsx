@@ -152,6 +152,7 @@ export class CommitMessageDialog extends React.Component<
             onCreateCommit={this.props.onSubmitCommitMessage}
             anyFilesAvailable={true}
             anyFilesSelected={true}
+            filesSelected={[]}
             onCommitMessageFocusSet={noop}
             onRefreshAuthor={this.onRefreshAuthor}
             onShowPopup={this.onShowPopup}

@@ -337,22 +337,32 @@ export class About extends React.Component<IAboutProps> {
             </span>{' '}
             ({releaseNotesLink})
           </p>
-          <p className="no-padding terms-and-license">
-            <LinkButton onClick={this.props.onShowTermsAndConditions}>
-              {t('about.terms-and-conditions', 'Terms and Conditions')}
-            </LinkButton>
-          </p>
-          <p className="terms-and-license">
-            <LinkButton onClick={this.props.onShowAcknowledgements}>
-              {t(
-                'about.license-and-open-source-notices',
-                'License and Open Source Notices'
-              )}
-            </LinkButton>
-          </p>
           {this.renderUpdateDetails()}
           {this.renderUpdateButton()}
           {this.renderBetaLink()}
+          <div className="terms-and-license-container">
+            <p className="no-padding terms-and-license">
+              <LinkButton onClick={this.props.onShowTermsAndConditions}>
+                {t('about.terms-and-conditions', 'Terms and Conditions')}
+              </LinkButton>
+            </p>
+            <p className="no-padding terms-and-license">
+              <LinkButton onClick={this.props.onShowAcknowledgements}>
+                {t(
+                  'about.license-and-open-source-notices',
+                  'License and Open Source Notices'
+                )}
+              </LinkButton>
+            </p>
+            <p className="terms-and-license">
+              <LinkButton uri="https://gh.io/copilot-for-desktop-transparency">
+                {t(
+                  'about.responsible-use-of-copilot',
+                  'Responsible use of Copilot in GitHub Desktop'
+          )}
+              </LinkButton>
+            </p>
+          </div>
         </DialogContent>
         <DefaultDialogFooter />
       </Dialog>

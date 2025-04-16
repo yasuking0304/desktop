@@ -78,6 +78,7 @@ describe('RepositoryStateCache', () => {
         commitMessage: {
           summary,
           description: null,
+          timestamp: Date.now(),
         },
         showCoAuthoredBy: true,
       }
