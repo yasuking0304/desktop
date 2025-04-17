@@ -222,7 +222,7 @@ export class GitConfigUserForm extends React.Component<
         <TextBox
           ref={this.emailInputRef}
           label={label}
-          placeholder={t('common.your-email', 'common.your-email@example.com')}
+          placeholder={t('common.your-email', 'your-email@example.com')}
           type="email"
           value={this.props.email}
           disabled={this.props.disabled}

@@ -15,6 +15,7 @@
     "no-longer-supported-operating-systems": "This operating system is no longer supported. Software updates have been disabled. ",
     "quit-and-install-update": "Quit and Install Update",
     "release-notes": "release notes",
+    "responsible-use-of-copilot": "Responsible use of Copilot in GitHub Desktop",
     "supported-operating-systems": "Supported operating systems",
     "terms-and-conditions": "Terms and Conditions",
     "update-has-been-downloaded-and-is-ready": "An update has been downloaded and is ready to be installed.",
@@ -354,10 +355,10 @@
     "amend": "Amend",
     "amending": "Amending",
     "commit": "Commit",
-    "commit-count-files": "{{0}} {{1}} ",
+    "commit-count-files": "{{0}} {{1}}",
     "commit-description": "Commit description",
     "commit-summaries-length-over": "Great commit summaries contain fewer than 50 characters",
-    "commit-title-1": "{{0}} {{1}}to ",
+    "commit-title-1": "{{0}} {{1}} to ",
     "commit-title-2": " ",
     "committing": "Committing",
     "committing-changes": "Committing changes…",
@@ -369,8 +370,10 @@
     "do-not-have-write-access-to-3": "?",
     "enable-commit-spellcheck": "Enable commit spellcheck",
     "enable-commit-spellcheck-darwin": "Enable Commit Spellcheck",
+    "generate-commit-message": "Generate commit message with Copilot{{0}}",
     "link-create-a-fork": "create a fork",
     "link-switch-branches": "switch branches",
+    "must-be-selected": ". Files must be selected to generate a commit message.",
     "please-information-description-field": "Place extra information in the description field.",
     "protected-branch-1": " ",
     "protected-branch-2": " is a protected branch. Want to ",
@@ -444,6 +447,7 @@
     "finish": "Finish",
     "github-desktop": "GitHub Desktop",
     "history": "History",
+    "i-understand": "I understand",
     "ignore": "Ignore",
     "install-and-restart": "Install and restart",
     "install-and-restart-darwin": "Install and Restart",
@@ -462,6 +466,7 @@
     "options": "Options",
     "organization": "Organization",
     "other": "Other",
+    "override": "Override",
     "overwrite": "Overwrite",
     "paste": "Paste",
     "preferences": "Settings",
@@ -491,7 +496,7 @@
     "view-conflicts": "View conflicts",
     "view-on-github": "View on GitHub",
     "yes": "Yes",
-    "your-email": "common.your-email@example.com",
+    "your-email": "your-email@example.com",
     "your-name": "Your Name"
   },
   "compare": {
@@ -814,6 +819,25 @@
   "fetch": {
     "fetching": "Fetching {{0}}"
   },
+  "filter-changes-list": {
+    "Adjust the filters": "Adjust the filters to see all {{0}} changes",
+    "and": " and ",
+    "file": "file",
+    "files": "files",
+    "files-description": "{{0}}{{1}} changed {{2}}",
+    "filter": "Filter",
+    "filter-options": "Filter Options",
+    "filter-options-number": "Filter Options {{0}}",
+    "hidden-changes-will-be-commited": "Hidden changes will be committed.",
+    "included-in-commit": "Included in commit ({{0}})",
+    "matching-your-filter": " matching your filter of '{{0}}'",
+    "number-description": "{{0}} of ",
+    "one-applied": "(1 applied)",
+    "sorry-i-cannot-find-any-changed-files": "Sorry, I can't find any changed files{{0}}{{1}}{{2}}.",
+    "stashed-changes": "Stashed Changes",
+    "summary-required": "Summary (required)",
+    "that-are-to-be-included": " that are to be included in your commit"
+  },
   "filter-list": {
     "filter": "Filter"
   },
@@ -840,6 +864,15 @@
   "full-screen-info": {
     "press-f11-to-exit-fullscreeen-1": "Press ",
     "press-f11-to-exit-fullscreeen-2": " to exit fullscreen"
+  },
+  "generate-commit-message-disclaimer": {
+    "copilot-is-powered-by-ai": "Copilot is powered by AI, so mistakes are possible. Review and edit the generated message carefully before use. ",
+    "github-copilot": "GitHub Copilot",
+    "learn-more-about-copilot": "Learn more about Copilot in GitHub Desktop."
+  },
+  "generate-commit-message-override-warning": {
+    "commit-message-override": "Commit message override",
+    "the-commit-message": "The commit message you have entered will be overridden by the generated commit message."
   },
   "generic-git-auth": {
     "authentication-failed": "Authentication failed",

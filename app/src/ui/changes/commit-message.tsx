@@ -886,12 +886,18 @@ export class CommitMessage extends React.Component<
 
     const noFilesSelected = this.props.filesSelected.length === 0
 
-    const ariaLabel =
-      'Generate commit message with Copilot' +
-      (noFilesSelected
-        ? '. Files must be selected to generate a commit message.'
-        : '')
+    const addCommitMessage = noFilesSelected
+      ? t(
+          'commit-message.must-be-selected',
+          '. Files must be selected to generate a commit message.'
+        )
+      : ''
 
+    const ariaLabel = t(
+      'commit-message.generate-commit-message',
+      'Generate commit message with Copilot{{0}}',
+      { 0: addCommitMessage }
+    )
     return (
       <>
         <div className="separator" />
@@ -1301,7 +1307,7 @@ export class CommitMessage extends React.Component<
      * as three separate strings "Verb" and "Count" and "to" and even tho
      * visually it was correctly adding spacings, for screen reader users it was
      * not and putting them all to together as one word. */
-    const action = t('commit-message.commit-title-1', `{{0}} {{1}}to `, {
+    const action = t('commit-message.commit-title-1', `{{0}} {{1}} to `, {
       0: verb,
       1: this.getFilesToBeCommittedButtonText(),
     })
@@ -1334,7 +1340,7 @@ export class CommitMessage extends React.Component<
         ? t('common.files', 'files')
         : t('common.file', 'file')
 
-    return t('commit-message.commit-count-files', `{{0}} {{1}} `, {
+    return t('commit-message.commit-count-files', `{{0}} {{1}}`, {
       0: filesToBeCommittedCount,
       1: pluralizedFile,
     })

@@ -68,7 +68,7 @@ import {
   PopoverDecoration,
 } from '../lib/popover'
 import { LinkButton } from '../lib/link-button'
-import { plural } from '../lib/plural'
+import { t } from 'i18next'
 
 interface IChangesListItem extends IFilterListItem {
   readonly id: string
@@ -851,7 +851,7 @@ export class FilterChangesList extends React.Component<
     prepopulateCommitSummary: boolean
   ) {
     if (!prepopulateCommitSummary) {
-      return 'Summary (required)'
+      return t('filter-changes-list.summary-required', 'Summary (required)')
     }
 
     const firstFile = files[0]
@@ -1096,7 +1096,9 @@ export class FilterChangesList extends React.Component<
         }
       >
         <Octicon className="stack-icon" symbol={StashIcon} />
-        <div className="text">Stashed Changes</div>
+        <div className="text">
+          {t('filter-changes-list.stashed-changes', 'Stashed Changes')}
+        </div>
         <Octicon symbol={octicons.chevronRight} />
       </button>
     )
@@ -1221,10 +1223,23 @@ export class FilterChangesList extends React.Component<
     const disableAllCheckbox =
       files.length === 0 || isCommitting || rebaseConflictState !== null
 
-    const checkAllLabel = `${
-      visibleFiles !== files.length ? `${visibleFiles} of ` : ''
-    }
-    ${files.length} changed file${plural(files.length)}`
+    const numberDescrption =
+      visibleFiles !== files.length
+        ? t('filter-changes-list.number-description', '{{0}} of ', {
+            0: visibleFiles,
+          })
+        : ''
+
+    const filesPlural =
+      files.length === 1
+        ? t('filter-changes-list.file', 'file')
+        : t('filter-changes-list.files', 'files')
+
+    const checkAllLabel = t(
+      'filter-changes-list.files-description',
+      '{{0}}{{1}} changed {{2}}',
+      { 0: numberDescrption, 1: files.length, 2: filesPlural }
+    )
 
     return (
       <div className="checkbox-container">
@@ -1274,7 +1289,9 @@ export class FilterChangesList extends React.Component<
         onClickOutside={this.closeFilterOptions}
       >
         <div className="filter-popover-header">
-          <h3 id="filter-options-header">Filter Options</h3>
+          <h3 id="filter-options-header">
+            {t('filter-changes-list.filter-options', 'Filter Options')}
+          </h3>
           <button
             className="close"
             onClick={this.closeFilterOptions}
@@ -1291,7 +1308,11 @@ export class FilterChangesList extends React.Component<
                 : CheckboxValue.Off
             }
             onChange={this.onFilterToIncludedInCommit}
-            label={`Included in commit (${checkedFilesThatAreVisibleCount})`}
+            label={t(
+              'filter-changes-list.included-in-commit',
+              `Included in commit ({{0}})`,
+              { 0: checkedFilesThatAreVisibleCount }
+            )}
           />
         </div>
       </Popover>
@@ -1299,9 +1320,14 @@ export class FilterChangesList extends React.Component<
   }
 
   private renderFilterBox = () => {
-    const buttonTextLabel = `Filter Options ${
-      this.props.includedChangesInCommitFilter ? '(1 applied)' : ''
-    }`
+    const appliedMessage = this.props.includedChangesInCommitFilter
+      ? t('filter-changes-list.one-applied', '(1 applied)')
+      : ''
+    const buttonTextLabel = t(
+      'filter-changes-list.filter-options-number',
+      'Filter Options {{0}}',
+      { 0: appliedMessage }
+    )
 
     return (
       <div className="filter-box-container">
@@ -1334,7 +1360,7 @@ export class FilterChangesList extends React.Component<
           ref={this.onTextBoxRef}
           displayClearButton={true}
           autoFocus={true}
-          placeholder={'Filter'}
+          placeholder={t('filter-changes-list.filter', 'Filter')}
           className="filter-list-filter-field"
           onValueChanged={this.onFilterTextChanged}
           onKeyDown={this.onFilterKeyDown}
@@ -1350,7 +1376,14 @@ export class FilterChangesList extends React.Component<
 
   private getListAriaLabel = () => {
     const { files } = this.props.workingDirectory
-    return `${files.length} changed file${plural(files.length)}`
+    const filesPlural =
+      files.length === 1
+        ? t('changes-list.file', 'file')
+        : t('changes-list.files', 'files')
+    return t('changes-list.files-description', '{{0}} changed {{1}}', {
+      0: files.length,
+      1: filesPlural,
+    })
   }
 
   public render() {
@@ -1423,9 +1456,18 @@ export class FilterChangesList extends React.Component<
       <div className="hidden-changes-warning" id="hidden-changes-warning">
         <Octicon symbol={octicons.alert} />
         <span className="sr-only">Warning:</span>
-        <span>Hidden changes will be committed. </span>
+        <span>
+          {t(
+            'filter-changes-list.hidden-changes-will-be-commited',
+            'Hidden changes will be committed. '
+          )}
+        </span>
         <LinkButton onClick={this.showFilesToBeCommitted}>
-          Adjust the filters to see all {filesSelected.length} changes
+          {t(
+            'filter-changes-list.Adjust the filters',
+            'Adjust the filters to see all {{0}} changes',
+            { 0: filesSelected.length }
+          )}
         </LinkButton>
       </div>
     )
@@ -1440,17 +1482,29 @@ export class FilterChangesList extends React.Component<
     }
 
     const filterTextMessage = this.props.filterText
-      ? ` matching your filter of '${this.props.filterText}'`
+      ? t(
+          'filter-changes-list.matching-your-filter',
+          ` matching your filter of '{{0}}'`,
+          { 0: this.props.filterText }
+        )
       : ''
 
     const includedCommitText = this.props.includedChangesInCommitFilter
-      ? ' that are to be included in your commit'
+      ? t(
+          'filter-changes-list.that-are-to-be-included',
+          ' that are to be included in your commit'
+        )
       : ''
 
-    const conjunction = filterTextMessage && includedCommitText ? ' and ' : ''
+    const conjunction = filterTextMessage && includedCommitText
+      ? t('filter-changes-list.and', ' and ')
+      : ''
 
-    return `Sorry, I can't find any changed files${filterTextMessage}${conjunction}
-        ${includedCommitText}.`
+    return t(
+      'filter-changes-list.sorry-i-cannot-find-any-changed-files',
+      `Sorry, I can't find any changed files{{0}}{{1}}{{2}}.`,
+      { 0: filterTextMessage, 1: conjunction, 2: includedCommitText }
+    )
   }
 
   private renderNoChanges = () => {

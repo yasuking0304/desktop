@@ -1,30 +1,31 @@
 {
   "about": {
     "about-name": "关于 {{0}}",
-    "application-is-currently-running": "The application is currently running in development and will not receive any updates.",
+    "application-is-currently-running": "该应用程序目前正在开发中，不会收到任何更新。",
     "build": "构建 {{0}}",
     "check-for-updates": "检查更新",
-    "check-out-the-beta-channel-1": "Check out the ",
+    "check-out-the-beta-channel-1": "查看 ",
     "check-out-the-beta-channel-2": "Beta Channel",
     "check-out-the-beta-channel-3": " ",
     "checking-for-updates": "正在检查更新…",
     "could-not-determine-the-last-time-update-check": "Couldn't determine the last time an update check was performed. You may be running an old version. Please try manually checking for updates and contact GitHub Support if the problem persists",
-    "downloading-updates": "Downloading update…",
-    "license-and-open-source-notices": "License and Open Source Notices",
-    "looking-for-the-latest-features": "Looking for the latest features?",
-    "no-longer-supported-operating-systems": "This operating system is no longer supported. Software updates have been disabled. ",
-    "quit-and-install-update": "Quit and Install Update",
+    "downloading-updates": "正在下载更新…",
+    "license-and-open-source-notices": "开源许可和声明",
+    "looking-for-the-latest-features": "寻找最新功能?",
+    "no-longer-supported-operating-systems": "此操作系统不再受支持。软件更新已被禁用。 ",
+    "quit-and-install-update": "退出并安装更新",
     "release-notes": "发行说明",
-    "supported-operating-systems": "Supported operating systems",
-    "terms-and-conditions": "Terms and Conditions",
-    "update-has-been-downloaded-and-is-ready": "An update has been downloaded and is ready to be installed.",
-    "version": "Version {{0}}",
-    "you-have-the-latest-version": "You have the latest version (last checked {{0}})",
-    "you-have-the-latest-version-1": "You have the latest version (last checked ",
+    "responsible-use-of-copilot": "负责任地使用 GitHub Desktop 中的 Copilot 功能",
+    "supported-operating-systems": "支持的操作系统",
+    "terms-and-conditions": "服务条款",
+    "update-has-been-downloaded-and-is-ready": "更新已下载并准备安装。",
+    "version": "版本 {{0}}",
+    "you-have-the-latest-version": "您拥有最新版本 (上次检查时间为 {{0}})",
+    "you-have-the-latest-version-1": "您拥有最新版本 (上次检查时间为 ",
     "you-have-the-latest-version-2": ")"
   },
   "accessibility": {
-    "accessibility": "可及性",
+    "accessibility": "辅助功能",
     "check-marks-will-be-displayed": "When enabled, check marks will be displayed along side the line numbers and groups of line numbers in the diff when committing. When disabled, the line number controls will be less prominent.",
     "show-check-marks-in-the-diff": "Show check marks in the diff",
     "this-is-an-example-link": "This is an example link",
@@ -32,7 +33,7 @@
     "underline-links-in-commit-messages": "When enabled, GitHub Desktop will underline links in commit messages, comments, and other text fields. This can help make links easier to distinguish."
   },
   "accessibility-settings-banner": {
-    "accessibility-settings": "可及性设置",
+    "accessibility-settings": "辅助功能设置",
     "check-out-1": "Check out the new",
     "check-out-2": "to control the visibility of the link underlines and diff check marks."
   },
@@ -41,7 +42,7 @@
     "about-license-2": " is an open source project published under the MIT License. You can view the source code and contribute to this project on ",
     "about-license-3": ".",
     "also-distributes-these-libraries": "GitHub Desktop also distributes these libraries:",
-    "license-and-open-source-notices": "License and Open Source Notices",
+    "license-and-open-source-notices": "开源许可和声明",
     "unknown-license": "Unknown license",
     "unknown-license-type": "License: {{0}}"
   },
@@ -52,7 +53,7 @@
     "add-repository-darwin": "Add Repository"
   },
   "advanced": {
-    "background-updates": "Background updates",
+    "background-updates": "背景更新",
     "help-github-desktop-improve-by-submitting-1": "Help GitHub Desktop improve by submitting ",
     "help-github-desktop-improve-by-submitting-2": " ",
     "network-and-credentials": "Network and credentials",
@@ -82,8 +83,8 @@
     "files-that-exceed": "Files that exceed the limit",
     "for-more-information-1": "See ",
     "for-more-information-2": " for more information on managing large files on GitHub",
-    "open-options": "Open options",
-    "open-settings-darwin": "Open Settings",
+    "open-options": "打开选项",
+    "open-settings-darwin": "打开设置",
     "retry-clone": "Retry clone",
     "retry-clone-darwin": "Retry Clone",
     "would-you-like-1": "Would you like to retry cloning ",
@@ -102,22 +103,22 @@
   },
   "appearance": {
     "dark": "Dark",
-    "diff": "Diff",
+    "diff": "差异",
     "light": "Light",
-    "loading-system-theme": "Loading system theme",
+    "loading-system-theme": "加载系统主题",
     "system": "System",
-    "tab_size_default": "{{0}} (default)",
-    "tab-size": "Tab size",
-    "tab-size-darwn": "Tab Size",
-    "theme": "Theme"
+    "tab_size_default": "{{0}} (默认)",
+    "tab-size": "选项卡大小",
+    "tab-size-darwn": "选项卡大小",
+    "theme": "主题"
   },
   "authentication-form": {
-    "sign-in-using-your-browser": "Sign in using your browser",
-    "your-browser-will-redirect": "Your browser will redirect you back to GitHub Desktop once you've signed in. If your browser asks for your permission to launch GitHub Desktop please allow it to."
+    "sign-in-using-your-browser": "使用浏览器登录",
+    "your-browser-will-redirect": "登录后，浏览器会将您重定向回 GitHub Desktop。如果您的浏览器请求您允许启动 GitHub Desktop, 请允许。"
   },
   "base-multi-commit-operation": {
-    "abort-operation": "Abort {{0}}",
-    "continue-operation": "Continue {{0}}",
+    "abort-operation": "中止 {{0}}",
+    "continue-operation": "继续 {{0}}",
     "resolve-conflicts-before-operation": "Resolve conflicts before {{0}}"
   },
   "binary-file": {
@@ -131,8 +132,8 @@
   },
   "branch-dropdown": {
     "checking-out": "Checking out {{0}}",
-    "current-branch": "Current branch",
-    "current-branch-darwin": "Current Branch",
+    "current-branch": "当前分支",
+    "current-branch-darwin": "当前分支",
     "current-branch-is": "Current branch is {{0}}",
     "currently-on-a-detached-head": "Currently on a detached HEAD",
     "detached-head": "Detached HEAD",
@@ -141,12 +142,12 @@
     "rebasing-target-branch": "Rebasing {{0}}"
   },
   "branch-list": {
-    "default-branch": "Default branch",
-    "default-branch-darwin": "Default Branch",
-    "new-branch": "New branch",
-    "new-branch-darwin": "New Branch",
-    "other-branch": "Other branches",
-    "other-branch-darwin": "Other Branches",
+    "default-branch": "默认分支",
+    "default-branch-darwin": "默认分支",
+    "new-branch": "新分支",
+    "new-branch-darwin": "新分支",
+    "other-branch": "其他分支",
+    "other-branch-darwin": "其他分支",
     "recent-branch": "Recent branches",
     "recent-branch-darwin": "Recent Branches"
   },
@@ -165,8 +166,8 @@
     "choose-a-branch-to-marge-2": " ",
     "new-branch": "New branch",
     "new-branch-darwin": "New Branch",
-    "pull-requests": "Pull requests",
-    "pull-requests-darwin": "Pull Requests"
+    "pull-requests": "拉取请求",
+    "pull-requests-darwin": "拉取请求"
   },
   "changes-list": {
     "confirm-discard-all-changes": "Discard all changes…",
@@ -181,8 +182,8 @@
     "discard-selected-changes-darwin": "Discard {{0}} Selected Changes",
     "exclude-selected-files": "Exclude selected files",
     "exclude-selected-files-darwin": "Exclude Selected Files",
-    "file": "file",
-    "files": "files",
+    "file": "文件",
+    "files": "文件",
     "files-changes-description": "{{0}}/{{1}} changed {{2}}  included",
     "files-description": "{{0}} changed {{1}}",
     "ignore-all-file-add-to-gitignore": "Ignore all {{0}} files (add to .gitignore)",
@@ -199,7 +200,7 @@
     "stash-all-changes": "隐藏所有更改",
     "stash-all-changes-darwin": "隐藏所有更改",
     "stashed-changes": "隐藏的更改",
-    "summary-required": "Summary (required)",
+    "summary-required": "摘要（必填）",
     "update-filename": "Update {{0}}"
   },
   "checkout": {
@@ -349,37 +350,39 @@
     "undo-commit-darwin": "Undo Commit…"
   },
   "commit-message": {
-    "add-co-authors": "Add co-authors",
-    "add-co-authors-darwin": "Add Co-Authors",
+    "add-co-authors": "添加共同作者",
+    "add-co-authors-darwin": "添加共同作者",
     "amend": "Amend",
     "amending": "Amending",
-    "commit": "Commit",
-    "commit-count-files": "{{0}} {{1}} ",
-    "commit-description": "Commit description",
-    "commit-summaries-length-over": "Great commit summaries contain fewer than 50 characters",
-    "commit-title-1": "{{0}} {{1}}to ",
+    "commit": "提交",
+    "commit-count-files": "{{0}} {{1}}",
+    "commit-description": "提交摘要",
+    "commit-summaries-length-over": "优秀的提交摘要包含少于 50 个字符",
+    "commit-title-1": "{{0}} {{1}}到 ",
     "commit-title-2": " ",
-    "committing": "Committing",
-    "committing-changes": "Committing changes…",
-    "description-field": "Description",
-    "disable-commit-spellcheck": "Disable commit spellcheck",
-    "disable-commit-spellcheck-darwin": "Disable Commit Spellcheck",
+    "committing": "提交",
+    "committing-changes": "提交更改…",
+    "description-field": "描述字段",
+    "disable-commit-spellcheck": "禁用提交拼写检查",
+    "disable-commit-spellcheck-darwin": "禁用提交拼写检查",
     "do-not-have-write-access-to-1": "You don't have write access to ",
     "do-not-have-write-access-to-2": ". Want to ",
     "do-not-have-write-access-to-3": "?",
     "enable-commit-spellcheck": "Enable commit spellcheck",
     "enable-commit-spellcheck-darwin": "Enable Commit Spellcheck",
+    "generate-commit-message": "Generate commit message with Copilot{{0}}",
     "link-create-a-fork": "create a fork",
     "link-switch-branches": "switch branches",
+    "must-be-selected": ". Files must be selected to generate a commit message.",
     "please-information-description-field": "Place extra information in the description field.",
     "protected-branch-1": " ",
     "protected-branch-2": " is a protected branch. Want to ",
     "protected-branch-3": "?",
-    "remove-co-authors": "Remove co-authors",
-    "remove-co-authors-darwin": "Remove Co-Authors",
+    "remove-co-authors": "删除共同作者",
+    "remove-co-authors-darwin": "删除共同作者",
     "select-one-or-more-files-to-commit": "Select one or more files to commit",
     "stop-amending": "Stop amending",
-    "summary-is-required-to-commit": "A commit summary is required to commit",
+    "summary-is-required-to-commit": "需要提交摘要",
     "will-modify-your-most-recent-commit-1": "Your changes will modify your",
     "will-modify-your-most-recent-commit-2": "most recent commit",
     "will-modify-your-most-recent-commit-3": ". ",
@@ -422,14 +425,14 @@
     "branch-name": "分支名称（不允许使用汉字）",
     "branch-name-darwin": "分支名称（不允许使用汉字）",
     "cancel": "取消",
-    "change": "Change",
-    "changes-files": "Changes",
+    "change": "更改",
+    "changes-files": "更改文件",
     "choose": "Choose…",
     "clone": "Clone",
     "close": "Close",
     "committed": "Committed",
     "continue": "Continue",
-    "copy": "Copy",
+    "copy": "复制",
     "create": "Create",
     "cut": "Cut",
     "delete": "Delete",
@@ -439,11 +442,12 @@
     "email": "Email",
     "enterprise-address": "Enterprise address",
     "error": "Error",
-    "file": "file",
-    "files": "files",
+    "file": "文件",
+    "files": "文件",
     "finish": "Finish",
     "github-desktop": "GitHub Desktop",
-    "history": "提交历史记录",
+    "history": "历史记录",
+    "i-understand": "I understand",
     "ignore": "Ignore",
     "install-and-restart": "Install and restart",
     "install-and-restart-darwin": "Install and Restart",
@@ -462,6 +466,7 @@
     "options": "选项",
     "organization": "Organization",
     "other": "Other",
+    "override": "Override",
     "overwrite": "Overwrite",
     "paste": "Paste",
     "preferences": "设置",
@@ -491,8 +496,8 @@
     "view-conflicts": "查看冲突",
     "view-on-github": "在 GitHub 上查看",
     "yes": "Yes",
-    "your-email": "common.your-email@example.com",
-    "your-name": "Your Name"
+    "your-email": "您的电子邮箱@example.com",
+    "your-name": "您的姓名"
   },
   "compare": {
     "ahead": "Ahead ({{0}})",
@@ -734,29 +739,29 @@
     "this-diff-contains-bidirectional-unicode": "This diff contains bidirectional Unicode text that may be interpreted or compiled differently than what appears below. To review, open the file in an editor that reveals hidden Unicode characters. "
   },
   "diff-options": {
-    "caption-diff": "Diff {{0}}",
+    "caption-diff": "差异検出的{{0}}",
     "caption-options": "选项",
     "caption-options-darwin": "Settings",
     "diff-display": "差异显示",
     "hide-whitespace-changes": "隐藏空格更改",
     "hide-whitespace-changes-darwin": "隐藏空格更改",
-    "interacting-with-individual-lines": "Interacting with individual lines or hunks will be disabled while hiding whitespace.",
+    "interacting-with-individual-lines": "忽略包含制表符或空格部分更改的行。",
     "split": "拆分",
     "unified": "统一",
     "whitespace": "空格"
   },
   "discard-changes-dialog": {
-    "are-you-sure-discard-all-changed": "Are you sure you want to discard all {{0}} changed files?",
-    "are-you-sure-discard-all-changed-list": "Are you sure you want to discard all changes to:",
-    "changes-can-be-restored": "Changes can be restored by retrieving them from the {{0}}.",
-    "confirm-discard-all-changes": "Confirm discard all changes",
-    "confirm-discard-all-changes-darwin": "Confirm Discard All Changes",
-    "confirm-discard-changes": "Confirm discard changes",
-    "confirm-discard-changes-darwin": "Confirm Discard Changes",
-    "discard-all-changes": "Discard all changes",
-    "discard-all-changes-darwin": "Discard All Changes",
-    "discard-changes": "Discard changes",
-    "discard-changes-darwin": "Discard Changes"
+    "are-you-sure-discard-all-changed": "您确定要放弃所有 {{0}} 个已更改的文件吗?",
+    "are-you-sure-discard-all-changed-list": "您确定要放弃对以下项的所有更改吗:",
+    "changes-can-be-restored": "可以通过从 {{0}} 中检索来恢复更改。",
+    "confirm-discard-all-changes": "确认放弃所有更改",
+    "confirm-discard-all-changes-darwin": "确认放弃所有更改",
+    "confirm-discard-changes": "确认放弃更改",
+    "confirm-discard-changes-darwin": "确认放弃更改",
+    "discard-all-changes": "放弃所有更改",
+    "discard-all-changes-darwin": "放弃所有更改",
+    "discard-changes": "放弃更改",
+    "discard-changes-darwin": "放弃更改"
   },
   "discard-changes-retry-dialog": {
     "changes-will-be-unrecoverable": "These changes will be unrecoverable from the {{0}}.",
@@ -768,10 +773,10 @@
     "discarded-Changes": "Discarded changes will be unrecoverable",
     "discarded-Changes-darwin": "Discarded Changes Will Be Unrecoverable",
     "fail-to-discard-changes": "Failed to discard changes to {{0}}.",
-    "restricted-access": "Restricted access to move the file(s)."
+    "restricted-access": "限制移动文件的访问权限。"
   },
   "discard-selection-dialog": {
-    "are-you-sure-discard-seleced-changed": "Are you sure you want to discard the selected changes to:"
+    "are-you-sure-discard-seleced-changed": "您确定要放弃对以下项的选定更改吗:"
   },
   "done": {
     "add-a-local-repository": "Add a local repository",
@@ -787,13 +792,13 @@
     "open-in-browser-darwin": "Open in Browser",
     "work-on-an-existing-project": "Work on an existing project in GitHub Desktop",
     "you-re-done": "You're done!",
-    "you-ve-learned-the-basics": "You've learned the basics on how to use GitHub Desktop. Here are some suggestions for what to do next."
+    "you-ve-learned-the-basics": "您已了解 GitHub Desktop 的基础知识。以下是一些后续操作的建议。"
   },
   "editor-error": {
-    "open-options": "Open options",
-    "open-settings-darwin": "Open Settings",
-    "unable-to-open-external-editor": "Unable to open external editor",
-    "unable-to-open-external-editor-darwin": "Unable to Open External Editor"
+    "open-options": "打开选项",
+    "open-settings-darwin": "打开设置",
+    "unable-to-open-external-editor": "无法打开外部编辑器",
+    "unable-to-open-external-editor-darwin": "无法打开外部编辑器"
   },
   "enterprise-server-entry": {
     "enterprise-or-ae-address": "Enterprise or AE address"
@@ -812,10 +817,29 @@
     "showing-changes-from-2": "{{0}} {{1}}"
   },
   "fetch": {
-    "fetching": "Fetching {{0}}"
+    "fetching": "正在获取 {{0}}"
+  },
+  "filter-changes-list": {
+    "Adjust the filters": "调整过滤器以查看所有 {{0}} 个更改",
+    "and": ", ",
+    "file": "文件",
+    "files": "文件",
+    "files-description": "{{1}}个已更改{{2}}{{0}}",
+    "filter": "筛选",
+    "filter-options": "筛选选项",
+    "filter-options-number": "筛选选项 {{0}}",
+    "hidden-changes-will-be-commited": "隐藏的更改将被提交。",
+    "included-in-commit": "包含在提交中 ({{0}})",
+    "matching-your-filter": "符合您的 \"{{0}} \"过滤器",
+    "number-description": "中的 {{0}} 个",
+    "one-applied": "(1 applied)",
+    "sorry-i-cannot-find-any-changed-files": "抱歉，我找不到任何{{0}}{{1}}{{2}}更改的文件。",
+    "stashed-changes": "隐藏的更改",
+    "summary-required": "摘要(必填)",
+    "that-are-to-be-included": "要包含在您的提交中"
   },
   "filter-list": {
-    "filter": "Filter"
+    "filter": "筛选"
   },
   "fork-contribution-target-description": {
     "autocompletion-of-user-1": "Autocompletion of user and issues will be based on ",
@@ -841,6 +865,15 @@
     "press-f11-to-exit-fullscreeen-1": "Press ",
     "press-f11-to-exit-fullscreeen-2": " to exit fullscreen"
   },
+  "generate-commit-message-disclaimer": {
+    "copilot-is-powered-by-ai": "Copilot is powered by AI, so mistakes are possible. Review and edit the generated message carefully before use. ",
+    "github-copilot": "GitHub Copilot",
+    "learn-more-about-copilot": "Learn more about Copilot in GitHub Desktop."
+  },
+  "generate-commit-message-override-warning": {
+    "commit-message-override": "Commit message override",
+    "the-commit-message": "The commit message you have entered will be overridden by the generated commit message."
+  },
   "generic-git-auth": {
     "authentication-failed": "Authentication failed",
     "authentication-failed-darwin": "Authentication Failed",
@@ -857,13 +890,13 @@
   },
   "git": {
     "default-branch-name-for-new-repositories": "Default branch name for new repositories",
-    "edit-your-global-git-config-1": "These preferences will ",
-    "edit-your-global-git-config-2": " edit your global Git config file",
-    "edit-your-global-git-config-3": ".",
-    "gitHub-default-branch-description-1": "GitHub's default branch name is ",
-    "gitHub-default-branch-description-2": ". ",
-    "gitHub-default-branch-description-3": "You may want to change it due to different workflows, or because your integrations still require the historical default branch name of ",
-    "gitHub-default-branch-description-4": "."
+    "edit-your-global-git-config-1": "这些首选项将 ",
+    "edit-your-global-git-config-2": " 编辑你的全局 Git 配置文件",
+    "edit-your-global-git-config-3": "。",
+    "gitHub-default-branch-description-1": "GitHub 的默认分支名称是 ",
+    "gitHub-default-branch-description-2": "。 ",
+    "gitHub-default-branch-description-3": "您可能想要根据不同的工作流程来更改它，或者因为您的集成仍然需要历史默认分支名称 ",
+    "gitHub-default-branch-description-4": "。"
   },
   "git-config": {
     "for-this-repository": "For this repository I wish to",
@@ -896,18 +929,18 @@
     "configure-custom-editor-darwin": "Configure Custom Editor…",
     "configure-custom-shell": "Configure custom shell…",
     "configure-custom-shell-darwin": "Configure Custom Shell…",
-    "external-editor": "External editor",
-    "external-editor-darwin": "External Editor",
-    "install-editor-name": "Install {{0}}?",
-    "no-editors-found": "No editors found. ",
-    "no-other-editors-found": "No other editors found. ",
+    "external-editor": "默认编辑器",
+    "external-editor-darwin": "默认编辑器",
+    "install-editor-name": "安装 {{0}}?",
+    "no-editors-found": "未找到编辑器。 ",
+    "no-other-editors-found": "未找到编辑器。 ",
     "shell": "Shell"
   },
   "invalidated-token": {
-    "invalidated-account-token": "Invalidated account token",
-    "invalidated-account-token-darwin": "Invalidated Account Token",
-    "token-has-been-invalidated-1": "Your account token has been invalidated and you have been signed out from your ",
-    "token-has-been-invalidated-2": "account. Do you want to sign in again?"
+    "invalidated-account-token": "账户令牌无效",
+    "invalidated-account-token-darwin": "账户令牌无效",
+    "token-has-been-invalidated-1": "您的账户令牌已失效，您已退出 ",
+    "token-has-been-invalidated-2": " 账\u200b\u200b户。是否要重新登录?"
   },
   "label": {
     "about-github-desktop": "关于 GitHub Desktop(&A)",
@@ -917,11 +950,11 @@
     "show-stashed-changes-darwin": "显示 隐藏的更改"
   },
   "launch": {
-    "custom-editor-at-path": "custom editor at path '{{0}}'"
+    "custom-editor-at-path": "路径为'{{0}}'的自定义编辑器"
   },
   "local-changes-overwritten-dialog": {
-    "Stash-Changes": "Stash changes and continue",
-    "Stash-Changes-darwin": "Stash Changes and Continue",
+    "Stash-Changes": "备份(stash)更改并继续",
+    "Stash-Changes-darwin": "备份(stash)更改并继续",
     "the-following-files-would-be-overwritten": "The following files would be overwritten:",
     "this-will-create-a-stash": "This will create a stash with your current changes. You can recover them by restoring the stash afterwards.",
     "unable-to-action": "Unable to {{0}} when changes are present on your branch. {{1}}",
@@ -1118,8 +1151,8 @@
   },
   "merge-choose-branch-dialog": {
     "checking-for-ability": "Checking for ability to merge automatically...",
-    "file": "file",
-    "files": "files",
+    "file": "文件",
+    "files": "文件",
     "is-already-up-to-date-with-1": " ",
     "is-already-up-to-date-with-2": " This branch is up to date with ",
     "is-already-up-to-date-with-3": " ",
@@ -1194,7 +1227,7 @@
     "multiple-commits": "commits",
     "multiple-local-commits": "{{0}} local commits",
     "multiple-tags": "{{0}} tags",
-    "no-local-changes": "No local changes",
+    "no-local-changes": "无本地更改",
     "one-commit": "a commit",
     "one-local-commit": "1 local commit",
     "one-tag": "1 tag",
@@ -1219,8 +1252,8 @@
     "the-current-branch-us-already-published-1": "The current branch (",
     "the-current-branch-us-already-published-2": ") is already published to GitHub. Create a pull request to propose and collaborate on your changes.",
     "the-remote": "the remote",
-    "there-are-no-uncommitted-changes": "There are no uncommitted changes in this repository. Here are some friendly suggestions for what to do next.",
-    "this-repository-is-currently-only": "This repository is currently only available on your local machine. By publishing it on GitHub you can share it, and collaborate with others.",
+    "there-are-no-uncommitted-changes": "此仓库中没有未提交的更改。以下是一些关于下一步操作的友好建议。",
+    "this-repository-is-currently-only": "此仓库目前仅在您的本地计算机上可用。通过将其发布到 GitHub, 您可以共享它并与他人协作。",
     "to-github": "to GitHub",
     "view-stash": "View stash",
     "view-the-files-of-your-repository": "View the files of your repository in {{0}}",
@@ -1260,21 +1293,21 @@
     "create-a-tutorial-repository": "Create a tutorial repository…",
     "create-a-tutorial-repository-darwin": "Create a Tutorial Repository…",
     "lets-get-start": "让我们开始吧!",
-    "protip": "ProTip!",
+    "protip": "提示!",
     "return-to-in-progress-tutorial": "Return to in progress tutorial",
     "return-to-in-progress-tutorial-darwin": "Return to In Progress Tutorial",
     "tips": "You can drag & drop an existing repository folder here to add it to Desktop"
   },
   "notifications": {
-    "allows-the-display-of-notifications": "Allows the display of notifications when high-signal events take place in the current repository.",
-    "enable-notifications": "Enable notifications",
-    "enabled": "enabled",
+    "allows-the-display-of-notifications": "当当前存储库中发生高信号事件时允许显示通知。",
+    "enable-notifications": "启用通知",
+    "enabled": "已启用",
     "has-no-permission-to-display-notifications-1": " GitHub Desktop has no permission to display notifications.  Please, enable them in the ",
-    "has-no-permission-to-display-notifications-2": ".",
-    "make-sure-notifications-1": " Make sure notifications are {{0}} for GitHub Desktop in the ",
-    "make-sure-notifications-2": ".",
-    "notifications": "Notifications",
-    "notifications-settings": "Notifications Settings",
+    "has-no-permission-to-display-notifications-2": " 。",
+    "make-sure-notifications-1": " 确保 ",
+    "make-sure-notifications-2": " 中 GitHub Desktop 的通知为 {{0}}。",
+    "notifications": "通知",
+    "notifications-settings": "通知设置",
     "properly-configured": "properly configured",
     "you-need-to-grant-permission-1": " You need to ",
     "you-need-to-grant-permission-2": "grant permission",
@@ -1327,14 +1360,14 @@
     "overwrite-stash-darwin": "Overwrite Stash?"
   },
   "preferences": {
-    "accessibility": "可及性",
-    "accounts": "Accounts",
-    "advanced": "Advanced",
+    "accessibility": "辅助功能",
+    "accounts": "帐户",
+    "advanced": "高级",
     "appearance": "外观",
     "git": "Git",
-    "integrations": "Integrations",
-    "notifications": "Notifications",
-    "prompts": "Prompts"
+    "integrations": "集成",
+    "notifications": "通知",
+    "prompts": "提示"
   },
   "progress-dialog": {
     "commit-0-of-1": "Commit {{0}} of {{1}}",
@@ -1404,18 +1437,18 @@
   },
   "push-needs-pull-warning": {
     "desktop-is-unable-to-push-commits": "Desktop is unable to push commits to this branch because there are commits on the remote that are not present on your local branch. Fetch these new commits before pushing in order to reconcile them with your local commits.",
-    "fetch": "Fetch",
+    "fetch": "获取",
     "newer-commits-on-remote": "Newer commits on remote",
     "newer-commits-on-remote-darwin": "Newer Commits on Remote"
   },
   "push-pull-button": {
     "cannot-publish-detached-head": "Cannot publish detached HEAD",
     "cannot-publish-unborn-head": "Cannot publish unborn HEAD",
-    "fetch": "Fetch {{0}}",
+    "fetch": "获取至 {{0}}",
     "force-push": "Force push {{0}}",
     "hang-on": "Hang on…",
-    "last-fetched": "Last fetched",
-    "never-fetched": "Never fetched",
+    "last-fetched": "最新获取",
+    "never-fetched": "尚未执行任何获取",
     "publish-branch": "Publish branch",
     "publish-branch-to-github": "Publish this branch to GitHub",
     "publish-branch-to-remote": "Publish this branch to the remote",
@@ -1427,7 +1460,7 @@
     "rebase-in-progress": "Rebase in progress"
   },
   "push-pull-button-dropdown": {
-    "fetch": "Fetch {{0}}}",
+    "fetch": "获取至 {{0}}}",
     "fetch-the-latest-changes": "Fetch the latest changes from {{0}}",
     "force-push": "Force push {{0}}",
     "overwrite-any-changes": "Overwrite any changes on {{0}} with your local changes",
@@ -1464,7 +1497,7 @@
     "spaces-and-invalid-characters": "Spaces and invalid characters have been replaced by hyphens."
   },
   "relative-time": {
-    "just-now": "just now"
+    "just-now": "现在"
   },
   "release-notes-dialog": {
     "bugfixes": "Bugfixes",
@@ -1562,8 +1595,8 @@
     }
   },
   "shell-error": {
-    "unable-to-open-options": "Open options",
-    "unable-to-open-settings-darwin": "Open Settings",
+    "unable-to-open-options": "打开选项",
+    "unable-to-open-settings-darwin": "打开设置",
     "unable-to-open-shell": "Unable to open shell",
     "unable-to-open-shell-darwin": "Unable to Open Shell"
   },
@@ -1577,7 +1610,7 @@
     "added-darwin": "Added",
     "collapse-expanded-lines": "Collapse expanded lines",
     "collapse-expanded-lines-darwin": "Collapse Expanded Lines",
-    "copy": "Copy",
+    "copy": "复制",
     "discard": "Discard  {{0}} line{{1}}{{2}}",
     "discard-darwin": "Discard {{0}} Line{{1}}{{2}}",
     "expand-whole-file": "扩展整个文件",
@@ -1709,48 +1742,48 @@
     "disclaimers-and-limitations-of-liability": "Disclaimers and Limitations of Liability",
     "github-s-logos": "GitHub's Logos",
     "miscellanea": "Miscellanea",
-    "open-source-licenses-and-notices": "Open Source Licenses and Notices",
+    "open-source-licenses-and-notices": "开源许可证和声明",
     "privacy": "Privacy",
-    "terms-and-conditions": "GitHub Open Source Applications Terms and Conditions"
+    "terms-and-conditions": "GitHub 开源应用程序条款和条件"
   },
   "thank-you": {
-    "thank-you-message": "Thanks so much for all your hard work on GitHub Desktop{{0}}. We're so grateful for your willingness to contribute and make the app better for everyone!",
-    "thank-you-title": "Thank you {{0}}! 🎉",
-    "you-contributed": "You contributed:"
+    "thank-you-message": "非常感谢您为 GitHub Desktop{{0}} 所做的所有努力。我们非常感激您愿意做出贡献，让这款应用变得更好，造福所有人!",
+    "thank-you-title": "谢谢 {{0}}! 🎉",
+    "you-contributed": "您贡献了:"
   },
   "tutorial-panel": {
-    "a-branch-allows-you-to-work": "A branch allows you to work on different versions of a repository at one time. Create a branch by going into the branch menu in the top bar and clicking \"{{0}}\".",
-    "a-commit-allows-you-to-save-sets": "A commit allows you to save sets of changes. In the “summary” field in the bottom left, write a short message that describes the changes you made. When you’re done, click the blue Commit button to finish.",
-    "a-pull-request-allows-you-to-propose": "A pull request allows you to propose changes to the code. By opening one, you’re requesting that someone review and merge them. Since this is a demo repository, this pull request will be private.",
+    "a-branch-allows-you-to-work": "分支允许您同时处理代码库的不同版本。前往顶部栏的分支菜单，然后点击\"{{0}}\"，即可创建分支。",
+    "a-commit-allows-you-to-save-sets": "提交允许您保存一系列更改。在左下角的\"摘要\"字段中，您可以输入简短的信息来描述您所做的更改。完成后，点击蓝色的\"提交\"按钮即可完成。",
+    "a-pull-request-allows-you-to-propose": "拉取请求允许您对代码提出修改建议。提交拉取请求即表示您请求他人审核并合并修改内容。由于这是一个演示代码库，因此此拉取请求将保持私密。",
     "atom-editor": "Atom",
-    "create-a-branch": "Create a branch",
-    "does-not-look-like-you-have-editor-1": "It doesn’t look like you have a text editor installed.  We can recommend ",
-    "does-not-look-like-you-have-editor-2": " or ",
-    "does-not-look-like-you-have-editor-3": ", but feel free to use any.",
-    "edit-a-file": "Edit a file",
-    "exit-tutorial": "Exit tutorial",
-    "exit-tutorial-darwin": "Exit Tutorial",
-    "get-started": "Get started",
-    "i-have-an-editor": "I have an editor",
-    "install-a-text-editor": "Install a text editor",
-    "make-a-commit": "Make a commit",
-    "new-branch": "New branch",
-    "new-branch-darwin": "New Branch",
-    "open-a-pull-request": "Open a pull request",
-    "open-editor": "Open editor",
-    "open-editor-darwin": "Open Editor",
-    "open-pull-request": "Open pull request",
-    "open-pull-request-darwin": "Open Pull Request",
+    "create-a-branch": "创建分支",
+    "does-not-look-like-you-have-editor-1": "您似乎没有安装文本编辑器。我们推荐使用 ",
+    "does-not-look-like-you-have-editor-2": " 或 ",
+    "does-not-look-like-you-have-editor-3": "，但您可以随意使用其中任何一种。",
+    "edit-a-file": "编辑文件",
+    "exit-tutorial": "退出教程",
+    "exit-tutorial-darwin": "退出教程",
+    "get-started": "介绍",
+    "i-have-an-editor": "我有一个编辑",
+    "install-a-text-editor": "安装文本编辑器",
+    "make-a-commit": "做出承诺",
+    "new-branch": "新分支",
+    "new-branch-darwin": "新分支",
+    "open-a-pull-request": "打开拉取请求",
+    "open-editor": "打开编辑器",
+    "open-editor-darwin": "打开编辑器",
+    "open-pull-request": "打开拉取请求",
+    "open-pull-request-darwin": "打开拉取请求",
     "open-the-atom-website": "Open the Atom website",
-    "open-the-editor-name-website": "Open the {{0}} website",
-    "open-this-repository-in-your-preferred-1": "Open this repository in your preferred text editor. Edit the ",
-    "open-this-repository-in-your-preferred-2": " file, save it, and come back.",
-    "partially-checked-check-list": "Partially checked check list",
-    "publish-to-github": "Publish to GitHub",
-    "publishing-will-push-or-upload": "Publishing will “push”, or upload, your commits to this branch of your repository on GitHub. Publish using the third button in the top bar.",
-    "your-default-editor-is-1": "Your default editor is ",
-    "your-default-editor-is-2": ". You can change your preferred editor in ",
-    "your-default-editor-is-3": " "
+    "open-the-editor-name-website": "打开 {{0}} 网站",
+    "open-this-repository-in-your-preferred-1": "用你喜欢的文本编辑器打开此存储库。编辑 ",
+    "open-this-repository-in-your-preferred-2": " 文件，保存，然后返回。",
+    "partially-checked-check-list": "部分检查清单",
+    "publish-to-github": "发布到 GitHub",
+    "publishing-will-push-or-upload": "发布会将你的提交\"推送\"或上传到 GitHub 仓库的此分支。使用顶部栏中的第三个按钮进行发布。",
+    "your-default-editor-is-1": "您的默认编辑器是 ",
+    "your-default-editor-is-2": "。您可以在 ",
+    "your-default-editor-is-3": " 中更改您喜欢的编辑器。"
   },
   "unmerged-file": {
     "no-conflicts-remaining": "No conflicts remaining"
@@ -1842,11 +1875,11 @@
     "you-have-changes-in-progress": "You have changes in progress. Resetting to a previous commit might result in some of these changes being lost. Do you want to continue anyway?"
   },
   "welcome": {
-    "definitions-git": " is the version control system.",
-    "definitions-github": " is where you store your code and collaborate with others.",
-    "definitions-github-desktop": " helps you work with GitHub locally.",
-    "use-this-tutorial": "Use this tutorial to get comfortable with Git, GitHub, and GitHub Desktop.",
-    "welcome": "Welcome to GitHub Desktop"
+    "definitions-git": " 是版本控制系统。",
+    "definitions-github": " 是您存储代码并与他人协作的地方。",
+    "definitions-github-desktop": " 帮助您在本地使用 GitHub。",
+    "use-this-tutorial": "使用本教程来熟悉 Git、GitHub 和 GitHub Desktop。",
+    "welcome": "欢迎使用 GitHub Desktop"
   },
   "whitespace-hint-popover": {
     "selecting-lines": "Selecting lines is disabled when hiding whitespace changes.",

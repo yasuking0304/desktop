@@ -359,7 +359,7 @@ export class About extends React.Component<IAboutProps> {
                 {t(
                   'about.responsible-use-of-copilot',
                   'Responsible use of Copilot in GitHub Desktop'
-          )}
+                )}
               </LinkButton>
             </p>
           </div>

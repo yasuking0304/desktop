@@ -15,6 +15,7 @@
     "no-longer-supported-operating-systems": "このオペレーティング システムはサポートされなくなりました。 ソフトウェアのアップデートが無効になっています。",
     "quit-and-install-update": "終了して更新プログラムをインストールする",
     "release-notes": "リリースノート",
+    "responsible-use-of-copilot": "GitHub Desktop における Copilot 機能の責任ある使用",
     "supported-operating-systems": "サポートされているオペレーティング システム",
     "terms-and-conditions": "利用条件",
     "update-has-been-downloaded-and-is-ready": "更新プログラムがダウンロードされ、インストールの準備が整いました。",
@@ -77,20 +78,20 @@
   },
   "app-error": {
     "clone-failed": "クローンの失敗",
-    "failed-to-push": "Failed to push",
-    "file-size-limit-exceeded": "File size limit exceeded",
-    "files-that-exceed": "Files that exceed the limit",
-    "for-more-information-1": "See ",
-    "for-more-information-2": " for more information on managing large files on GitHub",
+    "failed-to-push": "プッシュに失敗しました",
+    "file-size-limit-exceeded": "ファイルサイズの制限を超えました",
+    "files-that-exceed": "制限を超えたファイル",
+    "for-more-information-1": "GitHubで大きなファイルを管理する方法の詳細については、",
+    "for-more-information-2": " を参照してください。",
     "open-options": "オプションを開く",
     "open-settings-darwin": "オプションを開く",
     "retry-clone": "クローンの再試行",
     "retry-clone-darwin": "クローンの再試行",
-    "would-you-like-1": "Would you like to retry cloning ",
-    "would-you-like-2": "?"
+    "would-you-like-1": " ",
+    "would-you-like-2": " のクローンを再試行しますか?"
   },
   "app-store": {
-    "checking-out": "Checking out",
+    "checking-out": "チェックアウト",
     "error": {
       "pruner-is-already-active": "A branch pruner is already active and cannot start updating on {{0}}",
       "should-only-have-on-background-fetcher-active": "We should only have on background fetcher active at once, but we're trying to start background fetching on {{0}} while another background fetcher is still active!"
@@ -357,7 +358,7 @@
     "commit-count-files": "{{0}}{{1}}を",
     "commit-description": "コミットの概要説明",
     "commit-summaries-length-over": "概要入力は50文字未満でお願いします",
-    "commit-title-1": " ",
+    "commit-title-1": "{{1}} ",
     "commit-title-2": " に{{0}}",
     "committing": "コミット中",
     "committing-changes": "変更をコミットしています…",
@@ -369,8 +370,10 @@
     "do-not-have-write-access-to-3": "をしますか?",
     "enable-commit-spellcheck": "コミットスペルチェックを有効にする",
     "enable-commit-spellcheck-darwin": "コミットスペルチェックを有効にする",
+    "generate-commit-message": "Copilotでコミットメッセージを生成する{{0}}",
     "link-create-a-fork": "フォークの作成",
     "link-switch-branches": "ブランチの切り替え",
+    "must-be-selected": "。コミット メッセージを生成するにはファイルを選択する必要があります。",
     "please-information-description-field": "説明フィールドに追加情報を入力します。",
     "protected-branch-1": " ",
     "protected-branch-2": " は保護されたブランチです。",
@@ -444,6 +447,7 @@
     "finish": "完了",
     "github-desktop": "GitHub Desktop",
     "history": "コミット履歴",
+    "i-understand": "了解しました",
     "ignore": "無視",
     "install-and-restart": "インストールして再起動",
     "install-and-restart-darwin": "インストールして再起動",
@@ -462,6 +466,7 @@
     "options": "オプション",
     "organization": "組織",
     "other": "その他",
+    "override": "オーバーライド",
     "overwrite": "上書き",
     "paste": "貼り付け",
     "preferences": "環境設定",
@@ -814,6 +819,25 @@
   "fetch": {
     "fetching": "{{0}} をフェッチ中"
   },
+  "filter-changes-list": {
+    "Adjust the filters": "{{0}}個の変更ファイルを全て表示するにはフィルターを調整してください",
+    "and": "、",
+    "file": "ファイル",
+    "files": "ファイル",
+    "files-description": "{{0}}{{1}}個の変更された{{2}}",
+    "filter": "フィルター",
+    "filter-options": "フィルターオプション",
+    "filter-options-number": "フィルターオプション {{0}}",
+    "hidden-changes-will-be-commited": "非表示の変更ファイルはコミットされます。",
+    "included-in-commit": "コミットに含まれる ({{0}})",
+    "matching-your-filter": "フィルター \"{{0}}\" に一致する",
+    "number-description": "{{0}}/",
+    "one-applied": "(1 applied)",
+    "sorry-i-cannot-find-any-changed-files": "申し訳ありませんが、{{0}}{{1}}{{2}}変更ファイルは見つかりません。",
+    "stashed-changes": "一時退避した変更",
+    "summary-required": "概要 (必須入力)",
+    "that-are-to-be-included": "コミットに含まれる"
+  },
   "filter-list": {
     "filter": "フィルター"
   },
@@ -840,6 +864,15 @@
   "full-screen-info": {
     "press-f11-to-exit-fullscreeen-1": "全画面表示を終了するには ",
     "press-f11-to-exit-fullscreeen-2": " を押します"
+  },
+  "generate-commit-message-disclaimer": {
+    "copilot-is-powered-by-ai": "CopilotはAIを搭載しているため、間違いが発生する可能性があります。生成されたメッセージをよく確認し、編集してからご使用ください。 ",
+    "github-copilot": "GitHub Copilot",
+    "learn-more-about-copilot": "詳しくは GitHub Desktop 上の Copilot についてをご覧ください。"
+  },
+  "generate-commit-message-override-warning": {
+    "commit-message-override": "コミットメッセージの上書き",
+    "the-commit-message": "あなたが入力したコミットメッセージは、生成されたコミットメッセージによって上書きされます。"
   },
   "generic-git-auth": {
     "authentication-failed": "認証に失敗しました",
@@ -911,13 +944,13 @@
   },
   "label": {
     "about-github-desktop": "GitHub Desktop について(&A)",
-    "hide-stashed-changes": "一時退避した変更の非表示(&H)",
+    "hide-stashed-changes": "一時退避した変更の非表示(&I)",
     "hide-stashed-changes-darwin": "一時退避した変更の非表示",
     "show-stashed-changes": "一時退避した変更の表示(&W)",
     "show-stashed-changes-darwin": "一時退避した変更の表示"
   },
   "launch": {
-    "custom-editor-at-path": "custom editor at path '{{0}}'"
+    "custom-editor-at-path": "外部エディターのパス '{{0}}'"
   },
   "local-changes-overwritten-dialog": {
     "Stash-Changes": "変更を退避して続行する",
@@ -1403,7 +1436,7 @@
     "your-branch-must-be-published": "Your branch must be published before opening a pull request."
   },
   "push-needs-pull-warning": {
-    "desktop-is-unable-to-push-commits": "Desktop is unable to push commits to this branch because there are commits on the remote that are not present on your local branch. Fetch these new commits before pushing in order to reconcile them with your local commits.",
+    "desktop-is-unable-to-push-commits": "リモートブランチにローカルブランチに存在しないコミットがあるため、GitHub Desktop はこのブランチにコミットをプッシュできません。プッシュする前に、これらの新しいコミットを取得して、ローカルブランチのコミットと整合させてください。",
     "fetch": "フェッチ",
     "newer-commits-on-remote": "リモートに新しいコミットがあります",
     "newer-commits-on-remote-darwin": "リモートに新しいコミットがあります"
