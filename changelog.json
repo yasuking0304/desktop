@@ -1,5 +1,8 @@
 {
   "releases": {
+    "3.4.19-beta3": [
+      "[New] Copilot now helps you craft AI-generated commit messages with just one click - #17439"
+    ],
     "3.4.19-beta2": [
       "[Fixed] Right-clicking on selected files will keep those files selected in the changes list - #20319",
       "[Fixed] Let credential helper prompt for the specific enterprise account used in a given repository - #20318",
