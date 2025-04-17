@@ -886,12 +886,18 @@ export class CommitMessage extends React.Component<
 
     const noFilesSelected = this.props.filesSelected.length === 0
 
-    const ariaLabel =
-      'Generate commit message with Copilot' +
-      (noFilesSelected
-        ? '. Files must be selected to generate a commit message.'
-        : '')
+    const addCommitMessage = noFilesSelected
+      ? t(
+          'commit-message.must-be-selected',
+          '. Files must be selected to generate a commit message.'
+        )
+      : ''
 
+    const ariaLabel = t(
+      'commit-message.generate-commit-message',
+      'Generate commit message with Copilot{{0}}',
+      { 0: addCommitMessage }
+    )
     return (
       <>
         <div className="separator" />

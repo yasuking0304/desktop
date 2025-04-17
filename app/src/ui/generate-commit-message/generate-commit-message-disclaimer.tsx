@@ -9,6 +9,7 @@ import { Dispatcher } from '../dispatcher'
 import { Repository } from '../../models/repository'
 import { WorkingDirectoryFileChange } from '../../models/status'
 import { LinkButton } from '../lib/link-button'
+import { t } from 'i18next'
 
 interface IGenerateCommitMessageDisclaimerProps {
   readonly dispatcher: Dispatcher
@@ -29,7 +30,10 @@ export class GenerateCommitMessageDisclaimer extends React.Component<IGenerateCo
   public render() {
     return (
       <Dialog
-        title="GitHub Copilot"
+        title={t(
+          'generate-commit-message-disclaimer.github-copilot',
+          'GitHub Copilot'
+        )}
         id="generate-commit-message-disclaimer"
         type="warning"
         onDismissed={this.props.onDismissed}
@@ -39,15 +43,24 @@ export class GenerateCommitMessageDisclaimer extends React.Component<IGenerateCo
       >
         <DialogContent>
           <p id="generate-commit-message-disclaimer-body">
-            Copilot is powered by AI, so mistakes are possible. Review and edit
-            the generated message carefully before use.{' '}
+            {t(
+              'generate-commit-message-disclaimer.copilot-is-powered-by-ai',
+              `Copilot is powered by AI, so mistakes are possible. Review and edit
+              the generated message carefully before use. `
+            )}
             <LinkButton uri="https://gh.io/copilot-for-desktop-transparency">
-              Learn more about Copilot in GitHub Desktop.
+              {t(
+                'generate-commit-message-disclaimer.learn-more-about-copilot',
+                'Learn more about Copilot in GitHub Desktop.'
+              )}
             </LinkButton>
           </p>
         </DialogContent>
         <DialogFooter>
-          <OkCancelButtonGroup destructive={true} okButtonText="I understand" />
+          <OkCancelButtonGroup
+            destructive={true}
+            okButtonText={t('common.i-understand', 'I understand')}
+          />
         </DialogFooter>
       </Dialog>
     )
