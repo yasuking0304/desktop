@@ -1482,17 +1482,29 @@ export class FilterChangesList extends React.Component<
     }
 
     const filterTextMessage = this.props.filterText
-      ? ` matching your filter of '${this.props.filterText}'`
+      ? t(
+          'filter-changes-list.matching-your-filter',
+          ` matching your filter of '{{0}}'`,
+          { 0: this.props.filterText }
+        )
       : ''
 
     const includedCommitText = this.props.includedChangesInCommitFilter
-      ? ' that are to be included in your commit'
+      ? t(
+          'filter-changes-list.that-are-to-be-included',
+          ' that are to be included in your commit'
+        )
       : ''
 
-    const conjunction = filterTextMessage && includedCommitText ? ' and ' : ''
+    const conjunction = filterTextMessage && includedCommitText
+      ? t('filter-changes-list.and', ' and ')
+      : ''
 
-    return `Sorry, I can't find any changed files${filterTextMessage}${conjunction}
-        ${includedCommitText}.`
+    return t(
+      'filter-changes-list.sorry-i-cannot-find-any-changed-files',
+      `Sorry, I can't find any changed files{{0}}{{1}}{{2}}.`,
+      { 0: filterTextMessage, 1: conjunction, 2: includedCommitText }
+    )
   }
 
   private renderNoChanges = () => {

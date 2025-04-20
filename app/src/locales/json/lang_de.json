@@ -355,10 +355,10 @@
     "amend": "Amend",
     "amending": "Amending",
     "commit": "Commit",
-    "commit-count-files": "{{0}} {{1}} ",
+    "commit-count-files": "{{0}} {{1}}",
     "commit-description": "Commit description",
     "commit-summaries-length-over": "Great commit summaries contain fewer than 50 characters",
-    "commit-title-1": "{{0}} {{1}}to ",
+    "commit-title-1": "{{0}} {{1}} to ",
     "commit-title-2": " ",
     "committing": "Committing",
     "committing-changes": "Committing changes…",
@@ -821,6 +821,7 @@
   },
   "filter-changes-list": {
     "Adjust the filters": "Adjust the filters to see all {{0}} changes",
+    "and": " and ",
     "file": "file",
     "files": "files",
     "files-description": "{{0}}{{1}} changed {{2}}",
@@ -829,10 +830,13 @@
     "filter-options-number": "Filter Options {{0}}",
     "hidden-changes-will-be-commited": "Hidden changes will be committed.",
     "included-in-commit": "Included in commit ({{0}})",
+    "matching-your-filter": " matching your filter of '{{0}}'",
     "number-description": "{{0}} of ",
     "one-applied": "(1 applied)",
+    "sorry-i-cannot-find-any-changed-files": "Sorry, I can't find any changed files{{0}}{{1}}{{2}}.",
     "stashed-changes": "Stashed Changes",
-    "summary-required": "Summary (required)"
+    "summary-required": "Summary (required)",
+    "that-are-to-be-included": " that are to be included in your commit"
   },
   "filter-list": {
     "filter": "Filter"

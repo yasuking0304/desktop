@@ -358,7 +358,7 @@
     "commit-count-files": "{{0}}{{1}}を",
     "commit-description": "コミットの概要説明",
     "commit-summaries-length-over": "概要入力は50文字未満でお願いします",
-    "commit-title-1": " ",
+    "commit-title-1": "{{1}} ",
     "commit-title-2": " に{{0}}",
     "committing": "コミット中",
     "committing-changes": "変更をコミットしています…",
@@ -821,6 +821,7 @@
   },
   "filter-changes-list": {
     "Adjust the filters": "{{0}}個の変更ファイルを全て表示するにはフィルターを調整してください",
+    "and": "、",
     "file": "ファイル",
     "files": "ファイル",
     "files-description": "{{0}}{{1}}個の変更された{{2}}",
@@ -829,10 +830,13 @@
     "filter-options-number": "フィルターオプション {{0}}",
     "hidden-changes-will-be-commited": "非表示の変更ファイルはコミットされます。",
     "included-in-commit": "コミットに含まれる ({{0}})",
+    "matching-your-filter": "フィルター \"{{0}}\" に一致する",
     "number-description": "{{0}}/",
     "one-applied": "(1 applied)",
+    "sorry-i-cannot-find-any-changed-files": "申し訳ありませんが、{{0}}{{1}}{{2}}変更ファイルは見つかりません。",
     "stashed-changes": "一時退避した変更",
-    "summary-required": "概要 (必須入力)"
+    "summary-required": "概要 (必須入力)",
+    "that-are-to-be-included": "コミットに含まれる"
   },
   "filter-list": {
     "filter": "フィルター"
@@ -940,13 +944,13 @@
   },
   "label": {
     "about-github-desktop": "GitHub Desktop について(&A)",
-    "hide-stashed-changes": "一時退避した変更の非表示(&H)",
+    "hide-stashed-changes": "一時退避した変更の非表示(&I)",
     "hide-stashed-changes-darwin": "一時退避した変更の非表示",
     "show-stashed-changes": "一時退避した変更の表示(&W)",
     "show-stashed-changes-darwin": "一時退避した変更の表示"
   },
   "launch": {
-    "custom-editor-at-path": "custom editor at path '{{0}}'"
+    "custom-editor-at-path": "外部エディターのパス '{{0}}'"
   },
   "local-changes-overwritten-dialog": {
     "Stash-Changes": "変更を退避して続行する",
