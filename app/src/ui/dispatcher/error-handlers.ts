@@ -604,6 +604,31 @@ export async function discardChangesHandler(
   return null
 }
 
+
+/**
+ * Handler for when a push is denied by GitHub's push protection feature of
+ * secret scanning.
+ */
+export async function secretScanningPushProtectionErrorHandler(
+  error: Error,
+  dispatcher: Dispatcher
+) {
+  const e = asErrorWithMetadata(error)
+  if (!e) {
+    return error
+  }
+
+  const gitError = asGitError(e.underlyingError)
+  if (gitError?.result.gitError !== DugiteError.PushWithSecretDetected) {
+    return error
+  }
+
+  /// This error is a result of the push protection feature of secret scanning
+  /// and should be handled by the PushProtectionErrorDialog.
+
+  return error
+}
+
 /**
  * Extract lines from Git's stderr output starting with the
  * prefix `remote: `. Useful to extract server-specific
