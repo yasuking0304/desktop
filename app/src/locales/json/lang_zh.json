@@ -1,7 +1,7 @@
 {
   "about": {
     "about-name": "关于 {{0}}",
-    "application-is-currently-running": "该应用程序目前正在开发中，不会收到任何更新。",
+    "application-is-currently-running": "该应用程序目前正在开发中, 不会收到任何更新。",
     "build": "构建 {{0}}",
     "check-for-updates": "检查更新",
     "check-out-the-beta-channel-1": "查看 ",
@@ -26,11 +26,11 @@
   },
   "accessibility": {
     "accessibility": "辅助功能",
-    "check-marks-will-be-displayed": "When enabled, check marks will be displayed along side the line numbers and groups of line numbers in the diff when committing. When disabled, the line number controls will be less prominent.",
-    "show-check-marks-in-the-diff": "Show check marks in the diff",
-    "this-is-an-example-link": "This is an example link",
-    "underline-links": "Underline links",
-    "underline-links-in-commit-messages": "When enabled, GitHub Desktop will underline links in commit messages, comments, and other text fields. This can help make links easier to distinguish."
+    "check-marks-will-be-displayed": "启用后, 提交时差异中的行号和行号组旁边将显示复选标记。禁用后, 行号控件将不太显眼。",
+    "show-check-marks-in-the-diff": "在差异中显示复选标记",
+    "this-is-an-example-link": "这是一个示例链接",
+    "underline-links": "下划线链接",
+    "underline-links-in-commit-messages": "启用后, GitHub Desktop 将在提交消息、评论和其他文本字段中为链接添加下划线。这有助于更容易区分链接。"
   },
   "accessibility-settings-banner": {
     "accessibility-settings": "辅助功能设置",
@@ -114,7 +114,7 @@
   },
   "authentication-form": {
     "sign-in-using-your-browser": "使用浏览器登录",
-    "your-browser-will-redirect": "登录后，浏览器会将您重定向回 GitHub Desktop。如果您的浏览器请求您允许启动 GitHub Desktop, 请允许。"
+    "your-browser-will-redirect": "登录后, 浏览器会将您重定向回 GitHub Desktop。如果您的浏览器请求您允许启动 GitHub Desktop, 请允许。"
   },
   "base-multi-commit-operation": {
     "abort-operation": "中止 {{0}}",
@@ -392,7 +392,7 @@
     "ignore": "Ignore",
     "learn-more": "Learn more",
     "learn-more-about": "Learn more about commit attribution",
-    "repository-settings": "repository settings",
+    "repository-settings": "存储库设置",
     "update-email": "Update email",
     "update-email-1": "The email in your global Git config (",
     "update-email-darwin": "Update Email",
@@ -833,7 +833,7 @@
     "matching-your-filter": "符合您的 \"{{0}} \"过滤器",
     "number-description": "中的 {{0}} 个",
     "one-applied": "(1 applied)",
-    "sorry-i-cannot-find-any-changed-files": "抱歉，我找不到任何{{0}}{{1}}{{2}}更改的文件。",
+    "sorry-i-cannot-find-any-changed-files": "抱歉, 我找不到任何{{0}}{{1}}{{2}}更改的文件。",
     "stashed-changes": "隐藏的更改",
     "summary-required": "摘要(必填)",
     "that-are-to-be-included": "要包含在您的提交中"
@@ -854,21 +854,21 @@
     "view-on-gitgub-2": " in the browser."
   },
   "fork-settings": {
-    "contribute-to-the-parent-repository": "To contribute to the parent repository",
-    "for-my-own-purposes": "For my own purposes",
-    "will-be-using-this-fork": "I'll be using this fork…"
+    "contribute-to-the-parent-repository": "为上游存储库做出贡献",
+    "for-my-own-purposes": "用于个人目的",
+    "will-be-using-this-fork": "这个叉子是用来做什么的…"
   },
   "format-date": {
     "invalid-date": "Invalid date"
   },
   "full-screen-info": {
-    "press-f11-to-exit-fullscreeen-1": "Press ",
-    "press-f11-to-exit-fullscreeen-2": " to exit fullscreen"
+    "press-f11-to-exit-fullscreeen-1": "按 ",
+    "press-f11-to-exit-fullscreeen-2": " 退出全屏"
   },
   "generate-commit-message-disclaimer": {
-    "copilot-is-powered-by-ai": "Copilot is powered by AI, so mistakes are possible. Review and edit the generated message carefully before use. ",
+    "copilot-is-powered-by-ai": "Copilot 由人工智能驱动，因此可能会出现错误。使用前请仔细检查并编辑生成的消息。 ",
     "github-copilot": "GitHub Copilot",
-    "learn-more-about-copilot": "Learn more about Copilot in GitHub Desktop."
+    "learn-more-about-copilot": "了解有关 GitHub Desktop 中 Copilot 的更多信息。"
   },
   "generate-commit-message-override-warning": {
     "commit-message-override": "Commit message override",
@@ -895,13 +895,13 @@
     "edit-your-global-git-config-3": "。",
     "gitHub-default-branch-description-1": "GitHub 的默认分支名称是 ",
     "gitHub-default-branch-description-2": "。 ",
-    "gitHub-default-branch-description-3": "您可能想要根据不同的工作流程来更改它，或者因为您的集成仍然需要历史默认分支名称 ",
+    "gitHub-default-branch-description-3": "您可能想要根据不同的工作流程来更改它, 或者因为您的集成仍然需要历史默认分支名称 ",
     "gitHub-default-branch-description-4": "。"
   },
   "git-config": {
-    "for-this-repository": "For this repository I wish to",
-    "use-a-local-git-config": "Use a local Git config",
-    "use-my-global-git-config": "Use my global Git config"
+    "for-this-repository": "您要用于此存储库的名称和电子邮件地址",
+    "use-a-local-git-config": "使用本地 Git 配置",
+    "use-my-global-git-config": "使用我的全局 Git 配置"
   },
   "git-email-not-found-warning": {
     "does-not-match": "does not match",
@@ -939,7 +939,7 @@
   "invalidated-token": {
     "invalidated-account-token": "账户令牌无效",
     "invalidated-account-token-darwin": "账户令牌无效",
-    "token-has-been-invalidated-1": "您的账户令牌已失效，您已退出 ",
+    "token-has-been-invalidated-1": "您的账户令牌已失效, 您已退出 ",
     "token-has-been-invalidated-2": " 账\u200b\u200b户。是否要重新登录?"
   },
   "label": {
@@ -1374,24 +1374,24 @@
     "in-progress": "{{0}} in progress"
   },
   "prompts": {
-    "always-bring-my-changes-to-my-new-branch": "Always bring my changes to my new branch",
-    "always-stash-and-leave-my-changes": "Always stash and leave my changes on the current branch",
-    "ask-me-where-i-want-the-changes-to-go": "Ask me where I want the changes to go",
-    "commit-length": "Commit Length",
+    "always-bring-my-changes-to-my-new-branch": "始终将我的更改带到我的新分支",
+    "always-stash-and-leave-my-changes": "保存您正在进行的工作, 不要将其更新到新分支(您可以稍后再将其放回)",
+    "ask-me-where-i-want-the-changes-to-go": "了解如何修复它",
+    "commit-length": "提交摘要长度",
     "discarding-changes": "Discarding changes",
     "discarding-changes-permanently": "Discarding changes permanently",
     "discarding-checking-out": "Checking out a commit",
     "discarding-stash": "Discarding stash",
     "force-pushing": "Force pushing",
-    "if-i-have-changes-and-i-switch-branches": "If I have changes and I switch branches...",
+    "if-i-have-changes-and-i-switch-branches": "如果我有变化并且我切换分支…",
     "removing-repositories": "Removing repositories",
-    "show-a-confirmation": "Show a confirmation dialog before...",
-    "show-commit-length-warning": "Show commit length warning",
-    "undo-commit": "Undo commit"
+    "show-a-confirmation": "之前显示确认对话框…",
+    "show-commit-length-warning": "显示提交摘要长度警告",
+    "undo-commit": "撤消提交"
   },
   "publish": {
-    "publish-repository": "Publish repository",
-    "publish-repository-darwin": "Publish Repository"
+    "publish-repository": "发布存储库",
+    "publish-repository-darwin": "发布存储库"
   },
   "publish-repository": {
     "keep-this-code-private": "Keep this code private",
@@ -1558,8 +1558,8 @@
     "ignored-files": "Ignored files",
     "ignored-files-darwin": "Ignored Files",
     "remote": "Remote",
-    "repository-settings": "Repository settings",
-    "repository-settings-darwin": "Repository Settings"
+    "repository-settings": "存储库设置",
+    "repository-settings-darwin": "存储库设置"
   },
   "revert-progress": {
     "hang-on": "Hang on…",
@@ -1747,19 +1747,19 @@
     "terms-and-conditions": "GitHub 开源应用程序条款和条件"
   },
   "thank-you": {
-    "thank-you-message": "非常感谢您为 GitHub Desktop{{0}} 所做的所有努力。我们非常感激您愿意做出贡献，让这款应用变得更好，造福所有人!",
+    "thank-you-message": "非常感谢您为 GitHub Desktop{{0}} 所做的所有努力。我们非常感激您愿意做出贡献, 让这款应用变得更好, 造福所有人!",
     "thank-you-title": "谢谢 {{0}}! 🎉",
     "you-contributed": "您贡献了:"
   },
   "tutorial-panel": {
-    "a-branch-allows-you-to-work": "分支允许您同时处理代码库的不同版本。前往顶部栏的分支菜单，然后点击\"{{0}}\"，即可创建分支。",
-    "a-commit-allows-you-to-save-sets": "提交允许您保存一系列更改。在左下角的\"摘要\"字段中，您可以输入简短的信息来描述您所做的更改。完成后，点击蓝色的\"提交\"按钮即可完成。",
-    "a-pull-request-allows-you-to-propose": "拉取请求允许您对代码提出修改建议。提交拉取请求即表示您请求他人审核并合并修改内容。由于这是一个演示代码库，因此此拉取请求将保持私密。",
+    "a-branch-allows-you-to-work": "分支允许您同时处理代码库的不同版本。前往顶部栏的分支菜单, 然后点击\"{{0}}\", 即可创建分支。",
+    "a-commit-allows-you-to-save-sets": "提交允许您保存一系列更改。在左下角的\"摘要\"字段中, 您可以输入简短的信息来描述您所做的更改。完成后, 点击蓝色的\"提交\"按钮即可完成。",
+    "a-pull-request-allows-you-to-propose": "拉取请求允许您对代码提出修改建议。提交拉取请求即表示您请求他人审核并合并修改内容。由于这是一个演示代码库, 因此此拉取请求将保持私密。",
     "atom-editor": "Atom",
     "create-a-branch": "创建分支",
     "does-not-look-like-you-have-editor-1": "您似乎没有安装文本编辑器。我们推荐使用 ",
     "does-not-look-like-you-have-editor-2": " 或 ",
-    "does-not-look-like-you-have-editor-3": "，但您可以随意使用其中任何一种。",
+    "does-not-look-like-you-have-editor-3": ", 但您可以随意使用其中任何一种。",
     "edit-a-file": "编辑文件",
     "exit-tutorial": "退出教程",
     "exit-tutorial-darwin": "退出教程",
@@ -1777,7 +1777,7 @@
     "open-the-atom-website": "Open the Atom website",
     "open-the-editor-name-website": "打开 {{0}} 网站",
     "open-this-repository-in-your-preferred-1": "用你喜欢的文本编辑器打开此存储库。编辑 ",
-    "open-this-repository-in-your-preferred-2": " 文件，保存，然后返回。",
+    "open-this-repository-in-your-preferred-2": " 文件, 保存, 然后返回。",
     "partially-checked-check-list": "部分检查清单",
     "publish-to-github": "发布到 GitHub",
     "publishing-will-push-or-upload": "发布会将你的提交\"推送\"或上传到 GitHub 仓库的此分支。使用顶部栏中的第三个按钮进行发布。",
