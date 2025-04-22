@@ -242,6 +242,9 @@ const DefaultDailyMeasures: IDailyMeasures = {
   appliesIncludedInCommitFilterCount: 0,
   adjustedFiltersForHiddenChangesCount: 0,
   enterpriseAccountCount: 0,
+  generateCommitMessageButtonClickCount: 0,
+  generateCommitMessageCount: 0,
+  generateCommitMessageUsedVerbatimCount: 0,
 }
 
 // A subtype of IDailyMeasures filtered to contain only its numeric properties

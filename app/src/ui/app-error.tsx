@@ -16,6 +16,7 @@ import { Ref } from './lib/ref'
 import { GitError as DugiteError } from 'dugite'
 import { LinkButton } from './lib/link-button'
 import { getFileFromExceedsError } from '../lib/helpers/regex'
+import { CopilotError } from '../lib/copilot-error'
 
 interface IAppErrorProps {
   /** The error to be displayed  */
@@ -124,10 +125,28 @@ export class AppError extends React.Component<IAppErrorProps, IAppErrorState> {
       )
     }
 
+    if (isCopilotExceededQuotaError(e)) {
+      const copilotPlansURL = 'https://github.com/features/copilot/plans'
+      return (
+        <>
+          <p>{e.message}</p>
+          <p>
+            <LinkButton uri={copilotPlansURL}>
+              Upgrade to increase your limit.
+            </LinkButton>
+          </p>
+        </>
+      )
+    }
+
     return <p>{e.message}</p>
   }
 
   private getTitle(error: Error) {
+    if (isCopilotExceededQuotaError(error)) {
+      return 'Quota exceeded'
+    }
+
     switch (getDugiteError(error)) {
       case DugiteError.PushWithFileSizeExceedingLimit:
         return 'File size limit exceeded'
@@ -310,6 +329,15 @@ function getRetryActionType(error: Error) {
   }
 
   return error.metadata.retryAction?.type
+}
+
+function isCopilotExceededQuotaError(error: Error) {
+  const e = getUnderlyingError(error)
+
+  if (e instanceof CopilotError) {
+    return e.isQuotaExceededError
+  }
+  return false
 }
 
 function getDugiteError(error: Error) {

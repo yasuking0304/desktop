@@ -99,6 +99,8 @@ export enum PopupType {
   ConfirmCommitFilteredChanges = 'ConfirmCommitFilteredChanges',
   TestAbout = 'TestAbout',
   PushProtectionError = 'PushProtectionError',
+  GenerateCommitMessageOverrideWarning = 'GenerateCommitMessageOverrideWarning',
+  GenerateCommitMessageDisclaimer = 'GenerateCommitMessageDisclaimer',
 }
 
 interface IBasePopup {
@@ -438,6 +440,18 @@ export type PopupDetail =
   | {
       type: PopupType.PushProtectionError
       secrets: ReadonlyArray<ISecretScanResult>
+    }
+  | {
+      type: PopupType.GenerateCommitMessageOverrideWarning
+      repository: Repository
+      filesSelected: ReadonlyArray<WorkingDirectoryFileChange>
+    }
+  | {
+      type: PopupType.GenerateCommitMessageDisclaimer
+      // Same parameters as PopupType.GenerateCommitMessageOverrideWarning because
+      // from this popup we will trigger the commit message generation too.
+      repository: Repository
+      filesSelected: ReadonlyArray<WorkingDirectoryFileChange>
     }
 
 export type Popup = IBasePopup & PopupDetail

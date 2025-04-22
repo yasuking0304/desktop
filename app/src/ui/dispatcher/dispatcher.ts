@@ -1071,6 +1071,27 @@ export class Dispatcher {
     return this.appStore._setCommitMessage(repository, message)
   }
 
+  public promptOverrideWithGeneratedCommitMessage(
+    repository: Repository,
+    filesSelected: ReadonlyArray<WorkingDirectoryFileChange>
+  ) {
+    return this.appStore._promptOverrideWithGeneratedCommitMessage(
+      repository,
+      filesSelected
+    )
+  }
+
+  public updateCommitMessageGenerationDisclaimerLastSeen() {
+    return this.appStore._updateCommitMessageGenerationDisclaimerLastSeen()
+  }
+
+  public generateCommitMessage(
+    repository: Repository,
+    filesSelected: ReadonlyArray<WorkingDirectoryFileChange>
+  ) {
+    return this.appStore._generateCommitMessage(repository, filesSelected)
+  }
+
   /** Remove the given account from the app. */
   public removeAccount(account: Account): Promise<void> {
     return this.appStore._removeAccount(account)

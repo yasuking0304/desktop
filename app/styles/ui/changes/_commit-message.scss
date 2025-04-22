@@ -12,6 +12,21 @@
 
   padding: var(--spacing);
 
+  .copilot-disclaimer-popover-header {
+    display: flex;
+
+    h3 {
+      margin-bottom: 0;
+      font-size: var(--font-size);
+    }
+
+    @include close-button;
+
+    .close {
+      margin-right: 0;
+    }
+  }
+
   .summary {
     position: relative;
     display: flex;
@@ -79,6 +94,18 @@
     & {
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
+    }
+  }
+
+  .copilot-button {
+    color: var(--text-secondary-color);
+
+    &:hover {
+      color: var(--text-color);
+    }
+
+    &:focus {
+      outline-offset: 2px;
     }
   }
 
@@ -162,7 +189,9 @@
     }
 
     .action-bar {
-      padding: var(--spacing-half);
+      display: flex;
+
+      padding: var(--spacing);
       background: var(--box-background-color);
 
       border-bottom-left-radius: var(--border-radius);
@@ -180,9 +209,19 @@
       &.disabled {
         background: var(--box-alt-background-color);
       }
+
+      .separator {
+        width: 1px;
+        margin-left: var(--spacing-half);
+        margin-right: var(--spacing-half);
+        margin-top: 1px;
+        margin-bottom: 1px;
+        background: var(--box-border-color);
+      }
     }
 
-    .co-authors-toggle {
+    .co-authors-toggle,
+    .copilot-button {
       // button reset styles
       border: none;
       border-radius: 0px;
