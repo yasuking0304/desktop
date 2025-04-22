@@ -7,6 +7,90 @@ dialog.push-protection-error-dialog {
         padding: 0;
       };
     }
+
+    .secret-locations-container {
+      margin-top: var(--spacing);
+  
+      .secret-locations {
+        max-height: 200px;
+        overflow-y: scroll;
+        border: 1px solid var(--box-border-color);
+  
+        .location {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            border-top: 1px solid var(--box-border-color);
+  
+            padding: var(--spacing-half) var(--spacing);
+  
+            &:first-child {
+              border-top: 1px solid var(--box-border-color);
+            }
+  
+          
+            &.selected {
+              --text-color: var(--box-selected-text-color);
+              --text-secondary-color: var(--box-selected-text-color);
+          
+              color: var(--text-color);
+              background-color: var(--box-selected-background-color);
+            }
+          
+            &:focus {
+              outline: none;
+            }
+          
+            &:not(.not-selectable):hover {
+              background: var(--list-item-hover-background-color);
+            }
+  
+            .location-header {
+              display: flex;
+              flex-direction: row;
+              margin-bottom: var(--spacing-half);
+  
+              span:first-child {
+                font-weight: var(--font-weight-semibold);
+                flex-grow: 1;
+              }
+            }
+  
+            .location-details{
+              display: flex;
+              flex-direction: column;
+              
+  
+              > div {
+                display: flex;
+                flex-direction: row;
+                margin-bottom: var(--spacing-half);
+              }
+  
+              .ref {
+                padding-left: var(--spacing-half);
+              }
+  
+              .commit-sha {
+                .copy-button {
+                  margin-left: var(--spacing-half);
+        
+                  // Removing default button styles
+                  background: transparent;
+                  border: none;
+                  padding: 0;
+                  height: auto;
+                  min-width: 16px;
+        
+                  :hover {
+                    color: var(--text-secondary-color);
+                  }
+                }
+              }
+            }
+        }
+      }
+    }
   }
   
 }

@@ -2499,6 +2499,7 @@ export class App extends React.Component<IAppProps, IAppState> {
         return (
           <PushProtectionErrorDialog
             key="push-protection-error"
+            secrets={popup.secrets}
             onDismissed={onPopupDismissedFn}
           />
         )

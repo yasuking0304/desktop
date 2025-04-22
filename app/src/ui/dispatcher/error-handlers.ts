@@ -683,11 +683,11 @@ export async function secretScanningPushProtectionErrorHandler(
   }
 
   const remoteMessage = getRemoteMessage(coerceToString(gitError.result.stderr))
-  const secretLocations = extractSecretScanningResults(remoteMessage)
-  console.log('secretLocations', secretLocations)
+  const secrets = extractSecretScanningResults(remoteMessage)
 
   dispatcher.showPopup({
     type: PopupType.PushProtectionError,
+    secrets,
   })
 
   return null
