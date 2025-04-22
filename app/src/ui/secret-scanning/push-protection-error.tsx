@@ -70,12 +70,12 @@ export class PushProtectionErrorDialog extends React.Component<
             </p>
             Exposing this secret can allow someone to:
             <ul>
-              <li>
-                Verify the identity of this GitHub Personal Access Token secret
-              </li>
-              <li>Know which resources this secret can access</li>
+              <li>Verify the identity of the secret(s)</li>
+              <li>Know which resources the secret(s) can access</li>
               <li>Act on behalf of the secret's owner</li>
-              <li>Push this secret to this repository without being blocked</li>
+              <li>
+                Push the secret(s) to this repository without being blocked
+              </li>
             </ul>
             {this.renderSecrets()}
           </div>
