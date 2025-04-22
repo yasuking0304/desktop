@@ -186,9 +186,13 @@ import { showTestUI } from './lib/test-ui-components/test-ui-components'
 import { ConfirmCommitFilteredChanges } from './changes/confirm-commit-filtered-changes-dialog'
 import { AboutTestDialog } from './about/about-test-dialog'
 import { enableMultipleEnterpriseAccounts } from '../lib/feature-flag'
-import { PushProtectionErrorDialog } from './secret-scanning/push-protection-error'
+import {
+  ISecretScanResult,
+  PushProtectionErrorDialog,
+} from './secret-scanning/push-protection-error'
 import { GenerateCommitMessageOverrideWarning } from './generate-commit-message/generate-commit-message-override-warning'
 import { GenerateCommitMessageDisclaimer } from './generate-commit-message/generate-commit-message-disclaimer'
+import { IAPICreatePushProtectionBypassResponse } from '../lib/api'
 
 const MinuteInMilliseconds = 1000 * 60
 const HourInMilliseconds = MinuteInMilliseconds * 60
@@ -2502,6 +2506,7 @@ export class App extends React.Component<IAppProps, IAppState> {
           <PushProtectionErrorDialog
             key="push-protection-error"
             secrets={popup.secrets}
+            bypassPushProtection={this.bypassPushProtection}
             onDismissed={onPopupDismissedFn}
           />
         )
@@ -2546,6 +2551,16 @@ export class App extends React.Component<IAppProps, IAppState> {
     }
 
     return selectedState.state.pullRequestState
+  }
+
+  private bypassPushProtection = (
+    secret: ISecretScanResult
+  ): Promise<IAPICreatePushProtectionBypassResponse | null> => {
+    return this.props.dispatcher.createPushProtectionBypass(
+      'false_positive',
+      secret.id,
+      secret.bypassURL
+    )
   }
 
   private getWarnForcePushDialogOnBegin(

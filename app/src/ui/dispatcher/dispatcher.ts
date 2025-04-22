@@ -7,6 +7,7 @@ import {
   IAPICheckSuite,
   IAPIRepoRuleset,
   getDotComAPIEndpoint,
+  IAPICreatePushProtectionBypassResponse,
 } from '../../lib/api'
 import { shell } from '../../lib/app-shell'
 import {
@@ -124,6 +125,7 @@ import { SignInResult } from '../../lib/stores/sign-in-store'
 import { ICustomIntegration } from '../../lib/custom-integration'
 import { isAbsolute } from 'path'
 import { CLIAction } from '../../lib/cli-action'
+import { BypassReason } from '../secret-scanning/push-protection-error'
 
 /**
  * An error handler function.
@@ -4005,6 +4007,18 @@ export class Dispatcher {
     return this.appStore._setIncludedChangesInCommitFilter(
       repository,
       includedChangesInCommitFilter
+    )
+  }
+
+  public async createPushProtectionBypass(
+    reason: BypassReason,
+    placeholderId: string,
+    bypassURL: string
+  ): Promise<IAPICreatePushProtectionBypassResponse | null> {
+    return this.appStore._createPushProtectionBypass(
+      reason,
+      placeholderId,
+      bypassURL
     )
   }
 }
