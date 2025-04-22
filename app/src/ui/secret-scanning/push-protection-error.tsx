@@ -116,4 +116,3 @@ export class PushProtectionErrorDialog extends React.Component<
     )
   }
 }
-

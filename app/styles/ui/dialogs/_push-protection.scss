@@ -59,7 +59,8 @@ dialog.push-protection-error-dialog {
           display: flex;
           flex-direction: column;
 
-          .first-location, .secret-location-details {
+          .first-location,
+          .secret-location-details {
             display: flex;
             flex-direction: row;
             flex-grow: 1;

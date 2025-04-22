@@ -63,18 +63,23 @@ export class PushProtectionErrorLocation extends React.Component<
     const { showMoreLocations } = this.state
     const firstLocation = secret.locations.at(0)
     const showMoreLocationsToggle = secret.locations.length > 1
-    const toggleText = showMoreLocations ? 'Show Less Locations' : 'Show More locations'
+    const toggleText = showMoreLocations
+      ? 'Show Less Locations'
+      : 'Show More locations'
     if (firstLocation === undefined) {
       return null
     }
-    
 
     return (
       <span className="secret-location">
         <span className="first-location">
           {this.renderLocation(firstLocation, true)}
           {showMoreLocationsToggle && (
-            <Button tooltip={toggleText} ariaLabel={toggleText} onClick={this.onClickShowMoreLocations}>
+            <Button
+              tooltip={toggleText}
+              ariaLabel={toggleText}
+              onClick={this.onClickShowMoreLocations}
+            >
               <Octicon symbol={octicons.kebabHorizontal} />
             </Button>
           )}
