@@ -23,6 +23,10 @@ import { hasWritePermission } from '../../models/github-repository'
 import { RetryActionType } from '../../models/retry-actions'
 import { parseFilesToBeOverwritten } from '../lib/parse-files-to-be-overwritten'
 import { pathExists } from '../lib/path-exists'
+import {
+  ISecretLocation,
+  ISecretScanResult,
+} from '../secret-scanning/push-protection-error'
 
 /** An error which also has a code property. */
 interface IErrorWithCode extends Error {
@@ -604,6 +608,61 @@ export async function discardChangesHandler(
   return null
 }
 
+/**
+ * Extracts secret scanning results from the provided `remoteMessage` string
+ * from the git error provided when GitHub Secret Scanning detects a secret on
+ * push..
+ *
+ * This function parses the output of a secret scanning tool to identify
+ * secrets, their descriptions, locations in the codebase, and bypass URLs.
+ */
+function extractSecretScanningResults(
+  remoteMessage: string
+): ReadonlyArray<ISecretScanResult> {
+  const secretsRegex =
+    /—— (?<description>.*?) —+[.\s\S]*?locations:(?<locationsGroup>(?:\s+- commit: [a-f0-9]{40}\s+path: [.\s\S]*?)+).*?(?<bypassURL>https:\/\/github\.com\/.*?\/unblock-secret\/[a-zA-Z0-9]+)/g
+  const matches = [...remoteMessage.matchAll(secretsRegex)]
+
+  const secrets: Array<ISecretScanResult> = []
+  if (matches.length === 0) {
+    return secrets
+  }
+
+  for (const match of matches) {
+    if (match.groups === undefined || match.index === undefined) {
+      continue
+    }
+
+    const { bypassURL, description, locationsGroup } = match.groups
+
+    const locationsRegex =
+      /- commit: (?<commitSha>[a-f0-9]{40})\s+path: (?<path>.*?):(?<lineNumber>\d+)/g
+    const locationMatches = [...locationsGroup.matchAll(locationsRegex)]
+
+    const locations: ISecretLocation[] = []
+
+    locationMatches.forEach(locationMatch => {
+      if (locationMatch.groups === undefined) {
+        return
+      }
+      const { commitSha, path, lineNumber } = locationMatch.groups
+      locations.push({
+        commitSha,
+        path,
+        lineNumber: parseInt(lineNumber, 10),
+      })
+    })
+
+    secrets.push({
+      id: bypassURL.split('/').pop() || '',
+      description,
+      bypassURL,
+      locations,
+    })
+  }
+
+  return secrets
+}
 
 /**
  * Handler for when a push is denied by GitHub's push protection feature of
@@ -622,6 +681,10 @@ export async function secretScanningPushProtectionErrorHandler(
   if (gitError?.result.gitError !== DugiteError.PushWithSecretDetected) {
     return error
   }
+
+  const remoteMessage = getRemoteMessage(coerceToString(gitError.result.stderr))
+  const secretLocations = extractSecretScanningResults(remoteMessage)
+  console.log('secretLocations', secretLocations)
 
   dispatcher.showPopup({
     type: PopupType.PushProtectionError,
