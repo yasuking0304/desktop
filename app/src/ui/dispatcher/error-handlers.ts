@@ -623,10 +623,11 @@ export async function secretScanningPushProtectionErrorHandler(
     return error
   }
 
-  /// This error is a result of the push protection feature of secret scanning
-  /// and should be handled by the PushProtectionErrorDialog.
+  dispatcher.showPopup({
+    type: PopupType.PushProtectionError,
+  })
 
-  return error
+  return null
 }
 
 /**
