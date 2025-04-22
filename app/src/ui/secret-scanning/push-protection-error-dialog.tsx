@@ -128,7 +128,12 @@ export class PushProtectionErrorDialog extends React.Component<
 
   private renderBypassButton = (secret: ISecretScanResult) => {
     if (this.state.secretsBypassed.get(secret.id)) {
-      return <Octicon symbol={octicons.check} className="bypass-success" />
+      return (
+        <span className="bypass-success">
+          Bypassed{' '}
+          <Octicon symbol={octicons.check} className="bypass-success" />{' '}
+        </span>
+      )
     }
 
     return (

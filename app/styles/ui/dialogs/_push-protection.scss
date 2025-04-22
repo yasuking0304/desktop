@@ -53,6 +53,14 @@ dialog.push-protection-error-dialog {
             font-weight: var(--font-weight-semibold);
             flex-grow: 1;
           }
+
+          .bypass-success {
+            display: flex;
+
+            .octicon {
+              margin-left: var(--spacing-half);
+            }
+          }
         }
 
         .secret-location {

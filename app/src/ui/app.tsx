@@ -193,6 +193,10 @@ import {
 import { GenerateCommitMessageOverrideWarning } from './generate-commit-message/generate-commit-message-override-warning'
 import { GenerateCommitMessageDisclaimer } from './generate-commit-message/generate-commit-message-disclaimer'
 import { IAPICreatePushProtectionBypassResponse } from '../lib/api'
+import {
+  BypassPushProtectionDialog,
+  BypassReasonType,
+} from './secret-scanning/bypass-push-protection-dialog'
 
 const MinuteInMilliseconds = 1000 * 60
 const HourInMilliseconds = MinuteInMilliseconds * 60
@@ -2506,8 +2510,20 @@ export class App extends React.Component<IAppProps, IAppState> {
           <PushProtectionErrorDialog
             key="push-protection-error"
             secrets={popup.secrets}
-            bypassPushProtection={this.bypassPushProtection}
+            bypassPushProtection={this.openBypassPushProtection}
             onDismissed={onPopupDismissedFn}
+          />
+        )
+      case PopupType.BypassPushProtection:
+        return (
+          <BypassPushProtectionDialog
+            key="bypass-push-protection"
+            secret={popup.secret}
+            bypassPushProtection={popup.bypassPushProtection}
+            onDismissed={this.onDismissBypassPushProtection(
+              popup.id,
+              popup.onDismissed
+            )}
           />
         )
       case PopupType.GenerateCommitMessageOverrideWarning: {
@@ -2537,6 +2553,16 @@ export class App extends React.Component<IAppProps, IAppState> {
     }
   }
 
+  private onDismissBypassPushProtection = (
+    popup: string,
+    popupDismiss: () => void
+  ) => {
+    return () => {
+      popupDismiss()
+      this.onPopupDismissed(popup)
+    }
+  }
+
   private setConfirmCommitFilteredChanges = (value: boolean) => {
     this.props.dispatcher.setConfirmCommitFilteredChanges(value)
   }
@@ -2553,11 +2579,41 @@ export class App extends React.Component<IAppProps, IAppState> {
     return selectedState.state.pullRequestState
   }
 
+  private openBypassPushProtection = (secret: ISecretScanResult) => {
+    return new Promise<IAPICreatePushProtectionBypassResponse | null>(
+      resolve => {
+        this.props.dispatcher.showPopup({
+          type: PopupType.BypassPushProtection,
+          secret,
+          bypassPushProtection: (
+            secret: ISecretScanResult,
+            reason: BypassReasonType
+          ) => {
+            this.bypassPushProtection(secret, reason)
+              .then(response => {
+                resolve(response)
+              })
+              .catch(() => {
+                resolve(null)
+              })
+              .finally(() => {
+                this.props.dispatcher.closePopup(PopupType.BypassPushProtection)
+              })
+          },
+          onDismissed: () => {
+            resolve(null)
+          },
+        })
+      }
+    )
+  }
+
   private bypassPushProtection = (
-    secret: ISecretScanResult
+    secret: ISecretScanResult,
+    reason: BypassReasonType
   ): Promise<IAPICreatePushProtectionBypassResponse | null> => {
     return this.props.dispatcher.createPushProtectionBypass(
-      'false_positive',
+      reason,
       secret.id,
       secret.bypassURL
     )

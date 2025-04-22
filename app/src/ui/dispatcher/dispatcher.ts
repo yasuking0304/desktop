@@ -125,7 +125,7 @@ import { SignInResult } from '../../lib/stores/sign-in-store'
 import { ICustomIntegration } from '../../lib/custom-integration'
 import { isAbsolute } from 'path'
 import { CLIAction } from '../../lib/cli-action'
-import { BypassReason } from '../secret-scanning/push-protection-error-dialog'
+import { BypassReasonType } from '../secret-scanning/bypass-push-protection-dialog'
 
 /**
  * An error handler function.
@@ -4011,7 +4011,7 @@ export class Dispatcher {
   }
 
   public async createPushProtectionBypass(
-    reason: BypassReason,
+    reason: BypassReasonType,
     placeholderId: string,
     bypassURL: string
   ): Promise<IAPICreatePushProtectionBypassResponse | null> {

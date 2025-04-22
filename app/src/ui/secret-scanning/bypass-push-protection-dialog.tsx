@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { Dialog, DialogContent, DialogFooter } from '../dialog'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
-import { IAPICreatePushProtectionBypassResponse } from '../../lib/api'
 import { ISecretScanResult } from './push-protection-error-dialog'
 import { VerticalSegmentedControl } from '../lib/vertical-segmented-control'
 
@@ -22,8 +21,9 @@ interface IBypassPushProtectionDialogProps {
 
   /** The function to call when the user clicks the bypass button */
   readonly bypassPushProtection: (
-    secret: ISecretScanResult
-  ) => Promise<IAPICreatePushProtectionBypassResponse | null>
+    secret: ISecretScanResult,
+    reason: BypassReasonType
+  ) => void
 
   readonly onDismissed: () => void
 }
@@ -71,12 +71,11 @@ export class BypassPushProtectionDialog extends React.Component<
         title={__DARWIN__ ? 'Bypass Push Detection' : 'Bypass push detection'}
         onDismissed={this.props.onDismissed}
         onSubmit={this.bypassPushProtection}
-        type="error"
         className="bypass-push-protection-dialog"
       >
         <DialogContent>
           <VerticalSegmentedControl
-            label={`Why are you bypassing the ${this.props.secret.description} it?`}
+            label={`Why are you bypassing this ${this.props.secret.description}?`}
             items={items}
             selectedKey={this.state.reason}
             onSelectionChanged={this.onSelectionChanged}
@@ -97,6 +96,6 @@ export class BypassPushProtectionDialog extends React.Component<
   }
 
   private bypassPushProtection = () => {
-    this.props.bypassPushProtection(this.props.secret)
+    this.props.bypassPushProtection(this.props.secret, this.state.reason)
   }
 }
