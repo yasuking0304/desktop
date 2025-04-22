@@ -189,7 +189,7 @@ import { enableMultipleEnterpriseAccounts } from '../lib/feature-flag'
 import {
   ISecretScanResult,
   PushProtectionErrorDialog,
-} from './secret-scanning/push-protection-error'
+} from './secret-scanning/push-protection-error-dialog'
 import { GenerateCommitMessageOverrideWarning } from './generate-commit-message/generate-commit-message-override-warning'
 import { GenerateCommitMessageDisclaimer } from './generate-commit-message/generate-commit-message-disclaimer'
 import { IAPICreatePushProtectionBypassResponse } from '../lib/api'

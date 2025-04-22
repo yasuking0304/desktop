@@ -2,7 +2,10 @@ import * as React from 'react'
 import { Octicon } from '../octicons'
 import * as octicons from '../octicons/octicons.generated'
 import { CopyButton } from '../copy-button'
-import { ISecretLocation, ISecretScanResult } from './push-protection-error'
+import {
+  ISecretLocation,
+  ISecretScanResult,
+} from './push-protection-error-dialog'
 import { PathText } from '../lib/path-text'
 import { Button } from '../lib/button'
 

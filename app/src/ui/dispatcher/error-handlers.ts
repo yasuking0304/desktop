@@ -26,7 +26,7 @@ import { pathExists } from '../lib/path-exists'
 import {
   ISecretLocation,
   ISecretScanResult,
-} from '../secret-scanning/push-protection-error'
+} from '../secret-scanning/push-protection-error-dialog'
 
 /** An error which also has a code property. */
 interface IErrorWithCode extends Error {

@@ -23,7 +23,7 @@ import {
 } from './suppress-certificate-error'
 import { HttpStatusCode } from './http-status-code'
 import { CopilotError } from './copilot-error'
-import { BypassReason } from '../ui/secret-scanning/push-protection-error'
+import { BypassReason } from '../ui/secret-scanning/push-protection-error-dialog'
 
 const envEndpoint = process.env['DESKTOP_GITHUB_DOTCOM_API_ENDPOINT']
 const envHTMLURL = process.env['DESKTOP_GITHUB_DOTCOM_HTML_URL']

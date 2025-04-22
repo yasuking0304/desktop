@@ -125,7 +125,7 @@ import { SignInResult } from '../../lib/stores/sign-in-store'
 import { ICustomIntegration } from '../../lib/custom-integration'
 import { isAbsolute } from 'path'
 import { CLIAction } from '../../lib/cli-action'
-import { BypassReason } from '../secret-scanning/push-protection-error'
+import { BypassReason } from '../secret-scanning/push-protection-error-dialog'
 
 /**
  * An error handler function.
