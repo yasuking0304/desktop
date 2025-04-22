@@ -2,9 +2,7 @@ import * as React from 'react'
 import { Dialog, DialogContent, DialogFooter } from '../dialog'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
 import { LinkButton } from '../lib/link-button'
-import { Octicon } from '../octicons'
-import * as octicons from '../octicons/octicons.generated'
-import { CopyButton } from '../copy-button'
+import { PushProtectionErrorLocation } from './push-protection-error-location'
 
 /** Represents the location of a detected secret detected on push  */
 export interface ISecretLocation {
@@ -80,10 +78,7 @@ export class PushProtectionErrorDialog extends React.Component<
               <li>Act on behalf of the secret's owner</li>
               <li>Push this secret to this repository without being blocked</li>
             </ul>
-            <div className="secret-locations-container">
-              Secret Locations:
-              {this.renderLocations()}
-            </div>
+            {this.renderSecrets()}
           </div>
         </DialogContent>
         <DialogFooter>
@@ -93,37 +88,33 @@ export class PushProtectionErrorDialog extends React.Component<
     )
   }
 
-  private renderLocations = () => {
-    const rows = this.props.secrets.map((secret, index) => (
-      <div key={index} className="location">
-        <div className="location-header">
-          <span className="location-description">{secret.description}</span>
-          <span>
-            <LinkButton uri={secret.bypassURL}>Bypass </LinkButton>
-          </span>
-        </div>
-        <div className="location-details">
-          <div className="commit-sha">
-            <Octicon symbol={octicons.gitCommit} />
-            <div className="ref selectable-text">
-              {secret.locations.at(0)?.commitSha.substring(0, 7)}
-            </div>
-            <CopyButton
-              ariaLabel="Copy the full SHA"
-              copyContent={secret.locations.at(0)?.commitSha ?? ''}
-            />
-          </div>
-          <div>
-            <Octicon symbol={octicons.relFilePath} />
-            <div className="ref selectable-text">
-              {secret.locations.at(0)?.path} at line{' '}
-              {secret.locations.at(0)?.lineNumber}
-            </div>
-          </div>
-        </div>
-      </div>
+  private renderSecretDescription = (secret: ISecretScanResult) => {
+    return this.props.secrets.filter(s => s.description === secret.description)
+      .length > 1
+      ? `${secret.description} (${secret.id})`
+      : secret.description
+  }
+
+  private renderSecrets = () => {
+    const listItems = this.props.secrets.map((secret, index) => (
+      <li key={index} className="secret-list-item">
+        <span className="secret-list-item-header">
+          <span>{this.renderSecretDescription(secret)}</span>
+          <LinkButton
+            ariaLabel={`Bypass ${secret.description}`}
+            uri={secret.bypassURL}
+          >
+            Bypass
+          </LinkButton>
+        </span>
+        <PushProtectionErrorLocation secret={secret} />
+      </li>
     ))
-    return <div className="secret-locations">{rows}</div>
+    return (
+      <ul aria-label="Secrets" className="secret-list">
+        {listItems}
+      </ul>
+    )
   }
 }
 
