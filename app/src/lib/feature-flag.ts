@@ -103,8 +103,8 @@ export const enableCustomIntegration = () => true
 
 export const enableResizingToolbarButtons = () => true
 
-export const enableFilteredChangesList = enableBetaFeatures
-export const enableMultipleEnterpriseAccounts = enableBetaFeatures
+export const enableFilteredChangesList = () => true
+export const enableMultipleEnterpriseAccounts = () => true
 
 export const enableCommitMessageGeneration = (account: Account) => {
   return (
