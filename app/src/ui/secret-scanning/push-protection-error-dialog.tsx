@@ -7,8 +7,6 @@ import { IAPICreatePushProtectionBypassResponse } from '../../lib/api'
 import { Octicon } from '../octicons'
 import * as octicons from '../octicons/octicons.generated'
 
-export type BypassReason = 'false_positive' | 'used_in_tests' | 'will_fix_later'
-
 /** Represents the location of a detected secret detected on push  */
 export interface ISecretLocation {
   /**The SHA of the commit where the secret was detected. */

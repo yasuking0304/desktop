@@ -23,7 +23,7 @@ import {
 } from './suppress-certificate-error'
 import { HttpStatusCode } from './http-status-code'
 import { CopilotError } from './copilot-error'
-import { BypassReason } from '../ui/secret-scanning/push-protection-error-dialog'
+import { BypassReasonType } from '../ui/secret-scanning/bypass-push-protection-dialog'
 
 const envEndpoint = process.env['DESKTOP_GITHUB_DOTCOM_API_ENDPOINT']
 const envHTMLURL = process.env['DESKTOP_GITHUB_DOTCOM_HTML_URL']
@@ -816,7 +816,7 @@ interface IAPIAliveWebSocket {
 type TokenInvalidatedCallback = (endpoint: string, token: string) => void
 
 export interface IAPICreatePushProtectionBypassResponse {
-  reason: BypassReason
+  reason: BypassReasonType
   expire_at: string
   token_type: string
 }
@@ -2164,7 +2164,7 @@ export class API {
   public async createPushProtectionBypass(
     owner: string,
     name: string,
-    reason: BypassReason,
+    reason: BypassReasonType,
     placeholderId: string,
     bypassURL: string
   ): Promise<IAPICreatePushProtectionBypassResponse> {

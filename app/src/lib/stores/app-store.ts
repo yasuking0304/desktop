@@ -347,7 +347,7 @@ import {
   migratedCustomIntegration,
 } from '../custom-integration'
 import { updateStore } from '../../ui/lib/update-store'
-import { BypassReason } from '../../ui/secret-scanning/push-protection-error-dialog'
+import { BypassReasonType } from '../../ui/secret-scanning/bypass-push-protection-dialog'
 
 const LastSelectedRepositoryIDKey = 'last-selected-repository-id'
 
@@ -8286,7 +8286,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
   }
 
   public async _createPushProtectionBypass(
-    reason: BypassReason,
+    reason: BypassReasonType,
     placeholderId: string,
     bypassURL: string
   ): Promise<IAPICreatePushProtectionBypassResponse | null> {
