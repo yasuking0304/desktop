@@ -129,6 +129,17 @@ export class PushProtectionErrorDialog extends React.Component<
   }
 
   private renderBypassButton = (secret: ISecretScanResult) => {
+    if (secret.requiresApproval) {
+      return (
+        <LinkButton
+          ariaLabel={`Bypass ${secret.description}`}
+          uri={secret.bypassURL}
+        >
+          Bypass
+        </LinkButton>
+      )
+    }
+    
     if (this.state.secretsBypassed.get(secret.id)) {
       return (
         <span className="bypass-success">
