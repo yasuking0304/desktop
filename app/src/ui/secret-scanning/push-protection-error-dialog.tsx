@@ -27,6 +27,8 @@ export interface ISecretScanResult {
   locations: ReadonlyArray<ISecretLocation>
   /** The URL to use to get to GitHub.com's dialog for bypassing blocking the push of the secret  */
   bypassURL: string
+  /** The user cannot bypass themselves, but can request a bypass */
+  requiresApproval: boolean
 }
 
 interface IPushProtectionErrorDialogProps {

@@ -659,6 +659,7 @@ function extractSecretScanningResults(
       description,
       bypassURL,
       locations,
+      requiresApproval: !!match.at(0)?.includes('request an exemption'),
     })
   }
 
