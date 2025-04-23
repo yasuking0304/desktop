@@ -2180,10 +2180,15 @@ export class API {
         response
       )
     } catch (e) {
-      const msg = `Unable to create push protection bypass for ${owner}/${name} 
-      with reason ${reason} and 
-      placeholderId ${placeholderId}. Try again at: ${bypassURL}`
-      log.warn(msg, e)
+      const msg = `Unable to create push protection bypass.
+
+    Repository: ${owner}/${name} 
+    Reason: ${reason} 
+    Placeholder Id: ${placeholderId}.
+
+    Try again at: ${bypassURL}`
+
+      log.error(msg, e)
       throw new Error(msg)
     }
   }
