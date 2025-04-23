@@ -139,7 +139,7 @@ export class PushProtectionErrorDialog extends React.Component<
         </LinkButton>
       )
     }
-    
+
     if (this.state.secretsBypassed.get(secret.id)) {
       return (
         <span className="bypass-success">
