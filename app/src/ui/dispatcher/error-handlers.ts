@@ -620,7 +620,8 @@ function extractSecretScanningResults(
   remoteMessage: string
 ): ReadonlyArray<ISecretScanResult> {
   const secretsRegex =
-    /—— (?<description>.*?) —+[.\s\S]*?locations:(?<locationsGroup>(?:\s+- commit: [a-f0-9]{40}\s+path: [.\s\S]*?)+).*?(?<bypassURL>https:\/\/github\.com\/.*?\/unblock-secret\/[a-zA-Z0-9]+)/g
+    /—— (?<description>.*?) —+[\s\S]*?locations:(?<locationsGroup>(?:\s+- commit: [a-f0-9]{40}\s+path: [\s\S]*?)+).*?(?<bypassURL>https[\s\S]*?) /g
+
   const matches = [...remoteMessage.matchAll(secretsRegex)]
 
   const secrets: Array<ISecretScanResult> = []
