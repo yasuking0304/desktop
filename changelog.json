@@ -1,5 +1,10 @@
 {
   "releases": {
+    "3.4.20-beta1": [
+      "[Added] Handled GitHub Secret Scanning push protection errors in a friendly dialog with the ability to bypass blocked non-approval requiring secrets - #20386, #20387, #20391",
+      "[Fixed] Fix path used to create repository on existing non-Git directory - #20400",
+      "[Fixed] Show default branch name when opening Git settings from 'committing as' popup - #20399"
+    ],
     "3.4.19": [
       "[New] Users can filter the changed files list - #20220",
       "[New] Add support for multiple enterprise accounts - #20227",
