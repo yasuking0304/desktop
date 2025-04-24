@@ -27,6 +27,8 @@ export interface ISecretScanResult {
   locations: ReadonlyArray<ISecretLocation>
   /** The URL to use to get to GitHub.com's dialog for bypassing blocking the push of the secret  */
   bypassURL: string
+  /** The user cannot bypass themselves, but can request a bypass */
+  requiresApproval: boolean
 }
 
 interface IPushProtectionErrorDialogProps {
@@ -127,6 +129,17 @@ export class PushProtectionErrorDialog extends React.Component<
   }
 
   private renderBypassButton = (secret: ISecretScanResult) => {
+    if (secret.requiresApproval) {
+      return (
+        <LinkButton
+          ariaLabel={`Bypass ${secret.description}`}
+          uri={secret.bypassURL}
+        >
+          Bypass
+        </LinkButton>
+      )
+    }
+
     if (this.state.secretsBypassed.get(secret.id)) {
       return (
         <span className="bypass-success">

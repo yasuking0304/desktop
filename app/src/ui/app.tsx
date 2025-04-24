@@ -2593,8 +2593,9 @@ export class App extends React.Component<IAppProps, IAppState> {
               .then(response => {
                 resolve(response)
               })
-              .catch(() => {
+              .catch(error => {
                 resolve(null)
+                this.props.dispatcher.postError(error)
               })
               .finally(() => {
                 this.props.dispatcher.closePopup(PopupType.BypassPushProtection)
