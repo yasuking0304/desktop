@@ -22,6 +22,7 @@ import {
   samlReauthRequired,
   insufficientGitHubRepoPermissions,
   discardChangesHandler,
+  secretScanningPushProtectionErrorHandler,
 } from './dispatcher'
 import {
   AppStore,
@@ -344,6 +345,7 @@ dispatcher.registerErrorHandler(localChangesOverwrittenHandler)
 dispatcher.registerErrorHandler(rebaseConflictsHandler)
 dispatcher.registerErrorHandler(refusedWorkflowUpdate)
 dispatcher.registerErrorHandler(discardChangesHandler)
+dispatcher.registerErrorHandler(secretScanningPushProtectionErrorHandler)
 
 document.body.classList.add(`platform-${process.platform}`)
 

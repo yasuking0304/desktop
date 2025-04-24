@@ -568,6 +568,7 @@ ${massageFailReason7}
     case DugiteError.MergeCommitNoMainlineOption:
     case DugiteError.UnsafeDirectory:
     case DugiteError.PathExistsButNotInRef:
+    case DugiteError.PushWithSecretDetected:
       return null
     default:
       return assertNever(error, `Unknown error: ${error}`)
