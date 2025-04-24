@@ -3,6 +3,7 @@ import { Dialog, DialogContent, DialogFooter } from '../dialog'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
 import { LinkButton } from '../lib/link-button'
 import { PushProtectionErrorLocation } from './push-protection-error-location'
+import { t } from 'i18next'
 
 /** Represents the location of a detected secret detected on push  */
 export interface ISecretLocation {
@@ -44,8 +45,14 @@ export class PushProtectionErrorDialog extends React.Component<
       <Dialog
         title={
           __DARWIN__
-            ? 'Push Blocked: Secret Detected'
-            : 'Push blocked: secret detected'
+            ? t(
+                'push-protection-error.push-blocked-darwin',
+                'Push Blocked: Secret Detected'
+              )
+            : t(
+                'push-protection-error.push-blocked',
+                'Push blocked: secret detected'
+              )
         }
         onDismissed={this.props.onDismissed}
         onSubmit={this.props.onDismissed}
@@ -57,24 +64,55 @@ export class PushProtectionErrorDialog extends React.Component<
         <DialogContent>
           <div id="push-protection-error-dialog-description">
             <p>
+              {t('push-protection-error.found secrets-1', '')}
               <LinkButton uri="https://docs.github.com/code-security/secret-scanning/protecting-pushes-with-secret-scanning">
-                Secret Scanning
-              </LinkButton>{' '}
-              found secret(s) in the commit(s) you attempted to push.{' '}
+                {t('push-protection-error.secret-scanning', 'Secret Scanning')}
+              </LinkButton>
+              {t(
+                'push-protection-error.found secrets-2',
+                ' found secret(s) in the commit(s) you attempted to push. '
+              )}
             </p>
             <p>
-              Allowing secrets risks exposure. Consider{' '}
+              {t(
+                'push-protection-error.allowing-secrets-risks-exposure',
+                'Allowing secrets risks exposure. Consider '
+              )}
               <LinkButton uri="https://docs.github.com/code-security/secret-scanning/working-with-secret-scanning-and-push-protection/working-with-push-protection-in-the-github-ui#resolving-a-blocked-commit">
-                removing the secret from your commit and commit history.
+                {t(
+                  'push-protection-error.removing-the-secret',
+                  'removing the secret from your commit and commit history.'
+                )}
               </LinkButton>
             </p>
-            Exposing this secret can allow someone to:
+            {t(
+              'push-protection-error.exosing-this-secret-can-allow',
+              'Exposing this secret can allow someone to:'
+            )}
             <ul>
-              <li>Verify the identity of the secret(s)</li>
-              <li>Know which resources the secret(s) can access</li>
-              <li>Act on behalf of the secret's owner</li>
               <li>
-                Push the secret(s) to this repository without being blocked
+                {t(
+                  'push-protection-error.verify-the-identity',
+                  'Verify the identity of the secret(s)'
+                )}
+              </li>
+              <li>
+                {t(
+                  'push-protection-error.know-which-resources',
+                  'Know which resources the secret(s) can access'
+                )}
+              </li>
+              <li>
+                {t(
+                  'push-protection-error.act-on-behalf',
+                  "Act on behalf of the secret's owner"
+                )}
+              </li>
+              <li>
+                {t(
+                  'push-protection-error.push-the-secrets-to-this-repository',
+                  'Push the secret(s) to this repository without being blocked'
+                )}
               </li>
             </ul>
             {this.renderSecrets()}
@@ -103,7 +141,7 @@ export class PushProtectionErrorDialog extends React.Component<
             ariaLabel={`Bypass ${secret.description}`}
             uri={secret.bypassURL}
           >
-            Bypass
+            {t('push-protection-error.bypass', 'Bypass')}
           </LinkButton>
         </span>
         <PushProtectionErrorLocation secret={secret} />

@@ -4665,14 +4665,20 @@ export class AppStore extends TypedBaseStore<IAppState> {
           })
 
           const refreshTitle = __DARWIN__
-            ? 'Refreshing Repository'
-            : 'Refreshing repository'
+            ? t(
+                'app-store.refreshing-repository-darwin',
+                'Refreshing Repository'
+              )
+            : t('app-store.refreshing-repository', 'Refreshing repository')
           const refreshStartProgress = pushWeight + fetchWeight
 
           this.updatePushPullFetchProgress(repository, {
             kind: 'generic',
             title: refreshTitle,
-            description: 'Fast-forwarding branches',
+            description: t(
+              'app-store.fast-forwarding branches',
+              'Fast-forwarding branches'
+            ),
             value: refreshStartProgress,
           })
 
@@ -4901,7 +4907,10 @@ export class AppStore extends TypedBaseStore<IAppState> {
           this.updatePushPullFetchProgress(repository, {
             kind: 'generic',
             title: refreshTitle,
-            description: 'Fast-forwarding branches',
+            description: t(
+              'app-store.fast-forwarding branches',
+              'Fast-forwarding branches'
+            ),
             value: refreshStartProgress,
           })
 
@@ -5276,7 +5285,10 @@ export class AppStore extends TypedBaseStore<IAppState> {
         this.updatePushPullFetchProgress(repository, {
           kind: 'generic',
           title: refreshTitle,
-          description: 'Fast-forwarding branches',
+          description: t(
+            'app-store.fast-forwarding branches',
+            'Fast-forwarding branches'
+          ),
           value: fetchWeight,
         })
 

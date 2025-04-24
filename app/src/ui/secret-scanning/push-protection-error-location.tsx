@@ -5,6 +5,7 @@ import { CopyButton } from '../copy-button'
 import { ISecretLocation, ISecretScanResult } from './push-protection-error'
 import { PathText } from '../lib/path-text'
 import { Button } from '../lib/button'
+import { t } from 'i18next'
 
 interface IPushProtectionErrorLocationProps {
   readonly secret: ISecretScanResult
@@ -51,7 +52,9 @@ export class PushProtectionErrorLocation extends React.Component<
               path={location.path}
               availableWidth={isFirst ? 200 : 275}
             />
-            at line {location.lineNumber}
+            {t('push-protection-error-location.at-line', 'at line {{0}}', {
+              0: location.lineNumber,
+            })}
           </span>
         </span>
       </span>
@@ -64,8 +67,14 @@ export class PushProtectionErrorLocation extends React.Component<
     const firstLocation = secret.locations.at(0)
     const showMoreLocationsToggle = secret.locations.length > 1
     const toggleText = showMoreLocations
-      ? 'Show Less Locations'
-      : 'Show More locations'
+      ? t(
+          'push-protection-error-location.show-less-location',
+          'Show Less Locations'
+        )
+      : t(
+          'push-protection-error-location.show-more-location',
+          'Show More locations'
+        )
     if (firstLocation === undefined) {
       return null
     }

@@ -509,11 +509,19 @@ export class FilterChangesList extends React.Component<
     const label =
       files.length === 1
         ? __DARWIN__
-          ? `Discard Changes`
-          : `Discard changes`
+          ? t('filter-changes-list.discard-changes-darwin', `Discard Changes`)
+          : t('filter-changes-list.discard-changes', `Discard changes`)
         : __DARWIN__
-        ? `Discard ${files.length} Selected Changes`
-        : `Discard ${files.length} selected changes`
+        ? t(
+            'filter-changes-list.discard-selected-changes-darwin',
+            `Discard {{0}} Selected Changes`,
+            { 0: files.length }
+          )
+        : t(
+            'filter-changes-list.discard-selected-changes',
+            `Discard {{0}} selected changes`,
+            { 0: files.length }
+          )
 
     return this.props.askForConfirmationOnDiscardChanges ? `${label}…` : label
   }
@@ -628,7 +636,9 @@ export class FilterChangesList extends React.Component<
     const { externalEditorLabel } = this.props
 
     const openInExternalEditor = externalEditorLabel
-      ? `Open in ${externalEditorLabel}`
+      ? t('filter-changes-list.open-in-external-editor', `Open in {{0}}`, {
+          0: externalEditorLabel,
+        })
       : DefaultEditorLabel
 
     return {
@@ -685,8 +695,14 @@ export class FilterChangesList extends React.Component<
       const enabled = Path.basename(path) !== GitIgnoreFileName
       items.push({
         label: __DARWIN__
-          ? 'Ignore File (Add to .gitignore)'
-          : 'Ignore file (add to .gitignore)',
+          ? t(
+              'filter-changes-list.ignore-file-add-to-gitignore-darwin',
+              'Ignore File (Add to .gitignore)'
+            )
+          : t(
+              'filter-changes-list.ignore-file-add-to-gitignore',
+              'Ignore file (add to .gitignore)'
+            ),
         action: () => this.props.onIgnoreFile(path),
         enabled,
       })
@@ -707,8 +723,14 @@ export class FilterChangesList extends React.Component<
 
         items.push({
           label: __DARWIN__
-            ? 'Ignore Folder (Add to .gitignore)'
-            : 'Ignore folder (add to .gitignore)',
+            ? t(
+                'filter-changes-list.ignore-folder-add-to-gitignore-darwin',
+                'Ignore Folder (Add to .gitignore)'
+              )
+            : t(
+                'filter-changes-list.ignore-folder-add-to-gitignore',
+                'Ignore folder (add to .gitignore)'
+              ),
           submenu,
           enabled,
         })
@@ -716,8 +738,16 @@ export class FilterChangesList extends React.Component<
     } else if (paths.length > 1) {
       items.push({
         label: __DARWIN__
-          ? `Ignore ${paths.length} Selected Files (Add to .gitignore)`
-          : `Ignore ${paths.length} selected files (add to .gitignore)`,
+          ? t(
+              'filter-changes-list.ignore-selected-file-add-to-gitignore-darwin',
+              `Ignore {{0}} Selected Files (Add to .gitignore)`,
+              { 0: paths.length }
+            )
+          : t(
+              'filter-changes-list.ignore-selected-file-add-to-gitignore',
+              `Ignore {{0}} selected files (add to .gitignore)`,
+              { 0: paths.length }
+            ),
         action: () => {
           // Filter out any .gitignores that happens to be selected, ignoring
           // those doesn't make sense.
@@ -736,8 +766,16 @@ export class FilterChangesList extends React.Component<
       .forEach(extension => {
         items.push({
           label: __DARWIN__
-            ? `Ignore All ${extension} Files (Add to .gitignore)`
-            : `Ignore all ${extension} files (add to .gitignore)`,
+            ? t(
+                'filter-changes-list.ignore-all-file-add-to-gitignore-darwin',
+                `Ignore All {{0}} Files (Add to .gitignore)`,
+                { 0: extension }
+              )
+            : t(
+                'filter-changes-list.ignore-all-file-add-to-gitignore',
+                `Ignore all {{0}} files (add to .gitignore)`,
+                { 0: extension }
+              ),
           action: () => this.props.onIgnorePattern(`*${extension}`),
         })
       })
@@ -747,8 +785,14 @@ export class FilterChangesList extends React.Component<
         { type: 'separator' },
         {
           label: __DARWIN__
-            ? 'Include Selected Files'
-            : 'Include selected files',
+            ? t(
+                'filter-changes-list.include-selected-files-darwin',
+                'Include Selected Files'
+              )
+            : t(
+                'filter-changes-list.include-selected-files',
+                'Include selected files'
+              ),
           action: () => {
             selectedFiles.map(file =>
               this.props.onIncludeChanged(file.path, true)
@@ -757,8 +801,14 @@ export class FilterChangesList extends React.Component<
         },
         {
           label: __DARWIN__
-            ? 'Exclude Selected Files'
-            : 'Exclude selected files',
+            ? t(
+                'filter-changes-list.exclude-selected-files-darwin',
+                'Exclude Selected Files'
+              )
+            : t(
+                'filter-changes-list.exclude-selected-files',
+                'Exclude selected files'
+              ),
           action: () => {
             selectedFiles.map(file =>
               this.props.onIncludeChanged(file.path, false)
@@ -1496,9 +1546,10 @@ export class FilterChangesList extends React.Component<
         )
       : ''
 
-    const conjunction = filterTextMessage && includedCommitText
-      ? t('filter-changes-list.and', ' and ')
-      : ''
+    const conjunction =
+      filterTextMessage && includedCommitText
+        ? t('filter-changes-list.and', ' and ')
+        : ''
 
     return t(
       'filter-changes-list.sorry-i-cannot-find-any-changed-files',
