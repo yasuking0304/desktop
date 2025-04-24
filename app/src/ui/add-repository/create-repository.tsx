@@ -121,7 +121,14 @@ export class CreateRepository extends React.Component<
   public constructor(props: ICreateRepositoryProps) {
     super(props)
 
-    const path = this.props.initialPath ? this.props.initialPath : null
+    // If there is an initial path, remove the last part of the path which will
+    // be the suggested repository name. For example, if the initial path is
+    // /Users/adam/Projects/MyProject, the path will be /Users/adam/Projects and
+    // the name will be MyProject, so the repository will be created at
+    // /Users/adam/Projects/MyProject.
+    const path = this.props.initialPath
+      ? Path.dirname(this.props.initialPath)
+      : null
 
     const name = this.props.initialPath
       ? sanitizedRepositoryName(Path.basename(this.props.initialPath))
