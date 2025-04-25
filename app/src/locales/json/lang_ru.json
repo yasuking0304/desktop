@@ -1396,6 +1396,7 @@
     "always-stash-and-leave-my-changes": "Always stash and leave my changes on the current branch",
     "ask-me-where-i-want-the-changes-to-go": "Ask me where I want the changes to go",
     "commit-length": "Commit Length",
+    "committing-changes-hidden": "Committing changes hidden by filter",
     "discarding-changes": "Discarding changes",
     "discarding-changes-permanently": "Discarding changes permanently",
     "discarding-checking-out": "Checking out a commit",

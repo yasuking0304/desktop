@@ -1396,6 +1396,7 @@
     "always-stash-and-leave-my-changes": "保存您正在进行的工作, 不要将其更新到新分支(您可以稍后再将其放回)",
     "ask-me-where-i-want-the-changes-to-go": "了解如何修复它",
     "commit-length": "提交摘要长度",
+    "committing-changes-hidden": "Committing changes hidden by filter",
     "discarding-changes": "Discarding changes",
     "discarding-changes-permanently": "Discarding changes permanently",
     "discarding-checking-out": "Checking out a commit",
