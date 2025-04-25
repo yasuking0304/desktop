@@ -1,4 +1,4 @@
-import { getDotComAPIEndpoint, IAPIEmail } from '../lib/api'
+import { getDotComAPIEndpoint, getHTMLURL, IAPIEmail } from '../lib/api'
 
 /**
  * Returns a value indicating whether two account instances
@@ -23,6 +23,8 @@ export class Account {
     return new Account('', getDotComAPIEndpoint(), '', [], '', -1, '', 'free')
   }
 
+  private _friendlyEndpoint: string | undefined = undefined
+
   /**
    * Create an instance of an account
    *
@@ -33,6 +35,10 @@ export class Account {
    * @param avatarURL The profile URL to render for this account
    * @param id The GitHub.com or GitHub Enterprise database id for this account.
    * @param name The friendly name associated with this account
+   * @param plan The plan associated with this account
+   * @param copilotEndpoint The endpoint for the Copilot API
+   * @param isCopilotDesktopEnabled Whether Copilot for Desktop is enabled for this account
+   * @param features The Desktop-specific features available to this account
    */
   public constructor(
     public readonly login: string,
@@ -42,7 +48,10 @@ export class Account {
     public readonly avatarURL: string,
     public readonly id: number,
     public readonly name: string,
-    public readonly plan?: string
+    public readonly plan?: string,
+    public readonly copilotEndpoint?: string,
+    public readonly isCopilotDesktopEnabled?: boolean,
+    public readonly features?: ReadonlyArray<string>
   ) {}
 
   public withToken(token: string): Account {
@@ -54,7 +63,10 @@ export class Account {
       this.avatarURL,
       this.id,
       this.name,
-      this.plan
+      this.plan,
+      this.copilotEndpoint,
+      this.isCopilotDesktopEnabled,
+      this.features
     )
   }
 
@@ -66,6 +78,19 @@ export class Account {
    */
   public get friendlyName(): string {
     return this.name !== '' ? this.name : this.login
+  }
+
+  /**
+   * Get a human-friendly description of the Account endpoint.
+   *
+   * Accounts on GitHub.com will return the string 'GitHub.com'
+   * whereas GitHub Enterprise accounts will return the
+   * hostname without the protocol and/or path.
+   */
+  public get friendlyEndpoint(): string {
+    return (this._friendlyEndpoint ??= isDotComAccount(this)
+      ? 'GitHub.com'
+      : new URL(getHTMLURL(this.endpoint)).hostname)
   }
 }
 

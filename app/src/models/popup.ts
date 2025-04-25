@@ -23,6 +23,7 @@ import { GitHubRepository } from './github-repository'
 import { ValidNotificationPullRequestReview } from '../lib/valid-notification-pull-request-review'
 import { UnreachableCommitsTab } from '../ui/history/unreachable-commits-dialog'
 import { IAPIComment } from '../lib/api'
+import { ISecretScanResult } from '../ui/secret-scanning/push-protection-error'
 
 export enum PopupType {
   RenameBranch = 'RenameBranch',
@@ -97,6 +98,9 @@ export enum PopupType {
   TestIcons = 'TestIcons',
   ConfirmCommitFilteredChanges = 'ConfirmCommitFilteredChanges',
   TestAbout = 'TestAbout',
+  PushProtectionError = 'PushProtectionError',
+  GenerateCommitMessageOverrideWarning = 'GenerateCommitMessageOverrideWarning',
+  GenerateCommitMessageDisclaimer = 'GenerateCommitMessageDisclaimer',
 }
 
 interface IBasePopup {
@@ -432,6 +436,22 @@ export type PopupDetail =
     }
   | {
       type: PopupType.TestAbout
+    }
+  | {
+      type: PopupType.PushProtectionError
+      secrets: ReadonlyArray<ISecretScanResult>
+    }
+  | {
+      type: PopupType.GenerateCommitMessageOverrideWarning
+      repository: Repository
+      filesSelected: ReadonlyArray<WorkingDirectoryFileChange>
+    }
+  | {
+      type: PopupType.GenerateCommitMessageDisclaimer
+      // Same parameters as PopupType.GenerateCommitMessageOverrideWarning because
+      // from this popup we will trigger the commit message generation too.
+      repository: Repository
+      filesSelected: ReadonlyArray<WorkingDirectoryFileChange>
     }
 
 export type Popup = IBasePopup & PopupDetail

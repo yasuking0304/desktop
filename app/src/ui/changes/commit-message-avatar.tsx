@@ -55,7 +55,7 @@ interface ICommitMessageAvatarProps {
 
   /**
    * List of validations that failed for repo rules. Only used if
-   * {@link warningType} is 'disallowedEmail'.
+   * `warningType` is 'disallowedEmail'.
    */
   readonly emailRuleFailures?: RepoRulesMetadataFailures
 

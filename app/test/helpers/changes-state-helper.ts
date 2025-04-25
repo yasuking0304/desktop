@@ -22,6 +22,8 @@ export function createState<K extends keyof IChangesState>(
     stashEntry: null,
     currentBranchProtected: false,
     currentRepoRulesInfo: new RepoRulesInfo(),
+    filterText: '',
+    includedChangesInCommitFilter: false,
   }
 
   return merge(baseChangesState, pick)

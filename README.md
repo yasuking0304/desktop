@@ -16,13 +16,13 @@ You only need to run it once.
 
 <picture>
   <source
-    srcset="https://user-images.githubusercontent.com/634063/202742848-63fa1488-6254-49b5-af7c-96a6b50ea8af.png"
+    srcset="./docs/assets/github-desktop-dark.jpg"
     media="(prefers-color-scheme: dark)"
   />
   <img
     width="1072"
-    src="https://user-images.githubusercontent.com/111163564/236433396-f33fc461-ab77-44b3-8612-58ca35d988b6.JPG"
-    alt="A screenshot of the GitHub Desktop application showing changes being viewed and committed with two attributed co-authors"
+    src="./docs/assets/github-desktop-lite.jpg"
+    alt="A screenshot of the GitHub Desktop application showing changes being viewed and committed"
   />
 </picture>
 

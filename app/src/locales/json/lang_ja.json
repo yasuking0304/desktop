@@ -15,6 +15,7 @@
     "no-longer-supported-operating-systems": "このオペレーティング システムはサポートされなくなりました。 ソフトウェアのアップデートが無効になっています。",
     "quit-and-install-update": "終了して更新プログラムをインストールする",
     "release-notes": "リリースノート",
+    "responsible-use-of-copilot": "GitHub Desktop における Copilot 機能の責任ある使用",
     "supported-operating-systems": "サポートされているオペレーティング システム",
     "terms-and-conditions": "利用条件",
     "update-has-been-downloaded-and-is-ready": "更新プログラムがダウンロードされ、インストールの準備が整いました。",
@@ -77,24 +78,25 @@
   },
   "app-error": {
     "clone-failed": "クローンの失敗",
-    "failed-to-push": "Failed to push",
-    "file-size-limit-exceeded": "File size limit exceeded",
-    "files-that-exceed": "Files that exceed the limit",
-    "for-more-information-1": "See ",
-    "for-more-information-2": " for more information on managing large files on GitHub",
+    "failed-to-push": "プッシュに失敗しました",
+    "file-size-limit-exceeded": "ファイルサイズの制限を超えました",
+    "files-that-exceed": "制限を超えたファイル",
+    "for-more-information-1": "GitHubで大きなファイルを管理する方法の詳細については、",
+    "for-more-information-2": " を参照してください。",
     "open-options": "オプションを開く",
     "open-settings-darwin": "オプションを開く",
     "retry-clone": "クローンの再試行",
     "retry-clone-darwin": "クローンの再試行",
-    "would-you-like-1": "Would you like to retry cloning ",
-    "would-you-like-2": "?"
+    "would-you-like-1": " ",
+    "would-you-like-2": " のクローンを再試行しますか?"
   },
   "app-store": {
-    "checking-out": "Checking out",
+    "checking-out": "チェックアウト",
     "error": {
       "pruner-is-already-active": "A branch pruner is already active and cannot start updating on {{0}}",
       "should-only-have-on-background-fetcher-active": "We should only have on background fetcher active at once, but we're trying to start background fetching on {{0}} while another background fetcher is still active!"
     },
+    "fast-forwarding branches": "ブランチの高速転送中",
     "pushing-to": "{{0}} にプッシュ",
     "refreshing-repository": "リポジトリのリフレッシュ",
     "refreshing-repository-darwin": "リポジトリのリフレッシュ",
@@ -222,11 +224,11 @@
   "choose-fork-settings-dialog": {
     "contribute-to-parent-project": "パートナープロジェクトに貢献するため",
     "for-my-own-purposes": "私用目的のため",
+    "this-repository-is-a-fork": "このリポジトリはフォークされたものです。どのように使用する予定ですか?",
     "we-will-for-my-own-purposes-1": "私たちはあなたが ",
     "we-will-for-my-own-purposes-2": " リポジトリに貢献するのを手助けします",
     "we-will-help-you-contribute-1": "私たちはあなたが ",
     "we-will-help-you-contribute-2": " リポジトリに貢献するのを手助けします",
-    "you-have-changes-on-this-branch": "このブランチに変更があります。どのように対応しますか?",
     "you-planning-to-use-this-fork": "このフォークをどのように使用する予定ですか?"
   },
   "choose-target-branch": {
@@ -357,7 +359,7 @@
     "commit-count-files": "{{0}}{{1}}を",
     "commit-description": "コミットの概要説明",
     "commit-summaries-length-over": "概要入力は50文字未満でお願いします",
-    "commit-title-1": " ",
+    "commit-title-1": "{{1}} ",
     "commit-title-2": " に{{0}}",
     "committing": "コミット中",
     "committing-changes": "変更をコミットしています…",
@@ -369,8 +371,10 @@
     "do-not-have-write-access-to-3": "をしますか?",
     "enable-commit-spellcheck": "コミットスペルチェックを有効にする",
     "enable-commit-spellcheck-darwin": "コミットスペルチェックを有効にする",
+    "generate-commit-message": "Copilotでコミットメッセージを生成する{{0}}",
     "link-create-a-fork": "フォークの作成",
     "link-switch-branches": "ブランチの切り替え",
+    "must-be-selected": "。コミット メッセージを生成するにはファイルを選択する必要があります。",
     "please-information-description-field": "説明フィールドに追加情報を入力します。",
     "protected-branch-1": " ",
     "protected-branch-2": " は保護されたブランチです。",
@@ -443,7 +447,8 @@
     "files": "ファイル",
     "finish": "完了",
     "github-desktop": "GitHub Desktop",
-    "history": "変更履歴",
+    "history": "コミット履歴",
+    "i-understand": "了解しました",
     "ignore": "無視",
     "install-and-restart": "インストールして再起動",
     "install-and-restart-darwin": "インストールして再起動",
@@ -462,10 +467,12 @@
     "options": "オプション",
     "organization": "組織",
     "other": "その他",
+    "override": "オーバーライド",
     "overwrite": "上書き",
     "paste": "貼り付け",
     "preferences": "環境設定",
     "pulling": "{{0}} にプル中",
+    "recent": "最近",
     "redo": "やり直し",
     "remove": "削除",
     "remove-alias": "エイリアス削除",
@@ -502,7 +509,7 @@
     },
     "no-branch-to-compare": "比較するブランチがありません",
     "no-branch-to-compare-darwin": "比較するブランチがありません",
-    "no-history": "変更履歴なし",
+    "no-history": "コミット履歴なし",
     "select-branch-to-compare": "比較するブランチを選択…",
     "select-branch-to-compare-darwin": "比較するブランチを選択…",
     "squash-number-commits": "{{0}}個のコミットをスカッシュ(結合)する",
@@ -813,6 +820,42 @@
   "fetch": {
     "fetching": "{{0}} をフェッチ中"
   },
+  "filter-changes-list": {
+    "Adjust the filters": "{{0}}個の変更ファイルを全て表示するにはフィルターを調整してください",
+    "and": "、",
+    "discard-changes": "変更の破棄",
+    "discard-changes-darwin": "変更の破棄",
+    "discard-selected-changes": "選択した {{0}}つの変更を破棄します",
+    "discard-selected-changes-darwin": "選択した {{0}}つの変更を破棄します",
+    "exclude-selected-files": "選択したファイルを除外",
+    "exclude-selected-files-darwin": "選択したファイルを除外",
+    "file": "ファイル",
+    "files": "ファイル",
+    "files-description": "{{0}}{{1}}個の変更された{{2}}",
+    "filter": "フィルター",
+    "filter-options": "フィルターオプション",
+    "filter-options-number": "フィルターオプション {{0}}",
+    "hidden-changes-will-be-commited": "非表示の変更ファイルはコミットされます。",
+    "ignore-all-file-add-to-gitignore": "すべての {{0}} ファイルを除外する (.gitignore に追加)",
+    "ignore-all-file-add-to-gitignore-darwin": "すべての {{0}} ファイルを除外する (.gitignore に追加)",
+    "ignore-file-add-to-gitignore": "ファイルを除外する (.gitignore に追加)",
+    "ignore-file-add-to-gitignore-darwin": "ファイルを除外する (.gitignore に追加)",
+    "ignore-folder-add-to-gitignore": "ディレクトリを除外する (.gitignore に追加)",
+    "ignore-folder-add-to-gitignore-darwin": "ディレクトリを除外する (.gitignore に追加)",
+    "ignore-selected-file-add-to-gitignore": "選択した {{0}}ファイルを無視する (.gitignore に追加)",
+    "ignore-selected-file-add-to-gitignore-darwin": "選択した {{0}}ファイルを無視する (.gitignore に追加)",
+    "include-selected-files": "選択したファイルを含める",
+    "include-selected-files-darwin": "選択したファイルを含める",
+    "included-in-commit": "コミットに含まれる ({{0}})",
+    "matching-your-filter": "フィルター \"{{0}}\" に一致する",
+    "number-description": "{{0}}/",
+    "one-applied": "(1 applied)",
+    "open-in-external-editor": "{{0}} で開く",
+    "sorry-i-cannot-find-any-changed-files": "申し訳ありませんが、{{0}}{{1}}{{2}}変更ファイルは見つかりません。",
+    "stashed-changes": "一時退避した変更",
+    "summary-required": "概要 (必須入力)",
+    "that-are-to-be-included": "コミットに含まれる"
+  },
   "filter-list": {
     "filter": "フィルター"
   },
@@ -839,6 +882,15 @@
   "full-screen-info": {
     "press-f11-to-exit-fullscreeen-1": "全画面表示を終了するには ",
     "press-f11-to-exit-fullscreeen-2": " を押します"
+  },
+  "generate-commit-message-disclaimer": {
+    "copilot-is-powered-by-ai": "CopilotはAIを搭載しているため、間違いが発生する可能性があります。生成されたメッセージをよく確認し、編集してからご使用ください。 ",
+    "github-copilot": "GitHub Copilot",
+    "learn-more-about-copilot": "詳しくは GitHub Desktop 上の Copilot についてをご覧ください。"
+  },
+  "generate-commit-message-override-warning": {
+    "commit-message-override": "コミットメッセージの上書き",
+    "the-commit-message": "あなたが入力したコミットメッセージは、生成されたコミットメッセージによって上書きされます。"
   },
   "generic-git-auth": {
     "authentication-failed": "認証に失敗しました",
@@ -905,17 +957,18 @@
   "invalidated-token": {
     "invalidated-account-token": "アカウント トークンが無効になりました",
     "invalidated-account-token-darwin": "アカウント トークンが無効になりました",
-    "token-has-been-invalidated": "アカウント トークンが無効になり、GitHub{{0}} アカウントからサインアウトされました。もう一度サインインしますか?"
+    "token-has-been-invalidated-1": "アカウント トークンが無効になり、",
+    "token-has-been-invalidated-2": " アカウントからサインアウトされました。再度サインインしますか?"
   },
   "label": {
     "about-github-desktop": "GitHub Desktop について(&A)",
-    "hide-stashed-changes": "一時退避した変更の非表示(&H)",
+    "hide-stashed-changes": "一時退避した変更の非表示(&I)",
     "hide-stashed-changes-darwin": "一時退避した変更の非表示",
     "show-stashed-changes": "一時退避した変更の表示(&W)",
     "show-stashed-changes-darwin": "一時退避した変更の表示"
   },
   "launch": {
-    "custom-editor-at-path": "custom editor at path '{{0}}'"
+    "custom-editor-at-path": "外部エディターのパス '{{0}}'"
   },
   "local-changes-overwritten-dialog": {
     "Stash-Changes": "変更を退避して続行する",
@@ -931,8 +984,8 @@
     }
   },
   "menu": {
-    "add-local-repository": "ローカルリポジトリを追加(&L)…",
-    "add-local-repository-darwin": "ローカルリポジトリを追加…",
+    "add-local-repository": "ローカルリポジトリの追加(&L)…",
+    "add-local-repository-darwin": "ローカルリポジトリの追加…",
     "branch": "ブランチ(&B)",
     "branch-darwin": "ブランチ",
     "clone-repository": "リポジトリのクローン(&N)…",
@@ -1008,17 +1061,17 @@
     "merge-into-branch": "現在のブランチにマージ(&M)…",
     "merge-into-branch-darwin": "現在のブランチにマージ…",
     "minimize-darwin": "最小化",
-    "new-create-branch": "新規ブランチ(&B)…",
-    "new-create-branch-darwin": "新規ブランチ…",
-    "new-repository": "新規リポジトリ(&R)…",
-    "new-repository-darwin": "新規リポジトリ…",
+    "new-create-branch": "新しいブランチ(&B)…",
+    "new-create-branch-darwin": "新しいブランチ…",
+    "new-repository": "新しいリポジトリ(&R)…",
+    "new-repository-darwin": "新しいリポジトリ…",
     "open-default-program": "デフォルトプログラムで開く",
     "open-default-program-darwin": "デフォルトプログラムで開く",
     "open-in-external-editor": "{{0}} で開く(&O)",
     "open-in-external-editor-darwin": "{{0}} で開く",
     "open-in-shell": "{{0}} で開く(&P)",
     "open-in-shell-darwin": "{{0}} で開く",
-    "open-working-directory": "E&xplorerで表示",
+    "open-working-directory": "Explorerで表示(&X)",
     "open-working-directory-darwin": "Finderで表示",
     "open-working-directory-linux": "ファイルマネージャーで表示",
     "options": "オプション(&O)…",
@@ -1057,12 +1110,12 @@
     "services": "サービス",
     "show-all": "すべて表示",
     "show-banner": "バナー表示",
-    "show-branches-list": "ブランチリスト(&B)",
-    "show-branches-list-darwin": "ブランチリストを表示",
+    "show-branches-list": "全てのブランチを表示(&B)",
+    "show-branches-list-darwin": "全てのブランチを表示",
     "show-changes": "変更点(&C)",
     "show-changes-darwin": "変更点 表示",
-    "show-history": "変更履歴(&H)",
-    "show-history-darwin": "変更履歴 表示",
+    "show-history": "コミット履歴を表示(&H)",
+    "show-history-darwin": "コミット履歴を表示",
     "show-in-explorer": "Explorerで表示",
     "show-in-file-manager": "ファイルマネージャーで表示",
     "show-in-finger": "Finderで表示",
@@ -1073,8 +1126,8 @@
     "show-logs-in-finder-linux": "ファイルマネージャーでログを表示(&H)",
     "show-notification": "通知を表示",
     "show-popup": "ポップアップの表示",
-    "show-repository-list": "リポジトリリスト(&L)",
-    "show-repository-list-darwin": "リポジトリリストを表示",
+    "show-repository-list": "リポジトリリストの表示(&L)",
+    "show-repository-list-darwin": "リポジトリリストの表示",
     "show-user-guides": "ユーザーガイドの参照",
     "squash-and-merge-into-branch": "コミットをまとめて現在のブランチにマージ(&H)…",
     "squash-and-merge-into-branch-darwin": "コミットをまとめて現在のブランチにマージ…",
@@ -1343,6 +1396,7 @@
     "always-stash-and-leave-my-changes": "修正中の作業を退避して新しいブランチに反映しない(あとで戻せます)",
     "ask-me-where-i-want-the-changes-to-go": "どのように修正するのか確認する",
     "commit-length": "コミット概要の長さ",
+    "committing-changes-hidden": "フィルタによって非表示になっている変更のコミット",
     "discarding-changes": "変更の破棄",
     "discarding-changes-permanently": "変更を完全に破棄する",
     "discarding-checking-out": "コミットのチェックアウト",
@@ -1401,10 +1455,30 @@
     "your-branch-must-be-published": "Your branch must be published before opening a pull request."
   },
   "push-needs-pull-warning": {
-    "desktop-is-unable-to-push-commits": "Desktop is unable to push commits to this branch because there are commits on the remote that are not present on your local branch. Fetch these new commits before pushing in order to reconcile them with your local commits.",
+    "desktop-is-unable-to-push-commits": "リモートブランチにローカルブランチに存在しないコミットがあるため、GitHub Desktop はこのブランチにコミットをプッシュできません。プッシュする前に、これらの新しいコミットを取得して、ローカルブランチのコミットと整合させてください。",
     "fetch": "フェッチ",
     "newer-commits-on-remote": "リモートに新しいコミットがあります",
     "newer-commits-on-remote-darwin": "リモートに新しいコミットがあります"
+  },
+  "push-protection-error": {
+    "act-on-behalf": "Act on behalf of the secret's owner",
+    "allowing-secrets-risks-exposure": "Allowing secrets risks exposure. Consider ",
+    "bypass": "Bypass",
+    "exosing-this-secret-can-allow": "Exposing this secret can allow someone to:",
+    "found secrets-1": "",
+    "found secrets-2": " found secret(s) in the commit(s) you attempted to push. ",
+    "know-which-resources": "Know which resources the secret(s) can access",
+    "push-blocked": "Push blocked: secret detected",
+    "push-blocked-darwin": "Push Blocked: Secret Detected",
+    "push-the-secrets-to-this-repository": "Push the secret(s) to this repository without being blocked",
+    "removing-the-secret": "removing the secret from your commit and commit history.",
+    "secret-scanning": "Secret Scanning",
+    "verify-the-identity": "Verify the identity of the secret(s)"
+  },
+  "push-protection-error-location": {
+    "at-line": "at line {{0}}",
+    "show-less-location": "Show Less Locations",
+    "show-more-location": "Show More locations"
   },
   "push-pull-button": {
     "cannot-publish-detached-head": "detached HEAD を公開できません",

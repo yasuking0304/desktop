@@ -1,10 +1,11 @@
 import * as React from 'react'
 import { Dialog, DialogContent, DialogFooter } from '../dialog'
 import { Dispatcher } from '../dispatcher'
-import { Row } from '../lib/row'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
 import { t } from 'i18next'
 import { Account, isEnterpriseAccount } from '../../models/account'
+import { getHTMLURL } from '../../lib/api'
+import { Ref } from '../lib/ref'
 
 interface IInvalidatedTokenProps {
   readonly dispatcher: Dispatcher
@@ -19,7 +20,6 @@ interface IInvalidatedTokenProps {
 export class InvalidatedToken extends React.Component<IInvalidatedTokenProps> {
   public render() {
     const { account } = this.props
-    const accountTypeSuffix = isEnterpriseAccount(account) ? ' Enterprise' : ''
 
     return (
       <Dialog
@@ -40,15 +40,16 @@ export class InvalidatedToken extends React.Component<IInvalidatedTokenProps> {
         onDismissed={this.props.onDismissed}
       >
         <DialogContent>
-          <Row>
-            {t(
-              'invalidated-token.token-has-been-invalidated',
-              `Your account token has been invalidated and you have been
-                 signed out from your GitHub{{0}} account. Do you want to
-                 sign in again?`,
-              { 0: accountTypeSuffix }
-            )}
-          </Row>
+          {t(
+            'invalidated-token.token-has-been-invalidated-1',
+            `Your account token has been invalidated and you have been
+              signed out from your `
+          )}
+          <Ref>{account.friendlyEndpoint}</Ref>
+          {t(
+            'invalidated-token.token-has-been-invalidated-2',
+            `account. Do you want to sign in again?`
+          )}
         </DialogContent>
         <DialogFooter>
           <OkCancelButtonGroup
@@ -66,7 +67,9 @@ export class InvalidatedToken extends React.Component<IInvalidatedTokenProps> {
     onDismissed()
 
     if (isEnterpriseAccount(account)) {
-      dispatcher.showEnterpriseSignInDialog(this.props.account.endpoint)
+      dispatcher.showEnterpriseSignInDialog(
+        getHTMLURL(this.props.account.endpoint)
+      )
     } else {
       dispatcher.showDotComSignInDialog()
     }

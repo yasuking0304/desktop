@@ -15,6 +15,7 @@
     "no-longer-supported-operating-systems": "This operating system is no longer supported. Software updates have been disabled. ",
     "quit-and-install-update": "Quit and Install Update",
     "release-notes": "release notes",
+    "responsible-use-of-copilot": "Responsible use of Copilot in GitHub Desktop",
     "supported-operating-systems": "Supported operating systems",
     "terms-and-conditions": "Terms and Conditions",
     "update-has-been-downloaded-and-is-ready": "An update has been downloaded and is ready to be installed.",
@@ -95,6 +96,7 @@
       "pruner-is-already-active": "A branch pruner is already active and cannot start updating on {{0}}",
       "should-only-have-on-background-fetcher-active": "We should only have on background fetcher active at once, but we're trying to start background fetching on {{0}} while another background fetcher is still active!"
     },
+    "fast-forwarding branches": "Fast-forwarding branches",
     "pushing-to": "Pushing to {{0}}",
     "refreshing-repository": "Refreshing repository",
     "refreshing-repository-darwin": "Refreshing Repository",
@@ -222,11 +224,11 @@
   "choose-fork-settings-dialog": {
     "contribute-to-parent-project": "To contribute to the parent project",
     "for-my-own-purposes": "For my own purposes",
+    "this-repository-is-a-fork": "This repository is a fork. How do you plan to use it?",
     "we-will-for-my-own-purposes-1": "We will help you contribute to the ",
     "we-will-for-my-own-purposes-2": " repository",
     "we-will-help-you-contribute-1": "We will help you contribute to the ",
     "we-will-help-you-contribute-2": " repository",
-    "you-have-changes-on-this-branch": "You have changes on this branch. What would you like to do with them?",
     "you-planning-to-use-this-fork": "How are you planning to use this fork?"
   },
   "choose-target-branch": {
@@ -354,10 +356,10 @@
     "amend": "Amend",
     "amending": "Amending",
     "commit": "Commit",
-    "commit-count-files": "{{0}} {{1}} ",
+    "commit-count-files": "{{0}} {{1}}",
     "commit-description": "Commit description",
     "commit-summaries-length-over": "Great commit summaries contain fewer than 50 characters",
-    "commit-title-1": "{{0}} {{1}}to ",
+    "commit-title-1": "{{0}} {{1}} to ",
     "commit-title-2": " ",
     "committing": "Committing",
     "committing-changes": "Committing changes…",
@@ -369,8 +371,10 @@
     "do-not-have-write-access-to-3": "?",
     "enable-commit-spellcheck": "Enable commit spellcheck",
     "enable-commit-spellcheck-darwin": "Enable Commit Spellcheck",
+    "generate-commit-message": "Generate commit message with Copilot{{0}}",
     "link-create-a-fork": "create a fork",
     "link-switch-branches": "switch branches",
+    "must-be-selected": ". Files must be selected to generate a commit message.",
     "please-information-description-field": "Place extra information in the description field.",
     "protected-branch-1": " ",
     "protected-branch-2": " is a protected branch. Want to ",
@@ -444,6 +448,7 @@
     "finish": "Finish",
     "github-desktop": "GitHub Desktop",
     "history": "History",
+    "i-understand": "I understand",
     "ignore": "Ignore",
     "install-and-restart": "Install and restart",
     "install-and-restart-darwin": "Install and Restart",
@@ -462,10 +467,12 @@
     "options": "Options",
     "organization": "Organization",
     "other": "Other",
+    "override": "Override",
     "overwrite": "Overwrite",
     "paste": "Paste",
     "preferences": "Settings",
     "pulling": "Pulling {{0}}",
+    "recent": "Recent",
     "redo": "Redo",
     "remove": "Remove",
     "remove-alias": "Remove alias",
@@ -490,7 +497,7 @@
     "view-conflicts": "View conflicts",
     "view-on-github": "View on GitHub",
     "yes": "Yes",
-    "your-email": "common.your-email@example.com",
+    "your-email": "your-email@example.com",
     "your-name": "Your Name"
   },
   "compare": {
@@ -813,6 +820,42 @@
   "fetch": {
     "fetching": "Fetching {{0}}"
   },
+  "filter-changes-list": {
+    "Adjust the filters": "Adjust the filters to see all {{0}} changes",
+    "and": " and ",
+    "discard-changes": "Discard changes",
+    "discard-changes-darwin": "Discard Changes",
+    "discard-selected-changes": "Discard {{0}} selected changes",
+    "discard-selected-changes-darwin": "Discard {{0}} Selected Changes",
+    "exclude-selected-files": "Exclude selected files",
+    "exclude-selected-files-darwin": "Exclude Selected Files",
+    "file": "file",
+    "files": "files",
+    "files-description": "{{0}}{{1}} changed {{2}}",
+    "filter": "Filter",
+    "filter-options": "Filter Options",
+    "filter-options-number": "Filter Options {{0}}",
+    "hidden-changes-will-be-commited": "Hidden changes will be committed.",
+    "ignore-all-file-add-to-gitignore": "Ignore all {{0}} files (add to .gitignore)",
+    "ignore-all-file-add-to-gitignore-darwin": "Ignore All {{0}} Files (Add to .gitignore)",
+    "ignore-file-add-to-gitignore": "Ignore file (add to .gitignore)",
+    "ignore-file-add-to-gitignore-darwin": "Ignore File (Add to .gitignore)",
+    "ignore-folder-add-to-gitignore": "Ignore folder (add to .gitignore)",
+    "ignore-folder-add-to-gitignore-darwin": "Ignore Folder (Add to .gitignore)",
+    "ignore-selected-file-add-to-gitignore": "Ignore {{0}} selected files (add to .gitignore)",
+    "ignore-selected-file-add-to-gitignore-darwin": "Ignore {{0}} Selected Files (Add to .gitignore)",
+    "include-selected-files": "Include selected files",
+    "include-selected-files-darwin": "Include Selected Files",
+    "included-in-commit": "Included in commit ({{0}})",
+    "matching-your-filter": " matching your filter of '{{0}}'",
+    "number-description": "{{0}} of ",
+    "one-applied": "(1 applied)",
+    "open-in-external-editor": "Open in {{0}}",
+    "sorry-i-cannot-find-any-changed-files": "Sorry, I can't find any changed files{{0}}{{1}}{{2}}.",
+    "stashed-changes": "Stashed Changes",
+    "summary-required": "Summary (required)",
+    "that-are-to-be-included": " that are to be included in your commit"
+  },
   "filter-list": {
     "filter": "Filter"
   },
@@ -839,6 +882,15 @@
   "full-screen-info": {
     "press-f11-to-exit-fullscreeen-1": "Press ",
     "press-f11-to-exit-fullscreeen-2": " to exit fullscreen"
+  },
+  "generate-commit-message-disclaimer": {
+    "copilot-is-powered-by-ai": "Copilot is powered by AI, so mistakes are possible. Review and edit the generated message carefully before use. ",
+    "github-copilot": "GitHub Copilot",
+    "learn-more-about-copilot": "Learn more about Copilot in GitHub Desktop."
+  },
+  "generate-commit-message-override-warning": {
+    "commit-message-override": "Commit message override",
+    "the-commit-message": "The commit message you have entered will be overridden by the generated commit message."
   },
   "generic-git-auth": {
     "authentication-failed": "Authentication failed",
@@ -905,7 +957,8 @@
   "invalidated-token": {
     "invalidated-account-token": "Invalidated account token",
     "invalidated-account-token-darwin": "Invalidated Account Token",
-    "token-has-been-invalidated": "Your account token has been invalidated and you have been signed out from your GitHub{{0}} account. Do you want to sign in again?"
+    "token-has-been-invalidated-1": "Your account token has been invalidated and you have been signed out from your ",
+    "token-has-been-invalidated-2": "account. Do you want to sign in again?"
   },
   "label": {
     "about-github-desktop": "&About GitHub Desktop",
@@ -1343,6 +1396,7 @@
     "always-stash-and-leave-my-changes": "Always stash and leave my changes on the current branch",
     "ask-me-where-i-want-the-changes-to-go": "Ask me where I want the changes to go",
     "commit-length": "Commit Length",
+    "committing-changes-hidden": "Committing changes hidden by filter",
     "discarding-changes": "Discarding changes",
     "discarding-changes-permanently": "Discarding changes permanently",
     "discarding-checking-out": "Checking out a commit",
@@ -1405,6 +1459,26 @@
     "fetch": "Fetch",
     "newer-commits-on-remote": "Newer commits on remote",
     "newer-commits-on-remote-darwin": "Newer Commits on Remote"
+  },
+  "push-protection-error": {
+    "act-on-behalf": "Act on behalf of the secret's owner",
+    "allowing-secrets-risks-exposure": "Allowing secrets risks exposure. Consider ",
+    "bypass": "Bypass",
+    "exosing-this-secret-can-allow": "Exposing this secret can allow someone to:",
+    "found secrets-1": "",
+    "found secrets-2": " found secret(s) in the commit(s) you attempted to push. ",
+    "know-which-resources": "Know which resources the secret(s) can access",
+    "push-blocked": "Push blocked: secret detected",
+    "push-blocked-darwin": "Push Blocked: Secret Detected",
+    "push-the-secrets-to-this-repository": "Push the secret(s) to this repository without being blocked",
+    "removing-the-secret": "removing the secret from your commit and commit history.",
+    "secret-scanning": "Secret Scanning",
+    "verify-the-identity": "Verify the identity of the secret(s)"
+  },
+  "push-protection-error-location": {
+    "at-line": "at line {{0}}",
+    "show-less-location": "Show Less Locations",
+    "show-more-location": "Show More locations"
   },
   "push-pull-button": {
     "cannot-publish-detached-head": "Cannot publish detached HEAD",

@@ -56,6 +56,7 @@ interface IChangesSidebarProps {
   readonly issuesStore: IssuesStore
   readonly availableWidth: number
   readonly isCommitting: boolean
+  readonly isGeneratingCommitMessage: boolean
   readonly commitToAmend: Commit | null
   readonly isPushPullFetchInProgress: boolean
   // Used in receiveProps, no-unused-prop-types doesn't know that
@@ -88,8 +89,6 @@ interface IChangesSidebarProps {
   readonly commitSpellcheckEnabled: boolean
 
   readonly showCommitLengthWarning: boolean
-
-  readonly canFilterChanges: boolean
 }
 
 export class ChangesSidebar extends React.Component<IChangesSidebarProps, {}> {
@@ -400,10 +399,9 @@ export class ChangesSidebar extends React.Component<IChangesSidebarProps, {}> {
       this.props.repository
     )
 
-    const ChangesListComponent =
-      enableFilteredChangesList() && this.props.canFilterChanges
-        ? FilterChangesList
-        : ChangesList
+    const ChangesListComponent = enableFilteredChangesList()
+      ? FilterChangesList
+      : ChangesList
 
     return (
       <div className="panel" role="tabpanel" aria-labelledby="changes-tab">
@@ -442,6 +440,7 @@ export class ChangesSidebar extends React.Component<IChangesSidebarProps, {}> {
           onIgnoreFile={this.onIgnoreFile}
           onIgnorePattern={this.onIgnorePattern}
           isCommitting={this.props.isCommitting}
+          isGeneratingCommitMessage={this.props.isGeneratingCommitMessage}
           commitToAmend={this.props.commitToAmend}
           showCoAuthoredBy={showCoAuthoredBy}
           coAuthors={coAuthors}
@@ -458,6 +457,10 @@ export class ChangesSidebar extends React.Component<IChangesSidebarProps, {}> {
           currentRepoRulesInfo={currentRepoRulesInfo}
           aheadBehind={this.props.aheadBehind}
           accounts={this.props.accounts}
+          filterText={this.props.changes.filterText}
+          includedChangesInCommitFilter={
+            this.props.changes.includedChangesInCommitFilter
+          }
         />
         {this.renderUndoCommit(rebaseConflictState)}
       </div>

@@ -211,7 +211,10 @@ export class Prompts extends React.Component<
 
     return (
       <Checkbox
-        label="Committing changes hidden by filter"
+        label={t(
+          'prompts.committing-changes-hidden',
+          'Committing changes hidden by filter'
+        )}
         value={
           this.state.askForConfirmationOnCommitFilteredChanges
             ? CheckboxValue.On

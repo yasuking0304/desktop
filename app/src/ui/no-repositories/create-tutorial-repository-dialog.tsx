@@ -7,7 +7,6 @@ import { Ref } from '../lib/ref'
 import { LinkButton } from '../lib/link-button'
 import { Progress } from '../../models/progress'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
-import { friendlyEndpointName } from '../../lib/friendly-endpoint-name'
 import { t } from 'i18next'
 
 interface ICreateTutorialRepositoryDialogProps {
@@ -97,7 +96,7 @@ export class CreateTutorialRepositoryDialog extends React.Component<ICreateTutor
               ' on '
             )}
             <LinkButton uri={getHTMLURL(account.endpoint)}>
-              {friendlyEndpointName(account)}
+              {account.friendlyEndpoint}
             </LinkButton>
             {t(
               'create-tutorial-repository-dialog.will-create-a-repository-3',

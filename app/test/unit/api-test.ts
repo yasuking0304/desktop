@@ -1,3 +1,5 @@
+import { describe, it } from 'node:test'
+import assert from 'node:assert'
 import { getNextPagePathWithIncreasingPageSize } from '../../src/lib/api'
 import * as URL from 'url'
 
@@ -21,10 +23,10 @@ function assertNext(current: IPageInfo, expected: IPageInfo) {
     new Response(null, { headers })
   )
 
-  expect(nextPath).not.toBeNull()
-  const { pathname, query } = URL.parse(nextPath!, true)
+  assert(nextPath !== null)
+  const { pathname, query } = URL.parse(nextPath, true)
 
-  expect(pathname).toBe('/items')
+  assert.equal(pathname, '/items')
 
   const per_page = parseInt(
     typeof query.per_page === 'string' ? query.per_page : '',
@@ -32,8 +34,8 @@ function assertNext(current: IPageInfo, expected: IPageInfo) {
   )
   const page = parseInt(typeof query.page === 'string' ? query.page : '', 10)
 
-  expect(per_page).toBe(expected.per_page)
-  expect(page).toBe(expected.page)
+  assert.equal(per_page, expected.per_page)
+  assert.equal(page, expected.page)
 
   // If getNextPagePathWithIncreasingPageSize has fiddled with the
   // page size or page number we want to ensure that the next page will
@@ -42,14 +44,14 @@ function assertNext(current: IPageInfo, expected: IPageInfo) {
     const receivedCurrent = current.per_page * current.page
     const receivedNext = per_page * page
 
-    expect(receivedNext).toBeGreaterThan(receivedCurrent)
+    assert(receivedNext > receivedCurrent)
   }
 }
 
 describe('API', () => {
   describe('getNextPagePathWithIncreasingPageSize', () => {
     it("returns null when there's no link header", () => {
-      expect(getNextPagePathWithIncreasingPageSize(new Response())).toBeNull()
+      assert(getNextPagePathWithIncreasingPageSize(new Response()) === null)
     })
 
     it('returns raw link when missing page size', () => {
@@ -59,7 +61,7 @@ describe('API', () => {
         })
       )
 
-      expect(nextPath).toEqual('/items?page=2')
+      assert.equal(nextPath, '/items?page=2')
     })
 
     it('returns raw link when missing page number', () => {
@@ -69,7 +71,7 @@ describe('API', () => {
         })
       )
 
-      expect(nextPath).toEqual('/items?per_page=10')
+      assert.equal(nextPath, '/items?per_page=10')
     })
 
     it('does not increase page size when not aligned', () => {
@@ -79,7 +81,7 @@ describe('API', () => {
         })
       )
 
-      expect(nextPath).toEqual('/items?per_page=10&page=2')
+      assert.equal(nextPath, '/items?per_page=10&page=2')
     })
 
     it('increases page size on alignment with an initial page size of 10', () => {

@@ -1,3 +1,5 @@
+import { describe, it } from 'node:test'
+import assert from 'node:assert'
 import { CloningRepository } from '../../src/models/cloning-repository'
 
 describe('CloningRepository', () => {
@@ -8,7 +10,7 @@ describe('CloningRepository', () => {
         'https://github.com/desktop/desktop'
       )
 
-      expect(repository.name).toBe('desktop')
+      assert.equal(repository.name, 'desktop')
     })
 
     it('extracts the repo name from the url not the path', () => {
@@ -17,7 +19,7 @@ describe('CloningRepository', () => {
         'https://github.com/desktop/desktop'
       )
 
-      expect(repository.name).toBe('desktop')
+      assert.equal(repository.name, 'desktop')
     })
 
     it('extracts the repo name without git suffix', () => {
@@ -26,7 +28,7 @@ describe('CloningRepository', () => {
         'https://github.com/desktop/desktop.git'
       )
 
-      expect(repository.name).toBe('desktop')
+      assert.equal(repository.name, 'desktop')
     })
   })
 })
