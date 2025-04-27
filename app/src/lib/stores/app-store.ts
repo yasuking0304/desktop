@@ -101,6 +101,7 @@ import {
   IAPIComment,
   IAPIRepoRuleset,
   deleteToken,
+  IAPICreatePushProtectionBypassResponse,
 } from '../api'
 import { shell } from '../app-shell'
 import {
@@ -347,6 +348,7 @@ import {
   migratedCustomIntegration,
 } from '../custom-integration'
 import { updateStore } from '../../ui/lib/update-store'
+import { BypassReasonType } from '../../ui/secret-scanning/bypass-push-protection-dialog'
 
 const LastSelectedRepositoryIDKey = 'last-selected-repository-id'
 
@@ -8315,6 +8317,43 @@ export class AppStore extends TypedBaseStore<IAppState> {
       includedChangesInCommitFilter,
     }))
     this.emitUpdate()
+  }
+
+  public async _createPushProtectionBypass(
+    reason: BypassReasonType,
+    placeholderId: string,
+    bypassURL: string
+  ): Promise<IAPICreatePushProtectionBypassResponse | null> {
+    const repository = this.selectedRepository
+    if (
+      repository === null ||
+      repository instanceof CloningRepository ||
+      isRepositoryWithGitHubRepository(repository) === false
+    ) {
+      log.error('[_createPushProtectionBypass] - No GitHub repository selected')
+      return null
+    }
+
+    const { endpoint, name, owner } = repository.gitHubRepository
+
+    const account = getAccountForEndpoint(this.accounts, endpoint)
+
+    if (account === null) {
+      log.error(
+        `[_createPushProtectionBypass] - No account found for endpoint - ${endpoint}`
+      )
+      return null
+    }
+
+    const api = API.fromAccount(account)
+
+    return api.createPushProtectionBypass(
+      owner.login,
+      name,
+      reason,
+      placeholderId,
+      bypassURL
+    )
   }
 }
 

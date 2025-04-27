@@ -26,7 +26,7 @@ import { pathExists } from '../lib/path-exists'
 import {
   ISecretLocation,
   ISecretScanResult,
-} from '../secret-scanning/push-protection-error'
+} from '../secret-scanning/push-protection-error-dialog'
 
 /** An error which also has a code property. */
 interface IErrorWithCode extends Error {
@@ -620,7 +620,8 @@ function extractSecretScanningResults(
   remoteMessage: string
 ): ReadonlyArray<ISecretScanResult> {
   const secretsRegex =
-    /—— (?<description>.*?) —+[.\s\S]*?locations:(?<locationsGroup>(?:\s+- commit: [a-f0-9]{40}\s+path: [.\s\S]*?)+).*?(?<bypassURL>https:\/\/github\.com\/.*?\/unblock-secret\/[a-zA-Z0-9]+)/g
+    /—— (?<description>.*?) —+[\s\S]*?locations:(?<locationsGroup>(?:\s+- commit: [a-f0-9]{40}\s+path: [\s\S]*?)+).*?(?<bypassURL>https[\s\S]*?) /g
+
   const matches = [...remoteMessage.matchAll(secretsRegex)]
 
   const secrets: Array<ISecretScanResult> = []
@@ -658,6 +659,7 @@ function extractSecretScanningResults(
       description,
       bypassURL,
       locations,
+      requiresApproval: !!match.at(0)?.includes('request an exemption'),
     })
   }
 

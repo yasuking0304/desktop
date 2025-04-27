@@ -4,6 +4,9 @@ import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
 import { LinkButton } from '../lib/link-button'
 import { PushProtectionErrorLocation } from './push-protection-error-location'
 import { t } from 'i18next'
+import { IAPICreatePushProtectionBypassResponse } from '../../lib/api'
+import { Octicon } from '../octicons'
+import * as octicons from '../octicons/octicons.generated'
 
 /** Represents the location of a detected secret detected on push  */
 export interface ISecretLocation {
@@ -25,12 +28,22 @@ export interface ISecretScanResult {
   locations: ReadonlyArray<ISecretLocation>
   /** The URL to use to get to GitHub.com's dialog for bypassing blocking the push of the secret  */
   bypassURL: string
+  /** The user cannot bypass themselves, but can request a bypass */
+  requiresApproval: boolean
 }
 
 interface IPushProtectionErrorDialogProps {
   /** The secrets that were detected on push */
   readonly secrets: ReadonlyArray<ISecretScanResult>
+  /** The function to call when the user clicks the bypass button */
+  readonly bypassPushProtection: (
+    secret: ISecretScanResult
+  ) => Promise<IAPICreatePushProtectionBypassResponse | null>
   readonly onDismissed: () => void
+}
+
+interface IPushProtectionErrorDialogState {
+  readonly secretsBypassed: Map<string, boolean>
 }
 
 /**
@@ -38,8 +51,15 @@ interface IPushProtectionErrorDialogProps {
  */
 export class PushProtectionErrorDialog extends React.Component<
   IPushProtectionErrorDialogProps,
-  {}
+  IPushProtectionErrorDialogState
 > {
+  public constructor(props: IPushProtectionErrorDialogProps) {
+    super(props)
+    this.state = {
+      secretsBypassed: new Map(),
+    }
+  }
+
   public render() {
     return (
       <Dialog
@@ -132,17 +152,57 @@ export class PushProtectionErrorDialog extends React.Component<
       : secret.description
   }
 
+  private bypassSecret = (secret: ISecretScanResult) => {
+    return async () => {
+      const bypassed = await this.props.bypassPushProtection(secret)
+      if (bypassed) {
+        this.setState(prevState => ({
+          secretsBypassed: new Map(prevState.secretsBypassed).set(
+            secret.id,
+            true
+          ),
+        }))
+      }
+    }
+  }
+
+  private renderBypassButton = (secret: ISecretScanResult) => {
+    if (secret.requiresApproval) {
+      return (
+        <LinkButton
+          ariaLabel={`Bypass ${secret.description}`}
+          uri={secret.bypassURL}
+        >
+          {t('push-protection-error.bypass', 'Bypass')}
+        </LinkButton>
+      )
+    }
+
+    if (this.state.secretsBypassed.get(secret.id)) {
+      return (
+        <span className="bypass-success">
+          {t('push-protection-error.bypassed', 'Bypassed ')}
+          <Octicon symbol={octicons.check} className="bypass-success" />{' '}
+        </span>
+      )
+    }
+
+    return (
+      <LinkButton
+        ariaLabel={`Bypass ${secret.description}`}
+        onClick={this.bypassSecret(secret)}
+      >
+        Bypass
+      </LinkButton>
+    )
+  }
+
   private renderSecrets = () => {
     const listItems = this.props.secrets.map((secret, index) => (
       <li key={index} className="secret-list-item">
         <span className="secret-list-item-header">
           <span>{this.renderSecretDescription(secret)}</span>
-          <LinkButton
-            ariaLabel={`Bypass ${secret.description}`}
-            uri={secret.bypassURL}
-          >
-            {t('push-protection-error.bypass', 'Bypass')}
-          </LinkButton>
+          {this.renderBypassButton(secret)}
         </span>
         <PushProtectionErrorLocation secret={secret} />
       </li>
