@@ -170,6 +170,17 @@
     "pull-requests": "拉取请求",
     "pull-requests-darwin": "拉取请求"
   },
+  "bypass-push-protection-dialog": {
+    "allow-me-to-expose": "Allow me to expose this secret",
+    "bypass-push-detection": "Bypass push detection",
+    "bypass-push-detection-darwin": "Bypass Push Detection",
+    "i-will-fix-it-later": "I'll fix it later",
+    "its-a-false-positive": "It's a false positive",
+    "its-used-in-tests": "It's used in tests",
+    "the-detected-string": "The detected string is not a secret",
+    "the-secret-is-real": "The secret is real, I understand the risk, and I will need to revoke it. This will open a security alert and notify admins of this repository.",
+    "why-are-you-bypassing": "Why are you bypassing this {{0}}?"
+  },
   "changes-list": {
     "confirm-discard-all-changes": "Discard all changes…",
     "confirm-discard-all-changes-darwin": "Discard All Changes…",
@@ -1464,6 +1475,7 @@
     "act-on-behalf": "Act on behalf of the secret's owner",
     "allowing-secrets-risks-exposure": "Allowing secrets risks exposure. Consider ",
     "bypass": "Bypass",
+    "bypassed": "Bypassed ",
     "exosing-this-secret-can-allow": "Exposing this secret can allow someone to:",
     "found secrets-1": "",
     "found secrets-2": " found secret(s) in the commit(s) you attempted to push. ",
@@ -1881,8 +1893,8 @@
     "the-repository-is-a-fork-2": " is a fork of ",
     "the-repository-is-a-fork-3": ", but its ",
     "the-repository-is-a-fork-4": " remote points elsewhere.",
-    "upstream-already-exists": "Upstream already exists",
-    "upstream-already-exists-darwin": "Upstream Already Exists",
+    "upstream-already-exists": "Upstream 经存在",
+    "upstream-already-exists-darwin": "Upstream 经存在",
     "would-you-like-to-update": "Would you like to update the remote to use the expected URL?"
   },
   "url": {
@@ -1904,13 +1916,13 @@
     "changes-in-progress-undo-commit": "You have changes in progress. Undoing the commit might result in some of these changes being lost. Do you want to continue anyway?",
     "changes-in-progress-undo-merge": "You have changes in progress. Undoing the merge commit might result in some of these changes being lost.",
     "do-you-want-to-continue-anyway": "Do you want to continue anyway?",
-    "undo-commit": "Undo commit",
-    "undo-commit-darwin": "Undo Commit",
+    "undo-commit": "撤消提交",
+    "undo-commit-darwin": "撤消提交",
     "undoing-a merge-commit": "Undoing a merge commit will apply the changes from the merge into your working directory, and committing again will create an entirely new commit. This means you will lose the merge commit and, as a result, commits from the merged branch could disappear from this branch."
   },
   "warning-before-reset": {
-    "reset-to-commit": "Reset to commit",
-    "reset-to-commit-darwin": "Reset to Commit",
+    "reset-to-commit": "重置以提交",
+    "reset-to-commit-darwin": "重置以提交",
     "you-have-changes-in-progress": "You have changes in progress. Resetting to a previous commit might result in some of these changes being lost. Do you want to continue anyway?"
   },
   "welcome": {
@@ -1925,8 +1937,8 @@
     "show-whitespace-changes": "Show whitespace changes?"
   },
   "workflow-push-rejected": {
-    "continue-in-browser": "Continue in browser",
-    "continue-in-browser-darwin": "Continue in Browser",
+    "continue-in-browser": "在浏览器中继续",
+    "continue-in-browser-darwin": "在浏览器中继续",
     "push-rejected": "Push rejected",
     "push-rejected-darwin": "Push Rejected",
     "the-push-was-rejected-by-the-server-1": "The push was rejected by the server for containing a modification to the workflow file ",

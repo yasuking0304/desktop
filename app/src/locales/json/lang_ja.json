@@ -170,6 +170,17 @@
     "pull-requests": "プルリクエスト",
     "pull-requests-darwin": "プルリクエスト"
   },
+  "bypass-push-protection-dialog": {
+    "allow-me-to-expose": "Allow me to expose this secret",
+    "bypass-push-detection": "Bypass push detection",
+    "bypass-push-detection-darwin": "Bypass Push Detection",
+    "i-will-fix-it-later": "I'll fix it later",
+    "its-a-false-positive": "It's a false positive",
+    "its-used-in-tests": "It's used in tests",
+    "the-detected-string": "The detected string is not a secret",
+    "the-secret-is-real": "The secret is real, I understand the risk, and I will need to revoke it. This will open a security alert and notify admins of this repository.",
+    "why-are-you-bypassing": "Why are you bypassing this {{0}}?"
+  },
   "changes-list": {
     "confirm-discard-all-changes": "すべての変更を破棄する…",
     "confirm-discard-all-changes-darwin": "すべての変更を破棄する…",
@@ -1464,6 +1475,7 @@
     "act-on-behalf": "Act on behalf of the secret's owner",
     "allowing-secrets-risks-exposure": "Allowing secrets risks exposure. Consider ",
     "bypass": "Bypass",
+    "bypassed": "Bypassed ",
     "exosing-this-secret-can-allow": "Exposing this secret can allow someone to:",
     "found secrets-1": "",
     "found secrets-2": " found secret(s) in the commit(s) you attempted to push. ",
