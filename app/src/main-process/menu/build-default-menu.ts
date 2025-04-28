@@ -8,6 +8,7 @@ import { MenuLabelsEvent } from '../../models/menu-labels'
 import * as ipcWebContents from '../ipc-webcontents'
 import { mkdir } from 'fs/promises'
 import { buildTestMenu } from './build-test-menu'
+import { enableFilteredChangesList } from '../../lib/feature-flag'
 
 const createPullRequestLabel = __DARWIN__
   ? 'Create Pull Request'
@@ -213,16 +214,20 @@ export function buildDefaultMenu({
           ? emit('hide-stashed-changes')
           : emit('show-stashed-changes'),
       },
-      {
-        label: __DARWIN__
-          ? `${isChangesFilterVisible ? 'Hide' : 'Show'} Changes Filter`
-          : `${
-              isChangesFilterVisible ? 'Hide' : 'Show'
-            } Toggle Changes &Filter`,
-        id: 'toggle-changes-filter',
-        accelerator: 'CmdOrCtrl+L',
-        click: emit('toggle-changes-filter'),
-      },
+      ...(enableFilteredChangesList()
+        ? [
+            {
+              label: __DARWIN__
+                ? `${isChangesFilterVisible ? 'Hide' : 'Show'} Changes Filter`
+                : `${
+                    isChangesFilterVisible ? 'Hide' : 'Show'
+                  } Toggle Changes &Filter`,
+              id: 'toggle-changes-filter',
+              accelerator: 'CmdOrCtrl+L',
+              click: emit('toggle-changes-filter'),
+            },
+          ]
+        : []),
       {
         label: __DARWIN__ ? 'Toggle Full Screen' : 'Toggle &full screen',
         role: 'togglefullscreen',
