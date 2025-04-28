@@ -221,7 +221,7 @@ export function buildDefaultMenu({
                 ? `${isChangesFilterVisible ? 'Hide' : 'Show'} Changes Filter`
                 : `${
                     isChangesFilterVisible ? 'Hide' : 'Show'
-                  } Toggle Changes &Filter`,
+                  } Toggle Chan&ges Filter`,
               id: 'toggle-changes-filter',
               accelerator: 'CmdOrCtrl+L',
               click: emit('toggle-changes-filter'),
