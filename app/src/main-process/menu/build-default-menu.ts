@@ -45,6 +45,7 @@ export function buildDefaultMenu({
   isForcePushForCurrentRepository = false,
   isStashedChangesVisible = false,
   askForConfirmationWhenStashingAllChanges = true,
+  isChangesFilterVisible = true,
 }: MenuLabelsEvent): Electron.Menu {
   contributionTargetDefaultBranch = truncateWithEllipsis(
     contributionTargetDefaultBranch,
@@ -211,6 +212,16 @@ export function buildDefaultMenu({
         click: isStashedChangesVisible
           ? emit('hide-stashed-changes')
           : emit('show-stashed-changes'),
+      },
+      {
+        label: __DARWIN__
+          ? `${isChangesFilterVisible ? 'Hide' : 'Show'} Changes Filter`
+          : `${
+              isChangesFilterVisible ? 'Hide' : 'Show'
+            } Toggle Changes &Filter`,
+        id: 'toggle-changes-filter',
+        accelerator: 'CmdOrCtrl+L',
+        click: emit('toggle-changes-filter'),
       },
       {
         label: __DARWIN__ ? 'Toggle Full Screen' : 'Toggle &full screen',

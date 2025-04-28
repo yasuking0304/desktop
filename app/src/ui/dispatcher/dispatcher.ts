@@ -4021,4 +4021,8 @@ export class Dispatcher {
       bypassURL
     )
   }
+
+  public toggleChangesFilterVisibility() {
+    this.appStore._toggleChangesFilterVisibility()
+  }
 }

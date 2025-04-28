@@ -38,3 +38,4 @@ export type MenuIDs =
   | 'preview-pull-request'
   | 'decrease-active-resizable-width'
   | 'increase-active-resizable-width'
+  | 'toggle-changes-filter'

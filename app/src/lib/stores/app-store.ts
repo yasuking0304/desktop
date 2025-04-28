@@ -455,6 +455,8 @@ export const showDiffCheckMarksKey = 'diff-check-marks-visible'
 export const commitMessageGenerationDisclaimerLastSeenKey =
   'commit-message-generation-disclaimer-last-seen'
 
+const showChangesFilterKey = 'show-changes-filter'
+
 export class AppStore extends TypedBaseStore<IAppState> {
   private readonly gitStoreCache: GitStoreCache
 
@@ -606,6 +608,8 @@ export class AppStore extends TypedBaseStore<IAppState> {
   private underlineLinks: boolean = underlineLinksDefault
 
   private commitMessageGenerationDisclaimerLastSeen: number | null = null
+
+  private showChangesFilter: boolean = false
 
   public constructor(
     private readonly gitHubUserStore: GitHubUserStore,
@@ -1101,6 +1105,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
       updateState: updateStore.state,
       commitMessageGenerationDisclaimerLastSeen:
         this.commitMessageGenerationDisclaimerLastSeen,
+      showChangesFilter: this.showChangesFilter,
     }
   }
 
@@ -2330,6 +2335,8 @@ export class AppStore extends TypedBaseStore<IAppState> {
     this.commitMessageGenerationDisclaimerLastSeen =
       getNumber(commitMessageGenerationDisclaimerLastSeenKey) ?? null
 
+    this.showChangesFilter = getBoolean(showChangesFilterKey, true)
+
     this.emitUpdateNow()
 
     this.accountsStore.refresh()
@@ -2547,6 +2554,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
       isStashedChangesVisible,
       hasCurrentPullRequest: currentPullRequest !== null,
       askForConfirmationWhenStashingAllChanges,
+      isChangesFilterVisible: this.showChangesFilter,
     })
   }
 
@@ -8320,6 +8328,13 @@ export class AppStore extends TypedBaseStore<IAppState> {
       placeholderId,
       bypassURL
     )
+  }
+
+  public _toggleChangesFilterVisibility() {
+    this.showChangesFilter = !this.showChangesFilter
+    setBoolean(showChangesFilterKey, this.showChangesFilter)
+    this.updateMenuLabelsForSelectedRepository()
+    this.emitUpdate()
   }
 }
 
