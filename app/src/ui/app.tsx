@@ -3381,6 +3381,7 @@ export class App extends React.Component<IAppProps, IAppState> {
           showCommitLengthWarning={this.state.showCommitLengthWarning}
           onCherryPick={this.startCherryPickWithoutBranch}
           pullRequestSuggestedNextAction={state.pullRequestSuggestedNextAction}
+          showChangesFilter={state.showChangesFilter}
         />
       )
     } else if (selectedState.type === SelectionType.CloningRepository) {

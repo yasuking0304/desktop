@@ -89,6 +89,9 @@ interface IChangesSidebarProps {
   readonly commitSpellcheckEnabled: boolean
 
   readonly showCommitLengthWarning: boolean
+
+  /** Whether or not to show the changes filter */
+  readonly showChangesFilter: boolean
 }
 
 export class ChangesSidebar extends React.Component<IChangesSidebarProps, {}> {
@@ -461,6 +464,7 @@ export class ChangesSidebar extends React.Component<IChangesSidebarProps, {}> {
           includedChangesInCommitFilter={
             this.props.changes.includedChangesInCommitFilter
           }
+          showChangesFilter={this.props.showChangesFilter}
         />
         {this.renderUndoCommit(rebaseConflictState)}
       </div>
