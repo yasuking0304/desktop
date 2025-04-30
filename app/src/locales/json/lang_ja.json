@@ -567,7 +567,7 @@
   "confirm-force-push": {
     "force-push will-rewrite-history-1": "強制プッシュは ",
     "force-push will-rewrite-history-2": "の履歴を書き換えます。このブランチで作業しているコラボレーターは、リモートの履歴と一致するように自分のローカルブランチをリセットする必要があります。",
-    "i-am-sure": "大丈夫です",
+    "i-am-sure": "もちろんです",
     "want-to-force-push": "強制プッシュしますが、よろしいですか?"
   },
   "confirm-remove-repository": {
