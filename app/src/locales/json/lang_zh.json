@@ -321,8 +321,8 @@
     "squash-number-commit": "压缩 {{0}}个提交"
   },
   "commit-list": {
-    "copy-tag": "复制标签",
-    "copy-tags": "复制标签",
+    "copy-tag": "复制标记",
+    "copy-tags": "复制标记",
     "view-on-github": "在 GitHub 上查看",
     "view-on-github-enterprise": "在 GitHub Enterprise 上查看"
   },
@@ -335,12 +335,12 @@
     "cherry-pick-commit-darwin": "挑选提交…",
     "cherry-pick-commits": "挑选 {{0}}个提交…",
     "cherry-pick-commits-darwin": "挑选 {{0}}个提交…",
-    "comform-create-tag": "创建标签…",
-    "confim-detele-tag": "删除标签…",
+    "comform-create-tag": "创建标记…",
+    "confim-detele-tag": "删除标记…",
     "copy-sha": "复制 SHA",
     "create-branch-from-commit": "从提交创建分支",
     "create-branch-from-commit-darwin": "从提交创建分支",
-    "detele-tag": "删除标签 {{0}}",
+    "detele-tag": "删除标记 {{0}}",
     "empty-commit-message": "空的提交信息",
     "reorder-choose-locate-1": "使用 ",
     "reorder-choose-locate-2": "选择新位置。",
@@ -513,17 +513,17 @@
     "your-name": "您的姓名"
   },
   "compare": {
-    "ahead": "Ahead ({{0}})",
-    "behind": "Behind ({{0}})",
+    "ahead": "前方 ({{0}})",
+    "behind": "向后 ({{0}})",
     "error": {
-      "unable-to-reorder": "Unable to reorder. Reordering replays all commits up to the last one required for the reorder. A merge commit cannot exist among those commits.",
-      "unable-to-squash": "Unable to squash. Squashing replays all commits up to the last one required for the squash. A merge commit cannot exist among those commits."
+      "unable-to-reorder": "无法重新排序。重新排序会重放所有提交，直到重新排序所需的最后一个提交。这些提交之间不能存在合并提交。",
+      "unable-to-squash": "无法压缩。压缩操作会重放所有提交，直到压缩所需的最后一个提交。这些提交之间不能存在合并提交。"
     },
-    "no-branch-to-compare": "No branches to compare",
-    "no-branch-to-compare-darwin": "No Branches to Compare",
-    "no-history": "No history",
-    "select-branch-to-compare": "Select branch to compare…",
-    "select-branch-to-compare-darwin": "Select Branch to Compare…",
+    "no-branch-to-compare": "没有可供比较的分支",
+    "no-branch-to-compare-darwin": "没有可供比较的分支",
+    "no-history": "无历史记录",
+    "select-branch-to-compare": "选择要比较的分支…",
+    "select-branch-to-compare-darwin": "选择要比较的分支…",
     "squash-number-commits": "压缩 {{0}}个提交",
     "the-compare-branch-1": "The compared branch (",
     "the-compare-branch-2": ") is up to date with your branch",
@@ -560,9 +560,9 @@
     "discard-darwin": "Discard Stash?"
   },
   "confirm-exit-tutorial": {
-    "are-you-sure-you-want-to-leave": "Are you sure you want to leave the tutorial? This will bring you back to the home screen.",
-    "confirm-exit-tutorial": "Exit tutorial",
-    "confirm-exit-tutorial-darwin": "Exit Tutorial"
+    "are-you-sure-you-want-to-leave": "您确定要离开教程吗? 这会带您返回主屏幕。",
+    "confirm-exit-tutorial": "退出教程",
+    "confirm-exit-tutorial-darwin": "退出教程"
   },
   "confirm-force-push": {
     "force-push will-rewrite-history-1": "A force push will rewrite history on ",
@@ -691,19 +691,19 @@
     "will-be-created-as": "Will be created as {{0}}"
   },
   "create-tag-dialog": {
-    "create-a-tag": "Create a tag",
-    "create-a-tag-darwin": "Create a Tag",
-    "create-tag": "Create tag",
-    "create-tag-darwin": "Create Tag",
-    "no-matches-found": "No matches found for '{{0}}'",
-    "previous-tag": "Previous tags",
-    "previous-tag-darwin": "Previous Tags",
-    "tag-name-too-long": "The tag name cannot be longer than {{0}} characters",
-    "tag-named-already-exists-1": "A tag named ",
-    "tag-named-already-exists-2": " already exists"
+    "create-a-tag": "创建标记",
+    "create-a-tag-darwin": "创建标记",
+    "create-tag": "创建标记",
+    "create-tag-darwin": "创建标记",
+    "no-matches-found": "未找到'{{0}}'的匹配项",
+    "previous-tag": "以前的标记",
+    "previous-tag-darwin": "以前的标记",
+    "tag-name-too-long": "标签名称不能超过 {{0}}个字符",
+    "tag-named-already-exists-1": "名为 ",
+    "tag-named-already-exists-2": " 的标记已存在"
   },
   "create-tutorial-repository-dialog": {
-    "start-tutorial": "Start tutorial",
+    "start-tutorial": "开始教程",
     "will-create-a-repository-1": "This will create a repository on your local machine, and push it to your account ",
     "will-create-a-repository-2": " on ",
     "will-create-a-repository-3": ". This repository will only be visible to you, and not visible publicly."
@@ -718,19 +718,19 @@
     "This-path0does-not-appear": "This path does not appear to be a valid executable."
   },
   "delete-branch-dialog": {
-    "branch-also-exists-on-the-remote": "The branch also exists on the remote, do you wish to delete it there as well?",
-    "confirm-delete-branch-1": "Delete branch ",
+    "branch-also-exists-on-the-remote": "该分支也存在于远程, 您是否也希望在那里删除它?",
+    "confirm-delete-branch-1": "删除分支 ",
     "confirm-delete-branch-2": "?",
-    "delete-branch": "Delete branch",
-    "delete-branch-darwin": "Delete Branch",
-    "yes-delete-this-branch": "Yes, delete this branch on the remote"
+    "delete-branch": "删除分支",
+    "delete-branch-darwin": "删除分支",
+    "yes-delete-this-branch": "是的, 删除远程的这个分支"
   },
   "delete-pull-request-dialog": {
-    "delete-branch": "Delete branch",
-    "delete-branch-darwin": "Delete Branch",
-    "this-branch-may-have-an-open-1": "This branch may have an open pull request associated with it.",
-    "this-branch-may-have-an-open-2": "If ",
-    "this-branch-may-have-an-open-3": " has been merged, you can also go to GitHub to delete the remote branch."
+    "delete-branch": "删除分支",
+    "delete-branch-darwin": "删除分支",
+    "this-branch-may-have-an-open-1": "该分支可能有一个与之关联的开放拉取请求。",
+    "this-branch-may-have-an-open-2": "如果 ",
+    "this-branch-may-have-an-open-3": " 已经合并，你也可以前往GitHub删除远程分支。"
   },
   "delete-remote-branch-dialog": {
     "delete-remote-branch": "Delete remote branch",
@@ -741,10 +741,10 @@
     "this-branch-does-not-exist-locally": "This branch does not exist locally. Deleting it may impact others collaborating on this branch."
   },
   "delete-tag-dialog": {
-    "are-you-sure-you-want-to-delete-the-tag-1": "您确定要删除标签 ",
+    "are-you-sure-you-want-to-delete-the-tag-1": "您确定要删除标记 ",
     "are-you-sure-you-want-to-delete-the-tag-2": "吗?",
-    "delete-tag": "删除标签",
-    "delete-tag-darwin": "删除标签"
+    "delete-tag": "删除标记",
+    "delete-tag-darwin": "删除标记"
   },
   "diff-contents-warning": {
     "learn-more-about-bidirectional-unicode": "Learn more about bidirectional Unicode characters",

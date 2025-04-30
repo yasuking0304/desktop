@@ -728,7 +728,7 @@
   "delete-pull-request-dialog": {
     "delete-branch": "ブランチの削除",
     "delete-branch-darwin": "ブランチの削除",
-    "this-branch-may-have-an-open-1": "このブランチには、オープン中のプルリクエストが関連付けられている場合があります。",
+    "this-branch-may-have-an-open-1": "このブランチには、オープン中のプルリクエストが関連付けられている可能性があります。",
     "this-branch-may-have-an-open-2": "もし ",
     "this-branch-may-have-an-open-3": " がマージされている場合は、GitHub にアクセスしてリモートブランチを削除することもできます。"
   },
