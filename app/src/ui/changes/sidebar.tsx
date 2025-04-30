@@ -200,17 +200,12 @@ export class ChangesSidebar extends React.Component<IChangesSidebarProps, {}> {
     )
   }
 
-  private onIncludeChanged = (path: string, include: boolean) => {
-    const workingDirectory = this.props.changes.workingDirectory
-    const file = workingDirectory.files.find(f => f.path === path)
-    if (!file) {
-      console.error(
-        'unable to find working directory file to apply included change: ' +
-          path
-      )
-      return
-    }
-
+  private onIncludeChanged = (
+    file:
+      | WorkingDirectoryFileChange
+      | ReadonlyArray<WorkingDirectoryFileChange>,
+    include: boolean
+  ) => {
     this.props.dispatcher.changeFileIncluded(
       this.props.repository,
       file,

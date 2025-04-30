@@ -3412,13 +3412,25 @@ export class AppStore extends TypedBaseStore<IAppState> {
   /** This shouldn't be called directly. See `Dispatcher`. */
   public _changeFileIncluded(
     repository: Repository,
-    file: WorkingDirectoryFileChange,
+    file:
+      | WorkingDirectoryFileChange
+      | ReadonlyArray<WorkingDirectoryFileChange>,
     include: boolean
   ): Promise<void> {
-    const selection = include
-      ? file.selection.withSelectAll()
-      : file.selection.withSelectNone()
-    this.updateWorkingDirectoryFileSelection(repository, file, selection)
+    const files = Array.isArray(file) ? file : [file]
+    const modifiedIds = new Set<string>(files.map(f => f.id))
+
+    this.repositoryStateCache.updateChangesState(repository, state => {
+      const workingDirectory = WorkingDirectoryStatus.fromFiles(
+        state.workingDirectory.files.map(f =>
+          modifiedIds.has(f.id) ? f.withIncludeAll(include) : f
+        )
+      )
+
+      return { workingDirectory }
+    })
+
+    this.emitUpdate()
     return Promise.resolve()
   }
 

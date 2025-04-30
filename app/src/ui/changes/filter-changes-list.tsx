@@ -119,7 +119,12 @@ interface IFilterChangesListProps {
   readonly rebaseConflictState: RebaseConflictState | null
   readonly selectedFileIDs: ReadonlyArray<string>
   readonly onFileSelectionChanged: (rows: ReadonlyArray<number>) => void
-  readonly onIncludeChanged: (path: string, include: boolean) => void
+  readonly onIncludeChanged: (
+    file:
+      | WorkingDirectoryFileChange
+      | ReadonlyArray<WorkingDirectoryFileChange>,
+    include: boolean
+  ) => void
   readonly onCreateCommit: (context: ICommitContext) => Promise<boolean>
   readonly onDiscardChanges: (file: WorkingDirectoryFileChange) => void
   readonly askForConfirmationOnDiscardChanges: boolean
@@ -391,13 +396,11 @@ export class FilterChangesList extends React.Component<
 
   private onIncludeAllChanged = (event: React.FormEvent<HTMLInputElement>) => {
     const include = event.currentTarget.checked
-
-    const filteredItemPaths = [...this.state.filteredItems.values()].map(
-      i => i.change.path
+    const filteredItemPaths = Array.from(
+      this.state.filteredItems,
+      ([k, v]) => v.change
     )
-    filteredItemPaths.forEach(path =>
-      this.props.onIncludeChanged(path, include)
-    )
+    this.props.onIncludeChanged(filteredItemPaths, include)
   }
 
   private renderChangedFile = (
@@ -753,9 +756,7 @@ export class FilterChangesList extends React.Component<
             ? 'Include Selected Files'
             : 'Include selected files',
           action: () => {
-            selectedFiles.map(file =>
-              this.props.onIncludeChanged(file.path, true)
-            )
+            selectedFiles.map(file => this.props.onIncludeChanged(file, true))
           },
         },
         {
@@ -763,9 +764,7 @@ export class FilterChangesList extends React.Component<
             ? 'Exclude Selected Files'
             : 'Exclude selected files',
           action: () => {
-            selectedFiles.map(file =>
-              this.props.onIncludeChanged(file.path, false)
-            )
+            selectedFiles.map(file => this.props.onIncludeChanged(file, false))
           },
         },
         { type: 'separator' },
