@@ -1559,7 +1559,11 @@ export class CommitMessage extends React.Component<
 
           <AutocompletingInput
             required={true}
-            label={this.props.showInputLabels === true ? 'Summary' : undefined}
+            label={
+              this.props.showInputLabels === true
+                ? t('common.summary', 'Summary')
+                : undefined
+            }
             screenReaderLabel="Commit summary"
             className={summaryInputClassName}
             placeholder={placeholder}
@@ -1584,7 +1588,9 @@ export class CommitMessage extends React.Component<
         {this.state.isRuleFailurePopoverOpen && this.renderRuleFailurePopover()}
 
         {this.props.showInputLabels === true && (
-          <label htmlFor="commit-message-description">Description</label>
+          <label htmlFor="commit-message-description">
+            {t('common.description', 'Description')}
+          </label>
         )}
         <FocusContainer
           className="description-focus-container"

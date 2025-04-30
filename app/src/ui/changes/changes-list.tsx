@@ -1089,7 +1089,7 @@ export class ChangesList extends React.Component<
         : t('changes-list.files', 'files')
     const selectedChangesDescription = t(
       'changes-list.files-changes-description',
-      '{{0}}/{{1}} changed {{2}}  included',
+      '{{0}}/{{1}} changed {{2}} included',
       { 0: selectedChangeCount, 1: files.length, 2: totalFilesPlural }
     )
 

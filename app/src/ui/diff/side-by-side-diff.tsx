@@ -1608,7 +1608,7 @@ export class SideBySideDiff extends React.Component<
           1: plural,
           2: suffix,
         })
-      : t('side-by-side-diff.discard', `Discard  {{0}} line{{1}}{{2}}`, {
+      : t('side-by-side-diff.discard', `Discard {{0}} line{{1}}{{2}}`, {
           0: type,
           1: plural,
           2: suffix,
