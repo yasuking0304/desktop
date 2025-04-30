@@ -306,7 +306,9 @@ export class RepositorySettings extends React.Component<
   }
 
   private onShowGitIgnoreExamples = () => {
-    this.props.dispatcher.openInBrowser('https://git-scm.com/docs/gitignore')
+    this.props.dispatcher.openInBrowser(
+      t('url.git-scm-com-docs-gitignore', 'https://git-scm.com/docs/gitignore')
+    )
   }
 
   private onSubmit = async () => {

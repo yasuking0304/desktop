@@ -196,7 +196,7 @@
     "exclude-selected-files-darwin": "Exclude Selected Files",
     "file": "file",
     "files": "files",
-    "files-changes-description": "{{0}}/{{1}} changed {{2}}  included",
+    "files-changes-description": "{{0}}/{{1}} changed {{2}} included",
     "files-description": "{{0}} changed {{1}}",
     "ignore-all-file-add-to-gitignore": "Ignore all {{0}} files (add to .gitignore)",
     "ignore-all-file-add-to-gitignore-darwin": "Ignore All {{0}} Files (Add to .gitignore)",
@@ -243,7 +243,7 @@
     "you-planning-to-use-this-fork": "How are you planning to use this fork?"
   },
   "choose-target-branch": {
-    "cherry-pick-number-commit-to-a-branch": "Cherry-pick {{0}} {{1}}  to a branch",
+    "cherry-pick-number-commit-to-a-branch": "Cherry-pick {{0}} {{1}} to a branch",
     "cherry-pick-to-new-branch": "Cherry-pick to new branch",
     "cherry-pick-to-new-branch-darwin": "Cherry-pick to New Branch",
     "multiple-commits": "commits",
@@ -501,6 +501,7 @@
     "sign-into-2-darwin": " ",
     "sign-out": "Sign out",
     "sign-out-darwin": "Sign Out",
+    "summary": "Summary",
     "tag-name": "Tag name",
     "tag-name-darwin": "Tag Name",
     "undo": "Undo",
@@ -1662,7 +1663,7 @@
     "collapse-expanded-lines": "Collapse expanded lines",
     "collapse-expanded-lines-darwin": "Collapse Expanded Lines",
     "copy": "Copy",
-    "discard": "Discard  {{0}} line{{1}}{{2}}",
+    "discard": "Discard {{0}} line{{1}}{{2}}",
     "discard-darwin": "Discard {{0}} Line{{1}}{{2}}",
     "expand-whole-file": "Expand whole file",
     "expand-whole-file-darwin": "Expand Whole File",
@@ -1898,6 +1899,7 @@
     "would-you-like-to-update": "Would you like to update the remote to use the expected URL?"
   },
   "url": {
+    "git-scm-com-docs-gitignore": "https://git-scm.com/docs/gitignore",
     "github-desktop-issue": "https://github.com/yasuking0304/desktop/issues/new/choose",
     "github-desktop-issue-linux": "https://github.com/shiftkey/desktop/issues/new/choose",
     "keyboard-shortcuts": "https://docs.github.com/zh/desktop/installing-and-configuring-github-desktop/overview/keyboard-shortcuts",
@@ -1907,7 +1909,7 @@
   },
   "warn-force-push-dialog": {
     "are-you-sure-operation": "Are you sure you want to {{0}}?",
-    "begin-operation": "Begin {0}",
+    "begin-operation": "Begin {{0}}",
     "end-of-the-operation-flow": "At the end of the {{0}} flow, GitHub Desktop will enable you to force push the branch to update the upstream branch. Force pushing will alter the history on the remote and potentially cause problems for others collaborating on this branch.",
     "require-force-push": "{{0}} will require force push",
     "require-force-push-darwin": "{{0}} Will Require Force Push"
