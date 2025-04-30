@@ -44,6 +44,7 @@ export type MenuEvent =
   | 'test-app-error'
   | 'decrease-active-resizable-width'
   | 'increase-active-resizable-width'
+  | 'toggle-changes-filter'
   | TestMenuEvent
 
 /**

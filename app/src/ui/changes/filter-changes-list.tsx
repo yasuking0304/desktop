@@ -219,6 +219,9 @@ interface IFilterChangesListProps {
   readonly filterText: string
 
   readonly includedChangesInCommitFilter: boolean
+
+  /** Whether or not to show the changes filter */
+  readonly showChangesFilter: boolean
 }
 
 interface IFilterChangesListState {
@@ -1299,6 +1302,10 @@ export class FilterChangesList extends React.Component<
   }
 
   private renderFilterBox = () => {
+    if (!this.props.showChangesFilter) {
+      return null
+    }
+
     const buttonTextLabel = `Filter Options ${
       this.props.includedChangesInCommitFilter ? '(1 applied)' : ''
     }`
@@ -1344,7 +1351,11 @@ export class FilterChangesList extends React.Component<
     )
   }
 
-  private isIncludedInCommit(item: IChangesListItem) {
+  private isIncludedInCommit = (item: IChangesListItem) => {
+    if (!this.props.showChangesFilter) {
+      return true
+    }
+
     return item.change.selection.getSelectionType() !== DiffSelectionType.None
   }
 
@@ -1363,7 +1374,9 @@ export class FilterChangesList extends React.Component<
             ref={this.filterListRef}
             id="changes-list"
             rowHeight={RowHeight}
-            filterText={this.props.filterText}
+            filterText={
+              this.props.showChangesFilter ? this.props.filterText : ''
+            }
             filterTextBox={this.filterTextBox}
             onFilterListResultsChanged={this.onFilterListResultsChanged}
             selectedItems={this.state.selectedItems}
@@ -1387,6 +1400,7 @@ export class FilterChangesList extends React.Component<
               workingDirectory: workingDirectory,
               isCommitting: isCommitting,
               focusedRow: this.state.focusedRow,
+              showChangesFilter: this.props.showChangesFilter,
             }}
             onItemContextMenu={this.onItemContextMenu}
             renderCustomFilterRow={this.renderFilterRow}
