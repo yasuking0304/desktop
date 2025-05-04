@@ -530,6 +530,8 @@ export class App extends React.Component<IAppProps, IAppState> {
         return this.resizeActiveResizable('increase-active-resizable-width')
       case 'decrease-active-resizable-width':
         return this.resizeActiveResizable('decrease-active-resizable-width')
+      case 'toggle-changes-filter':
+        return this.toggleChangesFilterVisibility()
       default:
         if (isTestMenuEvent(name)) {
           return showTestUI(
@@ -541,6 +543,13 @@ export class App extends React.Component<IAppProps, IAppState> {
         }
         return assertNever(name, `Unknown menu event name: ${name}`)
     }
+  }
+
+  /**
+   * This method dispatches an action to update the changes filter visibility
+   */
+  private toggleChangesFilterVisibility() {
+    this.props.dispatcher.toggleChangesFilterVisibility()
   }
 
   /**
@@ -3381,6 +3390,7 @@ export class App extends React.Component<IAppProps, IAppState> {
           showCommitLengthWarning={this.state.showCommitLengthWarning}
           onCherryPick={this.startCherryPickWithoutBranch}
           pullRequestSuggestedNextAction={state.pullRequestSuggestedNextAction}
+          showChangesFilter={state.showChangesFilter}
         />
       )
     } else if (selectedState.type === SelectionType.CloningRepository) {

@@ -9,6 +9,7 @@ import * as ipcWebContents from '../ipc-webcontents'
 import { mkdir } from 'fs/promises'
 import { t } from 'i18next'
 import { buildTestMenu } from './build-test-menu'
+import { enableFilteredChangesList } from '../../lib/feature-flag'
 
 const createPullRequestLabel = __DARWIN__
   ? t('menu.create-pull-request-darwin', 'Create Pull Request')
@@ -52,6 +53,7 @@ export function buildDefaultMenu({
   isForcePushForCurrentRepository = false,
   isStashedChangesVisible = false,
   askForConfirmationWhenStashingAllChanges = true,
+  isChangesFilterVisible = true,
 }: MenuLabelsEvent): Electron.Menu {
   contributionTargetDefaultBranch = truncateWithEllipsis(
     contributionTargetDefaultBranch,
@@ -269,6 +271,20 @@ export function buildDefaultMenu({
           ? emit('hide-stashed-changes')
           : emit('show-stashed-changes'),
       },
+      ...(enableFilteredChangesList()
+        ? [
+            {
+              label: __DARWIN__
+                ? `${isChangesFilterVisible ? 'Hide' : 'Show'} Changes Filter`
+                : `${
+                    isChangesFilterVisible ? 'Hide' : 'Show'
+                  } Toggle Chan&ges Filter`,
+              id: 'toggle-changes-filter',
+              accelerator: 'CmdOrCtrl+L',
+              click: emit('toggle-changes-filter'),
+            },
+          ]
+        : []),
       {
         label: __DARWIN__
           ? t('menu.toggle-full-screen-darwin', 'Toggle Full Screen')

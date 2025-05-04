@@ -89,6 +89,9 @@ interface IChangesSidebarProps {
   readonly commitSpellcheckEnabled: boolean
 
   readonly showCommitLengthWarning: boolean
+
+  /** Whether or not to show the changes filter */
+  readonly showChangesFilter: boolean
 }
 
 export class ChangesSidebar extends React.Component<IChangesSidebarProps, {}> {
@@ -197,17 +200,12 @@ export class ChangesSidebar extends React.Component<IChangesSidebarProps, {}> {
     )
   }
 
-  private onIncludeChanged = (path: string, include: boolean) => {
-    const workingDirectory = this.props.changes.workingDirectory
-    const file = workingDirectory.files.find(f => f.path === path)
-    if (!file) {
-      console.error(
-        'unable to find working directory file to apply included change: ' +
-          path
-      )
-      return
-    }
-
+  private onIncludeChanged = (
+    file:
+      | WorkingDirectoryFileChange
+      | ReadonlyArray<WorkingDirectoryFileChange>,
+    include: boolean
+  ) => {
     this.props.dispatcher.changeFileIncluded(
       this.props.repository,
       file,
@@ -461,6 +459,7 @@ export class ChangesSidebar extends React.Component<IChangesSidebarProps, {}> {
           includedChangesInCommitFilter={
             this.props.changes.includedChangesInCommitFilter
           }
+          showChangesFilter={this.props.showChangesFilter}
         />
         {this.renderUndoCommit(rebaseConflictState)}
       </div>

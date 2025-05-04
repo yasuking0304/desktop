@@ -501,7 +501,7 @@
     "sign-into-2-darwin": " にサインイン",
     "sign-out": "サインアウト",
     "sign-out-darwin": "サインアウト",
-    "summary": "まとめ",
+    "summary": "要約",
     "tag-name": "タグ名(日本語は使用できません)",
     "tag-name-darwin": "タグ名(日本語は使用できません)",
     "undo": "元に戻す",
@@ -861,7 +861,7 @@
     "included-in-commit": "コミットに含まれる ({{0}})",
     "matching-your-filter": "フィルター \"{{0}}\" に一致する",
     "number-description": "{{0}}/",
-    "one-applied": "(1 applied)",
+    "one-applied": "(1件適用)",
     "open-in-external-editor": "{{0}} で開く",
     "sorry-i-cannot-find-any-changed-files": "申し訳ありませんが、{{0}}{{1}}{{2}}変更ファイルは見つかりません。",
     "stashed-changes": "一時退避した変更",
@@ -1546,7 +1546,7 @@
     "is-not-a-valid-name": " は有効な名前ではありません。",
     "render-warning-message-1": " ",
     "render-warning-message-2": " として{{0}}されます。",
-    "spaces-and-invalid-characters": "半角スペースと無効な文字は \"ハイフン\" に置き換えられます。"
+    "spaces-and-invalid-characters": "半角スペースと無効な文字はハイフンに置き換えられます。"
   },
   "relative-time": {
     "just-now": "たった今"
@@ -1627,15 +1627,15 @@
   "selected-commits": {
     "drag-the-commits-1": "Drag the commits to the branch menu to cherry-pick them.",
     "drag-the-commits-2": "Drag the commits to squash or reorder them.",
-    "drag-the-commits-3": "Right click on multiple commits to see options.",
+    "drag-the-commits-3": "複数のコミットを選択して右クリックするとオプションが表示されます。",
     "file-does-not-exist": "ファイルがディスク上に存在しません",
     "file-does-not-exist-darwin": "ファイルがディスク上に存在しません",
     "no-commit-selected": "コミットが選択されていません",
     "no-file-selected": "ファイルが選択されていません",
     "number-files-changed": "{{0}}{{1}} 変更",
     "open-in-external-editor": "{{0}} で開く",
-    "select-a-single-commit": "単一のコミット {{0}}を選択して差異を表示します。",
-    "unable-to-display-diff": "複数の {{0}}が選択されている場合、差異を表示できません。",
+    "select-a-single-commit": "差分を表示するには、単一のコミットまたは連続するコミットの範囲を選択します。",
+    "unable-to-display-diff": "連続しない複数が選択されている場合、差異を表示できません。",
     "view-on-github": "GitHub で確認",
     "view-on-github-enteprise": "GitHub Enterprise で確認",
     "you-can": "以下の対応が可能です:"
@@ -1709,7 +1709,7 @@
     "terms-of-service": "利用規約",
     "welcome-sends-usage-1": "GitHub Desktop は利用メトリクスを送信して製品を改善し、機能の決定をお知らせします。送信されるメトリクスとその利用方法について詳しく知りたい場合、",
     "welcome-sends-usage-2": "をご覧ください。",
-    "welcome-text": "GitHub Desktop は「GitHub および GitHub Enterprise 」のプロジェクトを円滑に遂行する方法を提供します。下記の手順でサインインして、プロジェクトを開始してください。",
+    "welcome-text": "GitHub Desktop は GitHub および GitHub Enterprise のプロジェクトを円滑に遂行する方法を提供します。下記の手順でサインインして、プロジェクトを開始してください。",
     "welcome-to-1": " ",
     "welcome-to-2": " にようこそ"
   },
@@ -1739,19 +1739,19 @@
   "status": {
     "conflicted": "競合中",
     "copied": "コピー",
-    "delete-suffix-on-branch": " on {{0}}",
+    "delete-suffix-on-branch": "{{0}}の",
     "deleted": "削除",
-    "do-not-include-this-file": "ファイルをインクルードしない{{0}}",
+    "do-not-include-this-file": "{{0}}ファイルをインクルードしない",
     "modified": "変更",
-    "new": "追加",
+    "new": "新規",
     "renamed": "リネーム",
     "resolved": "解決済み",
-    "suffix-from-branch": " from {{0}}",
-    "use-the-added-file": "ファイルを追加する{{0}}",
-    "use-the-modified-file": "ファイルを更新する{{0}}",
-    "using-the-added-file": "追加したファイルを使用する{{0}}",
-    "using-the-deleted-file": "削除したファイルを使用する{{0}}",
-    "using-the-modified-file": "更新したファイルを使用する{{0}}"
+    "suffix-from-branch": "{{0}} から",
+    "use-the-added-file": "{{0}}ファイルを追加する",
+    "use-the-modified-file": "{{0}}ファイルを更新する",
+    "using-the-added-file": "{{0}}追加したファイルを使用する",
+    "using-the-deleted-file": "{{0}}削除したファイルを使用する",
+    "using-the-modified-file": "{{0}}更新したファイルを使用する"
   },
   "submodule-diff": {
     "modified": "変更が加えられています",

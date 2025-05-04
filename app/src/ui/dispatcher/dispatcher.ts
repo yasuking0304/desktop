@@ -338,7 +338,9 @@ export class Dispatcher {
   /** Change the file's includedness. */
   public changeFileIncluded(
     repository: Repository,
-    file: WorkingDirectoryFileChange,
+    file:
+      | WorkingDirectoryFileChange
+      | ReadonlyArray<WorkingDirectoryFileChange>,
     include: boolean
   ): Promise<void> {
     return this.appStore._changeFileIncluded(repository, file, include)
@@ -4020,5 +4022,9 @@ export class Dispatcher {
       placeholderId,
       bypassURL
     )
+  }
+
+  public toggleChangesFilterVisibility() {
+    this.appStore._toggleChangesFilterVisibility()
   }
 }
