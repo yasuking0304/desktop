@@ -1857,7 +1857,7 @@
     "this-may-indicate-attackers": "This may indicate attackers are trying to steal your data.",
     "untrusted-server": "Untrusted server",
     "untrusted-server-darwin": "Untrusted Server",
-    "view-certificate-": "Add certificate",
+    "view-certificate": "Add certificate",
     "view-certificate-darwin": "View Certificate"
   },
   "update-available": {

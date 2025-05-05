@@ -100,7 +100,7 @@
     "pushing-to": "推送至 {{0}}",
     "refreshing-repository": "刷新存储库",
     "refreshing-repository-darwin": "刷新存储库",
-    "unable-to-initialize-cherry-pick": "Unable to initialize cherry-pick progress. No commits provided."
+    "unable-to-initialize-cherry-pick": "无法初始化 Cherry-Pick 进度。未提供任何提交。"
   },
   "appearance": {
     "dark": "Dark",
@@ -212,8 +212,8 @@
     "stash-all-changes": "隐藏所有更改",
     "stash-all-changes-darwin": "隐藏所有更改",
     "stashed-changes": "隐藏的更改",
-    "summary-required": "摘要（必填）",
-    "update-filename": "Update {{0}}"
+    "summary-required": "摘要(必填)",
+    "update-filename": "更新 {{0}}"
   },
   "checkout": {
     "checking-out-branch": "检出分支 {{0}}",
@@ -223,12 +223,12 @@
     "switching-to-branch-darwin": "切换到分支"
   },
   "cherry-pick-conflicts-banner": {
-    "resolve-conflicts-to-continue-1": "Resolve conflicts to continue cherry-picking onto ",
-    "resolve-conflicts-to-continue-2": "."
+    "resolve-conflicts-to-continue-1": "解决冲突以继续挑选 ",
+    "resolve-conflicts-to-continue-2": "。"
   },
   "cherry-pick-undone": {
-    "cherry-pick-undone-1": "Cherry-pick undone. Successfully removed the {{0}} copied {{1}} from ",
-    "cherry-pick-undone-2": ".",
+    "cherry-pick-undone-1": "已撤消挑选。已成功从 ",
+    "cherry-pick-undone-2": " 中移除 {{0}} 个复制的提交。",
     "multiple-commits": "提交",
     "one-commit": "提交"
   },
@@ -243,21 +243,21 @@
     "you-planning-to-use-this-fork": "您打算如何使用这个分叉?"
   },
   "choose-target-branch": {
-    "cherry-pick-number-commit-to-a-branch": "Cherry-pick {{0}} {{1}} to a branch",
+    "cherry-pick-number-commit-to-a-branch": "挑选 {{0}} 提交至分支",
     "cherry-pick-to-new-branch": "挑选新分支",
     "cherry-pick-to-new-branch-darwin": "挑选新分支",
     "multiple-commits": "提交",
-    "ok-button-text-to-1": "{{0}} to ",
+    "ok-button-text-to-1": "{{0}} 到 ",
     "ok-button-text-to-2": "…",
-    "okbutton": "Cherry-pick {{0}} {{1}}",
+    "okbutton": "精选 {{0}}{{1}}",
     "one-or-less-commit": "提交",
     "you-are-not-able-to-cherry-pick": "你不能从同一个分支中进行挑选"
   },
   "cli-installed": {
     "command-line-tool-installed": "已安装命令行工具",
     "command-line-tool-installed-darwin": "已安装命令行工具",
-    "the-command-line-tool-has-been-installed-1": "The 已安装命令行工具 has been installed at ",
-    "the-command-line-tool-has-been-installed-2": "."
+    "the-command-line-tool-has-been-installed-1": "已安装命令行工具已在 ",
+    "the-command-line-tool-has-been-installed-2": " 安装。"
   },
   "clone": {
     "cloning-into": "克隆到 {{0}}"
@@ -283,17 +283,17 @@
     "select": "选择"
   },
   "cloneable-repository-filter-list": {
-    "created-a-repository-1": " ",
-    "created-a-repository-2": " if you've created a repository recently.",
-    "loading-repositories": "Loading repositories from {{0}}…",
-    "looks-like-no-repositories-1": "Looks like there are no repositories for ",
-    "looks-like-no-repositories-2": " on {{0}}.",
-    "no-match": "Sorry, I can't find any repository matching ",
-    "placeholder-filter-repositories": "Filter your repositories",
-    "refresh-this-list": "Refresh this list",
-    "tooltip-refresh-list": "Refresh the list of repositories",
-    "your-repositories": "Your repositories",
-    "your-repositories_darwin": "Your Repositories"
+    "created-a-repository-1": "如果您最近创建了存储库, 请按 ",
+    "created-a-repository-2": " 。",
+    "loading-repositories": "正在从 {{0}} 加载存储库…",
+    "looks-like-no-repositories-1": "{{0}} 上似乎没有 ",
+    "looks-like-no-repositories-2": " 的存储库。",
+    "no-match": "抱歉, 我找不到任何匹配的存储库:",
+    "placeholder-filter-repositories": "过滤你的存储库",
+    "refresh-this-list": "刷新此列表",
+    "tooltip-refresh-list": "刷新存储库列表",
+    "your-repositories": "存储库",
+    "your-repositories_darwin": "存储库"
   },
   "cloning-repositories-store": {
     "clone": "克隆到 {{0}}"
@@ -304,7 +304,7 @@
   "close-keyword-filter": {
     "commit": "提交",
     "pull-request": "拉取请求",
-    "this-action-context-closes": "This {{0}} closes {{1}}."
+    "this-action-context-closes": "此{{0}}关闭 {{1}}."
   },
   "commit-conflicts-warning": {
     "are-you-sure-you-want-to-commit": "您确定要提交这些有冲突的文件吗?",
@@ -408,14 +408,14 @@
     "update-email": "更新电子邮件",
     "update-email-1": "The email in your global Git config (",
     "update-email-darwin": "更新电子邮件",
-    "you-can-also-choose-an-email-1": "You can also choose an email local to this repository from the ",
-    "you-can-also-choose-an-email-2": ".",
-    "you-can-choose-an-email-1": "You can choose an email local to this repository from the ",
-    "you-can-choose-an-email-2": "."
+    "you-can-also-choose-an-email-1": "您还可以从 ",
+    "you-can-also-choose-an-email-2": " 中选择此存储库本地的电子邮件。",
+    "you-can-choose-an-email-1": "您可以从 ",
+    "you-can-choose-an-email-2": " 中选择此存储库本地的电子邮件。"
   },
   "commit-summary": {
     "collapse": "折叠",
-    "empty-commit-message": "Empty commit message",
+    "empty-commit-message": "空的提交信息",
     "expand": "展开",
     "not-included": " 不包括。",
     "number-files-added": "{{0}} added",
@@ -425,12 +425,12 @@
     "number-lines-added": "{{0}} {{1}} added",
     "number-lines-deleted": "{{0}} {{1}} deleted",
     "number-unreachable-commits": "{{0}} unreachable {{1}}",
-    "showing-changes-from-1": "Showing changes from ",
+    "showing-changes-from-1": "查看更改:",
     "showing-changes-from-2": " {{0}} {{1}}",
-    "tag": "tag",
-    "tags": "tags",
-    "this-commit-has-not-been-pushed": "This commit has not been pushed to the remote repository",
-    "this-commit-has-number-tags": "This commit has {{0}} {{1}} to push"
+    "tag": "标记",
+    "tags": "标记",
+    "this-commit-has-not-been-pushed": "此提交尚未推送到远程存储库",
+    "this-commit-has-number-tags": "此提交有 {{0}} {{1}} 个需要推送"
   },
   "common": {
     "about-github-desktop": "关于 GitHub Desktop",
@@ -1467,7 +1467,7 @@
     "your-branch-must-be-published": "Your branch must be published before opening a pull request."
   },
   "push-needs-pull-warning": {
-    "desktop-is-unable-to-push-commits": "桌面无法将提交推送到此分支，因为远程分支上存在本地分支中不存在的提交。请在推送之前获取这些新的提交，以便与本地提交进行协调。",
+    "desktop-is-unable-to-push-commits": "桌面无法将提交推送到此分支, 因为远程分支上存在本地分支中不存在的提交。请在推送之前获取这些新的提交, 以便与本地提交进行协调。",
     "fetch": "获取",
     "newer-commits-on-remote": "远程更新的提交",
     "newer-commits-on-remote-darwin": "远程更新的提交"
@@ -1841,24 +1841,24 @@
     "no-conflicts-remaining": "不存在冲突"
   },
   "unreachable-commits-dialog": {
-    "about-unreachable-commits": "Learn more about unreachable commits.",
-    "commit-reachability": "Commit reachability",
-    "commit-reachability-darwin": "Commit Reachability",
-    "reachable": "Reachable",
-    "unreachable": "Unreachable"
+    "about-unreachable-commits": "了解有关无法访问的提交的更多信息。",
+    "commit-reachability": "提交可达性",
+    "commit-reachability-darwin": "提交可达性",
+    "reachable": "可达",
+    "unreachable": "无法到达"
   },
   "untrusted-certificate": {
-    "gitHub-desktop-cannot-verify-1": "GitHub Desktop cannot verify the identity of {{0}}. The  certificate ({{1}}) is invalid or untrusted. ",
+    "gitHub-desktop-cannot-verify-1": "GitHub Desktop 无法验证 {{0}} 的身份。证书 ({{1}}) 无效或不受信任。",
     "gitHub-desktop-cannot-verify-2": " ",
-    "if-this-is-a-github-enterprise-trial": "If this is a GitHub Enterprise trial.",
-    "if-you-are-unsure-of-what-to-do": "If you are unsure of what to do, cancel and contact your system administrator.",
-    "if-your-github-enterprise-instance": "If your GitHub Enterprise instance is run on an unusual top-level domain.",
-    "in-some-cases": "In some cases, this may be expected. For example:",
-    "this-may-indicate-attackers": "This may indicate attackers are trying to steal your data.",
-    "untrusted-server": "Untrusted server",
-    "untrusted-server-darwin": "Untrusted Server",
-    "view-certificate-": "Add certificate",
-    "view-certificate-darwin": "View Certificate"
+    "if-this-is-a-github-enterprise-trial": "如果这是 GitHub Enterprise 试用版。",
+    "if-you-are-unsure-of-what-to-do": "如果您不确定该怎么做, 请取消并联系您的系统管理员。",
+    "if-your-github-enterprise-instance": "如果您的 GitHub Enterprise 实例在不寻常的顶级域上运行。",
+    "in-some-cases": "在某些情况下, 这可能是意料之中的。例如:",
+    "this-may-indicate-attackers": "这可能表明攻击者正试图窃取您的数据。",
+    "untrusted-server": "不受信任的服务器",
+    "untrusted-server-darwin": "不受信任的服务器",
+    "view-certificate": "添加证书",
+    "view-certificate-darwin": "查看证书"
   },
   "update-available": {
     "an-optimized-arm-version-1": "您的 {{0}} 机器可以使用优化版本的 GitHub Desktop, 并将在下次启动时或现在 ",
@@ -1879,24 +1879,24 @@
   },
   "update-branch": {
     "create-a-merge-commit": "创建合并提交",
-    "description-create-a-merge-commit": "The commits from the selected branch will be added to the current branch via a merge commit.",
-    "description-rebase": "The commits from the selected branch will be rebased and added to the current branch.",
-    "description-squash-and-merge": "The commits in the selected branch will be combined into one commit in the current branch.",
+    "description-create-a-merge-commit": "所选分支的提交将通过合并提交添加到当前分支。",
+    "description-rebase": "所选分支的提交将被重新建立并添加到当前分支。",
+    "description-squash-and-merge": "所选分支中的提交将合并为当前分支中的一次提交。",
     "rebase": "变基",
     "squash-and-merge": "挤压并合并"
   },
   "upstream-already-exists": {
     "current": "Current: ",
     "expected": "Expected: ",
-    "must-have-a-github-repository": "A repository must have a GitHub repository to add an upstream remote",
-    "must-have-a-parent-repository": "A repository must have a parent repository to add an upstream remote",
+    "must-have-a-github-repository": "存储库必须具有 GitHub 存储库才能添加上游远程",
+    "must-have-a-parent-repository": "存储库必须具有父存储库才能添加上游远程",
     "the-repository-is-a-fork-1": "The repository ",
     "the-repository-is-a-fork-2": " is a fork of ",
     "the-repository-is-a-fork-3": ", but its ",
     "the-repository-is-a-fork-4": " remote points elsewhere.",
     "upstream-already-exists": "Upstream 经存在",
     "upstream-already-exists-darwin": "Upstream 经存在",
-    "would-you-like-to-update": "Would you like to update the remote to use the expected URL?"
+    "would-you-like-to-update": "您想更新远程以使用预期的 URL 吗?"
   },
   "url": {
     "git-scm-com-docs-gitignore": "https://git-scm.com/docs/gitignore/zh_HANS-CN",
@@ -1920,12 +1920,12 @@
     "do-you-want-to-continue-anyway": "您是否仍想继续?",
     "undo-commit": "撤消提交",
     "undo-commit-darwin": "撤消提交",
-    "undoing-a merge-commit": "Undoing a merge commit will apply the changes from the merge into your working directory, and committing again will create an entirely new commit. This means you will lose the merge commit and, as a result, commits from the merged branch could disappear from this branch."
+    "undoing-a merge-commit": "撤消合并提交会将合并后的更改应用到您的工作目录中, 再次提交将创建一个全新的提交。这意味着您将丢失合并提交, 因此, 合并分支中的提交可能会从该分支中\u200b\u200b消失。"
   },
   "warning-before-reset": {
     "reset-to-commit": "重置以提交",
     "reset-to-commit-darwin": "重置以提交",
-    "you-have-changes-in-progress": "You have changes in progress. Resetting to a previous commit might result in some of these changes being lost. Do you want to continue anyway?"
+    "you-have-changes-in-progress": "您正在进行一些更改。重置为之前的提交可能会导致部分更改丢失。您仍要继续吗?"
   },
   "welcome": {
     "definitions-git": " 是版本控制系统。",
@@ -1943,8 +1943,8 @@
     "continue-in-browser-darwin": "在浏览器中继续",
     "push-rejected": "推送被拒绝",
     "push-rejected-darwin": "推送被拒绝",
-    "the-push-was-rejected-by-the-server-1": "The push was rejected by the server for containing a modification to the workflow file ",
-    "the-push-was-rejected-by-the-server-2": ". In order to be able to push to workflow files GitHub Desktop needs to request additional permissions.",
+    "the-push-was-rejected-by-the-server-1": "由于推送包含对工作流程文件 ",
+    "the-push-was-rejected-by-the-server-2": " 的修改, 服务器拒绝了该推送。为了能够推送工作流程文件, GitHub Desktop 需要请求额外的权限。",
     "would-you-like-to-open-a-browser": "您是否要打开浏览器授予 GitHub Desktop 更新工作流文件的权限?"
   }
 }

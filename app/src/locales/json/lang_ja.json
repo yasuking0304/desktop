@@ -1857,8 +1857,8 @@
     "this-may-indicate-attackers": "これは、攻撃者がデータを盗もうとしていることを示している可能性があります。",
     "untrusted-server": "信頼できないサーバー",
     "untrusted-server-darwin": "信頼できないサーバー",
-    "view-certificate-": "証明書の追加",
-    "view-certificate-darwin": "証明書の追加"
+    "view-certificate": "証明書の追加",
+    "view-certificate-darwin": "証明書の表示"
   },
   "update-available": {
     "an-optimized-arm-version-1": "あなたの{{0}} PCに最適化されたバージョンの GitHub Desktop が利用可能で次回の起動時にインストールされます。または今すぐ ",

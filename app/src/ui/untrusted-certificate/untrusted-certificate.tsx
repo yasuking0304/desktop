@@ -108,7 +108,7 @@ export class UntrustedCertificate extends React.Component<
                     'View Certificate'
                   )
                 : t(
-                    'untrusted-certificate.view-certificate-',
+                    'untrusted-certificate.view-certificate',
                     'Add certificate'
                   )
             }
