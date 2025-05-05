@@ -1019,7 +1019,7 @@ export class CommitMessage extends React.Component<
         <CommitWarning icon={CommitWarningIcon.Information}>
           {t(
             'commit-message.will-modify-your-most-recent-commit-1',
-            'Your changes will modify your'
+            'Your changes will modify your '
           )}
           <strong>
             {t(
@@ -1415,7 +1415,10 @@ export class CommitMessage extends React.Component<
     const loading =
       isCommitting || isGeneratingCommitMessage ? <Loading /> : undefined
     const generatingCommitDetailsMessage = isGeneratingCommitMessage
-      ? 'Generating commit details…'
+      ? t(
+          'commit-message.generating-commit-details',
+          'Generating commit details…'
+        )
       : null
     const tooltip =
       generatingCommitDetailsMessage ?? this.getButtonTooltip(buttonEnabled)

@@ -4,7 +4,7 @@
     "application-is-currently-running": "该应用程序目前正在开发中, 不会收到任何更新。",
     "build": "构建 {{0}}",
     "check-for-updates": "检查更新",
-    "check-out-the-beta-channel-1": "查看 ",
+    "check-out-the-beta-channel-1": "结帐 ",
     "check-out-the-beta-channel-2": "Beta Channel",
     "check-out-the-beta-channel-3": " ",
     "checking-for-updates": "正在检查更新…",
@@ -15,7 +15,7 @@
     "no-longer-supported-operating-systems": "此操作系统不再受支持。软件更新已被禁用。 ",
     "quit-and-install-update": "退出并安装更新",
     "release-notes": "发行说明",
-    "responsible-use-of-copilot": "负责任地使用 GitHub Desktop 中的 Copilot 功能",
+    "responsible-use-of-copilot": "GitHub Desktop 中 GitHub Copilot 的负责任使用",
     "supported-operating-systems": "支持的操作系统",
     "terms-and-conditions": "服务条款",
     "update-has-been-downloaded-and-is-ready": "更新已下载并准备安装。",
@@ -34,13 +34,13 @@
   },
   "accessibility-settings-banner": {
     "accessibility-settings": "辅助功能设置",
-    "check-out-1": "查看新的",
+    "check-out-1": "结帐新的",
     "check-out-2": "来控制链接下划线和差异复选标记的可见性。"
   },
   "acknowledgements": {
     "about-license-1": " ",
     "about-license-2": " 是一个根据 MIT 许可证发布的开源项目。您可以在 ",
-    "about-license-3": " 上查看源代码并为该项目做出贡献。",
+    "about-license-3": " 上结帐源代码并为该项目做出贡献。",
     "also-distributes-these-libraries": "GitHub Desktop 还分发这些库:",
     "license-and-open-source-notices": "开源许可和声明",
     "unknown-license": "未知许可证",
@@ -100,7 +100,7 @@
     "pushing-to": "推送至 {{0}}",
     "refreshing-repository": "刷新存储库",
     "refreshing-repository-darwin": "刷新存储库",
-    "unable-to-initialize-cherry-pick": "Unable to initialize cherry-pick progress. No commits provided."
+    "unable-to-initialize-cherry-pick": "无法初始化 Cherry-Pick 进度。未提供任何提交。"
   },
   "appearance": {
     "dark": "Dark",
@@ -112,6 +112,15 @@
     "tab-size": "选项卡大小",
     "tab-size-darwn": "选项卡大小",
     "theme": "主题"
+  },
+  "attribute-mismatch": {
+    "git-lfs-filters-are-configured-1": "Git LFS 过滤器已在您的",
+    "git-lfs-filters-are-configured-2": "中配置，但其值不符合预期。您要立即更新它们吗?",
+    "update-existing-filters": "更新现有过滤器",
+    "update-existing-filters-darwin": "更新现有过滤器",
+    "update-existing-git-lfs": "更新现有的 Git LFS 过滤器?",
+    "update-existing-git-lfs-darwin": "更新现有的 Git LFS 过滤器?",
+    "your-global-git-config": "全局 git 配置文件"
   },
   "authentication-form": {
     "sign-in-using-your-browser": "使用浏览器登录",
@@ -132,7 +141,7 @@
     "is-already-up-to-date-with-2": " 同步"
   },
   "branch-dropdown": {
-    "checking-out": "正在查看 {{0}}",
+    "checking-out": "正在结帐 {{0}}",
     "current-branch": "当前分支",
     "current-branch-darwin": "当前分支",
     "current-branch-is": "当前分支是 {{0}}",
@@ -212,8 +221,8 @@
     "stash-all-changes": "隐藏所有更改",
     "stash-all-changes-darwin": "隐藏所有更改",
     "stashed-changes": "隐藏的更改",
-    "summary-required": "摘要（必填）",
-    "update-filename": "Update {{0}}"
+    "summary-required": "摘要(必填)",
+    "update-filename": "更新 {{0}}"
   },
   "checkout": {
     "checking-out-branch": "检出分支 {{0}}",
@@ -223,12 +232,12 @@
     "switching-to-branch-darwin": "切换到分支"
   },
   "cherry-pick-conflicts-banner": {
-    "resolve-conflicts-to-continue-1": "Resolve conflicts to continue cherry-picking onto ",
-    "resolve-conflicts-to-continue-2": "."
+    "resolve-conflicts-to-continue-1": "解决冲突以继续挑选 ",
+    "resolve-conflicts-to-continue-2": "。"
   },
   "cherry-pick-undone": {
-    "cherry-pick-undone-1": "Cherry-pick undone. Successfully removed the {{0}} copied {{1}} from ",
-    "cherry-pick-undone-2": ".",
+    "cherry-pick-undone-1": "已撤消挑选。已成功从 ",
+    "cherry-pick-undone-2": " 中移除 {{0}} 个复制的提交。",
     "multiple-commits": "提交",
     "one-commit": "提交"
   },
@@ -243,21 +252,21 @@
     "you-planning-to-use-this-fork": "您打算如何使用这个分叉?"
   },
   "choose-target-branch": {
-    "cherry-pick-number-commit-to-a-branch": "Cherry-pick {{0}} {{1}} to a branch",
+    "cherry-pick-number-commit-to-a-branch": "挑选 {{0}} 提交至分支",
     "cherry-pick-to-new-branch": "挑选新分支",
     "cherry-pick-to-new-branch-darwin": "挑选新分支",
     "multiple-commits": "提交",
-    "ok-button-text-to-1": "{{0}} to ",
+    "ok-button-text-to-1": "{{0}} 到 ",
     "ok-button-text-to-2": "…",
-    "okbutton": "Cherry-pick {{0}} {{1}}",
+    "okbutton": "精选 {{0}}{{1}}",
     "one-or-less-commit": "提交",
     "you-are-not-able-to-cherry-pick": "你不能从同一个分支中进行挑选"
   },
   "cli-installed": {
     "command-line-tool-installed": "已安装命令行工具",
     "command-line-tool-installed-darwin": "已安装命令行工具",
-    "the-command-line-tool-has-been-installed-1": "The 已安装命令行工具 has been installed at ",
-    "the-command-line-tool-has-been-installed-2": "."
+    "the-command-line-tool-has-been-installed-1": "已安装命令行工具已在 ",
+    "the-command-line-tool-has-been-installed-2": " 安装。"
   },
   "clone": {
     "cloning-into": "克隆到 {{0}}"
@@ -283,17 +292,17 @@
     "select": "选择"
   },
   "cloneable-repository-filter-list": {
-    "created-a-repository-1": " ",
-    "created-a-repository-2": " if you've created a repository recently.",
-    "loading-repositories": "Loading repositories from {{0}}…",
-    "looks-like-no-repositories-1": "Looks like there are no repositories for ",
-    "looks-like-no-repositories-2": " on {{0}}.",
-    "no-match": "Sorry, I can't find any repository matching ",
-    "placeholder-filter-repositories": "Filter your repositories",
-    "refresh-this-list": "Refresh this list",
-    "tooltip-refresh-list": "Refresh the list of repositories",
-    "your-repositories": "Your repositories",
-    "your-repositories_darwin": "Your Repositories"
+    "created-a-repository-1": "如果您最近创建了存储库, 请按 ",
+    "created-a-repository-2": " 。",
+    "loading-repositories": "正在从 {{0}} 加载存储库…",
+    "looks-like-no-repositories-1": "{{0}} 上似乎没有 ",
+    "looks-like-no-repositories-2": " 的存储库。",
+    "no-match": "抱歉, 我找不到任何匹配的存储库:",
+    "placeholder-filter-repositories": "过滤你的存储库",
+    "refresh-this-list": "刷新此列表",
+    "tooltip-refresh-list": "刷新存储库列表",
+    "your-repositories": "存储库",
+    "your-repositories_darwin": "存储库"
   },
   "cloning-repositories-store": {
     "clone": "克隆到 {{0}}"
@@ -304,7 +313,7 @@
   "close-keyword-filter": {
     "commit": "提交",
     "pull-request": "拉取请求",
-    "this-action-context-closes": "This {{0}} closes {{1}}."
+    "this-action-context-closes": "此{{0}}关闭 {{1}}."
   },
   "commit-conflicts-warning": {
     "are-you-sure-you-want-to-commit": "您确定要提交这些有冲突的文件吗?",
@@ -323,8 +332,8 @@
   "commit-list": {
     "copy-tag": "复制标记",
     "copy-tags": "复制标记",
-    "view-on-github": "在 GitHub 上查看",
-    "view-on-github-enterprise": "在 GitHub Enterprise 上查看"
+    "view-on-github": "在 GitHub 上结帐",
+    "view-on-github-enterprise": "在 GitHub Enterprise 上结帐"
   },
   "commit-list-item": {
     "amend-commit": "修改提交…",
@@ -383,6 +392,7 @@
     "enable-commit-spellcheck": "启用提交拼写检查",
     "enable-commit-spellcheck-darwin": "启用提交拼写检查",
     "generate-commit-message": "使用 Copilot 生成提交消息{{0}}",
+    "generating-commit-details": "正在生成提交详细信息…",
     "link-create-a-fork": "创建一个分叉",
     "link-switch-branches": "切换分支",
     "must-be-selected": "。必须选择文件才能生成提交消息。",
@@ -395,42 +405,43 @@
     "select-one-or-more-files-to-commit": "选择要提交的一个或多个文件",
     "stop-amending": "停止修改",
     "summary-is-required-to-commit": "需要提交摘要",
-    "will-modify-your-most-recent-commit-1": "Your changes will modify your",
-    "will-modify-your-most-recent-commit-2": "most recent commit",
-    "will-modify-your-most-recent-commit-3": ". ",
-    "will-modify-your-most-recent-commit-4": " to make these changes as a new commit."
+    "will-modify-your-most-recent-commit-1": "您的更改将修改您的 ",
+    "will-modify-your-most-recent-commit-2": "最近的提交",
+    "will-modify-your-most-recent-commit-3": "。",
+    "will-modify-your-most-recent-commit-4": " 将这些更改作为新的提交。"
   },
   "commit-message-avatar": {
     "ignore": "忽視",
     "learn-more": "了解更多",
-    "learn-more-about": "Learn more about commit attribution",
+    "learn-more-about": "详细了解提交归因",
     "repository-settings": "存储库设置",
     "update-email": "更新电子邮件",
-    "update-email-1": "The email in your global Git config (",
+    "update-email-1": "全局 Git 配置中的电子邮件 (",
+    "update-email-2": ")",
     "update-email-darwin": "更新电子邮件",
-    "you-can-also-choose-an-email-1": "You can also choose an email local to this repository from the ",
-    "you-can-also-choose-an-email-2": ".",
-    "you-can-choose-an-email-1": "You can choose an email local to this repository from the ",
-    "you-can-choose-an-email-2": "."
+    "you-can-also-choose-an-email-1": "您还可以从 ",
+    "you-can-also-choose-an-email-2": " 中选择此存储库本地的电子邮件。",
+    "you-can-choose-an-email-1": "您可以从 ",
+    "you-can-choose-an-email-2": " 中选择此存储库本地的电子邮件。"
   },
   "commit-summary": {
     "collapse": "折叠",
-    "empty-commit-message": "Empty commit message",
+    "empty-commit-message": "空的提交信息",
     "expand": "展开",
     "not-included": " 不包括。",
-    "number-files-added": "{{0}} added",
-    "number-files-changed": "{{0}} changed {{1}}",
-    "number-files-deleted": "{{0}} deleted",
-    "number-files-midified": "{{0}} modified",
-    "number-lines-added": "{{0}} {{1}} added",
-    "number-lines-deleted": "{{0}} {{1}} deleted",
-    "number-unreachable-commits": "{{0}} unreachable {{1}}",
-    "showing-changes-from-1": "Showing changes from ",
+    "number-files-added": "已添加 {{0}}",
+    "number-files-changed": "{{0}} 更改了 {{1}}",
+    "number-files-deleted": "已删除{{0}}",
+    "number-files-midified": "{{0}}修改",
+    "number-lines-added": "已添加 {{0}}{{1}}",
+    "number-lines-deleted": "{{0}}{{1}} 已删除",
+    "number-unreachable-commits": "{{0}} 无法访问 {{1}}",
+    "showing-changes-from-1": "结帐更改:",
     "showing-changes-from-2": " {{0}} {{1}}",
-    "tag": "tag",
-    "tags": "tags",
-    "this-commit-has-not-been-pushed": "This commit has not been pushed to the remote repository",
-    "this-commit-has-number-tags": "This commit has {{0}} {{1}} to push"
+    "tag": "标记",
+    "tags": "标记",
+    "this-commit-has-not-been-pushed": "此提交尚未推送到远程存储库",
+    "this-commit-has-number-tags": "此提交有 {{0}} {{1}} 个需要推送"
   },
   "common": {
     "about-github-desktop": "关于 GitHub Desktop",
@@ -451,12 +462,13 @@
     "description": "描述",
     "discard": "丢弃",
     "do-not-show-message-again": "不再显示此消息",
+    "download": "下载 {{0}}",
     "email": "电子邮件",
     "enterprise-address": "Enterprise 地址",
     "error": "错误",
     "file": "文件",
     "files": "文件",
-    "finish": "Finish",
+    "finish": "结束",
     "github-desktop": "GitHub Desktop",
     "history": "历史记录",
     "i-understand": "我明白",
@@ -469,7 +481,9 @@
     "local-path-darwin": "本地路径",
     "multiple-commits": "次提交",
     "name": "姓名",
-    "no": "No",
+    "no": "不",
+    "not-now": "现在不要",
+    "not-now-darwin": "现在不要",
     "ok": "Ok",
     "one-commit": "次提交",
     "one-or-less-commit": "次提交",
@@ -506,9 +520,9 @@
     "tag-name-darwin": "标记名称（不允许使用汉字）",
     "undo": "撤销",
     "update": "更新",
-    "view-conflicts": "查看冲突",
-    "view-on-github": "在 GitHub 上查看",
-    "yes": "Yes",
+    "view-conflicts": "结帐冲突",
+    "view-on-github": "在 GitHub 上结帐",
+    "yes": "是",
     "your-email": "您的电子邮箱@example.com",
     "your-name": "您的姓名"
   },
@@ -525,39 +539,39 @@
     "select-branch-to-compare": "选择要比较的分支…",
     "select-branch-to-compare-darwin": "选择要比较的分支…",
     "squash-number-commits": "压缩 {{0}}个提交",
-    "the-compare-branch-1": "The compared branch (",
-    "the-compare-branch-2": ") is up to date with your branch",
-    "your-branch-1": "Your branch is up to date with the compared branch (",
-    "your-branch-2": ")"
+    "the-compare-branch-1": "比较的分支(",
+    "the-compare-branch-2": ")与您的分支保持同步",
+    "your-branch-1": "您的分支与比较的分支(",
+    "your-branch-2": ")保持同步"
   },
   "configure-git": {
-    "configure-git": "Configure Git",
-    "welcome-text": "This is used to identify the commits you create. Anyone will be able to see this information if you publish commits."
+    "configure-git": "配置 Git",
+    "welcome-text": "这用于标识您创建的提交。如果您发布提交, 任何人都可以看到此信息。"
   },
   "configure-git-user": {
-    "configure-manually": "Configure manually",
-    "example-commit": "Example commit",
-    "use-github-account": "Use my GitHub{{0}} account name and email address"
+    "configure-manually": "手动配置",
+    "example-commit": "示例提交",
+    "use-github-account": "使用我的 GitHub{{0}} 帐户名和电子邮件地址"
   },
   "confirm-abort-dialog": {
-    "abort": "Abort {{0}}",
-    "abort-darwin": "Abort {{0}}",
-    "are-you-sure-you-want-to-abort": "Are you sure you want to abort this {{0}}?",
-    "confirm-abort": "Confirm abort {{0}}",
-    "confirm-abort-darwin": "Confirm Abort {{0}}",
-    "this-will-take-you-back": "This will take you back to the original branch state and the conflicts you have already resolved will be discarded."
+    "abort": "中止 {{0}}",
+    "abort-darwin": "中止 {{0}}",
+    "are-you-sure-you-want-to-abort": "您确定要中止此 {{0}} 吗?",
+    "confirm-abort": "确认中止 {{0}}",
+    "confirm-abort-darwin": "确认中止 {{0}}",
+    "this-will-take-you-back": "这将使您回到原始分支状态, 并且您已经解决的冲突将被丢弃。"
   },
   "confirm-checkout-commit": {
-    "checking-out-a-commit": "Checking out a commit will create a detached HEAD, and you will no longer be on any branch. Are you sure you want to checkout this commit?",
-    "checkout": "Checkout",
-    "checkout-commit": "Checkout commit?",
-    "checkout-commit-darwin": "Checkout Commit?",
-    "do-not-show-this-messaeg-again": "Do not show this message again"
+    "checking-out-a-commit": "检出提交将创建一个分离的 HEAD, 并且您将不再位于任何分支上。您确定要检出此提交吗",
+    "checkout": "结帐",
+    "checkout-commit": "结帐提交?",
+    "checkout-commit-darwin": "结帐提交?",
+    "do-not-show-this-messaeg-again": "不再显示此消息"
   },
   "confirm-discard-stash": {
-    "are-you-sure-you-want-to-discard": "Are you sure you want to discard these stashed changes?",
-    "discard": "Discard stash?",
-    "discard-darwin": "Discard Stash?"
+    "are-you-sure-you-want-to-discard": "您确定要放弃这些隐藏的更改吗?",
+    "discard": "丢弃储藏物?",
+    "discard-darwin": "丢弃储藏物?"
   },
   "confirm-exit-tutorial": {
     "are-you-sure-you-want-to-leave": "您确定要离开教程吗? 这会带您返回主屏幕。",
@@ -571,24 +585,24 @@
     "want-to-force-push": "您确定要强制推送吗?"
   },
   "confirm-remove-repository": {
-    "also-move-this-repository": "Also move this repository to {{0}}",
-    "remove-repositry": "Remove repository",
-    "remove-repositry-darwin": "Remove Repository",
-    "the-repository-will-be-removed": "The repository will be removed from GitHub Desktop:",
-    "you-want-to-remove-repository-1": "Are you sure you want to remove the repository \"",
-    "you-want-to-remove-repository-2": "\" from GitHub Desktop?"
+    "also-move-this-repository": "将此存储库也移动到 {{0}}",
+    "remove-repositry": "删除存储库",
+    "remove-repositry-darwin": "删除存储库",
+    "the-repository-will-be-removed": "该存储库将从 GitHub Desktop 中删除：",
+    "you-want-to-remove-repository-1": "您确定要从 GitHub Desktop 中删除存储库 \"",
+    "you-want-to-remove-repository-2": "\" 吗?"
   },
   "conflicts-dialog": {
-    "all-conflicted-files-have-been-resolved": "All conflicted files have been resolved. ",
-    "all-resolutions-have-been-undone": "All resolutions have been undone.",
+    "all-conflicted-files-have-been-resolved": "所有冲突文件均已解决。 ",
+    "all-resolutions-have-been-undone": "所有决议均已撤销。",
     "file-has": "file has",
     "files-have": "files have",
-    "many-conflicted-files-have-been-resolved": "{{0}} conflicted {{1}} been resolved.",
-    "tooltip-resolve-all-changes-before-continuing": "Resolve all changes before continuing"
+    "many-conflicted-files-have-been-resolved": "{{0}}个冲突文件已解决。",
+    "tooltip-resolve-all-changes-before-continuing": "解决所有更改后再继续"
   },
   "conflicts-found-banner": {
-    "resolve-conflicts-to-continue-1": "Resolve conflicts to continue",
-    "resolve-conflicts-to-continue-2": "."
+    "resolve-conflicts-to-continue-1": "解决冲突以继续 ",
+    "resolve-conflicts-to-continue-2": "。"
   },
   "copy-button": {
     "copied": "已复制"
@@ -596,13 +610,13 @@
   "core": {
     "error": {
       "authentication-failed": "身份验证失败。一些常见原因包括。",
-      "if-you-use-ssh-authentication-check-that": "- If you use SSH authentication, check that your key is added to the ssh-agent and associated with your account.",
-      "if-you-use-ssh-authentication-ensure": "- If you use SSH authentication, ensure the host key verification passes for your repository hosting service.",
-      "if-you-used-username": "- If you used username / password authentication, you might need to use a Personal Access Token instead of your account password. Check the documentation of your repository hosting service.",
-      "the-repository-is-archived-on-github": "- The repository is archived on GitHub. Check the repository settings to confirm you are still permitted to push commits.",
-      "you-are-not-logged": "- You are not logged in to your account: see {{0}}",
-      "you-do-not-have-permission": "- You do not have permission to access this repository.",
-      "you-may-need-to-log-out": "- You may need to log out and log back in to refresh your token."
+      "if-you-use-ssh-authentication-check-that": "- 如果您使用 SSH 身份验证, 请检查您的密钥是否已添加到 ssh-agent 并与您的帐户关联。",
+      "if-you-use-ssh-authentication-ensure": "- 如果您使用 SSH 身份验证, 请确保您的存储库托管服务的主机密钥验证通过。",
+      "if-you-used-username": "- 如果您使用了用户名/密码验证, 则可能需要使用个人访问令牌 (PTO) 而不是账户密码。请结帐您的存储库托管服务的文档。",
+      "the-repository-is-archived-on-github": "- 该仓库已归档至 GitHub。请检查仓库设置, 确认您仍有权推送提交。",
+      "you-are-not-logged": "- 您尚未登录您的帐户: 请参阅{{0}}",
+      "you-do-not-have-permission": "- 您无权访问此存储库。",
+      "you-may-need-to-log-out": "- 您可能需要注销并重新登录以刷新您的令牌。"
     },
     "menu-preferences": "文件 > 选项",
     "menu-preferences-darwin": "GitHub Desktop > 设置"
@@ -611,33 +625,33 @@
     "exit": "退出",
     "exit-and-restart": "退出并重新启动",
     "gitHub-desktop-encountered": "GitHub Desktop 遇到错误",
-    "gitHub-desktop-encountered-a-catastrophic-1": "GitHub Desktop encountered a catastrophic error that prevents it from launching. This has been reported to the team, but if you encounter this repeatedly please report this issue to the GitHub Desktop ",
-    "gitHub-desktop-encountered-a-catastrophic-2": ".",
+    "gitHub-desktop-encountered-a-catastrophic-1": "GitHub Desktop 遇到灾难性错误, 导致无法启动。此问题已报告给团队, 但如果您反复遇到此问题, 请将此问题报告给 GitHub Desktop ",
+    "gitHub-desktop-encountered-a-catastrophic-2": "。",
     "github-desktop-failed": "GitHub Desktop 启动失败",
-    "gitHub-desktop-has-encountered-an-unrecoverable-1": "GitHub Desktop has encountered an unrecoverable error and will need to restart. This has been reported to the team, but if you encounter this repeatedly please report this issue to the GitHub Desktop ",
-    "gitHub-desktop-has-encountered-an-unrecoverable-2": ".",
+    "gitHub-desktop-has-encountered-an-unrecoverable-1": "GitHub Desktop 遇到不可恢复的错误, 需要重新启动。此问题已报告给团队, 但如果您反复遇到此问题, 请将此问题报告给 GitHub Desktop ",
+    "gitHub-desktop-has-encountered-an-unrecoverable-2": "。",
     "issue-tracker": "issue tracker",
     "quit": "退出",
     "quit-and-restart": "退出并重新启动"
   },
   "create-branch-dialog": {
-    "as-determined-by-your-1": "as determined by your ",
-    "as-determined-by-your-2": " ",
-    "branch-will-be-based-on-the-commit": "Your new branch will be based on the commit {{0}} ( {{1}}) from your repository.",
-    "confirm-create-branch-based-on": "Create branch based on…",
+    "as-determined-by-your-1": "由您的 ",
+    "as-determined-by-your-2": " 决定。",
+    "branch-will-be-based-on-the-commit": "您的新分支将基于您存储库中的提交 {{0}} ( {{1}})。",
+    "confirm-create-branch-based-on": "根据以下条件创建分支…",
     "create-a-branch": "创建分支",
     "create-a-branch-darwin": "创建分支",
     "create-branch": "创建分支",
     "create-branch-darwin": "创建分支",
-    "current-branch-is-unborn": "Your current branch is unborn (does not contain any commits). Creating a new branch will rename the current branch.",
-    "currently-checked-out-branch": "The currently checked out branch. Pick this if you need to build on work done on this branch.",
+    "current-branch-is-unborn": "您当前的分支尚未创建(未包含任何提交)。创建新分支将重命名当前分支。",
+    "currently-checked-out-branch": "当前签出的分支。如果您需要在此分支上完成的工作的基础上继续构建, 请选择此项。",
     "default-branch": "默认分支",
-    "default-branch-in-your-repository": "The default branch in your repository. Pick this to start on something new that's not dependent on your current branch.",
-    "default-branch-of-the-upstream-repository": "The default branch of the upstream repository. Pick this to start on something new that's not dependent on your current branch.",
-    "default-branch-source-is-determined-1": "Your default branch source is determined by your ",
-    "default-branch-source-is-determined-2": "fork behavior settings",
-    "default-branch-source-is-determined-3": ".",
-    "do-not-have-any-branch-checked-out": "You do not currently have any branch checked out (your HEAD reference is detached). As such your new branch will be based on your currently checked out commit ({{0}} ).",
+    "default-branch-in-your-repository": "仓库中的默认分支。选择此选项可开始不依赖于当前分支的新内容。",
+    "default-branch-of-the-upstream-repository": "上游代码库的默认分支。选择此选项可启动不依赖于当前分支的新项目。",
+    "default-branch-source-is-determined-1": "您的默认分支源由您的 ",
+    "default-branch-source-is-determined-2": "分叉行为设置",
+    "default-branch-source-is-determined-3": "决定。",
+    "do-not-have-any-branch-checked-out": "您目前尚未签出任何分支（您的 HEAD 引用已分离）。因此, 您的新分支将基于您当前签出的提交 ({{0}})。",
     "error": {
       "unknown-tip-kind": "Unknown tip kind {{0}}"
     },
@@ -647,21 +661,21 @@
     "new-branch-will-be-based-on-3": " (",
     "new-branch-will-be-based-on-4": ")",
     "new-branch-will-be-based-on-5": "。",
-    "new-branch-will-be-checked-out-branch-1": "Your new branch will be based on your currently checked out branch (",
+    "new-branch-will-be-checked-out-branch-1": "您的新分支将基于您当前签出的分支 (",
     "new-branch-will-be-checked-out-branch-2": ")",
-    "new-branch-will-be-checked-out-branch-3": ". ",
-    "new-branch-will-be-checked-out-branch-4": "is the ",
-    "new-branch-will-be-checked-out-branch-5": " for your repository."
+    "new-branch-will-be-checked-out-branch-3": "。",
+    "new-branch-will-be-checked-out-branch-4": "是您的存储库的",
+    "new-branch-will-be-checked-out-branch-5": "。"
   },
   "create-fork-dialog": {
-    "do-you-want-to-fork-1": " Do you want to create a fork of this repository at ",
-    "do-you-want-to-fork-2": " to continue?",
-    "do-you-want-to-fork-title": "Do you want to fork this repository?",
-    "donot-have-write-access-1": "It looks like you don’t have write access to ",
-    "donot-have-write-access-2": ". If you should, please check with a repository administrator.",
+    "do-you-want-to-fork-1": " 它看起来您是否要在 ",
+    "do-you-want-to-fork-2": " 创建此存储库的分支以继续?",
+    "do-you-want-to-fork-title": "您想分叉这个存储库吗",
+    "donot-have-write-access-1": "您似乎没有对 ",
+    "donot-have-write-access-2": " 的写访问权限。如果有, 请咨询仓库管理员。",
     "error": {
-      "create-fork-failed-1": "Creating your fork ",
-      "create-fork-failed-2": " failed. ",
+      "create-fork-failed-1": "创建您的分叉 ",
+      "create-fork-failed-2": " 失败。 ",
       "you-can-try-1": "You can try ",
       "you-can-try-2": "creating the fork manually on GitHub",
       "you-can-try-3": "."
@@ -680,15 +694,15 @@
     "git-ignore-darwin": "Git 忽視",
     "initialze-checkbox": "使用 README 文件初始化此存储库",
     "license": "许可证",
-    "render-git-repository-warning-1-1": "This directory ",
-    "render-git-repository-warning-1-2": "appears to be a Git repository. Would you like to ",
-    "render-git-repository-warning-2": " instead?",
-    "render-invalid-path-error": "Directory could not be created at this path. You may not have permissions to create a directory here.",
-    "render-readme-overwrite-warning-1": "This directory contains a ",
-    "render-readme-overwrite-warning-2": " file already. Checking this box will result in the existing file being overwritten.",
-    "repo-sanitized-name-warning": "Will be created as {{0}}. ",
-    "spaces-and-invalid-characters": "Spaces and invalid characters have been replaced by hyphens.",
-    "will-be-created-as": "Will be created as {{0}}"
+    "render-git-repository-warning-1-1": "此目录 ",
+    "render-git-repository-warning-1-2": "似乎是一个 Git 存储库。您想改为使用 ",
+    "render-git-repository-warning-2": " 吗?",
+    "render-invalid-path-error": "无法在此路径创建目录。您可能没有权限在此创建目录。",
+    "render-readme-overwrite-warning-1": "此目录已包含 ",
+    "render-readme-overwrite-warning-2": " 文件。选中此框将导致现有文件被覆盖。",
+    "repo-sanitized-name-warning": "将被创建为 {{0}}。",
+    "spaces-and-invalid-characters": "空格和无效字符已被连字符取代。",
+    "will-be-created-as": "将创建为 {{0}}"
   },
   "create-tag-dialog": {
     "create-a-tag": "创建标记",
@@ -704,18 +718,18 @@
   },
   "create-tutorial-repository-dialog": {
     "start-tutorial": "开始教程",
-    "will-create-a-repository-1": "This will create a repository on your local machine, and push it to your account ",
-    "will-create-a-repository-2": " on ",
-    "will-create-a-repository-3": ". This repository will only be visible to you, and not visible publicly."
+    "will-create-a-repository-1": "这将在您的本地计算机上创建一个仓库, 并推送到账户 ",
+    "will-create-a-repository-2": " 下的 ",
+    "will-create-a-repository-3": "。此仓库仅对您可见, 不对外公开。"
   },
   "custom-integration-form": {
-    "arguments": "Arguments",
-    "arguments-must-include-the-target-path": "Arguments must include the target path placeholder ({0}}.",
-    "command-line-arguments": "Command line arguments",
-    "path": "Path",
-    "path-to-executable": "Path to executable",
-    "these-arguments-are-not-valid": "These arguments are not valid.",
-    "This-path0does-not-appear": "This path does not appear to be a valid executable."
+    "arguments": "参数",
+    "arguments-must-include-the-target-path": "参数必须包含目标路径占位符 ({0}}。",
+    "command-line-arguments": "命令行参数",
+    "path": "路径",
+    "path-to-executable": "可执行文件的路径",
+    "these-arguments-are-not-valid": "这些论点是无效的。",
+    "This-path0does-not-appear": "该路径似乎不是有效的可执行文件。"
   },
   "delete-branch-dialog": {
     "branch-also-exists-on-the-remote": "该分支也存在于远程, 您是否也希望在那里删除它?",
@@ -733,12 +747,12 @@
     "this-branch-may-have-an-open-3": " 已经合并, 你也可以前往GitHub删除远程分支。"
   },
   "delete-remote-branch-dialog": {
-    "delete-remote-branch": "Delete remote branch",
-    "delete-remote-branch-content-1": "Delete remote branch ",
+    "delete-remote-branch": "删除远程分支",
+    "delete-remote-branch-content-1": "删除远程分支 ",
     "delete-remote-branch-content-2": "?",
-    "delete-remote-branch-darwin": "Delete Remote Branch",
-    "this-action-cannot-be-undone": "This action cannot be undone.",
-    "this-branch-does-not-exist-locally": "This branch does not exist locally. Deleting it may impact others collaborating on this branch."
+    "delete-remote-branch-darwin": "删除远程分支",
+    "this-action-cannot-be-undone": "此操作无法撤消。",
+    "this-branch-does-not-exist-locally": "此分支在本地不存在。删除它可能会影响在此分支上协作的其他人。"
   },
   "delete-tag-dialog": {
     "are-you-sure-you-want-to-delete-the-tag-1": "您确定要删除标记 ",
@@ -747,9 +761,9 @@
     "delete-tag-darwin": "删除标记"
   },
   "diff-contents-warning": {
-    "learn-more-about-bidirectional-unicode": "Learn more about bidirectional Unicode characters",
+    "learn-more-about-bidirectional-unicode": "了解有关双向 Unicode 字符的更多信息",
     "this-diff-contains-a-change": "此差异包含行尾从“{{0}}”到“{{1}}”的变化。",
-    "this-diff-contains-bidirectional-unicode": "This diff contains bidirectional Unicode text that may be interpreted or compiled differently than what appears below. To review, open the file in an editor that reveals hidden Unicode characters. "
+    "this-diff-contains-bidirectional-unicode": "此 diff 包含双向 Unicode 文本, 其解释或编译方式可能与下方显示的内容不同。如需结帐, 请使用可显示隐藏 Unicode 字符的编辑器打开该文件。"
   },
   "diff-options": {
     "caption-diff": "差异検出的{{0}}",
@@ -777,15 +791,15 @@
     "discard-changes-darwin": "放弃更改"
   },
   "discard-changes-retry-dialog": {
-    "changes-will-be-unrecoverable": "These changes will be unrecoverable from the {{0}}.",
-    "common-reasons-are": "Common reasons are:",
-    "delete-items-immediately": "The {{0}} is configured to delete items immediately.",
-    "discard-changes": "Permanently discard changes",
-    "discard-changes-darwin": "Permanently Discard Changes",
-    "discard-changes-ok": "This will discard changes and they will be unrecoverable.",
-    "discarded-Changes": "Discarded changes will be unrecoverable",
-    "discarded-Changes-darwin": "Discarded Changes Will Be Unrecoverable",
-    "fail-to-discard-changes": "Failed to discard changes to {{0}}.",
+    "changes-will-be-unrecoverable": "这些更改将无法从 {{0}} 恢复。",
+    "common-reasons-are": "常见原因有:",
+    "delete-items-immediately": "{{0}} 配置为立即删除项目。",
+    "discard-changes": "永久放弃更改",
+    "discard-changes-darwin": "永久放弃更改",
+    "discard-changes-ok": "这将丢弃更改并且这些更改将无法恢复。",
+    "discarded-Changes": "丢弃的更改将无法恢复",
+    "discarded-Changes-darwin": "丢弃的更改将无法恢复",
+    "fail-to-discard-changes": "无法放弃对 {{0}} 的更改。",
     "restricted-access": "限制移动文件的访问权限。"
   },
   "discard-selection-dialog": {
@@ -824,7 +838,7 @@
     "expand": "展开",
     "expand-commit-details": "展开提交详细信息",
     "not-included": " 不包括。",
-    "number-unreachable-commits": "{{0}} unreachable {{1}}",
+    "number-unreachable-commits": "{{0}} 无法访问 {{1}}",
     "removed-lines": "{{0}}删除了行",
     "showing-changes-from-1": "显示来自以下来源的更改:",
     "showing-changes-from-2": "{{0}} {{1}}"
@@ -833,7 +847,7 @@
     "fetching": "正在获取 {{0}}"
   },
   "filter-changes-list": {
-    "Adjust the filters": "调整过滤器以查看所有 {{0}} 个更改",
+    "Adjust the filters": "调整过滤器以结帐所有 {{0}} 个更改",
     "and": ", ",
     "discard-changes": "放弃更改",
     "discard-changes-darwin": "放弃更改",
@@ -880,7 +894,7 @@
     "new-branches-2": " 的默认分支。",
     "pull-requests-targeting-1": "以 ",
     "pull-requests-targeting-2": " 为目标的拉取请求将出现在拉取请求列表中(默认目标是上游存储库)。",
-    "view-on-gitgub-1": "\"在 Github 上查看\" 将在浏览器中打开 ",
+    "view-on-gitgub-1": "\"在 Github 上结帐\" 将在浏览器中打开 ",
     "view-on-gitgub-2": "。"
   },
   "fork-settings": {
@@ -911,6 +925,7 @@
     "depending-on-your-repository-s-2": " 中了解有关创建 PAT 的更多信息。",
     "integration-docs": "集成文档",
     "password": "密码",
+    "username": "用户名",
     "we-were-unable-to-authenticate-1": "我们无法通过 ",
     "we-were-unable-to-authenticate-2": " 进行身份验证。请输入 ",
     "we-were-unable-to-authenticate-3": "用户 ",
@@ -939,7 +954,7 @@
     "learn-more": "了解更多。",
     "learn-more-about": "详细了解提交归因",
     "matchs": "匹配",
-    "this-email-address": "此电子邮件地址{{0}} {{1}}. {{2}}",
+    "this-email-address": "此电子邮件地址{{0}} {{1}}。{{2}}",
     "wrongly-attributed": "您的提交可能链接到错误的用户。 ",
     "your-account": "您的 {{0}} 帐户"
   },
@@ -948,6 +963,22 @@
     "gitignore-message-1": "编辑 ",
     "gitignore-message-2": " 文件。此项指定的 Git 消息没有任何意义。Git 已消失, 未受影响。 ",
     "placeholder-ignored-files": "忽視的文件"
+  },
+  "initialize-lfs": {
+    "git-lfs": "Git LFS",
+    "initialize-git-lfs": "Initialize Git LFS"
+  },
+  "install": {
+    "command-prompt": "command prompt",
+    "install-git": "安装 Git",
+    "open-without-git": "不使用 Git 打开",
+    "open-without-git-darwin": "不使用 Git 打开",
+    "terminal-window": "Terminal window",
+    "to-help-you-get-git-installed": "为了帮助您在您的操作系统上安装和配置 Git, 我们提供了一些外部资源。",
+    "unable-to-locate-git": "无法找到 Git",
+    "unable-to-locate-git-darwin": "无法找到 Git",
+    "we-are-unable-to-locate-git-1": "我们无法在您的系统上找到 Git。这意味着您将无法在",
+    "we-are-unable-to-locate-git-2": "中执行任何 Git 命令。"
   },
   "installing-update": {
     "quit-anyway": "无论如何退出",
@@ -980,7 +1011,10 @@
     "show-stashed-changes-darwin": "显示 隐藏的更改"
   },
   "launch": {
-    "custom-editor-at-path": "路径为'{{0}}'的自定义编辑器"
+    "custom-editor-at-path": "路径为'{{0}}'的自定义编辑器",
+    "error": {
+      "could-not-find-executable": "在路径'{{1}}' 中找不到 '{{0}}'的可执行文件。请打开 {{2}} 并选择一个可用的编辑器。"
+    }
   },
   "local-changes-overwritten-dialog": {
     "Stash-Changes": "备份(stash)更改并继续",
@@ -1067,7 +1101,9 @@
     "help": "帮助(&H)",
     "help-darwin": "帮助",
     "hide": "隐藏 GitHub Desktop",
+    "hide-changes-filter-darwin": "隐藏过滤器",
     "hide-others": "隐藏其他",
+    "hide-toggle-changes-filter": "隐藏过滤器(&G)",
     "install": "安装",
     "install-command-line-tool": "安装命令行工具…",
     "merge-into-branch": "合并到当前分支…(&M)",
@@ -1119,13 +1155,14 @@
     "reset-zoom-darwin": "缩放(100%)",
     "select-all": "全选(&A)",
     "select-all-darwin": "全选",
-    "services": "services",
+    "services": "服务",
     "show-all": "显示全部",
     "show-banner": "显示横幅",
     "show-branches-list": "显示所有分支(&B)",
     "show-branches-list-darwin": "显示所有分支",
     "show-changes": "更改(&C)",
-    "show-changes-darwin": "查看更改",
+    "show-changes-darwin": "结帐更改",
+    "show-changes-filter-darwin": "显示过滤器",
     "show-history": "显示提交历史记录(&H)",
     "show-history-darwin": "显示提交历史记录",
     "show-in-explorer": "显示于 Explorer",
@@ -1140,12 +1177,13 @@
     "show-popup": "显示弹出窗口",
     "show-repository-list": "显示仓库列表(&L)",
     "show-repository-list-darwin": "显示仓库列表",
+    "show-toggle-changes-filter": "显示过滤器(&G)",
     "show-user-guides": "显示用户指南",
     "squash-and-merge-into-branch": "压缩并合并到当前分支…(&H)",
     "squash-and-merge-into-branch-darwin": "压缩并合并到当前分支…",
     "stash-all-changes": "储存当前更改(&S)",
     "stash-all-changes-darwin": "储存当前更改",
-    "thank-you": "Thank you",
+    "thank-you": "谢谢",
     "toggle-developer-tools": "开发人员工具切换(&T)",
     "toggle-developer-tools-darwin": "开发人员工具切换",
     "toggle-full-screen": "切换全屏视图(&F)",
@@ -1156,14 +1194,14 @@
     "uninstall": "卸载",
     "update-branch-from": "从 {{0}} 更新分支(&U)",
     "update-branch-from-darwin": "从 {{0}} 更新分支",
-    "view": "查看(&V)",
-    "view-branch-on-github": "在 GitHub 上查看分支",
-    "view-branch-on-github-darwin": "在 GitHub 上查看分支",
-    "view-darwin": "查看",
-    "view-on-github": "在 GitHub 上查看(&V)",
-    "view-on-github-darwin": "在 GitHub 上查看",
-    "view-pull-request": "查看 GitHub 上的拉取请求(&P)",
-    "view-pull-request-darwin": "查看 GitHub 上的拉取请求",
+    "view": "结帐(&V)",
+    "view-branch-on-github": "在 GitHub 上结帐分支",
+    "view-branch-on-github-darwin": "在 GitHub 上结帐分支",
+    "view-darwin": "结帐",
+    "view-on-github": "在 GitHub 上结帐(&V)",
+    "view-on-github-darwin": "在 GitHub 上结帐",
+    "view-pull-request": "结帐 GitHub 上的拉取请求(&P)",
+    "view-pull-request-darwin": "结帐 GitHub 上的拉取请求",
     "window-darwin": "窗口",
     "zoom-darwin": "缩放",
     "zoom-in": "缩放(放大)",
@@ -1219,7 +1257,6 @@
     "do-you-want-to-move": "您是否要立即将 GitHub Desktop 移至'应用程序'文件夹? 这也会重新启动应用程序。",
     "move-and-restart": "移动并重启",
     "move-to-the-applications-folder": "将 GitHub Desktop 移动到应用程序文件夹?",
-    "not-now": "现在不要",
     "this-will-move-github-desktop": "这会将 GitHub Desktop 移动到您机器中的应用程序文件夹并重新启动该应用程序。"
   },
   "multiple-selection": {
@@ -1263,34 +1300,34 @@
     "one-tag": "1个标记",
     "open-a-pull-request": "打开拉取请求, ",
     "open-the-repository-in-your-external-editor": "在外部编辑器中打开存储库",
-    "open-the-repository-page-on-github-in-your-browser": "Open the repository page on GitHub in your browser",
+    "open-the-repository-page-on-github-in-your-browser": "在浏览器中打开 GitHub 上的存储库页面",
     "preview-pull-request": "预览拉取请求",
-    "preview-pull-request-1": "The current branch (",
-    "preview-pull-request-2": ") is already published to GitHub. Preview the changes this pull request will have before proposing your changes.",
-    "preview-pull-request-title": "Preview the Pull Request from your current branch",
+    "preview-pull-request-1": "当前分支 (",
+    "preview-pull-request-2": ") 已发布到 GitHub。在提出您的更改之前, 请预览此拉取请求将包含的更改。",
+    "preview-pull-request-title": "预览当前分支的拉取请求",
     "publish-branch": "发布分支",
     "publish-repository": "发布存储库",
     "publish-your-repository": "发布你的分支",
     "publish-your-repository-to-github": "将您的存储库发布到 GitHub",
     "pull": "拉动 {{0}}",
-    "pull-number-commits-from-the-remote": "Pull {{0}} {{1}} from the {{2}} remote",
+    "pull-number-commits-from-the-remote": "从 {{2}} 远程拉取 {{0}} {{1}}",
     "push": "推送 {{0}}",
-    "push-to-the-remote": "Push {{0}} to the {{1}} remote",
+    "push-to-the-remote": "将 {{0}} 推送至远程 {{1}}",
     "select-your-editor": "编辑器设置在这里 ",
-    "the-current-branch-1": "The current branch (",
-    "the-current-branch-2": ") hasn't been published to the remote yet. By publishing it {{0}} you can share it, {{1}} and collaborate with others.",
-    "the-current-branch-us-already-published-1": "The current branch (",
-    "the-current-branch-us-already-published-2": ") is already published to GitHub. Create a pull request to propose and collaborate on your changes.",
+    "the-current-branch-1": "当前分支 (",
+    "the-current-branch-2": ") 尚未发布到远程。发布后, {{0}} 即可共享, {{1}} 即可与他人协作。",
+    "the-current-branch-us-already-published-1": "当前分支 (",
+    "the-current-branch-us-already-published-2": ") 已发布到 GitHub。创建一个拉取请求来提出并协作您的更改。",
     "the-remote": "the remote",
     "there-are-no-uncommitted-changes": "此仓库中没有未提交的更改。以下是一些关于下一步操作的友好建议。",
     "this-repository-is-currently-only": "此仓库目前仅在您的本地计算机上可用。通过将其发布到 GitHub, 您可以共享它并与他人协作。",
     "to-github": "to GitHub",
-    "view-stash": "View stash",
-    "view-the-files-of-your-repository": "在 {{0}} 中查看您的存储库的文件",
-    "view-your-stashed-changes": "View your 隐藏的更改",
-    "when-a-stash-exists-access-it-at-the-bottom": "When a stash exists, access it at the bottom of the Changes tab to the left.",
-    "you-have-number-change-in-progress": "You have {{0}} {{1}} in progress that you have not yet committed.",
-    "you-have-operation": "You have {{0}} waiting to be pushed to {{1}}."
+    "view-stash": "查看储藏",
+    "view-the-files-of-your-repository": "在 {{0}} 中结帐您的存储库的文件",
+    "view-your-stashed-changes": "查看你的储藏的更改",
+    "when-a-stash-exists-access-it-at-the-bottom": "当存储存在时, 请在左侧的“更改”选项卡底部访问它。",
+    "you-have-number-change-in-progress": "您有 {{0}} {{1}} 正在进行但尚未提交。",
+    "you-have-operation": "您有 {{0}} 正在等待推送至 {{1}}。"
   },
   "no-pull-requests": {
     "creat-a-new-branch": "创建新分支",
@@ -1347,8 +1384,8 @@
     "unable-to-open-file": "无法在外部程序中打开文件 {{0}}。请检查您是否有与此文件扩展名关联的程序"
   },
   "open-pull-request-dialog": {
-    "button_title": "{{0}} pull request on GitHub{{1}}.",
-    "could-not-find-a-default-branch": "Could not find a default branch to compare against.",
+    "button_title": "GitHub 上的{{0}} 拉取请求{{1}}。",
+    "could-not-find-a-default-branch": "无法找到要比较的默认分支。",
     "create": "创建",
     "is-up-to-date-with-1": " 与 ",
     "is-up-to-date-with-2": " 的所有提交保持同步。",
@@ -1356,7 +1393,7 @@
     "request_darwin": "{{0}}拉取请求",
     "select-a-base-branch-above": "选择上面的一个基础分支。",
     "there_are_no_changes": "没有变化。",
-    "view": "查看"
+    "view": "结帐"
   },
   "open-pull-request-header": {
     "merge-into-1": "合并 {{0}} 到 ",
@@ -1381,8 +1418,8 @@
     "git-lfs": "Git LFS",
     "if-you-commit-these-files": "如果您提交这些文件, 您将无法再将此存储库推送到 GitHub.com。",
     "the-following-files": "以下文件超过 100MB。 ",
-    "we-recommend-you-avoid-committing-1": "We recommend you avoid committing these files or use ",
-    "we-recommend-you-avoid-committing-2": " to store large files on GitHub."
+    "we-recommend-you-avoid-committing-1": "我们建议您避免提交这些文件或使用 ",
+    "we-recommend-you-avoid-committing-2": " 在 GitHub 上存储大文件。"
   },
   "overwrite-stashed-changes-dialog": {
     "are-you-sure-you-want-to-proceed": "您确定要继续吗? 这会用您当前的更改覆盖您现有的存储。",
@@ -1447,10 +1484,10 @@
     "unable-to-merge-unrelated-histories": "无法合并此存储库中不相关的历史记录"
   },
   "push-branch-commits": {
-    "create-without-pushing": "Create without pushing",
-    "create-without-pushing-darwin": "Create Without Pushing",
-    "local-commit": "{{0}} local commit",
-    "local-commits": "{{0}} local commits",
+    "create-without-pushing": "无需推动即可创建",
+    "create-without-pushing-darwin": "无需推动即可创建",
+    "local-commit": "{{0}}本地提交",
+    "local-commits": "{{0}}本地提交",
     "publish-branch": "发布分支",
     "publish-branch-darwin": "发布分支",
     "publish-branch-q": "发布分支?",
@@ -1467,7 +1504,7 @@
     "your-branch-must-be-published": "Your branch must be published before opening a pull request."
   },
   "push-needs-pull-warning": {
-    "desktop-is-unable-to-push-commits": "桌面无法将提交推送到此分支，因为远程分支上存在本地分支中不存在的提交。请在推送之前获取这些新的提交，以便与本地提交进行协调。",
+    "desktop-is-unable-to-push-commits": "桌面无法将提交推送到此分支, 因为远程分支上存在本地分支中不存在的提交。请在推送之前获取这些新的提交, 以便与本地提交进行协调。",
     "fetch": "获取",
     "newer-commits-on-remote": "远程更新的提交",
     "newer-commits-on-remote-darwin": "远程更新的提交"
@@ -1507,9 +1544,9 @@
     "publish-repository": "发布存储库",
     "publish-this-repository": "将此存储库发布到 GitHub",
     "pull": "拉动 {{0}}",
-    "pull-with-rebase": "Pull {{0}} with rebase",
+    "pull-with-rebase": "变基后拉至 {{0}}",
     "push": "推送 {{0}}",
-    "rebase-in-progress": "正在进行重新定基"
+    "rebase-in-progress": "正在进行变基"
   },
   "push-pull-button-dropdown": {
     "fetch": "获取至 {{0}}",
@@ -1520,10 +1557,10 @@
     "warning-title": "警告:"
   },
   "rebase-choose-branch-dialog": {
-    "branch-is-already-up-to-date": "The current branch is already up to date with the selected branch.",
-    "checking-for-ability-to-rebase": "Checking for ability to rebase automatically…",
+    "branch-is-already-up-to-date": "当前分支已经与所选分支保持同步。",
+    "checking-for-ability-to-rebase": "检查自动重新定基的能力",
     "number-commit": " {{0}} {{1}}",
-    "rebase-1": "Rebase ",
+    "rebase-1": "重变基为 ",
     "rebase-2": " ",
     "this-will-fast-forward-1": "This will fast-forward ",
     "this-will-fast-forward-2": " by ",
@@ -1533,12 +1570,12 @@
     "this-will-update-2": " by applying its ",
     "this-will-update-3": " on top of ",
     "this-will-update-4": " ",
-    "unable-to-start-rebase": "Unable to start rebase. Check you have chosen a valid branch.",
-    "you-are-not-able-to-rebase": "You are not able to rebase this branch onto itself."
+    "unable-to-start-rebase": "无法启动 rebase。请检查您是否选择了有效的分支。",
+    "you-are-not-able-to-rebase": "您无法将该分支重新定位到其自身上。"
   },
   "rebase-conflicts-banner": {
-    "resolve-conflicts-to-continue-1": "Resolve conflicts to continue rebasing ",
-    "resolve-conflicts-to-continue-2": "."
+    "resolve-conflicts-to-continue-1": "解决冲突以继续重新定位 ",
+    "resolve-conflicts-to-continue-2": "。"
   },
   "ref-name-text-box": {
     "created": "创建",
@@ -1556,7 +1593,7 @@
     "enhancements": "增强功能",
     "other": "其他",
     "title": "版本 {{0}}",
-    "view-all-release-notes": "查看所有发行说明"
+    "view-all-release-notes": "结帐所有发行说明"
   },
   "remote": {
     "placeholder-remote-url": "远程URL",
@@ -1569,9 +1606,9 @@
     "rename-branch-name": "重命名 {{0}}"
   },
   "render-banner": {
-    "reorder-of-commit-undone": "Reorder of {{0}} {{1}} undone.",
-    "squash-of-commit-undone": "Squash of {{0}} {{1}} undone.",
-    "successfully-reordered-commit": "Successfully reordered {{0}} {{1}}."
+    "reorder-of-commit-undone": "已撤消对 {{0}} {{1}} 的重新排序。",
+    "squash-of-commit-undone": "{{0}} {{1}} 的挤压已取消。",
+    "successfully-reordered-commit": "已成功重新排序 {{0}} {{1}}。"
   },
   "render-functions": {
     "all-conflicts-resolved": "所有冲突已解决",
@@ -1622,27 +1659,30 @@
     "continue-in-browser": "在浏览器中继续",
     "continue-in-browser-darwin": "在浏览器中继续",
     "re-authorization-required": "需要重新授权",
-    "re-authorization-required-darwin": "需要重新授权"
+    "re-authorization-required-darwin": "需要重新授权",
+    "the-name-organization-has-enabled": "\"{{0}}\" 组织已启用或强制执行 SAML SSO。要访问此仓库，您必须重新登录并授予 GitHub Desktop 访问该组织仓库的权限。",
+    "would-you-like-to-open-a-browser": "您是否要打开浏览器授予 GitHub Desktop 访问存储库的权限?"
   },
   "selected-commits": {
     "drag-the-commits-1": "Drag the commits to the branch menu to cherry-pick them.",
     "drag-the-commits-2": "Drag the commits to squash or reorder them.",
-    "drag-the-commits-3": "右键单击多个提交以查看选项。",
+    "drag-the-commits-3": "右键单击多个提交以结帐选项。",
     "file-does-not-exist": "磁盘上不存在文件",
     "file-does-not-exist-darwin": "磁盘上不存在文件",
     "no-commit-selected": "未选择提交",
     "no-file-selected": "未选择文件",
     "number-files-changed": "{{0}} changed {{1}}",
     "open-in-external-editor": "在 {{0}} 中打开",
-    "select-a-single-commit": "选择单个提交或一系列连续的提交来查看差异。",
+    "select-a-single-commit": "选择单个提交或一系列连续的提交来结帐差异。",
     "unable-to-display-diff": "当选择多个不连续时无法显示差异。",
-    "view-on-github": "在 GitHub 上查看",
-    "view-on-github-enteprise": "在 GitHub Enterprise 上查看",
+    "view-on-github": "在 GitHub 上结帐",
+    "view-on-github-enteprise": "在 GitHub Enterprise 上结帐",
     "you-can": "You can:"
   },
   "shared": {
     "error": {
       "could-not-find-executable": "在路径'{{1}}'处找不到'{{0}}'的可执行文件。请打开 {{2}} 并选择一个可用的 shell。",
+      "could-not-find-executable-shell": "Could not find executable for custom shell at path '{{0}}'.  Please open {{1}} and select an available shell.",
       "could-not-find-terminal": "找不到终端应用程序。请打开 {{0}} 并选择一个可用的 shell。"
     }
   },
@@ -1791,7 +1831,9 @@
     "additional-services": "附加服务",
     "auto-update-services": "自动更新服务",
     "connecting-to-github": "连接到 GitHub",
+    "creative-commons-attribute": "知识共享署名许可",
     "disclaimers-and-limitations-of-liability": "免责声明和责任限制",
+    "github-privacy-statement": "GitHub 一般隐私声明",
     "github-s-logos": "GitHub 的徽标和商标",
     "miscellanea": "杂项",
     "open-source-licenses-and-notices": "开源许可证和声明",
@@ -1833,6 +1875,7 @@
     "partially-checked-check-list": "部分检查清单",
     "publish-to-github": "发布到 GitHub",
     "publishing-will-push-or-upload": "发布会将你的提交\"推送\"或上传到 GitHub 仓库的此分支。使用顶部栏中的第三个按钮进行发布。",
+    "skip": "跳过",
     "your-default-editor-is-1": "您的默认编辑器是 ",
     "your-default-editor-is-2": "。您可以在 ",
     "your-default-editor-is-3": " 中更改您喜欢的编辑器。"
@@ -1841,24 +1884,24 @@
     "no-conflicts-remaining": "不存在冲突"
   },
   "unreachable-commits-dialog": {
-    "about-unreachable-commits": "Learn more about unreachable commits.",
-    "commit-reachability": "Commit reachability",
-    "commit-reachability-darwin": "Commit Reachability",
-    "reachable": "Reachable",
-    "unreachable": "Unreachable"
+    "about-unreachable-commits": "了解有关无法访问的提交的更多信息。",
+    "commit-reachability": "提交可达性",
+    "commit-reachability-darwin": "提交可达性",
+    "reachable": "可达",
+    "unreachable": "无法到达"
   },
   "untrusted-certificate": {
-    "gitHub-desktop-cannot-verify-1": "GitHub Desktop cannot verify the identity of {{0}}. The  certificate ({{1}}) is invalid or untrusted. ",
+    "gitHub-desktop-cannot-verify-1": "GitHub Desktop 无法验证 {{0}} 的身份。证书 ({{1}}) 无效或不受信任。",
     "gitHub-desktop-cannot-verify-2": " ",
-    "if-this-is-a-github-enterprise-trial": "If this is a GitHub Enterprise trial.",
-    "if-you-are-unsure-of-what-to-do": "If you are unsure of what to do, cancel and contact your system administrator.",
-    "if-your-github-enterprise-instance": "If your GitHub Enterprise instance is run on an unusual top-level domain.",
-    "in-some-cases": "In some cases, this may be expected. For example:",
-    "this-may-indicate-attackers": "This may indicate attackers are trying to steal your data.",
-    "untrusted-server": "Untrusted server",
-    "untrusted-server-darwin": "Untrusted Server",
-    "view-certificate-": "Add certificate",
-    "view-certificate-darwin": "View Certificate"
+    "if-this-is-a-github-enterprise-trial": "如果这是 GitHub Enterprise 试用版。",
+    "if-you-are-unsure-of-what-to-do": "如果您不确定该怎么做, 请取消并联系您的系统管理员。",
+    "if-your-github-enterprise-instance": "如果您的 GitHub Enterprise 实例在不寻常的顶级域上运行。",
+    "in-some-cases": "在某些情况下, 这可能是意料之中的。例如:",
+    "this-may-indicate-attackers": "这可能表明攻击者正试图窃取您的数据。",
+    "untrusted-server": "不受信任的服务器",
+    "untrusted-server-darwin": "不受信任的服务器",
+    "view-certificate": "添加证书",
+    "view-certificate-darwin": "结帐证书"
   },
   "update-available": {
     "an-optimized-arm-version-1": "您的 {{0}} 机器可以使用优化版本的 GitHub Desktop, 并将在下次启动时或现在 ",
@@ -1869,36 +1912,37 @@
     "exciting-new-features-3": "。",
     "important-updates": "重要更新",
     "restart-gitHub-desktop": "重启 GitHub Desktop",
-    "this-version-is-missing-1": "This version of GitHub Desktop is missing ",
-    "this-version-is-missing-2": ". Please ",
-    "this-version-is-missing-3": " now to install pending updates.",
-    "updated version-is-available-1": "An updated version of GitHub Desktop is available and will be installed at the next launch. See ",
-    "updated version-is-available-2": "or ",
-    "updated version-is-available-3": ".",
+    "this-version-is-missing-1": "此版本的 GitHub Desktop 缺少 ",
+    "this-version-is-missing-2": "。请立即 ",
+    "this-version-is-missing-3": " 安装待处理的更新。",
+    "updated version-is-available-1": "GitHub Desktop 已更新, 下次启动时将安装。请参阅 ",
+    "updated version-is-available-2": " 或 ",
+    "updated version-is-available-3": "。",
     "whats-new": "什么是新的"
   },
   "update-branch": {
     "create-a-merge-commit": "创建合并提交",
-    "description-create-a-merge-commit": "The commits from the selected branch will be added to the current branch via a merge commit.",
-    "description-rebase": "The commits from the selected branch will be rebased and added to the current branch.",
-    "description-squash-and-merge": "The commits in the selected branch will be combined into one commit in the current branch.",
+    "description-create-a-merge-commit": "所选分支的提交将通过合并提交添加到当前分支。",
+    "description-rebase": "所选分支的提交将被重新建立并添加到当前分支。",
+    "description-squash-and-merge": "所选分支中的提交将合并为当前分支中的一次提交。",
     "rebase": "变基",
     "squash-and-merge": "挤压并合并"
   },
   "upstream-already-exists": {
-    "current": "Current: ",
-    "expected": "Expected: ",
-    "must-have-a-github-repository": "A repository must have a GitHub repository to add an upstream remote",
-    "must-have-a-parent-repository": "A repository must have a parent repository to add an upstream remote",
-    "the-repository-is-a-fork-1": "The repository ",
-    "the-repository-is-a-fork-2": " is a fork of ",
-    "the-repository-is-a-fork-3": ", but its ",
-    "the-repository-is-a-fork-4": " remote points elsewhere.",
+    "current": "当前: ",
+    "expected": "预期: ",
+    "must-have-a-github-repository": "存储库必须具有 GitHub 存储库才能添加上游远程",
+    "must-have-a-parent-repository": "存储库必须具有父存储库才能添加上游远程",
+    "the-repository-is-a-fork-1": "存储库",
+    "the-repository-is-a-fork-2": " 是 ",
+    "the-repository-is-a-fork-3": "的一个分支, 但其 ",
+    "the-repository-is-a-fork-4": " 远程指向其他地方。",
     "upstream-already-exists": "Upstream 经存在",
     "upstream-already-exists-darwin": "Upstream 经存在",
-    "would-you-like-to-update": "Would you like to update the remote to use the expected URL?"
+    "would-you-like-to-update": "您想更新远程以使用预期的 URL 吗?"
   },
   "url": {
+    "creativecommons_org_licenses": "https://creativecommons.org/licenses/by/4.0/",
     "git-scm-com-docs-gitignore": "https://git-scm.com/docs/gitignore/zh_HANS-CN",
     "github-desktop-issue": "https://github.com/yasuking0304/desktop/issues/new/choose",
     "github-desktop-issue-linux": "https://github.com/yasuking0304/desktop/issues/new/choose",
@@ -1920,12 +1964,12 @@
     "do-you-want-to-continue-anyway": "您是否仍想继续?",
     "undo-commit": "撤消提交",
     "undo-commit-darwin": "撤消提交",
-    "undoing-a merge-commit": "Undoing a merge commit will apply the changes from the merge into your working directory, and committing again will create an entirely new commit. This means you will lose the merge commit and, as a result, commits from the merged branch could disappear from this branch."
+    "undoing-a merge-commit": "撤消合并提交会将合并后的更改应用到您的工作目录中, 再次提交将创建一个全新的提交。这意味着您将丢失合并提交, 因此, 合并分支中的提交可能会从该分支中\u200b\u200b消失。"
   },
   "warning-before-reset": {
     "reset-to-commit": "重置以提交",
     "reset-to-commit-darwin": "重置以提交",
-    "you-have-changes-in-progress": "You have changes in progress. Resetting to a previous commit might result in some of these changes being lost. Do you want to continue anyway?"
+    "you-have-changes-in-progress": "您正在进行一些更改。重置为之前的提交可能会导致部分更改丢失。您仍要继续吗?"
   },
   "welcome": {
     "definitions-git": " 是版本控制系统。",
@@ -1943,8 +1987,8 @@
     "continue-in-browser-darwin": "在浏览器中继续",
     "push-rejected": "推送被拒绝",
     "push-rejected-darwin": "推送被拒绝",
-    "the-push-was-rejected-by-the-server-1": "The push was rejected by the server for containing a modification to the workflow file ",
-    "the-push-was-rejected-by-the-server-2": ". In order to be able to push to workflow files GitHub Desktop needs to request additional permissions.",
+    "the-push-was-rejected-by-the-server-1": "由于推送包含对工作流程文件 ",
+    "the-push-was-rejected-by-the-server-2": " 的修改, 服务器拒绝了该推送。为了能够推送工作流程文件, GitHub Desktop 需要请求额外的权限。",
     "would-you-like-to-open-a-browser": "您是否要打开浏览器授予 GitHub Desktop 更新工作流文件的权限?"
   }
 }

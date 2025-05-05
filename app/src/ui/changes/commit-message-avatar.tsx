@@ -281,7 +281,8 @@ export class CommitMessageAvatar extends React.Component<
           'commit-message-avatar.update-email-1',
           'The email in your global Git config ('
         )}
-        <span className="git-email">{this.props.email}</span>)
+        <span className="git-email">{this.props.email}</span>
+        {t('commit-message-avatar.update-email-2', ')')}
       </>
     )
 

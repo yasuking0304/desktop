@@ -95,7 +95,7 @@ export class MoveToApplicationsFolder extends React.Component<
             `This will move GitHub Desktop to the Applications folder in your
             machine and restart the app.`
           )}
-          cancelButtonText={t('move-to-applications-folder.not-now', 'Not Now')}
+          cancelButtonText={t('common.not-now-darwin', 'Not Now')}
           onCancelButtonClick={this.onNotNow}
         />
       </DialogFooter>

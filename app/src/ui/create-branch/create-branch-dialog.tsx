@@ -189,8 +189,7 @@ export class CreateBranch extends React.Component<
             'create-branch-dialog.do-not-have-any-branch-checked-out',
             `You do not currently have any branch checked out (your HEAD reference
           is detached). As such your new branch will be based on your currently
-          checked out commit ({{0}}
-          ).`,
+          checked out commit ({{0}}).`,
             { 0: tip.currentSha.substring(0, 7) }
           )}
         </p>

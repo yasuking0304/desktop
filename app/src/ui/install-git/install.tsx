@@ -3,6 +3,7 @@ import * as React from 'react'
 import { Dialog, DialogContent, DialogFooter } from '../dialog'
 import { shell } from '../../lib/app-shell'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
+import { t } from 'i18next'
 
 interface IInstallGitProps {
   /**
@@ -45,25 +46,42 @@ export class InstallGit extends React.Component<IInstallGitProps, {}> {
       <Dialog
         id="install-git"
         type="warning"
-        title={__DARWIN__ ? 'Unable to Locate Git' : 'Unable to locate Git'}
+        title={
+          __DARWIN__
+            ? t('install.unable-to-locate-git-darwin.', 'Unable to Locate Git')
+            : t('install.unable-to-locate-git', 'Unable to locate Git')
+        }
         onSubmit={this.onSubmit}
         onDismissed={this.props.onDismissed}
       >
         <DialogContent>
           <p>
-            We were unable to locate Git on your system. This means you won't be
-            able to execute any Git commands in the{' '}
-            {__DARWIN__ ? 'Terminal window' : 'command prompt'}.
+            {t(
+              'install.we-are-unable-to-locate-git-1',
+              `We were unable to locate Git on your system. This means you won't be
+              able to execute any Git commands in the `
+            )}
+            {__DARWIN__ || __LINUX__
+              ? t('install.terminal-window', 'Terminal window')
+              : t('install.command-prompt', 'command prompt')}
+            {t('install.we-are-unable-to-locate-git-2', '.')}
           </p>
           <p>
-            To help you get Git installed and configured for your operating
-            system, we have some external resources available.
+            {t(
+              'install.to-help-you-get-git-installed',
+              `To help you get Git installed and configured for your operating
+              system, we have some external resources available.`
+            )}
           </p>
         </DialogContent>
         <DialogFooter>
           <OkCancelButtonGroup
-            okButtonText={__DARWIN__ ? 'Open Without Git' : 'Open without Git'}
-            cancelButtonText="Install Git"
+            okButtonText={
+              __DARWIN__
+                ? t('install.open-without-git-darwin', 'Open Without Git')
+                : t('install.open-without-git', 'Open without Git')
+            }
+            cancelButtonText={t('install.install-git', 'Install Git')}
             onCancelButtonClick={this.onExternalLink}
           />
         </DialogFooter>
