@@ -13,6 +13,8 @@ import { getPersistedThemeName } from '../../ui/lib/application-theme'
 import { IUiActivityMonitor } from '../../ui/lib/ui-activity-monitor'
 import { Disposable } from 'event-kit'
 import {
+  showChangesFilterDefault,
+  showChangesFilterKey,
   showDiffCheckMarksDefault,
   showDiffCheckMarksKey,
   underlineLinksDefault,
@@ -408,6 +410,11 @@ interface ICalculatedStats {
    * if the user has not yet made an active decision
    **/
   readonly useExternalCredentialHelper?: boolean | null
+
+  /**
+   * Whether or not the user has the filtering changes enabled
+   **/
+  readonly filteringChangesEnabled: boolean
 }
 
 type DailyStats = ICalculatedStats &
@@ -590,9 +597,13 @@ export class StatsStore implements IStatsStore {
       showDiffCheckMarksKey,
       showDiffCheckMarksDefault
     )
-
     const useExternalCredentialHelper =
       getBoolean(useExternalCredentialHelperKey) ?? null
+
+    const filteringChangesEnabled = getBoolean(
+      showChangesFilterKey,
+      showChangesFilterDefault
+    )
 
     // isInApplicationsFolder is undefined when not running on Darwin
     const launchedFromApplicationsFolder = __DARWIN__
@@ -621,6 +632,7 @@ export class StatsStore implements IStatsStore {
       linkUnderlinesVisible,
       diffCheckMarksVisible,
       useExternalCredentialHelper,
+      filteringChangesEnabled,
     }
   }
 

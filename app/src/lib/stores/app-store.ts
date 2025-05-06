@@ -455,7 +455,8 @@ export const showDiffCheckMarksKey = 'diff-check-marks-visible'
 export const commitMessageGenerationDisclaimerLastSeenKey =
   'commit-message-generation-disclaimer-last-seen'
 
-const showChangesFilterKey = 'show-changes-filter'
+export const showChangesFilterKey = 'show-changes-filter'
+export const showChangesFilterDefault = true
 
 export class AppStore extends TypedBaseStore<IAppState> {
   private readonly gitStoreCache: GitStoreCache
@@ -2335,7 +2336,10 @@ export class AppStore extends TypedBaseStore<IAppState> {
     this.commitMessageGenerationDisclaimerLastSeen =
       getNumber(commitMessageGenerationDisclaimerLastSeenKey) ?? null
 
-    this.showChangesFilter = getBoolean(showChangesFilterKey, true)
+    this.showChangesFilter = getBoolean(
+      showChangesFilterKey,
+      showChangesFilterDefault
+    )
 
     this.emitUpdateNow()
 
