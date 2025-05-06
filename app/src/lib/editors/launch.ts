@@ -15,10 +15,16 @@ async function launchEditor(
   spawnAsDarwinApp: boolean
 ) {
   const exists = await pathExists(editorPath)
-  const label = __DARWIN__ ? 'Settings' : 'Options'
+  const label = __DARWIN__
+    ? t('common.settings', 'Settings')
+    : t('common.options', 'Options')
   if (!exists) {
     throw new ExternalEditorError(
-      `Could not find executable for ${editorName} at path '${editorPath}'. Please open ${label} and select an available editor.`,
+      t(
+        'launch.error.could-not-find-executable',
+        `Could not find executable for {{0}} at path '{{1}}'. Please open {{2}} and select an available editor.`,
+        { 0: editorName, 1: editorPath, 2: label }
+      ),
       { openPreferences: true }
     )
   }

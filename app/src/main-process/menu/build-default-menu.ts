@@ -275,10 +275,18 @@ export function buildDefaultMenu({
         ? [
             {
               label: __DARWIN__
-                ? `${isChangesFilterVisible ? 'Hide' : 'Show'} Changes Filter`
-                : `${
-                    isChangesFilterVisible ? 'Hide' : 'Show'
-                  } Toggle Chan&ges Filter`,
+                ? isChangesFilterVisible
+                  ? t('menu.hide-changes-filter-darwin', 'Hide Changes Filter')
+                  : t('menu.show-changes-filter-darwin', 'Show Changes Filter')
+                : isChangesFilterVisible
+                ? t(
+                    'menu.hide-toggle-changes-filter',
+                    'Hide Toggle Chan&ges Filter'
+                  )
+                : t(
+                    'menu.show-toggle-changes-filter',
+                    'Show Toggle Chan&ges Filter'
+                  ),
               id: 'toggle-changes-filter',
               accelerator: 'CmdOrCtrl+L',
               click: emit('toggle-changes-filter'),

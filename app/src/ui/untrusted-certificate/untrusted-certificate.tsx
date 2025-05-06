@@ -107,10 +107,7 @@ export class UntrustedCertificate extends React.Component<
                     'untrusted-certificate.view-certificate-darwin',
                     'View Certificate'
                   )
-                : t(
-                    'untrusted-certificate.view-certificate',
-                    'Add certificate'
-                  )
+                : t('untrusted-certificate.view-certificate', 'Add certificate')
             }
           />
         </DialogFooter>
