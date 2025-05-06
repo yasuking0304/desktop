@@ -1,23 +1,4 @@
-import { Entry, LicenseLookup } from 'legal-eagle'
-
-const tslibLicenseOverride: Entry = {
-  repository: 'git+https://github.com/microsoft/tslib',
-  license: 'BSD',
-  source:
-    'https://github.com/microsoft/tslib/blob/74f1ff794985b33657b599b611e82937e3074617/LICENSE.txt',
-  sourceText: `Copyright (c) Microsoft Corporation.
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-PERFORMANCE OF THIS SOFTWARE.`,
-}
+import { LicenseLookup } from 'legal-eagle'
 
 export const licenseOverrides: LicenseLookup = {
   'cycle@1.0.3': {
@@ -37,7 +18,4 @@ export const licenseOverrides: LicenseLookup = {
     sourceText:
       'Code is licensed under the AFL or BSD 3-Clause license as part of the Persevere project which is administered under the Dojo foundation, and all contributions require a Dojo CLA.',
   },
-
-  'tslib@2.0.0': tslibLicenseOverride,
-  'tslib@2.8.1': tslibLicenseOverride,
 }
