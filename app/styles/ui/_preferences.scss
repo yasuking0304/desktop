@@ -146,7 +146,7 @@
           left: calc(var(--spacing) + var(--spacing-half));
           margin-top: calc(50.5%);
   
-          &:checked + label {
+          &:checked + span {
             border-color: var(--box-selected-active-background-color);
           }
         }
