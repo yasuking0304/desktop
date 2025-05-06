@@ -9,18 +9,28 @@ const legalEagle = promisify(_legalEagle)
 import { getVersion } from '../../app/package-info'
 import { readFile, writeFile } from 'fs/promises'
 
-export async function updateLicenseDump(
-  projectRoot: string,
-  outRoot: string
-): Promise<void> {
-  const appRoot = path.join(projectRoot, 'app')
-  const outPath = path.join(outRoot, 'static', 'licenses.json')
-
-  let summary = await legalEagle({
-    path: appRoot,
+const assertValidLicensesIn = async (dir: string) => {
+  const summary = await legalEagle({
+    path: dir,
     overrides: licenseOverrides,
     omitPermissive: true,
   })
+
+  // Sourced from OSPOs license-policy
+  const additionalAllowedLicenses = [
+    '0BSD',
+    'BlueOak-1.0.0',
+    'Python-2.0',
+    'MPL-2.0',
+    'CC0-1.0',
+  ]
+
+  for (const key in summary) {
+    const license = summary[key]
+    if (additionalAllowedLicenses.includes(license.license)) {
+      delete summary[key]
+    }
+  }
 
   if (Object.keys(summary).length > 0) {
     let licensesMessage = ''
@@ -34,8 +44,19 @@ export async function updateLicenseDump(
     const message = `The following dependencies have unknown or non-permissive licenses. Check it out and update ${overridesPath} if appropriate:\n${licensesMessage}`
     throw new Error(message)
   }
+}
 
-  summary = await legalEagle({
+export async function updateLicenseDump(
+  projectRoot: string,
+  outRoot: string
+): Promise<void> {
+  const appRoot = path.join(projectRoot, 'app')
+  const outPath = path.join(outRoot, 'static', 'licenses.json')
+
+  await assertValidLicensesIn(projectRoot)
+  await assertValidLicensesIn(appRoot)
+
+  const summary = await legalEagle({
     path: appRoot,
     overrides: licenseOverrides,
   })
