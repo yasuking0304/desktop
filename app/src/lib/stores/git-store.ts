@@ -1517,11 +1517,7 @@ export class GitStore extends BaseStore {
     await queueWorkHigh(files, async file => {
       const foundSubmodule = submodules.some(s => s.path === file.path)
 
-      if (
-        file.status.kind !== AppFileStatusKind.Deleted &&
-        !foundSubmodule &&
-        moveToTrash
-      ) {
+      if (file.status.kind !== AppFileStatusKind.Deleted && !foundSubmodule) {
         if (moveToTrash) {
           // N.B. moveItemToTrash can take a fair bit of time which is why we're
           // running it inside this work queue that spreads out the calls across
