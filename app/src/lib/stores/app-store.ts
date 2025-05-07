@@ -5026,6 +5026,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
     try {
       await gitStore.discardChanges(
         files,
+        repository.path,
         moveToTrash,
         askForConfirmationOnDiscardChangesPermanently
       )

@@ -97,7 +97,7 @@ import { IStatsStore } from '../stats'
 import { getTagsToPush, storeTagsToPush } from './helpers/tags-to-push-storage'
 import { DiffSelection, ITextDiff } from '../../models/diff'
 import { getDefaultBranch } from '../helpers/default-branch'
-import { stat } from 'fs/promises'
+import { rm, stat } from 'fs/promises'
 import { findForkedRemotesToPrune } from './helpers/find-forked-remotes-to-prune'
 import { findDefaultBranch } from '../find-default-branch'
 
@@ -1505,6 +1505,7 @@ export class GitStore extends BaseStore {
 
   public async discardChanges(
     files: ReadonlyArray<WorkingDirectoryFileChange>,
+    repoPath: string,
     moveToTrash: boolean = true,
     askForConfirmationOnDiscardChangesPermanently: boolean = false
   ): Promise<void> {
@@ -1521,17 +1522,24 @@ export class GitStore extends BaseStore {
         !foundSubmodule &&
         moveToTrash
       ) {
-        // N.B. moveItemToTrash can take a fair bit of time which is why we're
-        // running it inside this work queue that spreads out the calls across
-        // as many animation frames as it needs to.
-        try {
-          await this.shell.moveItemToTrash(
-            Path.resolve(this.repository.path, file.path)
-          )
-        } catch (e) {
-          if (askForConfirmationOnDiscardChangesPermanently) {
-            throw new DiscardChangesError(e, this.repository, files)
+        if (moveToTrash) {
+          // N.B. moveItemToTrash can take a fair bit of time which is why we're
+          // running it inside this work queue that spreads out the calls across
+          // as many animation frames as it needs to.
+          try {
+            await this.shell.moveItemToTrash(
+              Path.resolve(this.repository.path, file.path)
+            )
+          } catch (e) {
+            if (askForConfirmationOnDiscardChangesPermanently) {
+              throw new DiscardChangesError(e, this.repository, files)
+            }
           }
+        } else if (file.status.kind === AppFileStatusKind.Untracked) {
+          // Removing untracked files as they will not be reset since they are
+          // no detected as changes in the index. We need to remove them
+          // manually.
+          rm(Path.join(repoPath, file.path))
         }
       }
 

@@ -71,7 +71,7 @@ describe('GitStore', () => {
     assert.equal(files[0].status.kind, AppFileStatusKind.Modified)
 
     // discard the LICENSE.md file
-    await gitStore.discardChanges([files[1]])
+    await gitStore.discardChanges([files[1]], repo.path)
 
     status = await getStatusOrThrow(repo)
     files = status.workingDirectory.files
@@ -98,7 +98,7 @@ describe('GitStore', () => {
     const filesToDiscard = statusBeforeDiscard.workingDirectory.files
 
     // discard the renamed file
-    await gitStore.discardChanges(filesToDiscard)
+    await gitStore.discardChanges(filesToDiscard, repo.path)
 
     const status = await getStatusOrThrow(repo)
     const files = status.workingDirectory.files
@@ -222,7 +222,7 @@ describe('GitStore', () => {
       let files = status.workingDirectory.files
       assert.equal(files.length, 1)
 
-      await gitStore.discardChanges([files[0]])
+      await gitStore.discardChanges([files[0]], repo.path)
 
       status = await getStatusOrThrow(repo)
       files = status.workingDirectory.files
