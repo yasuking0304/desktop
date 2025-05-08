@@ -900,6 +900,7 @@ export class CommitMessage extends React.Component<
           }
         >
           <Octicon symbol={octicons.copilot} />
+          <span className="call-to-action-bubble">New</span>
         </Button>
       </>
     )
