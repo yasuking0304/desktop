@@ -1530,10 +1530,17 @@ export class GitStore extends BaseStore {
             if (askForConfirmationOnDiscardChangesPermanently) {
               throw new DiscardChangesError(e, this.repository, files)
             }
+
+            // The user has received the confirmation dialog in past and has
+            // chosen to always discard the changes permanently if trash failes.
+            // We need to remove the file manually.
+            if (file.status.kind === AppFileStatusKind.Untracked) {
+              await rm(Path.join(repoPath, file.path))
+            }
           }
-        } else if (file.status.kind === AppFileStatusKind.Untracked) {
-          // Removing untracked files as they will not be reset since they are
-          // no detected as changes in the index. We need to remove them
+        } else if (moveToTrash === false) {
+          // The user has received the confirmation dialog and has chosen to
+          // discard the changes permanently. We need to remove the file
           // manually.
           await rm(Path.join(repoPath, file.path))
         }
