@@ -107,6 +107,7 @@ interface ICommitMessageProps {
   readonly autocompletionProviders: ReadonlyArray<IAutocompletionProvider<any>>
   readonly isCommitting?: boolean
   readonly isGeneratingCommitMessage?: boolean
+  readonly shouldShowGenerateCommitMessageCallOut?: boolean
   readonly commitToAmend: Commit | null
   readonly placeholder: string
   readonly prepopulateCommitSummary: boolean
@@ -900,7 +901,9 @@ export class CommitMessage extends React.Component<
           }
         >
           <Octicon symbol={octicons.copilot} />
-          <span className="call-to-action-bubble">New</span>
+          {this.props.shouldShowGenerateCommitMessageCallOut && (
+            <span className="call-to-action-bubble">New</span>
+          )}
         </Button>
       </>
     )
