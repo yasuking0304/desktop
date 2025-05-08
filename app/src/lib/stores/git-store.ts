@@ -1505,7 +1505,6 @@ export class GitStore extends BaseStore {
 
   public async discardChanges(
     files: ReadonlyArray<WorkingDirectoryFileChange>,
-    repoPath: string,
     moveToTrash: boolean = true,
     askForConfirmationOnDiscardChangesPermanently: boolean = false
   ): Promise<void> {
@@ -1535,14 +1534,16 @@ export class GitStore extends BaseStore {
             // chosen to always discard the changes permanently if trash failes.
             // We need to remove the file manually.
             if (file.status.kind === AppFileStatusKind.Untracked) {
-              await rm(Path.join(repoPath, file.path))
+              await rm(Path.join(this.repository.path, file.path))
             }
           }
         } else if (moveToTrash === false) {
           // The user has received the confirmation dialog and has chosen to
           // discard the changes permanently. We need to remove the file
           // manually.
-          await rm(Path.join(repoPath, file.path))
+          if (file.status.kind === AppFileStatusKind.Untracked) {
+            await rm(Path.join(this.repository.path, file.path))
+          }
         }
       }
 
