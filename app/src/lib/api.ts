@@ -15,6 +15,7 @@ import {
   getEndpointVersion,
   isDotCom,
   isGHE,
+  isGHES,
   updateEndpointVersion,
 } from './endpoint-capabilities'
 import {
@@ -2073,6 +2074,11 @@ export class API {
    * @returns Copilot license and API endpoint.
    */
   public async fetchUserCopilotInfo(): Promise<UserCopilotInfo | undefined> {
+    // Copilot is not available on GHES
+    if (isGHES(this.endpoint)) {
+      return undefined
+    }
+
     const graphql = `
     {
       viewer {
@@ -2101,10 +2107,7 @@ export class API {
         isCopilotDesktopEnabled: viewer.isCopilotDesktopEnabled,
       }
     } catch (e) {
-      log.warn(
-        `fetchCopilotAPIEndpoint: failed with endpoint ${this.endpoint}`,
-        e
-      )
+      log.warn(`fetchUserCopilotInfo: failed with endpoint ${this.endpoint}`, e)
       return undefined
     }
   }
@@ -2182,8 +2185,8 @@ export class API {
     } catch (e) {
       const msg = `Unable to create push protection bypass.
 
-    Repository: ${owner}/${name} 
-    Reason: ${reason} 
+    Repository: ${owner}/${name}
+    Reason: ${reason}
     Placeholder Id: ${placeholderId}.
 
     Try again at: ${bypassURL}`
