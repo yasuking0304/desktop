@@ -441,12 +441,12 @@
     "tag": "태그",
     "tags": "태그",
     "this-commit-has-not-been-pushed": "이 커밋은 원격 리포지토리에 푸시되지 않았습니다",
-    "this-commit-has-number-tags": "이 커밋에는 {{1}} 푸시할 {{0}}개가 있습니다."
+    "this-commit-has-number-tags": "이 커밋에는 푸시할{{1}}가{{0}}개 있습니다."
   },
   "common": {
     "about-github-desktop": "GitHub Desktop 정보",
-    "branch-name": "브랜치 이름(일본어를 사용할 수 없음)",
-    "branch-name-darwin": "브랜치 이름(일본어를 사용할 수 없음)",
+    "branch-name": "브랜치 이름(한글이나 한자는 사용할 수 없음)",
+    "branch-name-darwin": "브랜치 이름(한글이나 한자는 사용할 수 없음)",
     "cancel": "취소",
     "change": "변경",
     "changes-files": "변경 파일 수",
@@ -502,7 +502,7 @@
     "remove": "삭제",
     "remove-alias": "별칭 삭제",
     "remove-alias-darwin": "별칭 삭제",
-    "repository-name": "리포지토리 이름(일본어를 사용할 수 없음)",
+    "repository-name": "리포지토리 이름(한글이나 한자는 사용할 수 없음)",
     "repository-path": "리포지토리가 있는 경로",
     "save": "저장",
     "select-all": "모두 선택",
@@ -516,8 +516,8 @@
     "sign-out": "로그아웃",
     "sign-out-darwin": "로그아웃",
     "summary": "요약",
-    "tag-name": "태그 이름(일본어는 사용할 수 없음)",
-    "tag-name-darwin": "태그 이름(일본어는 사용할 수 없음)",
+    "tag-name": "태그 이름(한글이나 한자는 사용할 수 없음)",
+    "tag-name-darwin": "태그 이름(한글이나 한자는 사용할 수 없음)",
     "undo": "취소",
     "update": "업데이트",
     "view-conflicts": "조합 보기",
@@ -906,8 +906,8 @@
     "invalid-date": "잘못된 날짜"
   },
   "full-screen-info": {
-    "press-f11-to-exit-fullscreeen-1": "전체 화면 표시를 종료하려면",
-    "press-f11-to-exit-fullscreeen-2": "를 누르십시오"
+    "press-f11-to-exit-fullscreeen-1": "전체 화면 표시를 종료하려면 ",
+    "press-f11-to-exit-fullscreeen-2": " 를 누르십시오"
   },
   "generate-commit-message-disclaimer": {
     "copilot-is-powered-by-ai": "Copilot에는 AI가 포함되어 있으므로 실수가 발생할 수 있습니다. 생성된 메시지를 잘 확인하고 편집한 후 사용하세요.",

@@ -651,7 +651,7 @@
     "default-branch-source-is-determined-1": "デフォルトのブランチソースは、",
     "default-branch-source-is-determined-2": "フォークの動作設定",
     "default-branch-source-is-determined-3": "で決定されます",
-    "do-not-have-any-branch-checked-out": "現在、チェックアウトされているブランチはありません（HEAD参照が分離されています）。そのため、新しいブランチは現在チェックアウトされているコミット（{{0}}）に基づいて作成されます。",
+    "do-not-have-any-branch-checked-out": "現在、チェックアウトされているブランチはありません(HEAD参照が分離されています)。そのため、新しいブランチは現在チェックアウトされているコミット({{0}})に基づいて作成されます。",
     "error": {
       "unknown-tip-kind": "Unknown tip kind {{0}}"
     },

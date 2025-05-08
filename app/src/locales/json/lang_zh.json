@@ -516,8 +516,8 @@
     "sign-out": "退出登录",
     "sign-out-darwin": "退出登录",
     "summary": "概括",
-    "tag-name": "标记名称（不允许使用汉字）",
-    "tag-name-darwin": "标记名称（不允许使用汉字）",
+    "tag-name": "标记名称(不允许使用汉字)",
+    "tag-name-darwin": "标记名称(不允许使用汉字)",
     "undo": "撤销",
     "update": "更新",
     "view-conflicts": "结帐冲突",
@@ -651,7 +651,7 @@
     "default-branch-source-is-determined-1": "您的默认分支源由您的 ",
     "default-branch-source-is-determined-2": "分叉行为设置",
     "default-branch-source-is-determined-3": "决定。",
-    "do-not-have-any-branch-checked-out": "您目前尚未签出任何分支（您的 HEAD 引用已分离）。因此, 您的新分支将基于您当前签出的提交 ({{0}})。",
+    "do-not-have-any-branch-checked-out": "您目前尚未签出任何分支(您的 HEAD 引用已分离)。因此, 您的新分支将基于您当前签出的提交 ({{0}})。",
     "error": {
       "unknown-tip-kind": "Unknown tip kind {{0}}"
     },
@@ -661,7 +661,7 @@
     "new-branch-will-be-based-on-3": " (",
     "new-branch-will-be-based-on-4": ")",
     "new-branch-will-be-based-on-5": "。",
-    "new-branch-will-be-checked-out-branch-1": "您的新分支将基于您当前签出的分支 (",
+    "new-branch-will-be-checked-out-branch-1": "您的新分支将基于您当前签出的分支(",
     "new-branch-will-be-checked-out-branch-2": ")",
     "new-branch-will-be-checked-out-branch-3": "。",
     "new-branch-will-be-checked-out-branch-4": "是您的存储库的",
