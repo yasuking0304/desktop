@@ -3383,7 +3383,7 @@ export class App extends React.Component<IAppProps, IAppState> {
           pullRequestSuggestedNextAction={state.pullRequestSuggestedNextAction}
           showChangesFilter={state.showChangesFilter}
           shouldShowGenerateCommitMessageCallOut={
-            this.state.commitMessageGenerationDisclaimerLastSeen === null
+            !this.state.commitMessageGenerationButtonClicked
           }
         />
       )
