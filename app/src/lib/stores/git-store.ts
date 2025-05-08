@@ -1535,7 +1535,7 @@ export class GitStore extends BaseStore {
           // Removing untracked files as they will not be reset since they are
           // no detected as changes in the index. We need to remove them
           // manually.
-          rm(Path.join(repoPath, file.path))
+          await rm(Path.join(repoPath, file.path))
         }
       }
 
