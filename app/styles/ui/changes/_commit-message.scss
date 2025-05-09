@@ -108,6 +108,8 @@
       outline-offset: 2px;
     }
 
+    // Override default button width for as long as we have the call-to-action
+    // bubble in the button. DELETE AFTER THE CALL-TO-ACTION BUBBLE IS REMOVED
     width: auto !important;
   }
 
