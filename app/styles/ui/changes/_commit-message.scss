@@ -107,6 +107,22 @@
     &:focus {
       outline-offset: 2px;
     }
+
+    // Override default button width for as long as we have the call-to-action
+    // bubble in the button. DELETE AFTER THE CALL-TO-ACTION BUBBLE IS REMOVED
+    width: auto !important;
+  }
+
+  .call-to-action-bubble {
+    font-weight: var(--font-weight-semibold);
+    display: inline-block;
+    font-size: var(--font-size-xs);
+    border: 1px solid var(--call-to-action-bubble-border-color);
+    color: var(--call-to-action-bubble-color);
+    padding: 1px 5px;
+    border-radius: var(--border-radius);
+    margin-left: var(--spacing-third);
+    cursor: pointer;
   }
 
   .co-authors-toggle {
