@@ -458,7 +458,8 @@ const commitMessageGenerationDisclaimerLastSeenKey =
 const commitMessageGenerationButtonClickedKey =
   'commit-message-generation-button-clicked'
 
-const showChangesFilterKey = 'show-changes-filter'
+export const showChangesFilterKey = 'show-changes-filter'
+export const showChangesFilterDefault = true
 
 export class AppStore extends TypedBaseStore<IAppState> {
   private readonly gitStoreCache: GitStoreCache
@@ -2346,7 +2347,10 @@ export class AppStore extends TypedBaseStore<IAppState> {
       false
     )
 
-    this.showChangesFilter = getBoolean(showChangesFilterKey, true)
+    this.showChangesFilter = getBoolean(
+      showChangesFilterKey,
+      showChangesFilterDefault
+    )
 
     this.emitUpdateNow()
 
