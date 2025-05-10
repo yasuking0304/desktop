@@ -377,6 +377,8 @@ export interface IAppState {
 
   readonly commitMessageGenerationDisclaimerLastSeen: number | null
 
+  readonly commitMessageGenerationButtonClicked: boolean
+
   /** Whether the changes filter is shown */
   readonly showChangesFilter: boolean
 }

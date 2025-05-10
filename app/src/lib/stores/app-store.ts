@@ -453,8 +453,11 @@ export const underlineLinksDefault = true
 export const showDiffCheckMarksDefault = true
 export const showDiffCheckMarksKey = 'diff-check-marks-visible'
 
-export const commitMessageGenerationDisclaimerLastSeenKey =
+const commitMessageGenerationDisclaimerLastSeenKey =
   'commit-message-generation-disclaimer-last-seen'
+
+const commitMessageGenerationButtonClickedKey =
+  'commit-message-generation-button-clicked'
 
 export const showChangesFilterKey = 'show-changes-filter'
 export const showChangesFilterDefault = true
@@ -610,6 +613,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
   private underlineLinks: boolean = underlineLinksDefault
 
   private commitMessageGenerationDisclaimerLastSeen: number | null = null
+  private commitMessageGenerationButtonClicked: boolean = false
 
   private showChangesFilter: boolean = false
 
@@ -1107,6 +1111,8 @@ export class AppStore extends TypedBaseStore<IAppState> {
       updateState: updateStore.state,
       commitMessageGenerationDisclaimerLastSeen:
         this.commitMessageGenerationDisclaimerLastSeen,
+      commitMessageGenerationButtonClicked:
+        this.commitMessageGenerationButtonClicked,
       showChangesFilter: this.showChangesFilter,
     }
   }
@@ -2347,6 +2353,11 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
     this.commitMessageGenerationDisclaimerLastSeen =
       getNumber(commitMessageGenerationDisclaimerLastSeenKey) ?? null
+
+    this.commitMessageGenerationButtonClicked = getBoolean(
+      commitMessageGenerationButtonClickedKey,
+      false
+    )
 
     this.showChangesFilter = getBoolean(
       showChangesFilterKey,
@@ -5470,6 +5481,14 @@ export class AppStore extends TypedBaseStore<IAppState> {
     this.emitUpdate()
   }
 
+  public _setCommitMessageGenerationButtonClicked(): void {
+    if (!this.commitMessageGenerationButtonClicked) {
+      this.commitMessageGenerationButtonClicked = true
+      setBoolean(commitMessageGenerationButtonClickedKey, true)
+      this.emitUpdate()
+    }
+  }
+
   public async _generateCommitMessage(
     repository: Repository,
     filesSelected: ReadonlyArray<WorkingDirectoryFileChange>
@@ -5479,6 +5498,8 @@ export class AppStore extends TypedBaseStore<IAppState> {
     if (!account) {
       return false
     }
+
+    this._setCommitMessageGenerationButtonClicked()
 
     if (
       !this.commitMessageGenerationDisclaimerLastSeen ||
