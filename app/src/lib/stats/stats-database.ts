@@ -631,13 +631,13 @@ export interface IDailyMeasures {
   /** The number of secrets detected on push that were bypassed */
   readonly secretsDetectedOnPushBypassedCount: number
 
-  /** The number of types the user bypassed a secret with the reason of "False Positive" */
+  /** The number of times the user bypassed a secret with the reason of "False Positive" */
   readonly secretsDetectedOnPushBypassedAsFalsePositiveCount: number
 
-  /** The number of types the user bypassed a secret with the reason of "Used in Test" */
+  /** The number of times the user bypassed a secret with the reason of "Used in Test" */
   readonly secretsDetectedOnPushBypassedAsUsedInTestCount: number
 
-  /** The number of types the user bypassed a secret with the reason of "Will Fix Later" */
+  /** The number of times the user bypassed a secret with the reason of "Will Fix Later" */
   readonly secretsDetectedOnPushBypassedAsWillFixLaterCount: number
 
   /** The number of secrets detected on push where the delegated bypass linked was clicked  */
