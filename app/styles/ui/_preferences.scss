@@ -139,51 +139,53 @@
       width: 50%;
       margin: 0;
 
-      input[type='radio'] {
-        position: absolute;
-        left: calc(var(--spacing) + var(--spacing-half));
-        margin-top: calc(54.5%);
-
-        &:checked + label {
-          border-color: var(--box-selected-active-background-color);
-        }
-      }
-
       label {
-        border-radius: var(--border-radius);
-        border: var(--base-border);
-        float: left;
-        overflow: hidden;
-        padding-bottom: var(--spacing-half);
-        width: 100%;
-        margin: 0;
+        input[type='radio'] {
+          position: absolute;
+          left: calc(var(--spacing) + var(--spacing-half));
+          margin-top: calc(50.5%);
 
-        .theme-value-label {
-          margin-left: calc(var(--spacing-triple));
+          &:checked + span {
+            border-color: var(--box-selected-active-background-color);
+          }
         }
 
-        img {
+        > span {
+          border-radius: var(--border-radius);
+          border: var(--base-border);
+          float: left;
+          overflow: hidden;
+          padding-bottom: var(--spacing-half);
           width: 100%;
-          border-bottom: var(--base-border);
-          margin-bottom: var(--spacing-half);
-          display: block;
-        }
+          margin: 0;
 
-        .system-theme-swatch {
-          width: 100%;
-          position: relative;
-          display: block;
+          .theme-value-label {
+            margin-left: calc(var(--spacing-triple));
+          }
 
           img {
-            position: absolute;
-            top: 0;
+            width: 100%;
+            border-bottom: var(--base-border);
+            margin-bottom: var(--spacing-half);
+            display: block;
+          }
 
-            &:first-child {
-              position: inherit;
-            }
+          .system-theme-swatch {
+            width: 100%;
+            position: relative;
+            display: block;
 
-            &:last-child {
-              clip-path: polygon(50% 0, 100% 0%, 100% 100%, 50% 100%);
+            img {
+              position: absolute;
+              top: 0;
+
+              &:first-child {
+                position: inherit;
+              }
+
+              &:last-child {
+                clip-path: polygon(50% 0, 100% 0%, 100% 100%, 50% 100%);
+              }
             }
           }
         }
