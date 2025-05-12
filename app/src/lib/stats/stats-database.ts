@@ -625,7 +625,7 @@ export interface IDailyMeasures {
   /** The number of times a push was blocked by secret scanning */
   readonly pushBlockedBySecretScanningCount: number
 
-  /** The number of times a secrets is detected on push count */
+  /** The number of times a secret is detected on push */
   readonly secretsDetectedOnPushCount: number
 
   /** The number of secrets detected on push bypassed  */
