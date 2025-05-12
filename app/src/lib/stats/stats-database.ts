@@ -628,7 +628,7 @@ export interface IDailyMeasures {
   /** The number of times a secret is detected on push */
   readonly secretsDetectedOnPushCount: number
 
-  /** The number of secrets detected on push bypassed  */
+  /** The number of secrets detected on push that were bypassed */
   readonly secretsDetectedOnPushBypassedCount: number
 
   /** The number of types the user bypassed a secret with the reason of "False Positive" */
