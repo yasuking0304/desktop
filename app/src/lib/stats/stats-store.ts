@@ -247,6 +247,14 @@ const DefaultDailyMeasures: IDailyMeasures = {
   generateCommitMessageButtonClickCount: 0,
   generateCommitMessageCount: 0,
   generateCommitMessageUsedVerbatimCount: 0,
+  pushBlockedBySecretScanningCount: 0,
+  secretsDetectedOnPushCount: 0,
+  secretsDetectedOnPushBypassedCount: 0,
+  secretsDetectedOnPushBypassedAsFalsePositiveCount: 0,
+  secretsDetectedOnPushBypassedAsUsedInTestCount: 0,
+  secretsDetectedOnPushBypassedAsWillFixLaterCount: 0,
+  secretsDetectedOnPushDelegatedBypassLinkClickedCount: 0,
+  secretRemediationInstructionsLinkClickedCount: 0,
 }
 
 // A subtype of IDailyMeasures filtered to contain only its numeric properties
