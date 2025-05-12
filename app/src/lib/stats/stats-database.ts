@@ -640,7 +640,7 @@ export interface IDailyMeasures {
   /** The number of times the user bypassed a secret with the reason of "Will Fix Later" */
   readonly secretsDetectedOnPushBypassedAsWillFixLaterCount: number
 
-  /** The number of secrets detected on push where the delegated bypass linked was clicked  */
+  /** The number of secrets detected on push where the delegated bypass link was clicked  */
   readonly secretsDetectedOnPushDelegatedBypassLinkClickedCount: number
 
   /** The number of times the user clicked on the secret remediation instructions link */
