@@ -1,5 +1,12 @@
 {
   "releases": {
+    "3.4.20-beta2": [
+      "[Fixed] Fix spacing of text in \"Thank You\" banner - #20411",
+      "[Fixed] Radio inputs include the area around the radio button as a click surface.  - #20404",
+      "[Fixed] Checking or unchecking lots of files is fast once again - #20429",
+      "[Improved] Upgrade Electron to v36.1.0 - #20450",
+      "[Improved] Users can turn off the filter in the changes list in the `View` menu - #20303"
+    ],
     "3.4.20-beta1": [
       "[Added] Handled GitHub Secret Scanning push protection errors in a friendly dialog with the ability to bypass blocked non-approval requiring secrets - #20386, #20387, #20391",
       "[Fixed] Fix path used to create repository on existing non-Git directory - #20400",
