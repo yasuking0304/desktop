@@ -128,14 +128,14 @@ export async function getCommitDiff(
     '-z',
     '--no-color',
     '--',
-    file.path,
+    relativePathSpec(file.path),
   ]
 
   if (
     file.status.kind === AppFileStatusKind.Renamed ||
     file.status.kind === AppFileStatusKind.Copied
   ) {
-    args.push(file.status.oldPath)
+    args.push(relativePathSpec(file.status.oldPath))
   }
 
   const { stdout } = await git(args, repository.path, 'getCommitDiff', {
@@ -167,14 +167,14 @@ export async function getBranchMergeBaseDiff(
     '-z',
     '--no-color',
     '--',
-    file.path,
+    relativePathSpec(file.path),
   ]
 
   if (
     file.status.kind === AppFileStatusKind.Renamed ||
     file.status.kind === AppFileStatusKind.Copied
   ) {
-    args.push(file.status.oldPath)
+    args.push(relativePathSpec(file.status.oldPath))
   }
 
   const result = await git(args, repository.path, 'getBranchMergeBaseDiff', {
@@ -212,14 +212,14 @@ export async function getCommitRangeDiff(
     '-z',
     '--no-color',
     '--',
-    file.path,
+    relativePathSpec(file.path),
   ]
 
   if (
     file.status.kind === AppFileStatusKind.Renamed ||
     file.status.kind === AppFileStatusKind.Copied
   ) {
-    args.push(file.status.oldPath)
+    args.push(relativePathSpec(file.status.oldPath))
   }
 
   const result = await git(args, repository.path, 'getCommitsDiff', {
@@ -373,7 +373,7 @@ export async function getWorkingDirectoryDiff(
     // citation in source:
     // https://github.com/git/git/blob/1f66975deb8402131fbf7c14330d0c7cdebaeaa2/diff-no-index.c#L300
     successExitCodes.add(1)
-    args.push('--no-index', '--', '/dev/null', file.path)
+    args.push('--no-index', '--', '/dev/null', relativePathSpec(file.path))
   } else if (file.status.kind === AppFileStatusKind.Renamed) {
     // NB: Technically this is incorrect, the best kind of incorrect.
     // In order to show exactly what will end up in the commit we should
@@ -382,9 +382,9 @@ export async function getWorkingDirectoryDiff(
     // already staged to the renamed file which differs from our other diffs.
     // The closest I got to that was running hash-object and then using
     // git diff <blob> <blob> but that seems a bit excessive.
-    args.push('--', file.path)
+    args.push('--', relativePathSpec(file.path))
   } else {
-    args.push('HEAD', '--', file.path)
+    args.push('HEAD', '--', relativePathSpec(file.path))
   }
 
   const { stdout, stderr } = await git(
@@ -831,3 +831,11 @@ async function getFilesUsingBinaryMergeDriver(
     .filter(x => x.attr === 'merge' && x.value === 'binary')
     .map(x => x.path)
 }
+
+// Prefix a path with `:(top,literal)` to ensure that git treats it as a literal
+// path and not a glob pattern. This is important for paths that contain
+// special characters like `*`, `?`, or `[` which would otherwise be treated as
+// glob patterns and for paths that appear to be absolute paths on some platforms
+// and not others.
+// See https://git-scm.com/docs/gitglossary#Documentation/gitglossary.txt-top
+const relativePathSpec = (path: string) => `:(top,literal)${path}`
