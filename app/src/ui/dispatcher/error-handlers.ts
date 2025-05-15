@@ -687,6 +687,9 @@ export async function secretScanningPushProtectionErrorHandler(
   const remoteMessage = getRemoteMessage(coerceToString(gitError.result.stderr))
   const secrets = extractSecretScanningResults(remoteMessage)
 
+  dispatcher.incrementMetric('pushBlockedBySecretScanningCount')
+  dispatcher.incrementMetric('secretsDetectedOnPushCount', secrets.length)
+
   dispatcher.showPopup({
     type: PopupType.PushProtectionError,
     secrets,
