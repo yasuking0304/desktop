@@ -196,6 +196,7 @@ import { GenerateCommitMessageDisclaimer } from './generate-commit-message/gener
 import { IAPICreatePushProtectionBypassResponse } from '../lib/api'
 import {
   BypassPushProtectionDialog,
+  BypassReason,
   BypassReasonType,
 } from './secret-scanning/bypass-push-protection-dialog'
 
@@ -2520,6 +2521,10 @@ export class App extends React.Component<IAppProps, IAppState> {
           <PushProtectionErrorDialog
             key="push-protection-error"
             secrets={popup.secrets}
+            onDelegatedBypassLinkClick={this.onSecretDelegatedBypassLinkClick}
+            onRemediationInstructionsLinkClick={
+              this.onSecretRemediationInstructionsLinkClick
+            }
             bypassPushProtection={this.openBypassPushProtection}
             onDismissed={onPopupDismissedFn}
           />
@@ -2563,6 +2568,18 @@ export class App extends React.Component<IAppProps, IAppState> {
     }
   }
 
+  private onSecretDelegatedBypassLinkClick = () => {
+    this.props.dispatcher.incrementMetric(
+      'secretsDetectedOnPushDelegatedBypassLinkClickedCount'
+    )
+  }
+
+  private onSecretRemediationInstructionsLinkClick = () => {
+    this.props.dispatcher.incrementMetric(
+      'secretRemediationInstructionsLinkClickedCount'
+    )
+  }
+
   private onDismissBypassPushProtection = (
     popup: string,
     popupDismiss: () => void
@@ -2601,6 +2618,7 @@ export class App extends React.Component<IAppProps, IAppState> {
           ) => {
             this.bypassPushProtection(secret, reason)
               .then(response => {
+                this.recordSecretBypassStats(reason)
                 resolve(response)
               })
               .catch(error => {
@@ -2617,6 +2635,29 @@ export class App extends React.Component<IAppProps, IAppState> {
         })
       }
     )
+  }
+
+  private recordSecretBypassStats = (reason: BypassReasonType) => {
+    this.props.dispatcher.incrementMetric('secretsDetectedOnPushBypassedCount')
+    switch (reason) {
+      case BypassReason.FalsePositive:
+        this.props.dispatcher.incrementMetric(
+          'secretsDetectedOnPushBypassedAsFalsePositiveCount'
+        )
+        break
+      case BypassReason.UsedInTests:
+        this.props.dispatcher.incrementMetric(
+          'secretsDetectedOnPushBypassedAsUsedInTestCount'
+        )
+        break
+      case BypassReason.WillFixLater:
+        this.props.dispatcher.incrementMetric(
+          'secretsDetectedOnPushBypassedAsWillFixLaterCount'
+        )
+        break
+      default:
+        return assertNever(reason, `Unknown Bypass reason: ${reason}`)
+    }
   }
 
   private bypassPushProtection = (
@@ -3391,6 +3432,9 @@ export class App extends React.Component<IAppProps, IAppState> {
           onCherryPick={this.startCherryPickWithoutBranch}
           pullRequestSuggestedNextAction={state.pullRequestSuggestedNextAction}
           showChangesFilter={state.showChangesFilter}
+          shouldShowGenerateCommitMessageCallOut={
+            !this.state.commitMessageGenerationButtonClicked
+          }
         />
       )
     } else if (selectedState.type === SelectionType.CloningRepository) {

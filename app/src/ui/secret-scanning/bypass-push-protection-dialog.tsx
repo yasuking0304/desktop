@@ -5,7 +5,7 @@ import { ISecretScanResult } from './push-protection-error-dialog'
 import { VerticalSegmentedControl } from '../lib/vertical-segmented-control'
 import { t } from 'i18next'
 
-enum BypassReason {
+export enum BypassReason {
   FalsePositive = 'false_positive',
   UsedInTests = 'used_in_tests',
   WillFixLater = 'will_fix_later',

@@ -15,7 +15,7 @@ import roLang from './json/lang_ro.json'
 import ruLang from './json/lang_ru.json'
 import svLang from './json/lang_sv.json'
 import zhLang from './json/lang_zh.json'
-import zhHantLang from './json/lang_zh-hant.json'
+import zhTwLang from './json/lang_zh-tw.json'
 
 i18n.init({
   lng: getLanguage(),
@@ -32,12 +32,12 @@ i18n.init({
     ko: { translation: koLang },
     nl: { translation: nlLang },
     pt: { translation: ptLang },
-    'pt-br': { translation: ptBrLang },
+    pt_br: { translation: ptBrLang },
     ro: { translation: roLang },
     ru: { translation: ruLang },
     sv: { translation: svLang },
     zh: { translation: zhLang },
-    'zh-hant': { translation: zhHantLang },
+    zh_tw: { translation: zhTwLang },
   },
 })
 
@@ -45,18 +45,17 @@ i18n.init({
  * Get getLanguage.
  * Support langage:
  * 'de', 'en', 'es', 'fr', 'it', 'ja', 'ko', 'nl', 'pt', 'pt-br', 'ro', 'ru',
- * 'sv', 'zh', 'zh-cn', 'zh-hk', 'zh-tw'
+ * 'sv', 'zh', 'zh-cn', 'zh-hk', 'zh-mo', 'zh-tw'
  */
 function getLanguage(): string {
-  let lang = ''
   const langFull = getLocale().toLocaleLowerCase()
   const langShort = langFull.split('-')[0]
-  if (langFull === 'zh-hk' || langFull === 'zh-tw') {
-    lang = 'zh-hant'
+  if (['zh-hk', 'zh-mo', 'zh-tw'].indexOf(langFull) !== -1) {
+    return 'zh_tw'
+  } else if (['zh-cn', 'zh'].indexOf(langFull) !== -1) {
+    return 'zh'
   } else if (langFull === 'pt-br') {
-    lang = 'pt-br'
-  } else {
-    lang = langShort
+    return 'pt_br'
   }
-  return lang
+  return langShort
 }

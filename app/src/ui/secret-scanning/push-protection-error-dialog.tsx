@@ -35,10 +35,16 @@ export interface ISecretScanResult {
 interface IPushProtectionErrorDialogProps {
   /** The secrets that were detected on push */
   readonly secrets: ReadonlyArray<ISecretScanResult>
+
   /** The function to call when the user clicks the bypass button */
   readonly bypassPushProtection: (
     secret: ISecretScanResult
   ) => Promise<IAPICreatePushProtectionBypassResponse | null>
+
+  readonly onDelegatedBypassLinkClick: () => void
+
+  readonly onRemediationInstructionsLinkClick: () => void
+
   readonly onDismissed: () => void
 }
 
@@ -98,7 +104,10 @@ export class PushProtectionErrorDialog extends React.Component<
                 'push-protection-error.allowing-secrets-risks-exposure',
                 'Allowing secrets risks exposure. Consider '
               )}
-              <LinkButton uri="https://docs.github.com/code-security/secret-scanning/working-with-secret-scanning-and-push-protection/working-with-push-protection-in-the-github-ui#resolving-a-blocked-commit">
+              <LinkButton
+                onClick={this.props.onRemediationInstructionsLinkClick}
+                uri="https://docs.github.com/code-security/secret-scanning/working-with-secret-scanning-and-push-protection/working-with-push-protection-in-the-github-ui#resolving-a-blocked-commit"
+              >
                 {t(
                   'push-protection-error.removing-the-secret',
                   'removing the secret from your commit and commit history.'
@@ -172,6 +181,7 @@ export class PushProtectionErrorDialog extends React.Component<
         <LinkButton
           ariaLabel={`Bypass ${secret.description}`}
           uri={secret.bypassURL}
+          onClick={this.props.onDelegatedBypassLinkClick}
         >
           {t('push-protection-error.bypass', 'Bypass')}
         </LinkButton>
