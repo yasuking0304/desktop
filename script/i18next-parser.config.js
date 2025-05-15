@@ -14,7 +14,7 @@ module.exports = {
     'ru',
     'sv',
     'zh',
-    'zh-hant',
+    'zh-tw',
   ],
   output: 'app/src/locales/json/lang_$LOCALE.json',
   input: '../app/src/**/*.{js,ts,tsx}',

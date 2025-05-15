@@ -702,7 +702,7 @@
     "render-readme-overwrite-warning-1": "此目录已包含 ",
     "render-readme-overwrite-warning-2": " 文件。选中此框将导致现有文件被覆盖。",
     "repo-sanitized-name-warning": "将被创建为 {{0}}。",
-    "spaces-and-invalid-characters": "空格和无效字符已被连字符取代。",
+    "spaces-and-invalid-characters": "空白和无效字符已被连字符取代。",
     "will-be-created-as": "将创建为 {{0}}"
   },
   "create-tag-dialog": {
@@ -771,12 +771,12 @@
     "caption-options": "选项",
     "caption-options-darwin": "选项",
     "diff-display": "差异显示",
-    "hide-whitespace-changes": "隐藏空格更改",
-    "hide-whitespace-changes-darwin": "隐藏空格更改",
-    "interacting-with-individual-lines": "忽略包含制表符或空格部分更改的行。",
+    "hide-whitespace-changes": "隐藏空白更改",
+    "hide-whitespace-changes-darwin": "隐藏空白更改",
+    "interacting-with-individual-lines": "忽略包含制表符或空白部分更改的行。",
     "split": "拆分",
     "unified": "统一",
-    "whitespace": "空格"
+    "whitespace": "空白"
   },
   "discard-changes-dialog": {
     "are-you-sure-discard-all-changed": "您确定要放弃所有 {{0}} 个已更改的文件吗?",
@@ -1584,7 +1584,7 @@
     "is-not-a-valid-name": " 不是有效名称。",
     "render-warning-message-1": "作为 ",
     "render-warning-message-2": ", 将为{{0}}。",
-    "spaces-and-invalid-characters": "空格和无效字符已被连字符取代。"
+    "spaces-and-invalid-characters": "空白和无效字符已被连字符取代。"
   },
   "relative-time": {
     "just-now": "现在"
