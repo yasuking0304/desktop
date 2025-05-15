@@ -210,7 +210,13 @@ script:
   - Comment=Simple collaboration from your desktop.
   - Comment[es]=Trabaja con GitHub desde tu escritorio.
   - Comment[eu]=GitHub-ekin lan egin zure ordenagailutik.
-  - Comment[ja]=GitHub Desktop で GitHub を拡張
+  - Comment[fr]=GitHub Desktop facilite la collaboration
+  - Comment[ja]=GitHub Desktop で 簡単にコラボレーションできる環境に
+  - Comment[ko]=GitHub Desktop으로 손쉽게 협업할 수 있는 환경
+  - Comment[pt]=O GitHub Desktop facilita a colaboração
+  - Comment[pt-br]=O GitHub Desktop facilita a colaboração
+  - Comment[zh]=GitHub Desktop 让协作变得简单
+  - Comment[zh-tw]=GitHub Desktop 讓協作變得簡單
   - Exec=github %U
   - Terminal=false
   - Type=Application
