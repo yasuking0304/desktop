@@ -50,7 +50,7 @@ i18n.init({
 function getLanguage(): string {
   const langFull = getLocale().toLocaleLowerCase()
   const langShort = langFull.split('-')[0]
-  if (['zh-hk', 'zh-mo', 'zh-tw'].indexOf(langFull) !== -1) {
+  if (['zh-hk', 'zh-mo', 'zh-sg', 'zh-tw'].indexOf(langFull) !== -1) {
     return 'zh_tw'
   } else if (['zh-cn', 'zh'].indexOf(langFull) !== -1) {
     return 'zh'

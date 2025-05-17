@@ -392,6 +392,7 @@
     "enable-commit-spellcheck": "コミットスペルチェックを有効にする",
     "enable-commit-spellcheck-darwin": "コミットスペルチェックを有効にする",
     "generate-commit-message": "Copilotでコミットメッセージを生成する{{0}}",
+    "generating-commit-details": "コミットの詳細を生成中…",
     "link-create-a-fork": "フォークの作成",
     "link-switch-branches": "ブランチの切り替え",
     "must-be-selected": "。コミット メッセージを生成するにはファイルを選択する必要があります。",
@@ -1831,7 +1832,9 @@
     "additional-services": "追加サービス",
     "auto-update-services": "自動更新サービス",
     "connecting-to-github": "GitHub に接続",
+    "creative-commons-attribute": "クリエイティブ・コモンズ・ライセンス",
     "disclaimers-and-limitations-of-liability": "免責事項および責任の制限",
+    "github-privacy-statement": "GitHub のプライバシー ステートメント",
     "github-s-logos": "GitHub の商標およびロゴ",
     "miscellanea": "その他",
     "open-source-licenses-and-notices": "オープンソースライセンスと通知",
@@ -1940,6 +1943,7 @@
     "would-you-like-to-update": "予期された URL を使用するようにリモートを更新しますか?"
   },
   "url": {
+    "creativecommons_org_licenses": "https://creativecommons.jp/licenses/",
     "git-scm-com-docs-gitignore": "https://git-scm.com/docs/gitignore",
     "github-desktop-issue": "https://github.com/yasuking0304/desktop/issues/new/choose",
     "github-desktop-issue-linux": "https://github.com/yasuking0304/desktop/issues/new/choose",

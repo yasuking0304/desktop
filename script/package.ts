@@ -216,6 +216,10 @@ script:
   - Comment[pt]=O GitHub Desktop facilita a colaboração
   - Comment[pt-br]=O GitHub Desktop facilita a colaboração
   - Comment[zh]=GitHub Desktop 让协作变得简单
+  - Comment[zh-cn]=GitHub Desktop 让协作变得简单
+  - Comment[zh-hk]=GitHub Desktop 讓協作變得簡單
+  - Comment[zh-mo]=GitHub Desktop 讓協作變得簡單
+  - Comment[zh-sg]=GitHub Desktop 讓協作變得簡單
   - Comment[zh-tw]=GitHub Desktop 讓協作變得簡單
   - Exec=github %U
   - Terminal=false
