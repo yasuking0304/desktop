@@ -126,6 +126,10 @@
     "sign-in-using-your-browser": "Sign in using your browser",
     "your-browser-will-redirect": "Your browser will redirect you back to GitHub Desktop once you've signed in. If your browser asks for your permission to launch GitHub Desktop please allow it to."
   },
+  "author-input": {
+    "co-authors": "Co-Authors",
+    "username": "@username"
+  },
   "base-multi-commit-operation": {
     "abort-operation": "Abort {{0}}",
     "continue-operation": "Continue {{0}}",

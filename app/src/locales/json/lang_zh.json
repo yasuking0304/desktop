@@ -126,6 +126,10 @@
     "sign-in-using-your-browser": "使用浏览器登录",
     "your-browser-will-redirect": "登录后, 浏览器会将您重定向回 GitHub Desktop。如果您的浏览器请求您允许启动 GitHub Desktop, 请允许。"
   },
+  "author-input": {
+    "co-authors": "共同作者",
+    "username": "@用户名"
+  },
   "base-multi-commit-operation": {
     "abort-operation": "中止 {{0}}",
     "continue-operation": "继续 {{0}}",

@@ -126,6 +126,10 @@
     "sign-in-using-your-browser": "ブラウザーを使用してサインイン",
     "your-browser-will-redirect": "サインインすると、ブラウザーによって GitHub Desktop にリダイレクトされます。ブラウザーが GitHub Desktop の起動許可を求めた場合は、許可してください。"
   },
+  "author-input": {
+    "co-authors": "コラボレーター",
+    "username": "@ユーザ名"
+  },
   "base-multi-commit-operation": {
     "abort-operation": "{{0}}を中止",
     "continue-operation": "{{0}}を続ける",

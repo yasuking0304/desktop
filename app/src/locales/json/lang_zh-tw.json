@@ -126,6 +126,10 @@
     "sign-in-using-your-browser": "使用瀏覽器登入",
     "your-browser-will-redirect": "登入後, 瀏覽器會將您重新導向回 GitHub Desktop。如果您的瀏覽器要求您允許啟動 GitHub Desktop, 請允許。"
   },
+  "author-input": {
+    "co-authors": "共同作者",
+    "username": "@使用者名稱"
+  },
   "base-multi-commit-operation": {
     "abort-operation": "中止 {{0}}",
     "continue-operation": "繼續 {{0}}",
