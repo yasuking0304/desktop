@@ -8,6 +8,7 @@
     "check-out-the-beta-channel-2": "Beta Channel",
     "check-out-the-beta-channel-3": "을 참조하십시오",
     "checking-for-updates": "업데이트 확인…",
+    "click-here-for-details": "자세한 내용은 여기를 클릭하세요",
     "could-not-determine-the-last-time-update-check": "업데이트 확인이 마지막으로 실행된 시간을 확인할 수 없습니다. 이전 버전을 실행 중일 수 있습니다. 수동으로 업데이트를 확인하고 문제가 해결되지 않으면 GitHub 지원팀에 문의하세요.",
     "downloading-updates": "업데이트 다운로드…",
     "license-and-open-source-notices": "라이센스 및 오픈 소스 알림",
@@ -18,6 +19,7 @@
     "responsible-use-of-copilot": "GitHub Desktop에서 GitHub Copilot의 책임 있는 사용",
     "supported-operating-systems": "지원되는 운영 체제",
     "terms-and-conditions": "이용 조건",
+    "unofficial-build": "비공식 빌드 버전으로 인해 자동 업데이트가 수행되지 않습니다.",
     "update-has-been-downloaded-and-is-ready": "업데이트가 다운로드되어 설치할 준비가 되었습니다.",
     "version": "버전 {{0}}",
     "you-have-the-latest-version": "최신 버전이 설치되었습니다(최종 검사 {{0}})",
@@ -1954,6 +1956,7 @@
     "keyboard-shortcuts": "https://docs.github.com/ko/desktop/installing-and-configuring-github-desktop/overview/keyboard-shortcuts",
     "show-user-guides": "https://docs.github.com/ko/desktop",
     "supported-operating-systems-for-github-desktop": "https://docs.github.com/ko/desktop/installing-and-configuring-github-desktop/overview/supported-operating-systems",
+    "unofficial-github-desktop-wiki": "https://github.com/yasuking0304/desktop/wiki",
     "why-are-my-commits-linked-to-the-wrong-user": "https://docs.github.com/ko/github/committing-changes-to-your-project/why-are-my-commits-linked-to-the-wrong-user"
   },
   "warn-force-push-dialog": {

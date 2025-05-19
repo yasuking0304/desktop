@@ -124,7 +124,7 @@ export class About extends React.Component<IAboutProps> {
 
         const buttonTitle = t('about.check-for-updates', 'Check for Updates')
 
-        return __LINUX__ ? (
+        return __LINUX__ || __UNOFFICIAL__ ? (
           <></>
         ) : (
           <Row>
@@ -145,6 +145,30 @@ export class About extends React.Component<IAboutProps> {
   }
 
   private renderUpdateDetails() {
+    if (__UNOFFICIAL__) {
+      return (
+        <p className='unofficial-build'>
+          {t(
+            'about.unofficial-build',
+            `Since this is an unofficial build, automatic updates will not occur.`
+          )}
+          <Row>
+            <LinkButton
+              uri={t(
+                'url.unofficial-github-desktop-wiki',
+                'https://github.com/yasuking0304/desktop/wiki'
+              )}
+            >
+              {t(
+                'about.click-here-for-details',
+                'Click here for details'
+              )}
+            </LinkButton>
+          </Row>
+        </p>
+      )
+    }
+
     if (__LINUX__) {
       return null
     }

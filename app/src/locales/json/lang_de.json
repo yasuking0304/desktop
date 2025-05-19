@@ -8,6 +8,7 @@
     "check-out-the-beta-channel-2": "Beta Channel",
     "check-out-the-beta-channel-3": " ",
     "checking-for-updates": "Checking for updates…",
+    "click-here-for-details": "Click here for details",
     "could-not-determine-the-last-time-update-check": "Couldn't determine the last time an update check was performed. You may be running an old version. Please try manually checking for updates and contact GitHub Support if the problem persists",
     "downloading-updates": "Downloading update…",
     "license-and-open-source-notices": "License and Open Source Notices",
@@ -18,6 +19,7 @@
     "responsible-use-of-copilot": "Responsible use of Copilot in GitHub Desktop",
     "supported-operating-systems": "Supported operating systems",
     "terms-and-conditions": "Terms and Conditions",
+    "unofficial-build": "Since this is an unofficial build, automatic updates will not occur.",
     "update-has-been-downloaded-and-is-ready": "An update has been downloaded and is ready to be installed.",
     "version": "Version {{0}}",
     "you-have-the-latest-version": "You have the latest version (last checked {{0}})",
@@ -1954,6 +1956,7 @@
     "keyboard-shortcuts": "https://docs.github.com/de/desktop/installing-and-configuring-github-desktop/overview/keyboard-shortcuts",
     "show-user-guides": "https://docs.github.com/de/desktop",
     "supported-operating-systems-for-github-desktop": "https://docs.github.com/de/desktop/installing-and-configuring-github-desktop/overview/supported-operating-systems",
+    "unofficial-github-desktop-wiki": "https://github.com/yasuking0304/desktop/wiki",
     "why-are-my-commits-linked-to-the-wrong-user": "https://docs.github.com/de/github/committing-changes-to-your-project/why-are-my-commits-linked-to-the-wrong-user"
   },
   "warn-force-push-dialog": {

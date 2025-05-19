@@ -624,7 +624,7 @@ export class App extends React.Component<IAppProps, IAppState> {
     inBackground: boolean,
     skipGuidCheck: boolean = false
   ) {
-    if (__LINUX__ || __RELEASE_CHANNEL__ === 'development') {
+    if (__LINUX__ || __UNOFFICIAL__ || __RELEASE_CHANNEL__ === 'development') {
       return
     }
 

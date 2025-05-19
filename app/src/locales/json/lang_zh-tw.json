@@ -8,6 +8,7 @@
     "check-out-the-beta-channel-2": "Beta Channel",
     "check-out-the-beta-channel-3": " ",
     "checking-for-updates": "正在檢查更新…",
+    "click-here-for-details": "點此了解詳情",
     "could-not-determine-the-last-time-update-check": "無法確定上次執行更新檢查的時間。您可能正在執行舊版本。請嘗試手動檢查更新, 如果問題仍然存在, 請聯絡 GitHub 支援",
     "downloading-updates": "正在下載更新…",
     "license-and-open-source-notices": "開源授權與宣告",
@@ -18,6 +19,7 @@
     "responsible-use-of-copilot": "GitHub Desktop 中 GitHub Copilot 的負責任使用",
     "supported-operating-systems": "支援的作業系統",
     "terms-and-conditions": "服務條款",
+    "unofficial-build": "由於這是非官方版本，因此不會發生自動更新。",
     "update-has-been-downloaded-and-is-ready": "更新已下載並準備安裝。",
     "version": "版本 {{0}}",
     "you-have-the-latest-version": "您擁有最新版本 (上次檢查時間為 {{0}})",
@@ -1954,6 +1956,7 @@
     "keyboard-shortcuts": "https://docs.github.com/zh/desktop/installing-and-configuring-github-desktop/overview/keyboard-shortcuts",
     "show-user-guides": "https://docs.github.com/zh/desktop",
     "supported-operating-systems-for-github-desktop": "https://docs.github.com/zh/desktop/installing-and-configuring-github-desktop/overview/supported-operating-systems",
+    "unofficial-github-desktop-wiki": "https://github.com/yasuking0304/desktop/wiki",
     "why-are-my-commits-linked-to-the-wrong-user": "https://docs.github.com/zh/github/committing-changes-to-your-project/why-are-my-commits-linked-to-the-wrong-user"
   },
   "warn-force-push-dialog": {
