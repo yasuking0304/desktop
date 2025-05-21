@@ -373,7 +373,7 @@ export async function getWorkingDirectoryDiff(
     // citation in source:
     // https://github.com/git/git/blob/1f66975deb8402131fbf7c14330d0c7cdebaeaa2/diff-no-index.c#L300
     successExitCodes.add(1)
-    args.push('--no-index', '--', '/dev/null', relativePathSpec(file.path))
+    args.push('--no-index', '--', '/dev/null', file.path)
   } else if (file.status.kind === AppFileStatusKind.Renamed) {
     // NB: Technically this is incorrect, the best kind of incorrect.
     // In order to show exactly what will end up in the commit we should
