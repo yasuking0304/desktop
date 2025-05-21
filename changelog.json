@@ -1,5 +1,8 @@
 {
   "releases": {
+    "3.4.20": [
+      "[Fixed] Prevent network share traversal with renamed UNC paths on Windows"
+    ],
     "3.4.19": [
       "[New] Users can filter the changed files list - #20220",
       "[New] Add support for multiple enterprise accounts - #20227",
