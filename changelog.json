@@ -1,5 +1,8 @@
 {
   "releases": {
+    "3.4.20-beta3": [
+      "[Fixed] Prevent network share traversal with renamed UNC paths on Windows"
+    ],
     "3.4.20-beta2": [
       "[Fixed] Fix spacing of text in \"Thank You\" banner - #20411",
       "[Fixed] Radio inputs include the area around the radio button as a click surface.  - #20404",
