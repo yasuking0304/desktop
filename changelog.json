@@ -1,5 +1,8 @@
 {
   "releases": {
+    "3.4.20": [
+      "[Fixed] Prevent network share traversal with renamed UNC paths on Windows"
+    ],
     "3.4.20-beta3": [
       "[Fixed] Prevent network share traversal with renamed UNC paths on Windows"
     ],
