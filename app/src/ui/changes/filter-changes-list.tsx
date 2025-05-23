@@ -119,7 +119,12 @@ interface IFilterChangesListProps {
   readonly rebaseConflictState: RebaseConflictState | null
   readonly selectedFileIDs: ReadonlyArray<string>
   readonly onFileSelectionChanged: (rows: ReadonlyArray<number>) => void
-  readonly onIncludeChanged: (path: string, include: boolean) => void
+  readonly onIncludeChanged: (
+    file:
+      | WorkingDirectoryFileChange
+      | ReadonlyArray<WorkingDirectoryFileChange>,
+    include: boolean
+  ) => void
   readonly onCreateCommit: (context: ICommitContext) => Promise<boolean>
   readonly onDiscardChanges: (file: WorkingDirectoryFileChange) => void
   readonly askForConfirmationOnDiscardChanges: boolean
@@ -161,6 +166,7 @@ interface IFilterChangesListProps {
   readonly availableWidth: number
   readonly isCommitting: boolean
   readonly isGeneratingCommitMessage: boolean
+  readonly shouldShowGenerateCommitMessageCallOut: boolean
   readonly commitToAmend: Commit | null
   readonly currentBranchProtected: boolean
   readonly currentRepoRulesInfo: RepoRulesInfo
@@ -219,6 +225,9 @@ interface IFilterChangesListProps {
   readonly filterText: string
 
   readonly includedChangesInCommitFilter: boolean
+
+  /** Whether or not to show the changes filter */
+  readonly showChangesFilter: boolean
 }
 
 interface IFilterChangesListState {
@@ -388,13 +397,11 @@ export class FilterChangesList extends React.Component<
 
   private onIncludeAllChanged = (event: React.FormEvent<HTMLInputElement>) => {
     const include = event.currentTarget.checked
-
-    const filteredItemPaths = [...this.state.filteredItems.values()].map(
-      i => i.change.path
+    const filteredItemPaths = Array.from(
+      this.state.filteredItems,
+      ([k, v]) => v.change
     )
-    filteredItemPaths.forEach(path =>
-      this.props.onIncludeChanged(path, include)
-    )
+    this.props.onIncludeChanged(filteredItemPaths, include)
   }
 
   private renderChangedFile = (
@@ -750,9 +757,7 @@ export class FilterChangesList extends React.Component<
             ? 'Include Selected Files'
             : 'Include selected files',
           action: () => {
-            selectedFiles.map(file =>
-              this.props.onIncludeChanged(file.path, true)
-            )
+            selectedFiles.map(file => this.props.onIncludeChanged(file, true))
           },
         },
         {
@@ -760,9 +765,7 @@ export class FilterChangesList extends React.Component<
             ? 'Exclude Selected Files'
             : 'Exclude selected files',
           action: () => {
-            selectedFiles.map(file =>
-              this.props.onIncludeChanged(file.path, false)
-            )
+            selectedFiles.map(file => this.props.onIncludeChanged(file, false))
           },
         },
         { type: 'separator' },
@@ -888,6 +891,7 @@ export class FilterChangesList extends React.Component<
       commitToAmend,
       currentBranchProtected,
       currentRepoRulesInfo: currentRepoRulesInfo,
+      shouldShowGenerateCommitMessageCallOut,
     } = this.props
 
     if (rebaseConflictState !== null) {
@@ -960,6 +964,9 @@ export class FilterChangesList extends React.Component<
         autocompletionProviders={this.props.autocompletionProviders}
         isCommitting={isCommitting}
         isGeneratingCommitMessage={isGeneratingCommitMessage}
+        shouldShowGenerateCommitMessageCallOut={
+          shouldShowGenerateCommitMessageCallOut
+        }
         commitToAmend={commitToAmend}
         showCoAuthoredBy={this.props.showCoAuthoredBy}
         coAuthors={this.props.coAuthors}
@@ -1299,6 +1306,10 @@ export class FilterChangesList extends React.Component<
   }
 
   private renderFilterBox = () => {
+    if (!this.props.showChangesFilter) {
+      return null
+    }
+
     const buttonTextLabel = `Filter Options ${
       this.props.includedChangesInCommitFilter ? '(1 applied)' : ''
     }`
@@ -1344,7 +1355,11 @@ export class FilterChangesList extends React.Component<
     )
   }
 
-  private isIncludedInCommit(item: IChangesListItem) {
+  private isIncludedInCommit = (item: IChangesListItem) => {
+    if (!this.props.showChangesFilter) {
+      return true
+    }
+
     return item.change.selection.getSelectionType() !== DiffSelectionType.None
   }
 
@@ -1363,7 +1378,9 @@ export class FilterChangesList extends React.Component<
             ref={this.filterListRef}
             id="changes-list"
             rowHeight={RowHeight}
-            filterText={this.props.filterText}
+            filterText={
+              this.props.showChangesFilter ? this.props.filterText : ''
+            }
             filterTextBox={this.filterTextBox}
             onFilterListResultsChanged={this.onFilterListResultsChanged}
             selectedItems={this.state.selectedItems}
@@ -1387,6 +1404,7 @@ export class FilterChangesList extends React.Component<
               workingDirectory: workingDirectory,
               isCommitting: isCommitting,
               focusedRow: this.state.focusedRow,
+              showChangesFilter: this.props.showChangesFilter,
             }}
             onItemContextMenu={this.onItemContextMenu}
             renderCustomFilterRow={this.renderFilterRow}

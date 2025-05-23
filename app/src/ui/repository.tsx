@@ -59,6 +59,7 @@ interface IRepositoryViewProps {
   readonly commitSpellcheckEnabled: boolean
   readonly showCommitLengthWarning: boolean
   readonly accounts: ReadonlyArray<Account>
+  readonly shouldShowGenerateCommitMessageCallOut: boolean
 
   /**
    * A value indicating whether or not the application is currently presenting
@@ -109,6 +110,9 @@ interface IRepositoryViewProps {
 
   /** The user's preference of pull request suggested next action to use **/
   readonly pullRequestSuggestedNextAction?: PullRequestSuggestedNextAction
+
+  /** Whether or not to show the changes filter */
+  readonly showChangesFilter: boolean
 }
 
 interface IRepositoryViewState {
@@ -246,6 +250,9 @@ export class RepositoryView extends React.Component<
         gitHubUserStore={this.props.gitHubUserStore}
         isCommitting={this.props.state.isCommitting}
         isGeneratingCommitMessage={this.props.state.isGeneratingCommitMessage}
+        shouldShowGenerateCommitMessageCallOut={
+          this.props.shouldShowGenerateCommitMessageCallOut
+        }
         commitToAmend={this.props.state.commitToAmend}
         isPushPullFetchInProgress={this.props.state.isPushPullFetchInProgress}
         focusCommitMessage={this.props.focusCommitMessage}
@@ -267,6 +274,7 @@ export class RepositoryView extends React.Component<
         }
         commitSpellcheckEnabled={this.props.commitSpellcheckEnabled}
         showCommitLengthWarning={this.props.showCommitLengthWarning}
+        showChangesFilter={this.props.showChangesFilter}
       />
     )
   }

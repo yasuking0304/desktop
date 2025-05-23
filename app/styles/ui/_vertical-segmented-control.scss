@@ -17,7 +17,6 @@ fieldset.vertical-segmented-control {
   width: 100%;
 
   .radio-button-component {
-    padding: var(--spacing);
     margin: 0;
     border: var(--base-border);
     // Last child to have a border-bottom
@@ -60,7 +59,8 @@ fieldset.vertical-segmented-control {
     }
 
     > label {
-      min-width: 0;
+      min-width: 100%;
+      padding: var(--spacing);
     }
   }
 }

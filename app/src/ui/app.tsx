@@ -186,8 +186,18 @@ import { showTestUI } from './lib/test-ui-components/test-ui-components'
 import { ConfirmCommitFilteredChanges } from './changes/confirm-commit-filtered-changes-dialog'
 import { AboutTestDialog } from './about/about-test-dialog'
 import { enableMultipleEnterpriseAccounts } from '../lib/feature-flag'
+import {
+  ISecretScanResult,
+  PushProtectionErrorDialog,
+} from './secret-scanning/push-protection-error-dialog'
 import { GenerateCommitMessageOverrideWarning } from './generate-commit-message/generate-commit-message-override-warning'
 import { GenerateCommitMessageDisclaimer } from './generate-commit-message/generate-commit-message-disclaimer'
+import { IAPICreatePushProtectionBypassResponse } from '../lib/api'
+import {
+  BypassPushProtectionDialog,
+  BypassReason,
+  BypassReasonType,
+} from './secret-scanning/bypass-push-protection-dialog'
 
 const MinuteInMilliseconds = 1000 * 60
 const HourInMilliseconds = MinuteInMilliseconds * 60
@@ -520,6 +530,8 @@ export class App extends React.Component<IAppProps, IAppState> {
         return this.resizeActiveResizable('increase-active-resizable-width')
       case 'decrease-active-resizable-width':
         return this.resizeActiveResizable('decrease-active-resizable-width')
+      case 'toggle-changes-filter':
+        return this.toggleChangesFilterVisibility()
       default:
         if (isTestMenuEvent(name)) {
           return showTestUI(
@@ -531,6 +543,13 @@ export class App extends React.Component<IAppProps, IAppState> {
         }
         return assertNever(name, `Unknown menu event name: ${name}`)
     }
+  }
+
+  /**
+   * This method dispatches an action to update the changes filter visibility
+   */
+  private toggleChangesFilterVisibility() {
+    this.props.dispatcher.toggleChangesFilterVisibility()
   }
 
   /**
@@ -2496,6 +2515,31 @@ export class App extends React.Component<IAppProps, IAppState> {
             onShowTermsAndConditions={this.showTermsAndConditions}
           />
         )
+      case PopupType.PushProtectionError:
+        return (
+          <PushProtectionErrorDialog
+            key="push-protection-error"
+            secrets={popup.secrets}
+            onDelegatedBypassLinkClick={this.onSecretDelegatedBypassLinkClick}
+            onRemediationInstructionsLinkClick={
+              this.onSecretRemediationInstructionsLinkClick
+            }
+            bypassPushProtection={this.openBypassPushProtection}
+            onDismissed={onPopupDismissedFn}
+          />
+        )
+      case PopupType.BypassPushProtection:
+        return (
+          <BypassPushProtectionDialog
+            key="bypass-push-protection"
+            secret={popup.secret}
+            bypassPushProtection={popup.bypassPushProtection}
+            onDismissed={this.onDismissBypassPushProtection(
+              popup.id,
+              popup.onDismissed
+            )}
+          />
+        )
       case PopupType.GenerateCommitMessageOverrideWarning: {
         return (
           <GenerateCommitMessageOverrideWarning
@@ -2523,6 +2567,28 @@ export class App extends React.Component<IAppProps, IAppState> {
     }
   }
 
+  private onSecretDelegatedBypassLinkClick = () => {
+    this.props.dispatcher.incrementMetric(
+      'secretsDetectedOnPushDelegatedBypassLinkClickedCount'
+    )
+  }
+
+  private onSecretRemediationInstructionsLinkClick = () => {
+    this.props.dispatcher.incrementMetric(
+      'secretRemediationInstructionsLinkClickedCount'
+    )
+  }
+
+  private onDismissBypassPushProtection = (
+    popup: string,
+    popupDismiss: () => void
+  ) => {
+    return () => {
+      popupDismiss()
+      this.onPopupDismissed(popup)
+    }
+  }
+
   private setConfirmCommitFilteredChanges = (value: boolean) => {
     this.props.dispatcher.setConfirmCommitFilteredChanges(value)
   }
@@ -2537,6 +2603,71 @@ export class App extends React.Component<IAppProps, IAppState> {
     }
 
     return selectedState.state.pullRequestState
+  }
+
+  private openBypassPushProtection = (secret: ISecretScanResult) => {
+    return new Promise<IAPICreatePushProtectionBypassResponse | null>(
+      resolve => {
+        this.props.dispatcher.showPopup({
+          type: PopupType.BypassPushProtection,
+          secret,
+          bypassPushProtection: (
+            secret: ISecretScanResult,
+            reason: BypassReasonType
+          ) => {
+            this.bypassPushProtection(secret, reason)
+              .then(response => {
+                this.recordSecretBypassStats(reason)
+                resolve(response)
+              })
+              .catch(error => {
+                resolve(null)
+                this.props.dispatcher.postError(error)
+              })
+              .finally(() => {
+                this.props.dispatcher.closePopup(PopupType.BypassPushProtection)
+              })
+          },
+          onDismissed: () => {
+            resolve(null)
+          },
+        })
+      }
+    )
+  }
+
+  private recordSecretBypassStats = (reason: BypassReasonType) => {
+    this.props.dispatcher.incrementMetric('secretsDetectedOnPushBypassedCount')
+    switch (reason) {
+      case BypassReason.FalsePositive:
+        this.props.dispatcher.incrementMetric(
+          'secretsDetectedOnPushBypassedAsFalsePositiveCount'
+        )
+        break
+      case BypassReason.UsedInTests:
+        this.props.dispatcher.incrementMetric(
+          'secretsDetectedOnPushBypassedAsUsedInTestCount'
+        )
+        break
+      case BypassReason.WillFixLater:
+        this.props.dispatcher.incrementMetric(
+          'secretsDetectedOnPushBypassedAsWillFixLaterCount'
+        )
+        break
+      default:
+        return assertNever(reason, `Unknown Bypass reason: ${reason}`)
+    }
+  }
+
+  private bypassPushProtection = (
+    secret: ISecretScanResult,
+    reason: BypassReasonType
+  ): Promise<IAPICreatePushProtectionBypassResponse | null> => {
+    return this.props.dispatcher.createPushProtectionBypass(
+      reason,
+      secret.id,
+      secret.bypassURL
+    )
   }
 
   private getWarnForcePushDialogOnBegin(
@@ -3291,6 +3422,10 @@ export class App extends React.Component<IAppProps, IAppState> {
           showCommitLengthWarning={this.state.showCommitLengthWarning}
           onCherryPick={this.startCherryPickWithoutBranch}
           pullRequestSuggestedNextAction={state.pullRequestSuggestedNextAction}
+          showChangesFilter={state.showChangesFilter}
+          shouldShowGenerateCommitMessageCallOut={
+            !this.state.commitMessageGenerationButtonClicked
+          }
         />
       )
     } else if (selectedState.type === SelectionType.CloningRepository) {

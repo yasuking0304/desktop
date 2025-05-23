@@ -376,6 +376,11 @@ export interface IAppState {
   readonly updateState: IUpdateState
 
   readonly commitMessageGenerationDisclaimerLastSeen: number | null
+
+  readonly commitMessageGenerationButtonClicked: boolean
+
+  /** Whether the changes filter is shown */
+  readonly showChangesFilter: boolean
 }
 
 export enum FoldoutType {
