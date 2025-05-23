@@ -24,6 +24,8 @@ export function createState<K extends keyof IChangesState>(
     currentRepoRulesInfo: new RepoRulesInfo(),
     filterText: '',
     includedChangesInCommitFilter: false,
+    filterNewFiles: false,
+    filterModifiedFiles: false,
   }
 
   return merge(baseChangesState, pick)

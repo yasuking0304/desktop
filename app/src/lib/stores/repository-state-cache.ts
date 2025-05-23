@@ -320,6 +320,8 @@ function getInitialRepositoryState(): IRepositoryState {
       currentRepoRulesInfo: new RepoRulesInfo(),
       filterText: '',
       includedChangesInCommitFilter: false,
+      filterNewFiles: false,
+      filterModifiedFiles: false,
     },
     selectedSection: RepositorySectionTab.Changes,
     branchesState: {

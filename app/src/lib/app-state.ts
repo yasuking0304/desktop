@@ -776,6 +776,12 @@ export interface IChangesState {
 
   /** The state of the changes list filter of included changes. */
   readonly includedChangesInCommitFilter: boolean
+
+  /** Whether to filter and show only new files */
+  readonly filterNewFiles: boolean
+
+  /** Whether to filter and show only modified files */
+  readonly filterModifiedFiles: boolean
 }
 
 /**

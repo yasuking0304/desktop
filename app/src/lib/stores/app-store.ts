@@ -8330,6 +8330,23 @@ export class AppStore extends TypedBaseStore<IAppState> {
     this.emitUpdate()
   }
 
+  public _setFilterNewFiles(repository: Repository, filterNewFiles: boolean) {
+    this.repositoryStateCache.updateChangesState(repository, () => ({
+      filterNewFiles,
+    }))
+    this.emitUpdate()
+  }
+
+  public _setFilterModifiedFiles(
+    repository: Repository,
+    filterModifiedFiles: boolean
+  ) {
+    this.repositoryStateCache.updateChangesState(repository, () => ({
+      filterModifiedFiles,
+    }))
+    this.emitUpdate()
+  }
+
   public async _createPushProtectionBypass(
     reason: BypassReasonType,
     placeholderId: string,

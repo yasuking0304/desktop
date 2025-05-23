@@ -226,6 +226,12 @@ interface IFilterChangesListProps {
 
   readonly includedChangesInCommitFilter: boolean
 
+  /** Whether to filter and show only new files */
+  readonly filterNewFiles: boolean
+
+  /** Whether to filter and show only modified files */
+  readonly filterModifiedFiles: boolean
+
   /** Whether or not to show the changes filter */
   readonly showChangesFilter: boolean
 }
@@ -337,6 +343,26 @@ export class FilterChangesList extends React.Component<
       const filteredStatus = WorkingDirectoryStatus.fromFiles(files)
 
       return getCheckBoxValueFromIncludeAll(filteredStatus.includeAll)
+    }
+  )
+
+  /** Calculate the count of new files (including untracked) */
+  private getNewFilesCount = memoizeOne(
+    (workingDirectory: WorkingDirectoryStatus) => {
+      return workingDirectory.files.filter(
+        f =>
+          f.status.kind === AppFileStatusKind.New ||
+          f.status.kind === AppFileStatusKind.Untracked
+      ).length
+    }
+  )
+
+  /** Calculate the count of modified files */
+  private getModifiedFilesCount = memoizeOne(
+    (workingDirectory: WorkingDirectoryStatus) => {
+      return workingDirectory.files.filter(
+        f => f.status.kind === AppFileStatusKind.Modified
+      ).length
     }
   )
 
@@ -1213,6 +1239,10 @@ export class FilterChangesList extends React.Component<
     )
   }
 
+  private closeFilterOptions = () => {
+    this.setState({ isFilterOptionsOpen: false })
+  }
+
   private renderCheckBoxRow = () => {
     const { workingDirectory, rebaseConflictState, isCommitting } = this.props
     const { files } = workingDirectory
@@ -1256,10 +1286,6 @@ export class FilterChangesList extends React.Component<
     this.setState({ isFilterOptionsOpen: !this.state.isFilterOptionsOpen })
   }
 
-  private closeFilterOptions = () => {
-    this.setState({ isFilterOptionsOpen: false })
-  }
-
   private renderFilterOptions() {
     const checkedFilesThatAreVisibleCount = [
       ...this.state.filteredItems.values(),
@@ -1300,6 +1326,26 @@ export class FilterChangesList extends React.Component<
             onChange={this.onFilterToIncludedInCommit}
             label={`Included in commit (${checkedFilesThatAreVisibleCount})`}
           />
+          <Checkbox
+            value={
+              this.props.filterNewFiles ? CheckboxValue.On : CheckboxValue.Off
+            }
+            onChange={this.onFilterNewFiles}
+            label={`New files (${this.getNewFilesCount(
+              this.props.workingDirectory
+            )})`}
+          />
+          <Checkbox
+            value={
+              this.props.filterModifiedFiles
+                ? CheckboxValue.On
+                : CheckboxValue.Off
+            }
+            onChange={this.onFilterModifiedFiles}
+            label={`Modified files (${this.getModifiedFilesCount(
+              this.props.workingDirectory
+            )})`}
+          />
         </div>
       </Popover>
     )
@@ -1310,8 +1356,16 @@ export class FilterChangesList extends React.Component<
       return null
     }
 
+    // Count active filters
+    const activeFiltersCount = [
+      this.props.includedChangesInCommitFilter,
+      this.props.filterNewFiles,
+      this.props.filterModifiedFiles,
+    ].filter(Boolean).length
+
+    const hasActiveFilters = activeFiltersCount > 0
     const buttonTextLabel = `Filter Options ${
-      this.props.includedChangesInCommitFilter ? '(1 applied)' : ''
+      hasActiveFilters ? `(${activeFiltersCount} applied)` : ''
     }`
 
     return (
@@ -1319,7 +1373,7 @@ export class FilterChangesList extends React.Component<
         <span>
           <Button
             className={classNames('filter-button', {
-              active: this.props.includedChangesInCommitFilter,
+              active: hasActiveFilters,
             })}
             onClick={this.openFilterOptions}
             ariaExpanded={this.state.isFilterOptionsOpen}
@@ -1330,7 +1384,7 @@ export class FilterChangesList extends React.Component<
             <span>
               <Octicon symbol={octicons.filter} />
             </span>
-            {this.props.includedChangesInCommitFilter ? (
+            {hasActiveFilters ? (
               <span className="active-badge">
                 <div className="badge-bg">
                   <div className="badge"></div>
@@ -1355,12 +1409,49 @@ export class FilterChangesList extends React.Component<
     )
   }
 
-  private isIncludedInCommit = (item: IChangesListItem) => {
+  private applyFilters = (item: IChangesListItem) => {
     if (!this.props.showChangesFilter) {
       return true
     }
 
-    return item.change.selection.getSelectionType() !== DiffSelectionType.None
+    // Apply included in commit filter
+    if (this.props.includedChangesInCommitFilter) {
+      if (item.change.selection.getSelectionType() === DiffSelectionType.None) {
+        return false
+      }
+    }
+
+    // Apply file type filters (new files and/or modified files)
+    const hasFileTypeFilter =
+      this.props.filterNewFiles || this.props.filterModifiedFiles
+    if (hasFileTypeFilter) {
+      let matchesFileTypeFilter = false
+
+      // Check if file matches new files filter
+      if (this.props.filterNewFiles) {
+        const isNewFile =
+          item.change.status.kind === AppFileStatusKind.New ||
+          item.change.status.kind === AppFileStatusKind.Untracked
+        if (isNewFile) {
+          matchesFileTypeFilter = true
+        }
+      }
+
+      // Check if file matches modified files filter
+      if (this.props.filterModifiedFiles) {
+        const isModifiedFile =
+          item.change.status.kind === AppFileStatusKind.Modified
+        if (isModifiedFile) {
+          matchesFileTypeFilter = true
+        }
+      }
+
+      if (!matchesFileTypeFilter) {
+        return false
+      }
+    }
+
+    return true
   }
 
   private getListAriaLabel = () => {
@@ -1396,8 +1487,10 @@ export class FilterChangesList extends React.Component<
             onSelectionChanged={this.onFileSelectionChanged}
             groups={this.state.groups}
             filterMethod={
-              this.props.includedChangesInCommitFilter
-                ? this.isIncludedInCommit
+              this.props.includedChangesInCommitFilter ||
+              this.props.filterNewFiles ||
+              this.props.filterModifiedFiles
+                ? this.applyFilters
                 : undefined
             }
             invalidationProps={{
@@ -1405,6 +1498,8 @@ export class FilterChangesList extends React.Component<
               isCommitting: isCommitting,
               focusedRow: this.state.focusedRow,
               showChangesFilter: this.props.showChangesFilter,
+              filterNewFiles: this.props.filterNewFiles,
+              filterModifiedFiles: this.props.filterModifiedFiles,
             }}
             onItemContextMenu={this.onItemContextMenu}
             renderCustomFilterRow={this.renderFilterRow}
@@ -1452,7 +1547,9 @@ export class FilterChangesList extends React.Component<
   private getNoResultsMessage = () => {
     if (
       this.props.filterText === '' &&
-      !this.props.includedChangesInCommitFilter
+      !this.props.includedChangesInCommitFilter &&
+      !this.props.filterNewFiles &&
+      !this.props.filterModifiedFiles
     ) {
       return undefined
     }
@@ -1465,16 +1562,31 @@ export class FilterChangesList extends React.Component<
       ? ' that are to be included in your commit'
       : ''
 
-    const conjunction = filterTextMessage && includedCommitText ? ' and ' : ''
+    const newFilesText = this.props.filterNewFiles ? ' that are new' : ''
 
-    return `Sorry, I can't find any changed files${filterTextMessage}${conjunction}
-        ${includedCommitText}.`
+    const modifiedFilesText = this.props.filterModifiedFiles
+      ? ' that are modified'
+      : ''
+
+    const filterTexts = [
+      filterTextMessage,
+      includedCommitText,
+      newFilesText,
+      modifiedFilesText,
+    ].filter(text => text !== '')
+
+    const conjunction = filterTexts.length > 1 ? ' and ' : ''
+    const combinedFilters = filterTexts.join(conjunction)
+
+    return `Sorry, I can't find any changed files${combinedFilters}.`
   }
 
   private renderNoChanges = () => {
     if (
       this.props.filterText === '' &&
-      !this.props.includedChangesInCommitFilter
+      !this.props.includedChangesInCommitFilter &&
+      !this.props.filterNewFiles &&
+      !this.props.filterModifiedFiles
     ) {
       return null
     }
@@ -1493,6 +1605,22 @@ export class FilterChangesList extends React.Component<
     this.props.dispatcher.setIncludedChangesInCommitFilter(
       this.props.repository,
       !this.props.includedChangesInCommitFilter
+    )
+    this.closeFilterOptions()
+  }
+
+  private onFilterNewFiles = () => {
+    this.props.dispatcher.setFilterNewFiles(
+      this.props.repository,
+      !this.props.filterNewFiles
+    )
+    this.closeFilterOptions()
+  }
+
+  private onFilterModifiedFiles = () => {
+    this.props.dispatcher.setFilterModifiedFiles(
+      this.props.repository,
+      !this.props.filterModifiedFiles
     )
     this.closeFilterOptions()
   }

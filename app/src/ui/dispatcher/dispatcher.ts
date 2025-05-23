@@ -4012,6 +4012,20 @@ export class Dispatcher {
     )
   }
 
+  public setFilterNewFiles(repository: Repository, filterNewFiles: boolean) {
+    return this.appStore._setFilterNewFiles(repository, filterNewFiles)
+  }
+
+  public setFilterModifiedFiles(
+    repository: Repository,
+    filterModifiedFiles: boolean
+  ) {
+    return this.appStore._setFilterModifiedFiles(
+      repository,
+      filterModifiedFiles
+    )
+  }
+
   public async createPushProtectionBypass(
     reason: BypassReasonType,
     placeholderId: string,
