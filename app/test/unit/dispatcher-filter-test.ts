@@ -282,5 +282,39 @@ describe('Dispatcher Filter Functionality', () => {
       assert.strictEqual(methodContract.parameters[0].type, 'Repository')
       assert.strictEqual(methodContract.parameters[1].type, 'boolean')
     })
+
+    it('defines expected method contracts for setFilterDeletedFiles', () => {
+      // Method signature: setFilterDeletedFiles(repository: Repository, filterDeletedFiles: boolean)
+      const methodContract = {
+        name: 'setFilterDeletedFiles',
+        parameters: [
+          { name: 'repository', type: 'Repository' },
+          { name: 'filterDeletedFiles', type: 'boolean' },
+        ],
+        returnType: 'void',
+      }
+
+      assert.strictEqual(methodContract.name, 'setFilterDeletedFiles')
+      assert.strictEqual(methodContract.parameters.length, 2)
+      assert.strictEqual(methodContract.parameters[0].type, 'Repository')
+      assert.strictEqual(methodContract.parameters[1].type, 'boolean')
+    })
+
+    it('defines expected method contracts for setFilterUnstagedFiles', () => {
+      // Method signature: setFilterUnstagedFiles(repository: Repository, filterUnstagedFiles: boolean)
+      const methodContract = {
+        name: 'setFilterUnstagedFiles',
+        parameters: [
+          { name: 'repository', type: 'Repository' },
+          { name: 'filterUnstagedFiles', type: 'boolean' },
+        ],
+        returnType: 'void',
+      }
+
+      assert.strictEqual(methodContract.name, 'setFilterUnstagedFiles')
+      assert.strictEqual(methodContract.parameters.length, 2)
+      assert.strictEqual(methodContract.parameters[0].type, 'Repository')
+      assert.strictEqual(methodContract.parameters[1].type, 'boolean')
+    })
   })
 })

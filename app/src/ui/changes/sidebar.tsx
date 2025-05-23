@@ -465,6 +465,8 @@ export class ChangesSidebar extends React.Component<IChangesSidebarProps, {}> {
           }
           filterNewFiles={this.props.changes.filterNewFiles}
           filterModifiedFiles={this.props.changes.filterModifiedFiles}
+          filterDeletedFiles={this.props.changes.filterDeletedFiles}
+          filterUnstagedFiles={this.props.changes.filterUnstagedFiles}
           showChangesFilter={this.props.showChangesFilter}
         />
         {this.renderUndoCommit(rebaseConflictState)}

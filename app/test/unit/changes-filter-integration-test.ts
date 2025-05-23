@@ -218,6 +218,51 @@ describe('Changes Filter Integration Tests', () => {
       assert.ok(filteredFiles.some(f => f.path === 'old-file.txt'))
       assert.ok(filteredFiles.some(f => f.path === 'renamed-component.tsx'))
     })
+
+    it('filters deleted files when filterDeletedFiles is enabled', () => {
+      const state = createState({
+        workingDirectory,
+        filterDeletedFiles: true,
+      })
+
+      const filteredFiles = state.workingDirectory.files.filter(file => {
+        if (!state.filterDeletedFiles) {
+          return true
+        }
+        return file.status.kind === AppFileStatusKind.Deleted
+      })
+
+      assert.equal(filteredFiles.length, 1)
+      assert.ok(
+        filteredFiles.every(f => f.status.kind === AppFileStatusKind.Deleted)
+      )
+      assert.ok(filteredFiles.some(f => f.path === 'old-file.txt'))
+    })
+
+    it('filters unstaged files when filterUnstagedFiles is enabled', () => {
+      const state = createState({
+        workingDirectory,
+        filterUnstagedFiles: true,
+      })
+
+      const filteredFiles = state.workingDirectory.files.filter(file => {
+        if (!state.filterUnstagedFiles) {
+          return true
+        }
+        // Unstaged files are those not selected for commit (noneSelected)
+        return file.selection.getSelectionType() === DiffSelectionType.None
+      })
+
+      assert.equal(filteredFiles.length, 3)
+      assert.ok(
+        filteredFiles.every(
+          f => f.selection.getSelectionType() === DiffSelectionType.None
+        )
+      )
+      assert.ok(filteredFiles.some(f => f.path === 'src/components/App.tsx'))
+      assert.ok(filteredFiles.some(f => f.path === 'docs/api.md'))
+      assert.ok(filteredFiles.some(f => f.path === 'temp-file.tmp'))
+    })
   })
 
   describe('combined filtering', () => {
@@ -242,6 +287,114 @@ describe('Changes Filter Integration Tests', () => {
       assert.equal(filteredFiles.length, 1)
       assert.equal(filteredFiles[0].path, 'src/utils/helpers.ts')
       assert.equal(filteredFiles[0].status.kind, AppFileStatusKind.New)
+    })
+
+    it('applies multiple file type filters simultaneously', () => {
+      const state = createState({
+        workingDirectory,
+        filterDeletedFiles: true,
+        filterUnstagedFiles: true,
+      })
+
+      // Apply both deleted and unstaged files filters
+      const filteredFiles = state.workingDirectory.files.filter(file => {
+        // Check staging filter (unstaged files)
+        const hasStagingFilter = state.filterUnstagedFiles
+        let matchesStagingFilter = true
+        if (hasStagingFilter) {
+          matchesStagingFilter =
+            file.selection.getSelectionType() === DiffSelectionType.None
+        }
+
+        // Check file type filter (deleted files)
+        const hasFileTypeFilter = state.filterDeletedFiles
+        let matchesFileTypeFilter = true
+        if (hasFileTypeFilter) {
+          matchesFileTypeFilter = file.status.kind === AppFileStatusKind.Deleted
+        }
+
+        // When both filters are active, file must match both conditions
+        if (hasStagingFilter && hasFileTypeFilter) {
+          return matchesStagingFilter && matchesFileTypeFilter
+        }
+
+        // If only one filter is active, file must match that filter
+        if (hasStagingFilter) {
+          return matchesStagingFilter
+        }
+        if (hasFileTypeFilter) {
+          return matchesFileTypeFilter
+        }
+
+        return true
+      })
+
+      // Only files that are both deleted AND unstaged should match
+      // In our test data, 'old-file.txt' is deleted but staged (allSelected)
+      // So no files should match both conditions
+      assert.equal(filteredFiles.length, 0)
+    })
+
+    it('applies both staged and unstaged filters simultaneously', () => {
+      const state = createState({
+        workingDirectory,
+        includedChangesInCommitFilter: true,
+        filterUnstagedFiles: true,
+      })
+
+      // Apply both staged and unstaged files filters
+      const filteredFiles = state.workingDirectory.files.filter(file => {
+        // Check staging filter - should show both staged AND unstaged files
+        const hasStagingFilter =
+          state.includedChangesInCommitFilter || state.filterUnstagedFiles
+        let matchesStagingFilter = false
+        if (hasStagingFilter) {
+          const isStaged =
+            file.selection.getSelectionType() !== DiffSelectionType.None
+          const isUnstaged =
+            file.selection.getSelectionType() === DiffSelectionType.None
+
+          // When both filters are active, show files that match either condition
+          if (
+            state.includedChangesInCommitFilter &&
+            state.filterUnstagedFiles
+          ) {
+            matchesStagingFilter = isStaged || isUnstaged
+          } else if (state.includedChangesInCommitFilter) {
+            matchesStagingFilter = isStaged
+          } else if (state.filterUnstagedFiles) {
+            matchesStagingFilter = isUnstaged
+          }
+        }
+
+        return matchesStagingFilter
+      })
+
+      // Should show all files since every file is either staged or unstaged
+      assert.equal(filteredFiles.length, testFiles.length)
+    })
+
+    it('applies text filter with deleted files filter', () => {
+      const state = createState({
+        workingDirectory,
+        filterText: 'old',
+        filterDeletedFiles: true,
+      })
+
+      const filteredFiles = state.workingDirectory.files.filter(file => {
+        const matchesText =
+          state.filterText === '' ||
+          file.path.toLowerCase().includes(state.filterText.toLowerCase())
+        const matchesType =
+          !state.filterDeletedFiles ||
+          file.status.kind === AppFileStatusKind.Deleted
+
+        return matchesText && matchesType
+      })
+
+      assert.equal(filteredFiles.length, 1)
+      assert.equal(filteredFiles[0].path, 'old-file.txt')
+      assert.equal(filteredFiles[0].status.kind, AppFileStatusKind.Deleted)
     })
 
     it('applies text filter with included changes filter', () => {
@@ -292,6 +445,8 @@ describe('Changes Filter Integration Tests', () => {
         filterText: '',
         filterNewFiles: false,
         filterModifiedFiles: false,
+        filterDeletedFiles: false,
+        filterUnstagedFiles: false,
         includedChangesInCommitFilter: false,
       })
 
@@ -304,6 +459,12 @@ describe('Changes Filter Integration Tests', () => {
         const matchesModifiedFiles =
           !state.filterModifiedFiles ||
           file.status.kind === AppFileStatusKind.Modified
+        const matchesDeletedFiles =
+          !state.filterDeletedFiles ||
+          file.status.kind === AppFileStatusKind.Deleted
+        const matchesUnstagedFiles =
+          !state.filterUnstagedFiles ||
+          file.selection.getSelectionType() === DiffSelectionType.None
         const matchesIncluded =
           !state.includedChangesInCommitFilter ||
           file.selection.getSelectionType() !== DiffSelectionType.None
@@ -312,6 +473,8 @@ describe('Changes Filter Integration Tests', () => {
           matchesText &&
           matchesNewFiles &&
           matchesModifiedFiles &&
+          matchesDeletedFiles &&
+          matchesUnstagedFiles &&
           matchesIncluded
         )
       })

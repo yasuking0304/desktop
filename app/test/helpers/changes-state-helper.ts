@@ -26,6 +26,8 @@ export function createState<K extends keyof IChangesState>(
     includedChangesInCommitFilter: false,
     filterNewFiles: false,
     filterModifiedFiles: false,
+    filterDeletedFiles: false,
+    filterUnstagedFiles: false,
   }
 
   return merge(baseChangesState, pick)

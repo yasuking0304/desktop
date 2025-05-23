@@ -4026,6 +4026,23 @@ export class Dispatcher {
     )
   }
 
+  public setFilterDeletedFiles(
+    repository: Repository,
+    filterDeletedFiles: boolean
+  ) {
+    return this.appStore._setFilterDeletedFiles(repository, filterDeletedFiles)
+  }
+
+  public setFilterUnstagedFiles(
+    repository: Repository,
+    filterUnstagedFiles: boolean
+  ) {
+    return this.appStore._setFilterUnstagedFiles(
+      repository,
+      filterUnstagedFiles
+    )
+  }
+
   public async createPushProtectionBypass(
     reason: BypassReasonType,
     placeholderId: string,

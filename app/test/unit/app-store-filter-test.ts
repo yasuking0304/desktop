@@ -213,12 +213,86 @@ describe('App Store Filter Functionality', () => {
     })
   })
 
+  describe('_setFilterDeletedFiles', () => {
+    it('enables deleted files filter', () => {
+      repositoryStateCache.updateChangesState(repository, () => ({
+        filterDeletedFiles: true,
+      }))
+
+      const state = repositoryStateCache.get(repository)
+      assert.equal(state.changesState.filterDeletedFiles, true)
+    })
+
+    it('disables deleted files filter', () => {
+      repositoryStateCache.updateChangesState(repository, () => ({
+        filterDeletedFiles: false,
+      }))
+
+      const state = repositoryStateCache.get(repository)
+      assert.equal(state.changesState.filterDeletedFiles, false)
+    })
+
+    it('toggles deleted files filter state', () => {
+      repositoryStateCache.updateChangesState(repository, () => ({
+        filterDeletedFiles: true,
+      }))
+
+      let state = repositoryStateCache.get(repository)
+      assert.equal(state.changesState.filterDeletedFiles, true)
+
+      repositoryStateCache.updateChangesState(repository, () => ({
+        filterDeletedFiles: false,
+      }))
+
+      state = repositoryStateCache.get(repository)
+      assert.equal(state.changesState.filterDeletedFiles, false)
+    })
+  })
+
+  describe('_setFilterUnstagedFiles', () => {
+    it('enables unstaged files filter', () => {
+      repositoryStateCache.updateChangesState(repository, () => ({
+        filterUnstagedFiles: true,
+      }))
+
+      const state = repositoryStateCache.get(repository)
+      assert.equal(state.changesState.filterUnstagedFiles, true)
+    })
+
+    it('disables unstaged files filter', () => {
+      repositoryStateCache.updateChangesState(repository, () => ({
+        filterUnstagedFiles: false,
+      }))
+
+      const state = repositoryStateCache.get(repository)
+      assert.equal(state.changesState.filterUnstagedFiles, false)
+    })
+
+    it('toggles unstaged files filter state', () => {
+      repositoryStateCache.updateChangesState(repository, () => ({
+        filterUnstagedFiles: true,
+      }))
+
+      let state = repositoryStateCache.get(repository)
+      assert.equal(state.changesState.filterUnstagedFiles, true)
+
+      repositoryStateCache.updateChangesState(repository, () => ({
+        filterUnstagedFiles: false,
+      }))
+
+      state = repositoryStateCache.get(repository)
+      assert.equal(state.changesState.filterUnstagedFiles, false)
+    })
+  })
+
   describe('combined filter operations', () => {
     it('sets multiple filters simultaneously', () => {
       repositoryStateCache.updateChangesState(repository, () => ({
         filterText: 'test',
         filterNewFiles: true,
         filterModifiedFiles: true,
+        filterDeletedFiles: true,
+        filterUnstagedFiles: true,
         includedChangesInCommitFilter: true,
       }))
 
@@ -226,6 +300,8 @@ describe('App Store Filter Functionality', () => {
       assert.equal(state.changesState.filterText, 'test')
       assert.equal(state.changesState.filterNewFiles, true)
       assert.equal(state.changesState.filterModifiedFiles, true)
+      assert.equal(state.changesState.filterDeletedFiles, true)
+      assert.equal(state.changesState.filterUnstagedFiles, true)
       assert.equal(state.changesState.includedChangesInCommitFilter, true)
     })
 
@@ -314,6 +390,8 @@ describe('App Store Filter Functionality', () => {
       assert.equal(state.changesState.filterText, '')
       assert.equal(state.changesState.filterNewFiles, false)
       assert.equal(state.changesState.filterModifiedFiles, false)
+      assert.equal(state.changesState.filterDeletedFiles, false)
+      assert.equal(state.changesState.filterUnstagedFiles, false)
       assert.equal(state.changesState.includedChangesInCommitFilter, false)
     })
 
@@ -323,6 +401,8 @@ describe('App Store Filter Functionality', () => {
         filterText: 'non-default',
         filterNewFiles: true,
         filterModifiedFiles: true,
+        filterDeletedFiles: true,
+        filterUnstagedFiles: true,
         includedChangesInCommitFilter: true,
       }))
 
@@ -331,6 +411,8 @@ describe('App Store Filter Functionality', () => {
         filterText: '',
         filterNewFiles: false,
         filterModifiedFiles: false,
+        filterDeletedFiles: false,
+        filterUnstagedFiles: false,
         includedChangesInCommitFilter: false,
       }))
 
@@ -338,6 +420,8 @@ describe('App Store Filter Functionality', () => {
       assert.equal(state.changesState.filterText, '')
       assert.equal(state.changesState.filterNewFiles, false)
       assert.equal(state.changesState.filterModifiedFiles, false)
+      assert.equal(state.changesState.filterDeletedFiles, false)
+      assert.equal(state.changesState.filterUnstagedFiles, false)
       assert.equal(state.changesState.includedChangesInCommitFilter, false)
     })
   })

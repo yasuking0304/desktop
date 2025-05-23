@@ -322,6 +322,8 @@ function getInitialRepositoryState(): IRepositoryState {
       includedChangesInCommitFilter: false,
       filterNewFiles: false,
       filterModifiedFiles: false,
+      filterDeletedFiles: false,
+      filterUnstagedFiles: false,
     },
     selectedSection: RepositorySectionTab.Changes,
     branchesState: {

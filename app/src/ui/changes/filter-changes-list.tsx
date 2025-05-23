@@ -232,6 +232,12 @@ interface IFilterChangesListProps {
   /** Whether to filter and show only modified files */
   readonly filterModifiedFiles: boolean
 
+  /** Whether to filter and show only deleted files */
+  readonly filterDeletedFiles: boolean
+
+  /** Whether to filter and show only unstaged files */
+  readonly filterUnstagedFiles: boolean
+
   /** Whether or not to show the changes filter */
   readonly showChangesFilter: boolean
 }
@@ -362,6 +368,33 @@ export class FilterChangesList extends React.Component<
     (workingDirectory: WorkingDirectoryStatus) => {
       return workingDirectory.files.filter(
         f => f.status.kind === AppFileStatusKind.Modified
+      ).length
+    }
+  )
+
+  /** Calculate the count of deleted files */
+  private getDeletedFilesCount = memoizeOne(
+    (workingDirectory: WorkingDirectoryStatus) => {
+      return workingDirectory.files.filter(
+        f => f.status.kind === AppFileStatusKind.Deleted
+      ).length
+    }
+  )
+
+  /** Calculate the count of unstaged files (files with DiffSelectionType.None) */
+  private getUnstagedFilesCount = memoizeOne(
+    (workingDirectory: WorkingDirectoryStatus) => {
+      return workingDirectory.files.filter(
+        f => f.selection.getSelectionType() === DiffSelectionType.None
+      ).length
+    }
+  )
+
+  /** Calculate the count of staged files (files with DiffSelectionType.All or DiffSelectionType.Partial) */
+  private getStagedFilesCount = memoizeOne(
+    (workingDirectory: WorkingDirectoryStatus) => {
+      return workingDirectory.files.filter(
+        f => f.selection.getSelectionType() !== DiffSelectionType.None
       ).length
     }
   )
@@ -1287,15 +1320,6 @@ export class FilterChangesList extends React.Component<
   }
 
   private renderFilterOptions() {
-    const checkedFilesThatAreVisibleCount = [
-      ...this.state.filteredItems.values(),
-    ].filter(
-      f =>
-        this.props.workingDirectory
-          .findFileWithID(f.id)
-          ?.selection.getSelectionType() !== DiffSelectionType.None
-    ).length
-
     return (
       <Popover
         className="filter-popover"
@@ -1324,7 +1348,20 @@ export class FilterChangesList extends React.Component<
                 : CheckboxValue.Off
             }
             onChange={this.onFilterToIncludedInCommit}
-            label={`Included in commit (${checkedFilesThatAreVisibleCount})`}
+            label={`Staged files (${this.getStagedFilesCount(
+              this.props.workingDirectory
+            )})`}
+          />
+          <Checkbox
+            value={
+              this.props.filterUnstagedFiles
+                ? CheckboxValue.On
+                : CheckboxValue.Off
+            }
+            onChange={this.onFilterUnstagedFiles}
+            label={`Unstaged files (${this.getUnstagedFilesCount(
+              this.props.workingDirectory
+            )})`}
           />
           <Checkbox
             value={
@@ -1346,6 +1383,17 @@ export class FilterChangesList extends React.Component<
               this.props.workingDirectory
             )})`}
           />
+          <Checkbox
+            value={
+              this.props.filterDeletedFiles
+                ? CheckboxValue.On
+                : CheckboxValue.Off
+            }
+            onChange={this.onFilterDeletedFiles}
+            label={`Deleted files (${this.getDeletedFilesCount(
+              this.props.workingDirectory
+            )})`}
+          />
         </div>
       </Popover>
     )
@@ -1361,6 +1409,8 @@ export class FilterChangesList extends React.Component<
       this.props.includedChangesInCommitFilter,
       this.props.filterNewFiles,
       this.props.filterModifiedFiles,
+      this.props.filterDeletedFiles,
+      this.props.filterUnstagedFiles,
     ].filter(Boolean).length
 
     const hasActiveFilters = activeFiltersCount > 0
@@ -1414,24 +1464,42 @@ export class FilterChangesList extends React.Component<
       return true
     }
 
-    // Apply included in commit filter
-    if (this.props.includedChangesInCommitFilter) {
-      if (item.change.selection.getSelectionType() === DiffSelectionType.None) {
+    // Check staging status filters (included in commit and unstaged files)
+    const hasStagingFilter =
+      this.props.includedChangesInCommitFilter || this.props.filterUnstagedFiles
+    if (hasStagingFilter) {
+      let matchesStagingFilter = false
+      const isStaged =
+        item.change.selection.getSelectionType() !== DiffSelectionType.None
+      const isUnstaged =
+        item.change.selection.getSelectionType() === DiffSelectionType.None
+
+      // Check if file matches included in commit filter (staged files)
+      if (this.props.includedChangesInCommitFilter && isStaged) {
+        matchesStagingFilter = true
+      }
+
+      // Check if file matches unstaged files filter
+      if (this.props.filterUnstagedFiles && isUnstaged) {
+        matchesStagingFilter = true
+      }
+
+      if (!matchesStagingFilter) {
         return false
       }
     }
 
-    // Apply file type filters (new files and/or modified files)
+    // Apply file type filters (new files, modified files, deleted files)
     const hasFileTypeFilter =
-      this.props.filterNewFiles || this.props.filterModifiedFiles
+      this.props.filterNewFiles ||
+      this.props.filterModifiedFiles ||
+      this.props.filterDeletedFiles
     if (hasFileTypeFilter) {
       let matchesFileTypeFilter = false
 
       // Check if file matches new files filter
       if (this.props.filterNewFiles) {
-        const isNewFile =
-          item.change.status.kind === AppFileStatusKind.New ||
-          item.change.status.kind === AppFileStatusKind.Untracked
+        const isNewFile = item.change.status.kind === AppFileStatusKind.New
         if (isNewFile) {
           matchesFileTypeFilter = true
         }
@@ -1442,6 +1510,15 @@ export class FilterChangesList extends React.Component<
         const isModifiedFile =
           item.change.status.kind === AppFileStatusKind.Modified
         if (isModifiedFile) {
+          matchesFileTypeFilter = true
+        }
+      }
+
+      // Check if file matches deleted files filter
+      if (this.props.filterDeletedFiles) {
+        const isDeletedFile =
+          item.change.status.kind === AppFileStatusKind.Deleted
+        if (isDeletedFile) {
           matchesFileTypeFilter = true
         }
       }
@@ -1489,7 +1566,9 @@ export class FilterChangesList extends React.Component<
             filterMethod={
               this.props.includedChangesInCommitFilter ||
               this.props.filterNewFiles ||
-              this.props.filterModifiedFiles
+              this.props.filterModifiedFiles ||
+              this.props.filterDeletedFiles ||
+              this.props.filterUnstagedFiles
                 ? this.applyFilters
                 : undefined
             }
@@ -1500,6 +1579,8 @@ export class FilterChangesList extends React.Component<
               showChangesFilter: this.props.showChangesFilter,
               filterNewFiles: this.props.filterNewFiles,
               filterModifiedFiles: this.props.filterModifiedFiles,
+              filterDeletedFiles: this.props.filterDeletedFiles,
+              filterUnstagedFiles: this.props.filterUnstagedFiles,
             }}
             onItemContextMenu={this.onItemContextMenu}
             renderCustomFilterRow={this.renderFilterRow}
@@ -1549,7 +1630,9 @@ export class FilterChangesList extends React.Component<
       this.props.filterText === '' &&
       !this.props.includedChangesInCommitFilter &&
       !this.props.filterNewFiles &&
-      !this.props.filterModifiedFiles
+      !this.props.filterModifiedFiles &&
+      !this.props.filterDeletedFiles &&
+      !this.props.filterUnstagedFiles
     ) {
       return undefined
     }
@@ -1559,7 +1642,7 @@ export class FilterChangesList extends React.Component<
       : ''
 
     const includedCommitText = this.props.includedChangesInCommitFilter
-      ? ' that are to be included in your commit'
+      ? ' that are staged'
       : ''
 
     const newFilesText = this.props.filterNewFiles ? ' that are new' : ''
@@ -1568,11 +1651,21 @@ export class FilterChangesList extends React.Component<
       ? ' that are modified'
       : ''
 
+    const deletedFilesText = this.props.filterDeletedFiles
+      ? ' that are deleted'
+      : ''
+
+    const unstagedFilesText = this.props.filterUnstagedFiles
+      ? ' that are unstaged'
+      : ''
+
     const filterTexts = [
       filterTextMessage,
       includedCommitText,
       newFilesText,
       modifiedFilesText,
+      deletedFilesText,
+      unstagedFilesText,
     ].filter(text => text !== '')
 
     const conjunction = filterTexts.length > 1 ? ' and ' : ''
@@ -1586,7 +1679,9 @@ export class FilterChangesList extends React.Component<
       this.props.filterText === '' &&
       !this.props.includedChangesInCommitFilter &&
       !this.props.filterNewFiles &&
-      !this.props.filterModifiedFiles
+      !this.props.filterModifiedFiles &&
+      !this.props.filterDeletedFiles &&
+      !this.props.filterUnstagedFiles
     ) {
       return null
     }
@@ -1621,6 +1716,22 @@ export class FilterChangesList extends React.Component<
     this.props.dispatcher.setFilterModifiedFiles(
       this.props.repository,
       !this.props.filterModifiedFiles
+    )
+    this.closeFilterOptions()
+  }
+
+  private onFilterDeletedFiles = () => {
+    this.props.dispatcher.setFilterDeletedFiles(
+      this.props.repository,
+      !this.props.filterDeletedFiles
+    )
+    this.closeFilterOptions()
+  }
+
+  private onFilterUnstagedFiles = () => {
+    this.props.dispatcher.setFilterUnstagedFiles(
+      this.props.repository,
+      !this.props.filterUnstagedFiles
     )
     this.closeFilterOptions()
   }

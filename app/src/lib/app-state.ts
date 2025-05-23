@@ -782,6 +782,12 @@ export interface IChangesState {
 
   /** Whether to filter and show only modified files */
   readonly filterModifiedFiles: boolean
+
+  /** Whether to filter and show only deleted files */
+  readonly filterDeletedFiles: boolean
+
+  /** Whether to filter and show only unstaged files */
+  readonly filterUnstagedFiles: boolean
 }
 
 /**

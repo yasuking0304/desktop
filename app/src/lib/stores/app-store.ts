@@ -8347,6 +8347,26 @@ export class AppStore extends TypedBaseStore<IAppState> {
     this.emitUpdate()
   }
 
+  public _setFilterDeletedFiles(
+    repository: Repository,
+    filterDeletedFiles: boolean
+  ) {
+    this.repositoryStateCache.updateChangesState(repository, () => ({
+      filterDeletedFiles,
+    }))
+    this.emitUpdate()
+  }
+
+  public _setFilterUnstagedFiles(
+    repository: Repository,
+    filterUnstagedFiles: boolean
+  ) {
+    this.repositoryStateCache.updateChangesState(repository, () => ({
+      filterUnstagedFiles,
+    }))
+    this.emitUpdate()
+  }
+
   public async _createPushProtectionBypass(
     reason: BypassReasonType,
     placeholderId: string,
