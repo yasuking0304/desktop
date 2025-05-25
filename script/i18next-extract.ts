@@ -6,11 +6,11 @@ import fs from 'fs'
 const I18NEXT_CONFIG = 'i18next-parser.config.js'
 
 function convertLangJsonFile(filepath: string, filename: string) {
-  const data = fs.readFileSync(filepath + filename, 'utf8')
+  const orginal_data = fs.readFileSync(filepath + filename, 'utf8')
   const pattern = /\\n[ ]{2,}/g
-  const data2 = data.replace(pattern, ' ')
-  if (data2 !== data) {
-    fs.writeFileSync(filepath + filename, data2)
+  const converted_data = orginal_data.replace(pattern, ' ')
+  if (converted_data !== orginal_data) {
+    fs.writeFileSync(filepath + filename, converted_data)
     console.log(
       `  \x1b[32m[Convert]\x1b[0m ${process.cwd()}/${filepath}${filename}`
     )
