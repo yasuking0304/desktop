@@ -20,6 +20,10 @@ declare const __WIN32__: boolean
 /** Is the app being built to run on Linux? */
 declare const __LINUX__: boolean
 
+/** Is the app being built to run on Unofficial? */
+declare const __UNOFFICIAL__: boolean
+
+
 /**
  * The product name of the app, this is intended to be a compile-time
  * replacement for app.getName

@@ -15,6 +15,7 @@ import {
   getEndpointVersion,
   isDotCom,
   isGHE,
+  isGHES,
   updateEndpointVersion,
 } from './endpoint-capabilities'
 import {
@@ -23,6 +24,7 @@ import {
 } from './suppress-certificate-error'
 import { HttpStatusCode } from './http-status-code'
 import { CopilotError } from './copilot-error'
+import { BypassReasonType } from '../ui/secret-scanning/bypass-push-protection-dialog'
 
 const envEndpoint = process.env['DESKTOP_GITHUB_DOTCOM_API_ENDPOINT']
 const envHTMLURL = process.env['DESKTOP_GITHUB_DOTCOM_HTML_URL']
@@ -813,6 +815,12 @@ interface IAPIAliveWebSocket {
 }
 
 type TokenInvalidatedCallback = (endpoint: string, token: string) => void
+
+export interface IAPICreatePushProtectionBypassResponse {
+  reason: BypassReasonType
+  expire_at: string
+  token_type: string
+}
 
 /**
  * An object for making authenticated requests to the GitHub API
@@ -2066,6 +2074,11 @@ export class API {
    * @returns Copilot license and API endpoint.
    */
   public async fetchUserCopilotInfo(): Promise<UserCopilotInfo | undefined> {
+    // Copilot is not available on GHES
+    if (isGHES(this.endpoint)) {
+      return undefined
+    }
+
     const graphql = `
     {
       viewer {
@@ -2094,10 +2107,7 @@ export class API {
         isCopilotDesktopEnabled: viewer.isCopilotDesktopEnabled,
       }
     } catch (e) {
-      log.warn(
-        `fetchCopilotAPIEndpoint: failed with endpoint ${this.endpoint}`,
-        e
-      )
+      log.warn(`fetchUserCopilotInfo: failed with endpoint ${this.endpoint}`, e)
       return undefined
     }
   }
@@ -2136,6 +2146,53 @@ export class API {
         e
       )
       throw e
+    }
+  }
+
+  /**
+   * Creates a push protection bypass for a repository.
+   *
+   * This method sends a POST request to the GitHub API to create a bypass
+   * for push protection in a specified repository. The bypass is associated
+   * with a reason and a placeholder ID.
+   *
+   * @param owner - The owner of the repository.
+   * @param name - The name of the repository.
+   * @param reason - The reason for creating the bypass - false_positive, used_in_tests, will_fix_later.
+   * @param placeholderId - The placeholder ID associated with the bypass.
+   * @param bypassURL - The URL to retry the bypass creation on Github.com in case of failure.
+   * @returns A promise that resolves to the response of the bypass creation.
+   * @throws An error if the bypass creation fails, including a warning log.
+   */
+  public async createPushProtectionBypass(
+    owner: string,
+    name: string,
+    reason: BypassReasonType,
+    placeholderId: string,
+    bypassURL: string
+  ): Promise<IAPICreatePushProtectionBypassResponse> {
+    const path = `repos/${owner}/${name}/secret-scanning/push-protection-bypasses`
+    const body = {
+      reason,
+      placeholder_id: placeholderId,
+    }
+
+    try {
+      const response = await this.ghRequest('POST', path, { body })
+      return await parsedResponse<IAPICreatePushProtectionBypassResponse>(
+        response
+      )
+    } catch (e) {
+      const msg = `Unable to create push protection bypass.
+
+    Repository: ${owner}/${name}
+    Reason: ${reason}
+    Placeholder Id: ${placeholderId}.
+
+    Try again at: ${bypassURL}`
+
+      log.error(msg, e)
+      throw new Error(msg)
     }
   }
 }

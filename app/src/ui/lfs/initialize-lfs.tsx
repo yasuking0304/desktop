@@ -4,6 +4,7 @@ import { Dialog, DialogContent, DialogFooter } from '../dialog'
 import { PathText } from '../lib/path-text'
 import { LinkButton } from '../lib/link-button'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
+import { t } from 'i18next'
 
 const LFSURL = 'https://git-lfs.github.com/'
 
@@ -34,7 +35,7 @@ export class InitializeLFS extends React.Component<IInitializeLFSProps, {}> {
     return (
       <Dialog
         id="initialize-lfs"
-        title="Initialize Git LFS"
+        title={t('initialize-lfs.initialize-git-lfs.', 'Initialize Git LFS')}
         backdropDismissable={false}
         onSubmit={this.onInitialize}
         onDismissed={this.props.onDismissed}
@@ -43,8 +44,15 @@ export class InitializeLFS extends React.Component<IInitializeLFSProps, {}> {
 
         <DialogFooter>
           <OkCancelButtonGroup
-            okButtonText="Initialize Git LFS"
-            cancelButtonText={__DARWIN__ ? 'Not Now' : 'Not now'}
+            okButtonText={t(
+              'initialize-lfs.initialize-git-lfs.',
+              'Initialize Git LFS'
+            )}
+            cancelButtonText={
+              __DARWIN__
+                ? t('common.not-now-darwin', 'Not Now')
+                : t('common.not-now', 'Not now')
+            }
             onCancelButtonClick={this.props.onDismissed}
           />
         </DialogFooter>
@@ -62,8 +70,11 @@ export class InitializeLFS extends React.Component<IInitializeLFSProps, {}> {
       return (
         <p>
           {this.props.repositories.length} repositories use{' '}
-          <LinkButton uri={LFSURL}>Git LFS</LinkButton>. To contribute to them,
-          Git LFS must first be initialized. Would you like to do so now?
+          <LinkButton uri={LFSURL}>
+            {t('initialize-lfs.git-lfs', 'Git LFS')}
+          </LinkButton>
+          . To contribute to them, Git LFS must first be initialized. Would you
+          like to do so now?
         </p>
       )
     } else {
@@ -76,9 +87,11 @@ export class InitializeLFS extends React.Component<IInitializeLFSProps, {}> {
         <div>
           <p>
             {pluralizedRepositories}{' '}
-            <LinkButton uri={LFSURL}>Git LFS</LinkButton>. To contribute to{' '}
-            {pluralizedUse}, Git LFS must first be initialized. Would you like
-            to do so now?
+            <LinkButton uri={LFSURL}>
+              {t('initialize-lfs.git-lfs', 'Git LFS')}
+            </LinkButton>
+            . To contribute to {pluralizedUse}, Git LFS must first be
+            initialized. Would you like to do so now?
           </p>
           <ul>
             {this.props.repositories.map(r => (

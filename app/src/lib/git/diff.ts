@@ -36,6 +36,7 @@ import { createLogParser } from './git-delimiter-parser'
 import { enableImagePreviewsForDDSFiles } from '../feature-flag'
 import { unstageAll } from './reset'
 import { stageFiles } from './update-index'
+import { isAbsolute } from 'path'
 
 /**
  * V8 has a limit on the size of string it can create (~256MB), and unless we want to
@@ -128,14 +129,14 @@ export async function getCommitDiff(
     '-z',
     '--no-color',
     '--',
-    file.path,
+    ensureRelativePath(file.path),
   ]
 
   if (
     file.status.kind === AppFileStatusKind.Renamed ||
     file.status.kind === AppFileStatusKind.Copied
   ) {
-    args.push(file.status.oldPath)
+    args.push(ensureRelativePath(file.status.oldPath))
   }
 
   const { stdout } = await git(args, repository.path, 'getCommitDiff', {
@@ -167,14 +168,14 @@ export async function getBranchMergeBaseDiff(
     '-z',
     '--no-color',
     '--',
-    file.path,
+    ensureRelativePath(file.path),
   ]
 
   if (
     file.status.kind === AppFileStatusKind.Renamed ||
     file.status.kind === AppFileStatusKind.Copied
   ) {
-    args.push(file.status.oldPath)
+    args.push(ensureRelativePath(file.status.oldPath))
   }
 
   const result = await git(args, repository.path, 'getBranchMergeBaseDiff', {
@@ -212,14 +213,14 @@ export async function getCommitRangeDiff(
     '-z',
     '--no-color',
     '--',
-    file.path,
+    ensureRelativePath(file.path),
   ]
 
   if (
     file.status.kind === AppFileStatusKind.Renamed ||
     file.status.kind === AppFileStatusKind.Copied
   ) {
-    args.push(file.status.oldPath)
+    args.push(ensureRelativePath(file.status.oldPath))
   }
 
   const result = await git(args, repository.path, 'getCommitsDiff', {
@@ -382,9 +383,9 @@ export async function getWorkingDirectoryDiff(
     // already staged to the renamed file which differs from our other diffs.
     // The closest I got to that was running hash-object and then using
     // git diff <blob> <blob> but that seems a bit excessive.
-    args.push('--', file.path)
+    args.push('--', ensureRelativePath(file.path))
   } else {
-    args.push('HEAD', '--', file.path)
+    args.push('HEAD', '--', ensureRelativePath(file.path))
   }
 
   const { stdout, stderr } = await git(
@@ -831,3 +832,10 @@ async function getFilesUsingBinaryMergeDriver(
     .filter(x => x.attr === 'merge' && x.value === 'binary')
     .map(x => x.path)
 }
+
+// Prefix absolute path with `:(top,literal)` to ensure that git treats it as a
+// literal path. This is important for paths that appear to be absolute paths on
+// some platforms and not others. See
+// https://git-scm.com/docs/gitglossary#Documentation/gitglossary.txt-top
+const ensureRelativePath = (path: string) =>
+  isAbsolute(path) ? `:(top,literal)${path}` : path

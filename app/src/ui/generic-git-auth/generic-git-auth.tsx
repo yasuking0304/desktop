@@ -98,7 +98,7 @@ export class GenericGitAuthentication extends React.Component<
           {this.props.username === undefined && (
             <Row>
               <TextBox
-                label="Username"
+                label={t('generic-git-auth.username', 'Username')}
                 autoFocus={true}
                 value={this.state.username}
                 onValueChanged={this.onUsernameChange}

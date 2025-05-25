@@ -241,6 +241,7 @@ function getRepositoryMenuBuilder(state: IAppState): MenuStateBuilder {
     'show-branches-list',
     'open-external-editor',
     'compare-to-branch',
+    'toggle-changes-filter',
   ]
 
   const menuStateBuilder = new MenuStateBuilder()

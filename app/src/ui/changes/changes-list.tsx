@@ -131,7 +131,10 @@ interface IChangesListProps {
   readonly rebaseConflictState: RebaseConflictState | null
   readonly selectedFileIDs: ReadonlyArray<string>
   readonly onFileSelectionChanged: (rows: ReadonlyArray<number>) => void
-  readonly onIncludeChanged: (path: string, include: boolean) => void
+  readonly onIncludeChanged: (
+    file: WorkingDirectoryFileChange,
+    include: boolean
+  ) => void
   readonly onSelectAll: (selectAll: boolean) => void
   readonly onCreateCommit: (context: ICommitContext) => Promise<boolean>
   readonly onDiscardChanges: (file: WorkingDirectoryFileChange) => void
@@ -173,6 +176,7 @@ interface IChangesListProps {
   readonly availableWidth: number
   readonly isCommitting: boolean
   readonly isGeneratingCommitMessage: boolean
+  readonly shouldShowGenerateCommitMessageCallOut: boolean
   readonly commitToAmend: Commit | null
   readonly currentBranchProtected: boolean
   readonly currentRepoRulesInfo: RepoRulesInfo
@@ -686,9 +690,7 @@ export class ChangesList extends React.Component<
                 'Include selected files'
               ),
           action: () => {
-            selectedFiles.map(file =>
-              this.props.onIncludeChanged(file.path, true)
-            )
+            selectedFiles.map(file => this.props.onIncludeChanged(file, true))
           },
         },
         {
@@ -702,9 +704,7 @@ export class ChangesList extends React.Component<
                 'Exclude selected files'
               ),
           action: () => {
-            selectedFiles.map(file =>
-              this.props.onIncludeChanged(file.path, false)
-            )
+            selectedFiles.map(file => this.props.onIncludeChanged(file, false))
           },
         },
         { type: 'separator' },
@@ -837,6 +837,7 @@ export class ChangesList extends React.Component<
       commitToAmend,
       currentBranchProtected,
       currentRepoRulesInfo: currentRepoRulesInfo,
+      shouldShowGenerateCommitMessageCallOut,
     } = this.props
 
     if (rebaseConflictState !== null) {
@@ -904,6 +905,9 @@ export class ChangesList extends React.Component<
         autocompletionProviders={this.props.autocompletionProviders}
         isCommitting={isCommitting}
         isGeneratingCommitMessage={isGeneratingCommitMessage}
+        shouldShowGenerateCommitMessageCallOut={
+          shouldShowGenerateCommitMessageCallOut
+        }
         commitToAmend={commitToAmend}
         showCoAuthoredBy={this.props.showCoAuthoredBy}
         coAuthors={this.props.coAuthors}
@@ -1089,7 +1093,7 @@ export class ChangesList extends React.Component<
         : t('changes-list.files', 'files')
     const selectedChangesDescription = t(
       'changes-list.files-changes-description',
-      '{{0}}/{{1}} changed {{2}}  included',
+      '{{0}}/{{1}} changed {{2}} included',
       { 0: selectedChangeCount, 1: files.length, 2: totalFilesPlural }
     )
 

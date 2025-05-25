@@ -4,6 +4,11 @@ import { version, productName } from './package.json'
 
 const devClientId = '3a723b10ac5575cc5bb9'
 const devClientSecret = '22c34d87789a365981ed921352a7b9a8c3f69d54'
+/**
+ * This flag only exists in the unofficial multi-language model.
+ * If this value is true, an update check will not be performed.
+ **/
+const unofficial = true
 
 const channel = getChannel()
 
@@ -30,5 +35,6 @@ export function getReplacements() {
     'process.platform': s(process.platform),
     'process.env.NODE_ENV': s(process.env.NODE_ENV || 'development'),
     'process.env.TEST_ENV': s(process.env.TEST_ENV),
+    __UNOFFICIAL__: unofficial,
   }
 }

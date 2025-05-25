@@ -97,7 +97,7 @@ import { IStatsStore } from '../stats'
 import { getTagsToPush, storeTagsToPush } from './helpers/tags-to-push-storage'
 import { DiffSelection, ITextDiff } from '../../models/diff'
 import { getDefaultBranch } from '../helpers/default-branch'
-import { stat } from 'fs/promises'
+import { rm, stat } from 'fs/promises'
 import { findForkedRemotesToPrune } from './helpers/find-forked-remotes-to-prune'
 import { findDefaultBranch } from '../find-default-branch'
 
@@ -1516,21 +1516,33 @@ export class GitStore extends BaseStore {
     await queueWorkHigh(files, async file => {
       const foundSubmodule = submodules.some(s => s.path === file.path)
 
-      if (
-        file.status.kind !== AppFileStatusKind.Deleted &&
-        !foundSubmodule &&
-        moveToTrash
-      ) {
-        // N.B. moveItemToTrash can take a fair bit of time which is why we're
-        // running it inside this work queue that spreads out the calls across
-        // as many animation frames as it needs to.
-        try {
-          await this.shell.moveItemToTrash(
-            Path.resolve(this.repository.path, file.path)
-          )
-        } catch (e) {
-          if (askForConfirmationOnDiscardChangesPermanently) {
-            throw new DiscardChangesError(e, this.repository, files)
+      if (file.status.kind !== AppFileStatusKind.Deleted && !foundSubmodule) {
+        if (moveToTrash) {
+          // N.B. moveItemToTrash can take a fair bit of time which is why we're
+          // running it inside this work queue that spreads out the calls across
+          // as many animation frames as it needs to.
+          try {
+            await this.shell.moveItemToTrash(
+              Path.resolve(this.repository.path, file.path)
+            )
+          } catch (e) {
+            if (askForConfirmationOnDiscardChangesPermanently) {
+              throw new DiscardChangesError(e, this.repository, files)
+            }
+
+            // The user has received the confirmation dialog in past and has
+            // chosen to always discard the changes permanently if trash failes.
+            // We need to remove the file manually.
+            if (file.status.kind === AppFileStatusKind.Untracked) {
+              await rm(Path.join(this.repository.path, file.path))
+            }
+          }
+        } else if (moveToTrash === false) {
+          // The user has received the confirmation dialog and has chosen to
+          // discard the changes permanently. We need to remove the file
+          // manually.
+          if (file.status.kind === AppFileStatusKind.Untracked) {
+            await rm(Path.join(this.repository.path, file.path))
           }
         }
       }

@@ -8,6 +8,7 @@
     "check-out-the-beta-channel-2": "Beta Channel",
     "check-out-the-beta-channel-3": " ",
     "checking-for-updates": "Checking for updates…",
+    "click-here-for-details": "Click here for details",
     "could-not-determine-the-last-time-update-check": "Couldn't determine the last time an update check was performed. You may be running an old version. Please try manually checking for updates and contact GitHub Support if the problem persists",
     "downloading-updates": "Downloading update…",
     "license-and-open-source-notices": "License and Open Source Notices",
@@ -18,6 +19,7 @@
     "responsible-use-of-copilot": "Responsible use of Copilot in GitHub Desktop",
     "supported-operating-systems": "Supported operating systems",
     "terms-and-conditions": "Terms and Conditions",
+    "unofficial-build": "Since this is an unofficial build, automatic updates will not occur.",
     "update-has-been-downloaded-and-is-ready": "An update has been downloaded and is ready to be installed.",
     "version": "Version {{0}}",
     "you-have-the-latest-version": "You have the latest version (last checked {{0}})",
@@ -113,9 +115,22 @@
     "tab-size-darwn": "Tab Size",
     "theme": "Theme"
   },
+  "attribute-mismatch": {
+    "git-lfs-filters-are-configured-1": "Git LFS filters are already configured in ",
+    "git-lfs-filters-are-configured-2": " but are not the values it expects. Would you like to update them now?",
+    "update-existing-filters": "Update existing filters",
+    "update-existing-filters-darwin": "Update Existing Filters",
+    "update-existing-git-lfs": "Update existing Git LFS filters?",
+    "update-existing-git-lfs-darwin": "Update Existing Git LFS Filters?",
+    "your-global-git-config": "your global git config"
+  },
   "authentication-form": {
     "sign-in-using-your-browser": "Sign in using your browser",
     "your-browser-will-redirect": "Your browser will redirect you back to GitHub Desktop once you've signed in. If your browser asks for your permission to launch GitHub Desktop please allow it to."
+  },
+  "author-input": {
+    "co-authors": "Co-Authors",
+    "username": "@username"
   },
   "base-multi-commit-operation": {
     "abort-operation": "Abort {{0}}",
@@ -170,6 +185,17 @@
     "pull-requests": "Pull requests",
     "pull-requests-darwin": "Pull Requests"
   },
+  "bypass-push-protection-dialog": {
+    "allow-me-to-expose": "Allow me to expose this secret",
+    "bypass-push-detection": "Bypass push detection",
+    "bypass-push-detection-darwin": "Bypass Push Detection",
+    "i-will-fix-it-later": "I'll fix it later",
+    "its-a-false-positive": "It's a false positive",
+    "its-used-in-tests": "It's used in tests",
+    "the-detected-string": "The detected string is not a secret",
+    "the-secret-is-real": "The secret is real, I understand the risk, and I will need to revoke it. This will open a security alert and notify admins of this repository.",
+    "why-are-you-bypassing": "Why are you bypassing this {{0}}?"
+  },
   "changes-list": {
     "confirm-discard-all-changes": "Discard all changes…",
     "confirm-discard-all-changes-darwin": "Discard All Changes…",
@@ -185,7 +211,7 @@
     "exclude-selected-files-darwin": "Exclude Selected Files",
     "file": "file",
     "files": "files",
-    "files-changes-description": "{{0}}/{{1}} changed {{2}}  included",
+    "files-changes-description": "{{0}}/{{1}} changed {{2}} included",
     "files-description": "{{0}} changed {{1}}",
     "ignore-all-file-add-to-gitignore": "Ignore all {{0}} files (add to .gitignore)",
     "ignore-all-file-add-to-gitignore-darwin": "Ignore All {{0}} Files (Add to .gitignore)",
@@ -232,7 +258,7 @@
     "you-planning-to-use-this-fork": "How are you planning to use this fork?"
   },
   "choose-target-branch": {
-    "cherry-pick-number-commit-to-a-branch": "Cherry-pick {{0}} {{1}}  to a branch",
+    "cherry-pick-number-commit-to-a-branch": "Cherry-pick {{0}} {{1}} to a branch",
     "cherry-pick-to-new-branch": "Cherry-pick to new branch",
     "cherry-pick-to-new-branch-darwin": "Cherry-pick to New Branch",
     "multiple-commits": "commits",
@@ -372,6 +398,7 @@
     "enable-commit-spellcheck": "Enable commit spellcheck",
     "enable-commit-spellcheck-darwin": "Enable Commit Spellcheck",
     "generate-commit-message": "Generate commit message with Copilot{{0}}",
+    "generating-commit-details": "Generating commit details…",
     "link-create-a-fork": "create a fork",
     "link-switch-branches": "switch branches",
     "must-be-selected": ". Files must be selected to generate a commit message.",
@@ -396,6 +423,7 @@
     "repository-settings": "repository settings",
     "update-email": "Update email",
     "update-email-1": "The email in your global Git config (",
+    "update-email-2": ")",
     "update-email-darwin": "Update Email",
     "you-can-also-choose-an-email-1": "You can also choose an email local to this repository from the ",
     "you-can-also-choose-an-email-2": ".",
@@ -440,6 +468,7 @@
     "description": "Description",
     "discard": "Discard",
     "do-not-show-message-again": "Do not show this message again",
+    "download": "Download {{0}}",
     "email": "Email",
     "enterprise-address": "Enterprise address",
     "error": "Error",
@@ -458,7 +487,10 @@
     "local-path-darwin": "Local Path",
     "multiple-commits": "commits",
     "name": "Name",
+    "new": "New",
     "no": "No",
+    "not-now": "Not Now",
+    "not-now-darwin": "Not Now",
     "ok": "Ok",
     "one-commit": "commit",
     "one-or-less-commit": "commit",
@@ -490,6 +522,7 @@
     "sign-into-2-darwin": " ",
     "sign-out": "Sign out",
     "sign-out-darwin": "Sign Out",
+    "summary": "Summary",
     "tag-name": "Tag name",
     "tag-name-darwin": "Tag Name",
     "undo": "Undo",
@@ -625,7 +658,7 @@
     "default-branch-source-is-determined-1": "Your default branch source is determined by your ",
     "default-branch-source-is-determined-2": "fork behavior settings",
     "default-branch-source-is-determined-3": ".",
-    "do-not-have-any-branch-checked-out": "You do not currently have any branch checked out (your HEAD reference is detached). As such your new branch will be based on your currently checked out commit ({{0}} ).",
+    "do-not-have-any-branch-checked-out": "You do not currently have any branch checked out (your HEAD reference is detached). As such your new branch will be based on your currently checked out commit ({{0}}).",
     "error": {
       "unknown-tip-kind": "Unknown tip kind {{0}}"
     },
@@ -899,6 +932,7 @@
     "depending-on-your-repository-s-2": ".",
     "integration-docs": "integration docs",
     "password": "Password",
+    "username": "Username",
     "we-were-unable-to-authenticate-1": "We were unable to authenticate with ",
     "we-were-unable-to-authenticate-2": ". Please enter ",
     "we-were-unable-to-authenticate-3": "the password for the user ",
@@ -937,6 +971,22 @@
     "gitignore-message-2": ". This file specifies intentionally untracked files that Git should ignore. Files already tracked by Git are not affected. ",
     "placeholder-ignored-files": "Ignored files"
   },
+  "initialize-lfs": {
+    "git-lfs": "Git LFS",
+    "initialize-git-lfs": "Initialize Git LFS"
+  },
+  "install": {
+    "command-prompt": "command prompt",
+    "install-git": "Install Git",
+    "open-without-git": "Open without Git",
+    "open-without-git-darwin": "Open Without Git",
+    "terminal-window": "Terminal window",
+    "to-help-you-get-git-installed": "To help you get Git installed and configured for your operating system, we have some external resources available.",
+    "unable-to-locate-git": "Unable to locate Git",
+    "unable-to-locate-git-darwin": "Unable to Locate Git",
+    "we-are-unable-to-locate-git-1": "We were unable to locate Git on your system. This means you won't be able to execute any Git commands in the ",
+    "we-are-unable-to-locate-git-2": "."
+  },
   "installing-update": {
     "quit-anyway": "Quit anyway",
     "quit-anyway-darwin": "Quit Anyway",
@@ -968,7 +1018,10 @@
     "show-stashed-changes-darwin": "Show Stashed Changes"
   },
   "launch": {
-    "custom-editor-at-path": "custom editor at path '{{0}}'"
+    "custom-editor-at-path": "custom editor at path '{{0}}'",
+    "error": {
+      "could-not-find-executable": "Could not find executable for '{{0}}' at path '{{1}}'. Please open {{2}} and select an available editor."
+    }
   },
   "local-changes-overwritten-dialog": {
     "Stash-Changes": "Stash changes and continue",
@@ -1055,7 +1108,9 @@
     "help": "&Help",
     "help-darwin": "Help",
     "hide": "Hide GitHub Desktop",
+    "hide-changes-filter-darwin": "Hide Changes Filter",
     "hide-others": "Hide Others",
+    "hide-toggle-changes-filter": "Hide Toggle Chan&ges Filter",
     "install": "Install",
     "install-command-line-tool": "Install Command Line Tool…",
     "merge-into-branch": "&Merge into current branch…",
@@ -1114,6 +1169,7 @@
     "show-branches-list-darwin": "Show Branches List",
     "show-changes": "&Changes",
     "show-changes-darwin": "Show Changes",
+    "show-changes-filter-darwin": "Show Changes Filter",
     "show-history": "&History",
     "show-history-darwin": "Show History",
     "show-in-explorer": "Show in Explorer",
@@ -1128,6 +1184,7 @@
     "show-popup": "Show popup",
     "show-repository-list": "Repository &list",
     "show-repository-list-darwin": "Show Repository List",
+    "show-toggle-changes-filter": "Show Toggle Chan&ges Filter",
     "show-user-guides": "Show User Guides",
     "squash-and-merge-into-branch": "Squas&h and merge into current branch…",
     "squash-and-merge-into-branch-darwin": "Squash and Merge into Current Branch…",
@@ -1207,7 +1264,6 @@
     "do-you-want-to-move": "Do you want to move GitHub Desktop to the Applications folder now? This will also restart the app.",
     "move-and-restart": "Move and Restart",
     "move-to-the-applications-folder": "Move GitHub Desktop to the Applications folder?",
-    "not-now": "Not Now",
     "this-will-move-github-desktop": "This will move GitHub Desktop to the Applications folder in your machine and restart the app."
   },
   "multiple-selection": {
@@ -1464,6 +1520,7 @@
     "act-on-behalf": "Act on behalf of the secret's owner",
     "allowing-secrets-risks-exposure": "Allowing secrets risks exposure. Consider ",
     "bypass": "Bypass",
+    "bypassed": "Bypassed ",
     "exosing-this-secret-can-allow": "Exposing this secret can allow someone to:",
     "found secrets-1": "",
     "found secrets-2": " found secret(s) in the commit(s) you attempted to push. ",
@@ -1609,7 +1666,9 @@
     "continue-in-browser": "Continue in browser",
     "continue-in-browser-darwin": "Continue in Browser",
     "re-authorization-required": "Re-authorization required",
-    "re-authorization-required-darwin": "Re-authorization Required"
+    "re-authorization-required-darwin": "Re-authorization Required",
+    "the-name-organization-has-enabled": "The \"{{0}}\" organization has enabled or enforced SAML SSO. To access this repository, you must sign in again and grant GitHub Desktop permission to access the organization's repositories.",
+    "would-you-like-to-open-a-browser": "Would you like to open a browser to grant GitHub Desktop permission to access the repository?"
   },
   "selected-commits": {
     "drag-the-commits-1": "Drag the commits to the branch menu to cherry-pick them.",
@@ -1630,6 +1689,7 @@
   "shared": {
     "error": {
       "could-not-find-executable": "Could not find executable for '{{0}}' at path '{{1}}'.  Please open {{2}} and select an available shell.",
+      "could-not-find-executable-shell": "Could not find executable for custom shell at path '{{0}}'.  Please open {{1}} and select an available shell.",
       "could-not-find-terminal": "Could not find terminal applicaion. Please open {{0}} and select an available shell."
     }
   },
@@ -1650,7 +1710,7 @@
     "collapse-expanded-lines": "Collapse expanded lines",
     "collapse-expanded-lines-darwin": "Collapse Expanded Lines",
     "copy": "Copy",
-    "discard": "Discard  {{0}} line{{1}}{{2}}",
+    "discard": "Discard {{0}} line{{1}}{{2}}",
     "discard-darwin": "Discard {{0}} Line{{1}}{{2}}",
     "expand-whole-file": "Expand whole file",
     "expand-whole-file-darwin": "Expand Whole File",
@@ -1778,7 +1838,9 @@
     "additional-services": "Additional Services",
     "auto-update-services": "Auto-Update Services",
     "connecting-to-github": "Connecting to GitHub",
+    "creative-commons-attribute": "Creative Commons Attribution license",
     "disclaimers-and-limitations-of-liability": "Disclaimers and Limitations of Liability",
+    "github-privacy-statement": "GitHub Privacy Statement",
     "github-s-logos": "GitHub's Logos",
     "miscellanea": "Miscellanea",
     "open-source-licenses-and-notices": "Open Source Licenses and Notices",
@@ -1820,6 +1882,7 @@
     "partially-checked-check-list": "Partially checked check list",
     "publish-to-github": "Publish to GitHub",
     "publishing-will-push-or-upload": "Publishing will “push”, or upload, your commits to this branch of your repository on GitHub. Publish using the third button in the top bar.",
+    "skip": "Skip",
     "your-default-editor-is-1": "Your default editor is ",
     "your-default-editor-is-2": ". You can change your preferred editor in ",
     "your-default-editor-is-3": " "
@@ -1844,7 +1907,7 @@
     "this-may-indicate-attackers": "This may indicate attackers are trying to steal your data.",
     "untrusted-server": "Untrusted server",
     "untrusted-server-darwin": "Untrusted Server",
-    "view-certificate-": "Add certificate",
+    "view-certificate": "Add certificate",
     "view-certificate-darwin": "View Certificate"
   },
   "update-available": {
@@ -1886,16 +1949,19 @@
     "would-you-like-to-update": "Would you like to update the remote to use the expected URL?"
   },
   "url": {
+    "creativecommons_org_licenses": "https://creativecommons.org/licenses/by/4.0/",
+    "git-scm-com-docs-gitignore": "https://git-scm.com/docs/gitignore/pt_BR",
     "github-desktop-issue": "https://github.com/yasuking0304/desktop/issues/new/choose",
     "github-desktop-issue-linux": "https://github.com/yasuking0304/desktop/issues/new/choose",
     "keyboard-shortcuts": "https://docs.github.com/pt/desktop/installing-and-configuring-github-desktop/overview/keyboard-shortcuts",
     "show-user-guides": "https://docs.github.com/pt/desktop",
     "supported-operating-systems-for-github-desktop": "https://docs.github.com/pt/desktop/installing-and-configuring-github-desktop/overview/supported-operating-systems",
+    "unofficial-github-desktop-wiki": "https://github.com/yasuking0304/desktop/wiki",
     "why-are-my-commits-linked-to-the-wrong-user": "https://docs.github.com/pt/github/committing-changes-to-your-project/why-are-my-commits-linked-to-the-wrong-user"
   },
   "warn-force-push-dialog": {
     "are-you-sure-operation": "Are you sure you want to {{0}}?",
-    "begin-operation": "Begin {0}",
+    "begin-operation": "Begin {{0}}",
     "end-of-the-operation-flow": "At the end of the {{0}} flow, GitHub Desktop will enable you to force push the branch to update the upstream branch. Force pushing will alter the history on the remote and potentially cause problems for others collaborating on this branch.",
     "require-force-push": "{{0}} will require force push",
     "require-force-push-darwin": "{{0}} Will Require Force Push"

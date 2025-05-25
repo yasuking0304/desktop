@@ -64,17 +64,17 @@ export class RadioButton<T extends React.Key> extends React.Component<
   public render() {
     return (
       <div className="radio-button-component">
-        <input
-          type="radio"
-          id={this.state.inputId}
-          value={this.props.value}
-          checked={this.props.checked}
-          onChange={this.onSelected}
-          tabIndex={this.props.tabIndex}
-          autoFocus={this.props.autoFocus}
-        />
         <label htmlFor={this.state.inputId} onDoubleClick={this.onDoubleClick}>
-          {this.props.label ?? this.props.children}
+          <input
+            type="radio"
+            id={this.state.inputId}
+            value={this.props.value}
+            checked={this.props.checked}
+            onChange={this.onSelected}
+            tabIndex={this.props.tabIndex}
+            autoFocus={this.props.autoFocus}
+          />
+          <span>{this.props.label ?? this.props.children}</span>
         </label>
       </div>
     )

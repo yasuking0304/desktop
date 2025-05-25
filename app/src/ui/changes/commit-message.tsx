@@ -108,6 +108,7 @@ interface ICommitMessageProps {
   readonly autocompletionProviders: ReadonlyArray<IAutocompletionProvider<any>>
   readonly isCommitting?: boolean
   readonly isGeneratingCommitMessage?: boolean
+  readonly shouldShowGenerateCommitMessageCallOut?: boolean
   readonly commitToAmend: Commit | null
   readonly placeholder: string
   readonly prepopulateCommitSummary: boolean
@@ -913,6 +914,11 @@ export class CommitMessage extends React.Component<
           }
         >
           <Octicon symbol={octicons.copilot} />
+          {this.props.shouldShowGenerateCommitMessageCallOut && (
+            <span className="call-to-action-bubble">
+              {t('common.new', 'New')}
+            </span>
+          )}
         </Button>
       </>
     )
@@ -1019,7 +1025,7 @@ export class CommitMessage extends React.Component<
         <CommitWarning icon={CommitWarningIcon.Information}>
           {t(
             'commit-message.will-modify-your-most-recent-commit-1',
-            'Your changes will modify your'
+            'Your changes will modify your '
           )}
           <strong>
             {t(
@@ -1415,7 +1421,10 @@ export class CommitMessage extends React.Component<
     const loading =
       isCommitting || isGeneratingCommitMessage ? <Loading /> : undefined
     const generatingCommitDetailsMessage = isGeneratingCommitMessage
-      ? 'Generating commit details…'
+      ? t(
+          'commit-message.generating-commit-details',
+          'Generating commit details…'
+        )
       : null
     const tooltip =
       generatingCommitDetailsMessage ?? this.getButtonTooltip(buttonEnabled)
@@ -1559,7 +1568,11 @@ export class CommitMessage extends React.Component<
 
           <AutocompletingInput
             required={true}
-            label={this.props.showInputLabels === true ? 'Summary' : undefined}
+            label={
+              this.props.showInputLabels === true
+                ? t('common.summary', 'Summary')
+                : undefined
+            }
             screenReaderLabel="Commit summary"
             className={summaryInputClassName}
             placeholder={placeholder}
@@ -1584,7 +1597,9 @@ export class CommitMessage extends React.Component<
         {this.state.isRuleFailurePopoverOpen && this.renderRuleFailurePopover()}
 
         {this.props.showInputLabels === true && (
-          <label htmlFor="commit-message-description">Description</label>
+          <label htmlFor="commit-message-description">
+            {t('common.description', 'Description')}
+          </label>
         )}
         <FocusContainer
           className="description-focus-container"

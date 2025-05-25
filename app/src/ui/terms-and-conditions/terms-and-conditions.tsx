@@ -12,7 +12,10 @@ const contact = 'https://github.com/contact'
 const logos = 'https://github.com/logos'
 const privacyStatement =
   'https://help.github.com/articles/github-privacy-statement/'
-const license = 'https://creativecommons.org/licenses/by/4.0/'
+const license = t(
+  'url.creativecommons_org_licenses',
+  'https://creativecommons.org/licenses/by/4.0/'
+)
 
 export class TermsAndConditions extends React.Component<
   ITermsAndConditionsProps,
@@ -124,7 +127,10 @@ export class TermsAndConditions extends React.Component<
             Software does collect personal information on GitHub's behalf,
             GitHub will process that information in accordance with the
             <LinkButton uri={privacyStatement}>
-              GitHub Privacy Statement
+              {t(
+                'terms-and-conditions.github-privacy-statement',
+                'GitHub Privacy Statement'
+              )}
             </LinkButton>
             .
           </p>
@@ -245,7 +251,10 @@ export class TermsAndConditions extends React.Component<
               License to GitHub Policies. These Application Terms are licensed
               under the{' '}
               <LinkButton uri={license}>
-                Creative Commons Attribution license
+                {t(
+                  'terms-and-conditions.creative-commons-attribute',
+                  'Creative Commons Attribution license'
+                )}
               </LinkButton>
               . You may use it freely under the terms of the Creative Commons
               license.

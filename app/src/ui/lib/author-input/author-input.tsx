@@ -17,6 +17,7 @@ import memoizeOne from 'memoize-one'
 import { FocusContainer } from '../focus-container'
 import { AuthorHandle } from './author-handle'
 import { getFullTextForAuthor } from './author-text'
+import { t } from 'i18next'
 
 interface IAuthorInputProps {
   /**
@@ -180,12 +181,12 @@ export class AuthorInput extends React.Component<
         </div>
         <div className="shadow-input" ref={this.shadowInputRef} />
         <label id="author-input-label" className="label" htmlFor="author-input">
-          Co-Authors&nbsp;
+          {t("author-input.co-authors", "Co-Authors")}{' '}
         </label>
         {this.renderAuthors()}
         <AutocompletingInput<UserHit>
           elementId="author-input"
-          placeholder="@username"
+          placeholder={t("author-input.username", "@username")}
           alwaysAutocomplete={true}
           autocompletionProviders={[this.props.autoCompleteProvider]}
           autocompleteItemFilter={this.getAutocompleteItemFilter(

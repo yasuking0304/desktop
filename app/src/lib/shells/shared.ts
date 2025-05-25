@@ -148,9 +148,15 @@ export async function launchCustomShell(
   // platform-specific build targets.
   const exists = await pathExists(customShell.path)
   if (!exists) {
-    const label = __DARWIN__ ? 'Settings' : 'Options'
+    const label = __DARWIN__
+      ? t('common.settings', 'Settings')
+      : t('common.options', 'Options')
     throw new ShellError(
-      `Could not find executable for custom shell at path '${customShell.path}'.  Please open ${label} and select an available shell.`
+      t(
+        'shared.error.could-not-find-executable-shell',
+        `Could not find executable for custom shell at path '{{0}}'.  Please open {{1}} and select an available shell.`,
+        { 0: customShell.path, 1: label }
+      )
     )
   }
 
