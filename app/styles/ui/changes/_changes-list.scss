@@ -62,7 +62,7 @@
         margin: var(--spacing) 0;
       }
       .popover-content {
-        padding: var(--spacing);
+        padding: var(--spacing) var(--spacing) 0 var(--spacing);
       }
 
       @include close-button;
