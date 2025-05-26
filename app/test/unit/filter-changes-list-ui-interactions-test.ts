@@ -103,7 +103,6 @@ describe('FilterChangesList UI Interactions Tests', () => {
       // Test the file type filter logic from applyFilters
       const filterNewFiles = true
       const filterModifiedFiles = false
-      const filterDeletedFiles = false // eslint-disable-line @typescript-eslint/no-unused-vars
 
       const newFile = testFiles.find(
         f => f.status.kind === AppFileStatusKind.New

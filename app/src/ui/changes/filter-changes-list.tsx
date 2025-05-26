@@ -1499,7 +1499,9 @@ export class FilterChangesList extends React.Component<
 
       // Check if file matches new files filter
       if (this.props.filterNewFiles) {
-        const isNewFile = item.change.status.kind === AppFileStatusKind.New
+        const isNewFile =
+          item.change.status.kind === AppFileStatusKind.New ||
+          item.change.status.kind === AppFileStatusKind.Untracked
         if (isNewFile) {
           matchesFileTypeFilter = true
         }

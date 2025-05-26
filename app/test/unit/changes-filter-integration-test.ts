@@ -160,15 +160,23 @@ describe('Changes Filter Integration Tests', () => {
         if (!state.filterNewFiles) {
           return true
         }
-        return file.status.kind === AppFileStatusKind.New
+        return (
+          file.status.kind === AppFileStatusKind.New ||
+          file.status.kind === AppFileStatusKind.Untracked
+        )
       })
 
-      assert.equal(filteredFiles.length, 2)
+      assert.equal(filteredFiles.length, 3)
       assert.ok(
-        filteredFiles.every(f => f.status.kind === AppFileStatusKind.New)
+        filteredFiles.every(
+          f =>
+            f.status.kind === AppFileStatusKind.New ||
+            f.status.kind === AppFileStatusKind.Untracked
+        )
       )
       assert.ok(filteredFiles.some(f => f.path === 'src/utils/helpers.ts'))
       assert.ok(filteredFiles.some(f => f.path === 'docs/api.md'))
+      assert.ok(filteredFiles.some(f => f.path === 'temp-file.tmp'))
     })
 
     it('filters modified files when filterModifiedFiles is enabled', () => {
