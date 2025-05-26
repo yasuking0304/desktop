@@ -1464,73 +1464,61 @@ export class FilterChangesList extends React.Component<
       return true
     }
 
-    // Check staging status filters (included in commit and unstaged files)
-    const hasStagingFilter =
-      this.props.includedChangesInCommitFilter || this.props.filterUnstagedFiles
-    if (hasStagingFilter) {
-      let matchesStagingFilter = false
-      const isStaged =
-        item.change.selection.getSelectionType() !== DiffSelectionType.None
-      const isUnstaged =
-        item.change.selection.getSelectionType() === DiffSelectionType.None
-
-      // Check if file matches included in commit filter (staged files)
-      if (this.props.includedChangesInCommitFilter && isStaged) {
-        matchesStagingFilter = true
-      }
-
-      // Check if file matches unstaged files filter
-      if (this.props.filterUnstagedFiles && isUnstaged) {
-        matchesStagingFilter = true
-      }
-
-      if (!matchesStagingFilter) {
-        return false
-      }
-    }
-
-    // Apply file type filters (new files, modified files, deleted files)
-    const hasFileTypeFilter =
+    // Check if any filters are active
+    const hasAnyFilter =
+      this.props.includedChangesInCommitFilter ||
+      this.props.filterUnstagedFiles ||
       this.props.filterNewFiles ||
       this.props.filterModifiedFiles ||
       this.props.filterDeletedFiles
-    if (hasFileTypeFilter) {
-      let matchesFileTypeFilter = false
 
-      // Check if file matches new files filter
-      if (this.props.filterNewFiles) {
-        const isNewFile =
-          item.change.status.kind === AppFileStatusKind.New ||
-          item.change.status.kind === AppFileStatusKind.Untracked
-        if (isNewFile) {
-          matchesFileTypeFilter = true
-        }
-      }
+    if (!hasAnyFilter) {
+      return true
+    }
 
-      // Check if file matches modified files filter
-      if (this.props.filterModifiedFiles) {
-        const isModifiedFile =
-          item.change.status.kind === AppFileStatusKind.Modified
-        if (isModifiedFile) {
-          matchesFileTypeFilter = true
-        }
-      }
+    // Use OR logic - file matches if it satisfies ANY of the active filters
+    const isStaged =
+      item.change.selection.getSelectionType() !== DiffSelectionType.None
+    const isUnstaged =
+      item.change.selection.getSelectionType() === DiffSelectionType.None
 
-      // Check if file matches deleted files filter
-      if (this.props.filterDeletedFiles) {
-        const isDeletedFile =
-          item.change.status.kind === AppFileStatusKind.Deleted
-        if (isDeletedFile) {
-          matchesFileTypeFilter = true
-        }
-      }
+    // Check staging status filters
+    if (this.props.includedChangesInCommitFilter && isStaged) {
+      return true
+    }
 
-      if (!matchesFileTypeFilter) {
-        return false
+    if (this.props.filterUnstagedFiles && isUnstaged) {
+      return true
+    }
+
+    // Check file type filters
+    if (this.props.filterNewFiles) {
+      const isNewFile =
+        item.change.status.kind === AppFileStatusKind.New ||
+        item.change.status.kind === AppFileStatusKind.Untracked
+      if (isNewFile) {
+        return true
       }
     }
 
-    return true
+    if (this.props.filterModifiedFiles) {
+      const isModifiedFile =
+        item.change.status.kind === AppFileStatusKind.Modified
+      if (isModifiedFile) {
+        return true
+      }
+    }
+
+    if (this.props.filterDeletedFiles) {
+      const isDeletedFile =
+        item.change.status.kind === AppFileStatusKind.Deleted
+      if (isDeletedFile) {
+        return true
+      }
+    }
+
+    // File doesn't match any active filters
+    return false
   }
 
   private getListAriaLabel = () => {
@@ -1670,7 +1658,7 @@ export class FilterChangesList extends React.Component<
       unstagedFilesText,
     ].filter(text => text !== '')
 
-    const conjunction = filterTexts.length > 1 ? ' and ' : ''
+    const conjunction = filterTexts.length > 1 ? ' or ' : ''
     const combinedFilters = filterTexts.join(conjunction)
 
     return `Sorry, I can't find any changed files${combinedFilters}.`
