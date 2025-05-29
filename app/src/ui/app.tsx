@@ -1309,12 +1309,14 @@ export class App extends React.Component<IAppProps, IAppState> {
     this.openInShell(repository)
   }
 
-  /** 
-   * Gets a label string for the currently selected external editor, or 
+  /**
+   * Gets a label string for the currently selected external editor, or
    * `undefined` if the user has selected a custom editor.
    */
   private get externalEditorLabel() {
-    return this.state.useCustomEditor ? undefined : this.state.selectedExternalEditor ?? undefined
+    return this.state.useCustomEditor
+      ? undefined
+      : this.state.selectedExternalEditor ?? undefined
   }
 
   private openCurrentRepositoryInExternalEditor() {
