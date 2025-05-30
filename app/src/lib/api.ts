@@ -1867,7 +1867,6 @@ export class API {
 
     const response = await this.request(this.copilotEndpoint, 'POST', path, {
       body: {
-        model: 'gpt-4o',
         messages: [
           {
             role: 'user',
