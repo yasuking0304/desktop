@@ -19,7 +19,7 @@
     "responsible-use-of-copilot": "GitHub Desktop에서 GitHub Copilot의 책임 있는 사용",
     "supported-operating-systems": "지원되는 운영 체제",
     "terms-and-conditions": "이용 조건",
-    "unofficial-build": "비공식 빌드 버전으로 인해 자동 업데이트가 수행되지 않습니다.",
+    "unofficial-build": "비공식 빌드로 인해 자동 업데이트가 수행되지 않습니다",
     "update-has-been-downloaded-and-is-ready": "업데이트가 다운로드되어 설치할 준비가 되었습니다.",
     "version": "버전 {{0}}",
     "you-have-the-latest-version": "최신 버전이 설치되었습니다(최종 검사 {{0}})",
