@@ -33,6 +33,10 @@ fieldset.vertical-segmented-control {
       border-bottom-right-radius: var(--border-radius);
     }
 
+    label > span {
+      min-width: 0;
+    }
+
     .title {
       font-weight: var(--font-weight-semibold);
       @include ellipsis;
