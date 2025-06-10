@@ -1,5 +1,6 @@
 {
   "releases": {
+    "3.4.21": ["[Improved] Upgrade Electron to v36.1.0 - #20450"],
     "3.4.20": [
       "[Fixed] Prevent network share traversal with renamed UNC paths on Windows"
     ],
