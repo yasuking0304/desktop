@@ -37,8 +37,6 @@ export class RepoRulesMetadataFailureList extends React.Component<IRepoRulesMeta
       endText = '.'
     }
 
-    
-
     return (
       <div className="repo-rules-failure-list-component">
         <p>
@@ -54,9 +52,11 @@ export class RepoRulesMetadataFailureList extends React.Component<IRepoRulesMeta
     )
   }
 
-
-  private renderRuleFailureList(failures: RepoRulesMetadataFailure[], label: string) {
-    if(failures.length === 0) {
+  private renderRuleFailureList(
+    failures: RepoRulesMetadataFailure[],
+    label: string
+  ) {
+    if (failures.length === 0) {
       return null
     }
     const rulesText = __DARWIN__ ? 'Rules' : 'rules'
