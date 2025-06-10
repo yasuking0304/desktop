@@ -1134,7 +1134,7 @@ export class FilterChangesList extends React.Component<
       this.filterOptionsButtonRef?.focus()
       return
     }
-    
+
     this.includeAllCheckBoxRef.current?.focus()
   }
 
