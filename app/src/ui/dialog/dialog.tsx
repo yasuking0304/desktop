@@ -751,7 +751,12 @@ export class Dialog extends React.Component<DialogProps, IDialogState> {
     // of redundantly announcing the dialog contents along with the first
     // focusable element on alert dialogs because NVDA is receiving the signal
     // of "opening the dialog" again.
-    if (event.key === 'Tab' && __WIN32__ && this.props.role === 'alertdialog') {
+    if (
+      event.key === 'Tab' &&
+      !event.shiftKey &&
+      __WIN32__ &&
+      this.props.role === 'alertdialog'
+    ) {
       const focusableElements =
         this.dialogElement?.querySelectorAll<HTMLElement>(
           'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
