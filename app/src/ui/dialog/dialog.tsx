@@ -743,11 +743,14 @@ export class Dialog extends React.Component<DialogProps, IDialogState> {
       this.onDialogCancel(event)
     }
 
-    // N.B. - This is not needed to actually trap focus, But... on Windows,
-    // chromium will replay the action of "opening the dialog" when the user
-    // presses Tab to cycle back to the top of the dialog. This is not the
-    // desired behavior, because on alert dialogs they will hear the dialog
-    // title and contents again with the close button announcement.
+    // N.B. - The following focus management is not needed to trap focus.
+    // Possibly a Chromium update will fix this. On Windows, chromium appears to
+    // briefly move the focus out of the dialog and then back in when the user
+    // presses Tab on the last focusable element to cycle back to the top of the
+    // dialog. For screen reader users, this results in the undesired behavior
+    // of redundantly announcing the dialog contents along with the first
+    // focusable element on alert dialogs because NVDA is receiving the signal
+    // of "opening the dialog" again.
     if (event.key === 'Tab' && __WIN32__ && this.props.role === 'alertdialog') {
       const focusableElements =
         this.dialogElement?.querySelectorAll<HTMLElement>(
