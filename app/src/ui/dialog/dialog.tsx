@@ -742,6 +742,26 @@ export class Dialog extends React.Component<DialogProps, IDialogState> {
     if ((shortcutKey && event.key === 'w') || event.key === 'Escape') {
       this.onDialogCancel(event)
     }
+
+    // N.B. - This is not needed to actually trap focus, But... on Windows,
+    // chromium will replay the action of "opening the dialog" when the user
+    // presses Tab to cycle back to the top of the dialog. This is not the
+    // desired behavior, because on alert dialogs they will hear the dialog
+    // title and contents again with the close button announcement.
+    if (event.key === 'Tab') {
+      const focusableElements =
+        this.dialogElement?.querySelectorAll<HTMLElement>(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        )
+      if (focusableElements && focusableElements.length > 0) {
+        const lastElement = focusableElements[focusableElements.length - 1]
+        if (document.activeElement === lastElement) {
+          event.preventDefault()
+          // Move focus back to the first element
+          focusableElements[0].focus()
+        }
+      }
+    }
   }
 
   private onDismiss = () => {
