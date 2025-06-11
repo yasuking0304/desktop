@@ -748,7 +748,7 @@ export class Dialog extends React.Component<DialogProps, IDialogState> {
     // presses Tab to cycle back to the top of the dialog. This is not the
     // desired behavior, because on alert dialogs they will hear the dialog
     // title and contents again with the close button announcement.
-    if (event.key === 'Tab') {
+    if (event.key === 'Tab' && __WIN32__ && this.props.role === 'alertdialog') {
       const focusableElements =
         this.dialogElement?.querySelectorAll<HTMLElement>(
           'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
