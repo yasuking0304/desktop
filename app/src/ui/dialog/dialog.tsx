@@ -762,13 +762,17 @@ export class Dialog extends React.Component<DialogProps, IDialogState> {
           'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
         )
       if (focusableElements && focusableElements.length > 0) {
-        const lastElement = focusableElements[focusableElements.length - 1]
-        if (document.activeElement === lastElement) {
+        const isTabForward = !event.shiftKey
+        const compareElement = isTabForward
+          ? focusableElements[focusableElements.length - 1]
+          : focusableElements[0]
+        if (document.activeElement === compareElement) {
           event.preventDefault()
-          // Move focus back to the first element - Not using focusFirstSuitableChild
-          // as we want to focus the first element in the dialog, not the preferred
-          // focus element.
-          focusableElements[0].focus()
+          // Move focus back to the first or focusable last element
+          const nextFocusElement = isTabForward
+            ? focusableElements[0]
+            : focusableElements[focusableElements.length - 1]
+          nextFocusElement.focus()
         }
       }
     }
