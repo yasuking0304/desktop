@@ -28,8 +28,8 @@ interface IConfigureGitUserProps {
   /** The label for the button which saves config changes. */
   readonly saveLabel?: string
 
-  readonly globalUserName?: string
-  readonly globalUserEmail?: string
+  readonly globalUserName: string | undefined
+  readonly globalUserEmail: string | undefined
 }
 
 interface IConfigureGitUserState {

@@ -8,8 +8,8 @@ interface IConfigureGitProps {
   readonly accounts: ReadonlyArray<Account>
   readonly advance: (step: WelcomeStep) => void
   readonly done: () => void
-  readonly globalUserName?: string
-  readonly globalUserEmail?: string
+  readonly globalUserName: string | undefined
+  readonly globalUserEmail: string | undefined
 }
 
 /** The Welcome flow step to configure git. */
