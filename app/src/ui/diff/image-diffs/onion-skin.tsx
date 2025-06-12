@@ -29,6 +29,18 @@ export class OnionSkin extends React.Component<
 
     return (
       <div className="image-diff-onion-skin">
+        <input
+          style={{
+            width: this.props.maxSize.width / 2,
+          }}
+          className="slider"
+          type="range"
+          max={100}
+          min={0}
+          value={this.state.crossfade}
+          step={0.1}
+          onChange={this.onValueChange}
+        />
         <div className="sizing-container" ref={this.props.onContainerRef}>
           <div className="image-container" style={style}>
             <div className="image-diff-previous" style={style}>
@@ -54,19 +66,6 @@ export class OnionSkin extends React.Component<
             </div>
           </div>
         </div>
-
-        <input
-          style={{
-            width: this.props.maxSize.width / 2,
-          }}
-          className="slider"
-          type="range"
-          max={100}
-          min={0}
-          value={this.state.crossfade}
-          step={0.1}
-          onChange={this.onValueChange}
-        />
       </div>
     )
   }

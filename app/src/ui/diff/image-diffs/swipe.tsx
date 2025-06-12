@@ -55,6 +55,18 @@ export class Swipe extends React.Component<
 
     return (
       <div className="image-diff-swipe">
+        <input
+          style={{
+            width: this.props.maxSize.width + SliderOverflow,
+          }}
+          className="slider"
+          type="range"
+          max={100}
+          min={0}
+          value={this.state.percentage}
+          step={0.1}
+          onChange={this.onValueChange}
+        />
         <div className="sizing-container" ref={this.props.onContainerRef}>
           <div className="image-container" style={style}>
             <div className="image-diff-previous" style={previousStyle}>
@@ -73,18 +85,6 @@ export class Swipe extends React.Component<
             </div>
           </div>
         </div>
-        <input
-          style={{
-            width: this.props.maxSize.width + SliderOverflow,
-          }}
-          className="slider"
-          type="range"
-          max={100}
-          min={0}
-          value={this.state.percentage}
-          step={0.1}
-          onChange={this.onValueChange}
-        />
       </div>
     )
   }
