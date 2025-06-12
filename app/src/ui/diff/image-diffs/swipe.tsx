@@ -25,7 +25,8 @@ export class Swipe extends React.Component<
       width: this.props.maxSize.width,
     }
 
-    const swiperWidth = this.props.maxSize.width * (1 - this.state.percentage)
+    const swiperWidth =
+      this.props.maxSize.width * (1 - this.state.percentage / 100.0)
 
     const previousStyle: React.CSSProperties = {
       position: 'absolute',
@@ -78,10 +79,10 @@ export class Swipe extends React.Component<
           }}
           className="slider"
           type="range"
-          max={1}
+          max={100}
           min={0}
           value={this.state.percentage}
-          step={0.001}
+          step={0.1}
           onChange={this.onValueChange}
         />
       </div>

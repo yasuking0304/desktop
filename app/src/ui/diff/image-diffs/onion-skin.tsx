@@ -43,7 +43,7 @@ export class OnionSkin extends React.Component<
               className="image-diff-current"
               style={{
                 ...style,
-                opacity: this.state.crossfade,
+                opacity: this.state.crossfade / 100.0,
               }}
             >
               <ImageContainer
@@ -61,10 +61,10 @@ export class OnionSkin extends React.Component<
           }}
           className="slider"
           type="range"
-          max={1}
+          max={100}
           min={0}
           value={this.state.crossfade}
-          step={0.001}
+          step={0.1}
           onChange={this.onValueChange}
         />
       </div>
