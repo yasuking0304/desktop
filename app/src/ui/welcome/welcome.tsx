@@ -73,7 +73,10 @@ export class Welcome extends React.Component<IWelcomeProps, IWelcomeState> {
 
   public componentDidMount() {
     this.props.dispatcher.recordWelcomeWizardInitiated()
+    this.refreshGlobalGitAuthorInfo()
+  }
 
+  public refreshGlobalGitAuthorInfo() {
     Promise.all([
       getGlobalConfigValue('user.name'),
       getGlobalConfigValue('user.email'),
@@ -204,19 +207,7 @@ export class Welcome extends React.Component<IWelcomeProps, IWelcomeState> {
     // ConfigureGit step. This is necessary because the user could theoretically
     // have changed their global git config while the welcome flow was open.
     if (step === WelcomeStep.ConfigureGit) {
-      Promise.all([
-        getGlobalConfigValue('user.name'),
-        getGlobalConfigValue('user.email'),
-      ])
-        .then(([globalUserName, globalUserEmail]) => {
-          this.setState({
-            globalUserName: globalUserName ?? undefined,
-            globalUserEmail: globalUserEmail ?? undefined,
-          })
-        })
-        .catch(e => {
-          log.error(`[Welcome] error while fetching global user config`, e)
-        })
+      this.refreshGlobalGitAuthorInfo()
     }
 
     this.setState({ currentStep: step })
