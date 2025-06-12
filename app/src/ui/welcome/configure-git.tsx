@@ -8,6 +8,8 @@ interface IConfigureGitProps {
   readonly accounts: ReadonlyArray<Account>
   readonly advance: (step: WelcomeStep) => void
   readonly done: () => void
+  readonly globalUserName?: string
+  readonly globalUserEmail?: string
 }
 
 /** The Welcome flow step to configure git. */
@@ -25,6 +27,8 @@ export class ConfigureGit extends React.Component<IConfigureGitProps, {}> {
           accounts={this.props.accounts}
           onSave={this.props.done}
           saveLabel="Finish"
+          globalUserName={this.props.globalUserName}
+          globalUserEmail={this.props.globalUserEmail}
         >
           <Button onClick={this.cancel}>Cancel</Button>
         </ConfigureGitUser>
