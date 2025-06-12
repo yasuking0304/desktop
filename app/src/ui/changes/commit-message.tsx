@@ -971,6 +971,16 @@ export class CommitMessage extends React.Component<
   }
 
   private onFocusContainerClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (event.defaultPrevented) {
+      // Our description text area is styled to look like it's a big textarea
+      // with buttons towards the bottom but it's not. It's a textarea inside of
+      // a focus container (div) which is styled to look like a text area.
+      // To maintain that illusion we need to focus the description text area
+      // when the user clicks on the focus container but we don't want to
+      // do that if the user clicked on one of the buttons in the action bar
+      return
+    }
+
     if (this.descriptionComponent) {
       this.descriptionComponent.focus()
     }
