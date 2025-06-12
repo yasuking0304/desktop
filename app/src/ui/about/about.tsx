@@ -150,7 +150,7 @@ export class About extends React.Component<IAboutProps> {
         <p className='unofficial-build'>
           {t(
             'about.unofficial-build',
-            `Since this is an unofficial build, automatic updates will not occur.`
+            `Since this is an unofficial build, automatic updates will not occur`
           )}
           <Row>
             <LinkButton
