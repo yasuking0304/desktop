@@ -1189,6 +1189,11 @@ export class FilterChangesList extends React.Component<
   }
 
   public focus() {
+    if (this.props.showChangesFilter) {
+      this.filterOptionsButtonRef?.focus()
+      return
+    }
+
     this.includeAllCheckBoxRef.current?.focus()
   }
 
@@ -1448,7 +1453,6 @@ export class FilterChangesList extends React.Component<
         <TextBox
           ref={this.onTextBoxRef}
           displayClearButton={true}
-          autoFocus={true}
           placeholder={'Filter'}
           className="filter-list-filter-field"
           onValueChanged={this.onFilterTextChanged}

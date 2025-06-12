@@ -1867,7 +1867,6 @@ export class API {
 
     const response = await this.request(this.copilotEndpoint, 'POST', path, {
       body: {
-        model: 'gpt-4o',
         messages: [
           {
             role: 'user',
@@ -1945,7 +1944,13 @@ export class API {
       const internalError = `Internal server error, code: ${
         response.status
       }, request ID: ${response.headers.get('X-Github-Request-Id')}.`
-      throw new CopilotError(internalError, response.status)
+      console.error(
+        `Copilot request failed with status ${response.status}: ${internalError}`
+      )
+      throw new CopilotError(
+        'Something went wrong. Please, try again later.',
+        response.status
+      )
     }
 
     const text = await response.text()
