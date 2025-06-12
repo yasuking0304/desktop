@@ -108,7 +108,7 @@ export class ConfigureGitUser extends React.Component<
 
     if (globalUserEmail && globalUserEmail !== prevProps.globalUserEmail) {
       this.setState(prevState => ({
-        manualEmail: prevState.manualName || globalUserEmail,
+        manualEmail: prevState.manualEmail || globalUserEmail,
       }))
     }
   }
