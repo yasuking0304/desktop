@@ -300,18 +300,18 @@ describe('Dispatcher Filter Functionality', () => {
       assert.strictEqual(methodContract.parameters[1].type, 'boolean')
     })
 
-    it('defines expected method contracts for setFilterUnstagedFiles', () => {
-      // Method signature: setFilterUnstagedFiles(repository: Repository, filterUnstagedFiles: boolean)
+    it('defines expected method contracts for setFilterExcludedFiles', () => {
+      // Method signature: setFilterExcludedFiles(repository: Repository, filterExcludedFiles: boolean)
       const methodContract = {
-        name: 'setFilterUnstagedFiles',
+        name: 'setFilterExcludedFiles',
         parameters: [
           { name: 'repository', type: 'Repository' },
-          { name: 'filterUnstagedFiles', type: 'boolean' },
+          { name: 'filterExcludedFiles', type: 'boolean' },
         ],
         returnType: 'void',
       }
 
-      assert.strictEqual(methodContract.name, 'setFilterUnstagedFiles')
+      assert.strictEqual(methodContract.name, 'setFilterExcludedFiles')
       assert.strictEqual(methodContract.parameters.length, 2)
       assert.strictEqual(methodContract.parameters[0].type, 'Repository')
       assert.strictEqual(methodContract.parameters[1].type, 'boolean')

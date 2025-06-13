@@ -249,39 +249,39 @@ describe('App Store Filter Functionality', () => {
     })
   })
 
-  describe('_setFilterUnstagedFiles', () => {
-    it('enables unstaged files filter', () => {
+  describe('_setFilterExcludedFiles', () => {
+    it('enables excluded files filter', () => {
       repositoryStateCache.updateChangesState(repository, () => ({
-        filterUnstagedFiles: true,
+        filterExcludedFiles: true,
       }))
 
       const state = repositoryStateCache.get(repository)
-      assert.equal(state.changesState.filterUnstagedFiles, true)
+      assert.equal(state.changesState.filterExcludedFiles, true)
     })
 
-    it('disables unstaged files filter', () => {
+    it('disables excluded files filter', () => {
       repositoryStateCache.updateChangesState(repository, () => ({
-        filterUnstagedFiles: false,
+        filterExcludedFiles: false,
       }))
 
       const state = repositoryStateCache.get(repository)
-      assert.equal(state.changesState.filterUnstagedFiles, false)
+      assert.equal(state.changesState.filterExcludedFiles, false)
     })
 
-    it('toggles unstaged files filter state', () => {
+    it('toggles excluded files filter state', () => {
       repositoryStateCache.updateChangesState(repository, () => ({
-        filterUnstagedFiles: true,
+        filterExcludedFiles: true,
       }))
 
       let state = repositoryStateCache.get(repository)
-      assert.equal(state.changesState.filterUnstagedFiles, true)
+      assert.equal(state.changesState.filterExcludedFiles, true)
 
       repositoryStateCache.updateChangesState(repository, () => ({
-        filterUnstagedFiles: false,
+        filterExcludedFiles: false,
       }))
 
       state = repositoryStateCache.get(repository)
-      assert.equal(state.changesState.filterUnstagedFiles, false)
+      assert.equal(state.changesState.filterExcludedFiles, false)
     })
   })
 
@@ -292,7 +292,7 @@ describe('App Store Filter Functionality', () => {
         filterNewFiles: true,
         filterModifiedFiles: true,
         filterDeletedFiles: true,
-        filterUnstagedFiles: true,
+        filterExcludedFiles: true,
         includedChangesInCommitFilter: true,
       }))
 
@@ -301,7 +301,7 @@ describe('App Store Filter Functionality', () => {
       assert.equal(state.changesState.filterNewFiles, true)
       assert.equal(state.changesState.filterModifiedFiles, true)
       assert.equal(state.changesState.filterDeletedFiles, true)
-      assert.equal(state.changesState.filterUnstagedFiles, true)
+      assert.equal(state.changesState.filterExcludedFiles, true)
       assert.equal(state.changesState.includedChangesInCommitFilter, true)
     })
 
@@ -391,7 +391,7 @@ describe('App Store Filter Functionality', () => {
       assert.equal(state.changesState.filterNewFiles, false)
       assert.equal(state.changesState.filterModifiedFiles, false)
       assert.equal(state.changesState.filterDeletedFiles, false)
-      assert.equal(state.changesState.filterUnstagedFiles, false)
+      assert.equal(state.changesState.filterExcludedFiles, false)
       assert.equal(state.changesState.includedChangesInCommitFilter, false)
     })
 
@@ -402,7 +402,7 @@ describe('App Store Filter Functionality', () => {
         filterNewFiles: true,
         filterModifiedFiles: true,
         filterDeletedFiles: true,
-        filterUnstagedFiles: true,
+        filterExcludedFiles: true,
         includedChangesInCommitFilter: true,
       }))
 
@@ -412,7 +412,7 @@ describe('App Store Filter Functionality', () => {
         filterNewFiles: false,
         filterModifiedFiles: false,
         filterDeletedFiles: false,
-        filterUnstagedFiles: false,
+        filterExcludedFiles: false,
         includedChangesInCommitFilter: false,
       }))
 
@@ -421,7 +421,7 @@ describe('App Store Filter Functionality', () => {
       assert.equal(state.changesState.filterNewFiles, false)
       assert.equal(state.changesState.filterModifiedFiles, false)
       assert.equal(state.changesState.filterDeletedFiles, false)
-      assert.equal(state.changesState.filterUnstagedFiles, false)
+      assert.equal(state.changesState.filterExcludedFiles, false)
       assert.equal(state.changesState.includedChangesInCommitFilter, false)
     })
   })

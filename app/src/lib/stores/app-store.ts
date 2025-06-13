@@ -8357,12 +8357,12 @@ export class AppStore extends TypedBaseStore<IAppState> {
     this.emitUpdate()
   }
 
-  public _setFilterUnstagedFiles(
+  public _setFilterExcludedFiles(
     repository: Repository,
-    filterUnstagedFiles: boolean
+    filterExcludedFiles: boolean
   ) {
     this.repositoryStateCache.updateChangesState(repository, () => ({
-      filterUnstagedFiles,
+      filterExcludedFiles,
     }))
     this.emitUpdate()
   }

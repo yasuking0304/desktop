@@ -111,24 +111,24 @@ describe('Changes Filter Functionality', () => {
     })
   })
 
-  describe('filterUnstagedFiles', () => {
+  describe('filterExcludedFiles', () => {
     it('initializes with default value false', () => {
       const state = createState({})
-      assert.equal(state.filterUnstagedFiles, false)
+      assert.equal(state.filterExcludedFiles, false)
     })
 
     it('can be set to true', () => {
       const state = createState({
-        filterUnstagedFiles: true,
+        filterExcludedFiles: true,
       })
-      assert.equal(state.filterUnstagedFiles, true)
+      assert.equal(state.filterExcludedFiles, true)
     })
 
     it('can be set to false explicitly', () => {
       const state = createState({
-        filterUnstagedFiles: false,
+        filterExcludedFiles: false,
       })
-      assert.equal(state.filterUnstagedFiles, false)
+      assert.equal(state.filterExcludedFiles, false)
     })
   })
 
@@ -181,7 +181,7 @@ describe('Changes Filter Functionality', () => {
         filterNewFiles: true,
         filterModifiedFiles: true,
         filterDeletedFiles: true,
-        filterUnstagedFiles: true,
+        filterExcludedFiles: true,
         includedChangesInCommitFilter: true,
         filterText: 'test',
       })
@@ -189,7 +189,7 @@ describe('Changes Filter Functionality', () => {
       assert.equal(state.filterNewFiles, true)
       assert.equal(state.filterModifiedFiles, true)
       assert.equal(state.filterDeletedFiles, true)
-      assert.equal(state.filterUnstagedFiles, true)
+      assert.equal(state.filterExcludedFiles, true)
       assert.equal(state.includedChangesInCommitFilter, true)
       assert.equal(state.filterText, 'test')
     })
@@ -199,7 +199,7 @@ describe('Changes Filter Functionality', () => {
         filterNewFiles: true,
         filterModifiedFiles: false,
         filterDeletedFiles: true,
-        filterUnstagedFiles: false,
+        filterExcludedFiles: false,
         includedChangesInCommitFilter: true,
         filterText: 'feature',
       })
@@ -207,7 +207,7 @@ describe('Changes Filter Functionality', () => {
       assert.equal(state.filterNewFiles, true)
       assert.equal(state.filterModifiedFiles, false)
       assert.equal(state.filterDeletedFiles, true)
-      assert.equal(state.filterUnstagedFiles, false)
+      assert.equal(state.filterExcludedFiles, false)
       assert.equal(state.includedChangesInCommitFilter, true)
       assert.equal(state.filterText, 'feature')
     })
@@ -217,7 +217,7 @@ describe('Changes Filter Functionality', () => {
         filterNewFiles: false,
         filterModifiedFiles: false,
         filterDeletedFiles: false,
-        filterUnstagedFiles: false,
+        filterExcludedFiles: false,
         includedChangesInCommitFilter: false,
         filterText: '',
       })
@@ -225,7 +225,7 @@ describe('Changes Filter Functionality', () => {
       assert.equal(state.filterNewFiles, false)
       assert.equal(state.filterModifiedFiles, false)
       assert.equal(state.filterDeletedFiles, false)
-      assert.equal(state.filterUnstagedFiles, false)
+      assert.equal(state.filterExcludedFiles, false)
       assert.equal(state.includedChangesInCommitFilter, false)
       assert.equal(state.filterText, '')
     })

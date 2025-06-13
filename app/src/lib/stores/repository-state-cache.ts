@@ -323,7 +323,7 @@ function getInitialRepositoryState(): IRepositoryState {
       filterNewFiles: false,
       filterModifiedFiles: false,
       filterDeletedFiles: false,
-      filterUnstagedFiles: false,
+      filterExcludedFiles: false,
     },
     selectedSection: RepositorySectionTab.Changes,
     branchesState: {

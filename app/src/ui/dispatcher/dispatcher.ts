@@ -4033,13 +4033,13 @@ export class Dispatcher {
     return this.appStore._setFilterDeletedFiles(repository, filterDeletedFiles)
   }
 
-  public setFilterUnstagedFiles(
+  public setFilterExcludedFiles(
     repository: Repository,
-    filterUnstagedFiles: boolean
+    filterExcludedFiles: boolean
   ) {
-    return this.appStore._setFilterUnstagedFiles(
+    return this.appStore._setFilterExcludedFiles(
       repository,
-      filterUnstagedFiles
+      filterExcludedFiles
     )
   }
 

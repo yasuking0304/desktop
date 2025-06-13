@@ -786,8 +786,8 @@ export interface IChangesState {
   /** Whether to filter and show only deleted files */
   readonly filterDeletedFiles: boolean
 
-  /** Whether to filter and show only unstaged files */
-  readonly filterUnstagedFiles: boolean
+  /** Whether to filter and show only excluded from commit files */
+  readonly filterExcludedFiles: boolean
 }
 
 /**

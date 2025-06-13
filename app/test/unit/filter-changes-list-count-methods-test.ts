@@ -178,9 +178,9 @@ describe('FilterChangesList Count Methods Tests', () => {
     })
   })
 
-  describe('getUnstagedFilesCount', () => {
-    it('counts unstaged files correctly', () => {
-      // Expected: Files with DiffSelectionType.None
+  describe('getExcludedFilesCount', () => {
+    it('counts excluded from commit files correctly', () => {
+      // Expected: Files with DiffSelectionType.None (excluded from commit)
       // src/components/App.tsx, docs/api.md, deprecated.js, temp-file.tmp, cache.log = 5 files
       const expectedCount = 5
 
@@ -191,13 +191,13 @@ describe('FilterChangesList Count Methods Tests', () => {
       assert.equal(actualCount, expectedCount)
     })
 
-    it('returns zero when all files are staged', () => {
+    it('returns zero when all files are included in commit', () => {
       const allStagedFiles = testFiles.map(
         file =>
           new WorkingDirectoryFileChange(
             file.path,
             file.status,
-            allSelected // Make all files staged
+            allSelected // Make all files included in commit
           )
       )
       const workingDirectoryAllStaged =
@@ -210,13 +210,13 @@ describe('FilterChangesList Count Methods Tests', () => {
       assert.equal(actualCount, 0)
     })
 
-    it('counts all files when all are unstaged', () => {
+    it('counts all files when all are excluded from commit', () => {
       const allUnstagedFiles = testFiles.map(
         file =>
           new WorkingDirectoryFileChange(
             file.path,
             file.status,
-            noneSelected // Make all files unstaged
+            noneSelected // Make all files excluded from commit
           )
       )
       const workingDirectoryAllUnstaged =
@@ -230,9 +230,9 @@ describe('FilterChangesList Count Methods Tests', () => {
     })
   })
 
-  describe('getStagedFilesCount', () => {
-    it('counts staged files correctly', () => {
-      // Expected: Files with DiffSelectionType.All or DiffSelectionType.Partial
+  describe('getIncludedFilesCount', () => {
+    it('counts included in commit files correctly', () => {
+      // Expected: Files with DiffSelectionType.All or DiffSelectionType.Partial (included in commit)
       // README.md, package.json, src/utils/helpers.ts, old-file.txt, renamed-component.tsx = 5 files
       const expectedCount = 5
 
@@ -243,30 +243,30 @@ describe('FilterChangesList Count Methods Tests', () => {
       assert.equal(actualCount, expectedCount)
     })
 
-    it('includes partially staged files in count', () => {
+    it('includes partially included files in count', () => {
       const partiallyStaged = workingDirectory.files.filter(
         f => f.selection.getSelectionType() === DiffSelectionType.Partial
       )
 
-      // Should have 1 partially staged file (package.json)
+      // Should have 1 partially included file (package.json)
       assert.equal(partiallyStaged.length, 1)
       assert.equal(partiallyStaged[0].path, 'package.json')
 
-      // Partially staged files should be included in staged count
-      const stagedCount = workingDirectory.files.filter(
+      // Partially included files should be included in commit count
+      const includedCount = workingDirectory.files.filter(
         f => f.selection.getSelectionType() !== DiffSelectionType.None
       ).length
 
-      assert.ok(stagedCount > 0)
+      assert.ok(includedCount > 0)
     })
 
-    it('returns zero when no files are staged', () => {
+    it('returns zero when no files are included in commit', () => {
       const allUnstagedFiles = testFiles.map(
         file =>
           new WorkingDirectoryFileChange(
             file.path,
             file.status,
-            noneSelected // Make all files unstaged
+            noneSelected // Make all files excluded from commit
           )
       )
       const workingDirectoryAllUnstaged =

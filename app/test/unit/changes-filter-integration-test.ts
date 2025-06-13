@@ -247,14 +247,14 @@ describe('Changes Filter Integration Tests', () => {
       assert.ok(filteredFiles.some(f => f.path === 'old-file.txt'))
     })
 
-    it('filters unstaged files when filterUnstagedFiles is enabled', () => {
+    it('filters unstaged files when filterExcludedFiles is enabled', () => {
       const state = createState({
         workingDirectory,
-        filterUnstagedFiles: true,
+        filterExcludedFiles: true,
       })
 
       const filteredFiles = state.workingDirectory.files.filter(file => {
-        if (!state.filterUnstagedFiles) {
+        if (!state.filterExcludedFiles) {
           return true
         }
         // Unstaged files are those not selected for commit (noneSelected)
@@ -301,13 +301,13 @@ describe('Changes Filter Integration Tests', () => {
       const state = createState({
         workingDirectory,
         filterDeletedFiles: true,
-        filterUnstagedFiles: true,
+        filterExcludedFiles: true,
       })
 
       // Apply both deleted and unstaged files filters
       const filteredFiles = state.workingDirectory.files.filter(file => {
         // Check staging filter (unstaged files)
-        const hasStagingFilter = state.filterUnstagedFiles
+        const hasStagingFilter = state.filterExcludedFiles
         let matchesStagingFilter = true
         if (hasStagingFilter) {
           matchesStagingFilter =
@@ -347,14 +347,14 @@ describe('Changes Filter Integration Tests', () => {
       const state = createState({
         workingDirectory,
         includedChangesInCommitFilter: true,
-        filterUnstagedFiles: true,
+        filterExcludedFiles: true,
       })
 
       // Apply both staged and unstaged files filters
       const filteredFiles = state.workingDirectory.files.filter(file => {
         // Check staging filter - should show both staged AND unstaged files
         const hasStagingFilter =
-          state.includedChangesInCommitFilter || state.filterUnstagedFiles
+          state.includedChangesInCommitFilter || state.filterExcludedFiles
         let matchesStagingFilter = false
         if (hasStagingFilter) {
           const isStaged =
@@ -365,12 +365,12 @@ describe('Changes Filter Integration Tests', () => {
           // When both filters are active, show files that match either condition
           if (
             state.includedChangesInCommitFilter &&
-            state.filterUnstagedFiles
+            state.filterExcludedFiles
           ) {
             matchesStagingFilter = isStaged || isUnstaged
           } else if (state.includedChangesInCommitFilter) {
             matchesStagingFilter = isStaged
-          } else if (state.filterUnstagedFiles) {
+          } else if (state.filterExcludedFiles) {
             matchesStagingFilter = isUnstaged
           }
         }
@@ -454,7 +454,7 @@ describe('Changes Filter Integration Tests', () => {
         filterNewFiles: false,
         filterModifiedFiles: false,
         filterDeletedFiles: false,
-        filterUnstagedFiles: false,
+        filterExcludedFiles: false,
         includedChangesInCommitFilter: false,
       })
 
@@ -471,7 +471,7 @@ describe('Changes Filter Integration Tests', () => {
           !state.filterDeletedFiles ||
           file.status.kind === AppFileStatusKind.Deleted
         const matchesUnstagedFiles =
-          !state.filterUnstagedFiles ||
+          !state.filterExcludedFiles ||
           file.selection.getSelectionType() === DiffSelectionType.None
         const matchesIncluded =
           !state.includedChangesInCommitFilter ||
@@ -588,11 +588,11 @@ describe('Changes Filter Integration Tests', () => {
         WorkingDirectoryStatus.fromFiles(largeFileSet)
       const state = createState({
         workingDirectory: largeWorkingDirectory,
-        filterUnstagedFiles: true,
+        filterExcludedFiles: true,
       })
 
       const filteredFiles = state.workingDirectory.files.filter(file => {
-        if (!state.filterUnstagedFiles) {
+        if (!state.filterExcludedFiles) {
           return true
         }
         return file.selection.getSelectionType() === DiffSelectionType.None
@@ -609,14 +609,14 @@ describe('Changes Filter Integration Tests', () => {
       const state = createState({
         workingDirectory,
         includedChangesInCommitFilter: true,
-        filterUnstagedFiles: true,
+        filterExcludedFiles: true,
       })
 
       // Apply the fixed filtering logic that allows both filters to work together
       const filteredFiles = state.workingDirectory.files.filter(file => {
         // Check staging status filters (included in commit and unstaged files)
         const hasStagingFilter =
-          state.includedChangesInCommitFilter || state.filterUnstagedFiles
+          state.includedChangesInCommitFilter || state.filterExcludedFiles
         if (hasStagingFilter) {
           let matchesStagingFilter = false
           const isStaged =
@@ -630,7 +630,7 @@ describe('Changes Filter Integration Tests', () => {
           }
 
           // Check if file matches unstaged files filter
-          if (state.filterUnstagedFiles && isUnstaged) {
+          if (state.filterExcludedFiles && isUnstaged) {
             matchesStagingFilter = true
           }
 
@@ -651,18 +651,18 @@ describe('Changes Filter Integration Tests', () => {
       const state = createState({
         workingDirectory,
         filterDeletedFiles: true,
-        filterUnstagedFiles: true,
+        filterExcludedFiles: true,
       })
 
       const filteredFiles = state.workingDirectory.files.filter(file => {
         // Check staging status filters
-        const hasStagingFilter = state.filterUnstagedFiles
+        const hasStagingFilter = state.filterExcludedFiles
         if (hasStagingFilter) {
           let matchesStagingFilter = false
           const isUnstaged =
             file.selection.getSelectionType() === DiffSelectionType.None
 
-          if (state.filterUnstagedFiles && isUnstaged) {
+          if (state.filterExcludedFiles && isUnstaged) {
             matchesStagingFilter = true
           }
 
@@ -740,7 +740,7 @@ describe('Changes Filter Integration Tests', () => {
         workingDirectory,
         filterText: 'src/',
         filterNewFiles: true,
-        filterUnstagedFiles: true,
+        filterExcludedFiles: true,
         includedChangesInCommitFilter: false,
       })
 
@@ -751,7 +751,7 @@ describe('Changes Filter Integration Tests', () => {
           file.path.toLowerCase().includes(state.filterText.toLowerCase())
 
         // Apply staging filter
-        const hasStagingFilter = state.filterUnstagedFiles
+        const hasStagingFilter = state.filterExcludedFiles
         let matchesStagingFilter = true
         if (hasStagingFilter) {
           const isUnstaged =
@@ -787,7 +787,7 @@ describe('Changes Filter Integration Tests', () => {
             filterNewFiles: true,
             filterModifiedFiles: true,
             filterDeletedFiles: true,
-            filterUnstagedFiles: true,
+            filterExcludedFiles: true,
             includedChangesInCommitFilter: true,
           },
         },
@@ -798,7 +798,7 @@ describe('Changes Filter Integration Tests', () => {
             filterNewFiles: false,
             filterModifiedFiles: false,
             filterDeletedFiles: false,
-            filterUnstagedFiles: true,
+            filterExcludedFiles: true,
             includedChangesInCommitFilter: true,
           },
         },
@@ -809,7 +809,7 @@ describe('Changes Filter Integration Tests', () => {
             filterNewFiles: true,
             filterModifiedFiles: true,
             filterDeletedFiles: true,
-            filterUnstagedFiles: false,
+            filterExcludedFiles: false,
             includedChangesInCommitFilter: false,
           },
         },
@@ -820,7 +820,7 @@ describe('Changes Filter Integration Tests', () => {
             filterNewFiles: false,
             filterModifiedFiles: false,
             filterDeletedFiles: false,
-            filterUnstagedFiles: false,
+            filterExcludedFiles: false,
             includedChangesInCommitFilter: true,
           },
         },
@@ -841,7 +841,7 @@ describe('Changes Filter Integration Tests', () => {
 
           // Staging filters
           const hasStagingFilter =
-            state.includedChangesInCommitFilter || state.filterUnstagedFiles
+            state.includedChangesInCommitFilter || state.filterExcludedFiles
           let matchesStagingFilter = true
           if (hasStagingFilter) {
             matchesStagingFilter = false
@@ -853,7 +853,7 @@ describe('Changes Filter Integration Tests', () => {
             if (state.includedChangesInCommitFilter && isStaged) {
               matchesStagingFilter = true
             }
-            if (state.filterUnstagedFiles && isUnstaged) {
+            if (state.filterExcludedFiles && isUnstaged) {
               matchesStagingFilter = true
             }
           }

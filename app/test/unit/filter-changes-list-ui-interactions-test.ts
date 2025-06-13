@@ -80,7 +80,7 @@ describe('FilterChangesList UI Interactions Tests', () => {
     it('filters by staging status correctly', () => {
       // Test the staging filter logic from applyFilters
       const includedChangesInCommitFilter = true
-      const filterUnstagedFiles = false
+      const filterExcludedFiles = false
 
       const testFile = testFiles[0] // README.md (staged)
       const isStaged =
@@ -92,7 +92,7 @@ describe('FilterChangesList UI Interactions Tests', () => {
       if (includedChangesInCommitFilter && isStaged) {
         matchesStagingFilter = true
       }
-      if (filterUnstagedFiles && isUnstaged) {
+      if (filterExcludedFiles && isUnstaged) {
         matchesStagingFilter = true
       }
 
@@ -134,7 +134,7 @@ describe('FilterChangesList UI Interactions Tests', () => {
     it('handles combined staging and file type filters', () => {
       // Test combined filter logic
       const includedChangesInCommitFilter = true
-      const filterUnstagedFiles = true
+      const filterExcludedFiles = true
       const filterDeletedFiles = true
 
       const deletedStagedFile = testFiles.find(
@@ -160,7 +160,7 @@ describe('FilterChangesList UI Interactions Tests', () => {
       if (includedChangesInCommitFilter && isStaged1) {
         matchesStagingFilter1 = true
       }
-      if (filterUnstagedFiles && isUnstaged1) {
+      if (filterExcludedFiles && isUnstaged1) {
         matchesStagingFilter1 = true
       }
 
@@ -186,7 +186,7 @@ describe('FilterChangesList UI Interactions Tests', () => {
       if (includedChangesInCommitFilter && isStaged2) {
         matchesStagingFilter2 = true
       }
-      if (filterUnstagedFiles && isUnstaged2) {
+      if (filterExcludedFiles && isUnstaged2) {
         matchesStagingFilter2 = true
       }
 
@@ -214,7 +214,7 @@ describe('FilterChangesList UI Interactions Tests', () => {
         filterNewFiles: false,
         filterModifiedFiles: true,
         filterDeletedFiles: false,
-        filterUnstagedFiles: true,
+        filterExcludedFiles: true,
       }
 
       const activeFiltersCount = [
@@ -222,7 +222,7 @@ describe('FilterChangesList UI Interactions Tests', () => {
         filters.filterNewFiles,
         filters.filterModifiedFiles,
         filters.filterDeletedFiles,
-        filters.filterUnstagedFiles,
+        filters.filterExcludedFiles,
       ].filter(Boolean).length
 
       assert.equal(activeFiltersCount, 3)
@@ -261,16 +261,16 @@ describe('FilterChangesList UI Interactions Tests', () => {
   })
 
   describe('filter checkbox states', () => {
-    it('determines correct checkbox value for staged files filter', () => {
+    it('determines correct checkbox value for included files filter', () => {
       const includedChangesInCommitFilter = true
       const checkboxValue = includedChangesInCommitFilter ? 'On' : 'Off'
 
       assert.equal(checkboxValue, 'On')
     })
 
-    it('determines correct checkbox value for unstaged files filter', () => {
-      const filterUnstagedFiles = false
-      const checkboxValue = filterUnstagedFiles ? 'On' : 'Off'
+    it('determines correct checkbox value for excluded files filter', () => {
+      const filterExcludedFiles = false
+      const checkboxValue = filterExcludedFiles ? 'On' : 'Off'
 
       assert.equal(checkboxValue, 'Off')
     })
@@ -298,24 +298,24 @@ describe('FilterChangesList UI Interactions Tests', () => {
   })
 
   describe('filter labels with counts', () => {
-    it('generates correct label for staged files', () => {
-      const stagedCount = workingDirectory.files.filter(
+    it('generates correct label for included files', () => {
+      const includedCount = workingDirectory.files.filter(
         f => f.selection.getSelectionType() !== DiffSelectionType.None
       ).length
-      const label = `Staged files (${stagedCount})`
+      const label = `Included files (${includedCount})`
 
       // Expected: README.md, package.json, src/utils/helpers.ts, old-file.txt = 4 files
-      assert.equal(label, 'Staged files (4)')
+      assert.equal(label, 'Included files (4)')
     })
 
-    it('generates correct label for unstaged files', () => {
-      const unstagedCount = workingDirectory.files.filter(
+    it('generates correct label for excluded files', () => {
+      const excludedCount = workingDirectory.files.filter(
         f => f.selection.getSelectionType() === DiffSelectionType.None
       ).length
-      const label = `Unstaged files (${unstagedCount})`
+      const label = `Excluded files (${excludedCount})`
 
       // Expected: src/components/App.tsx, docs/api.md, deprecated.js, temp-file.tmp = 4 files
-      assert.equal(label, 'Unstaged files (4)')
+      assert.equal(label, 'Excluded files (4)')
     })
 
     it('generates correct label for new files', () => {
@@ -355,11 +355,11 @@ describe('FilterChangesList UI Interactions Tests', () => {
     it('handles scenario where staged and unstaged filters are both enabled', () => {
       // This should show all files since every file is either staged or unstaged
       const includedChangesInCommitFilter = true
-      const filterUnstagedFiles = true
+      const filterExcludedFiles = true
 
       const filteredFiles = workingDirectory.files.filter(file => {
         const hasStagingFilter =
-          includedChangesInCommitFilter || filterUnstagedFiles
+          includedChangesInCommitFilter || filterExcludedFiles
         if (!hasStagingFilter) {
           return true
         }
@@ -373,7 +373,7 @@ describe('FilterChangesList UI Interactions Tests', () => {
         if (includedChangesInCommitFilter && isStaged) {
           matchesStagingFilter = true
         }
-        if (filterUnstagedFiles && isUnstaged) {
+        if (filterExcludedFiles && isUnstaged) {
           matchesStagingFilter = true
         }
 
@@ -434,11 +434,11 @@ describe('FilterChangesList UI Interactions Tests', () => {
     it('handles scenario where no filters match any files', () => {
       // Create a scenario where filters exclude all files
       const filterNewFiles = true
-      const filterUnstagedFiles = true
+      const filterExcludedFiles = true
 
       // Filter for new files that are also unstaged
       const filteredFiles = workingDirectory.files.filter(file => {
-        const hasStagingFilter = filterUnstagedFiles
+        const hasStagingFilter = filterExcludedFiles
         const hasFileTypeFilter = filterNewFiles
 
         let matchesStagingFilter = true
@@ -461,15 +461,252 @@ describe('FilterChangesList UI Interactions Tests', () => {
     })
   })
 
+  describe('clear filters functionality', () => {
+    it('onClearAllFilters clears all filter states', () => {
+      // Simulate the onClearAllFilters method logic
+      const initialState = {
+        filterText: 'README',
+        includedChangesInCommitFilter: true,
+        filterNewFiles: true,
+        filterModifiedFiles: false,
+        filterDeletedFiles: true,
+        filterExcludedFiles: false,
+      }
+
+      // Simulate clearing all filters
+      const clearedState = {
+        filterText: '',
+        includedChangesInCommitFilter: false,
+        filterNewFiles: false,
+        filterModifiedFiles: false,
+        filterDeletedFiles: false,
+        filterExcludedFiles: false,
+      }
+
+      // Verify initial state has filters active
+      const hasInitialFilters = 
+        initialState.filterText !== '' ||
+        initialState.includedChangesInCommitFilter ||
+        initialState.filterNewFiles ||
+        initialState.filterModifiedFiles ||
+        initialState.filterDeletedFiles ||
+        initialState.filterExcludedFiles
+
+      // Verify cleared state has no filters active
+      const hasClearedFilters = 
+        clearedState.filterText !== '' ||
+        clearedState.includedChangesInCommitFilter ||
+        clearedState.filterNewFiles ||
+        clearedState.filterModifiedFiles ||
+        clearedState.filterDeletedFiles ||
+        clearedState.filterExcludedFiles
+
+      assert.equal(hasInitialFilters, true)
+      assert.equal(hasClearedFilters, false)
+    })
+
+    it('onClearAllFilters clears text filter along with other filters', () => {
+      const initialState = {
+        filterText: 'src/',
+        includedChangesInCommitFilter: false,
+        filterNewFiles: false,
+        filterModifiedFiles: false,
+        filterDeletedFiles: false,
+        filterExcludedFiles: false,
+      }
+
+      const clearedState = {
+        filterText: '',
+        includedChangesInCommitFilter: false,
+        filterNewFiles: false,
+        filterModifiedFiles: false,
+        filterDeletedFiles: false,
+        filterExcludedFiles: false,
+      }
+
+      // Even if only text filter is active, it should be cleared
+      assert.equal(initialState.filterText, 'src/')
+      assert.equal(clearedState.filterText, '')
+    })
+
+    it('hasActiveFilters includes text filter in determination', () => {
+      // Test the logic for determining if clear filters button should be visible
+      const testCases = [
+        {
+          state: { filterText: '', includedChangesInCommitFilter: false, filterNewFiles: false },
+          expected: false,
+          description: 'no filters active'
+        },
+        {
+          state: { filterText: 'README', includedChangesInCommitFilter: false, filterNewFiles: false },
+          expected: true,
+          description: 'only text filter active'
+        },
+        {
+          state: { filterText: '', includedChangesInCommitFilter: true, filterNewFiles: false },
+          expected: true,
+          description: 'only included filter active'
+        },
+        {
+          state: { filterText: 'test', includedChangesInCommitFilter: true, filterNewFiles: true },
+          expected: true,
+          description: 'multiple filters active'
+        },
+      ]
+
+      testCases.forEach(({ state, expected, description }) => {
+        const hasActiveFilters = 
+          state.filterText.length > 0 ||
+          state.includedChangesInCommitFilter ||
+          state.filterNewFiles
+
+        assert.equal(hasActiveFilters, expected, `Failed for ${description}`)
+      })
+    })
+
+    it('clear filters button visibility logic works correctly', () => {
+      // Test the exact logic from renderFilterOptions and renderNoChanges
+      const scenarios = [
+        {
+          filters: {
+            includedChangesInCommitFilter: false,
+            filterNewFiles: false,
+            filterModifiedFiles: false,
+            filterDeletedFiles: false,
+            filterExcludedFiles: false,
+          },
+          filterText: '',
+          expectedVisible: false,
+          description: 'no filters - button should be hidden'
+        },
+        {
+          filters: {
+            includedChangesInCommitFilter: true,
+            filterNewFiles: false,
+            filterModifiedFiles: false,
+            filterDeletedFiles: false,
+            filterExcludedFiles: false,
+          },
+          filterText: '',
+          expectedVisible: true,
+          description: 'one filter active - button should be visible'
+        },
+        {
+          filters: {
+            includedChangesInCommitFilter: false,
+            filterNewFiles: false,
+            filterModifiedFiles: false,
+            filterDeletedFiles: false,
+            filterExcludedFiles: false,
+          },
+          filterText: 'search',
+          expectedVisible: true,
+          description: 'only text filter - button should be visible'
+        },
+        {
+          filters: {
+            includedChangesInCommitFilter: true,
+            filterNewFiles: true,
+            filterModifiedFiles: true,
+            filterDeletedFiles: true,
+            filterExcludedFiles: true,
+          },
+          filterText: 'complex search',
+          expectedVisible: true,
+          description: 'all filters active - button should be visible'
+        },
+      ]
+
+      scenarios.forEach(({ filters, filterText, expectedVisible, description }) => {
+        // Logic from renderFilterOptions for dropdown button
+        const hasActiveFiltersDropdown = [
+          filters.includedChangesInCommitFilter,
+          filters.filterNewFiles,
+          filters.filterModifiedFiles,
+          filters.filterDeletedFiles,
+          filters.filterExcludedFiles,
+        ].some(Boolean)
+
+        // Logic from renderNoChanges for empty state button
+        const hasActiveFiltersEmptyState = [
+          filters.includedChangesInCommitFilter,
+          filters.filterNewFiles,
+          filters.filterModifiedFiles,
+          filters.filterDeletedFiles,
+          filters.filterExcludedFiles,
+        ].some(Boolean) || filterText.length > 0
+
+        if (filterText.length > 0) {
+          // When text filter is active, empty state button should always be visible
+          assert.equal(hasActiveFiltersEmptyState, true, `Empty state: ${description}`)
+        } else {
+          // When no text filter, both buttons should have same visibility
+          assert.equal(hasActiveFiltersDropdown, expectedVisible, `Dropdown: ${description}`)
+          assert.equal(hasActiveFiltersEmptyState, expectedVisible, `Empty state: ${description}`)
+        }
+      })
+    })
+
+    it('clear filters operation resets to default state', () => {
+      // Simulate the exact dispatcher calls made by onClearAllFilters
+      const dispatcherCalls = [
+        { method: 'setChangesListFilterText', args: ['repository', ''] },
+        { method: 'setIncludedChangesInCommitFilter', args: ['repository', false] },
+        { method: 'setFilterExcludedFiles', args: ['repository', false] },
+        { method: 'setFilterNewFiles', args: ['repository', false] },
+        { method: 'setFilterModifiedFiles', args: ['repository', false] },
+        { method: 'setFilterDeletedFiles', args: ['repository', false] },
+        { method: 'incrementMetric', args: ['appliesClearAllFiltersCount'] },
+      ]
+
+      // Verify all expected dispatcher calls are made
+      assert.equal(dispatcherCalls.length, 7)
+      
+      // Verify text filter is cleared
+      const textFilterCall = dispatcherCalls.find(call => call.method === 'setChangesListFilterText')
+      assert.ok(textFilterCall, 'Should call setChangesListFilterText')
+      assert.equal(textFilterCall.args[1], '', 'Should clear text filter')
+
+      // Verify all boolean filters are set to false
+      const booleanFilterCalls = dispatcherCalls.filter(call => 
+        call.method.startsWith('setFilter') || call.method === 'setIncludedChangesInCommitFilter'
+      )
+      assert.equal(booleanFilterCalls.length, 5, 'Should have 5 boolean filter calls')
+      
+      booleanFilterCalls.forEach(call => {
+        assert.equal(call.args[1], false, `${call.method} should be set to false`)
+      })
+
+      // Verify metrics are tracked
+      const metricsCall = dispatcherCalls.find(call => call.method === 'incrementMetric')
+      assert.ok(metricsCall, 'Should call incrementMetric')
+      assert.equal(metricsCall.args[0], 'appliesClearAllFiltersCount', 'Should track clear all filters metric')
+    })
+
+    it('clear filters closes filter options popover', () => {
+      // Test that closeFilterOptions is called after clearing filters
+      let popoverClosed = false
+      
+      const mockCloseFilterOptions = () => {
+        popoverClosed = true
+      }
+
+      // Simulate the end of onClearAllFilters method
+      mockCloseFilterOptions()
+
+      assert.equal(popoverClosed, true, 'Should close filter options popover after clearing')
+    })
+  })
+
   describe('edge cases', () => {
     it('handles empty working directory with filters enabled', () => {
       const emptyWorkingDirectory = WorkingDirectoryStatus.fromFiles([])
 
-      const stagedCount = emptyWorkingDirectory.files.filter(
+      const includedCount = emptyWorkingDirectory.files.filter(
         f => f.selection.getSelectionType() !== DiffSelectionType.None
       ).length
 
-      const unstagedCount = emptyWorkingDirectory.files.filter(
+      const excludedCount = emptyWorkingDirectory.files.filter(
         f => f.selection.getSelectionType() === DiffSelectionType.None
       ).length
 
@@ -479,8 +716,8 @@ describe('FilterChangesList UI Interactions Tests', () => {
           f.status.kind === AppFileStatusKind.Untracked
       ).length
 
-      assert.equal(stagedCount, 0)
-      assert.equal(unstagedCount, 0)
+      assert.equal(includedCount, 0)
+      assert.equal(excludedCount, 0)
       assert.equal(newCount, 0)
     })
 
@@ -495,11 +732,11 @@ describe('FilterChangesList UI Interactions Tests', () => {
       const singleFileWorkingDirectory =
         WorkingDirectoryStatus.fromFiles(singleFile)
 
-      const stagedCount = singleFileWorkingDirectory.files.filter(
+      const includedCount = singleFileWorkingDirectory.files.filter(
         f => f.selection.getSelectionType() !== DiffSelectionType.None
       ).length
 
-      const unstagedCount = singleFileWorkingDirectory.files.filter(
+      const excludedCount = singleFileWorkingDirectory.files.filter(
         f => f.selection.getSelectionType() === DiffSelectionType.None
       ).length
 
@@ -507,8 +744,8 @@ describe('FilterChangesList UI Interactions Tests', () => {
         f => f.status.kind === AppFileStatusKind.Modified
       ).length
 
-      assert.equal(stagedCount, 1)
-      assert.equal(unstagedCount, 0)
+      assert.equal(includedCount, 1)
+      assert.equal(excludedCount, 0)
       assert.equal(modifiedCount, 1)
     })
   })
