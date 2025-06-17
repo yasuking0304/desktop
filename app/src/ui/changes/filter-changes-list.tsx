@@ -1766,7 +1766,7 @@ export class FilterChangesList extends React.Component<
 
   private onFilterNewFiles = () => {
     if (!this.props.filterNewFiles) {
-      this.props.dispatcher.incrementMetric('appliesNewFilesFilterCount')
+      this.props.dispatcher.incrementMetric('appliesNewFilesChangesFilterCount')
     }
     this.props.dispatcher.setFilterNewFiles(
       this.props.repository,
@@ -1777,7 +1777,7 @@ export class FilterChangesList extends React.Component<
 
   private onFilterModifiedFiles = () => {
     if (!this.props.filterModifiedFiles) {
-      this.props.dispatcher.incrementMetric('appliesModifiedFilesFilterCount')
+      this.props.dispatcher.incrementMetric('appliesModifiedFilesChangesFilterCount')
     }
     this.props.dispatcher.setFilterModifiedFiles(
       this.props.repository,
@@ -1788,7 +1788,7 @@ export class FilterChangesList extends React.Component<
 
   private onFilterDeletedFiles = () => {
     if (!this.props.filterDeletedFiles) {
-      this.props.dispatcher.incrementMetric('appliesDeletedFilesFilterCount')
+      this.props.dispatcher.incrementMetric('appliesDeletedFilesChangesFilterCount')
     }
     this.props.dispatcher.setFilterDeletedFiles(
       this.props.repository,
