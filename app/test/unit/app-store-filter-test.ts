@@ -143,37 +143,49 @@ describe('App Store Filter Functionality', () => {
 
   describe('_setFilterNewFiles', () => {
     it('enables new files filter', () => {
-      repositoryStateCache.updateChangesState(repository, () => ({
-        filterNewFiles: true,
+      repositoryStateCache.updateChangesState(repository, state => ({
+        fileListFilter: {
+          ...state.fileListFilter,
+          filterNewFiles: true,
+        },
       }))
 
       const state = repositoryStateCache.get(repository)
-      assert.equal(state.changesState.filterNewFiles, true)
+      assert.equal(state.changesState.fileListFilter.filterNewFiles, true)
     })
 
     it('disables new files filter', () => {
-      repositoryStateCache.updateChangesState(repository, () => ({
-        filterNewFiles: false,
+      repositoryStateCache.updateChangesState(repository, state => ({
+        fileListFilter: {
+          ...state.fileListFilter,
+          filterNewFiles: false,
+        },
       }))
 
       const state = repositoryStateCache.get(repository)
-      assert.equal(state.changesState.filterNewFiles, false)
+      assert.equal(state.changesState.fileListFilter.filterNewFiles, false)
     })
 
     it('toggles new files filter state', () => {
-      repositoryStateCache.updateChangesState(repository, () => ({
-        filterNewFiles: true,
+      repositoryStateCache.updateChangesState(repository, state => ({
+        fileListFilter: {
+          ...state.fileListFilter,
+          filterNewFiles: true,
+        },
       }))
 
       let state = repositoryStateCache.get(repository)
-      assert.equal(state.changesState.filterNewFiles, true)
+      assert.equal(state.changesState.fileListFilter.filterNewFiles, true)
 
-      repositoryStateCache.updateChangesState(repository, () => ({
-        filterNewFiles: false,
+      repositoryStateCache.updateChangesState(repository, state => ({
+        fileListFilter: {
+          ...state.fileListFilter,
+          filterNewFiles: false,
+        },
       }))
 
       state = repositoryStateCache.get(repository)
-      assert.equal(state.changesState.filterNewFiles, false)
+      assert.equal(state.changesState.fileListFilter.filterNewFiles, false)
     })
   })
 

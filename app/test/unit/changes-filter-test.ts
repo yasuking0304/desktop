@@ -48,186 +48,276 @@ describe('Changes Filter Functionality', () => {
     workingDirectory = WorkingDirectoryStatus.fromFiles(testFiles)
   })
 
-  describe('filterNewFiles', () => {
+  describe('fileListFilter.filterNewFiles', () => {
     it('initializes with default value false', () => {
       const state = createState({})
-      assert.equal(state.filterNewFiles, false)
+      assert.equal(state.fileListFilter.filterNewFiles, false)
     })
 
     it('can be set to true', () => {
       const state = createState({
-        filterNewFiles: true,
+        fileListFilter: {
+          filterText: '',
+          includedChangesInCommitFilter: false,
+          filterNewFiles: true,
+          filterModifiedFiles: false,
+          filterDeletedFiles: false,
+          filterExcludedFiles: false,
+        },
       })
-      assert.equal(state.filterNewFiles, true)
+      assert.equal(state.fileListFilter.filterNewFiles, true)
     })
 
     it('can be set to false explicitly', () => {
       const state = createState({
-        filterNewFiles: false,
+        fileListFilter: {
+          filterText: '',
+          includedChangesInCommitFilter: false,
+          filterNewFiles: false,
+          filterModifiedFiles: false,
+          filterDeletedFiles: false,
+          filterExcludedFiles: false,
+        },
       })
-      assert.equal(state.filterNewFiles, false)
+      assert.equal(state.fileListFilter.filterNewFiles, false)
     })
   })
 
-  describe('filterModifiedFiles', () => {
+  describe('fileListFilter.filterModifiedFiles', () => {
     it('initializes with default value false', () => {
       const state = createState({})
-      assert.equal(state.filterModifiedFiles, false)
+      assert.equal(state.fileListFilter.filterModifiedFiles, false)
     })
 
     it('can be set to true', () => {
       const state = createState({
-        filterModifiedFiles: true,
+        fileListFilter: {
+          filterText: '',
+          includedChangesInCommitFilter: false,
+          filterNewFiles: false,
+          filterModifiedFiles: true,
+          filterDeletedFiles: false,
+          filterExcludedFiles: false,
+        },
       })
-      assert.equal(state.filterModifiedFiles, true)
+      assert.equal(state.fileListFilter.filterModifiedFiles, true)
     })
 
     it('can be set to false explicitly', () => {
       const state = createState({
-        filterModifiedFiles: false,
+        fileListFilter: {
+          filterText: '',
+          includedChangesInCommitFilter: false,
+          filterNewFiles: false,
+          filterModifiedFiles: false,
+          filterDeletedFiles: false,
+          filterExcludedFiles: false,
+        },
       })
-      assert.equal(state.filterModifiedFiles, false)
+      assert.equal(state.fileListFilter.filterModifiedFiles, false)
     })
   })
 
-  describe('filterDeletedFiles', () => {
+  describe('fileListFilter.filterDeletedFiles', () => {
     it('initializes with default value false', () => {
       const state = createState({})
-      assert.equal(state.filterDeletedFiles, false)
+      assert.equal(state.fileListFilter.filterDeletedFiles, false)
     })
 
     it('can be set to true', () => {
       const state = createState({
-        filterDeletedFiles: true,
+        fileListFilter: {
+          filterText: '',
+          includedChangesInCommitFilter: false,
+          filterNewFiles: false,
+          filterModifiedFiles: false,
+          filterDeletedFiles: true,
+          filterExcludedFiles: false,
+        },
       })
-      assert.equal(state.filterDeletedFiles, true)
+      assert.equal(state.fileListFilter.filterDeletedFiles, true)
     })
 
     it('can be set to false explicitly', () => {
       const state = createState({
-        filterDeletedFiles: false,
+        fileListFilter: {
+          filterText: '',
+          includedChangesInCommitFilter: false,
+          filterNewFiles: false,
+          filterModifiedFiles: false,
+          filterDeletedFiles: false,
+          filterExcludedFiles: false,
+        },
       })
-      assert.equal(state.filterDeletedFiles, false)
+      assert.equal(state.fileListFilter.filterDeletedFiles, false)
     })
   })
 
-  describe('filterExcludedFiles', () => {
+  describe('fileListFilter.filterExcludedFiles', () => {
     it('initializes with default value false', () => {
       const state = createState({})
-      assert.equal(state.filterExcludedFiles, false)
+      assert.equal(state.fileListFilter.filterExcludedFiles, false)
     })
 
     it('can be set to true', () => {
       const state = createState({
-        filterExcludedFiles: true,
+        fileListFilter: {
+          filterText: '',
+          includedChangesInCommitFilter: false,
+          filterNewFiles: false,
+          filterModifiedFiles: false,
+          filterDeletedFiles: false,
+          filterExcludedFiles: true,
+        },
       })
-      assert.equal(state.filterExcludedFiles, true)
+      assert.equal(state.fileListFilter.filterExcludedFiles, true)
     })
 
     it('can be set to false explicitly', () => {
       const state = createState({
-        filterExcludedFiles: false,
+        fileListFilter: {
+          filterText: '',
+          includedChangesInCommitFilter: false,
+          filterNewFiles: false,
+          filterModifiedFiles: false,
+          filterDeletedFiles: false,
+          filterExcludedFiles: false,
+        },
       })
-      assert.equal(state.filterExcludedFiles, false)
+      assert.equal(state.fileListFilter.filterExcludedFiles, false)
     })
   })
 
-  describe('includedChangesInCommitFilter', () => {
+  describe('fileListFilter.includedChangesInCommitFilter', () => {
     it('initializes with default value false', () => {
       const state = createState({})
-      assert.equal(state.includedChangesInCommitFilter, false)
+      assert.equal(state.fileListFilter.includedChangesInCommitFilter, false)
     })
 
     it('can be set to true', () => {
       const state = createState({
-        includedChangesInCommitFilter: true,
+        fileListFilter: {
+          filterText: '',
+          includedChangesInCommitFilter: true,
+          filterNewFiles: false,
+          filterModifiedFiles: false,
+          filterDeletedFiles: false,
+          filterExcludedFiles: false,
+        },
       })
-      assert.equal(state.includedChangesInCommitFilter, true)
+      assert.equal(state.fileListFilter.includedChangesInCommitFilter, true)
     })
 
     it('can be set to false explicitly', () => {
       const state = createState({
-        includedChangesInCommitFilter: false,
+        fileListFilter: {
+          filterText: '',
+          includedChangesInCommitFilter: false,
+          filterNewFiles: false,
+          filterModifiedFiles: false,
+          filterDeletedFiles: false,
+          filterExcludedFiles: false,
+        },
       })
-      assert.equal(state.includedChangesInCommitFilter, false)
+      assert.equal(state.fileListFilter.includedChangesInCommitFilter, false)
     })
   })
 
-  describe('filterText', () => {
+  describe('fileListFilter.filterText', () => {
     it('initializes with empty string', () => {
       const state = createState({})
-      assert.equal(state.filterText, '')
+      assert.equal(state.fileListFilter.filterText, '')
     })
 
     it('can be set to a filter string', () => {
       const filterText = 'README'
       const state = createState({
-        filterText,
+        fileListFilter: {
+          filterText,
+          includedChangesInCommitFilter: false,
+          filterNewFiles: false,
+          filterModifiedFiles: false,
+          filterDeletedFiles: false,
+          filterExcludedFiles: false,
+        },
       })
-      assert.equal(state.filterText, filterText)
+      assert.equal(state.fileListFilter.filterText, filterText)
     })
 
     it('can be set to empty string explicitly', () => {
       const state = createState({
-        filterText: '',
+        fileListFilter: {
+          filterText: '',
+          includedChangesInCommitFilter: false,
+          filterNewFiles: false,
+          filterModifiedFiles: false,
+          filterDeletedFiles: false,
+          filterExcludedFiles: false,
+        },
       })
-      assert.equal(state.filterText, '')
+      assert.equal(state.fileListFilter.filterText, '')
     })
   })
 
   describe('combined filter states', () => {
     it('can have multiple filters enabled simultaneously', () => {
       const state = createState({
-        filterNewFiles: true,
-        filterModifiedFiles: true,
-        filterDeletedFiles: true,
-        filterExcludedFiles: true,
-        includedChangesInCommitFilter: true,
-        filterText: 'test',
+        fileListFilter: {
+          filterText: 'test',
+          filterNewFiles: true,
+          filterModifiedFiles: true,
+          filterDeletedFiles: true,
+          filterExcludedFiles: true,
+          includedChangesInCommitFilter: true,
+        },
       })
 
-      assert.equal(state.filterNewFiles, true)
-      assert.equal(state.filterModifiedFiles, true)
-      assert.equal(state.filterDeletedFiles, true)
-      assert.equal(state.filterExcludedFiles, true)
-      assert.equal(state.includedChangesInCommitFilter, true)
-      assert.equal(state.filterText, 'test')
+      assert.equal(state.fileListFilter.filterNewFiles, true)
+      assert.equal(state.fileListFilter.filterModifiedFiles, true)
+      assert.equal(state.fileListFilter.filterDeletedFiles, true)
+      assert.equal(state.fileListFilter.filterExcludedFiles, true)
+      assert.equal(state.fileListFilter.includedChangesInCommitFilter, true)
+      assert.equal(state.fileListFilter.filterText, 'test')
     })
 
     it('can have mixed filter states', () => {
       const state = createState({
-        filterNewFiles: true,
-        filterModifiedFiles: false,
-        filterDeletedFiles: true,
-        filterExcludedFiles: false,
-        includedChangesInCommitFilter: true,
-        filterText: 'feature',
+        fileListFilter: {
+          filterText: 'feature',
+          filterNewFiles: true,
+          filterModifiedFiles: false,
+          filterDeletedFiles: true,
+          filterExcludedFiles: false,
+          includedChangesInCommitFilter: true,
+        },
       })
 
-      assert.equal(state.filterNewFiles, true)
-      assert.equal(state.filterModifiedFiles, false)
-      assert.equal(state.filterDeletedFiles, true)
-      assert.equal(state.filterExcludedFiles, false)
-      assert.equal(state.includedChangesInCommitFilter, true)
-      assert.equal(state.filterText, 'feature')
+      assert.equal(state.fileListFilter.filterNewFiles, true)
+      assert.equal(state.fileListFilter.filterModifiedFiles, false)
+      assert.equal(state.fileListFilter.filterDeletedFiles, true)
+      assert.equal(state.fileListFilter.filterExcludedFiles, false)
+      assert.equal(state.fileListFilter.includedChangesInCommitFilter, true)
+      assert.equal(state.fileListFilter.filterText, 'feature')
     })
 
     it('can disable all filters', () => {
       const state = createState({
-        filterNewFiles: false,
-        filterModifiedFiles: false,
-        filterDeletedFiles: false,
-        filterExcludedFiles: false,
-        includedChangesInCommitFilter: false,
-        filterText: '',
+        fileListFilter: {
+          filterText: '',
+          filterNewFiles: false,
+          filterModifiedFiles: false,
+          filterDeletedFiles: false,
+          filterExcludedFiles: false,
+          includedChangesInCommitFilter: false,
+        },
       })
 
-      assert.equal(state.filterNewFiles, false)
-      assert.equal(state.filterModifiedFiles, false)
-      assert.equal(state.filterDeletedFiles, false)
-      assert.equal(state.filterExcludedFiles, false)
-      assert.equal(state.includedChangesInCommitFilter, false)
-      assert.equal(state.filterText, '')
+      assert.equal(state.fileListFilter.filterNewFiles, false)
+      assert.equal(state.fileListFilter.filterModifiedFiles, false)
+      assert.equal(state.fileListFilter.filterDeletedFiles, false)
+      assert.equal(state.fileListFilter.filterExcludedFiles, false)
+      assert.equal(state.fileListFilter.includedChangesInCommitFilter, false)
+      assert.equal(state.fileListFilter.filterText, '')
     })
   })
 
