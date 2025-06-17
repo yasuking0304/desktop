@@ -484,7 +484,7 @@ describe('FilterChangesList UI Interactions Tests', () => {
       }
 
       // Verify initial state has filters active
-      const hasInitialFilters = 
+      const hasInitialFilters =
         initialState.filterText !== '' ||
         initialState.includedChangesInCommitFilter ||
         initialState.filterNewFiles ||
@@ -493,7 +493,7 @@ describe('FilterChangesList UI Interactions Tests', () => {
         initialState.filterExcludedFiles
 
       // Verify cleared state has no filters active
-      const hasClearedFilters = 
+      const hasClearedFilters =
         clearedState.filterText !== '' ||
         clearedState.includedChangesInCommitFilter ||
         clearedState.filterNewFiles ||
@@ -533,29 +533,45 @@ describe('FilterChangesList UI Interactions Tests', () => {
       // Test the logic for determining if clear filters button should be visible
       const testCases = [
         {
-          state: { filterText: '', includedChangesInCommitFilter: false, filterNewFiles: false },
+          state: {
+            filterText: '',
+            includedChangesInCommitFilter: false,
+            filterNewFiles: false,
+          },
           expected: false,
-          description: 'no filters active'
+          description: 'no filters active',
         },
         {
-          state: { filterText: 'README', includedChangesInCommitFilter: false, filterNewFiles: false },
+          state: {
+            filterText: 'README',
+            includedChangesInCommitFilter: false,
+            filterNewFiles: false,
+          },
           expected: true,
-          description: 'only text filter active'
+          description: 'only text filter active',
         },
         {
-          state: { filterText: '', includedChangesInCommitFilter: true, filterNewFiles: false },
+          state: {
+            filterText: '',
+            includedChangesInCommitFilter: true,
+            filterNewFiles: false,
+          },
           expected: true,
-          description: 'only included filter active'
+          description: 'only included filter active',
         },
         {
-          state: { filterText: 'test', includedChangesInCommitFilter: true, filterNewFiles: true },
+          state: {
+            filterText: 'test',
+            includedChangesInCommitFilter: true,
+            filterNewFiles: true,
+          },
           expected: true,
-          description: 'multiple filters active'
+          description: 'multiple filters active',
         },
       ]
 
       testCases.forEach(({ state, expected, description }) => {
-        const hasActiveFilters = 
+        const hasActiveFilters =
           state.filterText.length > 0 ||
           state.includedChangesInCommitFilter ||
           state.filterNewFiles
@@ -577,7 +593,7 @@ describe('FilterChangesList UI Interactions Tests', () => {
           },
           filterText: '',
           expectedVisible: false,
-          description: 'no filters - button should be hidden'
+          description: 'no filters - button should be hidden',
         },
         {
           filters: {
@@ -589,7 +605,7 @@ describe('FilterChangesList UI Interactions Tests', () => {
           },
           filterText: '',
           expectedVisible: true,
-          description: 'one filter active - button should be visible'
+          description: 'one filter active - button should be visible',
         },
         {
           filters: {
@@ -601,7 +617,7 @@ describe('FilterChangesList UI Interactions Tests', () => {
           },
           filterText: 'search',
           expectedVisible: true,
-          description: 'only text filter - button should be visible'
+          description: 'only text filter - button should be visible',
         },
         {
           filters: {
@@ -613,45 +629,63 @@ describe('FilterChangesList UI Interactions Tests', () => {
           },
           filterText: 'complex search',
           expectedVisible: true,
-          description: 'all filters active - button should be visible'
+          description: 'all filters active - button should be visible',
         },
       ]
 
-      scenarios.forEach(({ filters, filterText, expectedVisible, description }) => {
-        // Logic from renderFilterOptions for dropdown button
-        const hasActiveFiltersDropdown = [
-          filters.includedChangesInCommitFilter,
-          filters.filterNewFiles,
-          filters.filterModifiedFiles,
-          filters.filterDeletedFiles,
-          filters.filterExcludedFiles,
-        ].some(Boolean)
+      scenarios.forEach(
+        ({ filters, filterText, expectedVisible, description }) => {
+          // Logic from renderFilterOptions for dropdown button
+          const hasActiveFiltersDropdown = [
+            filters.includedChangesInCommitFilter,
+            filters.filterNewFiles,
+            filters.filterModifiedFiles,
+            filters.filterDeletedFiles,
+            filters.filterExcludedFiles,
+          ].some(Boolean)
 
-        // Logic from renderNoChanges for empty state button
-        const hasActiveFiltersEmptyState = [
-          filters.includedChangesInCommitFilter,
-          filters.filterNewFiles,
-          filters.filterModifiedFiles,
-          filters.filterDeletedFiles,
-          filters.filterExcludedFiles,
-        ].some(Boolean) || filterText.length > 0
+          // Logic from renderNoChanges for empty state button
+          const hasActiveFiltersEmptyState =
+            [
+              filters.includedChangesInCommitFilter,
+              filters.filterNewFiles,
+              filters.filterModifiedFiles,
+              filters.filterDeletedFiles,
+              filters.filterExcludedFiles,
+            ].some(Boolean) || filterText.length > 0
 
-        if (filterText.length > 0) {
-          // When text filter is active, empty state button should always be visible
-          assert.equal(hasActiveFiltersEmptyState, true, `Empty state: ${description}`)
-        } else {
-          // When no text filter, both buttons should have same visibility
-          assert.equal(hasActiveFiltersDropdown, expectedVisible, `Dropdown: ${description}`)
-          assert.equal(hasActiveFiltersEmptyState, expectedVisible, `Empty state: ${description}`)
+          if (filterText.length > 0) {
+            // When text filter is active, empty state button should always be visible
+            assert.equal(
+              hasActiveFiltersEmptyState,
+              true,
+              `Empty state: ${description}`
+            )
+          } else {
+            // When no text filter, both buttons should have same visibility
+            assert.equal(
+              hasActiveFiltersDropdown,
+              expectedVisible,
+              `Dropdown: ${description}`
+            )
+            assert.equal(
+              hasActiveFiltersEmptyState,
+              expectedVisible,
+              `Empty state: ${description}`
+            )
+          }
         }
-      })
+      )
     })
 
     it('clear filters operation resets to default state', () => {
       // Simulate the exact dispatcher calls made by onClearAllFilters
       const dispatcherCalls = [
         { method: 'setChangesListFilterText', args: ['repository', ''] },
-        { method: 'setIncludedChangesInCommitFilter', args: ['repository', false] },
+        {
+          method: 'setIncludedChangesInCommitFilter',
+          args: ['repository', false],
+        },
         { method: 'setFilterExcludedFiles', args: ['repository', false] },
         { method: 'setFilterNewFiles', args: ['repository', false] },
         { method: 'setFilterModifiedFiles', args: ['repository', false] },
@@ -661,32 +695,50 @@ describe('FilterChangesList UI Interactions Tests', () => {
 
       // Verify all expected dispatcher calls are made
       assert.equal(dispatcherCalls.length, 7)
-      
+
       // Verify text filter is cleared
-      const textFilterCall = dispatcherCalls.find(call => call.method === 'setChangesListFilterText')
+      const textFilterCall = dispatcherCalls.find(
+        call => call.method === 'setChangesListFilterText'
+      )
       assert.ok(textFilterCall, 'Should call setChangesListFilterText')
       assert.equal(textFilterCall.args[1], '', 'Should clear text filter')
 
       // Verify all boolean filters are set to false
-      const booleanFilterCalls = dispatcherCalls.filter(call => 
-        call.method.startsWith('setFilter') || call.method === 'setIncludedChangesInCommitFilter'
+      const booleanFilterCalls = dispatcherCalls.filter(
+        call =>
+          call.method.startsWith('setFilter') ||
+          call.method === 'setIncludedChangesInCommitFilter'
       )
-      assert.equal(booleanFilterCalls.length, 5, 'Should have 5 boolean filter calls')
-      
+      assert.equal(
+        booleanFilterCalls.length,
+        5,
+        'Should have 5 boolean filter calls'
+      )
+
       booleanFilterCalls.forEach(call => {
-        assert.equal(call.args[1], false, `${call.method} should be set to false`)
+        assert.equal(
+          call.args[1],
+          false,
+          `${call.method} should be set to false`
+        )
       })
 
       // Verify metrics are tracked
-      const metricsCall = dispatcherCalls.find(call => call.method === 'incrementMetric')
+      const metricsCall = dispatcherCalls.find(
+        call => call.method === 'incrementMetric'
+      )
       assert.ok(metricsCall, 'Should call incrementMetric')
-      assert.equal(metricsCall.args[0], 'appliesClearAllFiltersCount', 'Should track clear all filters metric')
+      assert.equal(
+        metricsCall.args[0],
+        'appliesClearAllFiltersCount',
+        'Should track clear all filters metric'
+      )
     })
 
     it('clear filters closes filter options popover', () => {
       // Test that closeFilterOptions is called after clearing filters
       let popoverClosed = false
-      
+
       const mockCloseFilterOptions = () => {
         popoverClosed = true
       }
@@ -694,7 +746,11 @@ describe('FilterChangesList UI Interactions Tests', () => {
       // Simulate the end of onClearAllFilters method
       mockCloseFilterOptions()
 
-      assert.equal(popoverClosed, true, 'Should close filter options popover after clearing')
+      assert.equal(
+        popoverClosed,
+        true,
+        'Should close filter options popover after clearing'
+      )
     })
   })
 

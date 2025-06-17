@@ -122,6 +122,7 @@ import {
   ChangesWorkingDirectorySelection,
   isRebaseConflictState,
   isCherryPickConflictState,
+  IFileListFilterState,
   isMergeConflictState,
   IMultiCommitOperationState,
   IConstrainedValue,
@@ -8313,58 +8314,54 @@ export class AppStore extends TypedBaseStore<IAppState> {
     }
   }
 
-  public _setChangesListFilterText(repository: Repository, filterText: string) {
-    this.repositoryStateCache.updateChangesState(repository, () => ({
-      filterText,
+  public _updateFileListFilter(
+    repository: Repository,
+    filterUpdate: Partial<IFileListFilterState>
+  ) {
+    this.repositoryStateCache.updateChangesState(repository, state => ({
+      fileListFilter: {
+        ...state.fileListFilter,
+        ...filterUpdate,
+      },
     }))
     this.emitUpdate()
+  }
+
+  // Legacy methods for backwards compatibility
+  public _setChangesListFilterText(repository: Repository, filterText: string) {
+    this._updateFileListFilter(repository, { filterText })
   }
 
   public _setIncludedChangesInCommitFilter(
     repository: Repository,
     includedChangesInCommitFilter: boolean
   ) {
-    this.repositoryStateCache.updateChangesState(repository, () => ({
-      includedChangesInCommitFilter,
-    }))
-    this.emitUpdate()
+    this._updateFileListFilter(repository, { includedChangesInCommitFilter })
   }
 
   public _setFilterNewFiles(repository: Repository, filterNewFiles: boolean) {
-    this.repositoryStateCache.updateChangesState(repository, () => ({
-      filterNewFiles,
-    }))
-    this.emitUpdate()
+    this._updateFileListFilter(repository, { filterNewFiles })
   }
 
   public _setFilterModifiedFiles(
     repository: Repository,
     filterModifiedFiles: boolean
   ) {
-    this.repositoryStateCache.updateChangesState(repository, () => ({
-      filterModifiedFiles,
-    }))
-    this.emitUpdate()
+    this._updateFileListFilter(repository, { filterModifiedFiles })
   }
 
   public _setFilterDeletedFiles(
     repository: Repository,
     filterDeletedFiles: boolean
   ) {
-    this.repositoryStateCache.updateChangesState(repository, () => ({
-      filterDeletedFiles,
-    }))
-    this.emitUpdate()
+    this._updateFileListFilter(repository, { filterDeletedFiles })
   }
 
   public _setFilterExcludedFiles(
     repository: Repository,
     filterExcludedFiles: boolean
   ) {
-    this.repositoryStateCache.updateChangesState(repository, () => ({
-      filterExcludedFiles,
-    }))
-    this.emitUpdate()
+    this._updateFileListFilter(repository, { filterExcludedFiles })
   }
 
   public async _createPushProtectionBypass(

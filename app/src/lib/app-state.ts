@@ -771,7 +771,15 @@ export interface IChangesState {
    */
   readonly currentRepoRulesInfo: RepoRulesInfo
 
-  /** The text entered into the compare branch filter text box */
+  /** The file list filter state containing all filter options */
+  readonly fileListFilter: IFileListFilterState
+}
+
+/**
+ * State interface for file list filtering options
+ */
+export interface IFileListFilterState {
+  /** The text entered into the filter text box */
   readonly filterText: string
 
   /** The state of the changes list filter of included changes. */
