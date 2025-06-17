@@ -1700,8 +1700,8 @@ export class FilterChangesList extends React.Component<
       return undefined
     }
 
-    const bulletedList = activeFilters.map(filter => `• ${filter}`).join('\n')
-    return `Sorry, I can't find any changed files matching the following filters:\n${bulletedList}`
+    const filterList = activeFilters.join(', ')
+    return `Sorry, I can't find any changed files matching the following filters: ${filterList}`
   }
 
   private renderNoChanges = () => {
