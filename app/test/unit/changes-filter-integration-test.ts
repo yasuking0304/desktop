@@ -75,13 +75,22 @@ describe('Changes Filter Integration Tests', () => {
     it('filters files by filename', () => {
       const state = createState({
         workingDirectory,
-        filterText: 'README',
+        fileListFilter: {
+          filterText: 'README',
+          includedChangesInCommitFilter: false,
+          filterNewFiles: false,
+          filterModifiedFiles: false,
+          filterDeletedFiles: false,
+          filterExcludedFiles: false,
+        },
       })
 
       // In a real implementation, this would be handled by the UI component
       // that applies the filter. Here we simulate the filtering logic.
       const filteredFiles = state.workingDirectory.files.filter(file =>
-        file.path.toLowerCase().includes(state.filterText.toLowerCase())
+        file.path
+          .toLowerCase()
+          .includes(state.fileListFilter.filterText.toLowerCase())
       )
 
       assert.equal(filteredFiles.length, 1)
@@ -91,11 +100,20 @@ describe('Changes Filter Integration Tests', () => {
     it('filters files by partial path', () => {
       const state = createState({
         workingDirectory,
-        filterText: 'src/',
+        fileListFilter: {
+          filterText: 'src/',
+          includedChangesInCommitFilter: false,
+          filterNewFiles: false,
+          filterModifiedFiles: false,
+          filterDeletedFiles: false,
+          filterExcludedFiles: false,
+        },
       })
 
       const filteredFiles = state.workingDirectory.files.filter(file =>
-        file.path.toLowerCase().includes(state.filterText.toLowerCase())
+        file.path
+          .toLowerCase()
+          .includes(state.fileListFilter.filterText.toLowerCase())
       )
 
       assert.equal(filteredFiles.length, 2)
@@ -106,11 +124,20 @@ describe('Changes Filter Integration Tests', () => {
     it('filters files by extension', () => {
       const state = createState({
         workingDirectory,
-        filterText: '.tsx',
+        fileListFilter: {
+          filterText: '.tsx',
+          includedChangesInCommitFilter: false,
+          filterNewFiles: false,
+          filterModifiedFiles: false,
+          filterDeletedFiles: false,
+          filterExcludedFiles: false,
+        },
       })
 
       const filteredFiles = state.workingDirectory.files.filter(file =>
-        file.path.toLowerCase().includes(state.filterText.toLowerCase())
+        file.path
+          .toLowerCase()
+          .includes(state.fileListFilter.filterText.toLowerCase())
       )
 
       assert.equal(filteredFiles.length, 2)
@@ -121,11 +148,20 @@ describe('Changes Filter Integration Tests', () => {
     it('handles case-insensitive filtering', () => {
       const state = createState({
         workingDirectory,
-        filterText: 'APP',
+        fileListFilter: {
+          filterText: 'APP',
+          includedChangesInCommitFilter: false,
+          filterNewFiles: false,
+          filterModifiedFiles: false,
+          filterDeletedFiles: false,
+          filterExcludedFiles: false,
+        },
       })
 
       const filteredFiles = state.workingDirectory.files.filter(file =>
-        file.path.toLowerCase().includes(state.filterText.toLowerCase())
+        file.path
+          .toLowerCase()
+          .includes(state.fileListFilter.filterText.toLowerCase())
       )
 
       assert.equal(filteredFiles.length, 1)
@@ -135,13 +171,22 @@ describe('Changes Filter Integration Tests', () => {
     it('returns all files when filter text is empty', () => {
       const state = createState({
         workingDirectory,
-        filterText: '',
+        fileListFilter: {
+          filterText: '',
+          includedChangesInCommitFilter: false,
+          filterNewFiles: false,
+          filterModifiedFiles: false,
+          filterDeletedFiles: false,
+          filterExcludedFiles: false,
+        },
       })
 
       const filteredFiles = state.workingDirectory.files.filter(
         file =>
-          state.filterText === '' ||
-          file.path.toLowerCase().includes(state.filterText.toLowerCase())
+          state.fileListFilter.filterText === '' ||
+          file.path
+            .toLowerCase()
+            .includes(state.fileListFilter.filterText.toLowerCase())
       )
 
       assert.equal(filteredFiles.length, testFiles.length)
@@ -152,12 +197,19 @@ describe('Changes Filter Integration Tests', () => {
     it('filters new files when filterNewFiles is enabled', () => {
       const state = createState({
         workingDirectory,
-        filterNewFiles: true,
+        fileListFilter: {
+          filterText: '',
+          includedChangesInCommitFilter: false,
+          filterNewFiles: true,
+          filterModifiedFiles: false,
+          filterDeletedFiles: false,
+          filterExcludedFiles: false,
+        },
       })
 
       // Simulate the filtering logic that would be applied in the UI
       const filteredFiles = state.workingDirectory.files.filter(file => {
-        if (!state.filterNewFiles) {
+        if (!state.fileListFilter.filterNewFiles) {
           return true
         }
         return (
@@ -182,11 +234,18 @@ describe('Changes Filter Integration Tests', () => {
     it('filters modified files when filterModifiedFiles is enabled', () => {
       const state = createState({
         workingDirectory,
-        filterModifiedFiles: true,
+        fileListFilter: {
+          filterText: '',
+          includedChangesInCommitFilter: false,
+          filterNewFiles: false,
+          filterModifiedFiles: true,
+          filterDeletedFiles: false,
+          filterExcludedFiles: false,
+        },
       })
 
       const filteredFiles = state.workingDirectory.files.filter(file => {
-        if (!state.filterModifiedFiles) {
+        if (!state.fileListFilter.filterModifiedFiles) {
           return true
         }
         return file.status.kind === AppFileStatusKind.Modified
@@ -204,11 +263,18 @@ describe('Changes Filter Integration Tests', () => {
     it('filters included files when includedChangesInCommitFilter is enabled', () => {
       const state = createState({
         workingDirectory,
-        includedChangesInCommitFilter: true,
+        fileListFilter: {
+          filterText: '',
+          includedChangesInCommitFilter: true,
+          filterNewFiles: false,
+          filterModifiedFiles: false,
+          filterDeletedFiles: false,
+          filterExcludedFiles: false,
+        },
       })
 
       const filteredFiles = state.workingDirectory.files.filter(file => {
-        if (!state.includedChangesInCommitFilter) {
+        if (!state.fileListFilter.includedChangesInCommitFilter) {
           return true
         }
         return file.selection.getSelectionType() !== DiffSelectionType.None
@@ -230,11 +296,18 @@ describe('Changes Filter Integration Tests', () => {
     it('filters deleted files when filterDeletedFiles is enabled', () => {
       const state = createState({
         workingDirectory,
-        filterDeletedFiles: true,
+        fileListFilter: {
+          filterText: '',
+          includedChangesInCommitFilter: false,
+          filterNewFiles: false,
+          filterModifiedFiles: false,
+          filterDeletedFiles: true,
+          filterExcludedFiles: false,
+        },
       })
 
       const filteredFiles = state.workingDirectory.files.filter(file => {
-        if (!state.filterDeletedFiles) {
+        if (!state.fileListFilter.filterDeletedFiles) {
           return true
         }
         return file.status.kind === AppFileStatusKind.Deleted
@@ -250,11 +323,18 @@ describe('Changes Filter Integration Tests', () => {
     it('filters unstaged files when filterExcludedFiles is enabled', () => {
       const state = createState({
         workingDirectory,
-        filterExcludedFiles: true,
+        fileListFilter: {
+          filterText: '',
+          includedChangesInCommitFilter: false,
+          filterNewFiles: false,
+          filterModifiedFiles: false,
+          filterDeletedFiles: false,
+          filterExcludedFiles: true,
+        },
       })
 
       const filteredFiles = state.workingDirectory.files.filter(file => {
-        if (!state.filterExcludedFiles) {
+        if (!state.fileListFilter.filterExcludedFiles) {
           return true
         }
         // Unstaged files are those not selected for commit (noneSelected)
@@ -277,17 +357,26 @@ describe('Changes Filter Integration Tests', () => {
     it('applies multiple filters simultaneously', () => {
       const state = createState({
         workingDirectory,
-        filterText: 'src/',
-        filterNewFiles: true,
+        fileListFilter: {
+          filterText: 'src/',
+          includedChangesInCommitFilter: false,
+          filterNewFiles: true,
+          filterModifiedFiles: false,
+          filterDeletedFiles: false,
+          filterExcludedFiles: false,
+        },
       })
 
       // Apply both text filter and new files filter
       const filteredFiles = state.workingDirectory.files.filter(file => {
         const matchesText =
-          state.filterText === '' ||
-          file.path.toLowerCase().includes(state.filterText.toLowerCase())
+          state.fileListFilter.filterText === '' ||
+          file.path
+            .toLowerCase()
+            .includes(state.fileListFilter.filterText.toLowerCase())
         const matchesType =
-          !state.filterNewFiles || file.status.kind === AppFileStatusKind.New
+          !state.fileListFilter.filterNewFiles ||
+          file.status.kind === AppFileStatusKind.New
 
         return matchesText && matchesType
       })
@@ -300,14 +389,20 @@ describe('Changes Filter Integration Tests', () => {
     it('applies multiple file type filters simultaneously', () => {
       const state = createState({
         workingDirectory,
-        filterDeletedFiles: true,
-        filterExcludedFiles: true,
+        fileListFilter: {
+          filterText: '',
+          includedChangesInCommitFilter: false,
+          filterNewFiles: false,
+          filterModifiedFiles: false,
+          filterDeletedFiles: true,
+          filterExcludedFiles: true,
+        },
       })
 
       // Apply both deleted and unstaged files filters
       const filteredFiles = state.workingDirectory.files.filter(file => {
         // Check staging filter (unstaged files)
-        const hasStagingFilter = state.filterExcludedFiles
+        const hasStagingFilter = state.fileListFilter.filterExcludedFiles
         let matchesStagingFilter = true
         if (hasStagingFilter) {
           matchesStagingFilter =
@@ -315,7 +410,7 @@ describe('Changes Filter Integration Tests', () => {
         }
 
         // Check file type filter (deleted files)
-        const hasFileTypeFilter = state.filterDeletedFiles
+        const hasFileTypeFilter = state.fileListFilter.filterDeletedFiles
         let matchesFileTypeFilter = true
         if (hasFileTypeFilter) {
           matchesFileTypeFilter = file.status.kind === AppFileStatusKind.Deleted
@@ -346,15 +441,22 @@ describe('Changes Filter Integration Tests', () => {
     it('applies both staged and unstaged filters simultaneously', () => {
       const state = createState({
         workingDirectory,
-        includedChangesInCommitFilter: true,
-        filterExcludedFiles: true,
+        fileListFilter: {
+          filterText: '',
+          includedChangesInCommitFilter: true,
+          filterNewFiles: false,
+          filterModifiedFiles: false,
+          filterDeletedFiles: false,
+          filterExcludedFiles: true,
+        },
       })
 
       // Apply both staged and unstaged files filters
       const filteredFiles = state.workingDirectory.files.filter(file => {
         // Check staging filter - should show both staged AND unstaged files
         const hasStagingFilter =
-          state.includedChangesInCommitFilter || state.filterExcludedFiles
+          state.fileListFilter.includedChangesInCommitFilter ||
+          state.fileListFilter.filterExcludedFiles
         let matchesStagingFilter = false
         if (hasStagingFilter) {
           const isStaged =
@@ -364,13 +466,13 @@ describe('Changes Filter Integration Tests', () => {
 
           // When both filters are active, show files that match either condition
           if (
-            state.includedChangesInCommitFilter &&
-            state.filterExcludedFiles
+            state.fileListFilter.includedChangesInCommitFilter &&
+            state.fileListFilter.filterExcludedFiles
           ) {
             matchesStagingFilter = isStaged || isUnstaged
-          } else if (state.includedChangesInCommitFilter) {
+          } else if (state.fileListFilter.includedChangesInCommitFilter) {
             matchesStagingFilter = isStaged
-          } else if (state.filterExcludedFiles) {
+          } else if (state.fileListFilter.filterExcludedFiles) {
             matchesStagingFilter = isUnstaged
           }
         }
@@ -385,16 +487,24 @@ describe('Changes Filter Integration Tests', () => {
     it('applies text filter with deleted files filter', () => {
       const state = createState({
         workingDirectory,
-        filterText: 'old',
-        filterDeletedFiles: true,
+        fileListFilter: {
+          filterText: 'old',
+          includedChangesInCommitFilter: false,
+          filterNewFiles: false,
+          filterModifiedFiles: false,
+          filterDeletedFiles: true,
+          filterExcludedFiles: false,
+        },
       })
 
       const filteredFiles = state.workingDirectory.files.filter(file => {
         const matchesText =
-          state.filterText === '' ||
-          file.path.toLowerCase().includes(state.filterText.toLowerCase())
+          state.fileListFilter.filterText === '' ||
+          file.path
+            .toLowerCase()
+            .includes(state.fileListFilter.filterText.toLowerCase())
         const matchesType =
-          !state.filterDeletedFiles ||
+          !state.fileListFilter.filterDeletedFiles ||
           file.status.kind === AppFileStatusKind.Deleted
 
         return matchesText && matchesType
@@ -408,16 +518,24 @@ describe('Changes Filter Integration Tests', () => {
     it('applies text filter with included changes filter', () => {
       const state = createState({
         workingDirectory,
-        filterText: '.md',
-        includedChangesInCommitFilter: true,
+        fileListFilter: {
+          filterText: '.md',
+          includedChangesInCommitFilter: true,
+          filterNewFiles: false,
+          filterModifiedFiles: false,
+          filterDeletedFiles: false,
+          filterExcludedFiles: false,
+        },
       })
 
       const filteredFiles = state.workingDirectory.files.filter(file => {
         const matchesText =
-          state.filterText === '' ||
-          file.path.toLowerCase().includes(state.filterText.toLowerCase())
+          state.fileListFilter.filterText === '' ||
+          file.path
+            .toLowerCase()
+            .includes(state.fileListFilter.filterText.toLowerCase())
         const matchesIncluded =
-          !state.includedChangesInCommitFilter ||
+          !state.fileListFilter.includedChangesInCommitFilter ||
           file.selection.getSelectionType() !== DiffSelectionType.None
 
         return matchesText && matchesIncluded
@@ -430,16 +548,25 @@ describe('Changes Filter Integration Tests', () => {
     it('returns empty result when filters exclude all files', () => {
       const state = createState({
         workingDirectory,
-        filterText: 'nonexistent',
-        filterNewFiles: true,
+        fileListFilter: {
+          filterText: 'nonexistent',
+          includedChangesInCommitFilter: false,
+          filterNewFiles: true,
+          filterModifiedFiles: false,
+          filterDeletedFiles: false,
+          filterExcludedFiles: false,
+        },
       })
 
       const filteredFiles = state.workingDirectory.files.filter(file => {
         const matchesText =
-          state.filterText === '' ||
-          file.path.toLowerCase().includes(state.filterText.toLowerCase())
+          state.fileListFilter.filterText === '' ||
+          file.path
+            .toLowerCase()
+            .includes(state.fileListFilter.filterText.toLowerCase())
         const matchesType =
-          !state.filterNewFiles || file.status.kind === AppFileStatusKind.New
+          !state.fileListFilter.filterNewFiles ||
+          file.status.kind === AppFileStatusKind.New
 
         return matchesText && matchesType
       })
@@ -450,31 +577,36 @@ describe('Changes Filter Integration Tests', () => {
     it('handles all filters disabled (shows all files)', () => {
       const state = createState({
         workingDirectory,
-        filterText: '',
-        filterNewFiles: false,
-        filterModifiedFiles: false,
-        filterDeletedFiles: false,
-        filterExcludedFiles: false,
-        includedChangesInCommitFilter: false,
+        fileListFilter: {
+          filterText: '',
+          filterNewFiles: false,
+          filterModifiedFiles: false,
+          filterDeletedFiles: false,
+          filterExcludedFiles: false,
+          includedChangesInCommitFilter: false,
+        },
       })
 
       const filteredFiles = state.workingDirectory.files.filter(file => {
         const matchesText =
-          state.filterText === '' ||
-          file.path.toLowerCase().includes(state.filterText.toLowerCase())
+          state.fileListFilter.filterText === '' ||
+          file.path
+            .toLowerCase()
+            .includes(state.fileListFilter.filterText.toLowerCase())
         const matchesNewFiles =
-          !state.filterNewFiles || file.status.kind === AppFileStatusKind.New
+          !state.fileListFilter.filterNewFiles ||
+          file.status.kind === AppFileStatusKind.New
         const matchesModifiedFiles =
-          !state.filterModifiedFiles ||
+          !state.fileListFilter.filterModifiedFiles ||
           file.status.kind === AppFileStatusKind.Modified
         const matchesDeletedFiles =
-          !state.filterDeletedFiles ||
+          !state.fileListFilter.filterDeletedFiles ||
           file.status.kind === AppFileStatusKind.Deleted
         const matchesUnstagedFiles =
-          !state.filterExcludedFiles ||
+          !state.fileListFilter.filterExcludedFiles ||
           file.selection.getSelectionType() === DiffSelectionType.None
         const matchesIncluded =
-          !state.includedChangesInCommitFilter ||
+          !state.fileListFilter.includedChangesInCommitFilter ||
           file.selection.getSelectionType() !== DiffSelectionType.None
 
         return (
@@ -496,16 +628,25 @@ describe('Changes Filter Integration Tests', () => {
       const emptyWorkingDirectory = WorkingDirectoryStatus.fromFiles([])
       const state = createState({
         workingDirectory: emptyWorkingDirectory,
-        filterText: 'anything',
-        filterNewFiles: true,
+        fileListFilter: {
+          filterText: 'anything',
+          includedChangesInCommitFilter: false,
+          filterNewFiles: true,
+          filterModifiedFiles: false,
+          filterDeletedFiles: false,
+          filterExcludedFiles: false,
+        },
       })
 
       const filteredFiles = state.workingDirectory.files.filter(file => {
         const matchesText =
-          state.filterText === '' ||
-          file.path.toLowerCase().includes(state.filterText.toLowerCase())
+          state.fileListFilter.filterText === '' ||
+          file.path
+            .toLowerCase()
+            .includes(state.fileListFilter.filterText.toLowerCase())
         const matchesType =
-          !state.filterNewFiles || file.status.kind === AppFileStatusKind.New
+          !state.fileListFilter.filterNewFiles ||
+          file.status.kind === AppFileStatusKind.New
 
         return matchesText && matchesType
       })
@@ -531,11 +672,20 @@ describe('Changes Filter Integration Tests', () => {
         WorkingDirectoryStatus.fromFiles(specialFiles)
       const state = createState({
         workingDirectory: specialWorkingDirectory,
-        filterText: '@#$',
+        fileListFilter: {
+          filterText: '@#$',
+          includedChangesInCommitFilter: false,
+          filterNewFiles: false,
+          filterModifiedFiles: false,
+          filterDeletedFiles: false,
+          filterExcludedFiles: false,
+        },
       })
 
       const filteredFiles = state.workingDirectory.files.filter(file =>
-        file.path.toLowerCase().includes(state.filterText.toLowerCase())
+        file.path
+          .toLowerCase()
+          .includes(state.fileListFilter.filterText.toLowerCase())
       )
 
       assert.equal(filteredFiles.length, 1)
@@ -560,11 +710,20 @@ describe('Changes Filter Integration Tests', () => {
         WorkingDirectoryStatus.fromFiles(unicodeFiles)
       const state = createState({
         workingDirectory: unicodeWorkingDirectory,
-        filterText: '测试',
+        fileListFilter: {
+          filterText: '测试',
+          includedChangesInCommitFilter: false,
+          filterNewFiles: false,
+          filterModifiedFiles: false,
+          filterDeletedFiles: false,
+          filterExcludedFiles: false,
+        },
       })
 
       const filteredFiles = state.workingDirectory.files.filter(file =>
-        file.path.toLowerCase().includes(state.filterText.toLowerCase())
+        file.path
+          .toLowerCase()
+          .includes(state.fileListFilter.filterText.toLowerCase())
       )
 
       assert.equal(filteredFiles.length, 1)
@@ -588,11 +747,18 @@ describe('Changes Filter Integration Tests', () => {
         WorkingDirectoryStatus.fromFiles(largeFileSet)
       const state = createState({
         workingDirectory: largeWorkingDirectory,
-        filterExcludedFiles: true,
+        fileListFilter: {
+          filterText: '',
+          includedChangesInCommitFilter: false,
+          filterNewFiles: false,
+          filterModifiedFiles: false,
+          filterDeletedFiles: false,
+          filterExcludedFiles: true,
+        },
       })
 
       const filteredFiles = state.workingDirectory.files.filter(file => {
-        if (!state.filterExcludedFiles) {
+        if (!state.fileListFilter.filterExcludedFiles) {
           return true
         }
         return file.selection.getSelectionType() === DiffSelectionType.None
@@ -608,15 +774,22 @@ describe('Changes Filter Integration Tests', () => {
       // This test verifies the fix for the bug where staged and unstaged filters couldn't work together
       const state = createState({
         workingDirectory,
-        includedChangesInCommitFilter: true,
-        filterExcludedFiles: true,
+        fileListFilter: {
+          filterText: '',
+          includedChangesInCommitFilter: true,
+          filterNewFiles: false,
+          filterModifiedFiles: false,
+          filterDeletedFiles: false,
+          filterExcludedFiles: true,
+        },
       })
 
       // Apply the fixed filtering logic that allows both filters to work together
       const filteredFiles = state.workingDirectory.files.filter(file => {
         // Check staging status filters (included in commit and unstaged files)
         const hasStagingFilter =
-          state.includedChangesInCommitFilter || state.filterExcludedFiles
+          state.fileListFilter.includedChangesInCommitFilter ||
+          state.fileListFilter.filterExcludedFiles
         if (hasStagingFilter) {
           let matchesStagingFilter = false
           const isStaged =
@@ -625,12 +798,12 @@ describe('Changes Filter Integration Tests', () => {
             file.selection.getSelectionType() === DiffSelectionType.None
 
           // Check if file matches included in commit filter (staged files)
-          if (state.includedChangesInCommitFilter && isStaged) {
+          if (state.fileListFilter.includedChangesInCommitFilter && isStaged) {
             matchesStagingFilter = true
           }
 
           // Check if file matches unstaged files filter
-          if (state.filterExcludedFiles && isUnstaged) {
+          if (state.fileListFilter.filterExcludedFiles && isUnstaged) {
             matchesStagingFilter = true
           }
 
@@ -650,19 +823,25 @@ describe('Changes Filter Integration Tests', () => {
       // Test the deleted files filter working with staging filters
       const state = createState({
         workingDirectory,
-        filterDeletedFiles: true,
-        filterExcludedFiles: true,
+        fileListFilter: {
+          filterText: '',
+          includedChangesInCommitFilter: false,
+          filterNewFiles: false,
+          filterModifiedFiles: false,
+          filterDeletedFiles: true,
+          filterExcludedFiles: true,
+        },
       })
 
       const filteredFiles = state.workingDirectory.files.filter(file => {
         // Check staging status filters
-        const hasStagingFilter = state.filterExcludedFiles
+        const hasStagingFilter = state.fileListFilter.filterExcludedFiles
         if (hasStagingFilter) {
           let matchesStagingFilter = false
           const isUnstaged =
             file.selection.getSelectionType() === DiffSelectionType.None
 
-          if (state.filterExcludedFiles && isUnstaged) {
+          if (state.fileListFilter.filterExcludedFiles && isUnstaged) {
             matchesStagingFilter = true
           }
 
@@ -672,11 +851,11 @@ describe('Changes Filter Integration Tests', () => {
         }
 
         // Apply file type filters
-        const hasFileTypeFilter = state.filterDeletedFiles
+        const hasFileTypeFilter = state.fileListFilter.filterDeletedFiles
         if (hasFileTypeFilter) {
           let matchesFileTypeFilter = false
 
-          if (state.filterDeletedFiles) {
+          if (state.fileListFilter.filterDeletedFiles) {
             const isDeletedFile = file.status.kind === AppFileStatusKind.Deleted
             if (isDeletedFile) {
               matchesFileTypeFilter = true
@@ -738,20 +917,26 @@ describe('Changes Filter Integration Tests', () => {
       // Test a complex filter combination that might have caused issues before the fix
       const state = createState({
         workingDirectory,
-        filterText: 'src/',
-        filterNewFiles: true,
-        filterExcludedFiles: true,
-        includedChangesInCommitFilter: false,
+        fileListFilter: {
+          filterText: 'src/',
+          filterNewFiles: true,
+          filterModifiedFiles: false,
+          filterDeletedFiles: false,
+          filterExcludedFiles: true,
+          includedChangesInCommitFilter: false,
+        },
       })
 
       const filteredFiles = state.workingDirectory.files.filter(file => {
         // Apply text filter
         const matchesText =
-          state.filterText === '' ||
-          file.path.toLowerCase().includes(state.filterText.toLowerCase())
+          state.fileListFilter.filterText === '' ||
+          file.path
+            .toLowerCase()
+            .includes(state.fileListFilter.filterText.toLowerCase())
 
         // Apply staging filter
-        const hasStagingFilter = state.filterExcludedFiles
+        const hasStagingFilter = state.fileListFilter.filterExcludedFiles
         let matchesStagingFilter = true
         if (hasStagingFilter) {
           const isUnstaged =
@@ -760,7 +945,7 @@ describe('Changes Filter Integration Tests', () => {
         }
 
         // Apply file type filter
-        const hasFileTypeFilter = state.filterNewFiles
+        const hasFileTypeFilter = state.fileListFilter.filterNewFiles
         let matchesFileTypeFilter = true
         if (hasFileTypeFilter) {
           matchesFileTypeFilter = file.status.kind === AppFileStatusKind.New
@@ -783,45 +968,53 @@ describe('Changes Filter Integration Tests', () => {
         {
           name: 'All filters enabled',
           filters: {
-            filterText: 'src/',
-            filterNewFiles: true,
-            filterModifiedFiles: true,
-            filterDeletedFiles: true,
-            filterExcludedFiles: true,
-            includedChangesInCommitFilter: true,
+            fileListFilter: {
+              filterText: 'src/',
+              filterNewFiles: true,
+              filterModifiedFiles: true,
+              filterDeletedFiles: true,
+              filterExcludedFiles: true,
+              includedChangesInCommitFilter: true,
+            },
           },
         },
         {
           name: 'Only staging filters',
           filters: {
-            filterText: '',
-            filterNewFiles: false,
-            filterModifiedFiles: false,
-            filterDeletedFiles: false,
-            filterExcludedFiles: true,
-            includedChangesInCommitFilter: true,
+            fileListFilter: {
+              filterText: '',
+              filterNewFiles: false,
+              filterModifiedFiles: false,
+              filterDeletedFiles: false,
+              filterExcludedFiles: true,
+              includedChangesInCommitFilter: true,
+            },
           },
         },
         {
           name: 'Only file type filters',
           filters: {
-            filterText: '',
-            filterNewFiles: true,
-            filterModifiedFiles: true,
-            filterDeletedFiles: true,
-            filterExcludedFiles: false,
-            includedChangesInCommitFilter: false,
+            fileListFilter: {
+              filterText: '',
+              filterNewFiles: true,
+              filterModifiedFiles: true,
+              filterDeletedFiles: true,
+              filterExcludedFiles: false,
+              includedChangesInCommitFilter: false,
+            },
           },
         },
         {
           name: 'Text and staging filters',
           filters: {
-            filterText: 'README',
-            filterNewFiles: false,
-            filterModifiedFiles: false,
-            filterDeletedFiles: false,
-            filterExcludedFiles: false,
-            includedChangesInCommitFilter: true,
+            fileListFilter: {
+              filterText: 'README',
+              filterNewFiles: false,
+              filterModifiedFiles: false,
+              filterDeletedFiles: false,
+              filterExcludedFiles: false,
+              includedChangesInCommitFilter: true,
+            },
           },
         },
       ]
@@ -836,12 +1029,15 @@ describe('Changes Filter Integration Tests', () => {
         const filteredFiles = state.workingDirectory.files.filter(file => {
           // Text filter
           const matchesText =
-            state.filterText === '' ||
-            file.path.toLowerCase().includes(state.filterText.toLowerCase())
+            state.fileListFilter.filterText === '' ||
+            file.path
+              .toLowerCase()
+              .includes(state.fileListFilter.filterText.toLowerCase())
 
           // Staging filters
           const hasStagingFilter =
-            state.includedChangesInCommitFilter || state.filterExcludedFiles
+            state.fileListFilter.includedChangesInCommitFilter ||
+            state.fileListFilter.filterExcludedFiles
           let matchesStagingFilter = true
           if (hasStagingFilter) {
             matchesStagingFilter = false
@@ -850,36 +1046,39 @@ describe('Changes Filter Integration Tests', () => {
             const isUnstaged =
               file.selection.getSelectionType() === DiffSelectionType.None
 
-            if (state.includedChangesInCommitFilter && isStaged) {
+            if (
+              state.fileListFilter.includedChangesInCommitFilter &&
+              isStaged
+            ) {
               matchesStagingFilter = true
             }
-            if (state.filterExcludedFiles && isUnstaged) {
+            if (state.fileListFilter.filterExcludedFiles && isUnstaged) {
               matchesStagingFilter = true
             }
           }
 
           // File type filters
           const hasFileTypeFilter =
-            state.filterNewFiles ||
-            state.filterModifiedFiles ||
-            state.filterDeletedFiles
+            state.fileListFilter.filterNewFiles ||
+            state.fileListFilter.filterModifiedFiles ||
+            state.fileListFilter.filterDeletedFiles
           let matchesFileTypeFilter = true
           if (hasFileTypeFilter) {
             matchesFileTypeFilter = false
             if (
-              state.filterNewFiles &&
+              state.fileListFilter.filterNewFiles &&
               file.status.kind === AppFileStatusKind.New
             ) {
               matchesFileTypeFilter = true
             }
             if (
-              state.filterModifiedFiles &&
+              state.fileListFilter.filterModifiedFiles &&
               file.status.kind === AppFileStatusKind.Modified
             ) {
               matchesFileTypeFilter = true
             }
             if (
-              state.filterDeletedFiles &&
+              state.fileListFilter.filterDeletedFiles &&
               file.status.kind === AppFileStatusKind.Deleted
             ) {
               matchesFileTypeFilter = true

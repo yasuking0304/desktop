@@ -281,6 +281,11 @@ export class FilterChangesList extends React.Component<
   IFilterChangesListState
 > {
   private filterTextBox: TextBox | undefined = undefined
+  private headerRef = createObservableRef<HTMLDivElement>()
+  private filterOptionsButtonRef: HTMLButtonElement | null = null
+  private includeAllCheckBoxRef = React.createRef<Checkbox>()
+  private filterListRef =
+    React.createRef<AugmentedSectionFilterList<IChangesListItem>>()
 
   private isCommittingFileHiddenByFilter = memoizeOne(
     (
@@ -414,12 +419,6 @@ export class FilterChangesList extends React.Component<
     }
   )
 
-  private headerRef = createObservableRef<HTMLDivElement>()
-  private filterOptionsButtonRef: HTMLButtonElement | null = null
-  private includeAllCheckBoxRef = React.createRef<Checkbox>()
-  private filterListRef =
-    React.createRef<AugmentedSectionFilterList<IChangesListItem>>()
-
   public constructor(props: IFilterChangesListProps) {
     super(props)
 
@@ -473,7 +472,7 @@ export class FilterChangesList extends React.Component<
     const include = event.currentTarget.checked
     const filteredItemPaths = Array.from(
       this.state.filteredItems,
-      ([k, v]) => v.change
+      ([, v]) => v.change
     )
     this.props.onIncludeChanged(filteredItemPaths, include)
   }
@@ -949,7 +948,7 @@ export class FilterChangesList extends React.Component<
     }
   }
 
-  private onScroll = (scrollTop: number, clientHeight: number) => {
+  private onScroll = (scrollTop: number, _clientHeight: number) => {
     this.props.onChangesListScrolled(scrollTop)
   }
 
@@ -1777,7 +1776,9 @@ export class FilterChangesList extends React.Component<
 
   private onFilterModifiedFiles = () => {
     if (!this.props.filterModifiedFiles) {
-      this.props.dispatcher.incrementMetric('appliesModifiedFilesChangesFilterCount')
+      this.props.dispatcher.incrementMetric(
+        'appliesModifiedFilesChangesFilterCount'
+      )
     }
     this.props.dispatcher.setFilterModifiedFiles(
       this.props.repository,
@@ -1788,7 +1789,9 @@ export class FilterChangesList extends React.Component<
 
   private onFilterDeletedFiles = () => {
     if (!this.props.filterDeletedFiles) {
-      this.props.dispatcher.incrementMetric('appliesDeletedFilesChangesFilterCount')
+      this.props.dispatcher.incrementMetric(
+        'appliesDeletedFilesChangesFilterCount'
+      )
     }
     this.props.dispatcher.setFilterDeletedFiles(
       this.props.repository,

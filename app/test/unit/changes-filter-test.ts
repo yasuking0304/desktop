@@ -326,8 +326,14 @@ describe('Changes Filter Functionality', () => {
       const firstFile = testFiles[0].id
       const state = createState({
         workingDirectory,
-        filterNewFiles: true,
-        filterText: 'README',
+        fileListFilter: {
+          filterText: 'README',
+          includedChangesInCommitFilter: false,
+          filterNewFiles: true,
+          filterModifiedFiles: false,
+          filterDeletedFiles: false,
+          filterExcludedFiles: false,
+        },
         selection: {
           kind: ChangesSelectionKind.WorkingDirectory,
           selectedFileIDs: [firstFile],
@@ -335,16 +341,22 @@ describe('Changes Filter Functionality', () => {
         },
       })
 
-      assert.equal(state.filterNewFiles, true)
-      assert.equal(state.filterText, 'README')
+      assert.equal(state.fileListFilter.filterNewFiles, true)
+      assert.equal(state.fileListFilter.filterText, 'README')
       assert.equal(state.selection.kind, ChangesSelectionKind.WorkingDirectory)
     })
 
     it('works with empty file selection', () => {
       const state = createState({
         workingDirectory,
-        filterNewFiles: true,
-        filterModifiedFiles: true,
+        fileListFilter: {
+          filterText: '',
+          includedChangesInCommitFilter: false,
+          filterNewFiles: true,
+          filterModifiedFiles: true,
+          filterDeletedFiles: false,
+          filterExcludedFiles: false,
+        },
         selection: {
           kind: ChangesSelectionKind.WorkingDirectory,
           selectedFileIDs: [],
@@ -352,8 +364,8 @@ describe('Changes Filter Functionality', () => {
         },
       })
 
-      assert.equal(state.filterNewFiles, true)
-      assert.equal(state.filterModifiedFiles, true)
+      assert.equal(state.fileListFilter.filterNewFiles, true)
+      assert.equal(state.fileListFilter.filterModifiedFiles, true)
       assert.equal(state.selection.kind, ChangesSelectionKind.WorkingDirectory)
     })
   })
@@ -363,51 +375,84 @@ describe('Changes Filter Functionality', () => {
       const emptyWorkingDirectory = WorkingDirectoryStatus.fromFiles([])
       const state = createState({
         workingDirectory: emptyWorkingDirectory,
-        filterNewFiles: true,
-        filterModifiedFiles: true,
-        includedChangesInCommitFilter: true,
+        fileListFilter: {
+          filterText: '',
+          includedChangesInCommitFilter: true,
+          filterNewFiles: true,
+          filterModifiedFiles: true,
+          filterDeletedFiles: false,
+          filterExcludedFiles: false,
+        },
       })
 
-      assert.equal(state.filterNewFiles, true)
-      assert.equal(state.filterModifiedFiles, true)
-      assert.equal(state.includedChangesInCommitFilter, true)
+      assert.equal(state.fileListFilter.filterNewFiles, true)
+      assert.equal(state.fileListFilter.filterModifiedFiles, true)
+      assert.equal(state.fileListFilter.includedChangesInCommitFilter, true)
       assert.equal(state.workingDirectory.files.length, 0)
     })
 
     it('handles special characters in filter text', () => {
       const specialFilterText = 'file-with-special_chars@#$.txt'
       const state = createState({
-        filterText: specialFilterText,
+        fileListFilter: {
+          filterText: specialFilterText,
+          includedChangesInCommitFilter: false,
+          filterNewFiles: false,
+          filterModifiedFiles: false,
+          filterDeletedFiles: false,
+          filterExcludedFiles: false,
+        },
       })
 
-      assert.equal(state.filterText, specialFilterText)
+      assert.equal(state.fileListFilter.filterText, specialFilterText)
     })
 
     it('handles very long filter text', () => {
       const longFilterText = 'a'.repeat(1000)
       const state = createState({
-        filterText: longFilterText,
+        fileListFilter: {
+          filterText: longFilterText,
+          includedChangesInCommitFilter: false,
+          filterNewFiles: false,
+          filterModifiedFiles: false,
+          filterDeletedFiles: false,
+          filterExcludedFiles: false,
+        },
       })
 
-      assert.equal(state.filterText, longFilterText)
+      assert.equal(state.fileListFilter.filterText, longFilterText)
     })
 
     it('handles unicode characters in filter text', () => {
       const unicodeFilterText = '测试文件.txt'
       const state = createState({
-        filterText: unicodeFilterText,
+        fileListFilter: {
+          filterText: unicodeFilterText,
+          includedChangesInCommitFilter: false,
+          filterNewFiles: false,
+          filterModifiedFiles: false,
+          filterDeletedFiles: false,
+          filterExcludedFiles: false,
+        },
       })
 
-      assert.equal(state.filterText, unicodeFilterText)
+      assert.equal(state.fileListFilter.filterText, unicodeFilterText)
     })
 
     it('handles filter text with whitespace', () => {
       const whitespaceFilterText = '  file with spaces  '
       const state = createState({
-        filterText: whitespaceFilterText,
+        fileListFilter: {
+          filterText: whitespaceFilterText,
+          includedChangesInCommitFilter: false,
+          filterNewFiles: false,
+          filterModifiedFiles: false,
+          filterDeletedFiles: false,
+          filterExcludedFiles: false,
+        },
       })
 
-      assert.equal(state.filterText, whitespaceFilterText)
+      assert.equal(state.fileListFilter.filterText, whitespaceFilterText)
     })
   })
 
@@ -439,13 +484,19 @@ describe('Changes Filter Functionality', () => {
       const basicWorkingDirectory = WorkingDirectoryStatus.fromFiles(basicFiles)
       const state = createState({
         workingDirectory: basicWorkingDirectory,
-        filterNewFiles: true,
-        filterModifiedFiles: true,
+        fileListFilter: {
+          filterText: '',
+          includedChangesInCommitFilter: false,
+          filterNewFiles: true,
+          filterModifiedFiles: true,
+          filterDeletedFiles: false,
+          filterExcludedFiles: false,
+        },
       })
 
       assert.equal(state.workingDirectory.files.length, 4)
-      assert.equal(state.filterNewFiles, true)
-      assert.equal(state.filterModifiedFiles, true)
+      assert.equal(state.fileListFilter.filterNewFiles, true)
+      assert.equal(state.fileListFilter.filterModifiedFiles, true)
     })
 
     it('works with complex file status kinds', () => {
@@ -474,36 +525,60 @@ describe('Changes Filter Functionality', () => {
         WorkingDirectoryStatus.fromFiles(complexFiles)
       const state = createState({
         workingDirectory: complexWorkingDirectory,
-        filterNewFiles: false,
-        filterModifiedFiles: true,
+        fileListFilter: {
+          filterText: '',
+          includedChangesInCommitFilter: false,
+          filterNewFiles: false,
+          filterModifiedFiles: true,
+          filterDeletedFiles: false,
+          filterExcludedFiles: false,
+        },
       })
 
       assert.equal(state.workingDirectory.files.length, 2)
-      assert.equal(state.filterNewFiles, false)
-      assert.equal(state.filterModifiedFiles, true)
+      assert.equal(state.fileListFilter.filterNewFiles, false)
+      assert.equal(state.fileListFilter.filterModifiedFiles, true)
     })
   })
 
   describe('filter state validation', () => {
     it('accepts boolean values for filter flags', () => {
       const state = createState({
-        filterNewFiles: true,
-        filterModifiedFiles: false,
-        includedChangesInCommitFilter: true,
+        fileListFilter: {
+          filterText: '',
+          includedChangesInCommitFilter: true,
+          filterNewFiles: true,
+          filterModifiedFiles: false,
+          filterDeletedFiles: false,
+          filterExcludedFiles: false,
+        },
       })
 
-      assert.strictEqual(typeof state.filterNewFiles, 'boolean')
-      assert.strictEqual(typeof state.filterModifiedFiles, 'boolean')
-      assert.strictEqual(typeof state.includedChangesInCommitFilter, 'boolean')
+      assert.strictEqual(typeof state.fileListFilter.filterNewFiles, 'boolean')
+      assert.strictEqual(
+        typeof state.fileListFilter.filterModifiedFiles,
+        'boolean'
+      )
+      assert.strictEqual(
+        typeof state.fileListFilter.includedChangesInCommitFilter,
+        'boolean'
+      )
     })
 
     it('accepts string values for filter text', () => {
       const state = createState({
-        filterText: 'test-filter',
+        fileListFilter: {
+          filterText: 'test-filter',
+          includedChangesInCommitFilter: false,
+          filterNewFiles: false,
+          filterModifiedFiles: false,
+          filterDeletedFiles: false,
+          filterExcludedFiles: false,
+        },
       })
 
-      assert.strictEqual(typeof state.filterText, 'string')
-      assert.equal(state.filterText, 'test-filter')
+      assert.strictEqual(typeof state.fileListFilter.filterText, 'string')
+      assert.equal(state.fileListFilter.filterText, 'test-filter')
     })
   })
 })
