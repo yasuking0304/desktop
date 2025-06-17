@@ -118,6 +118,11 @@ export function groupRepositories(
     }))
 }
 
+// Returns the display title for a repository, which is either the alias
+// (if available) or the name.
+const getDisplayTitle = (r: Repositoryish) =>
+  r instanceof Repository && r.alias != null ? r.alias : r.name
+
 const toSortedListItems = (
   group: RepositoryListGroup,
   repositories: ReadonlyArray<Repositoryish>,
@@ -128,10 +133,16 @@ const toSortedListItems = (
   const allNames = new Map<string, number>()
 
   for (const groupItem of groups.values()) {
-    for (const r of groupItem.repos) {
-      allNames.set(r.name, (allNames.get(r.name) ?? 0) + 1)
+    // All items in the recent group are by definition present in another
+    // group and therefore we don't want to count them.
+    if (groupItem.group.kind === 'recent') {
+      continue
+    }
+
+    for (const title of groupItem.repos.map(getDisplayTitle)) {
+      allNames.set(title, (allNames.get(title) ?? 0) + 1)
       if (groupItem.group === group) {
-        groupNames.set(r.name, (groupNames.get(r.name) ?? 0) + 1)
+        groupNames.set(title, (groupNames.get(title) ?? 0) + 1)
       }
     }
   }
@@ -139,10 +150,10 @@ const toSortedListItems = (
   return repositories
     .map(r => {
       const repoState = localRepositoryStateLookup.get(r.id)
+      const title = getDisplayTitle(r)
 
       return {
-        text:
-          r instanceof Repository ? [r.alias ?? r.name, nameOf(r)] : [r.name],
+        text: r instanceof Repository ? [title, nameOf(r)] : [title],
         id: r.id.toString(),
         repository: r,
         needsDisambiguation:
@@ -152,18 +163,13 @@ const toSortedListItems = (
           // already grouped by owner. If the repository is in the 'recent'
           // group and has a duplicate name in any group, we need to
           // disambiguate it.
-          ((groupNames.get(r.name) ?? 0) > 1 && group.kind === 'enterprise') ||
-          ((allNames.get(r.name) ?? 0) > 1 && group.kind === 'recent'),
+          ((groupNames.get(title) ?? 0) > 1 && group.kind === 'enterprise') ||
+          ((allNames.get(title) ?? 0) > 1 && group.kind === 'recent'),
         aheadBehind: repoState?.aheadBehind ?? null,
         changedFilesCount: repoState?.changedFilesCount ?? 0,
       }
     })
     .sort(({ repository: x }, { repository: y }) =>
-      caseInsensitiveCompare(repositorySortingKey(x), repositorySortingKey(y))
+      caseInsensitiveCompare(getDisplayTitle(x), getDisplayTitle(y))
     )
 }
-
-// Use either the configured alias or the repository name when sorting the
-// repository list.
-const repositorySortingKey = (r: Repositoryish) =>
-  r instanceof Repository && r.alias !== null ? r.alias : r.name
