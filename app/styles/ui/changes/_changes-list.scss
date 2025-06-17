@@ -292,11 +292,12 @@
   flex: 1;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   text-align: center;
   padding: var(--spacing);
   box-sizing: border-box;
-  overflow: hidden; // Prevent scrollbars
+  overflow-x: hidden;
+  overflow-y: auto;
   max-height: 100%; // Ensure it fits within container
   container-type: size; // Enable container queries
 
@@ -327,7 +328,6 @@
     white-space: pre-line;
     line-height: 1.4;
     flex-shrink: 1; // Allow subtitle to shrink if needed
-    overflow: hidden;
     max-height: 100px; // Prevent excessive height
   }
 
