@@ -118,9 +118,8 @@ export class TabBar extends React.Component<ITabBarProps, {}> {
     return children.map((child, index) => {
       const selected = index === selectedIndex
       return (
-        <>
+        <React.Fragment key={index}>
           <TabBarItem
-            key={index}
             selected={selected}
             index={index}
             onClick={this.onTabClicked}
@@ -135,7 +134,7 @@ export class TabBar extends React.Component<ITabBarProps, {}> {
           {type === TabBarType.Switch && index < children.length - 1 && (
             <div className="tab-bar-separator" />
           )}
-        </>
+        </React.Fragment>
       )
     })
   }
