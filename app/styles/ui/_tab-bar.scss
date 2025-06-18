@@ -91,7 +91,10 @@
   }
 
   &.switch &-item {
-    cursor: pointer;
+    &,
+    * {
+      cursor: pointer;
+    }
 
     // Give each item equal space
     flex: 1;
