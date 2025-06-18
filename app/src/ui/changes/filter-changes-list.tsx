@@ -1513,49 +1513,53 @@ export class FilterChangesList extends React.Component<
       return true
     }
 
-    // Use OR logic - file matches if it satisfies ANY of the active filters
+    // Use AND logic - file must satisfy ALL active filters
     const isStaged =
       item.change.selection.getSelectionType() !== DiffSelectionType.None
     const isUnstaged =
       item.change.selection.getSelectionType() === DiffSelectionType.None
 
     // Check staging status filters
-    if (this.props.includedChangesInCommitFilter && isStaged) {
-      return true
+    if (this.props.includedChangesInCommitFilter && !isStaged) {
+      return false
     }
 
-    if (this.props.filterExcludedFiles && isUnstaged) {
-      return true
+    if (this.props.filterExcludedFiles && !isUnstaged) {
+      return false
     }
 
-    // Check file type filters
-    if (this.props.filterNewFiles) {
+    // Check if file type filters are active
+    const hasFileTypeFilter =
+      this.props.filterNewFiles ||
+      this.props.filterModifiedFiles ||
+      this.props.filterDeletedFiles
+
+    if (hasFileTypeFilter) {
+      // Determine the file type
       const isNewFile =
         item.change.status.kind === AppFileStatusKind.New ||
         item.change.status.kind === AppFileStatusKind.Untracked
-      if (isNewFile) {
-        return true
-      }
-    }
-
-    if (this.props.filterModifiedFiles) {
       const isModifiedFile =
         item.change.status.kind === AppFileStatusKind.Modified
-      if (isModifiedFile) {
-        return true
-      }
-    }
-
-    if (this.props.filterDeletedFiles) {
       const isDeletedFile =
         item.change.status.kind === AppFileStatusKind.Deleted
-      if (isDeletedFile) {
-        return true
+
+      // Check each active file type filter
+      if (this.props.filterNewFiles && !isNewFile) {
+        return false
+      }
+
+      if (this.props.filterModifiedFiles && !isModifiedFile) {
+        return false
+      }
+
+      if (this.props.filterDeletedFiles && !isDeletedFile) {
+        return false
       }
     }
 
-    // File doesn't match any active filters
-    return false
+    // File matches all active filters
+    return true
   }
 
   private getListAriaLabel = () => {
