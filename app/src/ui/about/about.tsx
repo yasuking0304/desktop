@@ -147,7 +147,7 @@ export class About extends React.Component<IAboutProps> {
   private renderUpdateDetails() {
     if (__UNOFFICIAL__) {
       return (
-        <p className='unofficial-build'>
+        <p className="unofficial-build">
           {t(
             'about.unofficial-build',
             `Since this is an unofficial build, automatic updates will not occur`
@@ -159,10 +159,7 @@ export class About extends React.Component<IAboutProps> {
                 'https://github.com/yasuking0304/desktop/wiki'
               )}
             >
-              {t(
-                'about.click-here-for-details',
-                'Click here for details'
-              )}
+              {t('about.click-here-for-details', 'Click here for details')}
             </LinkButton>
           </Row>
         </p>

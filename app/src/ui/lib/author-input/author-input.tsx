@@ -181,12 +181,12 @@ export class AuthorInput extends React.Component<
         </div>
         <div className="shadow-input" ref={this.shadowInputRef} />
         <label id="author-input-label" className="label" htmlFor="author-input">
-          {t("author-input.co-authors", "Co-Authors")}{' '}
+          {t('author-input.co-authors', 'Co-Authors')}{' '}
         </label>
         {this.renderAuthors()}
         <AutocompletingInput<UserHit>
           elementId="author-input"
-          placeholder={t("author-input.username", "@username")}
+          placeholder={t('author-input.username', '@username')}
           alwaysAutocomplete={true}
           autocompletionProviders={[this.props.autoCompleteProvider]}
           autocompleteItemFilter={this.getAutocompleteItemFilter(

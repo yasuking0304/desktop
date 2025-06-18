@@ -196,6 +196,17 @@
     "the-secret-is-real": "The secret is real, I understand the risk, and I will need to revoke it. This will open a security alert and notify admins of this repository.",
     "why-are-you-bypassing": "Why are you bypassing this {{0}}?"
   },
+  "bytes": {
+    "b": "B",
+    "eib": "EiB",
+    "gib": "GB",
+    "kib": "KB",
+    "mib": "MB",
+    "pib": "PiB",
+    "tib": "TiB",
+    "yib": "YiB",
+    "zib": "ZiB"
+  },
   "changes-list": {
     "confirm-discard-all-changes": "放棄所有更改…",
     "confirm-discard-all-changes-darwin": "放棄所有更改…",
@@ -451,6 +462,7 @@
   },
   "common": {
     "about-github-desktop": "關於 GitHub Desktop",
+    "added": "已新增",
     "branch-name": "分支名稱(不允許使用漢字)",
     "branch-name-darwin": "分支名稱(不允許使用漢字)",
     "cancel": "取消",
@@ -465,6 +477,7 @@
     "create": "建立",
     "cut": "剪下",
     "delete": "刪除",
+    "deleted": "已刪除",
     "description": "描述",
     "discard": "丟棄",
     "do-not-show-message-again": "不再顯示此訊息",
@@ -1259,6 +1272,12 @@
     "locate": "明確地點…",
     "remove": "刪除"
   },
+  "modified-image-diff": {
+    "difference": "強調差異",
+    "onion-skin": "半透明比較",
+    "swipe": "滑動",
+    "two-up": "兩種觀點"
+  },
   "move-to-applications-folder": {
     "detected-that-youre-not-running": "我們偵測到您沒有從電腦的'應用程式'資料夾執行 GitHub Desktop。這可能會導致應用程式出現問題, 包括影響您的登入。",
     "do-you-want-to-move": "您是否要立即將 GitHub Desktop 移至'應用程式'資料夾? 這也會重新啟動應用程式。",
@@ -1886,6 +1905,13 @@
     "your-default-editor-is-1": "您的預設編輯器是 ",
     "your-default-editor-is-2": "。您可以在 ",
     "your-default-editor-is-3": " 中更改您喜歡的編輯器。"
+  },
+  "two-up": {
+    "diff": "尺寸差異",
+    "h": "高矮",
+    "no-size-difference": "沒有大小差異",
+    "size": "大小",
+    "w": "幅"
   },
   "unmerged-file": {
     "no-conflicts-remaining": "不存在衝突"
