@@ -11,7 +11,7 @@
     padding: var(--spacing) 0;
   }
 
-  &:not(.vertical) {
+  &.switch:not(.vertical) {
     gap: var(--spacing);
   }
 
