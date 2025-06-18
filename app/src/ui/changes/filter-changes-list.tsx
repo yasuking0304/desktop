@@ -1180,11 +1180,18 @@ export class FilterChangesList extends React.Component<
     this.props.dispatcher.incrementMetric(
       'adjustedFiltersForHiddenChangesCount'
     )
+    // Clear all filters first to ensure all files are visible
+    this.clearFilter()
+    this.props.dispatcher.setFilterExcludedFiles(this.props.repository, false)
+    this.props.dispatcher.setFilterNewFiles(this.props.repository, false)
+    this.props.dispatcher.setFilterModifiedFiles(this.props.repository, false)
+    this.props.dispatcher.setFilterDeletedFiles(this.props.repository, false)
+    
+    // Then apply only the "Included in commit" filter to show only files being committed
     this.props.dispatcher.setIncludedChangesInCommitFilter(
       this.props.repository,
       true
     )
-    this.clearFilter()
   }
 
   private onTextBoxRef = (component: TextBox | null) => {
