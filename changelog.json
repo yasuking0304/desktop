@@ -1,5 +1,8 @@
 {
   "releases": {
+    "3.5.0": [
+      "[New] Copilot now helps you craft AI-generated commit messages with just one click - #17439"
+    ],
     "3.4.22-beta1": [
       "[Fixed] Disambiguate repositories in the recent group - #20582",
       "[Fixed] Screen readers announces text fields in the welcome flow as editable - #20634",
