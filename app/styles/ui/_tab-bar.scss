@@ -11,7 +11,7 @@
     padding: var(--spacing) 0;
   }
 
-  &:not(.vertical) {
+  &.switch:not(.vertical) {
     gap: var(--spacing);
   }
 
@@ -91,7 +91,10 @@
   }
 
   &.switch &-item {
-    cursor: pointer;
+    &,
+    * {
+      cursor: pointer;
+    }
 
     // Give each item equal space
     flex: 1;
