@@ -196,6 +196,17 @@
     "the-secret-is-real": "The secret is real, I understand the risk, and I will need to revoke it. This will open a security alert and notify admins of this repository.",
     "why-are-you-bypassing": "Why are you bypassing this {{0}}?"
   },
+  "bytes": {
+    "b": "B",
+    "eib": "EiB",
+    "gib": "GiB",
+    "kib": "KiB",
+    "mib": "MiB",
+    "pib": "PiB",
+    "tib": "TiB",
+    "yib": "YiB",
+    "zib": "ZiB"
+  },
   "changes-list": {
     "confirm-discard-all-changes": "Discard all changes…",
     "confirm-discard-all-changes-darwin": "Discard All Changes…",
@@ -451,6 +462,7 @@
   },
   "common": {
     "about-github-desktop": "About GitHub Desktop",
+    "added": "Added",
     "branch-name": "Branch name",
     "branch-name-darwin": "Branch Name",
     "cancel": "Cancel",
@@ -465,6 +477,7 @@
     "create": "Create",
     "cut": "Cut",
     "delete": "Delete",
+    "deleted": "Deleted",
     "description": "Description",
     "discard": "Discard",
     "do-not-show-message-again": "Do not show this message again",
@@ -1259,6 +1272,12 @@
     "locate": "Locate…",
     "remove": "Remove"
   },
+  "modified-image-diff": {
+    "difference": "Difference",
+    "onion-skin": "Onion Skin",
+    "swipe": "Swipe",
+    "two-up": "2-up"
+  },
   "move-to-applications-folder": {
     "detected-that-youre-not-running": "We've detected that you're not running GitHub Desktop from the Applications folder of your machine. This could cause problems with the app, including impacting your ability to sign in.",
     "do-you-want-to-move": "Do you want to move GitHub Desktop to the Applications folder now? This will also restart the app.",
@@ -1886,6 +1905,13 @@
     "your-default-editor-is-1": "Your default editor is ",
     "your-default-editor-is-2": ". You can change your preferred editor in ",
     "your-default-editor-is-3": " "
+  },
+  "two-up": {
+    "diff": "Diff:",
+    "h": "H:",
+    "no-size-difference": "No size difference",
+    "size": "Size:",
+    "w": "W:"
   },
   "unmerged-file": {
     "no-conflicts-remaining": "No conflicts remaining"

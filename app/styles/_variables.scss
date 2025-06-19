@@ -59,6 +59,10 @@ $overlay-background-color: rgba(0, 0, 0, 0.4);
   --commit-message-icon-warning-color: var(--input-icon-warning-color);
   --commit-message-icon-error-color: var(--input-icon-error-color);
 
+  // Colors used for the separator of commit message action buttons
+  // (e.g. co-authors and Copilot buttons)
+  --commit-message-action-button-separator-color: var(--box-border-color);
+
   // Typography
   //
   // Font, line-height, and color for body text, headings, and more.

@@ -41,14 +41,14 @@ export class WhitespaceHintPopover extends React.Component<IWhitespaceHintPopove
             'Selecting lines is disabled when hiding whitespace changes.'
           )}
         </p>
-        <footer>
+        <div className="popover-footer">
           <OkCancelButtonGroup
             okButtonText={t('common.yes', 'Yes')}
             cancelButtonText={t('common.no', 'No')}
             onCancelButtonClick={this.onDismissed}
             onOkButtonClick={this.onShowWhitespaceChanges}
           />
-        </footer>
+        </div>
       </Popover>
     )
   }

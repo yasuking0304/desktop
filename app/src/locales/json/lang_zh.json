@@ -196,6 +196,17 @@
     "the-secret-is-real": "The secret is real, I understand the risk, and I will need to revoke it. This will open a security alert and notify admins of this repository.",
     "why-are-you-bypassing": "Why are you bypassing this {{0}}?"
   },
+  "bytes": {
+    "b": "B",
+    "eib": "EiB",
+    "gib": "GB",
+    "kib": "KB",
+    "mib": "MB",
+    "pib": "PiB",
+    "tib": "TiB",
+    "yib": "YiB",
+    "zib": "ZiB"
+  },
   "changes-list": {
     "confirm-discard-all-changes": "放弃所有更改…",
     "confirm-discard-all-changes-darwin": "放弃所有更改…",
@@ -451,6 +462,7 @@
   },
   "common": {
     "about-github-desktop": "关于 GitHub Desktop",
+    "added": "已添加",
     "branch-name": "分支名称(不允许使用汉字)",
     "branch-name-darwin": "分支名称(不允许使用汉字)",
     "cancel": "取消",
@@ -465,6 +477,7 @@
     "create": "创建",
     "cut": "剪切",
     "delete": "删除",
+    "deleted": "已删除",
     "description": "描述",
     "discard": "丢弃",
     "do-not-show-message-again": "不再显示此消息",
@@ -1259,6 +1272,12 @@
     "locate": "明确地点…",
     "remove": "删除"
   },
+  "modified-image-diff": {
+    "difference": "强调差异",
+    "onion-skin": "半透明比较",
+    "swipe": "滑动",
+    "two-up": "两种观点"
+  },
   "move-to-applications-folder": {
     "detected-that-youre-not-running": "我们检测到您没有从计算机的'应用程序'文件夹运行 GitHub Desktop。这可能会导致应用程序出现问题, 包括影响您的登录。",
     "do-you-want-to-move": "您是否要立即将 GitHub Desktop 移至'应用程序'文件夹? 这也会重新启动应用程序。",
@@ -1886,6 +1905,13 @@
     "your-default-editor-is-1": "您的默认编辑器是 ",
     "your-default-editor-is-2": "。您可以在 ",
     "your-default-editor-is-3": " 中更改您喜欢的编辑器。"
+  },
+  "two-up": {
+    "diff": "尺寸差异",
+    "h": "高",
+    "no-size-difference": "没有大小差异",
+    "size": "大小",
+    "w": "幅"
   },
   "unmerged-file": {
     "no-conflicts-remaining": "不存在冲突"

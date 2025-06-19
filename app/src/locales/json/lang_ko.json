@@ -196,6 +196,17 @@
     "the-secret-is-real": "The secret is real, I understand the risk, and I will need to revoke it. This will open a security alert and notify admins of this repository.",
     "why-are-you-bypassing": "Why are you bypassing this {{0}}?"
   },
+  "bytes": {
+    "b": "B",
+    "eib": "EiB",
+    "gib": "GiB",
+    "kib": "KiB",
+    "mib": "MiB",
+    "pib": "PiB",
+    "tib": "TiB",
+    "yib": "YiB",
+    "zib": "ZiB"
+  },
   "changes-list": {
     "confirm-discard-all-changes": "모든 변경사항 삭제...",
     "confirm-discard-all-changes-darwin": "모든 변경사항 삭제...",
@@ -451,6 +462,7 @@
   },
   "common": {
     "about-github-desktop": "GitHub Desktop 정보",
+    "added": "추가됨",
     "branch-name": "브랜치 이름(한글이나 한자는 사용할 수 없음)",
     "branch-name-darwin": "브랜치 이름(한글이나 한자는 사용할 수 없음)",
     "cancel": "취소",
@@ -465,6 +477,7 @@
     "create": "만들기",
     "cut": "자르기",
     "delete": "삭제",
+    "deleted": "삭제됨",
     "description": "개요",
     "discard": "파기",
     "do-not-show-message-again": "이 메시지를 향후 표시하지 않음",
@@ -1259,6 +1272,12 @@
     "locate": "위치 지정…",
     "remove": "삭제"
   },
+  "modified-image-diff": {
+    "difference": "차이 강조",
+    "onion-skin": "반투명 비교",
+    "swipe": "스와이프",
+    "two-up": "두 개 보기"
+  },
   "move-to-applications-folder": {
     "detected-that-youre-not-running": "응용 프로그램 폴더에서 GitHub Desktop을 실행하지 않는 것으로 감지되었습니다. 이로 인해 로그인 기능에 영향을 미치는 등 앱에 문제가 발생할 수 있습니다.",
     "do-you-want-to-move": "GitHub 데스크톱을 애플리케이션 폴더로 이동하시겠습니까? 이렇게 하면 애플리케이션도 다시 시작됩니다.",
@@ -1886,6 +1905,13 @@
     "your-default-editor-is-1": "기본 편집기는 ",
     "your-default-editor-is-2": "입니다.",
     "your-default-editor-is-3": "에서 원하는 편집기로 변경할 수 있습니다."
+  },
+  "two-up": {
+    "diff": "사이즈 차이",
+    "h": "높이",
+    "no-size-difference": "크기 차이가 없습니다",
+    "size": "크기",
+    "w": "폭"
   },
   "unmerged-file": {
     "no-conflicts-remaining": "경쟁이 남아 있지 않습니다"

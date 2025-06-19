@@ -57,6 +57,10 @@ body.theme-dark {
   --commit-message-icon-warning-color: var(--input-icon-warning-color);
   --commit-message-icon-error-color: var(--input-icon-error-color);
 
+  // Colors used for the separator of commit message action buttons
+  // (e.g. co-authors and Copilot buttons)
+  --commit-message-action-button-separator-color: var(--box-border-contrast-color);
+
   /**
    * Background color for custom scroll bars.
    * The color is applied to the thumb part of the scrollbar.
