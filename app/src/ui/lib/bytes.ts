@@ -1,3 +1,4 @@
+import '../../locales/i18n'
 import { round } from './round'
 import { t } from 'i18next'
 
