@@ -246,7 +246,7 @@ const DefaultDailyMeasures: IDailyMeasures = {
   appliesNewFilesChangesFilterCount: 0,
   appliesModifiedFilesChangesFilterCount: 0,
   appliesDeletedFilesChangesFilterCount: 0,
-  appliesClearAllFiltersCount: 0,
+  appliesClearAllChangesListFilterCount: 0,
   adjustedFiltersForHiddenChangesCount: 0,
   enterpriseAccountCount: 0,
   generateCommitMessageButtonClickCount: 0,

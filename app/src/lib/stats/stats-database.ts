@@ -620,7 +620,7 @@ export interface IDailyMeasures {
   appliesDeletedFilesChangesFilterCount: 0
 
   /** The number of times the user clears all filters */
-  appliesClearAllFiltersCount: 0
+  appliesClearAllChangesListFilterCount: 0
 
   /** The number of times the user adjust the filter from warnings about hidden changes */
   adjustedFiltersForHiddenChangesCount: 0

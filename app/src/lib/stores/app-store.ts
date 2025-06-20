@@ -8327,7 +8327,6 @@ export class AppStore extends TypedBaseStore<IAppState> {
     this.emitUpdate()
   }
 
-  // Legacy methods for backwards compatibility
   public _setChangesListFilterText(repository: Repository, filterText: string) {
     this._updateFileListFilter(repository, { filterText })
   }

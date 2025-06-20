@@ -459,20 +459,7 @@ export class ChangesSidebar extends React.Component<IChangesSidebarProps, {}> {
           currentRepoRulesInfo={currentRepoRulesInfo}
           aheadBehind={this.props.aheadBehind}
           accounts={this.props.accounts}
-          filterText={this.props.changes.fileListFilter.filterText}
-          includedChangesInCommitFilter={
-            this.props.changes.fileListFilter.includedChangesInCommitFilter
-          }
-          filterNewFiles={this.props.changes.fileListFilter.filterNewFiles}
-          filterModifiedFiles={
-            this.props.changes.fileListFilter.filterModifiedFiles
-          }
-          filterDeletedFiles={
-            this.props.changes.fileListFilter.filterDeletedFiles
-          }
-          filterExcludedFiles={
-            this.props.changes.fileListFilter.filterExcludedFiles
-          }
+          fileListFilter={this.props.changes.fileListFilter}
           showChangesFilter={this.props.showChangesFilter}
         />
         {this.renderUndoCommit(rebaseConflictState)}
