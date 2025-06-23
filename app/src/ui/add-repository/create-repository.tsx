@@ -30,7 +30,7 @@ import { enableReadmeOverwriteWarning } from '../../lib/feature-flag'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
 import { showOpenDialog } from '../main-process-proxy'
 import { pathExists } from '../lib/path-exists'
-import { mkdir, rm } from 'fs/promises'
+import { mkdir } from 'fs/promises'
 import { directoryExists } from '../../lib/directory-exists'
 import { FoldoutType } from '../../lib/app-state'
 import { join } from 'path'
@@ -404,9 +404,6 @@ export class CreateRepository extends React.Component<
       )
       this.props.dispatcher.postError(e)
     }
-
-    const gitPath = join(repository.path, '.git')
-    await rm(gitPath, { recursive: true, force: true })
 
     const status = await getStatus(repository, true, true).catch(e => {
       log.error(`createRepository: unable to get status for ${fullPath}`, e)
