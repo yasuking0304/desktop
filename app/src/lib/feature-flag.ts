@@ -108,7 +108,6 @@ export const enableMultipleEnterpriseAccounts = () => true
 
 export const enableCommitMessageGeneration = (account: Account) => {
   return (
-    enableBetaFeatures() &&
     (account.features ?? []).includes(
       'desktop_copilot_generate_commit_message'
     ) &&
