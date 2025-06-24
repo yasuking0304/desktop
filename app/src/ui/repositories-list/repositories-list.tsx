@@ -250,10 +250,9 @@ export class RepositoriesList extends React.Component<
 
     // So there's two types of selection at play here. There's the repository
     // selection for the whole app and then there's the keyboard selection in
-    // the list itself.
-    // If the user has selected a repository using keyboard navigation we want
-    // to honor that selection. If the user hasn't selected a repository yet
-    // we'll select the repository currently selected in the app.
+    // the list itself. If the user has selected a repository using keyboard
+    // navigation we want to honor that selection. If the user hasn't selected a
+    // repository yet we'll select the repository currently selected in the app.
     const selectedItem =
       this.state.selectedItem ??
       this.getSelectedListItem(groups, this.props.selectedRepository)
