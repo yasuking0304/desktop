@@ -434,7 +434,7 @@ export async function getFilesDiffText(
     '--patch-with-raw',
     '--no-color',
     '--staged',
-    ...(commitish ? [`${commitish}^`] : []),
+    ...(commitish ? [commitish] : []),
   ]
   const successExitCodes = new Set([0])
 
