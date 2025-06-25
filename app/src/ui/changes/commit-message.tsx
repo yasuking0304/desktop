@@ -878,14 +878,25 @@ export class CommitMessage extends React.Component<
   }
 
   private renderCopilotButton() {
+    const {
+      accounts,
+      onGenerateCommitMessage,
+      filesSelected,
+      isCommitting,
+      isGeneratingCommitMessage,
+      commitToAmend,
+      shouldShowGenerateCommitMessageCallOut,
+    } = this.props
+
     if (
-      !this.props.accounts.some(enableCommitMessageGeneration) ||
-      this.props.onGenerateCommitMessage === undefined
+      !accounts.some(enableCommitMessageGeneration) ||
+      onGenerateCommitMessage === undefined
     ) {
       return null
     }
 
-    const noFilesSelected = this.props.filesSelected.length === 0
+    const noFilesSelected = filesSelected.length === 0
+    const noChangesAvailable = !commitToAmend && noFilesSelected
 
     const addCommitMessage = noFilesSelected
       ? t(
@@ -908,13 +919,13 @@ export class CommitMessage extends React.Component<
           ariaLabel={ariaLabel}
           tooltip={ariaLabel}
           disabled={
-            this.props.isCommitting === true ||
-            this.props.isGeneratingCommitMessage ||
-            noFilesSelected
+            isCommitting === true ||
+            isGeneratingCommitMessage ||
+            noChangesAvailable
           }
         >
           <Octicon symbol={octicons.copilot} />
-          {this.props.shouldShowGenerateCommitMessageCallOut && (
+          {shouldShowGenerateCommitMessageCallOut && (
             <span className="call-to-action-bubble">
               {t('common.new', 'New')}
             </span>

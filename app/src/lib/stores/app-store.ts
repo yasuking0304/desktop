@@ -5515,7 +5515,16 @@ export class AppStore extends TypedBaseStore<IAppState> {
     }
 
     return this.withIsGeneratingCommitMessage(repository, async () => {
-      const diff = await getFilesDiffText(repository, filesSelected)
+      // If user is amending a commit, we want to use the commit
+      // to amend as the base for the commit message generation.
+      const commitToAmend =
+        this.repositoryStateCache.get(repository)?.commitToAmend?.sha ??
+        undefined
+      const diff = await getFilesDiffText(
+        repository,
+        filesSelected,
+        commitToAmend ? `${commitToAmend}^` : undefined
+      )
       if (!diff) {
         return false
       }
