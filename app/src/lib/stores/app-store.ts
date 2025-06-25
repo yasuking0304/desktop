@@ -8333,34 +8333,34 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
   public _setIncludedChangesInCommitFilter(
     repository: Repository,
-    includedChangesInCommitFilter: boolean
+    isIncludedInCommit: boolean
   ) {
-    this._updateFileListFilter(repository, { includedChangesInCommitFilter })
+    this._updateFileListFilter(repository, { isIncludedInCommit })
   }
 
-  public _setFilterNewFiles(repository: Repository, filterNewFiles: boolean) {
-    this._updateFileListFilter(repository, { filterNewFiles })
+  public _setFilterNewFiles(repository: Repository, isNewFile: boolean) {
+    this._updateFileListFilter(repository, { isNewFile })
   }
 
   public _setFilterModifiedFiles(
     repository: Repository,
-    filterModifiedFiles: boolean
+    isModifiedFile: boolean
   ) {
-    this._updateFileListFilter(repository, { filterModifiedFiles })
+    this._updateFileListFilter(repository, { isModifiedFile })
   }
 
   public _setFilterDeletedFiles(
     repository: Repository,
-    filterDeletedFiles: boolean
+    isDeletedFile: boolean
   ) {
-    this._updateFileListFilter(repository, { filterDeletedFiles })
+    this._updateFileListFilter(repository, { isDeletedFile })
   }
 
   public _setFilterExcludedFiles(
     repository: Repository,
-    filterExcludedFiles: boolean
+    isExcludedFromCommit: boolean
   ) {
-    this._updateFileListFilter(repository, { filterExcludedFiles })
+    this._updateFileListFilter(repository, { isExcludedFromCommit })
   }
 
   public async _createPushProtectionBypass(

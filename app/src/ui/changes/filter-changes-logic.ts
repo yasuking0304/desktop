@@ -1,24 +1,8 @@
-import {
-  WorkingDirectoryFileChange,
-  AppFileStatusKind,
-} from '../../models/status'
+import { AppFileStatusKind } from '../../models/status'
 import { DiffSelectionType } from '../../models/diff'
-
-/** Interface for filter state */
-export interface IFileFilterState {
-  readonly isIncludedInCommit: boolean
-  readonly isExcludedFromCommit: boolean
-  readonly isNewFile: boolean
-  readonly isModifiedFile: boolean
-  readonly isDeletedFile: boolean
-}
-
-/** Interface for a changes list item */
-export interface IChangesListItem {
-  readonly id: string
-  readonly text: ReadonlyArray<string>
-  readonly change: WorkingDirectoryFileChange
-}
+import { IFileListFilterState } from '../../lib/app-state'
+import { IChangesListItem } from './filter-changes-list'
+import memoizeOne from 'memoize-one'
 
 /**
  * Apply filter options to determine if a file should be shown
@@ -27,7 +11,7 @@ export interface IChangesListItem {
  */
 export function applyFilterOptions(
   item: IChangesListItem,
-  filters: IFileFilterState
+  filters: IFileListFilterState
 ): boolean {
   // If no filters are active, show all files
   if (countActiveFilterOptions(filters) === 0) {
@@ -71,40 +55,43 @@ export function applyFilterOptions(
 
 /**
  * Check if any files being committed are hidden by the current filter
+ * Memoized to avoid recalculating for the same inputs
  */
-export function isCommittingFileHiddenByFilter(
-  filterText: string,
-  fileIdsIncludedInCommit: ReadonlyArray<string>,
-  filteredItems: Map<string, IChangesListItem>,
-  fileCount: number,
-  filters: IFileFilterState
-): boolean {
-  // All possible files are present in the list (no active filters or all files match active filters)
-  if (
-    !hasActiveFilters(filterText, filters) ||
-    filteredItems.size === fileCount
-  ) {
-    return false
-  }
+export const isCommittingFileHiddenByFilter = memoizeOne(
+  (
+    filterText: string,
+    fileIdsIncludedInCommit: ReadonlyArray<string>,
+    filteredItems: Map<string, IChangesListItem>,
+    fileCount: number,
+    filters: IFileListFilterState
+  ): boolean => {
+    // All possible files are present in the list (no active filters or all files match active filters)
+    if (
+      !hasActiveFilters(filterText, filters) ||
+      filteredItems.size === fileCount
+    ) {
+      return false
+    }
 
-  // If filtered rows count is 1 and included for commit rows count is 2,
-  // there is no way the included for commit rows are visible regardless of
-  // what they are.
-  if (fileIdsIncludedInCommit.length > filteredItems.size) {
-    return true
-  }
+    // If filtered rows count is 1 and included for commit rows count is 2,
+    // there is no way the included for commit rows are visible regardless of
+    // what they are.
+    if (fileIdsIncludedInCommit.length > filteredItems.size) {
+      return true
+    }
 
-  // If we can find a file id included in the commit that does not exist in
-  // the filtered items, then we are committing a hidden file.
-  return fileIdsIncludedInCommit.some(fId => !filteredItems.get(fId))
-}
+    // If we can find a file id included in the commit that does not exist in
+    // the filtered items, then we are committing a hidden file.
+    return fileIdsIncludedInCommit.some(fId => !filteredItems.get(fId))
+  }
+)
 
 /**
  * Generate message when no files match filters
  */
 export function getNoResultsMessage(
   filterText: string,
-  filters: IFileFilterState
+  filters: IFileListFilterState
 ): string | undefined {
   if (!hasActiveFilters(filterText, filters)) {
     return undefined
@@ -158,7 +145,9 @@ export function getNoResultsMessage(
  * Count the number of active filter options
  * Note: This does not include the filterText filter
  */
-export function countActiveFilterOptions(filters: IFileFilterState): number {
+export function countActiveFilterOptions(
+  filters: IFileListFilterState
+): number {
   return [
     filters.isIncludedInCommit,
     filters.isNewFile,
@@ -173,7 +162,25 @@ export function countActiveFilterOptions(filters: IFileFilterState): number {
  */
 export function hasActiveFilters(
   filterText: string,
-  filters: IFileFilterState
+  filters: IFileListFilterState
 ): boolean {
   return filterText !== '' || countActiveFilterOptions(filters) > 0
 }
+
+/**
+ * Apply filters to a changes list item
+ * Memoized to avoid recalculating for the same inputs
+ */
+export const applyFilters = memoizeOne(
+  (
+    item: IChangesListItem,
+    showChangesFilter: boolean,
+    filters: IFileListFilterState
+  ) => {
+    if (!showChangesFilter) {
+      return true
+    }
+
+    return applyFilterOptions(item, filters)
+  }
+)

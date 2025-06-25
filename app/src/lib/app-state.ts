@@ -782,20 +782,20 @@ export interface IFileListFilterState {
   /** The text entered into the filter text box */
   readonly filterText: string
 
-  /** The state of the changes list filter of included changes. */
-  readonly includedChangesInCommitFilter: boolean
-
-  /** Whether to filter and show only new files */
-  readonly filterNewFiles: boolean
-
-  /** Whether to filter and show only modified files */
-  readonly filterModifiedFiles: boolean
-
-  /** Whether to filter and show only deleted files */
-  readonly filterDeletedFiles: boolean
+  /** Whether to filter and show only included in commit files */
+  readonly isIncludedInCommit: boolean
 
   /** Whether to filter and show only excluded from commit files */
-  readonly filterExcludedFiles: boolean
+  readonly isExcludedFromCommit: boolean
+
+  /** Whether to filter and show only new files */
+  readonly isNewFile: boolean
+
+  /** Whether to filter and show only modified files */
+  readonly isModifiedFile: boolean
+
+  /** Whether to filter and show only deleted files */
+  readonly isDeletedFile: boolean
 }
 
 /**

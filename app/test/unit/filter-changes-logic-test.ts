@@ -8,9 +8,9 @@ import {
   applyFilterOptions,
   isCommittingFileHiddenByFilter,
   getNoResultsMessage,
-  IFileFilterState,
-  IChangesListItem,
 } from '../../src/ui/changes/filter-changes-logic'
+import { IFileListFilterState } from '../../src/lib/app-state'
+import { IChangesListItem } from '../../src/ui/changes/filter-changes-list'
 
 // Helper function to create a test file
 function createTestFile(
@@ -52,7 +52,8 @@ describe('filter-changes-logic', () => {
   describe('applyFilterOptions', () => {
     describe('when no filters are active', () => {
       it('should show all files', () => {
-        const filters: IFileFilterState = {
+        const filters: IFileListFilterState = {
+          filterText: '',
           isIncludedInCommit: false,
           isExcludedFromCommit: false,
           isNewFile: false,
@@ -84,7 +85,8 @@ describe('filter-changes-logic', () => {
 
     describe('when using AND logic', () => {
       it('should show files matching ALL active filters', () => {
-        const filters: IFileFilterState = {
+        const filters: IFileListFilterState = {
+          filterText: '',
           isIncludedInCommit: true,
           isExcludedFromCommit: false,
           isNewFile: true,
@@ -117,7 +119,8 @@ describe('filter-changes-logic', () => {
       })
 
       it('should handle conflicting filters correctly', () => {
-        const filters: IFileFilterState = {
+        const filters: IFileListFilterState = {
+          filterText: '',
           isIncludedInCommit: true,
           isExcludedFromCommit: true, // Both can't be true at same time
           isNewFile: false,
@@ -145,7 +148,8 @@ describe('filter-changes-logic', () => {
 
   describe('isCommittingFileHiddenByFilter', () => {
     it('should return false when no filters are active', () => {
-      const filters: IFileFilterState = {
+      const filters: IFileListFilterState = {
+        filterText: '',
         isIncludedInCommit: false,
         isExcludedFromCommit: false,
         isNewFile: false,
@@ -166,7 +170,8 @@ describe('filter-changes-logic', () => {
     })
 
     it('should return true when committing files not in filtered list', () => {
-      const filters: IFileFilterState = {
+      const filters: IFileListFilterState = {
+        filterText: '',
         isIncludedInCommit: true,
         isExcludedFromCommit: false,
         isNewFile: false,
@@ -189,7 +194,8 @@ describe('filter-changes-logic', () => {
 
   describe('getNoResultsMessage', () => {
     it('should return undefined when no filters active', () => {
-      const filters: IFileFilterState = {
+      const filters: IFileListFilterState = {
+        filterText: '',
         isIncludedInCommit: false,
         isExcludedFromCommit: false,
         isNewFile: false,
@@ -201,7 +207,8 @@ describe('filter-changes-logic', () => {
     })
 
     it('should return message with text filter', () => {
-      const filters: IFileFilterState = {
+      const filters: IFileListFilterState = {
+        filterText: '',
         isIncludedInCommit: false,
         isExcludedFromCommit: false,
         isNewFile: false,
@@ -214,7 +221,8 @@ describe('filter-changes-logic', () => {
     })
 
     it('should return message with multiple filters', () => {
-      const filters: IFileFilterState = {
+      const filters: IFileListFilterState = {
+        filterText: '',
         isIncludedInCommit: true,
         isExcludedFromCommit: false,
         isNewFile: true,

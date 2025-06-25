@@ -4004,42 +4004,36 @@ export class Dispatcher {
   }
   public setIncludedChangesInCommitFilter(
     repository: Repository,
-    includedChangesInCommitFilter: boolean
+    isIncludedInCommit: boolean
   ) {
     return this.appStore._setIncludedChangesInCommitFilter(
       repository,
-      includedChangesInCommitFilter
+      isIncludedInCommit
     )
   }
 
-  public setFilterNewFiles(repository: Repository, filterNewFiles: boolean) {
-    return this.appStore._setFilterNewFiles(repository, filterNewFiles)
+  public setFilterNewFiles(repository: Repository, isNewFile: boolean) {
+    return this.appStore._setFilterNewFiles(repository, isNewFile)
   }
 
   public setFilterModifiedFiles(
     repository: Repository,
-    filterModifiedFiles: boolean
+    isModifiedFile: boolean
   ) {
-    return this.appStore._setFilterModifiedFiles(
-      repository,
-      filterModifiedFiles
-    )
+    return this.appStore._setFilterModifiedFiles(repository, isModifiedFile)
   }
 
-  public setFilterDeletedFiles(
-    repository: Repository,
-    filterDeletedFiles: boolean
-  ) {
-    return this.appStore._setFilterDeletedFiles(repository, filterDeletedFiles)
+  public setFilterDeletedFiles(repository: Repository, isDeletedFile: boolean) {
+    return this.appStore._setFilterDeletedFiles(repository, isDeletedFile)
   }
 
   public setFilterExcludedFiles(
     repository: Repository,
-    filterExcludedFiles: boolean
+    isExcludedFromCommit: boolean
   ) {
     return this.appStore._setFilterExcludedFiles(
       repository,
-      filterExcludedFiles
+      isExcludedFromCommit
     )
   }
 

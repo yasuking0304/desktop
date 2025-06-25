@@ -24,11 +24,11 @@ export function createState<K extends keyof IChangesState>(
     currentRepoRulesInfo: new RepoRulesInfo(),
     fileListFilter: {
       filterText: '',
-      includedChangesInCommitFilter: false,
-      filterNewFiles: false,
-      filterModifiedFiles: false,
-      filterDeletedFiles: false,
-      filterExcludedFiles: false,
+      isIncludedInCommit: false,
+      isNewFile: false,
+      isModifiedFile: false,
+      isDeletedFile: false,
+      isExcludedFromCommit: false,
     },
   }
 
