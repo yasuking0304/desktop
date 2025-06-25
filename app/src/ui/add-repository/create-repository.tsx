@@ -37,6 +37,7 @@ import { join } from 'path'
 import { isTopMostDialog } from '../dialog/is-top-most'
 import { InputError } from '../lib/input-description/input-error'
 import { InputWarning } from '../lib/input-description/input-warning'
+import { CreateRepositoryError } from '../../lib/error-with-metadata'
 
 /** URL used to provide information about submodules to the user. */
 const submoduleDocsUrl = 'https://gh.io/git-submodules'
@@ -404,14 +405,14 @@ export class CreateRepository extends React.Component<
       this.props.dispatcher.postError(e)
     }
 
-    const status = await getStatus(repository)
-    if (status === null) {
-      this.props.dispatcher.postError(
-        new Error(
-          `Unable to create the new repository because there are too many new files in this directory`
-        )
-      )
+    const status = await getStatus(repository, true, true).catch(e => {
+      log.error(`createRepository: unable to get status for ${fullPath}`, e)
+      this.props.dispatcher.postError(new CreateRepositoryError(e))
+      return null
+    })
 
+    if (status === null) {
+      this.setState({ creating: false })
       return
     }
 
