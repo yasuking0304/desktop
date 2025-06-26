@@ -898,7 +898,7 @@ export class CommitMessage extends React.Component<
     const noFilesSelected = filesSelected.length === 0
     const noChangesAvailable = !commitToAmend && noFilesSelected
 
-    const addCommitMessage = noFilesSelected
+    const addCommitMessage = noChangesAvailable
       ? t(
           'commit-message.must-be-selected',
           '. Files must be selected to generate a commit message.'
