@@ -13,7 +13,17 @@ const units = [
   t('bytes.zib', 'ZiB'),
   t('bytes.yib', 'YiB'),
 ]
-const units_linux = ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB']
+const units_linux = [
+  'B',
+  'KiB',
+  'MiB',
+  'GiB',
+  'TiB',
+  'PiB',
+  'EiB',
+  'ZiB',
+  'YiB',
+]
 
 /**
  * Formats a number of bytes into a human readable string.
