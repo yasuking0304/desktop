@@ -2374,13 +2374,22 @@ export class AppStore extends TypedBaseStore<IAppState> {
     // Start with all the available width
     let available = window.innerWidth
 
+    // // The tutorial currently has a fixed-width sidebar which we have to account
+    // // for so it makes sense to limit the width of the file list in order to
+    // // give the tutorial enough space to show its content.
+    const tutorialMinWidth =
+      this.currentOnboardingTutorialStep === TutorialStep.NotApplicable
+        ? 0
+        : 650
+
     // Working our way from left to right (i.e. giving priority to the leftmost
     // pane when we need to constrain the width)
     //
     // 220 was determined as the minimum value since it is the smallest width
     // that will still fit the placeholder text in the branch selector textbox
     // of the history tab
-    const maxSidebarWidth = available - toolbarButtonsMinWidth
+    const maxSidebarWidth =
+      available - Math.max(toolbarButtonsMinWidth, tutorialMinWidth)
     this.sidebarWidth = constrain(this.sidebarWidth, 220, maxSidebarWidth)
 
     // Now calculate the width we have left to distribute for the other panes
