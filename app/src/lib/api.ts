@@ -2473,6 +2473,7 @@ export async function isGitHubHost(url: string) {
       signal: ac.signal,
       credentials: 'omit',
       method: 'HEAD',
+      redirect: 'error',
     })
 
     tryUpdateEndpointVersionFromResponse(endpoint, response)
