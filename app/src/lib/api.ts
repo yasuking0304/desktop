@@ -2311,7 +2311,7 @@ export function getHTMLURL(endpoint: string): string {
 /**
  * Get the API URL for an HTML URL. For example:
  *
- * http://github.mycompany.com -> http://github.mycompany.com/api/v3
+ * http://github.mycompany.com -> https://github.mycompany.com/api/v3
  */
 export function getEnterpriseAPIURL(endpoint: string): string {
   const { host } = new window.URL(endpoint)
