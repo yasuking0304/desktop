@@ -1,5 +1,3 @@
-import { AppFileStatusKind } from '../../models/status'
-import { DiffSelectionType } from '../../models/diff'
 import { IFileListFilterState } from '../../lib/app-state'
 import { IChangesListItem } from './filter-changes-list'
 import memoizeOne from 'memoize-one'
@@ -18,34 +16,25 @@ export function applyFilterOptions(
     return true
   }
 
-  // Check staging status
-  const isStaged =
-    item.change.selection.getSelectionType() !== DiffSelectionType.None
+  const { change } = item
 
-  if (filters.isIncludedInCommit && !isStaged) {
+  if (filters.isIncludedInCommit && !change.isIncludedInCommit()) {
     return false
   }
 
-  if (filters.isExcludedFromCommit && isStaged) {
+  if (filters.isExcludedFromCommit && !change.isExcludedFromCommit()) {
     return false
   }
 
-  // Check file type
-  const status = item.change.status.kind
-  const isNewFile =
-    status === AppFileStatusKind.New || status === AppFileStatusKind.Untracked
-  const isModifiedFile = status === AppFileStatusKind.Modified
-  const isDeletedFile = status === AppFileStatusKind.Deleted
-
-  if (filters.isNewFile && !isNewFile) {
+  if (filters.isNewFile && !change.isNew() && !change.isUntracked()) {
     return false
   }
 
-  if (filters.isModifiedFile && !isModifiedFile) {
+  if (filters.isModifiedFile && !change.isModified()) {
     return false
   }
 
-  if (filters.isDeletedFile && !isDeletedFile) {
+  if (filters.isDeletedFile && !change.isDeleted()) {
     return false
   }
 
