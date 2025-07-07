@@ -894,7 +894,7 @@ export class CommitMessage extends React.Component<
 
     return (
       <>
-        <div className="separator" />
+        {this.isCoAuthorInputEnabled && <div className="separator" />}
         <Button
           className="copilot-button"
           onClick={this.onCopilotButtonClick}
