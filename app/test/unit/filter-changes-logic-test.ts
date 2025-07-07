@@ -164,7 +164,7 @@ describe('filter-changes-logic', () => {
       ])
 
       assert.equal(
-        isCommittingFileHiddenByFilter('', fileIds, filteredItems, 2, filters),
+        isCommittingFileHiddenByFilter(fileIds, filteredItems, 2, filters),
         false
       )
     })
@@ -186,7 +186,7 @@ describe('filter-changes-logic', () => {
       ])
 
       assert.equal(
-        isCommittingFileHiddenByFilter('', fileIds, filteredItems, 5, filters),
+        isCommittingFileHiddenByFilter(fileIds, filteredItems, 5, filters),
         true
       )
     })
@@ -203,12 +203,12 @@ describe('filter-changes-logic', () => {
         isDeletedFile: false,
       }
 
-      assert.equal(getNoResultsMessage('', filters), undefined)
+      assert.equal(getNoResultsMessage(filters), undefined)
     })
 
     it('should return message with text filter', () => {
       const filters: IFileListFilterState = {
-        filterText: '',
+        filterText: 'test',
         isIncludedInCommit: false,
         isExcludedFromCommit: false,
         isNewFile: false,
@@ -216,7 +216,7 @@ describe('filter-changes-logic', () => {
         isDeletedFile: false,
       }
 
-      const message = getNoResultsMessage('test', filters)
+      const message = getNoResultsMessage(filters)
       assert(message?.includes('"test"'))
     })
 
@@ -230,7 +230,7 @@ describe('filter-changes-logic', () => {
         isDeletedFile: false,
       }
 
-      const message = getNoResultsMessage('', filters)
+      const message = getNoResultsMessage(filters)
       assert(message?.includes('Included in commit'))
       assert(message?.includes('New files'))
     })

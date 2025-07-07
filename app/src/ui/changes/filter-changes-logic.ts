@@ -59,17 +59,13 @@ export function applyFilterOptions(
  */
 export const isCommittingFileHiddenByFilter = memoizeOne(
   (
-    filterText: string,
     fileIdsIncludedInCommit: ReadonlyArray<string>,
     filteredItems: Map<string, IChangesListItem>,
     fileCount: number,
     filters: IFileListFilterState
   ): boolean => {
     // All possible files are present in the list (no active filters or all files match active filters)
-    if (
-      !hasActiveFilters(filterText, filters) ||
-      filteredItems.size === fileCount
-    ) {
+    if (!hasActiveFilters(filters) || filteredItems.size === fileCount) {
       return false
     }
 
@@ -90,17 +86,16 @@ export const isCommittingFileHiddenByFilter = memoizeOne(
  * Generate message when no files match filters
  */
 export function getNoResultsMessage(
-  filterText: string,
   filters: IFileListFilterState
 ): string | undefined {
-  if (!hasActiveFilters(filterText, filters)) {
+  if (!hasActiveFilters(filters)) {
     return undefined
   }
 
   const activeFilters: string[] = []
 
-  if (filterText) {
-    activeFilters.push(`"${filterText}"`)
+  if (filters.filterText) {
+    activeFilters.push(`"${filters.filterText}"`)
   }
 
   if (filters.isIncludedInCommit) {
@@ -160,11 +155,8 @@ export function countActiveFilterOptions(
 /**
  * Check if there are any active filters
  */
-export function hasActiveFilters(
-  filterText: string,
-  filters: IFileListFilterState
-): boolean {
-  return filterText !== '' || countActiveFilterOptions(filters) > 0
+export function hasActiveFilters(filters: IFileListFilterState): boolean {
+  return filters.filterText !== '' || countActiveFilterOptions(filters) > 0
 }
 
 /**
