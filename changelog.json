@@ -1,5 +1,9 @@
 {
   "releases": {
+    "3.5.1": [
+      "[Fixed] Use all changes to generate a commit message when amending commits - #20664",
+      "[Improved] Upgrade embedded Git to v2.47.3 on macOS, and to v2.47.3.windows.1 on Windows"
+    ],
     "3.5.0": [
       "[New] Copilot now helps you craft AI-generated commit messages with just one click - #17439"
     ],
