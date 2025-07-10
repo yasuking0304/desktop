@@ -6,9 +6,15 @@ import fs from 'fs'
 const I18NEXT_CONFIG = 'i18next-parser.config.js'
 
 function convertLangJsonFile(filepath: string, filename: string) {
+  // if includes '\n' and more than 2 spaces, replace with ' '.
+  // if includes '<wbr>' or '<br>', replace with '\n'.
+  // Note: If your content contains line breaks '\n', set the
+  // white-space property in CSS to pre-line or a similar value.
   const orginal_data = fs.readFileSync(filepath + filename, 'utf8')
-  const pattern = /\\n[ ]{2,}/g
-  const converted_data = orginal_data.replace(pattern, ' ')
+  const converted_data = orginal_data
+    .replace(/\\n[ ]{2,}/g, ' ')
+    .replace('<br>', '\\n')
+    .replace('<wbr>', '\\n')
   if (converted_data !== orginal_data) {
     fs.writeFileSync(filepath + filename, converted_data)
     console.log(

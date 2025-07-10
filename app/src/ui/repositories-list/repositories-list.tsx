@@ -79,6 +79,7 @@ interface IRepositoriesListProps {
 
 interface IRepositoriesListState {
   readonly newRepositoryMenuExpanded: boolean
+  readonly selectedItem: IRepositoryListItem | null
 }
 
 const RowHeight = 29
@@ -148,6 +149,7 @@ export class RepositoriesList extends React.Component<
 
     this.state = {
       newRepositoryMenuExpanded: false,
+      selectedItem: null,
     }
   }
 
@@ -247,10 +249,14 @@ export class RepositoriesList extends React.Component<
       this.props.recentRepositories
     )
 
-    const selectedItem = this.getSelectedListItem(
-      groups,
-      this.props.selectedRepository
-    )
+    // So there's two types of selection at play here. There's the repository
+    // selection for the whole app and then there's the keyboard selection in
+    // the list itself. If the user has selected a repository using keyboard
+    // navigation we want to honor that selection. If the user hasn't selected a
+    // repository yet we'll select the repository currently selected in the app.
+    const selectedItem =
+      this.state.selectedItem ??
+      this.getSelectedListItem(groups, this.props.selectedRepository)
 
     return (
       <div className="repository-list">
@@ -272,9 +278,14 @@ export class RepositoriesList extends React.Component<
           onItemContextMenu={this.onItemContextMenu}
           getGroupAriaLabel={this.getGroupAriaLabelGetter(groups)}
           getItemAriaLabel={this.getItemAriaLabel}
+          onSelectionChanged={this.onSelectionChanged}
         />
       </div>
     )
+  }
+
+  private onSelectionChanged = (selectedItem: IRepositoryListItem | null) => {
+    this.setState({ selectedItem })
   }
 
   private renderPostFilter = () => {

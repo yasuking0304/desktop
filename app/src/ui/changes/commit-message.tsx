@@ -248,6 +248,7 @@ export class CommitMessage extends React.Component<
 > {
   private descriptionComponent: AutocompletingTextArea | null = null
 
+  private wrapperRef = React.createRef<HTMLDivElement>()
   private summaryGroupRef = React.createRef<HTMLDivElement>()
   private summaryTextInput: HTMLInputElement | null = null
 
@@ -644,11 +645,25 @@ export class CommitMessage extends React.Component<
     )
   }
 
-  private canExcecuteCommitShortcut(): boolean {
-    return !this.props.isShowingFoldout && !this.props.isShowingModal
+  private canExcecuteCommitShortcut(event: KeyboardEvent) {
+    // Once upon a time the CommitMessage component was only ever used in the
+    // changes view so it was safe to bind to the keyDown event of the Window in
+    // order to allow users to hit CmdOrCtrl+Enter to commit from pretty much
+    // anywhere in the app as long as the changes view was active and we weren't
+    // showing a modal or foldout.
+    //
+    // Now that the CommitMessage component is used in other places, such as in
+    // the squash dialog we still want the CmdOrCtrl+Enter shortcut to work
+    // so we'll allow the shortcut even if a dialog is open as long as it's
+    // coming from within the component itself.
+    return (
+      (event.target instanceof Node &&
+        this.wrapperRef.current?.contains(event.target)) ||
+      (!this.props.isShowingFoldout && !this.props.isShowingModal)
+    )
   }
 
-  private onKeyDown = (event: React.KeyboardEvent<Element> | KeyboardEvent) => {
+  private onKeyDown = (event: KeyboardEvent) => {
     if (event.defaultPrevented) {
       return
     }
@@ -658,7 +673,7 @@ export class CommitMessage extends React.Component<
       isShortcutKey &&
       event.key === 'Enter' &&
       (this.canCommit() || this.canAmend()) &&
-      this.canExcecuteCommitShortcut()
+      this.canExcecuteCommitShortcut(event)
     ) {
       this.createCommit()
       event.preventDefault()
@@ -878,16 +893,27 @@ export class CommitMessage extends React.Component<
   }
 
   private renderCopilotButton() {
+    const {
+      accounts,
+      onGenerateCommitMessage,
+      filesSelected,
+      isCommitting,
+      isGeneratingCommitMessage,
+      commitToAmend,
+      shouldShowGenerateCommitMessageCallOut,
+    } = this.props
+
     if (
-      !this.props.accounts.some(enableCommitMessageGeneration) ||
-      this.props.onGenerateCommitMessage === undefined
+      !accounts.some(enableCommitMessageGeneration) ||
+      onGenerateCommitMessage === undefined
     ) {
       return null
     }
 
-    const noFilesSelected = this.props.filesSelected.length === 0
+    const noFilesSelected = filesSelected.length === 0
+    const noChangesAvailable = !commitToAmend && noFilesSelected
 
-    const addCommitMessage = noFilesSelected
+    const addCommitMessage = noChangesAvailable
       ? t(
           'commit-message.must-be-selected',
           '. Files must be selected to generate a commit message.'
@@ -908,13 +934,13 @@ export class CommitMessage extends React.Component<
           ariaLabel={ariaLabel}
           tooltip={ariaLabel}
           disabled={
-            this.props.isCommitting === true ||
-            this.props.isGeneratingCommitMessage ||
-            noFilesSelected
+            isCommitting === true ||
+            isGeneratingCommitMessage ||
+            noChangesAvailable
           }
         >
           <Octicon symbol={octicons.copilot} />
-          {this.props.shouldShowGenerateCommitMessageCallOut && (
+          {shouldShowGenerateCommitMessageCallOut && (
             <span className="call-to-action-bubble">
               {t('common.new', 'New')}
             </span>
@@ -1572,6 +1598,7 @@ export class CommitMessage extends React.Component<
         aria-label="Create commit"
         className={className}
         onContextMenu={this.onContextMenu}
+        ref={this.wrapperRef}
       >
         <div className={summaryClassName} ref={this.summaryGroupRef}>
           {this.renderAvatar()}

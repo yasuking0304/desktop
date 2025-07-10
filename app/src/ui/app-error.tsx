@@ -171,6 +171,14 @@ export class AppError extends React.Component<IAppErrorProps, IAppErrorState> {
         return t('app-error.failed-to-push', 'Failed to push')
     }
 
+    if (isErrorWithMetaData(error)) {
+      const { gitContext } = error.metadata
+      switch (gitContext?.kind) {
+        case 'create-repository':
+          return `Failed creating repository`
+      }
+    }
+
     return t('common.error', 'Error')
   }
 

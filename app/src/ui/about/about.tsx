@@ -159,7 +159,10 @@ export class About extends React.Component<IAboutProps> {
                 'https://github.com/yasuking0304/desktop/wiki'
               )}
             >
-              {t('about.click-here-for-details', 'Click here for details')}
+              {t(
+                'about.click-here-for-update-information',
+                'Click here for Update information'
+              )}
             </LinkButton>
           </Row>
         </p>
@@ -295,7 +298,7 @@ export class About extends React.Component<IAboutProps> {
   }
 
   private renderBetaLink() {
-    if (__RELEASE_CHANNEL__ === 'beta') {
+    if (__RELEASE_CHANNEL__ === 'beta' || __UNOFFICIAL__) {
       return
     }
 
