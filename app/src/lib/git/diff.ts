@@ -404,10 +404,20 @@ export async function getWorkingDirectoryDiff(
  * The files will be compared against HEAD if it's tracked, if not it'll be
  * compared to an empty file meaning that all content in the file will be
  * treated as additions.
+ *
+ * @param repository The repository to get the diff for
+ * @param files The list of files to get the diff for
+ * @param commitish The commitish to compare against, if not provided it will
+ *                  default to HEAD. Mainly used to get a diff that includes
+ *                  both staged changes and the changes in a commit. For example,
+ *                  when the user is amending a commit and wants to generate
+ *                  a commit message based on both the new changes and the
+ *                  changes in the commit.
  */
 export async function getFilesDiffText(
   repository: Repository,
-  files: ReadonlyArray<WorkingDirectoryFileChange>
+  files: ReadonlyArray<WorkingDirectoryFileChange>,
+  commitish?: string
 ): Promise<string> {
   // Clear the staging area, our diffs reflect the difference between the
   // working directory and the last commit (if any) so our commits should
@@ -424,6 +434,7 @@ export async function getFilesDiffText(
     '--patch-with-raw',
     '--no-color',
     '--staged',
+    ...(commitish ? [commitish] : []),
   ]
   const successExitCodes = new Set([0])
 
