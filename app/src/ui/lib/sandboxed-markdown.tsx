@@ -360,16 +360,21 @@ export class SandboxedMarkdown extends React.PureComponent<
     // convert non-latin strings that existed in the markedjs.
     const b64src = Buffer.from(src, 'utf8').toString('base64')
 
-    if (this.frameRef === null) {
-      // If frame is destroyed before markdown parsing completes, frameref will be null.
-      return
-    }
+    // HACK OR NOT? This prevents a crash since Electron 34 where the layout
+    // changes during the ResizeObserver callback. See:
+    // https://github.com/desktop/desktop/issues/20760
+    requestAnimationFrame(() => {
+      if (this.frameRef === null) {
+        // If frame is destroyed before markdown parsing completes, frameref will be null.
+        return
+      }
 
-    // We are using `src` and data uri as opposed to an html string in the
-    // `srcdoc` property because the `srcdoc` property renders the html in the
-    // parent dom and we want all rendering to be isolated to our sandboxed iframe.
-    // -- https://csplite.com/csp/test188/
-    this.frameRef.src = `data:text/html;charset=utf-8;base64,${b64src}`
+      // We are using `src` and data uri as opposed to an html string in the
+      // `srcdoc` property because the `srcdoc` property renders the html in the
+      // parent dom and we want all rendering to be isolated to our sandboxed iframe.
+      // -- https://csplite.com/csp/test188/
+      this.frameRef.src = `data:text/html;charset=utf-8;base64,${b64src}`
+    })
   }
 
   public render() {
