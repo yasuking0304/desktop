@@ -349,6 +349,7 @@
   "commit-list": {
     "copy-tag": "Copy Tag",
     "copy-tags": "Copy Tags",
+    "pushed-tags-should-not-be-deleted": "Pushed tags should not be deleted",
     "view-on-github": "View on GitHub",
     "view-on-github-enterprise": "View on GitHub Enterprise"
   },
@@ -366,7 +367,6 @@
     "copy-sha": "Copy SHA",
     "create-branch-from-commit": "Create branch from commit",
     "create-branch-from-commit-darwin": "Create Branch from Commit",
-    "detele-tag": "Delete tag {{0}}",
     "empty-commit-message": "Empty commit message",
     "reorder-choose-locate-1": "Use ",
     "reorder-choose-locate-2": "to choose a new location.",
@@ -778,7 +778,10 @@
     "are-you-sure-you-want-to-delete-the-tag-1": "Are you sure you want to delete the tag ",
     "are-you-sure-you-want-to-delete-the-tag-2": "?",
     "delete-tag": "Delete tag",
-    "delete-tag-darwin": "Delete Tag"
+    "delete-tag-darwin": "Delete Tag",
+    "do-you-still-want-to-delete-the-tag": "Do you still want to delete the tag?",
+    "tag-named-is-present-on-the-remote-1": "There is a tag ",
+    "tag-named-is-present-on-the-remote-2": " pushed to the remote.\nIf this tag is in use, removing it may cause problems.\nWe recommend that you consult with your system administrator\nbefore deleting it."
   },
   "diff-contents-warning": {
     "learn-more-about-bidirectional-unicode": "Learn more about bidirectional Unicode characters",

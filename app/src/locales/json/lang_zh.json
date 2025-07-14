@@ -349,6 +349,7 @@
   "commit-list": {
     "copy-tag": "复制标记",
     "copy-tags": "复制标记",
+    "pushed-tags-should-not-be-deleted": "请勿删除已推送的标签",
     "view-on-github": "在 GitHub 上结帐",
     "view-on-github-enterprise": "在 GitHub Enterprise 上结帐"
   },
@@ -366,7 +367,6 @@
     "copy-sha": "复制 SHA",
     "create-branch-from-commit": "从提交创建分支",
     "create-branch-from-commit-darwin": "从提交创建分支",
-    "detele-tag": "删除标记 {{0}}",
     "empty-commit-message": "空的提交信息",
     "reorder-choose-locate-1": "使用 ",
     "reorder-choose-locate-2": "选择新位置。",
@@ -778,7 +778,10 @@
     "are-you-sure-you-want-to-delete-the-tag-1": "您确定要删除标记 ",
     "are-you-sure-you-want-to-delete-the-tag-2": "吗?",
     "delete-tag": "删除标记",
-    "delete-tag-darwin": "删除标记"
+    "delete-tag-darwin": "删除标记",
+    "do-you-still-want-to-delete-the-tag": "Do you still want to delete the tag?",
+    "tag-named-is-present-on-the-remote-1": "There is a tag ",
+    "tag-named-is-present-on-the-remote-2": " pushed to the remote.\nIf this tag is in use, removing it may cause problems.\nWe recommend that you consult with your system administrator\nbefore deleting it."
   },
   "diff-contents-warning": {
     "learn-more-about-bidirectional-unicode": "了解有关双向 Unicode 字符的更多信息",

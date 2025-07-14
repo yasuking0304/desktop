@@ -335,11 +335,24 @@ dialog {
       overflow-x: hidden;
     }
 
+    &.dialog-danger {
+      color: var(--form-danger-text-color);
+      background: var(--form-danger-background);
+      border-bottom: 1px solid var(--form-danger-border-color);
+      border-top: 1px solid var(--form-danger-border-color);
+      overflow-x: hidden;
+      overflow-y: hidden;
+      white-space: break-spaces;
+    }
+
     &.dialog-error {
       color: var(--form-error-text-color);
       background: var(--form-error-background);
       border-bottom: 1px solid var(--form-error-border-color);
       border-top: 1px solid var(--form-error-border-color);
+      overflow-x: hidden;
+      overflow-y: hidden;
+      white-space: break-spaces;
     }
 
     &.dialog-success {

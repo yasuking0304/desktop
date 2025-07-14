@@ -865,28 +865,37 @@ export class CommitList extends React.Component<
       return null
     }
 
-    if (commit.tags.length === 1) {
-      const tagName = commit.tags[0]
-
-      return {
-        label: t('commit-list-item.detele-tag', `Delete tag {{0}}`, {
-          0: tagName,
-        }),
-        action: () => onDeleteTag(tagName),
-        enabled: unpushedTags.includes(tagName),
+    for (const tagName of commit.tags) {
+      if (!unpushedTags.includes(tagName)) {
+        return {
+          label: t('commit-list-item.confim-detele-tag', 'Delete tag…'),
+          submenu: [
+            {
+              label: t(
+                'commit-list.pushed-tags-should-not-be-deleted',
+                'Pushed tags should not be deleted'
+              ),
+              enabled: false,
+            },
+            { type: 'separator' },
+            ...commit.tags.map(tagName => {
+              return {
+                label: tagName,
+                action: () => onDeleteTag(tagName),
+                enabled: true,
+              }
+            }),
+          ],
+        }
       }
     }
-
-    // Convert tags to a Set to avoid O(n^2)
-    const unpushedTagsSet = new Set(unpushedTags)
-
     return {
       label: t('commit-list-item.confim-detele-tag', 'Delete tag…'),
       submenu: commit.tags.map(tagName => {
         return {
           label: tagName,
           action: () => onDeleteTag(tagName),
-          enabled: unpushedTagsSet.has(tagName),
+          enabled: true,
         }
       }),
     }

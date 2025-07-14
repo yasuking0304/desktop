@@ -1,4 +1,5 @@
 export * from './content'
+export * from './danger'
 export * from './dialog'
 export * from './error'
 export * from './footer'

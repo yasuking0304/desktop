@@ -349,6 +349,7 @@
   "commit-list": {
     "copy-tag": "태그 복사",
     "copy-tags": "복수 태그 복사",
+    "pushed-tags-should-not-be-deleted": "푸시된 태그는 삭제해서는 안 됩니다",
     "view-on-github": "GitHub에서 확인",
     "view-on-github-enterprise": "GitHub Enterprise에서 확인"
   },
@@ -366,7 +367,6 @@
     "copy-sha": "SHA 복사",
     "create-branch-from-commit": "커밋에서 브랜치 만들기",
     "create-branch-from-commit-darwin": "커밋에서 브랜치 만들기",
-    "detele-tag": "{{0}} 태그 삭제",
     "empty-commit-message": "빈 커밋 메시지",
     "reorder-choose-locate-1": " ",
     "reorder-choose-locate-2": "키로 새 위치 선택",
@@ -778,7 +778,10 @@
     "are-you-sure-you-want-to-delete-the-tag-1": "태그 ",
     "are-you-sure-you-want-to-delete-the-tag-2": "을 삭제하시겠습니까?",
     "delete-tag": "태그 삭제",
-    "delete-tag-darwin": "태그 삭제"
+    "delete-tag-darwin": "태그 삭제",
+    "do-you-still-want-to-delete-the-tag": "Do you still want to delete the tag?",
+    "tag-named-is-present-on-the-remote-1": "There is a tag ",
+    "tag-named-is-present-on-the-remote-2": " pushed to the remote.\nIf this tag is in use, removing it may cause problems.\nWe recommend that you consult with your system administrator\nbefore deleting it."
   },
   "diff-contents-warning": {
     "learn-more-about-bidirectional-unicode": "양방향 유니코드 문자에 대해 자세히 알아보기",

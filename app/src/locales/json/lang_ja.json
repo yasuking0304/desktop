@@ -349,6 +349,7 @@
   "commit-list": {
     "copy-tag": "タグのコピー",
     "copy-tags": "複数タグのコピー",
+    "pushed-tags-should-not-be-deleted": "プッシュ済みのタグは削除するべきではありません",
     "view-on-github": "GitHub で確認",
     "view-on-github-enterprise": "GitHub Enterprise で確認"
   },
@@ -366,7 +367,6 @@
     "copy-sha": "SHA のコピー",
     "create-branch-from-commit": "コミットからブランチを作成する",
     "create-branch-from-commit-darwin": "コミットからブランチを作成する",
-    "detele-tag": "{{0}} タグを削除する",
     "empty-commit-message": "空のコミットメッセージ",
     "reorder-choose-locate-1": " ",
     "reorder-choose-locate-2": "キーで新しい場所を選択します",
@@ -778,7 +778,10 @@
     "are-you-sure-you-want-to-delete-the-tag-1": "タグ ",
     "are-you-sure-you-want-to-delete-the-tag-2": " を削除してもよろしいですか? ",
     "delete-tag": "タグの削除",
-    "delete-tag-darwin": "タグの削除"
+    "delete-tag-darwin": "タグの削除",
+    "do-you-still-want-to-delete-the-tag": "それでもタグを削除しますか?",
+    "tag-named-is-present-on-the-remote-1": "リモートに ",
+    "tag-named-is-present-on-the-remote-2": " というプッシュ済みのタグが存在します。\nこのタグが使用されている場合、削除すると問題が発生する可能性が\nあります。削除する前に、システム管理者に相談することをお勧めします。"
   },
   "diff-contents-warning": {
     "learn-more-about-bidirectional-unicode": "双方向Unicode文字についての詳細",
