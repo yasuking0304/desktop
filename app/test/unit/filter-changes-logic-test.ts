@@ -15,7 +15,10 @@ import { IChangesListItem } from '../../src/ui/changes/filter-changes-list'
 // Helper function to create a test file
 function createTestFile(
   path: string,
-  status: AppFileStatusKind,
+  kind:
+    | AppFileStatusKind.New
+    | AppFileStatusKind.Modified
+    | AppFileStatusKind.Deleted,
   selectionType: DiffSelectionType
 ): WorkingDirectoryFileChange {
   const selection =
@@ -26,18 +29,16 @@ function createTestFile(
       : DiffSelection.fromInitialSelection(
           selectionType as DiffSelectionType.All | DiffSelectionType.None
         )
-  return {
-    id: path,
-    path,
-    status: { kind: status },
-    selection,
-  } as WorkingDirectoryFileChange
+  return new WorkingDirectoryFileChange(path, { kind }, selection)
 }
 
 // Helper function to create a test changes list item
 function createTestItem(
   path: string,
-  status: AppFileStatusKind,
+  status:
+    | AppFileStatusKind.New
+    | AppFileStatusKind.Modified
+    | AppFileStatusKind.Deleted,
   selectionType: DiffSelectionType
 ): IChangesListItem {
   const change = createTestFile(path, status, selectionType)
