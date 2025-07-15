@@ -36,7 +36,7 @@ interface IChangesListFilterOptionsState {
 
 /**
  * Component to render filter options for the changes list.
- * 
+ *
  * Allows users to filter files based on their status (new, modified, deleted, etc.)
  * and includes a button to clear all filters.
  */
