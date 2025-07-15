@@ -122,6 +122,7 @@ import {
   ChangesWorkingDirectorySelection,
   isRebaseConflictState,
   isCherryPickConflictState,
+  IFileListFilterState,
   isMergeConflictState,
   IMultiCommitOperationState,
   IConstrainedValue,
@@ -8331,21 +8332,53 @@ export class AppStore extends TypedBaseStore<IAppState> {
     }
   }
 
-  public _setChangesListFilterText(repository: Repository, filterText: string) {
-    this.repositoryStateCache.updateChangesState(repository, () => ({
-      filterText,
+  public _updateFileListFilter(
+    repository: Repository,
+    filterUpdate: Partial<IFileListFilterState>
+  ) {
+    this.repositoryStateCache.updateChangesState(repository, state => ({
+      fileListFilter: {
+        ...state.fileListFilter,
+        ...filterUpdate,
+      },
     }))
     this.emitUpdate()
   }
 
+  public _setChangesListFilterText(repository: Repository, filterText: string) {
+    this._updateFileListFilter(repository, { filterText })
+  }
+
   public _setIncludedChangesInCommitFilter(
     repository: Repository,
-    includedChangesInCommitFilter: boolean
+    isIncludedInCommit: boolean
   ) {
-    this.repositoryStateCache.updateChangesState(repository, () => ({
-      includedChangesInCommitFilter,
-    }))
-    this.emitUpdate()
+    this._updateFileListFilter(repository, { isIncludedInCommit })
+  }
+
+  public _setFilterNewFiles(repository: Repository, isNewFile: boolean) {
+    this._updateFileListFilter(repository, { isNewFile })
+  }
+
+  public _setFilterModifiedFiles(
+    repository: Repository,
+    isModifiedFile: boolean
+  ) {
+    this._updateFileListFilter(repository, { isModifiedFile })
+  }
+
+  public _setFilterDeletedFiles(
+    repository: Repository,
+    isDeletedFile: boolean
+  ) {
+    this._updateFileListFilter(repository, { isDeletedFile })
+  }
+
+  public _setFilterExcludedFiles(
+    repository: Repository,
+    isExcludedFromCommit: boolean
+  ) {
+    this._updateFileListFilter(repository, { isExcludedFromCommit })
   }
 
   public async _createPushProtectionBypass(

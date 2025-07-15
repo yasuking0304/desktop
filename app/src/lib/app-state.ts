@@ -771,11 +771,31 @@ export interface IChangesState {
    */
   readonly currentRepoRulesInfo: RepoRulesInfo
 
-  /** The text entered into the compare branch filter text box */
+  /** The file list filter state containing all filter options */
+  readonly fileListFilter: IFileListFilterState
+}
+
+/**
+ * State interface for file list filtering options
+ */
+export interface IFileListFilterState {
+  /** The text entered into the filter text box */
   readonly filterText: string
 
-  /** The state of the changes list filter of included changes. */
-  readonly includedChangesInCommitFilter: boolean
+  /** Whether to filter and show only included in commit files */
+  readonly isIncludedInCommit: boolean
+
+  /** Whether to filter and show only excluded from commit files */
+  readonly isExcludedFromCommit: boolean
+
+  /** Whether to filter and show only new files */
+  readonly isNewFile: boolean
+
+  /** Whether to filter and show only modified files */
+  readonly isModifiedFile: boolean
+
+  /** Whether to filter and show only deleted files */
+  readonly isDeletedFile: boolean
 }
 
 /**
