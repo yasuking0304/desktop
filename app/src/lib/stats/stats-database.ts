@@ -607,6 +607,21 @@ export interface IDailyMeasures {
   /** The number of times the user applies the "Included in Commit" Filter */
   appliesIncludedInCommitFilterCount: 0
 
+  /** The number of times the user applies the "Excluded from Commit" Filter */
+  appliesExcludedFromCommitFilterCount: 0
+
+  /** The number of times the user applies the "New Files" Changes Filter */
+  appliesNewFilesChangesFilterCount: 0
+
+  /** The number of times the user applies the "Modified Files" Changes Filter */
+  appliesModifiedFilesChangesFilterCount: 0
+
+  /** The number of times the user applies the "Deleted Files" Changes Filter */
+  appliesDeletedFilesChangesFilterCount: 0
+
+  /** The number of times the user clears all filters */
+  appliesClearAllChangesListFilterCount: 0
+
   /** The number of times the user adjust the filter from warnings about hidden changes */
   adjustedFiltersForHiddenChangesCount: 0
 
