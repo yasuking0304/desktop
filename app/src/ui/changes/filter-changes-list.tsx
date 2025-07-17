@@ -1478,12 +1478,10 @@ export class FilterChangesList extends React.Component<
         <img src={BlankSlateImage} className="blankslate-image" alt="" />
 
         <div className="title">
-          {
-            t(
-              'filter-changes-list.no-files-match-your-current-filters',
-              'No files match your current filters'
-            )
-          }
+          {t(
+            'filter-changes-list.no-files-match-your-current-filters',
+            'No files match your current filters'
+          )}
         </div>
 
         <div className="subtitle">

@@ -241,6 +241,17 @@
     "summary-required": "摘要(必填)",
     "update-filename": "更新 {{0}}"
   },
+  "changes-list-filter-options": {
+    "active-filters": "({{0}}已申请)",
+    "clear-filters": "清除筛选条件",
+    "deleted-files-with-number": "已删除的文件 ({0})",
+    "excluded-from-commit-with-number": "排除在提交之外 ({{0}})",
+    "filter-button-label": "筛选选项 {{0}}",
+    "filter-options": "筛选选项",
+    "included-in-commit-with-number": "包含在提交中 ({{0}})",
+    "modified-files-with-number": "修改的文件 ({{0}})",
+    "new-files-with-number": "新文件 ({{0}})"
+  },
   "checkout": {
     "checking-out-branch": "检出分支 {{0}}",
     "checking-out-commit": "检出提交",
@@ -779,9 +790,9 @@
     "are-you-sure-you-want-to-delete-the-tag-2": "吗?",
     "delete-tag": "删除标记",
     "delete-tag-darwin": "删除标记",
-    "do-you-still-want-to-delete-the-tag": "Do you still want to delete the tag?",
-    "tag-named-is-present-on-the-remote-1": "There is a tag ",
-    "tag-named-is-present-on-the-remote-2": " pushed to the remote.\nIf this tag is in use, removing it may cause problems.\nWe recommend that you consult with your system administrator\nbefore deleting it."
+    "do-you-still-want-to-delete-the-tag": "您仍要删除该标签吗?",
+    "tag-named-is-present-on-the-remote-1": "有一个标签 ",
+    "tag-named-is-present-on-the-remote-2": " 被推送到远程。\n如果此标签正在使用中, 删除它可能会导致问题。\n我们建议您在删除之前咨询系统管理员。"
   },
   "diff-contents-warning": {
     "learn-more-about-bidirectional-unicode": "了解有关双向 Unicode 字符的更多信息",
@@ -871,7 +882,7 @@
   },
   "filter-changes-list": {
     "Adjust the filters": "调整过滤器以结帐所有 {{0}} 个更改",
-    "and": ", ",
+    "clear-filters": "清除筛选条件",
     "discard-changes": "放弃更改",
     "discard-changes-darwin": "放弃更改",
     "discard-selected-changes": "放弃 {{0}}个选定的更改",
@@ -882,8 +893,6 @@
     "files": "文件",
     "files-description": "{{1}}个已更改{{2}}{{0}}",
     "filter": "筛选",
-    "filter-options": "筛选选项",
-    "filter-options-number": "筛选选项 {{0}}",
     "hidden-changes-will-be-commited": "隐藏的更改将被提交。",
     "ignore-all-file-add-to-gitignore": "忽略所有 {{0}}文件 (添加到 .gitignore)",
     "ignore-all-file-add-to-gitignore-darwin": "忽略所有 {{0}}文件 (添加到 .gitignore)",
@@ -895,15 +904,22 @@
     "ignore-selected-file-add-to-gitignore-darwin": "忽略 {{0}}个选定的文件 (添加到 .gitignore)",
     "include-selected-files": "包括选定的文件",
     "include-selected-files-darwin": "包括选定的文件",
-    "included-in-commit": "包含在提交中 ({{0}})",
-    "matching-your-filter": "符合您的 \"{{0}} \"过滤器",
+    "no-files-match-your-current-filters": "没有文件符合您当前的过滤器",
     "number-description": "中的 {{0}} 个",
-    "one-applied": "(1已申请)",
     "open-in-external-editor": "在 {{0}} 中打开",
-    "sorry-i-cannot-find-any-changed-files": "抱歉, 我找不到任何{{0}}{{1}}{{2}}更改的文件。",
     "stashed-changes": "隐藏的更改",
-    "summary-required": "摘要(必填)",
-    "that-are-to-be-included": "要包含在您的提交中"
+    "summary-required": "摘要(必填)"
+  },
+  "filter-changes-logic": {
+    "commna": ", ",
+    "deleted-files": "已删除的文件",
+    "excluded-from-commit": "排除在提交之外",
+    "included-in-commit": "包含在提交中",
+    "modified-files": "修改的文件",
+    "new-files": "新文件",
+    "one-and-another": "{{0}}, {{1}}",
+    "other-filters-and-last": "{{0}}, {{1}}",
+    "sorry-i-cannot-find-any-changed-files": "抱歉, 我找不到符合以下过滤器的任何已更改文件: {{0}}"
   },
   "filter-list": {
     "filter": "筛选"

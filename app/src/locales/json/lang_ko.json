@@ -241,6 +241,17 @@
     "summary-required": "개요(필수 입력)",
     "update-filename": "업데이트 {{0}}"
   },
+  "changes-list-filter-options": {
+    "active-filters": "({{0}} applied)",
+    "clear-filters": "Clear filters",
+    "deleted-files-with-number": "Deleted files ({0})",
+    "excluded-from-commit-with-number": "Excluded from commit ({{0}})",
+    "filter-button-label": "Filter Options {{0}}",
+    "filter-options": "Filter Options",
+    "included-in-commit-with-number": "Included in commit ({{0}})",
+    "modified-files-with-number": "Modified files ({{0}})",
+    "new-files-with-number": "New files ({{0}})"
+  },
   "checkout": {
     "checking-out-branch": "{{0}} 브랜치 체크아웃",
     "checking-out-commit": "커밋 체크아웃",
@@ -871,7 +882,7 @@
   },
   "filter-changes-list": {
     "Adjust the filters": "{{0}}개의 변경 파일을 모두 보려면 필터를 조정하세요.",
-    "and": ",",
+    "clear-filters": "Clear filters",
     "discard-changes": "변경 취소",
     "discard-changes-darwin": "변경 폐기",
     "discard-selected-changes": "선택한 {{0}}개의 변경사항을 삭제합니다.",
@@ -882,8 +893,6 @@
     "files": "파일",
     "files-description": "{{0}}{{1}}개의 수정된 {{2}}",
     "filter": "필터",
-    "filter-options": "필터 옵션",
-    "filter-options-number": "필터 옵션 {{0}}",
     "hidden-changes-will-be-commited": "숨겨진 변경 파일이 커밋됩니다.",
     "ignore-all-file-add-to-gitignore": "모든 {{0}} 파일 제외(.gitignore에 추가)",
     "ignore-all-file-add-to-gitignore-darwin": "모든 {{0}} 파일 제외(.gitignore에 추가)",
@@ -895,15 +904,22 @@
     "ignore-selected-file-add-to-gitignore-darwin": "선택한 {{0}} 파일을 무시합니다(.gitignore에 추가)",
     "include-selected-files": "선택한 파일 포함",
     "include-selected-files-darwin": "선택한 파일 포함",
-    "included-in-commit": "커밋에 포함됨({{0}})",
-    "matching-your-filter": "필터 \"{{0}}\"과 일치",
+    "no-files-match-your-current-filters": "No files match your current filters",
     "number-description": "{{0}}/",
-    "one-applied": "(1개 적용)",
     "open-in-external-editor": "{{0}}에서 열기",
-    "sorry-i-cannot-find-any-changed-files": "죄송합니다. {{0}}{{1}}{{2}}변경 파일을 찾을 수 없습니다.",
     "stashed-changes": "일시 퇴피한 변경",
-    "summary-required": "개요(필수 입력)",
-    "that-are-to-be-included": "커밋에 포함됨"
+    "summary-required": "개요(필수 입력)"
+  },
+  "filter-changes-logic": {
+    "commna": ", ",
+    "deleted-files": "Deleted files",
+    "excluded-from-commit": "Excluded from commit",
+    "included-in-commit": "Included in commit",
+    "modified-files": "Modified files",
+    "new-files": "New files",
+    "one-and-another": "{{0}} and {{1}}",
+    "other-filters-and-last": "{{0}}, and {{1}}",
+    "sorry-i-cannot-find-any-changed-files": "Sorry, I can't find any changed files matching the following filters: {{0}}"
   },
   "filter-list": {
     "filter": "필터"

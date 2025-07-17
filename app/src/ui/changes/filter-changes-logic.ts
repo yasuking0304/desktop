@@ -1,6 +1,7 @@
 import { IFileListFilterState } from '../../lib/app-state'
 import { IChangesListItem } from './filter-changes-list'
 import memoizeOne from 'memoize-one'
+import { t } from 'i18next'
 
 /**
  * Apply filter options to determine if a file should be shown
@@ -88,23 +89,29 @@ export function getNoResultsMessage(
   }
 
   if (filters.isIncludedInCommit) {
-    activeFilters.push('Included in commit')
+    activeFilters.push(
+      t('filter-changes-logic.included-in-commit', 'Included in commit')
+    )
   }
 
   if (filters.isExcludedFromCommit) {
-    activeFilters.push('Excluded from commit')
+    activeFilters.push(
+      t('filter-changes-logic.excluded-from-commit', 'Excluded from commit')
+    )
   }
 
   if (filters.isNewFile) {
-    activeFilters.push('New files')
+    activeFilters.push(t('filter-changes-logic.new-files', 'New files'))
   }
 
   if (filters.isModifiedFile) {
-    activeFilters.push('Modified files')
+    activeFilters.push(
+      t('filter-changes-logic.modified-files', 'Modified files')
+    )
   }
 
   if (filters.isDeletedFile) {
-    activeFilters.push('Deleted files')
+    activeFilters.push(t('filter-changes-logic.deleted-files', 'Deleted files'))
   }
 
   if (activeFilters.length === 0) {
@@ -116,13 +123,25 @@ export function getNoResultsMessage(
   if (activeFilters.length === 1) {
     filterList = activeFilters[0]
   } else if (activeFilters.length === 2) {
-    filterList = `${activeFilters[0]} and ${activeFilters[1]}`
+    filterList = t('filter-changes-logic.one-and-another', `{{0}} and {{1}}`, {
+      0: activeFilters[0],
+      1: activeFilters[1],
+    })
   } else {
     const lastFilter = activeFilters[activeFilters.length - 1]
     const otherFilters = activeFilters.slice(0, -1)
-    filterList = `${otherFilters.join(', ')}, and ${lastFilter}`
+    const commaSeparated = t('filter-changes-logic.commna', ', ')
+    filterList = t(
+      'filter-changes-logic.other-filters-and-last',
+      `{{0}}, and {{1}}`,
+      { 0: otherFilters.join(commaSeparated), 1: lastFilter }
+    )
   }
-  return `Sorry, I can't find any changed files matching the following filters: ${filterList}`
+  return t(
+    'filter-changes-logic.sorry-i-cannot-find-any-changed-files',
+    `Sorry, I can't find any changed files matching the following filters: {{0}}`,
+    { 0: filterList }
+  )
 }
 
 /**

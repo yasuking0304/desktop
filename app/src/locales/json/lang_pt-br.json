@@ -241,6 +241,17 @@
     "summary-required": "Summary (required)",
     "update-filename": "Update {{0}}"
   },
+  "changes-list-filter-options": {
+    "active-filters": "({{0}} applied)",
+    "clear-filters": "Clear filters",
+    "deleted-files-with-number": "Deleted files ({0})",
+    "excluded-from-commit-with-number": "Excluded from commit ({{0}})",
+    "filter-button-label": "Filter Options {{0}}",
+    "filter-options": "Filter Options",
+    "included-in-commit-with-number": "Included in commit ({{0}})",
+    "modified-files-with-number": "Modified files ({{0}})",
+    "new-files-with-number": "New files ({{0}})"
+  },
   "checkout": {
     "checking-out-branch": "Checking out branch {{0}}",
     "checking-out-commit": "Checking out commit",
@@ -871,7 +882,7 @@
   },
   "filter-changes-list": {
     "Adjust the filters": "Adjust the filters to see all {{0}} changes",
-    "and": " and ",
+    "clear-filters": "Clear filters",
     "discard-changes": "Discard changes",
     "discard-changes-darwin": "Discard Changes",
     "discard-selected-changes": "Discard {{0}} selected changes",
@@ -882,8 +893,6 @@
     "files": "files",
     "files-description": "{{0}}{{1}} changed {{2}}",
     "filter": "Filter",
-    "filter-options": "Filter Options",
-    "filter-options-number": "Filter Options {{0}}",
     "hidden-changes-will-be-commited": "Hidden changes will be committed.",
     "ignore-all-file-add-to-gitignore": "Ignore all {{0}} files (add to .gitignore)",
     "ignore-all-file-add-to-gitignore-darwin": "Ignore All {{0}} Files (Add to .gitignore)",
@@ -895,15 +904,22 @@
     "ignore-selected-file-add-to-gitignore-darwin": "Ignore {{0}} Selected Files (Add to .gitignore)",
     "include-selected-files": "Include selected files",
     "include-selected-files-darwin": "Include Selected Files",
-    "included-in-commit": "Included in commit ({{0}})",
-    "matching-your-filter": " matching your filter of '{{0}}'",
+    "no-files-match-your-current-filters": "No files match your current filters",
     "number-description": "{{0}} of ",
-    "one-applied": "(1 applied)",
     "open-in-external-editor": "Open in {{0}}",
-    "sorry-i-cannot-find-any-changed-files": "Sorry, I can't find any changed files{{0}}{{1}}{{2}}.",
     "stashed-changes": "Stashed Changes",
-    "summary-required": "Summary (required)",
-    "that-are-to-be-included": " that are to be included in your commit"
+    "summary-required": "Summary (required)"
+  },
+  "filter-changes-logic": {
+    "commna": ", ",
+    "deleted-files": "Deleted files",
+    "excluded-from-commit": "Excluded from commit",
+    "included-in-commit": "Included in commit",
+    "modified-files": "Modified files",
+    "new-files": "New files",
+    "one-and-another": "{{0}} and {{1}}",
+    "other-filters-and-last": "{{0}}, and {{1}}",
+    "sorry-i-cannot-find-any-changed-files": "Sorry, I can't find any changed files matching the following filters: {{0}}"
   },
   "filter-list": {
     "filter": "Filter"
