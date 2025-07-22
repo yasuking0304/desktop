@@ -32,7 +32,9 @@ export async function deleteTag(
 ): Promise<void> {
   const args = ['tag', '-d', name]
 
-  const result = await git(args, repository.path, 'deleteTag')
+  const result = await git(args, repository.path, 'deleteTag', {
+    successExitCodes: new Set([0, 1]),
+  })
   if (result.exitCode !== 0) {
     throw result.gitError
   }
@@ -43,14 +45,13 @@ export async function deleteTag(
   if (tags.some(v => v === name)) {
     const args = ['push', 'origin', '--delete', name]
 
-    const result = await git(args, repository.path, 'deleteTag')
-    if (result.exitCode !== 0) {
+    const result = await git(args, repository.path, 'deleteTag', {
+      successExitCodes: new Set([0, 1]),
+    })
+    if (result.exitCode === 1) {
       const args = ['push', 'upstream', '--delete', name]
 
-      const result = await git(args, repository.path, 'deleteTag')
-      if (result.exitCode !== 0) {
-        throw result.gitError
-      }
+      await git(args, repository.path, 'deleteTag')
     }
   }
 }
@@ -64,8 +65,9 @@ export async function getRemoteTags(
   repository: Repository
 ): Promise<Map<string, string>> {
   const args = ['ls-remote', '--tags']
+
   const tags = await git(args, repository.path, 'getRemoteTags', {
-    successExitCodes: new Set([0, 1]), // when there are no tags, git exits with 1.
+    successExitCodes: new Set([0, 1, 128]),
   })
 
   const tagsArray: Array<[string, string]> = tags.stdout
