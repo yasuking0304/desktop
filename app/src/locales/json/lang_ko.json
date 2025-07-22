@@ -242,12 +242,12 @@
     "update-filename": "업데이트 {{0}}"
   },
   "changes-list-filter-options": {
-    "active-filters": "({{0}} applied)",
-    "clear-filters": "Clear filters",
+    "active-filters": "({{0}}개 적용)",
+    "clear-filters": "필터 지우기",
     "deleted-files-with-number": "Deleted files ({0})",
     "excluded-from-commit-with-number": "Excluded from commit ({{0}})",
-    "filter-button-label": "Filter Options {{0}}",
-    "filter-options": "Filter Options",
+    "filter-button-label": "필터 옵션 {{0}}",
+    "filter-options": "필터 옵션",
     "included-in-commit-with-number": "Included in commit ({{0}})",
     "modified-files-with-number": "Modified files ({{0}})",
     "new-files-with-number": "New files ({{0}})"
@@ -904,7 +904,7 @@
     "ignore-selected-file-add-to-gitignore-darwin": "선택한 {{0}} 파일을 무시합니다(.gitignore에 추가)",
     "include-selected-files": "선택한 파일 포함",
     "include-selected-files-darwin": "선택한 파일 포함",
-    "no-files-match-your-current-filters": "No files match your current filters",
+    "no-files-match-your-current-filters": "현재 필터와 일치하는 파일이 없습니다",
     "number-description": "{{0}}/",
     "open-in-external-editor": "{{0}}에서 열기",
     "stashed-changes": "일시 퇴피한 변경",
@@ -917,9 +917,9 @@
     "included-in-commit": "Included in commit",
     "modified-files": "Modified files",
     "new-files": "New files",
-    "one-and-another": "{{0}} and {{1}}",
-    "other-filters-and-last": "{{0}}, and {{1}}",
-    "sorry-i-cannot-find-any-changed-files": "Sorry, I can't find any changed files matching the following filters: {{0}}"
+    "one-and-another": "{{0}}, {{1}}",
+    "other-filters-and-last": "{{0}}, {{1}}",
+    "sorry-i-cannot-find-any-changed-files": "죄송합니다. 다음 필터와 일치하는 변경된 파일을 찾을 수 없습니다: {{0}}"
   },
   "filter-list": {
     "filter": "필터"
