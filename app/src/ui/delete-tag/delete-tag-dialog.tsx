@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import { Dispatcher } from '../dispatcher'
 import { Repository } from '../../models/repository'
-import { Dialog, DialogContent, DialogFooter } from '../dialog'
+import { Dialog, DialogDanger, DialogContent, DialogFooter } from '../dialog'
 import { Ref } from '../lib/ref'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
 import { t } from 'i18next'
@@ -12,6 +12,7 @@ interface IDeleteTagProps {
   readonly repository: Repository
   readonly tagName: string
   readonly onDismissed: () => void
+  readonly tagsToPush?: ReadonlyArray<string>
 }
 
 interface IDeleteTagState {
@@ -31,6 +32,9 @@ export class DeleteTag extends React.Component<
   }
 
   public render() {
+    const isRemote = this.isRemoteTag()
+    const comfirmMessage = this.comfirmMessage()
+
     return (
       <Dialog
         id="delete-tag"
@@ -47,19 +51,9 @@ export class DeleteTag extends React.Component<
         role="alertdialog"
         ariaDescribedBy="delete-tag-confirmation"
       >
-        <DialogContent>
-          <p id="delete-tag-confirmation">
-            {t(
-              'delete-tag-dialog.are-you-sure-you-want-to-delete-the-tag-1',
-              'Are you sure you want to delete the tag '
-            )}
-            <Ref>{this.props.tagName}</Ref>
-            {t(
-              'delete-tag-dialog.are-you-sure-you-want-to-delete-the-tag-2',
-              '?'
-            )}
-          </p>
-        </DialogContent>
+        {isRemote && <DialogDanger>{isRemote}</DialogDanger>}
+
+        <DialogContent>{comfirmMessage}</DialogContent>
         <DialogFooter>
           <OkCancelButtonGroup
             destructive={true}
@@ -68,6 +62,57 @@ export class DeleteTag extends React.Component<
         </DialogFooter>
       </Dialog>
     )
+  }
+
+  private comfirmMessage(): JSX.Element | null {
+    const isLocalTagName =
+      this.props.tagsToPush &&
+      this.props.tagsToPush.includes(this.props.tagName)
+    if (!isLocalTagName) {
+      return (
+        <p id="delete-tag-confirmation">
+          {t(
+            'delete-tag-dialog.do-you-still-want-to-delete-the-tag',
+            'Do you still want to delete the tag?'
+          )}
+        </p>
+      )
+    }
+    return (
+      <p id="delete-tag-confirmation">
+        {t(
+          'delete-tag-dialog.are-you-sure-you-want-to-delete-the-tag-1',
+          'Are you sure you want to delete the tag '
+        )}
+        <Ref>{this.props.tagName}</Ref>
+        {t('delete-tag-dialog.are-you-sure-you-want-to-delete-the-tag-2', '?')}
+      </p>
+    )
+  }
+
+  private isRemoteTag(): JSX.Element | null {
+    const isLocalTagName =
+      this.props.tagsToPush &&
+      this.props.tagsToPush.includes(this.props.tagName)
+    if (!isLocalTagName) {
+      return (
+        <>
+          {t(
+            'delete-tag-dialog.tag-named-is-present-on-the-remote-1',
+            'A tag named '
+          )}
+          <Ref>{this.props.tagName}</Ref>
+          {t(
+            'delete-tag-dialog.tag-named-is-present-on-the-remote-2',
+            ` is present on the remote.\n
+            This tag may be in use and deleting it may cause problems.\n
+            We recommend that you consult with your system administrator\n
+            before deleting it.`
+          )}
+        </>
+      )
+    }
+    return null
   }
 
   private DeleteTag = async () => {

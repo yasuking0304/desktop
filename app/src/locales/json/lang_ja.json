@@ -241,6 +241,17 @@
     "summary-required": "概要 (必須入力)",
     "update-filename": "Update {{0}}"
   },
+  "changes-list-filter-options": {
+    "active-filters": "({{0}}件適用)",
+    "clear-filters": "フィルターのクリア",
+    "deleted-files-with-number": "削除済みファイル ({0})",
+    "excluded-from-commit-with-number": "コミットから除外 ({{0}})",
+    "filter-button-label": "フィルターオプション {{0}}",
+    "filter-options": "フィルターオプション",
+    "included-in-commit-with-number": "コミットに含まれる ({{0}})",
+    "modified-files-with-number": "変更ファイル ({{0}})",
+    "new-files-with-number": "新規ファイル ({{0}})"
+  },
   "checkout": {
     "checking-out-branch": "ブランチ {{0}} のチェックアウト",
     "checking-out-commit": "コミットのチェックアウト",
@@ -349,6 +360,7 @@
   "commit-list": {
     "copy-tag": "タグのコピー",
     "copy-tags": "複数タグのコピー",
+    "pushed-tags-should-not-be-deleted": "プッシュ済みのタグは削除するべきではありません",
     "view-on-github": "GitHub で確認",
     "view-on-github-enterprise": "GitHub Enterprise で確認"
   },
@@ -366,7 +378,6 @@
     "copy-sha": "SHA のコピー",
     "create-branch-from-commit": "コミットからブランチを作成する",
     "create-branch-from-commit-darwin": "コミットからブランチを作成する",
-    "detele-tag": "{{0}} タグを削除する",
     "empty-commit-message": "空のコミットメッセージ",
     "reorder-choose-locate-1": " ",
     "reorder-choose-locate-2": "キーで新しい場所を選択します",
@@ -778,7 +789,10 @@
     "are-you-sure-you-want-to-delete-the-tag-1": "タグ ",
     "are-you-sure-you-want-to-delete-the-tag-2": " を削除してもよろしいですか? ",
     "delete-tag": "タグの削除",
-    "delete-tag-darwin": "タグの削除"
+    "delete-tag-darwin": "タグの削除",
+    "do-you-still-want-to-delete-the-tag": "それでもタグを削除しますか?",
+    "tag-named-is-present-on-the-remote-1": "リモートに ",
+    "tag-named-is-present-on-the-remote-2": " というプッシュ済みのタグが存在します。\nこのタグが使用されている場合、削除すると問題が発生する可能性が\nあります。削除する前に、システム管理者に相談することをお勧めします。"
   },
   "diff-contents-warning": {
     "learn-more-about-bidirectional-unicode": "双方向Unicode文字についての詳細",
@@ -868,7 +882,7 @@
   },
   "filter-changes-list": {
     "Adjust the filters": "{{0}}個の変更ファイルを全て表示するにはフィルターを調整してください",
-    "and": "、",
+    "clear-filters": "フィルターのクリア",
     "discard-changes": "変更の破棄",
     "discard-changes-darwin": "変更の破棄",
     "discard-selected-changes": "選択した {{0}}つの変更を破棄します",
@@ -879,8 +893,6 @@
     "files": "ファイル",
     "files-description": "{{0}}{{1}}個の変更された{{2}}",
     "filter": "フィルター",
-    "filter-options": "フィルターオプション",
-    "filter-options-number": "フィルターオプション {{0}}",
     "hidden-changes-will-be-commited": "非表示の変更ファイルはコミットされます。",
     "ignore-all-file-add-to-gitignore": "すべての {{0}} ファイルを除外する (.gitignore に追加)",
     "ignore-all-file-add-to-gitignore-darwin": "すべての {{0}} ファイルを除外する (.gitignore に追加)",
@@ -892,15 +904,22 @@
     "ignore-selected-file-add-to-gitignore-darwin": "選択した {{0}}ファイルを無視する (.gitignore に追加)",
     "include-selected-files": "選択したファイルを含める",
     "include-selected-files-darwin": "選択したファイルを含める",
-    "included-in-commit": "コミットに含まれる ({{0}})",
-    "matching-your-filter": "フィルター \"{{0}}\" に一致する",
+    "no-files-match-your-current-filters": "現在のフィルターに一致するファイルはありません",
     "number-description": "{{0}}/",
-    "one-applied": "(1件適用)",
     "open-in-external-editor": "{{0}} で開く",
-    "sorry-i-cannot-find-any-changed-files": "申し訳ありませんが、{{0}}{{1}}{{2}}変更ファイルは見つかりません。",
     "stashed-changes": "一時退避した変更",
-    "summary-required": "概要 (必須入力)",
-    "that-are-to-be-included": "コミットに含まれる"
+    "summary-required": "概要 (必須入力)"
+  },
+  "filter-changes-logic": {
+    "commna": "、",
+    "deleted-files": "削除済みファイル",
+    "excluded-from-commit": "コミットから除外",
+    "included-in-commit": "コミットに含まれる",
+    "modified-files": "変更ファイル",
+    "new-files": "新規ファイル",
+    "one-and-another": "{{0}}、{{1}}",
+    "other-filters-and-last": "{{0}}、{{1}}",
+    "sorry-i-cannot-find-any-changed-files": "申し訳ありませんが、フィルター条件に一致する変更ファイルは見つかりません: {{0}}"
   },
   "filter-list": {
     "filter": "フィルター"

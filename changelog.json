@@ -1,5 +1,19 @@
 {
   "releases": {
+    "3.5.2": [
+      "[Fixed] Fix the crash that sometimes occurs when opening Pull Request-related notifications - #20761",
+      "[Fixed] Ensure the cursor type on links is pointer - #20766. Thanks @huanfe1!",
+      "[Fixed] Fix CmdOrCtrl+Enter in squash dialog - #20716",
+      "[Fixed] Keyboard selection in the repository list now persists when the list of repositories update  - #20672",
+      "[Fixed] Organization is no longer prefixed to repositories with aliases in the recent group - #20651",
+      "[Improved] Tutorial responsively adapts at high zoom levels - #20691",
+      "[Improved] Add the ability to filter changed files by status (modified, new, deleted, untracked) as well as by file exclusion from commit  - #20537. Thanks @Gr8z!"
+    ],
+    "3.5.2-beta2": [
+      "[Fixed] Fix the crash that sometimes occurs when opening Pull Request-related notifications - #20761",
+      "[Fixed] Ensure the cursor type on links is pointer - #20766. Thanks @huanfe1!",
+      "[Improved] Add the ability to filter changed files by status (modified, new, deleted, untracked) as well as by file exclusion from commit  - #20537. Thanks @Gr8z!"
+    ],
     "3.5.2-beta1": [
       "[Fixed] Use all changes to generate a commit message when amending commits - #20664",
       "[Fixed] Fix CmdOrCtrl+Enter in squash dialog - #20716",

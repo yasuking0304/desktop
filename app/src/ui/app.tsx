@@ -2055,12 +2055,19 @@ export class App extends React.Component<IAppProps, IAppState> {
         )
       }
       case PopupType.DeleteTag: {
+        const selection = this.state.selectedState
+        const state =
+          !selection || selection.type !== SelectionType.Repository
+            ? null
+            : selection.state
+        const tagsToPush = selection == null ? [] : state?.tagsToPush || []
         return (
           <DeleteTag
             key="delete-tag"
             repository={popup.repository}
             onDismissed={onPopupDismissedFn}
             dispatcher={this.props.dispatcher}
+            tagsToPush={tagsToPush}
             tagName={popup.tagName}
           />
         )

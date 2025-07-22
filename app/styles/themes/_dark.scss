@@ -358,6 +358,12 @@ body.theme-dark {
   --syntax-header-color: #{$red-300};
   --syntax-quote-color: #{$green-400};
 
+  // Colors for form dangerous actions
+  --danger-color: #{$red};
+  --form-danger-background: #{darken($red-900, 3%)};
+  --form-danger-border-color: #{$red-900};
+  --form-danger-text-color: var(--text-color);
+
   // Colors for form errors
   --error-color: #{$red};
   --form-error-background: #{darken($red-900, 3%)};

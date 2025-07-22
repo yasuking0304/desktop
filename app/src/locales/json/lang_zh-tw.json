@@ -241,6 +241,17 @@
     "summary-required": "摘要(必填)",
     "update-filename": "更新 {{0}}"
   },
+  "changes-list-filter-options": {
+    "active-filters": "({{0}}已申請)",
+    "clear-filters": "清除過濾條件",
+    "deleted-files-with-number": "已刪除的文件 ({0})",
+    "excluded-from-commit-with-number": "排除在提交之外 ({{0}})",
+    "filter-button-label": "篩選選項 {{0}}",
+    "filter-options": "篩選選項",
+    "included-in-commit-with-number": "包含在提交中 ({{0}})",
+    "modified-files-with-number": "修改的文件 ({{0}})",
+    "new-files-with-number": "新文件 ({{0}})"
+  },
   "checkout": {
     "checking-out-branch": "檢出分支 {{0}}",
     "checking-out-commit": "檢出提交",
@@ -349,6 +360,7 @@
   "commit-list": {
     "copy-tag": "複製標記",
     "copy-tags": "複製標記",
+    "pushed-tags-should-not-be-deleted": "請勿刪除已推播的標籤",
     "view-on-github": "在 GitHub 上結帳",
     "view-on-github-enterprise": "在 GitHub Enterprise 上結帳"
   },
@@ -366,7 +378,6 @@
     "copy-sha": "複製 SHA",
     "create-branch-from-commit": "從提交建立分支",
     "create-branch-from-commit-darwin": "從提交建立分支",
-    "detele-tag": "刪除標記 {{0}}",
     "empty-commit-message": "空的提交資料",
     "reorder-choose-locate-1": "使用 ",
     "reorder-choose-locate-2": "選擇新位置。",
@@ -778,7 +789,10 @@
     "are-you-sure-you-want-to-delete-the-tag-1": "您確定要刪除標記 ",
     "are-you-sure-you-want-to-delete-the-tag-2": "嗎?",
     "delete-tag": "刪除標記",
-    "delete-tag-darwin": "刪除標記"
+    "delete-tag-darwin": "刪除標記",
+    "do-you-still-want-to-delete-the-tag": "您仍要刪除該標籤嗎?",
+    "tag-named-is-present-on-the-remote-1": "有一個標籤 ",
+    "tag-named-is-present-on-the-remote-2": " 被推送到遠端。 \n如果此標籤正在使用中, 刪除它可能會導致問題。 \n我們建議您在刪除之前諮詢系統管理員。"
   },
   "diff-contents-warning": {
     "learn-more-about-bidirectional-unicode": "了解有關雙向 Unicode 字元的更多資訊",
@@ -868,7 +882,7 @@
   },
   "filter-changes-list": {
     "Adjust the filters": "調整過濾器以結帳所有 {{0}} 個變更",
-    "and": ", ",
+    "clear-filters": "清除過濾條件",
     "discard-changes": "放棄更改",
     "discard-changes-darwin": "放棄更改",
     "discard-selected-changes": "放棄 {{0}}個選定的更改",
@@ -879,8 +893,6 @@
     "files": "檔案",
     "files-description": "{{1}}個已更改{{2}}{{0}}",
     "filter": "篩選",
-    "filter-options": "篩選選項",
-    "filter-options-number": "篩選選項 {{0}}",
     "hidden-changes-will-be-commited": "隱藏的更改將被提交。",
     "ignore-all-file-add-to-gitignore": "忽略所有 {{0}}檔案 (新增至 .gitignore)",
     "ignore-all-file-add-to-gitignore-darwin": "忽略所有 {{0}}檔 (新增至 .gitignore)",
@@ -892,15 +904,22 @@
     "ignore-selected-file-add-to-gitignore-darwin": "忽略 {{0}}個選定的檔案 (新增至 .gitignore)",
     "include-selected-files": "包含選定的檔案",
     "include-selected-files-darwin": "包含選定的檔案",
-    "included-in-commit": "包含在提交中 ({{0}})",
-    "matching-your-filter": "符合您的 \"{{0}} \"過濾器",
+    "no-files-match-your-current-filters": "沒有檔案符合您目前的過濾器",
     "number-description": "中的 {{0}} 個",
-    "one-applied": "(1已申請)",
     "open-in-external-editor": "在 {{0}} 中開啟",
-    "sorry-i-cannot-find-any-changed-files": "抱歉, 我找不到任何{{0}}{{1}}{{2}}更改的檔案。",
     "stashed-changes": "隱藏的變更",
-    "summary-required": "摘要(必填)",
-    "that-are-to-be-included": "要包含在您的提交中"
+    "summary-required": "摘要(必填)"
+  },
+  "filter-changes-logic": {
+    "commna": "、",
+    "deleted-files": "已刪除的文件",
+    "excluded-from-commit": "排除在提交之外",
+    "included-in-commit": "包含在提交中",
+    "modified-files": "修改的文件",
+    "new-files": "新文件",
+    "one-and-another": "{{0}}、{{1}}",
+    "other-filters-and-last": "{{0}}、{{1}}",
+    "sorry-i-cannot-find-any-changed-files": "抱歉, 我找不到任何符合以下過濾器的已更改檔案: {{0}}"
   },
   "filter-list": {
     "filter": "篩選"
