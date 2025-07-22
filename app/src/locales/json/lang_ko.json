@@ -244,13 +244,13 @@
   "changes-list-filter-options": {
     "active-filters": "({{0}}개 적용)",
     "clear-filters": "필터 지우기",
-    "deleted-files-with-number": "Deleted files ({0})",
-    "excluded-from-commit-with-number": "Excluded from commit ({{0}})",
+    "deleted-files-with-number": "삭제된 파일 ({0})",
+    "excluded-from-commit-with-number": "커밋에서 제외됨 ({{0}})",
     "filter-button-label": "필터 옵션 {{0}}",
     "filter-options": "필터 옵션",
-    "included-in-commit-with-number": "Included in commit ({{0}})",
-    "modified-files-with-number": "Modified files ({{0}})",
-    "new-files-with-number": "New files ({{0}})"
+    "included-in-commit-with-number": "커밋에 포함됨 ({{0}})",
+    "modified-files-with-number": "수정된 파일 ({{0}})",
+    "new-files-with-number": "새 파일 ({{0}})"
   },
   "checkout": {
     "checking-out-branch": "{{0}} 브랜치 체크아웃",
@@ -790,9 +790,9 @@
     "are-you-sure-you-want-to-delete-the-tag-2": "을 삭제하시겠습니까?",
     "delete-tag": "태그 삭제",
     "delete-tag-darwin": "태그 삭제",
-    "do-you-still-want-to-delete-the-tag": "Do you still want to delete the tag?",
-    "tag-named-is-present-on-the-remote-1": "There is a tag ",
-    "tag-named-is-present-on-the-remote-2": " pushed to the remote.\nIf this tag is in use, removing it may cause problems.\nWe recommend that you consult with your system administrator\nbefore deleting it."
+    "do-you-still-want-to-delete-the-tag": "그래도 태그를 삭제하시겠습니까?",
+    "tag-named-is-present-on-the-remote-1": "원격으로 ",
+    "tag-named-is-present-on-the-remote-2": " 라는 푸시 태그가 있습니다.\n이 태그를 사용하는 경우 삭제할 때 문제가 발생할 수 있습니다.\n삭제하기 전에 시스템 관리자와 상의하는 것이 좋습니다."
   },
   "diff-contents-warning": {
     "learn-more-about-bidirectional-unicode": "양방향 유니코드 문자에 대해 자세히 알아보기",
@@ -912,11 +912,11 @@
   },
   "filter-changes-logic": {
     "commna": ", ",
-    "deleted-files": "Deleted files",
-    "excluded-from-commit": "Excluded from commit",
-    "included-in-commit": "Included in commit",
-    "modified-files": "Modified files",
-    "new-files": "New files",
+    "deleted-files": "삭제된 파일",
+    "excluded-from-commit": "커밋에서 제외됨",
+    "included-in-commit": "커밋에 포함됨",
+    "modified-files": "수정된 파일",
+    "new-files": "새 파일",
     "one-and-another": "{{0}}, {{1}}",
     "other-filters-and-last": "{{0}}, {{1}}",
     "sorry-i-cannot-find-any-changed-files": "죄송합니다. 다음 필터와 일치하는 변경된 파일을 찾을 수 없습니다: {{0}}"
