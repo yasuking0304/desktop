@@ -256,13 +256,14 @@ export class ChangesListFilterOptions extends React.Component<
     )
     const hasActiveFilters = activeFiltersCount > 0
     const activeFiltersText = hasActiveFilters
-      ? t('changes-list-filter-options.active-filters',
-         '({{0}} applied)',
-         { 0: activeFiltersCount })
+      ? t('changes-list-filter-options.active-filters', '({{0}} applied)', {
+          0: activeFiltersCount,
+        })
       : ''
     const buttonTextLabel = t(
       'changes-list-filter-options.filter-button-label',
-      `Filter Options {{0}}`, {0: activeFiltersText}
+      `Filter Options {{0}}`,
+      { 0: activeFiltersText }
     )
 
     return (

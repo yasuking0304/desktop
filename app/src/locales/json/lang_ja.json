@@ -883,6 +883,10 @@
   "filter-changes-list": {
     "Adjust the filters": "{{0}}個の変更ファイルを全て表示するにはフィルターを調整してください",
     "clear-filters": "フィルターのクリア",
+    "confirm-discard-all-changes": "すべての変更を破棄する…",
+    "confirm-discard-all-changes-darwin": "すべての変更を破棄する…",
+    "confirm-stash-all-changes": "すべての変更を一時退避する…",
+    "confirm-stash-all-changes-darwin": "すべての変更を一時退避する…",
     "discard-changes": "変更の破棄",
     "discard-changes-darwin": "変更の破棄",
     "discard-selected-changes": "選択した {{0}}つの変更を破棄します",
@@ -907,6 +911,8 @@
     "no-files-match-your-current-filters": "現在のフィルターに一致するファイルはありません",
     "number-description": "{{0}}/",
     "open-in-external-editor": "{{0}} で開く",
+    "stash-all-changes": "すべての変更を一時退避する",
+    "stash-all-changes-darwin": "すべての変更を一時退避する",
     "stashed-changes": "一時退避した変更",
     "summary-required": "概要 (必須入力)"
   },
@@ -1002,6 +1008,12 @@
     "gitignore-message-1": " ",
     "gitignore-message-2": " を編集します。このファイルには、Git がコミット時に除外したいファイルとディレクトリを指定します。既にコミットされているファイルは影響を受けません。",
     "placeholder-ignored-files": "除外ファイル"
+  },
+  "index": {
+    "show-diff": "差分を表示",
+    "show-diff-darwin": "差分を表示",
+    "the-diff-is-too-large": "差分が大きすぎるためデフォルトでは表示しません。",
+    "you-can-try-to-show-it-anyway": "無理やり表示することも可能ですが、パフォーマンスに悪影響が出る可能性があります。"
   },
   "initialize-lfs": {
     "git-lfs": "Git LFS",
