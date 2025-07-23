@@ -527,15 +527,26 @@ export class FilterChangesList extends React.Component<
       hasConflictedFiles(this.props.workingDirectory)
 
     const stashAllChangesLabel = __DARWIN__
-      ? 'Stash All Changes'
-      : 'Stash all changes'
+      ? t('filter-changes-list.stash-all-changes-darwin', 'Stash All Changes')
+      : t('filter-changes-list.stash-all-changes', 'Stash all changes')
     const confirmStashAllChangesLabel = __DARWIN__
-      ? 'Stash All Changes…'
-      : 'Stash all changes…'
+      ? t(
+          'filter-changes-list.confirm-stash-all-changes-darwin',
+          'Stash All Changes…'
+        )
+      : t('filter-changes-list.confirm-stash-all-changes', 'Stash all changes…')
 
     const items: IMenuItem[] = [
       {
-        label: __DARWIN__ ? 'Discard All Changes…' : 'Discard all changes…',
+        label: __DARWIN__
+          ? t(
+              'filter-changes-list.confirm-discard-all-changes-darwin',
+              'Discard All Changes…'
+            )
+          : t(
+              'filter-changes-list.confirm-discard-all-changes',
+              'Discard all changes…'
+            ),
         action: this.onDiscardAllChanges,
         enabled: hasLocalChanges,
       },

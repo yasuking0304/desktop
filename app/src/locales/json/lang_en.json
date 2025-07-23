@@ -883,6 +883,10 @@
   "filter-changes-list": {
     "Adjust the filters": "Adjust the filters to see all {{0}} changes",
     "clear-filters": "Clear filters",
+    "confirm-discard-all-changes": "Discard all changes…",
+    "confirm-discard-all-changes-darwin": "Discard All Changes…",
+    "confirm-stash-all-changes": "Stash all changes…",
+    "confirm-stash-all-changes-darwin": "Stash All Changes…",
     "discard-changes": "Discard changes",
     "discard-changes-darwin": "Discard Changes",
     "discard-selected-changes": "Discard {{0}} selected changes",
@@ -907,6 +911,8 @@
     "no-files-match-your-current-filters": "No files match your current filters",
     "number-description": "{{0}} of ",
     "open-in-external-editor": "Open in {{0}}",
+    "stash-all-changes": "Stash all changes",
+    "stash-all-changes-darwin": "Stash All Changes",
     "stashed-changes": "Stashed Changes",
     "summary-required": "Summary (required)"
   },
@@ -1002,6 +1008,12 @@
     "gitignore-message-1": "Editing ",
     "gitignore-message-2": ". This file specifies intentionally untracked files that Git should ignore. Files already tracked by Git are not affected. ",
     "placeholder-ignored-files": "Ignored files"
+  },
+  "index": {
+    "show-diff": "Show diff",
+    "show-diff-darwin": "Show Diff",
+    "the-diff-is-too-large": "The diff is too large to be displayed by default.",
+    "you-can-try-to-show-it-anyway": "You can try to show it anyway, but performance may be negatively impacted."
   },
   "initialize-lfs": {
     "git-lfs": "Git LFS",

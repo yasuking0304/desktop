@@ -33,6 +33,7 @@ import { IFileContents } from './syntax-highlighting'
 import { SubmoduleDiff } from './submodule-diff'
 import { Octicon } from '../octicons'
 import * as OcticonSymbol from '../octicons/octicons.generated'
+import { t } from 'i18next'
 
 // image used when no diff is displayed
 const NoDiffImage = encodePathAsUrl(__dirname, 'static/ufo-alert.svg')
@@ -180,14 +181,24 @@ export class Diff extends React.Component<IDiffProps, IDiffState> {
       <div className="panel empty large-diff">
         <img src={NoDiffImage} className="blankslate-image" alt="" />
         <div className="description">
-          <p>The diff is too large to be displayed by default.</p>
           <p>
-            You can try to show it anyway, but performance may be negatively
-            impacted.
+            {t(
+              'index.the-diff-is-too-large',
+              'The diff is too large to be displayed by default.'
+            )}
+          </p>
+          <p>
+            {t(
+              'index.you-can-try-to-show-it-anyway',
+              `You can try to show it anyway, but performance may be negatively
+              impacted.`
+            )}
           </p>
         </div>
         <Button onClick={this.showLargeDiff}>
-          {__DARWIN__ ? 'Show Diff' : 'Show diff'}
+          {__DARWIN__
+            ? t('index.show-diff-darwin', 'Show Diff')
+            : t('index.show-diff', 'Show diff')}
         </Button>
       </div>
     )
