@@ -1,6 +1,8 @@
 import * as React from 'react'
 import classNames from 'classnames'
 import { RowIndexPath } from './list-row-index-path'
+import { Tooltip } from '../tooltip'
+import { createObservableRef } from '../observable-ref'
 
 interface IListRowProps {
   /** whether or not the section to which this row belongs has a header */
@@ -114,6 +116,18 @@ interface IListRowProps {
    * with `listitem` as the role for the items so browse mode can navigate them.
    */
   readonly role?: 'option' | 'listitem' | 'presentation'
+
+  /**
+   * Optional render function for the keyboard focus tooltip
+   *
+   * This is used to render a tooltip when the row is focused via keyboard
+   * navigation. This should be provided if the row has tooltip content that is
+   * only accessible via the mouse. The content in the mouse tooltip(s) will
+   * need to be in the keyboard focus tooltip as well.
+   */
+  readonly renderKeyboardFocusTooltip?: (
+    indexPath: RowIndexPath
+  ) => JSX.Element | string | null
 }
 
 export class ListRow extends React.Component<IListRowProps, {}> {
@@ -124,9 +138,41 @@ export class ListRow extends React.Component<IListRowProps, {}> {
   // event, with no keyDown events (since that keyDown event should've happened
   // in the component that previously had focus).
   private keyboardFocusDetectionState: 'ready' | 'failed' | 'focused' = 'ready'
+  private readonly listItemRef = createObservableRef<HTMLDivElement>()
 
-  private onRef = (elem: HTMLDivElement | null) => {
-    this.props.onRowRef?.(this.props.rowIndex, elem)
+  private renderKeyboardFocusTooltip() {
+    if (
+      !this.props.renderKeyboardFocusTooltip ||
+      !this.props.renderKeyboardFocusTooltip(this.props.rowIndex)
+    ) {
+      return null
+    }
+
+    return (
+      <Tooltip
+        ancestorFocused={this.props.selected}
+        target={this.listItemRef}
+        openOnFocus={true}
+        onlyShowOnKeyboardFocus={true}
+        delay={1000}
+        tooltipOffset={
+          new DOMRect(
+            this.listItemRef.current
+              ? this.listItemRef.current?.clientWidth / -2 + 20
+              : 0,
+            0
+          )
+        }
+      >
+        {this.props.renderKeyboardFocusTooltip(this.props.rowIndex)}
+      </Tooltip>
+    )
+  }
+
+  public componentDidMount() {
+    this.listItemRef.subscribe(elem => {
+      this.props.onRowRef?.(this.props.rowIndex, elem)
+    })
   }
 
   private onRowMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -234,7 +280,7 @@ export class ListRow extends React.Component<IListRowProps, {}> {
         aria-label={this.props.ariaLabel}
         className={rowClassName}
         tabIndex={tabIndex}
-        ref={this.onRef}
+        ref={this.listItemRef}
         onMouseDown={this.onRowMouseDown}
         onMouseUp={this.onRowMouseUp}
         onClick={this.onRowClick}
@@ -255,6 +301,7 @@ export class ListRow extends React.Component<IListRowProps, {}> {
             className="list-item-content-wrapper"
             aria-hidden={this.props.ariaLabel !== undefined}
           >
+            {this.renderKeyboardFocusTooltip()}
             {children}
           </div>
         }
