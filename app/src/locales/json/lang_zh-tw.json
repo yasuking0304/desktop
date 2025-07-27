@@ -1010,9 +1010,16 @@
     "placeholder-ignored-files": "忽略的檔案"
   },
   "index": {
+    "file-in-conflict": "The file is in conflict and must be resolved via the command line.",
+    "no-content-changes-found": "內容沒有任何變化。",
+    "only-whitespace-changes-found": "只能使用製表符代碼或半角空格進行更改。",
     "show-diff": "顯示差異",
     "show-diff-darwin": "顯示差異",
-    "the-diff-is-too-large": "差異太大, 預設無法顯示。",
+    "the-diff-is-too-large": "差異太大, 無法顯示。",
+    "the-diff-is-too-large-by-default": "差異太大, 預設無法顯示。",
+    "the-file-is-empty": "文件大小為零",
+    "the-file-was-renamed": "The file was renamed and includes changes.",
+    "the-file-was-renamed-but-not-changed": "The file was renamed but not changed.",
     "you-can-try-to-show-it-anyway": "可以強制顯示, 但這可能會對效能產生負面影響。"
   },
   "initialize-lfs": {

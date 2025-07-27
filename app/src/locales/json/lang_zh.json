@@ -1010,9 +1010,16 @@
     "placeholder-ignored-files": "忽視的文件"
   },
   "index": {
+    "file-in-conflict": "The file is in conflict and must be resolved via the command line.",
+    "no-content-changes-found": "内容没有任何变化。",
+    "only-whitespace-changes-found": "只能使用制表符代码或半角空格进行更改。",
     "show-diff": "显示差异",
     "show-diff-darwin": "显示差异",
-    "the-diff-is-too-large": "差异太大，默认情况下无法显示。",
+    "the-diff-is-too-large": "差异太大, 无法显示。",
+    "the-diff-is-too-large-by-default": "差异太大, 默认情况下无法显示。",
+    "the-file-is-empty": "文件大小为零",
+    "the-file-was-renamed": "The file was renamed and includes changes.",
+    "the-file-was-renamed-but-not-changed": "The file was renamed but not changed.",
     "you-can-try-to-show-it-anyway": "可以强制显示, 但这可能会对性能产生负面影响。"
   },
   "initialize-lfs": {

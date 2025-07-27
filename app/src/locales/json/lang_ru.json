@@ -1010,9 +1010,16 @@
     "placeholder-ignored-files": "Ignored files"
   },
   "index": {
+    "file-in-conflict": "The file is in conflict and must be resolved via the command line.",
+    "no-content-changes-found": "No content changes found.",
+    "only-whitespace-changes-found": "Only whitespace changes found.",
     "show-diff": "Show diff",
     "show-diff-darwin": "Show Diff",
-    "the-diff-is-too-large": "The diff is too large to be displayed by default.",
+    "the-diff-is-too-large": "The diff is too large to be displayed.",
+    "the-diff-is-too-large-by-default": "The diff is too large to be displayed by default.",
+    "the-file-is-empty": "The file is empty",
+    "the-file-was-renamed": "The file was renamed and includes changes.",
+    "the-file-was-renamed-but-not-changed": "The file was renamed but not changed.",
     "you-can-try-to-show-it-anyway": "You can try to show it anyway, but performance may be negatively impacted."
   },
   "initialize-lfs": {

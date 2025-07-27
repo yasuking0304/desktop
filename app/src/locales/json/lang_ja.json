@@ -1010,9 +1010,16 @@
     "placeholder-ignored-files": "除外ファイル"
   },
   "index": {
+    "file-in-conflict": "ファイルが競合しているため、コマンドライン経由で解決する必要があります。",
+    "no-content-changes-found": "コンテンツの変更はありませんでした。",
+    "only-whitespace-changes-found": "タブコードや半角スペースによる変更のみです。",
     "show-diff": "差分を表示",
     "show-diff-darwin": "差分を表示",
-    "the-diff-is-too-large": "差分が大きすぎるためデフォルトでは表示しません。",
+    "the-diff-is-too-large": "差分が大きすぎるため表示できません。",
+    "the-diff-is-too-large-by-default": "差分が大きすぎるためデフォルトでは表示しません。",
+    "the-file-is-empty": "このファイルはサイズゼロです",
+    "the-file-was-renamed": "ファイル名が変更され、内容も変更されました。",
+    "the-file-was-renamed-but-not-changed": "ファイル名は変更されましたが、内容は変更されていません。",
     "you-can-try-to-show-it-anyway": "無理やり表示することも可能ですが、パフォーマンスに悪影響が出る可能性があります。"
   },
   "initialize-lfs": {

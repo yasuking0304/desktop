@@ -183,7 +183,7 @@ export class Diff extends React.Component<IDiffProps, IDiffState> {
         <div className="description">
           <p>
             {t(
-              'index.the-diff-is-too-large',
+              'index.the-diff-is-too-large-by-default',
               'The diff is too large to be displayed by default.'
             )}
           </p>
@@ -208,7 +208,12 @@ export class Diff extends React.Component<IDiffProps, IDiffState> {
     return (
       <div className="panel empty large-diff">
         <img src={NoDiffImage} alt="" />
-        <p>The diff is too large to be displayed.</p>
+        <p>
+          {t(
+            'index.the-diff-is-too-large',
+            'The diff is too large to be displayed.'
+          )}
+        </p>
       </div>
     )
   }
@@ -233,7 +238,11 @@ export class Diff extends React.Component<IDiffProps, IDiffState> {
         this.props.file.status.kind === AppFileStatusKind.New ||
         this.props.file.status.kind === AppFileStatusKind.Untracked
       ) {
-        return <div className="panel empty">The file is empty</div>
+        return (
+          <div className="panel empty">
+            {t('index.the-file-is-empty', 'The file is empty')}
+          </div>
+        )
       }
 
       if (this.props.file.status.kind === AppFileStatusKind.Renamed) {
@@ -242,13 +251,19 @@ export class Diff extends React.Component<IDiffProps, IDiffState> {
           return (
             <div className="panel renamed">
               <Octicon symbol={OcticonSymbol.alert} />
-              The file was renamed and includes changes.
+              {t(
+                'index.the-file-was-renamed',
+                'The file was renamed and includes changes.'
+              )}
             </div>
           )
         }
         return (
           <div className="panel renamed">
-            The file was renamed but not changed
+            {t(
+              'index.the-file-was-renamed-but-not-changed',
+              'The file was renamed but not changed.'
+            )}
           </div>
         )
       }
@@ -259,16 +274,30 @@ export class Diff extends React.Component<IDiffProps, IDiffState> {
       ) {
         return (
           <div className="panel empty">
-            The file is in conflict and must be resolved via the command line.
+            {t(
+              'index.file-in-conflict',
+              'The file is in conflict and must be resolved via the command line.'
+            )}
           </div>
         )
       }
 
       if (this.props.hideWhitespaceInDiff) {
-        return <div className="panel empty">Only whitespace changes found</div>
+        return (
+          <div className="panel empty">
+            {t(
+              'index.only-whitespace-changes-found',
+              'Only whitespace changes found.'
+            )}
+          </div>
+        )
       }
 
-      return <div className="panel empty">No content changes found</div>
+      return (
+        <div className="panel empty">
+          {t('index.no-content-changes-found', 'No content changes found.')}
+        </div>
+      )
     }
 
     return this.renderTextDiff(diff)
