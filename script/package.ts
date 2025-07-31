@@ -1,8 +1,12 @@
 /* eslint-disable no-sync */
 
 import * as cp from 'child_process'
+import * as crypto from 'crypto'
 import * as path from 'path'
 import * as electronInstaller from 'electron-winstaller'
+import { createReadStream } from 'fs'
+import { writeFile } from 'fs/promises'
+import { pathExists, chmod } from 'fs-extra'
 import { getProductName, getCompanyName } from '../app/package-info'
 import {
   getDistPath,
@@ -24,6 +28,10 @@ import { getVersion } from '../app/package-info'
 import { rename } from 'fs/promises'
 import { join } from 'path'
 import { assertNonNullable } from '../app/src/lib/fatal-error'
+
+import { packageElectronBuilder } from './package-electron-builder'
+import { packageDebian } from './package-debian'
+import { packageRedhat } from './package-redhat'
 
 const distPath = getDistPath()
 const productName = getProductName()
@@ -165,115 +173,73 @@ function packageWindows() {
     })
 }
 
-async function packageLinux() {
-  const yaml_name = 'GitHub-Desktop.yml'
-  const out_name = `./out/GitHub_Desktop-${getVersion()}.*.AppImage`
-  const template = `app: github-desktop
+function getSha256Checksum(fullPath: string): Promise<string> {
+  return new Promise<string>((resolve, reject) => {
+    const algo = 'sha256'
+    const shasum = crypto.createHash(algo)
 
-ingredients:
-  dist: trusty
-  script:
-    - rm -fr ./github-desktop
-    - mkdir -p ./github-desktop/
-    - cp -fr ${getDistRoot()}/desktop-linux-x64/* ./github-desktop/
-
-script:
-  - mkdir -p opt/github-desktop;
-  - mkdir -p usr/bin;
-  - cp -r ../github-desktop/* opt/github-desktop;
-  - find . -name 32x32.png -exec cp {} usr/share/icons/hicolor/32x32/apps/github-desktop.png \\;
-  - find . -name 64x64.png -exec cp {} usr/share/icons/hicolor/64x64/apps/github-desktop.png \\;
-  - find . -name 128x128.png -exec cp {} usr/share/icons/hicolor/128x128/apps/github-desktop.png \\;
-  - find . -name 256x256.png -exec cp {} usr/share/icons/hicolor/256x256/apps/github-desktop.png \\;
-  - find . -name 512x512.png -exec cp {} usr/share/icons/hicolor/512x512/apps/github-desktop.png \\;
-  - find . -name 1024x1024.png -exec cp {} usr/share/icons/hicolor/1024x1024/apps/github-desktop.png \\;
-  - find . -name icon-logo.png -exec cp {} github-desktop.png \\;
-  - cat > ./usr/bin/github <<\\EOF
-  - #!/bin/bash
-  - HERE="$(dirname "$(readlink -f "$\{0\}")")"
-  - cd \${HERE}
-  - cd ../..
-  - CONTENTS="./opt/github-desktop"
-  - cd \${CONTENTS}
-  - # pwd
-  - BINARY_NAME="desktop"
-  - ELECTRON="./\${BINARY_NAME}"
-  - CLI="./resources/app/cli.js"
-  - # echo "\${ELECTRON}" "\${CLI}" "$@"
-  - "\${ELECTRON}" "$\{CLI}" "$@"
-  - exit $?
-  - EOF
-  - chmod a+x ./usr/bin/github
-  - cat > github-desktop.desktop <<\\EOF
-  - [Desktop Entry]
-  - Name=GitHub Desktop
-  - Comment=Simple collaboration from your desktop.
-  - Comment[es]=Trabaja con GitHub desde tu escritorio.
-  - Comment[eu]=GitHub-ekin lan egin zure ordenagailutik.
-  - Comment[fr]=GitHub Desktop facilite la collaboration
-  - Comment[ja]=GitHub Desktop で 簡単にコラボレーションできる環境に
-  - Comment[ko]=GitHub Desktop으로 손쉽게 협업할 수 있는 환경
-  - Comment[pt]=O GitHub Desktop facilita a colaboração
-  - Comment[pt-br]=O GitHub Desktop facilita a colaboração
-  - Comment[zh]=GitHub Desktop 让协作变得简单
-  - Comment[zh-cn]=GitHub Desktop 让协作变得简单
-  - Comment[zh-hk]=GitHub Desktop 讓協作變得簡單
-  - Comment[zh-mo]=GitHub Desktop 讓協作變得簡單
-  - Comment[zh-sg]=GitHub Desktop 讓協作變得簡單
-  - Comment[zh-tw]=GitHub Desktop 讓協作變得簡單
-  - Exec=github %U
-  - Terminal=false
-  - Type=Application
-  - Icon=github-desktop
-  - Categories=Development;
-  - MimeType=x-scheme-handler/x-github-client;x-scheme-handler/x-github-desktop-auth;x-scheme-handler/x-github-desktop-dev-auth;
-  - EOF
-  - echo "${getVersion()}" > ../VERSION
-`
-  const pkg2appimage_path = '../pkg2appimage/recipes'
-  const pkg2appimage_file = '../pkg2appimage/pkg2appimage'
-  console.log('Create yaml file…')
-  writeFileSync(path.resolve(__dirname, yaml_name), template)
-  const exit_code = await new Promise((resolve, _reject) => {
-    if (existsSync(pkg2appimage_file) && existsSync(pkg2appimage_path)) {
-      console.log('Create .AppImage file…')
-      writeFileSync(path.resolve(pkg2appimage_path, yaml_name), template)
-      console.log(`cd ../pkg2appimage`)
-      process.chdir(path.dirname(pkg2appimage_file))
-      const spawn = cp.spawn(`./pkg2appimage ./recipes/${yaml_name}`, {
-        shell: true,
-        stdio: 'inherit',
-      })
-      spawn.on('close', code => {
-        if (code === 0) {
-          console.log(
-            `cp -f ${out_name} ${getDistRoot()}/GitHub_Desktopx86_64.AppImage`
-          )
-          cp.execSync(
-            `cp -f ${out_name} ${getDistRoot()}/GitHub_Desktopx86_64.AppImage`
-          )
-          process.chdir(__dirname)
-        }
-        resolve(code)
-      })
-    } else {
-      console.log(`usage:`)
-      console.log(
-        `0. git clone https://github.com/AppImageCommunity/pkg2appimage.git pkg2appimage`
-      )
-      console.log(``)
-      console.log(`1. pkg2appimage files is here.`)
-      console.log(
-        `2. cp ${path.resolve(
-          __dirname,
-          'GitHub-Desktop.yml'
-        )} <pkg2appimage/recipes>`
-      )
-      console.log(`3. cd <pkg2appimage>`)
-      console.log(`4. ./pkg2appimage ./recipes/GitHub-Desktop.yml`)
-      console.log(``)
-      resolve(0)
-    }
+    const s = createReadStream(fullPath)
+    s.on('data', function (d) {
+      shasum.update(d)
+    })
+    s.on('error', err => {
+      reject(err)
+    })
+    s.on('end', function () {
+      const d = shasum.digest('hex')
+      resolve(d)
+    })
   })
-  return exit_code
+}
+
+async function generateChecksums(files: Array<string>) {
+  const distRoot = getDistRoot()
+
+  const checksums = new Map<string, string>()
+
+  for (const f of files) {
+    const checksum = await getSha256Checksum(f)
+    checksums.set(f, checksum)
+  }
+
+  let checksumsText = `Checksums: \n`
+
+  for (const [fullPath, checksum] of checksums) {
+    const fileName = path.basename(fullPath)
+    checksumsText += `${checksum} - ${fileName}\n`
+
+    const checksumFilePath = `${fullPath}.sha256`
+    await writeFile(checksumFilePath, checksum)
+  }
+
+  const checksumFile = path.join(distRoot, 'checksums.txt')
+
+  await writeFile(checksumFile, checksumsText)
+}
+
+async function packageLinux() {
+  const helperPath = path.join(getDistPath(), 'chrome-sandbox')
+  const exists = await pathExists(helperPath)
+
+  if (exists) {
+    console.log('Updating file mode for chrome-sandbox…')
+    await chmod(helperPath, 0o4755)
+  }
+  try {
+    const files = await packageElectronBuilder()
+    const debianPackage = await packageDebian()
+    const redhatPackage = await packageRedhat()
+
+    const installers = [...files, debianPackage, redhatPackage]
+
+    console.log(`Installers created:`)
+    for (const installer of installers) {
+      console.log(` - ${installer}`)
+    }
+
+    generateChecksums(installers)
+  } catch (err) {
+    console.error('A problem occurred with the packaging step', err)
+    process.exit(1)
+  }
 }
