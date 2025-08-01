@@ -158,6 +158,8 @@
     "i18next-parser": "^9.0.2",
     "markdownlint-cli": "^0.32.2",
     "node-test-github-reporter": "^1.2.0",
+    "patch-package": "^8.0.0",
+    "postinstall-postinstall": "^2.1.0",
     "reserved-words": "^0.1.2",
     "tsconfig-paths": "^3.9.0",
     "tsx": "^4.19.3"
