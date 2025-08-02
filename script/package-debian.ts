@@ -85,7 +85,7 @@ const options: DebianOptions = {
     // see https://github.com/shiftkey/desktop/issues/72 for more details
     'x-scheme-handler/x-github-desktop-dev-auth',
   ],
-  maintainer: 'Brendan Forster <github@brendanforster.com>',
+  maintainer: 'Yasuhiro Kaneko <yasuking0304@gmail.com>',
 }
 
 export async function packageDebian(): Promise<string> {
