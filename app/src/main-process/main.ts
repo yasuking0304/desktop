@@ -282,7 +282,7 @@ function setAsDefaultProtocolClient(protocol: string) {
   }
 }
 
-if (process.env.GITHUB_DESKTOP_DISABLE_HARDWARE_ACCELERATION) {
+if (process.env.GITHUB_DESKTOP_DISABLE_HARDWARE_ACCELERATION || __LINUX__) {
   log.info(
     `GITHUB_DESKTOP_DISABLE_HARDWARE_ACCELERATION environment variable set, disabling hardware acceleration`
   )
@@ -412,7 +412,7 @@ app.on('ready', () => {
     const menuItem = currentMenu.getMenuItemById(id)
     if (menuItem) {
       const window = BrowserWindow.fromWebContents(event.sender) || undefined
-      const fakeEvent = { preventDefault: () => {}, sender: event.sender }
+      const fakeEvent = { preventDefault: () => { }, sender: event.sender }
       menuItem.click(fakeEvent, window, event.sender)
     }
   })

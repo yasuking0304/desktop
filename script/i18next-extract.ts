@@ -13,8 +13,8 @@ function convertLangJsonFile(filepath: string, filename: string) {
   const orginal_data = fs.readFileSync(filepath + filename, 'utf8')
   const converted_data = orginal_data
     .replace(/\\n[ ]{2,}/g, ' ')
-    .replace('<br>', '\\n')
-    .replace('<wbr>', '\\n')
+    .replace(/<br>/g, '\\n')
+    .replace(/<wbr>/g, '\\n')
   if (converted_data !== orginal_data) {
     fs.writeFileSync(filepath + filename, converted_data)
     console.log(
