@@ -84,7 +84,6 @@
     "klaw-sync": "^3.0.0",
     "legal-eagle": "0.16.0",
     "mini-css-extract-plugin": "^2.9.1",
-    "node-gyp": "^11.0.0",
     "parallel-webpack": "^2.6.0",
     "parse-dds": "^1.2.1",
     "prettier": "^2.6.0",
@@ -94,7 +93,6 @@
     "semver": "^7.6.3",
     "style-loader": "^3.3.1",
     "to-camel-case": "^1.0.0",
-    "ts-jest": "^29.1.1",
     "ts-loader": "^9",
     "ts-node": "^7.0.0",
     "typescript": "^5.8.2",
@@ -102,10 +100,7 @@
     "webpack-bundle-analyzer": "^4.5.0",
     "webpack-dev-middleware": "^5.3.4",
     "webpack-hot-middleware": "^2.25.1",
-    "webpack-merge": "^6.0.1",
-    "xml2js": "^0.5.0",
-    "xvfb-maybe": "^0.2.1",
-    "yaml": "^2.7.0"
+    "webpack-merge": "^6.0.1"
   },
   "devDependencies": {
     "@github/markdownlint-github": "^0.1.0",
@@ -122,7 +117,6 @@
     "@types/fs-extra": "^7.0.0",
     "@types/fuzzaldrin-plus": "^0.0.1",
     "@types/glob": "^5.0.35",
-    "@types/jest": "^29.5.10",
     "@types/klaw-sync": "^6.0.0",
     "@types/legal-eagle": "^0.15.0",
     "@types/lodash": "^4.14.178",
