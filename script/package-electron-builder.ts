@@ -3,6 +3,7 @@
 import * as path from 'path'
 import * as cp from 'child_process'
 import { promisify } from 'util'
+import fs from 'fs'
 
 import glob = require('glob')
 const globPromise = promisify(glob)
@@ -21,6 +22,39 @@ function getArchitecture() {
   }
 }
 
+function patchCliui() {
+  /**
+   * The following version cinbinations cause problems,
+   * so wrap-ansi is prohibited.
+   * 
+   * electron-builder >= 25.x.x
+   * cliui <= 7.0.x
+   * wrap-ansi >= 8.0.x
+   */
+  const cliuiPath = path.resolve(
+    __dirname,
+    '..',
+    'node_modules',
+    'electron-builder',
+    'node_modules',
+    'cliui',
+  )
+  const cliuiVersion = require(path.resolve(cliuiPath, 'package.json'))['version']
+  const cliuiIndexCjsPath = path.resolve(cliuiPath, 'build', 'index.cjs')
+
+  const orginalCjs = fs.readFileSync(cliuiIndexCjsPath, 'utf8')
+  const convertedCjs = orginalCjs.replace(
+    'this.wrap = (_a = opts.wrap) !== null && _a !== void 0 ? _a : true;',
+    'this.wrap = false;'
+  )
+  if (convertedCjs !== orginalCjs) {
+    fs.writeFileSync(cliuiIndexCjsPath, convertedCjs)
+    console.log(
+      `\x1b[32m[Patched. Target Version: ${cliuiVersion}] ${cliuiIndexCjsPath}\x1b[0m`
+    )
+  }
+}
+
 export async function packageElectronBuilder(): Promise<Array<string>> {
   const distPath = getDistPath()
   const distRoot = getDistRoot()
@@ -33,7 +67,9 @@ export async function packageElectronBuilder(): Promise<Array<string>> {
     'electron-builder'
   )
 
-  const configPath = path.resolve(__dirname, 'electron-builder-linux.yml')
+  patchCliui()
+
+  const configPath = path.resolve(__dirname, 'electron-builder.yml')
 
   const args = [
     'build',
