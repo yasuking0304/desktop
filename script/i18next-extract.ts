@@ -10,13 +10,13 @@ function convertLangJsonFile(filepath: string, filename: string) {
   // if includes '<wbr>' or '<br>', replace with '\n'.
   // Note: If your content contains line breaks '\n', set the
   // white-space property in CSS to pre-line or a similar value.
-  const orginal_data = fs.readFileSync(filepath + filename, 'utf8')
-  const converted_data = orginal_data
+  const orginalData = fs.readFileSync(filepath + filename, 'utf8')
+  const convertedData = orginalData
     .replace(/\\n[ ]{2,}/g, ' ')
     .replace(/<br>/g, '\\n')
     .replace(/<wbr>/g, '\\n')
-  if (converted_data !== orginal_data) {
-    fs.writeFileSync(filepath + filename, converted_data)
+  if (convertedData !== orginalData) {
+    fs.writeFileSync(filepath + filename, convertedData)
     console.log(
       `  \x1b[32m[Convert]\x1b[0m ${process.cwd()}/${filepath}${filename}`
     )
