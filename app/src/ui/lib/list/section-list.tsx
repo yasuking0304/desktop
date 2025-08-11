@@ -75,7 +75,7 @@ interface ISectionListProps {
    * only accessible via the mouse. The content in the mouse tooltip(s) will
    * need to be in the keyboard focus tooltip as well.
    */
-  readonly renderKeyboardFocusTooltip?: (
+  readonly renderRowFocusTooltip?: (
     indexPath: RowIndexPath
   ) => JSX.Element | string | null
 
@@ -1233,7 +1233,7 @@ export class SectionList extends React.Component<
           children={element}
           selectable={selectable}
           className={customClasses}
-          renderKeyboardFocusTooltip={this.props.renderKeyboardFocusTooltip}
+          renderRowFocusTooltip={this.props.renderRowFocusTooltip}
           hasKeyboardFocus={
             this.focusRow !== InvalidRowIndexPath &&
             this.focusRow.section === section &&

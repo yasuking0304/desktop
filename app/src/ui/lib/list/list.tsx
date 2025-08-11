@@ -1214,7 +1214,6 @@ export class List extends React.Component<IListProps, IListState> {
           children={element}
           selectable={selectable}
           className={customClasses}
-          hasKeyboardFocus={this.focusRow === rowIndex}
         />
       )
     }

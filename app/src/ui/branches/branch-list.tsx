@@ -252,7 +252,7 @@ export class BranchList extends React.Component<
         onFilterKeyDown={this.props.onFilterKeyDown}
         selectedItem={this.selectedItem}
         renderItem={this.renderItem}
-        renderKeyboardFocusTooltip={this.renderKeyboardFocusTooltip}
+        renderRowFocusTooltip={this.renderRowFocusTooltip}
         renderGroupHeader={this.renderGroupHeader}
         onItemClick={this.onItemClick}
         onSelectionChanged={this.onSelectionChanged}
@@ -311,7 +311,7 @@ export class BranchList extends React.Component<
     )
   }
 
-  private renderKeyboardFocusTooltip = (
+  private renderRowFocusTooltip = (
     item: IBranchListItem
   ): JSX.Element | string | null => {
     const { tip, name } = item.branch
@@ -325,18 +325,18 @@ export class BranchList extends React.Component<
       : null
 
     return (
-      <>
+      <div className="branches-list-item-tooltip list-item-tooltip">
         <div>
-          <strong>Name: </strong>
+          <div className="label">Full Name: </div>
           {name}
         </div>
         {absoluteDate && (
           <div>
-            <strong>Date Authored: </strong>
+            <div className="label">Last Modified: </div>
             {absoluteDate}
           </div>
         )}
-      </>
+      </div>
     )
   }
 

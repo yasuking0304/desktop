@@ -187,7 +187,7 @@ export class RepositoriesList extends React.Component<
     )
   }
 
-  private renderKeyboardFocusTooltip = (
+  private renderRowFocusTooltip = (
     item: IRepositoryListItem
   ): JSX.Element | string | null => {
     const { repository, aheadBehind, changedFilesCount } = item
@@ -205,29 +205,34 @@ export class RepositoriesList extends React.Component<
     const behind = aheadBehind?.behind ?? 0
 
     return (
-      <div className="repository-list-item-tooltip">
+      <div className="repository-list-item-tooltip list-item-tooltip">
         <div>
-          <strong>{realName}</strong>
+          <div className="label">Full Name: </div>
+          {realName}
           {alias && <> ({alias})</>}
         </div>
         <div>
-          <strong>Path: </strong>
+          <div className="label">Path: </div>
           {repository.path}
         </div>
         {aheadBehindTooltip && (
           <div>
-            <div className="ahead-behind">
-              {ahead > 0 && <Octicon symbol={octicons.arrowUp} />}
-              {behind > 0 && <Octicon symbol={octicons.arrowDown} />}
+            <div className="label">
+              <div className="ahead-behind">
+                {ahead > 0 && <Octicon symbol={octicons.arrowUp} />}
+                {behind > 0 && <Octicon symbol={octicons.arrowDown} />}
+              </div>
             </div>
             {aheadBehindTooltip}
           </div>
         )}
         {uncommittedChangesTooltip && (
           <div>
-            <span className="change-indicator-wrapper">
-              <Octicon symbol={octicons.dotFill} />
-            </span>
+            <div className="label">
+              <span className="change-indicator-wrapper">
+                <Octicon symbol={octicons.dotFill} />
+              </span>
+            </div>
             {uncommittedChangesTooltip}
           </div>
         )}
@@ -334,7 +339,7 @@ export class RepositoriesList extends React.Component<
           filterText={this.props.filterText}
           onFilterTextChanged={this.props.onFilterTextChanged}
           renderItem={this.renderItem}
-          renderKeyboardFocusTooltip={this.renderKeyboardFocusTooltip}
+          renderRowFocusTooltip={this.renderRowFocusTooltip}
           renderGroupHeader={this.renderGroupHeader}
           onItemClick={this.onItemClick}
           renderPostFilter={this.renderPostFilter}

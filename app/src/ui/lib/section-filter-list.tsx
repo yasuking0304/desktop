@@ -68,7 +68,7 @@ interface ISectionFilterListProps<T extends IFilterListItem, GroupIdentifier> {
    * only accessible via the mouse. The content in the mouse tooltip(s) will
    * need to be in the keyboard focus tooltip as well.
    */
-  readonly renderKeyboardFocusTooltip?: (item: T) => JSX.Element | string | null
+  readonly renderRowFocusTooltip?: (item: T) => JSX.Element | string | null
 
   /** Called to render header for the group with the given identifier. */
   readonly renderGroupHeader?: (
@@ -381,7 +381,7 @@ export class SectionFilterList<
           ref={this.onListRef}
           rowCount={this.state.rows.map(r => r.length)}
           rowRenderer={this.renderRow}
-          renderKeyboardFocusTooltip={this.renderKeyboardFocusTooltip}
+          renderRowFocusTooltip={this.renderRowFocusTooltip}
           sectionHasHeader={this.sectionHasHeader}
           getRowAriaLabel={this.getRowAriaLabel}
           getSectionAriaLabel={this.getSectionAriaLabel}
@@ -450,14 +450,14 @@ export class SectionFilterList<
     }
   }
 
-  private renderKeyboardFocusTooltip = (
+  private renderRowFocusTooltip = (
     index: RowIndexPath
   ): JSX.Element | string | null => {
     const row = this.state.rows[index.section][index.row]
-    if (row.kind !== 'item' || !this.props.renderKeyboardFocusTooltip) {
+    if (row.kind !== 'item' || !this.props.renderRowFocusTooltip) {
       return null
     }
-    return this.props.renderKeyboardFocusTooltip(row.item)
+    return this.props.renderRowFocusTooltip(row.item)
   }
 
   private onTextBoxRef = (component: TextBox | null) => {

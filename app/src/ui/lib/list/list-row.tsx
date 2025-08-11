@@ -3,6 +3,7 @@ import classNames from 'classnames'
 import { RowIndexPath } from './list-row-index-path'
 import { Tooltip } from '../tooltip'
 import { createObservableRef } from '../observable-ref'
+import { AriaLiveContainer } from '../../accessibility/aria-live-container'
 
 interface IListRowProps {
   /** whether or not the section to which this row belongs has a header */
@@ -118,18 +119,17 @@ interface IListRowProps {
   readonly role?: 'option' | 'listitem' | 'presentation'
 
   /**
-   * Optional render function for the keyboard focus tooltip
-   *
-   * This is used to render a tooltip when the row is focused via keyboard
-   * navigation. This should be provided if the row has tooltip content that is
-   * only accessible via the mouse. The content in the mouse tooltip(s) will
-   * need to be in the keyboard focus tooltip as well.
+   * Optional render function for tooltip that appears on keyboard and mouse focus
    */
-  readonly renderKeyboardFocusTooltip?: (
+  readonly renderRowFocusTooltip?: (
     indexPath: RowIndexPath
   ) => JSX.Element | string | null
 
-  readonly hasKeyboardFocus: boolean
+  /** Used in conjuction with the above renderRowFocus to communcate keyboard
+   *  focus This must be provided if providing a tooltip on a the list row as it
+   *  enables access to the tooltip for keyboard and screenreader users.
+   */
+  readonly hasKeyboardFocus?: boolean
 }
 
 export class ListRow extends React.Component<IListRowProps, {}> {
@@ -144,8 +144,8 @@ export class ListRow extends React.Component<IListRowProps, {}> {
 
   private renderKeyboardFocusTooltip() {
     if (
-      !this.props.renderKeyboardFocusTooltip ||
-      !this.props.renderKeyboardFocusTooltip(this.props.rowIndex)
+      !this.props.renderRowFocusTooltip ||
+      !this.props.renderRowFocusTooltip(this.props.rowIndex)
     ) {
       return null
     }
@@ -166,7 +166,8 @@ export class ListRow extends React.Component<IListRowProps, {}> {
           )
         }
       >
-        {this.props.renderKeyboardFocusTooltip(this.props.rowIndex)}
+        <AriaLiveContainer message={'A test here to provide'} />
+        {this.props.renderRowFocusTooltip(this.props.rowIndex)}
       </Tooltip>
     )
   }
@@ -294,6 +295,7 @@ export class ListRow extends React.Component<IListRowProps, {}> {
         onBlur={this.onBlur}
         onContextMenu={this.onContextMenu}
       >
+        {this.renderKeyboardFocusTooltip()}
         {
           // HACK: When we have an ariaLabel we need to make sure that the
           // child elements are not exposed to the screen reader, otherwise
@@ -303,7 +305,6 @@ export class ListRow extends React.Component<IListRowProps, {}> {
             className="list-item-content-wrapper"
             aria-hidden={this.props.ariaLabel !== undefined}
           >
-            {this.renderKeyboardFocusTooltip()}
             {children}
           </div>
         }
