@@ -110,19 +110,15 @@ export class BranchListItem extends React.Component<
         onMouseUp={this.onMouseUp}
       >
         <Octicon className="icon" symbol={icon} />
-        <TooltippedContent
-          className="name"
-          tooltip={name}
-          onlyWhenOverflowed={true}
-          tagName="div"
-        >
+        <div className="name">
           <HighlightText text={name} highlight={this.props.matches.title} />
-        </TooltippedContent>
+        </div>
         {authorDate && (
           <RelativeTime
             className="description"
             date={authorDate}
             onlyRelative={true}
+            tooltip={false}
           />
         )}
       </div>
