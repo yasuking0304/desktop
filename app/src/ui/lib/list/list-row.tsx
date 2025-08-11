@@ -153,7 +153,7 @@ export class ListRow extends React.Component<IListRowProps, {}> {
         ancestorFocused={this.props.selected}
         target={this.listItemRef}
         openOnFocus={true}
-        onlyShowOnKeyboardFocus={true}
+        positionRelativeToTarget={true}
         delay={1000}
         tooltipOffset={
           new DOMRect(

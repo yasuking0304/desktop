@@ -158,7 +158,7 @@ export interface ITooltipProps<T> {
    * */
   readonly applyAriaDescribedBy?: boolean
 
-  readonly onlyShowOnKeyboardFocus?: boolean
+  readonly positionRelativeToTarget?: boolean
 }
 
 interface ITooltipState {
@@ -576,7 +576,7 @@ export class Tooltip<T extends TooltipTarget> extends React.Component<
     const { direction, tooltipOffset } = this.props
 
     return offsetRect(
-      direction === undefined && this.props.onlyShowOnKeyboardFocus !== true
+      direction === undefined && this.props.positionRelativeToTarget !== true
         ? this.mouseRect
         : target.getBoundingClientRect(),
       tooltipOffset?.x ?? 0,
