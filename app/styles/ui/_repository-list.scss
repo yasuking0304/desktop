@@ -114,6 +114,14 @@
     }
   }
 
+  .repository-list-item-tooltip {
+    > div {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+
   .filter-list-group-header {
     padding-top: var(--spacing);
     text-overflow: ellipsis;

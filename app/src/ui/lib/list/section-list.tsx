@@ -1234,6 +1234,11 @@ export class SectionList extends React.Component<
           selectable={selectable}
           className={customClasses}
           renderKeyboardFocusTooltip={this.props.renderKeyboardFocusTooltip}
+          hasKeyboardFocus={
+            this.focusRow !== InvalidRowIndexPath &&
+            this.focusRow.section === section &&
+            this.focusRow.row === indexPath.row
+          }
         />
       )
     }

@@ -201,8 +201,11 @@ export class RepositoriesList extends React.Component<
       ? `There are uncommitted changes in this repository.`
       : null
 
+    const ahead = aheadBehind?.ahead ?? 0
+    const behind = aheadBehind?.behind ?? 0
+
     return (
-      <>
+      <div className="repository-list-item-tooltip">
         <div>
           <strong>{realName}</strong>
           {alias && <> ({alias})</>}
@@ -213,17 +216,22 @@ export class RepositoriesList extends React.Component<
         </div>
         {aheadBehindTooltip && (
           <div>
-            <strong>Ahead/Behind: </strong>
+            <div className="ahead-behind">
+              {ahead > 0 && <Octicon symbol={octicons.arrowUp} />}
+              {behind > 0 && <Octicon symbol={octicons.arrowDown} />}
+            </div>
             {aheadBehindTooltip}
           </div>
         )}
         {uncommittedChangesTooltip && (
           <div>
-            <strong>Uncommitted Changes: </strong>
+            <span className="change-indicator-wrapper">
+              <Octicon symbol={octicons.dotFill} />
+            </span>
             {uncommittedChangesTooltip}
           </div>
         )}
-      </>
+      </div>
     )
   }
 

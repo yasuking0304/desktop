@@ -128,6 +128,8 @@ interface IListRowProps {
   readonly renderKeyboardFocusTooltip?: (
     indexPath: RowIndexPath
   ) => JSX.Element | string | null
+
+  readonly hasKeyboardFocus: boolean
 }
 
 export class ListRow extends React.Component<IListRowProps, {}> {
@@ -150,7 +152,7 @@ export class ListRow extends React.Component<IListRowProps, {}> {
 
     return (
       <Tooltip
-        ancestorFocused={this.props.selected}
+        ancestorFocused={this.props.hasKeyboardFocus}
         target={this.listItemRef}
         openOnFocus={true}
         positionRelativeToTarget={true}
