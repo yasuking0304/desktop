@@ -7,7 +7,6 @@ import * as octicons from '../octicons/octicons.generated'
 import { HighlightText } from '../lib/highlight-text'
 import { dragAndDropManager } from '../../lib/drag-and-drop-manager'
 import { DragType, DropTargetType } from '../../models/drag-drop'
-import { TooltippedContent } from '../lib/tooltipped-content'
 import { RelativeTime } from '../relative-time'
 import classNames from 'classnames'
 
