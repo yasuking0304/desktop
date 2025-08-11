@@ -157,8 +157,6 @@ export interface ITooltipProps<T> {
    * Default: true
    * */
   readonly applyAriaDescribedBy?: boolean
-
-  readonly onlyShowOnKeyboardFocus?: boolean
 }
 
 interface ITooltipState {
@@ -400,13 +398,10 @@ export class Tooltip<T extends TooltipTarget> extends React.Component<
   }
 
   private installTooltip(elem: TooltipTarget) {
-    if (this.props.onlyShowOnKeyboardFocus !== true) {
-      elem.addEventListener('mouseenter', this.onTargetMouseEnter)
-      elem.addEventListener('mouseleave', this.onTargetMouseLeave)
-      elem.addEventListener('mousemove', this.onTargetMouseMove)
-      elem.addEventListener('mousedown', this.onTargetMouseDown)
-    }
-
+    elem.addEventListener('mouseenter', this.onTargetMouseEnter)
+    elem.addEventListener('mouseleave', this.onTargetMouseLeave)
+    elem.addEventListener('mousemove', this.onTargetMouseMove)
+    elem.addEventListener('mousedown', this.onTargetMouseDown)
     elem.addEventListener('focus', this.onTargetFocus)
     elem.addEventListener('focusin', this.onTargetFocusIn)
     elem.addEventListener('focusout', this.onTargetBlur)
@@ -469,8 +464,6 @@ export class Tooltip<T extends TooltipTarget> extends React.Component<
     ) {
       this.beginShowTooltip()
     }
-
-    console.log('onTargetFocus', this.props.target.current)
   }
 
   private onTargetClick = (event: FocusEvent) => {
@@ -581,9 +574,7 @@ export class Tooltip<T extends TooltipTarget> extends React.Component<
     const { direction, tooltipOffset } = this.props
 
     return offsetRect(
-      direction === undefined && this.props.onlyShowOnKeyboardFocus !== true
-        ? this.mouseRect
-        : target.getBoundingClientRect(),
+      direction === undefined ? this.mouseRect : target.getBoundingClientRect(),
       tooltipOffset?.x ?? 0,
       tooltipOffset?.y ?? 0
     )
