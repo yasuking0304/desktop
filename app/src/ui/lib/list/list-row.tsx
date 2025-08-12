@@ -120,16 +120,19 @@ interface IListRowProps {
 
   /**
    * Optional render function for tooltip that appears on keyboard and mouse focus
+   *
+   * See other prop `hasKeyboardFocus` if using this method.
    */
   readonly renderRowFocusTooltip?: (
     indexPath: RowIndexPath
   ) => JSX.Element | string | null
 
-  /** Used in conjuction with the above renderRowFocus to communcate keyboard
-   *  focus This must be provided if providing a tooltip on a the list row as it
-   *  enables access to the tooltip for keyboard and screenreader users.
+  /**
+   * Used in conjunction with the above renderRowFocus to communicate keyboard
+   * focus This must be provided if providing a tooltip on a the list row as it
+   * enables access to the tooltip for keyboard and screenreader users.
    */
-  readonly hasKeyboardFocus?: boolean
+  readonly hasKeyboardFocus: boolean
 }
 
 export class ListRow extends React.Component<IListRowProps, {}> {
