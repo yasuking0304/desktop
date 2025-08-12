@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { RepositoryListItem } from './repository-list-item'
+import { commitGrammar, RepositoryListItem } from './repository-list-item'
 import {
   groupRepositories,
   IRepositoryListItem,
@@ -26,6 +26,7 @@ import { generateRepositoryListContextMenu } from '../repositories-list/reposito
 import { SectionFilterList } from '../lib/section-filter-list'
 import { assertNever } from '../../lib/fatal-error'
 import { enableMultipleEnterpriseAccounts } from '../../lib/feature-flag'
+import { IAheadBehind } from '../../models/branch'
 
 const BlankSlateImage = encodePathAsUrl(__dirname, 'static/empty-no-repo.svg')
 
@@ -166,6 +167,79 @@ export class RepositoriesList extends React.Component<
     )
   }
 
+  private getAheadBehindTooltip = (aheadBehind: IAheadBehind | null) => {
+    if (aheadBehind === null) {
+      return null
+    }
+
+    const { ahead, behind } = aheadBehind
+
+    if (behind === 0 && ahead === 0) {
+      return null
+    }
+
+    return (
+      'The currently checked out branch is' +
+      (behind ? ` ${commitGrammar(behind)} behind ` : '') +
+      (behind && ahead ? 'and' : '') +
+      (ahead ? ` ${commitGrammar(ahead)} ahead of ` : '') +
+      'its tracked branch.'
+    )
+  }
+
+  private renderRowFocusTooltip = (
+    item: IRepositoryListItem
+  ): JSX.Element | string | null => {
+    const { repository, aheadBehind, changedFilesCount } = item
+    const gitHubRepo =
+      repository instanceof Repository ? repository.gitHubRepository : null
+    const alias = repository instanceof Repository ? repository.alias : null
+    const realName = gitHubRepo ? gitHubRepo.fullName : repository.name
+    const aheadBehindTooltip = this.getAheadBehindTooltip(aheadBehind)
+    const hasChanges = changedFilesCount > 0
+    const uncommittedChangesTooltip = hasChanges
+      ? `There are uncommitted changes in this repository.`
+      : null
+
+    const ahead = aheadBehind?.ahead ?? 0
+    const behind = aheadBehind?.behind ?? 0
+
+    return (
+      <div className="repository-list-item-tooltip list-item-tooltip">
+        <div>
+          <div className="label">Full Name: </div>
+          {realName}
+          {alias && <> ({alias})</>}
+        </div>
+        <div>
+          <div className="label">Path: </div>
+          {repository.path}
+        </div>
+        {aheadBehindTooltip && (
+          <div>
+            <div className="label">
+              <div className="ahead-behind">
+                {ahead > 0 && <Octicon symbol={octicons.arrowUp} />}
+                {behind > 0 && <Octicon symbol={octicons.arrowDown} />}
+              </div>
+            </div>
+            {aheadBehindTooltip}
+          </div>
+        )}
+        {uncommittedChangesTooltip && (
+          <div>
+            <div className="label">
+              <span className="change-indicator-wrapper">
+                <Octicon symbol={octicons.dotFill} />
+              </span>
+            </div>
+            {uncommittedChangesTooltip}
+          </div>
+        )}
+      </div>
+    )
+  }
+
   private getGroupLabel(group: RepositoryListGroup) {
     const { kind } = group
     if (kind === 'enterprise') {
@@ -265,6 +339,7 @@ export class RepositoriesList extends React.Component<
           filterText={this.props.filterText}
           onFilterTextChanged={this.props.onFilterTextChanged}
           renderItem={this.renderItem}
+          renderRowFocusTooltip={this.renderRowFocusTooltip}
           renderGroupHeader={this.renderGroupHeader}
           onItemClick={this.onItemClick}
           renderPostFilter={this.renderPostFilter}

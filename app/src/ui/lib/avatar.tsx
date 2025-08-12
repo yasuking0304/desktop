@@ -168,6 +168,9 @@ interface IAvatarProps {
   readonly size?: number
 
   readonly accounts: ReadonlyArray<Account>
+
+  /** Defaults true */
+  readonly tooltip?: boolean
 }
 
 interface IAvatarState {
@@ -371,16 +374,10 @@ export class Avatar extends React.Component<IAvatarProps, IAvatarState> {
 
   public render() {
     const title = this.getTitle()
-    const { imageError, user } = this.state
-    const alt = user
-      ? `Avatar for ${user.name || user.email}`
-      : `Avatar for unknown user`
 
-    const now = Date.now()
-    const src = this.state.candidates.find(c => {
-      const lastFailed = FailingAvatars.get(c)
-      return lastFailed === undefined || now - lastFailed > RetryLimit
-    })
+    if (this.props.tooltip === false) {
+      return <div className="avatar-container">{this.renderAvatar()}</div>
+    }
 
     return (
       <TooltippedContent
@@ -390,6 +387,24 @@ export class Avatar extends React.Component<IAvatarProps, IAvatarState> {
         direction={TooltipDirection.NORTH}
         tagName="div"
       >
+        {this.renderAvatar()}
+      </TooltippedContent>
+    )
+  }
+
+  private renderAvatar = () => {
+    const { imageError, user } = this.state
+    const alt = user
+      ? `Avatar for ${user.name || user.email}`
+      : `Avatar for unknown user`
+    const now = Date.now()
+    const src = this.state.candidates.find(c => {
+      const lastFailed = FailingAvatars.get(c)
+      return lastFailed === undefined || now - lastFailed > RetryLimit
+    })
+
+    return (
+      <>
         {(!src || imageError) && (
           <Octicon symbol={DefaultAvatarSymbol} className="avatar" />
         )}
@@ -407,7 +422,7 @@ export class Avatar extends React.Component<IAvatarProps, IAvatarState> {
             style={{ display: imageError ? 'none' : undefined }}
           />
         )}
-      </TooltippedContent>
+      </>
     )
   }
 

@@ -22,7 +22,6 @@ import {
   DropTargetType,
 } from '../../models/drag-drop'
 import classNames from 'classnames'
-import { TooltippedContent } from '../lib/tooltipped-content'
 import { Account } from '../../models/account'
 import { Emoji } from '../../lib/emoji'
 
@@ -44,7 +43,6 @@ interface ICommitProps {
    */
   readonly isDraggable?: boolean
   readonly showUnpushedIndicator: boolean
-  readonly unpushedIndicatorTitle?: string
   readonly disableSquashing?: boolean
   readonly accounts: ReadonlyArray<Account>
 }
@@ -160,6 +158,7 @@ export class CommitListItem extends React.PureComponent<
               <AvatarStack
                 users={this.state.avatarUsers}
                 accounts={this.props.accounts}
+                tooltip={false}
               />
               <div className="byline">
                 <CommitAttribution
@@ -198,13 +197,9 @@ export class CommitListItem extends React.PureComponent<
     }
 
     return (
-      <TooltippedContent
-        tagName="div"
-        className="unpushed-indicator"
-        tooltip={this.props.unpushedIndicatorTitle}
-      >
+      <div className="unpushed-indicator">
         <Octicon symbol={octicons.arrowUp} />
-      </TooltippedContent>
+      </div>
     )
   }
 
@@ -237,7 +232,7 @@ function renderRelativeTime(date: Date) {
   return (
     <>
       {` • `}
-      <RelativeTime date={date} />
+      <RelativeTime date={date} tooltip={false} />
     </>
   )
 }

@@ -28,6 +28,11 @@ import {
 import { KeyboardShortcut } from '../keyboard-shortcut/keyboard-shortcut'
 import { Account } from '../../models/account'
 import { Emoji } from '../../lib/emoji'
+import { getAvatarUsersForCommit, IAvatarUser } from '../../models/avatar'
+import { formatDate } from '../../lib/format-date'
+import { Avatar } from '../lib/avatar'
+import { Octicon } from '../octicons'
+import * as octicons from '../octicons/octicons.generated'
 
 const RowHeight = 50
 
@@ -291,10 +296,6 @@ export class CommitList extends React.Component<
         key={commit.sha}
         gitHubRepository={this.props.gitHubRepository}
         showUnpushedIndicator={showUnpushedIndicator}
-        unpushedIndicatorTitle={this.getUnpushedIndicatorTitle(
-          isLocal,
-          unpushedTags.length
-        )}
         commit={commit}
         emoji={this.props.emoji}
         isDraggable={
@@ -464,6 +465,89 @@ export class CommitList extends React.Component<
     return rowClassMap
   }
 
+  private renderExpandedAuthor(user: IAvatarUser): string | JSX.Element {
+    if (!user) {
+      return 'Unknown user'
+    }
+
+    if (user.name) {
+      return (
+        <>
+          <div>{user.name}</div>
+          <div>{user.email}</div>
+        </>
+      )
+    }
+
+    return user.email
+  }
+
+  private renderRowFocusTooltip = (indexPath: RowIndexPath | undefined) => {
+    if (!indexPath) {
+      return null
+    }
+    const row = indexPath.row
+    const sha = this.props.commitSHAs[row]
+    const commit = this.props.commitLookup.get(sha)
+    if (!commit) {
+      return null
+    }
+
+    const avatarUsers = getAvatarUsersForCommit(
+      this.props.gitHubRepository,
+      commit
+    )
+
+    const {
+      author: { date },
+    } = commit
+
+    const absoluteDate = formatDate(date, {
+      dateStyle: 'full',
+      timeStyle: 'short',
+    })
+
+    const authorList = avatarUsers.map((user, i) => {
+      return (
+        <div className="author" key={i}>
+          <div className="label">
+            <Avatar accounts={this.props.accounts} user={user} title={null} />
+          </div>
+          <div>{this.renderExpandedAuthor(user)}</div>
+        </div>
+      )
+    })
+
+    const isLocal = this.isLocalCommit(commit.sha)
+    const unpushedTags = this.getUnpushedTags(commit)
+
+    const showUnpushedIndicator =
+      (isLocal || unpushedTags.length > 0) &&
+      this.props.isLocalRepository === false
+
+    return (
+      <div className="commit-list-item-tooltip list-item-tooltip">
+        {authorList}
+        <div>
+          <div className="label">Date: </div>
+          {absoluteDate}
+        </div>
+        {showUnpushedIndicator ? (
+          <div>
+            <div className="label">
+              <span className="unpushed-indicator">
+                <Octicon symbol={octicons.arrowUp} />
+              </span>
+            </div>
+            <div>
+              {this.getUnpushedIndicatorTitle(isLocal, unpushedTags.length)}
+            </div>
+          </div>
+        ) : null}
+      </div>
+    )
+  }
+
   public focus() {
     this.listRef.current?.focus()
   }
@@ -533,6 +617,7 @@ export class CommitList extends React.Component<
           }}
           setScrollTop={this.props.compareListScrollTop}
           rowCustomClassNameMap={this.getRowCustomClassMap()}
+          renderRowFocusTooltip={this.renderRowFocusTooltip}
         />
         <AriaLiveContainer message={this.state.reorderingMessage} />
       </div>

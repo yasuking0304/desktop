@@ -23,6 +23,7 @@ import memoizeOne from 'memoize-one'
 import { getAuthors } from '../../lib/git/log'
 import { Repository } from '../../models/repository'
 import uuid from 'uuid'
+import { formatDate } from '../../lib/format-date'
 
 const RowHeight = 30
 
@@ -251,6 +252,7 @@ export class BranchList extends React.Component<
         onFilterKeyDown={this.props.onFilterKeyDown}
         selectedItem={this.selectedItem}
         renderItem={this.renderItem}
+        renderRowFocusTooltip={this.renderRowFocusTooltip}
         renderGroupHeader={this.renderGroupHeader}
         onItemClick={this.onItemClick}
         onSelectionChanged={this.onSelectionChanged}
@@ -306,6 +308,35 @@ export class BranchList extends React.Component<
       item,
       matches,
       this.state.commitAuthorDates.get(item.branch.tip.sha)
+    )
+  }
+
+  private renderRowFocusTooltip = (
+    item: IBranchListItem
+  ): JSX.Element | string | null => {
+    const { tip, name } = item.branch
+    const authorDate = this.state.commitAuthorDates.get(tip.sha)
+
+    const absoluteDate = authorDate
+      ? formatDate(authorDate, {
+          dateStyle: 'full',
+          timeStyle: 'short',
+        })
+      : null
+
+    return (
+      <div className="branches-list-item-tooltip list-item-tooltip">
+        <div>
+          <div className="label">Full Name: </div>
+          {name}
+        </div>
+        {absoluteDate && (
+          <div>
+            <div className="label">Last Modified: </div>
+            {absoluteDate}
+          </div>
+        )}
+      </div>
     )
   }
 
