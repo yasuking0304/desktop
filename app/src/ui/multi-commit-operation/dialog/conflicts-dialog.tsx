@@ -146,27 +146,32 @@ export class ConflictsDialog extends React.Component<
   private renderUnmergedFiles(
     files: ReadonlyArray<WorkingDirectoryFileChange>
   ) {
+    let isFirstUnmergedFile = true
     return (
       <ul className="unmerged-file-statuses">
-        {files.map(f =>
-          isConflictedFile(f.status)
-            ? renderUnmergedFile({
-                path: f.path,
-                status: f.status,
-                resolvedExternalEditor: this.props.resolvedExternalEditor,
-                openFileInExternalEditor: this.props.openFileInExternalEditor,
-                repository: this.props.repository,
-                dispatcher: this.props.dispatcher,
-                manualResolution: this.props.manualResolutions.get(f.path),
-                ourBranch: this.props.ourBranch,
-                theirBranch: this.props.theirBranch,
-                isFileResolutionOptionsMenuOpen:
-                  this.state.isFileResolutionOptionsMenuOpen,
-                setIsFileResolutionOptionsMenuOpen:
-                  this.setIsFileResolutionOptionsMenuOpen,
-              })
-            : null
-        )}
+        {files.map(f => {
+          if (isConflictedFile(f.status)) {
+            const isFirst = isFirstUnmergedFile
+            isFirstUnmergedFile = false
+            return renderUnmergedFile({
+              path: f.path,
+              status: f.status,
+              resolvedExternalEditor: this.props.resolvedExternalEditor,
+              openFileInExternalEditor: this.props.openFileInExternalEditor,
+              repository: this.props.repository,
+              dispatcher: this.props.dispatcher,
+              manualResolution: this.props.manualResolutions.get(f.path),
+              ourBranch: this.props.ourBranch,
+              theirBranch: this.props.theirBranch,
+              isFileResolutionOptionsMenuOpen:
+                this.state.isFileResolutionOptionsMenuOpen,
+              setIsFileResolutionOptionsMenuOpen:
+                this.setIsFileResolutionOptionsMenuOpen,
+              isFirstConflictedFile: isFirst,
+            })
+          }
+          return null
+        })}
       </ul>
     )
   }
