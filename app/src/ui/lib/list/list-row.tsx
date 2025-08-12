@@ -3,7 +3,6 @@ import classNames from 'classnames'
 import { RowIndexPath } from './list-row-index-path'
 import { Tooltip } from '../tooltip'
 import { createObservableRef, ObservableRef } from '../observable-ref'
-import { AriaLiveContainer } from '../../accessibility/aria-live-container'
 
 interface IListRowProps {
   /** whether or not the section to which this row belongs has a header */
@@ -170,7 +169,6 @@ export class ListRow extends React.Component<IListRowProps, {}> {
           )
         }
       >
-        <AriaLiveContainer message={'A test here to provide'} />
         {this.props.renderRowFocusTooltip(this.props.rowIndex)}
       </Tooltip>
     )
