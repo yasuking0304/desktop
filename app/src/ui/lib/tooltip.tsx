@@ -158,6 +158,9 @@ export interface ITooltipProps<T> {
    * */
   readonly applyAriaDescribedBy?: boolean
 
+  /** Usually the position of the tooltip is relative to the mouse pointer, this
+   * forces it to be relative to the target's position. Useful for tooltips
+   * rendered by keyboard focus of the item. */
   readonly positionRelativeToTarget?: boolean
 }
 
