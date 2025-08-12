@@ -157,7 +157,6 @@ export class ListRow extends React.Component<IListRowProps, {}> {
         target={this.listItemRef}
         openOnFocus={true}
         positionRelativeToTarget={true}
-        delay={1000}
         tooltipOffset={
           new DOMRect(
             this.listItemRef.current
