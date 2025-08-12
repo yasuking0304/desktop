@@ -2,7 +2,7 @@ import * as React from 'react'
 import classNames from 'classnames'
 import { RowIndexPath } from './list-row-index-path'
 import { Tooltip } from '../tooltip'
-import { createObservableRef } from '../observable-ref'
+import { createObservableRef, ObservableRef } from '../observable-ref'
 import { AriaLiveContainer } from '../../accessibility/aria-live-container'
 
 interface IListRowProps {
@@ -140,10 +140,11 @@ export class ListRow extends React.Component<IListRowProps, {}> {
   // event, with no keyDown events (since that keyDown event should've happened
   // in the component that previously had focus).
   private keyboardFocusDetectionState: 'ready' | 'failed' | 'focused' = 'ready'
-  private readonly listItemRef = createObservableRef<HTMLDivElement>()
+  private listItemRef: ObservableRef<HTMLDivElement> | null = null
 
-  private renderKeyboardFocusTooltip() {
+  private renderFocusTooltip() {
     if (
+      !this.listItemRef ||
       !this.props.renderRowFocusTooltip ||
       !this.props.renderRowFocusTooltip(this.props.rowIndex)
     ) {
@@ -172,10 +173,11 @@ export class ListRow extends React.Component<IListRowProps, {}> {
     )
   }
 
-  public componentDidMount() {
-    this.listItemRef.subscribe(elem => {
-      this.props.onRowRef?.(this.props.rowIndex, elem)
-    })
+  private onRowRef = (elem: HTMLDivElement | null) => {
+    if (elem) {
+      this.listItemRef = createObservableRef(elem)
+    }
+    this.props.onRowRef?.(this.props.rowIndex, elem)
   }
 
   private onRowMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -283,7 +285,7 @@ export class ListRow extends React.Component<IListRowProps, {}> {
         aria-label={this.props.ariaLabel}
         className={rowClassName}
         tabIndex={tabIndex}
-        ref={this.listItemRef}
+        ref={this.onRowRef}
         onMouseDown={this.onRowMouseDown}
         onMouseUp={this.onRowMouseUp}
         onClick={this.onRowClick}
@@ -295,7 +297,7 @@ export class ListRow extends React.Component<IListRowProps, {}> {
         onBlur={this.onBlur}
         onContextMenu={this.onContextMenu}
       >
-        {this.renderKeyboardFocusTooltip()}
+        {this.renderFocusTooltip()}
         {
           // HACK: When we have an ariaLabel we need to make sure that the
           // child elements are not exposed to the screen reader, otherwise
