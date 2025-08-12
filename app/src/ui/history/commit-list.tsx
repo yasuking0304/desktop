@@ -296,10 +296,6 @@ export class CommitList extends React.Component<
         key={commit.sha}
         gitHubRepository={this.props.gitHubRepository}
         showUnpushedIndicator={showUnpushedIndicator}
-        unpushedIndicatorTitle={this.getUnpushedIndicatorTitle(
-          isLocal,
-          unpushedTags.length
-        )}
         commit={commit}
         emoji={this.props.emoji}
         isDraggable={
@@ -477,10 +473,8 @@ export class CommitList extends React.Component<
     if (user.name) {
       return (
         <>
-          {user.name}
-          {' <'}
-          {user.email}
-          {'>'}
+          <div>{user.name}</div>
+          <div>{user.email}</div>
         </>
       )
     }
@@ -515,7 +509,7 @@ export class CommitList extends React.Component<
 
     const authorList = avatarUsers.map((user, i) => {
       return (
-        <div className="author selectable" key={i}>
+        <div className="author" key={i}>
           <div className="label">
             <Avatar accounts={this.props.accounts} user={user} title={null} />
           </div>
@@ -539,9 +533,11 @@ export class CommitList extends React.Component<
           {absoluteDate}
         </div>
         {showUnpushedIndicator ? (
-          <div className="unpushed-indicator">
+          <div>
             <div className="label">
-              <Octicon symbol={octicons.arrowUp} />
+              <span className="unpushed-indicator">
+                <Octicon symbol={octicons.arrowUp} />
+              </span>
             </div>
             <div>
               {this.getUnpushedIndicatorTitle(isLocal, unpushedTags.length)}
