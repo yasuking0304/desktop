@@ -158,6 +158,7 @@ export class CommitListItem extends React.PureComponent<
               <AvatarStack
                 users={this.state.avatarUsers}
                 accounts={this.props.accounts}
+                tooltip={false}
               />
               <div className="byline">
                 <CommitAttribution
