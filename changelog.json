@@ -1,5 +1,9 @@
 {
   "releases": {
+    "3.5.3-beta1": [
+      "[Improved] Provides the tooltips for list items in a single condensed tooltip that allows keyboard users and screen reader users access upon navigation of a list item - #20804",
+      "[Fixed] Focus lands on first interactive control instead of 'Continue' button in the conflict resolution dialog - #20880"
+    ],
     "3.5.2": [
       "[Fixed] Fix the crash that sometimes occurs when opening Pull Request-related notifications - #20761",
       "[Fixed] Ensure the cursor type on links is pointer - #20766. Thanks @huanfe1!",
