@@ -160,6 +160,8 @@
   "branch-list": {
     "default-branch": "既定のブランチ",
     "default-branch-darwin": "既定のブランチ",
+    "full-name": "正式名称: ",
+    "last-modified": "最終更新日: ",
     "new-branch": "新しいブランチ",
     "new-branch-darwin": "新しいブランチ",
     "other-branch": "その他のブランチ",
@@ -180,6 +182,7 @@
     "branches": "ブランチ",
     "choose-a-branch-to-marge-1": " ",
     "choose-a-branch-to-marge-2": " にマージするブランチを選択",
+    "choose-a-branch-to-marge-into": "{{0}} にマージするブランチを選択",
     "new-branch": "新規ブランチ",
     "new-branch-darwin": "新規ブランチ",
     "pull-requests": "プルリクエスト",
@@ -378,7 +381,9 @@
     "copy-sha": "SHA のコピー",
     "create-branch-from-commit": "コミットからブランチを作成する",
     "create-branch-from-commit-darwin": "コミットからブランチを作成する",
+    "date": "更新日: ",
     "empty-commit-message": "空のコミットメッセージ",
+    "no-commits-to-list": "コミットはありません",
     "reorder-choose-locate-1": " ",
     "reorder-choose-locate-2": "キーで新しい場所を選択します",
     "reorder-comfirm-locate-1": " ",
@@ -1694,6 +1699,10 @@
     "pro-tip-2": " で、ローカルリポジトリをすばやく追加することが可能で、 ",
     "pro-tip-3": " で、アプリ内のどこからでもクローンすることが可能です",
     "sorry-i-can-not-find-that-repository": "申し訳ありません。そのリポジトリを見つけることができません"
+  },
+  "repository-list": {
+    "full-name": "正式名称: ",
+    "path": "パス: "
   },
   "repository-list-item-context-menu": {
     "copy-repo-name": "リポジトリ名のコピー",

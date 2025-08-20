@@ -26,7 +26,7 @@ function patchCliui() {
   /**
    * The following version cinbinations cause problems,
    * so wrap-ansi is prohibited.
-   * 
+   *
    * electron-builder >= 25.x.x
    * cliui <= 7.0.x
    * wrap-ansi >= 8.0.x
@@ -37,9 +37,11 @@ function patchCliui() {
     'node_modules',
     'electron-builder',
     'node_modules',
-    'cliui',
+    'cliui'
   )
-  const cliuiVersion = require(path.resolve(cliuiPath, 'package.json'))['version']
+  const cliuiVersion = require(path.resolve(cliuiPath, 'package.json')).get(
+    'version'
+  )
   const cliuiIndexCjsPath = path.resolve(cliuiPath, 'build', 'index.cjs')
 
   const orginalCjs = fs.readFileSync(cliuiIndexCjsPath, 'utf8')
@@ -50,7 +52,8 @@ function patchCliui() {
   if (convertedCjs !== orginalCjs) {
     fs.writeFileSync(cliuiIndexCjsPath, convertedCjs)
     console.log(
-      `\x1b[32m[Patched. Target Version: ${cliuiVersion}] ${cliuiIndexCjsPath}\x1b[0m`
+      `\x1b[32m[Patched. Target Version: ` +
+        `${cliuiVersion}] ${cliuiIndexCjsPath}\x1b[0m`
     )
   }
 }

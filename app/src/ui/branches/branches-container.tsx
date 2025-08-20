@@ -179,7 +179,11 @@ export class BranchesContainer extends React.Component<
         <Button
           className="merge-button"
           onClick={this.onMergeClick}
-          tooltip={`Choose a branch to merge into ${currentBranch.name}`}
+          tooltip={t(
+            'branches-container.choose-a-branch-to-marge-into',
+            `Choose a branch to merge into {{0}}`,
+            { 0: currentBranch.name }
+          )}
         >
           <Octicon className="icon" symbol={octicons.gitMerge} />
           {t(

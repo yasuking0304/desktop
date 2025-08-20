@@ -160,6 +160,8 @@
   "branch-list": {
     "default-branch": "默认分支",
     "default-branch-darwin": "默认分支",
+    "full-name": "正式名称: ",
+    "last-modified": "最后修改: ",
     "new-branch": "新分支",
     "new-branch-darwin": "新分支",
     "other-branch": "其他分支",
@@ -180,6 +182,7 @@
     "branches": "分支",
     "choose-a-branch-to-marge-1": "选择要合并到 ",
     "choose-a-branch-to-marge-2": " 的分支",
+    "choose-a-branch-to-marge-into": "选择要合并到 {{0}} 的分支",
     "new-branch": "新分支",
     "new-branch-darwin": "新分支",
     "pull-requests": "拉取请求",
@@ -378,7 +381,9 @@
     "copy-sha": "复制 SHA",
     "create-branch-from-commit": "从提交创建分支",
     "create-branch-from-commit-darwin": "从提交创建分支",
+    "date": "Date: ",
     "empty-commit-message": "空的提交信息",
+    "no-commits-to-list": "No commits to list",
     "reorder-choose-locate-1": "使用 ",
     "reorder-choose-locate-2": "选择新位置。",
     "reorder-comfirm-locate-1": "按 ",
@@ -1694,6 +1699,10 @@
     "pro-tip-2": " 快速添加本地存储库, ",
     "pro-tip-3": " 可从应用程序内的任何位置克隆",
     "sorry-i-can-not-find-that-repository": "抱歉, 我找不到该存储库"
+  },
+  "repository-list": {
+    "full-name": "正式名称: ",
+    "path": "路径: "
   },
   "repository-list-item-context-menu": {
     "copy-repo-name": "复制存储库名称",

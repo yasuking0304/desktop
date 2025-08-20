@@ -160,6 +160,8 @@
   "branch-list": {
     "default-branch": "Default branch",
     "default-branch-darwin": "Default Branch",
+    "full-name": "Full Name: ",
+    "last-modified": "Last Modified: ",
     "new-branch": "New branch",
     "new-branch-darwin": "New Branch",
     "other-branch": "Other branches",
@@ -180,6 +182,7 @@
     "branches": "Branches",
     "choose-a-branch-to-marge-1": "Choose a branch to merge into ",
     "choose-a-branch-to-marge-2": " ",
+    "choose-a-branch-to-marge-into": "Choose a branch to merge into {{0}}",
     "new-branch": "New branch",
     "new-branch-darwin": "New Branch",
     "pull-requests": "Pull requests",
@@ -378,7 +381,9 @@
     "copy-sha": "Copy SHA",
     "create-branch-from-commit": "Create branch from commit",
     "create-branch-from-commit-darwin": "Create Branch from Commit",
+    "date": "Date: ",
     "empty-commit-message": "Empty commit message",
+    "no-commits-to-list": "No commits to list",
     "reorder-choose-locate-1": "Use ",
     "reorder-choose-locate-2": "to choose a new location.",
     "reorder-comfirm-locate-1": "Press ",
@@ -1694,6 +1699,10 @@
     "pro-tip-2": " to quickly add a local repository, and ",
     "pro-tip-3": " to clone from anywhere within the app",
     "sorry-i-can-not-find-that-repository": "Sorry, I can't find that repository"
+  },
+  "repository-list": {
+    "full-name": "Full Name: ",
+    "path": "Path: "
   },
   "repository-list-item-context-menu": {
     "copy-repo-name": "Copy repo name",

@@ -208,12 +208,14 @@ export class RepositoriesList extends React.Component<
     return (
       <div className="repository-list-item-tooltip list-item-tooltip">
         <div>
-          <div className="label">Full Name: </div>
+          <div className="label">
+            {t('repository-list.full-name', 'Full Name: ')}
+          </div>
           {realName}
           {alias && <> ({alias})</>}
         </div>
         <div>
-          <div className="label">Path: </div>
+          <div className="label">{t('repository-list.path', 'Path: ')}</div>
           {repository.path}
         </div>
         {aheadBehindTooltip && (

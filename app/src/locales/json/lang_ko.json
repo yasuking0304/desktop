@@ -160,6 +160,8 @@
   "branch-list": {
     "default-branch": "기본 브랜치",
     "default-branch-darwin": "기본 브랜치",
+    "full-name": "정식 명칭: ",
+    "last-modified": "마지막 수정됨: ",
     "new-branch": "새 브랜치",
     "new-branch-darwin": "새 브랜치",
     "other-branch": "기타 브랜치",
@@ -179,7 +181,8 @@
   "branches-container": {
     "branches": "브랜치",
     "choose-a-branch-to-marge-1": " ",
-    "choose-a-branch-to-marge-2": "에 병합할 브랜치 선택",
+    "choose-a-branch-to-marge-2": " 에 병합할 브랜치 선택",
+    "choose-a-branch-to-marge-into": "{{0}} 에 병합할 브랜치 선택",
     "new-branch": "신규 브랜치",
     "new-branch-darwin": "신규 브랜치",
     "pull-requests": "풀 요청",
@@ -378,7 +381,9 @@
     "copy-sha": "SHA 복사",
     "create-branch-from-commit": "커밋에서 브랜치 만들기",
     "create-branch-from-commit-darwin": "커밋에서 브랜치 만들기",
+    "date": "Date: ",
     "empty-commit-message": "빈 커밋 메시지",
+    "no-commits-to-list": "No commits to list",
     "reorder-choose-locate-1": " ",
     "reorder-choose-locate-2": "키로 새 위치 선택",
     "reorder-comfirm-locate-1": " ",
@@ -757,7 +762,7 @@
     "arguments": "인수",
     "arguments-must-include-the-target-path": "인수에 대상 경로의 {{0}} 자리 표시자를 포함해야 합니다.",
     "command-line-arguments": "명령줄 인수",
-    "path": "경로",
+    "path": "패스",
     "path-to-executable": "실행 파일 경로",
     "these-arguments-are-not-valid": "이 인수는 잘못되었습니다.",
     "This-path0does-not-appear": "이 경로는 유효한 실행 파일이 아닌 것 같습니다."
@@ -1694,6 +1699,10 @@
     "pro-tip-2": "로 로컬 리포지토리를 신속하게 추가 할 수 있습니다.",
     "pro-tip-3": "그래서 앱의 어느 곳에서나 복제할 수 있습니다.",
     "sorry-i-can-not-find-that-repository": "죄송합니다. 리포지토리를 찾을 수 없습니다."
+  },
+  "repository-list": {
+    "full-name": "정식 명칭: ",
+    "path": "패스: "
   },
   "repository-list-item-context-menu": {
     "copy-repo-name": "리포지토리 이름 복사",

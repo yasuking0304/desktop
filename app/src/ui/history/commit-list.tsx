@@ -539,7 +539,7 @@ export class CommitList extends React.Component<
       <div className="commit-list-item-tooltip list-item-tooltip">
         {authorList}
         <div>
-          <div className="label">Date: </div>
+          <div className="label">{t('commit-list-item.date', 'Date: ')}</div>
           {absoluteDate}
         </div>
         {showUnpushedIndicator ? (
@@ -574,7 +574,8 @@ export class CommitList extends React.Component<
     if (commitSHAs.length === 0) {
       return (
         <div className="panel blankslate">
-          {emptyListMessage ?? 'No commits to list'}
+          {emptyListMessage ??
+            t('commit-list-item.no-commits-to-list', 'No commits to list')}
         </div>
       )
     }
