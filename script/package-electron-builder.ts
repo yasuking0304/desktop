@@ -22,14 +22,31 @@ function getArchitecture() {
   }
 }
 
+function compareVersions(version1: string, version2: string): number {
+  const v1Parts = version1.split('.').map(Number);
+  const v2Parts = version2.split('.').map(Number);
+
+  const maxLength = Math.max(v1Parts.length, v2Parts.length);
+
+  for (let i = 0; i < maxLength; i++) {
+    const v1 = v1Parts[i] || 0; // 足りない部分は0とみなす
+    const v2 = v2Parts[i] || 0;
+
+    if (v1 > v2) return 1;  // version1が新しい
+    if (v1 < v2) return -1; // version2が新しい
+  }
+
+  return 0; // 同じバージョン
+}
+
 function patchCliui() {
   /**
    * The following version cinbinations cause problems,
    * so wrap-ansi is prohibited.
    *
    * electron-builder >= 25.x.x
-   * cliui <= 7.0.x
-   * wrap-ansi >= 8.0.x
+   * cliui <= 8.0.0
+   * wrap-ansi >= 8.0.0
    */
   const cliuiPath = path.resolve(
     __dirname,
@@ -47,10 +64,15 @@ function patchCliui() {
   const wrapAnsiVersion = require(path.resolve(wrapAnsiPath, 'package.json'))[
     'version'
   ]
-  console.log(wrapAnsiVersion)
+  if (compareVersions(wrapAnsiVersion, '8.0.0') < 0) {
+    return
+  }
   const cliuiVersion = require(path.resolve(cliuiPath, 'package.json'))[
     'version'
   ]
+  if (compareVersions(cliuiVersion, '8.0.0') > 0) {
+    return
+  }
   const cliuiIndexCjsPath = path.resolve(cliuiPath, 'build', 'index.cjs')
 
   const orginalCjs = fs.readFileSync(cliuiIndexCjsPath, 'utf8')
