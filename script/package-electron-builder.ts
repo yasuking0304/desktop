@@ -39,9 +39,18 @@ function patchCliui() {
     'node_modules',
     'cliui'
   )
-  const cliuiVersion = require(path.resolve(cliuiPath, 'package.json')).get(
-    'version'
+  const wrapAnsiPath = path.resolve(
+    cliuiPath,
+    '..',
+    'wrap-ansi'
   )
+  const wrapAnsiVersion = require(path.resolve(wrapAnsiPath, 'package.json'))[
+    'version'
+  ]
+  console.log(wrapAnsiVersion)
+  const cliuiVersion = require(path.resolve(cliuiPath, 'package.json'))[
+    'version'
+  ]
   const cliuiIndexCjsPath = path.resolve(cliuiPath, 'build', 'index.cjs')
 
   const orginalCjs = fs.readFileSync(cliuiIndexCjsPath, 'utf8')
@@ -53,7 +62,7 @@ function patchCliui() {
     fs.writeFileSync(cliuiIndexCjsPath, convertedCjs)
     console.log(
       `\x1b[32m[Patched. Target Version: ` +
-        `${cliuiVersion}] ${cliuiIndexCjsPath}\x1b[0m`
+      `${cliuiVersion}] ${cliuiIndexCjsPath}\x1b[0m`
     )
   }
 }
