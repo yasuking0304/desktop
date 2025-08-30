@@ -23,20 +23,29 @@ function getArchitecture() {
 }
 
 function compareVersions(version1: string, version2: string): number {
-  const v1Parts = version1.split('.').map(Number);
-  const v2Parts = version2.split('.').map(Number);
+  /**
+   * Compare two version
+   * param
+   *   version1: First Version Number(ex: 2.0.0)
+   *   version2: Second Version Number(ex: 4.3.2.0)
+   * return
+   *  -1: version1 < version2
+   *   0: version1 = version2
+   *   1: version1 > version2
+   */
+  const v1Parts = version1.split('.').map(Number)
+  const v2Parts = version2.split('.').map(Number)
 
-  const maxLength = Math.max(v1Parts.length, v2Parts.length);
+  const maxLength = Math.max(v1Parts.length, v2Parts.length)
 
   for (let i = 0; i < maxLength; i++) {
-    const v1 = v1Parts[i] || 0; // 足りない部分は0とみなす
-    const v2 = v2Parts[i] || 0;
+    const v1 = v1Parts[i] || 0
+    const v2 = v2Parts[i] || 0
 
-    if (v1 > v2) return 1;  // version1が新しい
-    if (v1 < v2) return -1; // version2が新しい
+    if (v1 > v2) return 1  // version1 is newer.
+    if (v1 < v2) return -1 // version2 is newer.
   }
-
-  return 0; // 同じバージョン
+  return 0 // some version
 }
 
 function patchCliui() {
@@ -45,7 +54,7 @@ function patchCliui() {
    * so wrap-ansi is prohibited.
    *
    * electron-builder >= 25.x.x
-   * cliui <= 8.0.0
+   * cliui <= 7.0.x
    * wrap-ansi >= 8.0.0
    */
   const cliuiPath = path.resolve(
@@ -65,14 +74,12 @@ function patchCliui() {
     'version'
   ]
   if (compareVersions(wrapAnsiVersion, '8.0.0') < 0) {
+    console.log('wrap-ansi version is valid: %s', wrapAnsiVersion)
     return
   }
   const cliuiVersion = require(path.resolve(cliuiPath, 'package.json'))[
     'version'
   ]
-  if (compareVersions(cliuiVersion, '8.0.0') > 0) {
-    return
-  }
   const cliuiIndexCjsPath = path.resolve(cliuiPath, 'build', 'index.cjs')
 
   const orginalCjs = fs.readFileSync(cliuiIndexCjsPath, 'utf8')
