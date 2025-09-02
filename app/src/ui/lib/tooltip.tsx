@@ -162,6 +162,9 @@ export interface ITooltipProps<T> {
    * forces it to be relative to the target's position. Useful for tooltips
    * rendered by keyboard focus of the item. */
   readonly positionRelativeToTarget?: boolean
+
+  /** Whether to show the tooltip when the target is focused */
+  readonly disabled?: boolean
 }
 
 interface ITooltipState {
@@ -528,6 +531,10 @@ export class Tooltip<T extends TooltipTarget> extends React.Component<
   }
 
   private beginShowTooltip() {
+    if (this.props.disabled) {
+      return
+    }
+
     this.cancelShowTooltip()
     this.showTooltipTimeout = window.setTimeout(
       this.showTooltip,

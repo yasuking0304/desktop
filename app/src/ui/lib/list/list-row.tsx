@@ -3,6 +3,7 @@ import classNames from 'classnames'
 import { RowIndexPath } from './list-row-index-path'
 import { Tooltip } from '../tooltip'
 import { createObservableRef, ObservableRef } from '../observable-ref'
+import { enableAccessibleListToolTips } from '../../../lib/feature-flag'
 
 interface IListRowProps {
   /** whether or not the section to which this row belongs has a header */
@@ -145,6 +146,10 @@ export class ListRow extends React.Component<IListRowProps, {}> {
   private listItemRef: ObservableRef<HTMLDivElement> | null = null
 
   private renderFocusTooltip() {
+    if (!enableAccessibleListToolTips()) {
+      return null
+    }
+
     if (
       !this.listItemRef ||
       !this.props.renderRowFocusTooltip ||

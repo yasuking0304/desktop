@@ -24,6 +24,8 @@ import {
 import classNames from 'classnames'
 import { Account } from '../../models/account'
 import { Emoji } from '../../lib/emoji'
+import { enableAccessibleListToolTips } from '../../lib/feature-flag'
+import { TooltippedContent } from '../lib/tooltipped-content'
 
 interface ICommitProps {
   readonly gitHubRepository: GitHubRepository | null
@@ -44,6 +46,7 @@ interface ICommitProps {
   readonly isDraggable?: boolean
   readonly showUnpushedIndicator: boolean
   readonly disableSquashing?: boolean
+  readonly unpushedIndicatorTitle?: string
   readonly accounts: ReadonlyArray<Account>
 }
 
@@ -158,7 +161,7 @@ export class CommitListItem extends React.PureComponent<
               <AvatarStack
                 users={this.state.avatarUsers}
                 accounts={this.props.accounts}
-                tooltip={false}
+                tooltip={enableAccessibleListToolTips()}
               />
               <div className="byline">
                 <CommitAttribution
@@ -197,9 +200,14 @@ export class CommitListItem extends React.PureComponent<
     }
 
     return (
-      <div className="unpushed-indicator">
+      <TooltippedContent
+        tagName="div"
+        className="unpushed-indicator"
+        tooltip={this.props.unpushedIndicatorTitle}
+        disabled={enableAccessibleListToolTips()}
+      >
         <Octicon symbol={octicons.arrowUp} />
-      </div>
+      </TooltippedContent>
     )
   }
 
