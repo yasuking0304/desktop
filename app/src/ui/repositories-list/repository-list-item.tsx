@@ -30,7 +30,10 @@ interface IRepositoryListItemProps {
 }
 
 /** A repository item. */
-export class RepositoryListItem extends React.Component<IRepositoryListItemProps, {}> {
+export class RepositoryListItem extends React.Component<
+  IRepositoryListItemProps,
+  {}
+> {
   private readonly listItemRef = createObservableRef<HTMLDivElement>()
 
   public render() {
