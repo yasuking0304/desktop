@@ -531,7 +531,7 @@ export class Tooltip<T extends TooltipTarget> extends React.Component<
   }
 
   private beginShowTooltip() {
-    if (this.props.disabled) {
+    if (this.props.disabled === true) {
       return
     }
 

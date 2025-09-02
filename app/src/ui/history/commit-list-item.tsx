@@ -161,7 +161,7 @@ export class CommitListItem extends React.PureComponent<
               <AvatarStack
                 users={this.state.avatarUsers}
                 accounts={this.props.accounts}
-                tooltip={enableAccessibleListToolTips()}
+                tooltip={!enableAccessibleListToolTips()}
               />
               <div className="byline">
                 <CommitAttribution
@@ -240,7 +240,7 @@ function renderRelativeTime(date: Date) {
   return (
     <>
       {` • `}
-      <RelativeTime date={date} tooltip={false} />
+      <RelativeTime date={date} tooltip={!enableAccessibleListToolTips()} />
     </>
   )
 }
