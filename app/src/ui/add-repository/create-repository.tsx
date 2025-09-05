@@ -10,7 +10,6 @@ import {
   getRepositoryType,
   RepositoryType,
 } from '../../lib/git'
-import { sanitizedRepositoryName } from './sanitized-repository-name'
 import { TextBox } from '../lib/text-box'
 import { Button } from '../lib/button'
 import { Row } from '../lib/row'
@@ -651,7 +650,12 @@ export class CreateRepository extends React.Component<
   private renderPathMessage = () => {
     const { path, name, isRepository } = this.state
 
-    if (path === null || path === '' || name === '' || isRepository) {
+    if (
+      path === null ||
+      path.trim().length === 0 ||
+      name.trim().length === 0 ||
+      isRepository
+    ) {
       return null
     }
 
@@ -682,7 +686,7 @@ export class CreateRepository extends React.Component<
     const disabled =
       this.state.path === null ||
       this.state.path.length === 0 ||
-      this.state.name.length === 0 ||
+      this.state.name.trim().length === 0 ||
       this.state.creating ||
       this.state.isRepository
 
