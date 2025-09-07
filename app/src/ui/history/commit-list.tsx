@@ -297,6 +297,10 @@ export class CommitList extends React.Component<
         key={commit.sha}
         gitHubRepository={this.props.gitHubRepository}
         showUnpushedIndicator={showUnpushedIndicator}
+        unpushedIndicatorTitle={this.getUnpushedIndicatorTitle(
+          isLocal,
+          unpushedTags.length
+        )}
         commit={commit}
         emoji={this.props.emoji}
         isDraggable={

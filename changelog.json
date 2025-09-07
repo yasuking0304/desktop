@@ -1,5 +1,8 @@
 {
   "releases": {
+    "3.5.3-beta2": [
+      "[Improved] The text color of the 'File does not exist' merge conflict warning meets 4.5:1 contrast requirements - #20902"
+    ],
     "3.5.3-beta1": [
       "[Improved] Provides the tooltips for list items in a single condensed tooltip that allows keyboard users and screen reader users access upon navigation of a list item - #20804",
       "[Fixed] Focus lands on first interactive control instead of 'Continue' button in the conflict resolution dialog - #20880"
