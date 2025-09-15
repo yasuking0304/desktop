@@ -63,6 +63,7 @@ import { useRepoRulesLogic } from '../../lib/helpers/repo-rules'
 import { isDotCom } from '../../lib/endpoint-capabilities'
 import { WorkingDirectoryFileChange } from '../../models/status'
 import { enableCommitMessageGeneration } from '../../lib/feature-flag'
+import { AriaLiveContainer } from '../accessibility/aria-live-container'
 
 const addAuthorIcon: OcticonSymbolVariant = {
   w: 18,
@@ -906,11 +907,12 @@ export class CommitMessage extends React.Component<
     const noFilesSelected = filesSelected.length === 0
     const noChangesAvailable = !commitToAmend && noFilesSelected
 
-    const ariaLabel =
-      'Generate commit message with Copilot' +
-      (noChangesAvailable
-        ? '. Files must be selected to generate a commit message.'
-        : '')
+    const ariaLabel = isGeneratingCommitMessage
+      ? "Generating commit details…'"
+      : 'Generate commit message with Copilot' +
+        (noChangesAvailable
+          ? '. Files must be selected to generate a commit message.'
+          : '')
 
     return (
       <>
@@ -926,6 +928,11 @@ export class CommitMessage extends React.Component<
             noChangesAvailable
           }
         >
+          <AriaLiveContainer
+            message={
+              isGeneratingCommitMessage ? 'Generating commit details…' : ''
+            }
+          />
           <Octicon symbol={octicons.copilot} />
           {shouldShowGenerateCommitMessageCallOut && (
             <span className="call-to-action-bubble">New</span>
