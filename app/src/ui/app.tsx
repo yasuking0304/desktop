@@ -1579,6 +1579,9 @@ export class App extends React.Component<IAppProps, IAppState> {
             askForConfirmationOnCommitFilteredChanges={
               this.state.askForConfirmationOnCommitFilteredChanges
             }
+            confirmCommitMessageOverride={
+              this.state.askForConfirmationOnCommitMessageOverride
+            }
             uncommittedChangesStrategy={this.state.uncommittedChangesStrategy}
             selectedExternalEditor={this.state.selectedExternalEditor}
             useWindowsOpenSSH={this.state.useWindowsOpenSSH}

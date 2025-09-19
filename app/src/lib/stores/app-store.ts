@@ -387,6 +387,7 @@ const confirmCheckoutCommitDefault: boolean = true
 const askForConfirmationOnForcePushDefault = true
 const confirmUndoCommitDefault: boolean = true
 const confirmCommitFilteredChangesDefault: boolean = true
+const confirmCommitMessageOverrideDefault: boolean = true
 const askToMoveToApplicationsFolderKey: string = 'askToMoveToApplicationsFolder'
 const confirmRepoRemovalKey: string = 'confirmRepoRemoval'
 const showCommitLengthWarningKey: string = 'showCommitLengthWarning'
@@ -399,6 +400,7 @@ const confirmForcePushKey: string = 'confirmForcePush'
 const confirmUndoCommitKey: string = 'confirmUndoCommit'
 const confirmCommitFilteredChangesKey: string =
   'confirmCommitFilteredChangesKey'
+const confirmCommitMessageOverrideKey: string = 'confirmCommitMessageOverride'
 
 const uncommittedChangesStrategyKey = 'uncommittedChangesStrategyKind'
 
@@ -539,6 +541,8 @@ export class AppStore extends TypedBaseStore<IAppState> {
   private confirmUndoCommit: boolean = confirmUndoCommitDefault
   private confirmCommitFilteredChanges: boolean =
     confirmCommitFilteredChangesDefault
+  private confirmCommitMessageOverride: boolean =
+    confirmCommitMessageOverrideDefault
   private imageDiffType: ImageDiffType = imageDiffTypeDefault
   private hideWhitespaceInChangesDiff: boolean =
     hideWhitespaceInChangesDiffDefault
@@ -1073,6 +1077,8 @@ export class AppStore extends TypedBaseStore<IAppState> {
       askForConfirmationOnUndoCommit: this.confirmUndoCommit,
       askForConfirmationOnCommitFilteredChanges:
         this.confirmCommitFilteredChanges,
+      askForConfirmationOnCommitMessageOverride:
+        this.confirmCommitMessageOverride,
       uncommittedChangesStrategy: this.uncommittedChangesStrategy,
       selectedExternalEditor: this.selectedExternalEditor,
       imageDiffType: this.imageDiffType,
@@ -2252,6 +2258,11 @@ export class AppStore extends TypedBaseStore<IAppState> {
     this.confirmCommitFilteredChanges = getBoolean(
       confirmCommitFilteredChangesKey,
       confirmCommitFilteredChangesDefault
+    )
+
+    this.confirmCommitMessageOverride = getBoolean(
+      confirmCommitMessageOverrideKey,
+      confirmCommitMessageOverrideDefault
     )
 
     this.uncommittedChangesStrategy =
@@ -5444,6 +5455,12 @@ export class AppStore extends TypedBaseStore<IAppState> {
     repository: Repository,
     filesSelected: ReadonlyArray<WorkingDirectoryFileChange>
   ): Promise<void> {
+    if (!this.confirmCommitMessageOverride) {
+      // If user has disabled the confirmation, directly generate commit message
+      await this._generateCommitMessage(repository, filesSelected)
+      return
+    }
+
     return this._showPopup({
       type: PopupType.GenerateCommitMessageOverrideWarning,
       repository,
@@ -5974,6 +5991,17 @@ export class AppStore extends TypedBaseStore<IAppState> {
   public _setConfirmCommitFilteredChanges(value: boolean): Promise<void> {
     this.confirmCommitFilteredChanges = value
     setBoolean(confirmCommitFilteredChangesKey, value)
+
+    this.emitUpdate()
+
+    return Promise.resolve()
+  }
+
+  public _setConfirmCommitMessageOverrideSetting(
+    value: boolean
+  ): Promise<void> {
+    this.confirmCommitMessageOverride = value
+    setBoolean(confirmCommitMessageOverrideKey, value)
 
     this.emitUpdate()
 
