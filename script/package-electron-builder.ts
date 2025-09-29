@@ -42,8 +42,12 @@ function compareVersions(version1: string, version2: string): number {
     const v1 = v1Parts[i] || 0
     const v2 = v2Parts[i] || 0
 
-    if (v1 > v2) return 1  // version1 is newer.
-    if (v1 < v2) return -1 // version2 is newer.
+    if (v1 > v2) {
+      return 1
+    } // version1 is newer.
+    if (v1 < v2) {
+      return -1
+    } // version2 is newer.
   }
   return 0 // some version
 }
@@ -65,11 +69,7 @@ function patchCliui() {
     'node_modules',
     'cliui'
   )
-  const wrapAnsiPath = path.resolve(
-    cliuiPath,
-    '..',
-    'wrap-ansi'
-  )
+  const wrapAnsiPath = path.resolve(cliuiPath, '..', 'wrap-ansi')
   const wrapAnsiVersion = require(path.resolve(wrapAnsiPath, 'package.json'))[
     'version'
   ]
@@ -91,7 +91,7 @@ function patchCliui() {
     fs.writeFileSync(cliuiIndexCjsPath, convertedCjs)
     console.log(
       `\x1b[32m[Patched. Target Version: ` +
-      `${cliuiVersion}] ${cliuiIndexCjsPath}\x1b[0m`
+        `${cliuiVersion}] ${cliuiIndexCjsPath}\x1b[0m`
     )
   }
 }

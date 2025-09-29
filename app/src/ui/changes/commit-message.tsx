@@ -921,7 +921,7 @@ export class CommitMessage extends React.Component<
         )
       : ''
 
-    const ariaLabel =  isGeneratingCommitMessage
+    const ariaLabel = isGeneratingCommitMessage
       ? t(
           'commit-message.generating-commit-details',
           'Generating commit details…'
@@ -947,7 +947,12 @@ export class CommitMessage extends React.Component<
         >
           <AriaLiveContainer
             message={
-              isGeneratingCommitMessage ? 'Generating commit details…' : ''
+              isGeneratingCommitMessage
+                ? t(
+                    'commit-message.generating-commit-details',
+                    'Generating commit details…'
+                  )
+                : ''
             }
           />
           <Octicon symbol={octicons.copilot} />
