@@ -1717,13 +1717,29 @@ export class AppStore extends TypedBaseStore<IAppState> {
     if (formState.kind === HistoryTabMode.History) {
       const commits = state.compareState.commitSHAs
 
-      const newCommits = await gitStore.loadCommitBatch('HEAD', commits.length)
-      if (newCommits == null) {
+      const tip = state.branchesState.tip
+
+      let newCommits: string[] | null = null
+
+      // Prioritize pulling from the local commits if the last one we pulled is local
+      if (
+        commits.length > 0 &&
+        tip.kind === TipState.Valid &&
+        gitStore.localCommitSHAs.includes(commits[commits.length - 1])
+      ) {
+        newCommits = await gitStore.loadLocalCommits(tip.branch, commits.length)
+      }
+
+      if (!newCommits || newCommits.length === 0) {
+        newCommits = await gitStore.loadCommitBatch('HEAD', commits.length)
+      }
+
+      if (!newCommits) {
         return
       }
 
       this.repositoryStateCache.updateCompareState(repository, () => ({
-        commitSHAs: commits.concat(newCommits),
+        commitSHAs: commits.concat(newCommits ?? []),
       }))
       this.emitUpdate()
     }
