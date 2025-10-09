@@ -94,7 +94,7 @@ export const isWindowsAndNoLongerSupportedByElectron = memoizeOne(
 )
 
 export const isMacOSAndNoLongerSupportedByElectron = memoizeOne(
-  () => __DARWIN__ && systemVersionLessThan('11.0')
+  () => __DARWIN__ && systemVersionLessThan('12.0')
 )
 
 export const isOSNoLongerSupportedByElectron = memoizeOne(
