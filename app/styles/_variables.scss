@@ -367,6 +367,7 @@ $overlay-background-color: rgba(0, 0, 0, 0.4);
 
   /** The highlight color used for focus rings and focus box shadows */
   --focus-color: #{$blue};
+  --accent-color: #{$blue-400};
   --diff-linenumber-focus-color: #{$blue-600};
 
   /**
