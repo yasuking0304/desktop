@@ -160,7 +160,6 @@ export class OpenPullRequestDialog extends React.Component<IOpenPullRequestDialo
     }
 
     const { diff, file, changesetData, shas } = commitSelection
-    const { files } = changesetData
 
     if (shas.length === 0) {
       return
@@ -172,7 +171,7 @@ export class OpenPullRequestDialog extends React.Component<IOpenPullRequestDialo
         dispatcher={dispatcher}
         externalEditorLabel={externalEditorLabel}
         fileListWidth={fileListWidth}
-        files={files}
+        changesetData={changesetData}
         hideWhitespaceInDiff={hideWhitespaceInDiff}
         imageDiffType={imageDiffType}
         nonLocalCommitSHA={nonLocalCommitSHA}

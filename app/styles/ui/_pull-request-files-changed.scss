@@ -11,9 +11,25 @@
     padding: var(--spacing);
     border-bottom: var(--base-border);
     display: flex;
+    gap: var(--spacing);
 
-    .commits-displayed {
+    .gap {
       flex-grow: 1;
+    }
+
+    .lines-added-deleted {
+      display: flex;
+      align-items: center;
+      font-size: var(--font-size-sm);
+      column-gap: var(--spacing-half);
+
+      .lines-added {
+        color: var(--color-new);
+      }
+
+      .lines-deleted {
+        color: var(--color-deleted);
+      }
     }
   }
 
