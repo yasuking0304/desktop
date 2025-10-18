@@ -68,6 +68,18 @@ interface ISectionListProps {
   readonly rowRenderer: (indexPath: RowIndexPath) => JSX.Element | null
 
   /**
+   * Optional render function for the keyboard focus tooltip
+   *
+   * This is used to render a tooltip when the row is focused via keyboard
+   * navigation. This should be provided if the row has tooltip content that is
+   * only accessible via the mouse. The content in the mouse tooltip(s) will
+   * need to be in the keyboard focus tooltip as well.
+   */
+  readonly renderRowFocusTooltip?: (
+    indexPath: RowIndexPath
+  ) => JSX.Element | string | null
+
+  /**
    * Whether or not a given section has a header row at the beginning. When
    * ommitted, it's assumed the section does NOT have a header row.
    */
@@ -1221,6 +1233,12 @@ export class SectionList extends React.Component<
           children={element}
           selectable={selectable}
           className={customClasses}
+          renderRowFocusTooltip={this.props.renderRowFocusTooltip}
+          hasKeyboardFocus={
+            this.focusRow !== InvalidRowIndexPath &&
+            this.focusRow.section === section &&
+            this.focusRow.row === indexPath.row
+          }
         />
       )
     }

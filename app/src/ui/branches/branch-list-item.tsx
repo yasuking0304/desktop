@@ -7,9 +7,10 @@ import * as octicons from '../octicons/octicons.generated'
 import { HighlightText } from '../lib/highlight-text'
 import { dragAndDropManager } from '../../lib/drag-and-drop-manager'
 import { DragType, DropTargetType } from '../../models/drag-drop'
-import { TooltippedContent } from '../lib/tooltipped-content'
 import { RelativeTime } from '../relative-time'
 import classNames from 'classnames'
+import { TooltippedContent } from '../lib/tooltipped-content'
+import { enableAccessibleListToolTips } from '../../lib/feature-flag'
 
 interface IBranchListItemProps {
   /** The name of the branch */
@@ -115,6 +116,7 @@ export class BranchListItem extends React.Component<
           tooltip={name}
           onlyWhenOverflowed={true}
           tagName="div"
+          disabled={enableAccessibleListToolTips()}
         >
           <HighlightText text={name} highlight={this.props.matches.title} />
         </TooltippedContent>
@@ -123,6 +125,7 @@ export class BranchListItem extends React.Component<
             className="description"
             date={authorDate}
             onlyRelative={true}
+            tooltip={!enableAccessibleListToolTips()}
           />
         )}
       </div>

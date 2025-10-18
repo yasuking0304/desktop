@@ -29,6 +29,7 @@ import {
 } from '../../../lib/status'
 import { t } from 'i18next'
 import { revealInFileManager } from '../../../lib/app-shell'
+import { DialogPreferredFocusClassName } from '../../dialog'
 
 const defaultConflictsResolvedMessage = t(
   'unmerged-file.no-conflicts-remaining',
@@ -82,6 +83,8 @@ export const renderUnmergedFile: React.FunctionComponent<{
   readonly setIsFileResolutionOptionsMenuOpen: (
     isFileResolutionOptionsMenuOpen: boolean
   ) => void
+  /** whether this is the first conflicted file in the dialog (for focus management) */
+  readonly isFirstConflictedFile?: boolean
 }> = props => {
   if (
     isConflictWithMarkers(props.status) &&
@@ -100,6 +103,7 @@ export const renderUnmergedFile: React.FunctionComponent<{
       isFileResolutionOptionsMenuOpen: props.isFileResolutionOptionsMenuOpen,
       setIsFileResolutionOptionsMenuOpen:
         props.setIsFileResolutionOptionsMenuOpen,
+      isFirstConflictedFile: props.isFirstConflictedFile,
     })
   }
   if (
@@ -113,6 +117,7 @@ export const renderUnmergedFile: React.FunctionComponent<{
       dispatcher: props.dispatcher,
       ourBranch: props.ourBranch,
       theirBranch: props.theirBranch,
+      isFirstConflictedFile: props.isFirstConflictedFile,
     })
   }
   return renderResolvedFile({
@@ -178,6 +183,7 @@ const renderManualConflictedFile: React.FunctionComponent<{
   readonly ourBranch?: string
   readonly theirBranch?: string
   readonly dispatcher: Dispatcher
+  readonly isFirstConflictedFile?: boolean
 }> = props => {
   const onDropdownClick = makeManualConflictDropdownClickHandler(
     props.path,
@@ -218,6 +224,10 @@ const renderManualConflictedFile: React.FunctionComponent<{
     )
   }
 
+  const resolveButtonClassName = props.isFirstConflictedFile
+    ? `small-button button-group-item resolve-arrow-menu ${DialogPreferredFocusClassName}`
+    : 'small-button button-group-item resolve-arrow-menu'
+
   const content = (
     <>
       <div className="column-left">
@@ -226,7 +236,7 @@ const renderManualConflictedFile: React.FunctionComponent<{
       </div>
       <div className="action-buttons">
         <Button
-          className="small-button button-group-item resolve-arrow-menu"
+          className={resolveButtonClassName}
           onClick={onDropdownClick}
           onKeyDown={onDropdownKeyDown}
         >
@@ -265,6 +275,7 @@ const renderConflictedFileWithConflictMarkers: React.FunctionComponent<{
   readonly setIsFileResolutionOptionsMenuOpen: (
     isFileResolutionOptionsMenuOpen: boolean
   ) => void
+  readonly isFirstConflictedFile?: boolean
 }> = props => {
   const humanReadableConflicts = calculateConflicts(
     props.status.conflictMarkerCount
@@ -297,6 +308,10 @@ const renderConflictedFileWithConflictMarkers: React.FunctionComponent<{
     props.theirBranch
   )
 
+  const openEditorButtonClassName = props.isFirstConflictedFile
+    ? `small-button button-group-item ${DialogPreferredFocusClassName}`
+    : 'small-button button-group-item'
+
   const content = (
     <>
       <div className="column-left">
@@ -308,7 +323,7 @@ const renderConflictedFileWithConflictMarkers: React.FunctionComponent<{
           onClick={props.onOpenEditorClick}
           disabled={disabled}
           tooltip={tooltip}
-          className="small-button button-group-item"
+          className={openEditorButtonClassName}
         >
           {editorButtonString(props.resolvedExternalEditor)}
         </Button>

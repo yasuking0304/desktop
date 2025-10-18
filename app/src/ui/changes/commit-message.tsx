@@ -64,6 +64,7 @@ import { useRepoRulesLogic } from '../../lib/helpers/repo-rules'
 import { isDotCom } from '../../lib/endpoint-capabilities'
 import { WorkingDirectoryFileChange } from '../../models/status'
 import { enableCommitMessageGeneration } from '../../lib/feature-flag'
+import { AriaLiveContainer } from '../accessibility/aria-live-container'
 
 const addAuthorIcon: OcticonSymbolVariant = {
   w: 18,
@@ -920,11 +921,16 @@ export class CommitMessage extends React.Component<
         )
       : ''
 
-    const ariaLabel = t(
-      'commit-message.generate-commit-message',
-      'Generate commit message with Copilot{{0}}',
-      { 0: addCommitMessage }
-    )
+    const ariaLabel = isGeneratingCommitMessage
+      ? t(
+          'commit-message.generating-commit-details',
+          'Generating commit details…'
+        )
+      : t(
+          'commit-message.generate-commit-message',
+          'Generate commit message with Copilot{{0}}',
+          { 0: addCommitMessage }
+        )
     return (
       <>
         <div className="separator" />
@@ -939,6 +945,16 @@ export class CommitMessage extends React.Component<
             noChangesAvailable
           }
         >
+          <AriaLiveContainer
+            message={
+              isGeneratingCommitMessage
+                ? t(
+                    'commit-message.generating-commit-details',
+                    'Generating commit details…'
+                  )
+                : ''
+            }
+          />
           <Octicon symbol={octicons.copilot} />
           {shouldShowGenerateCommitMessageCallOut && (
             <span className="call-to-action-bubble">

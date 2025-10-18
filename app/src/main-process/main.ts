@@ -282,7 +282,7 @@ function setAsDefaultProtocolClient(protocol: string) {
   }
 }
 
-if (process.env.GITHUB_DESKTOP_DISABLE_HARDWARE_ACCELERATION) {
+if (process.env.GITHUB_DESKTOP_DISABLE_HARDWARE_ACCELERATION || __LINUX__) {
   log.info(
     `GITHUB_DESKTOP_DISABLE_HARDWARE_ACCELERATION environment variable set, disabling hardware acceleration`
   )

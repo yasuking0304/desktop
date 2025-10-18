@@ -160,6 +160,8 @@
   "branch-list": {
     "default-branch": "預設分支",
     "default-branch-darwin": "預設分支",
+    "full-name": "正式名称: ",
+    "last-modified": "最後修改時間: ",
     "new-branch": "新分支",
     "new-branch-darwin": "新分支",
     "other-branch": "其他分支",
@@ -180,6 +182,7 @@
     "branches": "分支",
     "choose-a-branch-to-marge-1": "選擇要合併到 ",
     "choose-a-branch-to-marge-2": " 的分支",
+    "choose-a-branch-to-marge-into": "選擇要合併到 {{0}} 的分支",
     "new-branch": "新分支",
     "new-branch-darwin": "新分支",
     "pull-requests": "拉取請求",
@@ -378,7 +381,9 @@
     "copy-sha": "複製 SHA",
     "create-branch-from-commit": "從提交建立分支",
     "create-branch-from-commit-darwin": "從提交建立分支",
+    "date": "Date: ",
     "empty-commit-message": "空的提交資料",
+    "no-commits-to-list": "No commits to list",
     "reorder-choose-locate-1": "使用 ",
     "reorder-choose-locate-2": "選擇新位置。",
     "reorder-comfirm-locate-1": "按 ",
@@ -1010,9 +1015,16 @@
     "placeholder-ignored-files": "忽略的檔案"
   },
   "index": {
+    "file-in-conflict": "The file is in conflict and must be resolved via the command line.",
+    "no-content-changes-found": "內容沒有任何變化。",
+    "only-whitespace-changes-found": "只能使用製表符代碼或半角空格進行更改。",
     "show-diff": "顯示差異",
     "show-diff-darwin": "顯示差異",
-    "the-diff-is-too-large": "差異太大, 預設無法顯示。",
+    "the-diff-is-too-large": "差異太大, 無法顯示。",
+    "the-diff-is-too-large-by-default": "差異太大, 預設無法顯示。",
+    "the-file-is-empty": "文件大小為零",
+    "the-file-was-renamed": "The file was renamed and includes changes.",
+    "the-file-was-renamed-but-not-changed": "The file was renamed but not changed.",
     "you-can-try-to-show-it-anyway": "可以強制顯示, 但這可能會對效能產生負面影響。"
   },
   "initialize-lfs": {
@@ -1687,6 +1699,10 @@
     "pro-tip-2": " 快速新增本機儲存庫, ",
     "pro-tip-3": " 可從應用程式內的任何位置複製",
     "sorry-i-can-not-find-that-repository": "抱歉, 我找不到該儲存庫"
+  },
+  "repository-list": {
+    "full-name": "正式名称: ",
+    "path": "路徑: "
   },
   "repository-list-item-context-menu": {
     "copy-repo-name": "複製儲存庫名稱",

@@ -238,6 +238,7 @@ These shells are currently supported:
 
  - [GNOME Terminal](https://help.gnome.org/users/gnome-terminal/stable/)
  - [GNOME Console](https://gitlab.gnome.org/GNOME/console)
+ - [Ptyxis](https://gitlab.gnome.org/chergert/ptyxis/)
  - [MATE Terminal](https://github.com/mate-desktop/mate-terminal)
  - [Tilix](https://github.com/gnunn1/tilix)
  - [Terminator](https://gnometerminator.blogspot.com)

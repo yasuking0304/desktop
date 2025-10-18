@@ -341,6 +341,13 @@ interface IListProps {
     indexPath: RowIndexPath,
     data: KeyboardInsertionData
   ) => void
+
+  /**
+   * Optional render function for the keyboard focus tooltip
+   */
+  readonly renderRowFocusTooltip?: (
+    indexPath: RowIndexPath
+  ) => JSX.Element | string | null
 }
 
 interface IListState {
@@ -1214,6 +1221,8 @@ export class List extends React.Component<IListProps, IListState> {
           children={element}
           selectable={selectable}
           className={customClasses}
+          hasKeyboardFocus={this.focusRow === rowIndex}
+          renderRowFocusTooltip={this.props.renderRowFocusTooltip}
         />
       )
     }

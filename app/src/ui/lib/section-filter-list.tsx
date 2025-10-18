@@ -60,6 +60,16 @@ interface ISectionFilterListProps<T extends IFilterListItem, GroupIdentifier> {
   /** Called to render each visible item. */
   readonly renderItem: (item: T, matches: IMatches) => JSX.Element | null
 
+  /**
+   * Optional render function for the keyboard focus tooltip
+   *
+   * This is used to render a tooltip when the row is focused via keyboard
+   * navigation. This should be provided if the row has tooltip content that is
+   * only accessible via the mouse. The content in the mouse tooltip(s) will
+   * need to be in the keyboard focus tooltip as well.
+   */
+  readonly renderRowFocusTooltip?: (item: T) => JSX.Element | string | null
+
   /** Called to render header for the group with the given identifier. */
   readonly renderGroupHeader?: (
     identifier: GroupIdentifier
@@ -371,6 +381,7 @@ export class SectionFilterList<
           ref={this.onListRef}
           rowCount={this.state.rows.map(r => r.length)}
           rowRenderer={this.renderRow}
+          renderRowFocusTooltip={this.renderRowFocusTooltip}
           sectionHasHeader={this.sectionHasHeader}
           getRowAriaLabel={this.getRowAriaLabel}
           getSectionAriaLabel={this.getSectionAriaLabel}
@@ -437,6 +448,16 @@ export class SectionFilterList<
     } else {
       return null
     }
+  }
+
+  private renderRowFocusTooltip = (
+    index: RowIndexPath
+  ): JSX.Element | string | null => {
+    const row = this.state.rows[index.section][index.row]
+    if (row.kind !== 'item' || !this.props.renderRowFocusTooltip) {
+      return null
+    }
+    return this.props.renderRowFocusTooltip(row.item)
   }
 
   private onTextBoxRef = (component: TextBox | null) => {

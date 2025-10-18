@@ -13,6 +13,7 @@ import {
 export enum Shell {
   Gnome = 'GNOME Terminal',
   GnomeConsole = 'GNOME Console',
+  Ptyxis = 'Ptyxis',
   Mate = 'MATE Terminal',
   Tilix = 'Tilix',
   Terminator = 'Terminator',
@@ -47,6 +48,8 @@ function getShellPath(shell: Shell): Promise<string | null> {
       return getPathIfAvailable('/usr/bin/gnome-terminal')
     case Shell.GnomeConsole:
       return getPathIfAvailable('/usr/bin/kgx')
+    case Shell.Ptyxis:
+      return getPathIfAvailable('/usr/bin/ptyxis')
     case Shell.Mate:
       return getPathIfAvailable('/usr/bin/mate-terminal')
     case Shell.Tilix:
@@ -90,6 +93,7 @@ export async function getAvailableShells(): Promise<
   const [
     gnomeTerminalPath,
     gnomeConsolePath,
+    ptyxisPath,
     mateTerminalPath,
     tilixPath,
     terminatorPath,
@@ -109,6 +113,7 @@ export async function getAvailableShells(): Promise<
   ] = await Promise.all([
     getShellPath(Shell.Gnome),
     getShellPath(Shell.GnomeConsole),
+    getShellPath(Shell.Ptyxis),
     getShellPath(Shell.Mate),
     getShellPath(Shell.Tilix),
     getShellPath(Shell.Terminator),
@@ -134,6 +139,10 @@ export async function getAvailableShells(): Promise<
 
   if (gnomeConsolePath) {
     shells.push({ shell: Shell.GnomeConsole, path: gnomeConsolePath })
+  }
+
+  if (ptyxisPath) {
+    shells.push({ shell: Shell.Ptyxis, path: ptyxisPath })
   }
 
   if (mateTerminalPath) {
@@ -218,6 +227,12 @@ export function launch(
     case Shell.Alacritty:
     case Shell.LXTerminal:
       return spawn(foundShell.path, ['--working-directory', path])
+    case Shell.Ptyxis:
+      return spawn(foundShell.path, [
+        '--new-window',
+        '--working-directory',
+        path,
+      ])
     case Shell.Urxvt:
       return spawn(foundShell.path, ['-cd', path])
     case Shell.Konsole:

@@ -1,0 +1,12 @@
+artifactName: 'GitHubDesktop-${os}-${arch}-${version}.${ext}'
+linux:
+  category: 'GNOME;GTK;Development'
+  packageCategory: 'GNOME;GTK;Development'
+  icon: 'app/static/linux/logos'
+  mimeTypes:
+    - x-scheme-handler/x-github-client
+    - x-scheme-handler/x-github-desktop-auth
+    - x-scheme-handler/x-github-desktop-dev-auth
+  target:
+    - AppImage
+  maintainer: 'Yasuhiro Kaneko <yasuking0304@gmail.com>'
