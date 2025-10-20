@@ -15,6 +15,7 @@ interface IPromptsPreferencesProps {
   readonly confirmForcePush: boolean
   readonly confirmUndoCommit: boolean
   readonly askForConfirmationOnCommitFilteredChanges: boolean
+  readonly confirmCommitMessageOverride: boolean
   readonly showCommitLengthWarning: boolean
   readonly uncommittedChangesStrategy: UncommittedChangesStrategy
   readonly onConfirmDiscardChangesChanged: (checked: boolean) => void
@@ -29,6 +30,7 @@ interface IPromptsPreferencesProps {
     value: UncommittedChangesStrategy
   ) => void
   readonly onAskForConfirmationOnCommitFilteredChanges: (value: boolean) => void
+  readonly onConfirmCommitMessageOverrideChanged: (checked: boolean) => void
 }
 
 interface IPromptsPreferencesState {
@@ -40,6 +42,7 @@ interface IPromptsPreferencesState {
   readonly confirmForcePush: boolean
   readonly confirmUndoCommit: boolean
   readonly askForConfirmationOnCommitFilteredChanges: boolean
+  readonly confirmCommitMessageOverride: boolean
   readonly uncommittedChangesStrategy: UncommittedChangesStrategy
 }
 
@@ -62,6 +65,7 @@ export class Prompts extends React.Component<
       uncommittedChangesStrategy: this.props.uncommittedChangesStrategy,
       askForConfirmationOnCommitFilteredChanges:
         this.props.askForConfirmationOnCommitFilteredChanges,
+      confirmCommitMessageOverride: this.props.confirmCommitMessageOverride,
     }
   }
 
@@ -126,6 +130,15 @@ export class Prompts extends React.Component<
 
     this.setState({ askForConfirmationOnCommitFilteredChanges: value })
     this.props.onAskForConfirmationOnCommitFilteredChanges(value)
+  }
+
+  private onConfirmCommitMessageOverrideChanged = (
+    event: React.FormEvent<HTMLInputElement>
+  ) => {
+    const value = event.currentTarget.checked
+
+    this.setState({ confirmCommitMessageOverride: value })
+    this.props.onConfirmCommitMessageOverrideChanged(value)
   }
 
   private onConfirmRepositoryRemovalChanged = (
@@ -279,6 +292,15 @@ export class Prompts extends React.Component<
                   : CheckboxValue.Off
               }
               onChange={this.onConfirmUndoCommitChanged}
+            />
+            <Checkbox
+              label="Overriding commit message with generated message"
+              value={
+                this.state.confirmCommitMessageOverride
+                  ? CheckboxValue.On
+                  : CheckboxValue.Off
+              }
+              onChange={this.onConfirmCommitMessageOverrideChanged}
             />
             {this.renderCommittingFilteredChangesPrompt()}
           </div>
