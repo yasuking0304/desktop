@@ -825,6 +825,44 @@ export class CommitMessage extends React.Component<
     }
   }
 
+  private getGenerateCommitMessageMenuItem(): IMenuItem | null {
+    const {
+      accounts,
+      onGenerateCommitMessage,
+      filesSelected,
+      isCommitting,
+      isGeneratingCommitMessage,
+      commitToAmend,
+    } = this.props
+
+    if (
+      !accounts.some(enableCommitMessageGeneration) ||
+      onGenerateCommitMessage === undefined
+    ) {
+      return null
+    }
+
+    const noFilesSelected = filesSelected.length === 0
+    const noChangesAvailable = !commitToAmend && noFilesSelected
+
+    return {
+      label: __DARWIN__
+        ? 'Generate Commit Message with Copilot'
+        : 'Generate commit message with Copilot',
+      action: () => {
+        const { commitMessage } = this.state
+        onGenerateCommitMessage(
+          filesSelected,
+          !!commitMessage.summary || !!commitMessage.description
+        )
+      },
+      enabled:
+        isCommitting !== true &&
+        !isGeneratingCommitMessage &&
+        !noChangesAvailable,
+    }
+  }
+
   private onContextMenu = (event: React.MouseEvent<HTMLDivElement>) => {
     if (
       event.target instanceof HTMLTextAreaElement ||
@@ -833,16 +871,29 @@ export class CommitMessage extends React.Component<
       return
     }
 
-    showContextualMenu([this.getAddRemoveCoAuthorsMenuItem()])
+    const items: IMenuItem[] = [this.getAddRemoveCoAuthorsMenuItem()]
+
+    const generateMenuItem = this.getGenerateCommitMessageMenuItem()
+    if (generateMenuItem) {
+      items.push(generateMenuItem)
+    }
+
+    showContextualMenu(items)
   }
 
   private onAutocompletingInputContextMenu = () => {
-    const items: IMenuItem[] = [
-      this.getAddRemoveCoAuthorsMenuItem(),
+    const items: IMenuItem[] = [this.getAddRemoveCoAuthorsMenuItem()]
+
+    const generateMenuItem = this.getGenerateCommitMessageMenuItem()
+    if (generateMenuItem) {
+      items.push(generateMenuItem)
+    }
+
+    items.push(
       { type: 'separator' },
       { role: 'editMenu' },
-      { type: 'separator' },
-    ]
+      { type: 'separator' }
+    )
 
     items.push(
       this.getCommitSpellcheckEnabilityMenuItem(
