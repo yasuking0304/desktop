@@ -25,7 +25,6 @@ import { clamp } from '../../lib/clamp'
 import { getDotComAPIEndpoint } from '../../lib/api'
 import { createCommitURL } from '../../lib/commit-url'
 import { DiffOptions } from '../diff/diff-options'
-import { IChangesetData } from '../../lib/git'
 
 interface IPullRequestFilesChangedProps {
   readonly repository: Repository
@@ -34,8 +33,8 @@ interface IPullRequestFilesChangedProps {
   /** The file whose diff should be displayed. */
   readonly selectedFile: CommittedFileChange | null
 
-  /** The changeset data associated with the selected commit */
-  readonly changesetData: IChangesetData
+  /** The files changed in the pull request. */
+  readonly files: ReadonlyArray<CommittedFileChange>
 
   /** The diff that should be rendered */
   readonly diff: IDiff | null
@@ -233,7 +232,7 @@ export class PullRequestFilesChanged extends React.Component<
   }
 
   private onRowDoubleClick = (row: number) => {
-    const files = this.props.changesetData.files
+    const files = this.props.files
     const file = files[row]
 
     this.props.onOpenInExternalEditor(file.path)
@@ -247,8 +246,6 @@ export class PullRequestFilesChanged extends React.Component<
         <div className="commits-displayed">
           Showing changes from all commits
         </div>
-        {this.renderLinesChanged()}
-        <div className="gap" />
         <DiffOptions
           isInteractiveDiff={false}
           hideWhitespaceChanges={hideWhitespaceInDiff}
@@ -261,24 +258,8 @@ export class PullRequestFilesChanged extends React.Component<
     )
   }
 
-  private renderLinesChanged() {
-    const { changesetData } = this.props
-    const { linesAdded, linesDeleted } = changesetData
-
-    if (linesAdded === 0 && linesDeleted === 0) {
-      return null
-    }
-
-    return (
-      <div className="lines-added-deleted">
-        <div className="lines-added">+{changesetData.linesAdded}</div>
-        <div className="lines-deleted">-{changesetData.linesDeleted}</div>
-      </div>
-    )
-  }
-
   private renderFileList() {
-    const { changesetData, selectedFile, fileListWidth } = this.props
+    const { files, selectedFile, fileListWidth } = this.props
 
     return (
       <Resizable
@@ -290,7 +271,7 @@ export class PullRequestFilesChanged extends React.Component<
         description="Pull request file list"
       >
         <FileList
-          files={changesetData.files}
+          files={files}
           onSelectedFileChanged={this.onFileSelected}
           selectedFile={selectedFile}
           availableWidth={clamp(fileListWidth)}
