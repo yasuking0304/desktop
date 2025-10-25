@@ -425,6 +425,8 @@
     "enable-commit-spellcheck": "Enable commit spellcheck",
     "enable-commit-spellcheck-darwin": "Enable Commit Spellcheck",
     "generate-commit-message": "Generate commit message with Copilot{{0}}",
+    "generate-commit-message-with-copilot": "Generate commit message with Copilot",
+    "generate-commit-message-with-copilot-darwin": "Generate Commit Message with Copilot",
     "generating-commit-details": "Generating commit details…",
     "link-create-a-fork": "create a fork",
     "link-switch-branches": "switch branches",

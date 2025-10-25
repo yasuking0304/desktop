@@ -848,8 +848,14 @@ export class CommitMessage extends React.Component<
 
     return {
       label: __DARWIN__
-        ? 'Generate Commit Message with Copilot'
-        : 'Generate commit message with Copilot',
+        ?  t(
+          'commit-message.generate-commit-message-with-copilot-darwin',
+          'Generate Commit Message with Copilot'
+        )
+        : t(
+          'commit-message.generate-commit-message-with-copilot',
+          'Generate commit message with Copilot'
+        ),
       action: () => {
         const { commitMessage } = this.state
         onGenerateCommitMessage(

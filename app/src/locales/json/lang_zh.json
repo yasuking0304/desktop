@@ -425,6 +425,8 @@
     "enable-commit-spellcheck": "启用提交拼写检查",
     "enable-commit-spellcheck-darwin": "启用提交拼写检查",
     "generate-commit-message": "使用 Copilot 生成提交消息{{0}}",
+    "generate-commit-message-with-copilot": "使用 Copilot 生成提交消息",
+    "generate-commit-message-with-copilot-darwin": "使用 Copilot 生成提交消息",
     "generating-commit-details": "正在生成提交详细信息…",
     "link-create-a-fork": "创建一个分叉",
     "link-switch-branches": "切换分支",

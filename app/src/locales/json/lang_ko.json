@@ -425,6 +425,8 @@
     "enable-commit-spellcheck": "커밋 맞춤법 검사 사용",
     "enable-commit-spellcheck-darwin": "커밋 맞춤법 검사 사용",
     "generate-commit-message": "Copilot에서 커밋 메시지 생성{{0}}",
+    "generate-commit-message-with-copilot": "Copilot에서 커밋 메시지 생성",
+    "generate-commit-message-with-copilot-darwin": "Copilot에서 커밋 메시지 생성",
     "generating-commit-details": "커밋 세부정보 생성 중…",
     "link-create-a-fork": "포크 만들기",
     "link-switch-branches": "브랜치 전환",
