@@ -35,6 +35,27 @@
         color: var(--warning-badge-icon-color);
       }
     }
+
+    .git-setting-path-section {
+      &:not(:last-child) {
+        margin-bottom: var(--spacing);
+      }
+
+      .checkbox-component:first-child {
+        margin-top: var(--spacing-half);
+      }
+
+      .checkbox-component:not(:last-child) {
+        margin-bottom: var(--spacing-half);
+      }
+
+      .checkbox-component {
+        label {
+          white-space: pre-line;
+          line-height: 1.2;
+        }
+      }
+    }
   }
 
   .tab-bar {
@@ -124,6 +145,14 @@
     margin-top: var(--spacing-double);
     font-size: var(--font-size-sm);
     color: var(--text-secondary-color);
+  }
+
+  .edit-global-git-config-component {
+    margin-top: var(--spacing);
+  }
+
+  .git-settings-path-component {
+    margin-top: var(--spacing-double);
   }
 
   .theme-selector {

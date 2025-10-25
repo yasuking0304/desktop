@@ -985,13 +985,16 @@
   },
   "git": {
     "default-branch-name-for-new-repositories": "新しいリポジトリのデフォルトのブランチ名",
+    "display-escaped-non-ascii-characters": "非ASCII文字を変換して表示する\n(日本語環境ではOFFでの使用を推奨します)",
     "edit-your-global-git-config-1": "これらの設定は、",
     "edit-your-global-git-config-2": "グローバル向け Git 構成ファイルを編集",
     "edit-your-global-git-config-3": "することになります。",
+    "enable-paths-lt-260-characters": "Windowsで260文字を超えるパスを有効にする",
     "gitHub-default-branch-description-1": "GitHub のデフォルトのブランチ名は ",
     "gitHub-default-branch-description-2": "です。 ",
     "gitHub-default-branch-description-3": " ワークフローが異なったり統合する過程で ",
-    "gitHub-default-branch-description-4": " という過去のデフォルトのブランチ名が依然として必要なため、これを変更することが必要になる場合があります。"
+    "gitHub-default-branch-description-4": " という過去のデフォルトのブランチ名が依然として必要なため、これを変更することが必要になる場合があります。",
+    "settings-related-to-the-path": "パスに関する設定"
   },
   "git-config": {
     "for-this-repository": "このリポジトリで使用する名前とメールアドレス",

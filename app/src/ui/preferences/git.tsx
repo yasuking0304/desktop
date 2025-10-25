@@ -6,11 +6,14 @@ import { LinkButton } from '../lib/link-button'
 import { Account } from '../../models/account'
 import { GitConfigUserForm } from '../lib/git-config-user-form'
 import { t } from 'i18next'
+import { Checkbox, CheckboxValue } from '../lib/checkbox'
 
 interface IGitProps {
   readonly name: string
   readonly email: string
   readonly defaultBranch: string
+  readonly coreLongpaths: boolean
+  readonly coreQuotepath: boolean
   readonly isLoadingGitConfig: boolean
 
   readonly accounts: ReadonlyArray<Account>
@@ -18,6 +21,8 @@ interface IGitProps {
   readonly onNameChanged: (name: string) => void
   readonly onEmailChanged: (email: string) => void
   readonly onDefaultBranchChanged: (defaultBranch: string) => void
+  readonly onCoreLongpathsChanged: (coreLongpaths: boolean) => void
+  readonly onCoreQuotepathChanged: (coreQuotepath: boolean) => void
 
   readonly onEditGlobalGitConfig: () => void
 }
@@ -28,6 +33,8 @@ export class Git extends React.Component<IGitProps> {
       <DialogContent>
         {this.renderGitConfigAuthorInfo()}
         {this.renderDefaultBranchSetting()}
+        {this.renderCorePathsSetting()}
+        {this.renderEditYourGlobalGitConfig()}
       </DialogContent>
     )
   }
@@ -79,7 +86,13 @@ export class Git extends React.Component<IGitProps> {
           <Ref>master</Ref>
           {t('git.gitHub-default-branch-description-4', '.')}
         </p>
+      </div>
+    )
+  }
 
+  private renderEditYourGlobalGitConfig() {
+    return (
+      <div className="edit-global-git-config-component">
         <p className="git-settings-description">
           {t('git.edit-your-global-git-config-1', 'These preferences will ')}
           <LinkButton onClick={this.props.onEditGlobalGitConfig}>
@@ -90,6 +103,58 @@ export class Git extends React.Component<IGitProps> {
           </LinkButton>
           {t('git.edit-your-global-git-config-3', '.')}
         </p>
+      </div>
+    )
+  }
+
+  private onCoreLongpathsChanged = (
+    event: React.FormEvent<HTMLInputElement>
+  ) => {
+    this.props.onCoreLongpathsChanged(event.currentTarget.checked)
+  }
+
+  private onCoreQuotepathChanged = (
+    event: React.FormEvent<HTMLInputElement>
+  ) => {
+    this.props.onCoreQuotepathChanged(event.currentTarget.checked)
+  }
+
+  private renderCorePathsSetting() {
+    return (
+      <div className="git-settings-path-component">
+        <h2 id="git-settings-path-heading">
+          {t(
+            'git.settings-related-to-the-path',
+            'Settings related to the path'
+          )}
+        </h2>
+
+        <div className="git-setting-path-section">
+          <div role="group" aria-labelledby="git-settings-path-heading">
+            {__WIN32__ ? (
+              <Checkbox
+                label={t(
+                  'git.enable-paths-lt-260-characters',
+                  'Enable paths longer than 260 characters on Windows'
+                )}
+                value={
+                  this.props.coreLongpaths ? CheckboxValue.On : CheckboxValue.Off
+                }
+                onChange={this.onCoreLongpathsChanged}
+              />
+            ) : null}
+            <Checkbox
+              label={t(
+                'git.display-escaped-non-ascii-characters',
+                'Display escaped non-ASCII characters in path names\n(recommended to turn off for users in the Asian double-byte character region)'
+              )}
+              value={
+                this.props.coreQuotepath ? CheckboxValue.On : CheckboxValue.Off
+              }
+              onChange={this.onCoreQuotepathChanged}
+            />
+          </div>
+        </div>
       </div>
     )
   }
