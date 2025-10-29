@@ -11,6 +11,7 @@ import { Dialog, DialogFooter, DialogError } from '../dialog'
 import {
   getGlobalConfigValue,
   setGlobalConfigValue,
+  getGlobalBooleanConfigValue,
 } from '../../lib/git/config'
 import { lookupPreferredEmail } from '../../lib/email'
 import { Shell, getAvailableShells } from '../../lib/shells'
@@ -88,9 +89,13 @@ interface IPreferencesState {
   readonly committerName: string
   readonly committerEmail: string
   readonly defaultBranch: string
+  readonly coreLongpaths: boolean
+  readonly coreQuotepath: boolean
   readonly initialCommitterName: string | null
   readonly initialCommitterEmail: string | null
   readonly initialDefaultBranch: string | null
+  readonly initialCoreLongpaths: boolean | null
+  readonly initialCoreQuotepath: boolean | null
   readonly disallowedCharactersMessage: string | null
   readonly useWindowsOpenSSH: boolean
   readonly showCommitLengthWarning: boolean
@@ -159,9 +164,13 @@ export class Preferences extends React.Component<
       committerName: '',
       committerEmail: '',
       defaultBranch: '',
+      coreLongpaths: false,
+      coreQuotepath: false,
       initialCommitterName: null,
       initialCommitterEmail: null,
       initialDefaultBranch: null,
+      initialCoreLongpaths: null,
+      initialCoreQuotepath: null,
       disallowedCharactersMessage: null,
       availableEditors: [],
       useCustomEditor: this.props.useCustomEditor,
@@ -199,9 +208,17 @@ export class Preferences extends React.Component<
     const initialCommitterName = await getGlobalConfigValue('user.name')
     const initialCommitterEmail = await getGlobalConfigValue('user.email')
     const initialDefaultBranch = await getDefaultBranch()
+    const initialCoreLongpaths = await getGlobalBooleanConfigValue(
+      'core.longpaths'
+    )
+    const initialCoreQuotepath = await getGlobalBooleanConfigValue(
+      'core.quotepath'
+    )
 
     let committerName = initialCommitterName
     let committerEmail = initialCommitterEmail
+    let committerCoreLongpaths = initialCoreLongpaths
+    let committerCoreQuotepath = initialCoreQuotepath
 
     if (!committerName || !committerEmail) {
       const { accounts } = this.props
@@ -220,6 +237,8 @@ export class Preferences extends React.Component<
 
     committerName = committerName || ''
     committerEmail = committerEmail || ''
+    committerCoreLongpaths = committerCoreLongpaths ?? false
+    committerCoreQuotepath = committerCoreQuotepath ?? true
 
     const [editors, shells] = await Promise.all([
       getAvailableEditors(),
@@ -233,6 +252,8 @@ export class Preferences extends React.Component<
       committerName,
       committerEmail,
       defaultBranch: initialDefaultBranch,
+      coreLongpaths: committerCoreLongpaths,
+      coreQuotepath: committerCoreQuotepath,
       initialCommitterName,
       initialCommitterEmail,
       initialDefaultBranch,
@@ -443,10 +464,14 @@ export class Preferences extends React.Component<
               email={this.state.committerEmail}
               accounts={this.props.accounts}
               defaultBranch={this.state.defaultBranch}
+              coreLongpaths={this.state.coreLongpaths}
+              coreQuotepath={this.state.coreQuotepath}
               onNameChanged={this.onCommitterNameChanged}
               onEmailChanged={this.onCommitterEmailChanged}
               onDefaultBranchChanged={this.onDefaultBranchChanged}
               isLoadingGitConfig={this.state.isLoadingGitConfig}
+              onCoreLongpathsChanged={this.onCoreLongpathsChanged}
+              onCoreQuotepathChanged={this.onCoreQuotepathChanged}
               onEditGlobalGitConfig={this.props.onEditGlobalGitConfig}
             />
           </>
@@ -657,6 +682,14 @@ export class Preferences extends React.Component<
     this.setState({ defaultBranch })
   }
 
+  private onCoreLongpathsChanged = (coreLongpaths: boolean) => {
+    this.setState({ coreLongpaths })
+  }
+
+  private onCoreQuotepathChanged = (coreQuotepath: boolean) => {
+    this.setState({ coreQuotepath })
+  }
+
   private onSelectedEditorChanged = (editor: string) => {
     this.setState({ selectedExternalEditor: editor })
   }
@@ -724,6 +757,20 @@ export class Preferences extends React.Component<
       if (this.state.committerEmail !== this.state.initialCommitterEmail) {
         await setGlobalConfigValue('user.email', this.state.committerEmail)
         shouldRefreshAuthor = true
+      }
+
+      if (this.state.coreLongpaths !== this.state.initialCoreLongpaths) {
+        await setGlobalConfigValue(
+          'core.longpaths',
+          this.state.coreLongpaths ? 'true' : 'false'
+        )
+      }
+
+      if (this.state.coreQuotepath !== this.state.initialCoreQuotepath) {
+        await setGlobalConfigValue(
+          'core.quotepath',
+          this.state.coreQuotepath ? 'true' : 'false'
+        )
       }
 
       if (this.props.repository !== null && shouldRefreshAuthor) {
