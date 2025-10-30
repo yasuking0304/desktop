@@ -7,6 +7,10 @@
   }
 }
 
+.toolbar-dropdown.open .pr-badge {
+  background: none;
+}
+
 .pr-badge {
   --height: 22px;
 
