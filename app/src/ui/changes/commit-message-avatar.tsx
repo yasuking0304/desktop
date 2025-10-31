@@ -104,7 +104,6 @@ export class CommitMessageAvatar extends React.Component<
 > {
   private avatarButtonRef: HTMLButtonElement | null = null
   private warningBadgeRef = React.createRef<HTMLDivElement>()
-  private documentClickListener: (event: MouseEvent) => void
 
   public constructor(props: ICommitMessageAvatarProps) {
     super(props)
@@ -115,31 +114,6 @@ export class CommitMessageAvatar extends React.Component<
       isGitConfigLocal: false,
     }
     this.determineGitConfigLocation()
-
-    // Create the document click listener
-    this.documentClickListener = (event: MouseEvent) => {
-      if (this.state.isPopoverOpen && event.target instanceof Element) {
-        // Check if click is on app menu bar or its descendants
-        const appMenuBar = document.getElementById('app-menu-bar')
-        if (
-          appMenuBar &&
-          (appMenuBar.contains(event.target) || appMenuBar === event.target)
-        ) {
-          // Close popover when clicking on app menu
-          this.closePopover()
-        }
-      }
-    }
-  }
-
-  public componentDidMount() {
-    // Add global click listener to detect app menu clicks
-    document.addEventListener('click', this.documentClickListener, true) // Use capture phase
-  }
-
-  public componentWillUnmount() {
-    // Remove global click listener
-    document.removeEventListener('click', this.documentClickListener, true)
   }
 
   public componentDidUpdate(prevProps: ICommitMessageAvatarProps) {
@@ -450,6 +424,7 @@ export class CommitMessageAvatar extends React.Component<
         }
         anchorPosition={PopoverAnchorPosition.RightBottom}
         decoration={PopoverDecoration.Balloon}
+        onMousedownOutside={this.closePopover}
         onClickOutside={this.closePopover}
         ariaLabelledby="commit-avatar-popover-header"
       >
