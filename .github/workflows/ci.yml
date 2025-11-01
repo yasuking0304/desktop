@@ -45,6 +45,28 @@ env:
   NODE_VERSION: 22.19.0
 
 jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    env:
+      RELEASE_CHANNEL: ${{ inputs.environment }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.repository || github.repository }}
+          ref: ${{ inputs.ref }}
+          submodules: recursive
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: yarn
+      - run: yarn
+      - run: yarn validate-electron-version
+      - run: yarn validate-macos-version
+      - run: yarn lint
+      - run: yarn validate-changelog
+      - name: Ensure a clean working directory
+        run: git diff --name-status --exit-code
   build:
     name: ${{ matrix.friendlyName }} ${{ matrix.arch }}
     runs-on: ${{ matrix.os }}
