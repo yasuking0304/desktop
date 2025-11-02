@@ -759,14 +759,18 @@ export class Preferences extends React.Component<
         shouldRefreshAuthor = true
       }
 
-      if (this.state.coreLongpaths !== this.state.initialCoreLongpaths) {
+      if (
+        this.state.coreLongpaths !== (this.state.initialCoreLongpaths ?? false)
+      ) {
         await setGlobalConfigValue(
           'core.longpaths',
           this.state.coreLongpaths ? 'true' : 'false'
         )
       }
 
-      if (this.state.coreQuotepath !== this.state.initialCoreQuotepath) {
+      if (
+        this.state.coreQuotepath !== (this.state.initialCoreQuotepath ?? true)
+      ) {
         await setGlobalConfigValue(
           'core.quotepath',
           this.state.coreQuotepath ? 'true' : 'false'
