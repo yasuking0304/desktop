@@ -10,6 +10,7 @@ import {
 import { Dispatcher } from '../dispatcher'
 import { Checkbox, CheckboxValue } from '../lib/checkbox'
 import { Row } from '../lib/row'
+import { t } from 'i18next'
 
 interface IGenerateCommitMessageOverrideWarningProps {
   readonly dispatcher: Dispatcher
@@ -41,7 +42,10 @@ export class GenerateCommitMessageOverrideWarning extends React.Component<
   public render() {
     return (
       <Dialog
-        title="Commit message override"
+        title={t(
+          'generate-commit-message-override-warning.commit-message-override',
+          'Commit message override'
+        )}
         id="generate-commit-message-override-warning"
         type="warning"
         onDismissed={this.props.onDismissed}
@@ -51,8 +55,11 @@ export class GenerateCommitMessageOverrideWarning extends React.Component<
       >
         <DialogContent>
           <Row id="generate-commit-message-override-warning-body">
-            The commit message you have entered will be overridden by the
-            generated commit message.
+            {t(
+              'generate-commit-message-override-warning.the-commit-message',
+              `The commit message you have entered will be overridden by the
+              generated commit message.`
+            )}
           </Row>
           <Row>
             <Checkbox
@@ -67,7 +74,10 @@ export class GenerateCommitMessageOverrideWarning extends React.Component<
           </Row>
         </DialogContent>
         <DialogFooter>
-          <OkCancelButtonGroup destructive={true} okButtonText="Override" />
+          <OkCancelButtonGroup
+            destructive={true}
+            okButtonText={t('common.override', 'Override')}
+          />
         </DialogFooter>
       </Dialog>
     )

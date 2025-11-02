@@ -3,6 +3,7 @@ import { Checkbox, CheckboxValue } from '../../lib/checkbox'
 import { Dispatcher } from '../../dispatcher'
 import { DialogFooter, DialogContent, Dialog } from '../../dialog'
 import { OkCancelButtonGroup } from '../../dialog/ok-cancel-button-group'
+import { t } from 'i18next'
 
 interface IWarnForcePushProps {
   /**
@@ -41,8 +42,16 @@ export class WarnForcePushDialog extends React.Component<
     const { operation, onDismissed } = this.props
 
     const title = __DARWIN__
-      ? `${operation} Will Require Force Push`
-      : `${operation} will require force push`
+      ? t(
+          'warn-force-push-dialog.require-force-push-darwin',
+          '{{0}} Will Require Force Push',
+          { 0: operation }
+        )
+      : t(
+          'warn-force-push-dialog.require-force-push',
+          '{{0}} will require force push',
+          { 0: operation }
+        )
 
     return (
       <Dialog
@@ -56,17 +65,29 @@ export class WarnForcePushDialog extends React.Component<
       >
         <DialogContent>
           <p id="warn-force-push-confirmation-title">
-            Are you sure you want to {operation.toLowerCase()}?
+            {t(
+              'warn-force-push-dialog.are-you-sure-operation',
+              'Are you sure you want to {{0}}?',
+              { 0: operation.toLowerCase() }
+            )}
           </p>
           <p id="warn-force-push-confirmation-message">
-            At the end of the {operation.toLowerCase()} flow, GitHub Desktop
-            will enable you to force push the branch to update the upstream
-            branch. Force pushing will alter the history on the remote and
-            potentially cause problems for others collaborating on this branch.
+            {t(
+              'warn-force-push-dialog.end-of-the-operation-flow',
+              `At the end of the {{0}} flow, GitHub Desktop
+              will enable you to force push the branch to update the upstream
+              branch. Force pushing will alter the history on the remote and
+              potentially cause problems for others collaborating on this
+              branch.`,
+              { 0: operation.toLowerCase() }
+            )}
           </p>
           <div>
             <Checkbox
-              label="Do not show this message again"
+              label={t(
+                'common.do-not-show-message-again',
+                'Do not show this message again'
+              )}
               value={
                 this.state.askForConfirmationOnForcePush
                   ? CheckboxValue.Off
@@ -78,9 +99,11 @@ export class WarnForcePushDialog extends React.Component<
         </DialogContent>
         <DialogFooter>
           <OkCancelButtonGroup
-            okButtonText={`Begin ${
-              __DARWIN__ ? operation : operation.toLowerCase()
-            }`}
+            okButtonText={t(
+              'warn-force-push-dialog.begin-operation',
+              `Begin {{0}}`,
+              { 0: __DARWIN__ ? operation : operation.toLowerCase() }
+            )}
             onCancelButtonClick={this.props.onDismissed}
           />
         </DialogFooter>

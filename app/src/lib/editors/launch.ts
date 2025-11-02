@@ -1,4 +1,5 @@
 import { spawn, SpawnOptions } from 'child_process'
+import { t } from 'i18next'
 import { pathExists } from '../../ui/lib/path-exists'
 import { ExternalEditorError, FoundEditor } from './shared'
 import {
@@ -14,10 +15,16 @@ async function launchEditor(
   spawnAsDarwinApp: boolean
 ) {
   const exists = await pathExists(editorPath)
-  const label = __DARWIN__ ? 'Settings' : 'Options'
+  const label = __DARWIN__
+    ? t('common.settings', 'Settings')
+    : t('common.options', 'Options')
   if (!exists) {
     throw new ExternalEditorError(
-      `Could not find executable for ${editorName} at path '${editorPath}'. Please open ${label} and select an available editor.`,
+      t(
+        'launch.error.could-not-find-executable',
+        `Could not find executable for {{0}} at path '{{1}}'. Please open {{2}} and select an available editor.`,
+        { 0: editorName, 1: editorPath, 2: label }
+      ),
       { openPreferences: true }
     )
   }
@@ -80,7 +87,11 @@ export const launchCustomExternalEditor = (
   // which will open the right executable file for us, we only need the path
   // to the editor .app folder.
   const spawnAsDarwinApp = __DARWIN__ && customEditor.bundleID !== undefined
-  const editorName = `custom editor at path '${customEditor.path}'`
+  const editorName = t(
+    'launch.custom-editor-at-path',
+    `custom editor at path '{{0}}'`,
+    { 0: customEditor.path }
+  )
 
   return launchEditor(customEditor.path, args, editorName, spawnAsDarwinApp)
 }

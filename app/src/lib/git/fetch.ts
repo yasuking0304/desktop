@@ -6,6 +6,7 @@ import { enableRecurseSubmodulesFlag } from '../feature-flag'
 import { IRemote } from '../../models/remote'
 import { ITrackingBranch } from '../../models/branch'
 import { envForRemoteOperation } from './environment'
+import { t } from 'i18next'
 
 async function getFetchArgs(
   remote: string,
@@ -51,7 +52,7 @@ export async function fetch(
   }
 
   if (progressCallback) {
-    const title = `Fetching ${remote.name}`
+    const title = t('fetch.fetching', 'Fetching {{0}}', { 0: remote.name })
     const kind = 'fetch'
 
     opts = await executionOptionsWithProgress(

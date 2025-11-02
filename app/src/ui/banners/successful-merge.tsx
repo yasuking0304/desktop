@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { SuccessBanner } from './success-banner'
+import { t } from 'i18next'
 
 export function SuccessfulMerge({
   ourBranch,
@@ -13,15 +14,29 @@ export function SuccessfulMerge({
   const message =
     theirBranch !== undefined ? (
       <span>
-        {'Successfully merged '}
+        {t(
+          'successful-merge.successfully-merged-srcbranch-into-distbranch-1',
+          'Successfully merged '
+        )}
         <strong>{theirBranch}</strong>
-        {' into '}
+        {t(
+          'successful-merge.successfully-merged-srcbranch-into-distbranch-2',
+          ' into '
+        )}
         <strong>{ourBranch}</strong>
+        {t(
+          'successful-merge.successfully-merged-srcbranch-into-distbranch-3',
+          ' '
+        )}
       </span>
     ) : (
       <span>
-        {'Successfully merged into '}
+        {t(
+          'successful-merge.successfully-merged-into-branch-1',
+          'Successfully merged into '
+        )}
         <strong>{ourBranch}</strong>
+        {t('successful-merge.successfully-merged-into-branch-2', ' ')}
       </span>
     )
 

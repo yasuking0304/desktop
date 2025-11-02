@@ -10,6 +10,7 @@ import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
 import { DesktopFakeRepository } from '../../lib/desktop-fake-repository'
 import { SandboxedMarkdown } from '../lib/sandboxed-markdown'
 import { Button } from '../lib/button'
+import { t } from 'i18next'
 import { Emoji } from '../../lib/emoji'
 
 interface IReleaseNotesProps {
@@ -60,9 +61,18 @@ export class ReleaseNotes extends React.Component<IReleaseNotesProps, {}> {
     return (
       <div className="container">
         <div className="column">
-          {this.renderList(release.bugfixes, 'Bugfixes')}
-          {this.renderList(release.enhancements, 'Enhancements')}
-          {this.renderList(release.other, 'Other')}
+          {this.renderList(
+            release.bugfixes,
+            t('release-notes-dialog.bugfixes', 'Bugfixes')
+          )}
+          {this.renderList(
+            release.enhancements,
+            t('release-notes-dialog.enhancements', 'Enhancements')
+          )}
+          {this.renderList(
+            release.other,
+            t('release-notes-dialog.other', 'Other')
+          )}
         </div>
       </div>
     )
@@ -72,11 +82,20 @@ export class ReleaseNotes extends React.Component<IReleaseNotesProps, {}> {
     return (
       <div className="container">
         <div className="column">
-          {this.renderList(release.enhancements, 'Enhancements')}
-          {this.renderList(release.other, 'Other')}
+          {this.renderList(
+            release.enhancements,
+            t('release-notes-dialog.enhancements', 'Enhancements')
+          )}
+          {this.renderList(
+            release.other,
+            t('release-notes-dialog.other', 'Other')
+          )}
         </div>
         <div className="column">
-          {this.renderList(release.bugfixes, 'Bugfixes')}
+          {this.renderList(
+            release.bugfixes,
+            t('release-notes-dialog.bugfixes', 'Bugfixes')
+          )}
         </div>
       </div>
     )
@@ -136,7 +155,7 @@ export class ReleaseNotes extends React.Component<IReleaseNotesProps, {}> {
     if (latestVersion === __APP_VERSION__) {
       return (
         <Button type="submit" onClick={this.onDismissed}>
-          Close
+          {t('common.close', 'Close')}
         </Button>
       )
     }
@@ -145,9 +164,11 @@ export class ReleaseNotes extends React.Component<IReleaseNotesProps, {}> {
       <OkCancelButtonGroup
         destructive={true}
         okButtonText={
-          __DARWIN__ ? 'Install and Restart' : 'Install and restart'
+          __DARWIN__
+            ? t('common.install-and-restart-darwin', 'Install and Restart')
+            : t('common.install-and-restart', 'Install and restart')
         }
-        cancelButtonText="Close"
+        cancelButtonText={t('common.close', 'Close')}
       />
     )
   }
@@ -169,7 +190,11 @@ export class ReleaseNotes extends React.Component<IReleaseNotesProps, {}> {
 
     const dialogHeader = (
       <>
-        <span className="version">Version {latestVersion}</span>
+        <span className="version">
+          {t('release-notes-dialog.title', 'Version {{0}}', {
+            0: latestVersion,
+          })}
+        </span>
         <span className="date">{datePublished}</span>
       </>
     )
@@ -187,7 +212,10 @@ export class ReleaseNotes extends React.Component<IReleaseNotesProps, {}> {
         </DialogContent>
         <DialogFooter>
           <LinkButton onClick={this.showAllReleaseNotes}>
-            View all release notes
+            {t(
+              'release-notes-dialog.view-all-release-notes',
+              'View all release notes'
+            )}
           </LinkButton>
           {this.renderButtons()}
         </DialogFooter>

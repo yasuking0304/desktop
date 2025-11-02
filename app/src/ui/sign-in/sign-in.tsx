@@ -13,6 +13,7 @@ import { TextBox } from '../lib/text-box'
 import { Dialog, DialogError, DialogContent, DialogFooter } from '../dialog'
 
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
+import { t } from 'i18next'
 import { Ref } from '../lib/ref'
 import { getHTMLURL } from '../../lib/api'
 
@@ -29,16 +30,19 @@ interface ISignInState {
 }
 
 const SignInWithBrowserTitle = __DARWIN__
-  ? 'Sign in Using Your Browser'
-  : 'Sign in using your browser'
+  ? t('sign-in.sign-in-browser-darwin', 'Sign in Using Your Browser')
+  : t('sign-in.sign-in-browser', 'Sign in using your browser')
 
-const DefaultTitle = 'Sign in'
+const DefaultTitle = t('common.sign-in', 'Sign in')
 
 const browserSignInInfoContent = (
   <p>
-    Your browser will redirect you back to GitHub Desktop once you've signed in.
-    If your browser asks for your permission to launch GitHub Desktop, please
-    allow it.
+    {t(
+      'sign-in.your-browser-will-redirect-you-back',
+      `Your browser will redirect you back to GitHub Desktop once
+       you've signed in. If your browser asks for your permission to
+       launch GitHub Desktop, please allow it.`
+    )}
   </p>
 )
 
@@ -121,13 +125,13 @@ export class SignIn extends React.Component<ISignInProps, ISignInState> {
     let primaryButtonText: string
     const stepKind = state.kind
     const continueWithBrowserLabel = __DARWIN__
-      ? 'Continue With Browser'
-      : 'Continue with browser'
+      ? t('sign-in.continue-with-browser-darwin', 'Continue With Browser')
+      : t('sign-in.continue-with-browser', 'Continue with browser')
 
     switch (state.kind) {
       case SignInStep.EndpointEntry:
         disableSubmit = this.state.endpoint.length === 0
-        primaryButtonText = 'Continue'
+        primaryButtonText = t('common.continue', 'Continue')
         break
       case SignInStep.ExistingAccountWarning:
         primaryButtonText = continueWithBrowserLabel
@@ -155,10 +159,17 @@ export class SignIn extends React.Component<ISignInProps, ISignInState> {
     return (
       <DialogContent>
         <p className="existing-account-warning">
-          You're already signed in to{' '}
-          <Ref>{new URL(getHTMLURL(state.endpoint)).host}</Ref> with the account{' '}
-          <Ref>{state.existingAccount.login}</Ref>. If you continue, you will
-          first be signed out.
+          {t(
+            'sign-in.you-are-already-signed-1',
+            `You're already signed in to `
+          )}
+          <Ref>{new URL(getHTMLURL(state.endpoint)).host}</Ref>
+          {t('sign-in.you-are-already-signed-2', ' with the account ')}
+          <Ref>{state.existingAccount.login}</Ref>
+          {t(
+            'sign-in.you-are-already-signed-3.',
+            '. If you continue, you will first be signed out.'
+          )}
         </p>
         {browserSignInInfoContent}
       </DialogContent>
@@ -170,7 +181,7 @@ export class SignIn extends React.Component<ISignInProps, ISignInState> {
       <DialogContent>
         <Row>
           <TextBox
-            label="Enterprise address"
+            label={t('common.enterprise-address', 'Enterprise address')}
             value={this.state.endpoint}
             onValueChanged={this.onEndpointChanged}
             placeholder="https://github.example.com"
@@ -184,8 +195,12 @@ export class SignIn extends React.Component<ISignInProps, ISignInState> {
     const credentialHelperInfo =
       this.props.isCredentialHelperSignIn && this.props.credentialHelperUrl ? (
         <p>
-          Git requesting credentials to access{' '}
-          <Ref>{this.props.credentialHelperUrl}</Ref>.
+          {t(
+            'sign-in.git-requesting-credentials-1',
+            'Git requesting credentials to access '
+          )}
+          <Ref>{this.props.credentialHelperUrl}</Ref>
+          {t('sign-in.git-requesting-credentials-2', '.')}
         </p>
       ) : undefined
 

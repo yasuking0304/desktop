@@ -460,6 +460,12 @@ $overlay-background-color: rgba(0, 0, 0, 0.4);
   // specified in `changes/index.tsx`.
   --undo-animation-duration: 500ms;
 
+  // Colors for form dangerous actions
+  --danger-color: #{$red};
+  --form-danger-background: #{$red-100};
+  --form-danger-border-color: #{$red-200};
+  --form-danger-text-color: #{$red-800};
+
   // Colors for form errors
   --error-color: #{$red};
   --form-error-background: #{$red-100};

@@ -17,6 +17,7 @@ import { PreferencesTab } from '../../models/preferences'
 import { Ref } from '../lib/ref'
 import { suggestedExternalEditor } from '../../lib/editors/shared'
 import { TutorialStepInstructions } from './tutorial-step-instruction'
+import { t } from 'i18next'
 import { KeyboardShortcut } from '../keyboard-shortcut/keyboard-shortcut'
 
 const TutorialPanelImage = encodePathAsUrl(
@@ -106,15 +107,27 @@ export class TutorialPanel extends React.Component<
   }
 
   public render() {
+    const newBranchPlural = __DARWIN__
+      ? t('tutorial-panel.new-branch-darwin', 'New Branch')
+      : t('tutorial-panel.new-branch', 'New branch')
     return (
       <div className="tutorial-panel-component panel">
         <div className="titleArea">
-          <h3>Get started</h3>
-          <img src={TutorialPanelImage} alt="Partially checked check list" />
+          <h3>{t('tutorial-panel.get-started', 'Get started')}</h3>
+          <img
+            src={TutorialPanelImage}
+            alt={t(
+              'tutorial-panel.partially-checked-check-list',
+              'Partially checked check list'
+            )}
+          />
         </div>
         <ol>
           <TutorialStepInstructions
-            summaryText="Install a text editor"
+            summaryText={t(
+              'tutorial-panel.install-a-text-editor',
+              'Install a text editor'
+            )}
             isComplete={this.isStepComplete}
             isNextStepTodo={this.isStepNextTodo}
             sectionId={TutorialStep.PickEditor}
@@ -125,42 +138,67 @@ export class TutorialPanel extends React.Component<
             {!this.isStepComplete(TutorialStep.PickEditor) ? (
               <>
                 <p className="description">
-                  It doesn’t look like you have a text editor installed. We can
-                  recommend{' '}
+                  {t(
+                    'tutorial-panel.does-not-look-like-you-have-editor-1',
+                    `It doesn’t look like you have a text editor installed. 
+                    We can recommend `
+                  )}
                   <LinkButton
                     uri={suggestedExternalEditor.url}
-                    title={`Open the ${suggestedExternalEditor.name} website`}
+                    title={t(
+                      'tutorial-panel.open-the-editor-name-website',
+                      `Open the {{0}} website`,
+                      { 0: suggestedExternalEditor.name }
+                    )}
                   >
                     {suggestedExternalEditor.name}
                   </LinkButton>
-                  {` or `}
+                  {t(
+                    'tutorial-panel.does-not-look-like-you-have-editor-2',
+                    ` or `
+                  )}
                   <LinkButton
                     uri="https://atom.io"
-                    title="Open the Atom website"
+                    title={t(
+                      'tutorial-panel.open-the-atom-website',
+                      'Open the Atom website'
+                    )}
                   >
-                    Atom
+                    {t('tutorial-panel.atom-editor', 'Atom')}
                   </LinkButton>
-                  , but feel free to use any.
+                  {t(
+                    'tutorial-panel.does-not-look-like-you-have-editor-3',
+                    ', but feel free to use any.'
+                  )}
                 </p>
                 <div className="action">
                   <LinkButton onClick={this.skipEditorInstall}>
-                    I have an editor
+                    {t('tutorial-panel.i-have-an-editor', 'I have an editor')}
                   </LinkButton>
                 </div>
               </>
             ) : (
               <p className="description">
-                Your default editor is{' '}
-                <strong>{this.props.resolvedExternalEditor}</strong>. You can
-                change your preferred editor in{' '}
+                {t(
+                  'tutorial-panel.your-default-editor-is-1',
+                  'Your default editor is '
+                )}
+                <strong>{this.props.resolvedExternalEditor}</strong>
+                {t(
+                  'tutorial-panel.your-default-editor-is-2',
+                  '. You can change your preferred editor in '
+                )}
                 <LinkButton onClick={this.onPreferencesClick}>
-                  {__DARWIN__ ? 'Settings' : 'options'}
+                  {__DARWIN__
+                    ? t('common.settings', 'Settings')
+                    : t('common.options', 'Options')}
                 </LinkButton>
+                {t('tutorial-panel.your-default-editor-is-3', ' ')}
               </p>
             )}
           </TutorialStepInstructions>
           <TutorialStepInstructions
-            summaryText="Create a branch"
+            summaryText={t('tutorial-panel.create-a-branch', 'Create a branch')}
             isComplete={this.isStepComplete}
             isNextStepTodo={this.isStepNextTodo}
             sectionId={TutorialStep.CreateBranch}
@@ -168,9 +206,13 @@ export class TutorialPanel extends React.Component<
             onSummaryClick={this.onStepSummaryClick}
           >
             <p className="description">
-              {`A branch allows you to work on different versions of a repository at one time. Create a
-                branch by going into the branch menu in the top bar and
-              clicking "${__DARWIN__ ? 'New Branch' : 'New branch'}".`}
+              {t(
+                'tutorial-panel.a-branch-allows-you-to-work',
+                `A branch allows you to work on different versions of a
+                 repository at one time. Create a branch by going into the
+                 branch menu in the top bar and clicking "{{0}}".`,
+                { 0: newBranchPlural }
+              )}
             </p>
             <div className="action">
               <KeyboardShortcut
@@ -180,7 +222,7 @@ export class TutorialPanel extends React.Component<
             </div>
           </TutorialStepInstructions>
           <TutorialStepInstructions
-            summaryText="Edit a file"
+            summaryText={t('tutorial-panel.edit-a-file', 'Edit a file')}
             isComplete={this.isStepComplete}
             isNextStepTodo={this.isStepNextTodo}
             sectionId={TutorialStep.EditFile}
@@ -188,16 +230,23 @@ export class TutorialPanel extends React.Component<
             onSummaryClick={this.onStepSummaryClick}
           >
             <p className="description">
-              Open this repository in your preferred text editor. Edit the
-              {` `}
+              {t(
+                'tutorial-panel.open-this-repository-in-your-preferred-1',
+                `Open this repository in your preferred text editor.
+                 Edit the `
+              )}
               <Ref>README.md</Ref>
-              {` `}
-              file, save it, and come back.
+              {t(
+                'tutorial-panel.open-this-repository-in-your-preferred-2',
+                ` file, save it, and come back.`
+              )}
             </p>
             {this.props.resolvedExternalEditor && (
               <div className="action">
                 <Button onClick={this.openTutorialFileInEditor}>
-                  {__DARWIN__ ? 'Open Editor' : 'Open editor'}
+                  {__DARWIN__
+                    ? t('tutorial-panel.open-editor-darwin', 'Open Editor')
+                    : t('tutorial-panel.open-editor', 'Open editor')}
                 </Button>
                 <KeyboardShortcut
                   darwinKeys={['⌘', '⇧', 'A']}
@@ -207,7 +256,7 @@ export class TutorialPanel extends React.Component<
             )}
           </TutorialStepInstructions>
           <TutorialStepInstructions
-            summaryText="Make a commit"
+            summaryText={t('tutorial-panel.make-a-commit', 'Make a commit')}
             isComplete={this.isStepComplete}
             isNextStepTodo={this.isStepNextTodo}
             sectionId={TutorialStep.MakeCommit}
@@ -215,14 +264,20 @@ export class TutorialPanel extends React.Component<
             onSummaryClick={this.onStepSummaryClick}
           >
             <p className="description">
-              A commit allows you to save sets of changes. In the “summary“
-              field in the bottom left, write a short message that describes the
-              changes you made. When you’re done, click the blue Commit button
-              to finish.
+              {t(
+                'tutorial-panel.a-commit-allows-you-to-save-sets',
+                `A commit allows you to save sets of changes. In the “summary”
+                field in the bottom left, write a short message that describes
+                the changes you made. When you’re done, click the blue Commit
+                button to finish.`
+              )}
             </p>
           </TutorialStepInstructions>
           <TutorialStepInstructions
-            summaryText="Publish to GitHub"
+            summaryText={t(
+              'tutorial-panel.publish-to-github',
+              'Publish to GitHub'
+            )}
             isComplete={this.isStepComplete}
             isNextStepTodo={this.isStepNextTodo}
             sectionId={TutorialStep.PushBranch}
@@ -230,16 +285,22 @@ export class TutorialPanel extends React.Component<
             onSummaryClick={this.onStepSummaryClick}
           >
             <p className="description">
-              Publishing will “push”, or upload, your commits to this branch of
-              your repository on GitHub. Publish using the third button in the
-              top bar.
+              {t(
+                'tutorial-panel.publishing-will-push-or-upload',
+                `Publishing will “push”, or upload, your commits to this branch
+               of your repository on GitHub. Publish using the third button in
+               the top bar.`
+              )}
             </p>
             <div className="action">
               <KeyboardShortcut darwinKeys={['⌘', 'P']} keys={['Ctrl', 'P']} />
             </div>
           </TutorialStepInstructions>
           <TutorialStepInstructions
-            summaryText="Open a pull request"
+            summaryText={t(
+              'tutorial-panel.open-a-pull-request',
+              'Open a pull request'
+            )}
             isComplete={this.isStepComplete}
             isNextStepTodo={this.isStepNextTodo}
             sectionId={TutorialStep.OpenPullRequest}
@@ -248,14 +309,22 @@ export class TutorialPanel extends React.Component<
             onSummaryClick={this.onStepSummaryClick}
           >
             <p className="description">
-              A pull request allows you to propose changes to the code. By
-              opening one, you’re requesting that someone review and merge them.
-              Since this is a demo repository, this pull request will be
-              private.
+              {t(
+                'tutorial-panel.a-pull-request-allows-you-to-propose',
+                `A pull request allows you to propose changes to the code. By
+                opening one, you’re requesting that someone review and merge
+                them. Since this is a demo repository, this pull request will
+                be private.`
+              )}
             </p>
             <div className="action">
               <Button onClick={this.openPullRequest} role="link">
-                {__DARWIN__ ? 'Open Pull Request' : 'Open pull request'}
+                {__DARWIN__
+                  ? t(
+                      'tutorial-panel.open-pull-request-darwin',
+                      'Open Pull Request'
+                    )
+                  : t('tutorial-panel.open-pull-request', 'Open pull request')}
                 <Octicon symbol={octicons.linkExternal} />
               </Button>
               <KeyboardShortcut darwinKeys={['⌘', 'R']} keys={['Ctrl', 'R']} />
@@ -264,7 +333,9 @@ export class TutorialPanel extends React.Component<
         </ol>
         <div className="footer">
           <Button onClick={this.props.onExitTutorial}>
-            {__DARWIN__ ? 'Exit Tutorial' : 'Exit tutorial'}
+            {__DARWIN__
+              ? t('tutorial-panel.exit-tutorial-darwin', 'Exit Tutorial')
+              : t('tutorial-panel.exit-tutorial', 'Exit tutorial')}
           </Button>
         </div>
       </div>
@@ -285,4 +356,8 @@ export class TutorialPanel extends React.Component<
 
 const SkipLinkButton: React.FunctionComponent<{
   onClick: () => void
-}> = props => <LinkButton onClick={props.onClick}>Skip</LinkButton>
+}> = props => (
+  <LinkButton onClick={props.onClick}>
+    {t('tutorial-panel.skip', 'Skip')}
+  </LinkButton>
+)

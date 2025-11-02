@@ -3,9 +3,12 @@ import { Dialog, DialogContent, DialogFooter } from '../dialog'
 import { Dispatcher } from '../dispatcher'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
 import { RetryAction } from '../../models/retry-actions'
+import { t } from 'i18next'
 import { SignInResult } from '../../lib/stores'
 
-const okButtonText = __DARWIN__ ? 'Continue in Browser' : 'Continue in browser'
+const okButtonText = __DARWIN__
+  ? t('saml-reauth-required.continue-in-browser-darwin', 'Continue in Browser')
+  : t('saml-reauth-required.continue-in-browser', 'Continue in browser')
 
 interface ISAMLReauthRequiredDialogProps {
   readonly dispatcher: Dispatcher
@@ -38,7 +41,15 @@ export class SAMLReauthRequiredDialog extends React.Component<
     return (
       <Dialog
         title={
-          __DARWIN__ ? 'Re-authorization Required' : 'Re-authorization required'
+          __DARWIN__
+            ? t(
+                'saml-reauth-required.re-authorization-required-darwin',
+                'Re-authorization Required'
+              )
+            : t(
+                'saml-reauth-required.re-authorization-required',
+                'Re-authorization required'
+              )
         }
         loading={this.state.loading}
         onDismissed={this.props.onDismissed}
@@ -47,14 +58,21 @@ export class SAMLReauthRequiredDialog extends React.Component<
       >
         <DialogContent>
           <p>
-            The "{this.props.organizationName}" organization has enabled or
-            enforced SAML SSO. To access this repository, you must sign in again
-            and grant GitHub Desktop permission to access the organization's
-            repositories.
+            {t(
+              'saml-reauth-required.the-name-organization-has-enabled',
+              `The "{{0}}" organization has enabled or
+              enforced SAML SSO. To access this repository, you must sign in again
+              and grant GitHub Desktop permission to access the organization's
+              repositories.`,
+              { 0: this.props.organizationName }
+            )}
           </p>
           <p>
-            Would you like to open a browser to grant GitHub Desktop permission
-            to access the repository?
+            {t(
+              'saml-reauth-required.would-you-like-to-open-a-browser',
+              `Would you like to open a browser to grant GitHub Desktop permission
+              to access the repository?`
+            )}
           </p>
         </DialogContent>
         <DialogFooter>

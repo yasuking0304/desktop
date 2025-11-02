@@ -5,6 +5,7 @@ import { Row } from '../../ui/lib/row'
 import { Select } from '../lib/select'
 import { Shell, parse as parseShell } from '../../lib/shells'
 import { suggestedExternalEditor } from '../../lib/editors/shared'
+import { t } from 'i18next'
 import { CustomIntegrationForm } from './custom-integration-form'
 import { ICustomIntegration } from '../../lib/custom-integration'
 import { enableCustomIntegration } from '../../lib/feature-flag'
@@ -184,7 +185,9 @@ export class Integrations extends React.Component<
   private renderExternalEditor() {
     const options = this.props.availableEditors
     const { selectedExternalEditor, useCustomEditor } = this.state
-    const label = __DARWIN__ ? 'External Editor' : 'External editor'
+    const label = __DARWIN__
+      ? t('integrations.external-editor-darwin', 'External Editor')
+      : t('integrations.external-editor', 'External editor')
 
     if (!enableCustomIntegration() && options.length === 0) {
       // this is emulating the <Select/> component's UI so the styles are
@@ -196,9 +199,11 @@ export class Integrations extends React.Component<
         <div className="select-component no-options-found">
           <label>{label}</label>
           <span>
-            No editors found.{' '}
+            {t('integrations.no-editors-found', 'No editors found. ')}
             <LinkButton uri={suggestedExternalEditor.url}>
-              Install {suggestedExternalEditor.name}?
+              {t('integrations.install-editor-name', 'Install {{0}}?', {
+                0: suggestedExternalEditor.name,
+              })}
             </LinkButton>
           </span>
         </div>
@@ -224,8 +229,14 @@ export class Integrations extends React.Component<
         {enableCustomIntegration() && (
           <option key={CustomIntegrationValue} value={CustomIntegrationValue}>
             {__DARWIN__
-              ? 'Configure Custom Editor…'
-              : 'Configure custom editor…'}
+              ? t(
+                  'integrations.configure-custom-editor-darwin',
+                  'Configure Custom Editor…'
+                )
+              : t(
+                  'integrations.configure-custom-editor',
+                  'Configure custom editor…'
+                )}
           </option>
         )}
       </Select>
@@ -242,9 +253,14 @@ export class Integrations extends React.Component<
       <Row>
         <div className="no-options-found">
           <span>
-            No other editors found.{' '}
+            {t(
+              'integrations.no-other-editors-found',
+              'No other editors found. '
+            )}
             <LinkButton uri={suggestedExternalEditor.url}>
-              Install {suggestedExternalEditor.name}?
+              {t('integrations.install-editor-name', 'Install {{0}}?', {
+                0: suggestedExternalEditor.name,
+              })}
             </LinkButton>
           </span>
         </div>
@@ -295,7 +311,11 @@ export class Integrations extends React.Component<
 
     return (
       <Select
-        label={enableCustomIntegration() ? undefined : 'Shell'}
+        label={
+          enableCustomIntegration()
+            ? undefined
+            : t('integrations.shell', 'Shell')
+        }
         aria-label="Shell"
         value={useCustomShell ? CustomIntegrationValue : selectedShell}
         onChange={this.onSelectedShellChanged}
@@ -307,7 +327,15 @@ export class Integrations extends React.Component<
         ))}
         {enableCustomIntegration() && (
           <option key={CustomIntegrationValue} value={CustomIntegrationValue}>
-            {__DARWIN__ ? 'Configure Custom Shell…' : 'Configure custom shell…'}
+            {__DARWIN__
+              ? t(
+                  'integrations.configure-custom-shell-darwin',
+                  'Configure Custom Shell…'
+                )
+              : t(
+                  'integrations.configure-custom-shell',
+                  'Configure custom shell…'
+                )}
           </option>
         )}
       </Select>
@@ -366,7 +394,11 @@ export class Integrations extends React.Component<
       <DialogContent>
         <fieldset>
           <legend>
-            <h2>{__DARWIN__ ? 'External Editor' : 'External editor'}</h2>
+            <h2>
+              {__DARWIN__
+                ? t('integrations.external-editor-darwin', 'External Editor')
+                : t('integrations.external-editor', 'External editor')}
+            </h2>
           </legend>
           <Row>{this.renderExternalEditor()}</Row>
           {this.state.useCustomEditor && this.renderCustomExternalEditor()}
@@ -374,7 +406,7 @@ export class Integrations extends React.Component<
         </fieldset>
         <fieldset>
           <legend>
-            <h2>Shell</h2>
+            <h2>{t('integrations.shell', 'Shell')}</h2>
           </legend>
           <Row>{this.renderSelectedShell()}</Row>
           {this.state.useCustomShell && this.renderCustomShell()}

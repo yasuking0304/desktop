@@ -7,6 +7,7 @@ import { MergeTreeResult } from '../../../models/merge'
 import { MultiCommitOperationKind } from '../../../models/multi-commit-operation'
 import { PopupType } from '../../../models/popup'
 import { ActionStatusIcon } from '../../lib/action-status-icon'
+import { t } from 'i18next'
 import {
   ChooseBranchDialog,
   IBaseChooseBranchDialogProps,
@@ -89,11 +90,15 @@ export class MergeChooseBranchDialog extends React.Component<
     )
     const squashPrefix =
       this.props.operation === MultiCommitOperationKind.Squash
-        ? 'Squash and '
+        ? t('merge-choose-branch-dialog.squash-and', 'Squash and ')
         : null
     return (
       <>
-        {squashPrefix}Merge into <strong>{truncatedName}</strong>
+        {t('merge-choose-branch-dialog.merge-into-1', '{{0}}Merge into ', {
+          0: squashPrefix,
+        })}
+        <strong>{truncatedName}</strong>
+        {t('merge-choose-branch-dialog.merge-into-2', ' ', { 0: squashPrefix })}
       </>
     )
   }
@@ -171,7 +176,14 @@ export class MergeChooseBranchDialog extends React.Component<
   }
 
   private renderLoadingMergeMessage() {
-    return <>Checking for ability to merge automatically...</>
+    return (
+      <>
+        {t(
+          'merge-choose-branch-dialog.checking-for-ability',
+          'Checking for ability to merge automatically...'
+        )}
+      </>
+    )
   }
 
   private renderCleanMergeMessage(
@@ -182,22 +194,36 @@ export class MergeChooseBranchDialog extends React.Component<
     if (commitCount === 0) {
       return (
         <React.Fragment>
+          {t('merge-choose-branch-dialog.is-already-up-to-date-with-1', ` `)}
           <strong>{currentBranch.name}</strong>
-          {` `}
-          is already up to date with <strong>{branch.name}</strong>
+          {t(
+            'merge-choose-branch-dialog.is-already-up-to-date-with-2',
+            ` This branch is up to date with `
+          )}
+          <strong>{branch.name}</strong>
+          {t('merge-choose-branch-dialog.is-already-up-to-date-with-3', ` `)}
         </React.Fragment>
       )
     }
 
-    const pluralized = commitCount === 1 ? 'commit' : 'commits'
+    const pluralized =
+      commitCount === 1
+        ? t('common.one-commit', 'commit')
+        : t('common.multiple-commits', 'commits')
     return (
       <React.Fragment>
-        This will merge
-        <strong>{` ${commitCount} ${pluralized}`}</strong>
-        {` from `}
+        {t('merge-choose-branch-dialog.this-will-merge-1', 'This will merge ')}
+        <strong>
+          {t('merge-choose-branch-dialog.number-commit', `{{0}} {{1}}`, {
+            0: commitCount,
+            1: pluralized,
+          })}
+        </strong>
+        {t('merge-choose-branch-dialog.this-will-merge-2', ` from `)}
         <strong>{branch.name}</strong>
-        {` into `}
+        {t('merge-choose-branch-dialog.this-will-merge-3', ` into `)}
         <strong>{currentBranch.name}</strong>
+        {t('merge-choose-branch-dialog.this-will-merge-4', ` `)}
       </React.Fragment>
     )
   }
@@ -205,7 +231,10 @@ export class MergeChooseBranchDialog extends React.Component<
   private renderInvalidMergeMessage() {
     return (
       <React.Fragment>
-        Unable to merge unrelated histories in this repository
+        {t(
+          'merge-choose-branch-dialog.unable-to-merge-unrelated-histories',
+          'Unable to merge unrelated histories in this repository'
+        )}
       </React.Fragment>
     )
   }
@@ -215,15 +244,34 @@ export class MergeChooseBranchDialog extends React.Component<
     currentBranch: Branch,
     count: number
   ) {
-    const pluralized = count === 1 ? 'file' : 'files'
+    const pluralized =
+      count === 1
+        ? t('merge-choose-branch-dialog.file', 'file')
+        : t('merge-choose-branch-dialog.files', 'files')
     return (
       <React.Fragment>
-        There will be
-        <strong>{` ${count} conflicted ${pluralized}`}</strong>
-        {` when merging `}
+        {t(
+          'merge-choose-branch-dialog.there-will-be-number-conflicted-1',
+          'There will be '
+        )}
+        <strong>
+          {t(
+            'merge-choose-branch-dialog.number-conflicted-file',
+            `{{0}} conflicted {{1}}`,
+            { 0: count, 1: pluralized }
+          )}
+        </strong>
+        {t(
+          'merge-choose-branch-dialog.there-will-be-number-conflicted-2',
+          ` when merging `
+        )}
         <strong>{branch.name}</strong>
-        {` into `}
+        {t(
+          'merge-choose-branch-dialog.there-will-be-number-conflicted-3',
+          ` into `
+        )}
         <strong>{currentBranch.name}</strong>
+        {t('merge-choose-branch-dialog.there-will-be-number-conflicted-4', ` `)}
       </React.Fragment>
     )
   }

@@ -14,6 +14,7 @@ import { FoldoutType } from '../../lib/app-state'
 import untildify from 'untildify'
 import { showOpenDialog } from '../main-process-proxy'
 import { Ref } from '../lib/ref'
+import { t } from 'i18next'
 import { InputError } from '../lib/input-description/input-error'
 import { IAccessibleMessage } from '../../models/accessible-message'
 
@@ -223,7 +224,17 @@ export class AddExistingRepository extends React.Component<
     return (
       <Dialog
         id="add-existing-repository"
-        title={__DARWIN__ ? 'Add Local Repository' : 'Add local repository'}
+        title={
+          __DARWIN__
+            ? t(
+                'add-existing-repository.add-local-repository-darwin',
+                'Add Local Repository'
+              )
+            : t(
+                'add-existing-repository.add-local-repository',
+                'Add local repository'
+              )
+        }
         onSubmit={this.addRepository}
         onDismissed={this.props.onDismissed}
         loading={this.state.isTrustingRepository}
@@ -233,19 +244,32 @@ export class AddExistingRepository extends React.Component<
             <TextBox
               ref={this.pathTextBoxRef}
               value={this.state.path}
-              label={__DARWIN__ ? 'Local Path' : 'Local path'}
-              placeholder="repository path"
+              label={
+                __DARWIN__
+                  ? t('common.local-path-darwin', 'Local Path')
+                  : t('common.local-path', 'Local path')
+              }
+              placeholder={t('common.repository-path', 'repository path')}
               onValueChanged={this.onPathChanged}
               ariaDescribedBy="add-existing-repository-path-error"
             />
-            <Button onClick={this.showFilePicker}>Choose…</Button>
+            <Button onClick={this.showFilePicker}>
+              {t('common.choose', 'Choose…')}
+            </Button>
           </Row>
           {this.renderErrors()}
         </DialogContent>
 
         <DialogFooter>
           <OkCancelButtonGroup
-            okButtonText={__DARWIN__ ? 'Add Repository' : 'Add repository'}
+            okButtonText={
+              __DARWIN__
+                ? t(
+                    'add-existing-repository.add-repository-darwin',
+                    'Add Repository'
+                  )
+                : t('add-existing-repository.add-repository', 'Add repository')
+            }
           />
         </DialogFooter>
       </Dialog>

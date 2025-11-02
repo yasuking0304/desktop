@@ -18,6 +18,7 @@ import { OpenThankYouCard } from './open-thank-you-card'
 import { SuccessfulSquash } from './successful-squash'
 import { SuccessBanner } from './success-banner'
 import { ConflictsFoundBanner } from './conflicts-found-banner'
+import { t } from 'i18next'
 import { OSVersionNoLongerSupportedBanner } from './os-version-no-longer-supported-banner'
 
 export function renderBanner(
@@ -121,19 +122,29 @@ export function renderBanner(
         />
       )
     case BannerType.SquashUndone: {
-      const pluralized = banner.commitsCount === 1 ? 'commit' : 'commits'
+      const pluralized =
+        banner.commitsCount === 1
+          ? t('common.one-commit', 'commit')
+          : t('common.multiple-commits', 'commits')
       return (
         <SuccessBanner
           key="squash-undone"
           timeout={5000}
           onDismissed={onDismissed}
         >
-          Squash of {banner.commitsCount} {pluralized} undone.
+          {t(
+            'render-banner.squash-of-commit-undone',
+            'Squash of {{0}} {{1}} undone.',
+            { 0: banner.commitsCount, 1: pluralized }
+          )}
         </SuccessBanner>
       )
     }
     case BannerType.SuccessfulReorder: {
-      const pluralized = banner.count === 1 ? 'commit' : 'commits'
+      const pluralized =
+        banner.count === 1
+          ? t('common.one-commit', 'commit')
+          : t('common.multiple-commits', 'commits')
 
       return (
         <SuccessBanner
@@ -143,20 +154,31 @@ export function renderBanner(
           onUndo={banner.onUndo}
         >
           <span>
-            Successfully reordered {banner.count} {pluralized}.
+            {t(
+              'render-banner.successfully-reordered-commit',
+              'Successfully reordered {{0}} {{1}}.',
+              { 0: banner.count, 1: pluralized }
+            )}
           </span>
         </SuccessBanner>
       )
     }
     case BannerType.ReorderUndone: {
-      const pluralized = banner.commitsCount === 1 ? 'commit' : 'commits'
+      const pluralized =
+        banner.commitsCount === 1
+          ? t('common.one-commit', 'commit')
+          : t('common.multiple-commits', 'commits')
       return (
         <SuccessBanner
           key="reorder-undone"
           timeout={5000}
           onDismissed={onDismissed}
         >
-          Reorder of {banner.commitsCount} {pluralized} undone.
+          {t(
+            'render-banner.reorder-of-commit-undone',
+            'Reorder of {{0}} {{1}} undone.',
+            { 0: banner.commitsCount, 1: pluralized }
+          )}
         </SuccessBanner>
       )
     }

@@ -333,6 +333,7 @@ import { findContributionTargetDefaultBranch } from '../branch'
 import { ValidNotificationPullRequestReview } from '../valid-notification-pull-request-review'
 import { determineMergeability } from '../git/merge-tree'
 import { PopupManager } from '../popup-manager'
+import { t } from 'i18next'
 import { resizableComponentClass } from '../../ui/resizable'
 import { compare } from '../compare'
 import { parseRepoRules, useRepoRulesLogic } from '../helpers/repo-rules'
@@ -2014,7 +2015,12 @@ export class AppStore extends TypedBaseStore<IAppState> {
   private startBackgroundPruner(repository: Repository) {
     if (this.currentBranchPruner !== null) {
       fatalError(
-        `A branch pruner is already active and cannot start updating on ${repository.name}`
+        t(
+          'app-store.error.pruner-is-already-active',
+          `A branch pruner is already active and cannot start updating
+           on {{0}}`,
+          { 0: repository.name }
+        )
       )
     }
 
@@ -2138,7 +2144,13 @@ export class AppStore extends TypedBaseStore<IAppState> {
   ) {
     if (this.currentBackgroundFetcher) {
       fatalError(
-        `We should only have on background fetcher active at once, but we're trying to start background fetching on ${repository.name} while another background fetcher is still active!`
+        t(
+          'app-store.error.should-only-have-on-background-fetcher-active',
+          `We should only have on background fetcher active at once,
+         but we're trying to start background fetching on {{0}}
+         while another background fetcher is still active!`,
+          { 0: repository.name }
+        )
       )
     }
 
@@ -4185,8 +4197,10 @@ export class AppStore extends TypedBaseStore<IAppState> {
   ) {
     this.updateCheckoutProgress(repository, {
       kind: 'checkout',
-      title: `Refreshing ${__DARWIN__ ? 'Repository' : 'repository'}`,
-      description: 'Checking out',
+      title: __DARWIN__
+        ? t('app-store.refreshing-repository-darwin', 'Refreshing Repository')
+        : t('app-store.refreshing-repository', 'Refreshing repository'),
+      description: t('app-store.checking-out', 'Checking out'),
       value: 1,
       target: commitish,
     })
@@ -4610,7 +4624,9 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
       const remoteName = branch.upstreamRemoteName || remote.name
 
-      const pushTitle = `Pushing to ${remoteName}`
+      const pushTitle = t('app-store.pushing-to', `Pushing to {{0}}`, {
+        0: remoteName,
+      })
 
       // Emit an initial progress even before our push begins
       // since we're doing some work to get remotes up front.
@@ -4707,14 +4723,20 @@ export class AppStore extends TypedBaseStore<IAppState> {
           })
 
           const refreshTitle = __DARWIN__
-            ? 'Refreshing Repository'
-            : 'Refreshing repository'
+            ? t(
+                'app-store.refreshing-repository-darwin',
+                'Refreshing Repository'
+              )
+            : t('app-store.refreshing-repository', 'Refreshing repository')
           const refreshStartProgress = pushWeight + fetchWeight
 
           this.updatePushPullFetchProgress(repository, {
             kind: 'generic',
             title: refreshTitle,
-            description: 'Fast-forwarding branches',
+            description: t(
+              'app-store.fast-forwarding branches',
+              'Fast-forwarding branches'
+            ),
             value: refreshStartProgress,
           })
 
@@ -4870,7 +4892,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
           }
         }
 
-        const title = `Pulling ${remote.name}`
+        const title = t('common.pulling', `Pulling {{0}}`, { 0: remote.name })
         const kind = 'pull'
         this.updatePushPullFetchProgress(repository, {
           kind,
@@ -4934,13 +4956,19 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
           const refreshStartProgress = pullWeight + fetchWeight
           const refreshTitle = __DARWIN__
-            ? 'Refreshing Repository'
-            : 'Refreshing repository'
+            ? t(
+                'app-store.refreshing-repository-darwin',
+                'Refreshing Repository'
+              )
+            : t('app-store.refreshing-repository', 'Refreshing repository')
 
           this.updatePushPullFetchProgress(repository, {
             kind: 'generic',
             title: refreshTitle,
-            description: 'Fast-forwarding branches',
+            description: t(
+              'app-store.fast-forwarding branches',
+              'Fast-forwarding branches'
+            ),
             value: refreshStartProgress,
           })
 
@@ -5309,13 +5337,16 @@ export class AppStore extends TypedBaseStore<IAppState> {
         }
 
         const refreshTitle = __DARWIN__
-          ? 'Refreshing Repository'
-          : 'Refreshing repository'
+          ? t('app-store.refreshing-repository-darwin', 'Refreshing Repository')
+          : t('app-store.refreshing-repository', 'Refreshing repository')
 
         this.updatePushPullFetchProgress(repository, {
           kind: 'generic',
           title: refreshTitle,
-          description: 'Fast-forwarding branches',
+          description: t(
+            'app-store.fast-forwarding branches',
+            'Fast-forwarding branches'
+          ),
           value: fetchWeight,
         })
 
@@ -7226,7 +7257,10 @@ export class AppStore extends TypedBaseStore<IAppState> {
   ) {
     // This shouldn't happen... but in case throw error.
     const lastCommit = forceUnwrap(
-      'Unable to initialize cherry-pick progress. No commits provided.',
+      t(
+        'app-store.unable-to-initialize-cherry-pick',
+        'Unable to initialize cherry-pick progress. No commits provided.'
+      ),
       commits.at(-1)
     )
 

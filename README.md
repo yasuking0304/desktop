@@ -1,22 +1,32 @@
-# [GitHub Desktop](https://desktop.github.com)
+# [GitHub Desktop](https://desktop.github.com) Multilingal Platform
 
 [GitHub Desktop](https://desktop.github.com/) is an open-source [Electron](https://www.electronjs.org/)-based
 GitHub app. It is written in [TypeScript](https://www.typescriptlang.org) and
 uses [React](https://reactjs.org/).
 
+## Where can I get it Multilingal Platform?
+ - [macOS(x64)](https://1drv.ms/u/c/fa41b5f1e3d42cf5/EfUs1OPxtUEggPqkUQAAAAABVt4rmUD8_lbla7jT_sb3rw)  
+    For the MacOS version, please execute the included "setenv_lang_macos.sh" after installation.
+You only need to run it once.
+
+ - [Windows(x64)](https://drive.google.com/file/d/1EY6c2QdhyjasrxgBMgbdUwlNF2hN8aHE/view?usp=drive_link)
+ - [Linux(x64-AppImage)](https://drive.google.com/file/d/1I_0-SPXuSJNAJe4-J0xiYPIGjgYhL8U5/view?usp=drive_link)
+
+[Click here for details (This site is only available in Japanese)](https://github.com/yasuking0304/desktop/wiki)
+
 <picture>
   <source
-    srcset="https://user-images.githubusercontent.com/634063/202742848-63fa1488-6254-49b5-af7c-96a6b50ea8af.png"
+    srcset="./docs/assets/github-desktop-dark.jpg"
     media="(prefers-color-scheme: dark)"
   />
   <img
     width="1072"
-    src="https://user-images.githubusercontent.com/634063/202742985-bb3b3b94-8aca-404a-8d8a-fd6a6f030672.png"
-    alt="A screenshot of the GitHub Desktop application showing changes being viewed and committed with two attributed co-authors"
+    src="./docs/assets/github-desktop-lite.jpg"
+    alt="A screenshot of the GitHub Desktop application showing changes being viewed and committed"
   />
 </picture>
 
-## Where can I get it?
+## Where can I get it Original?
 
 Download the official installer for your operating system:
 

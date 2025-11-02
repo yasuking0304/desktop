@@ -27,6 +27,7 @@ export enum Shell {
   Alacritty = 'Alacritty',
   Kitty = 'Kitty',
   LXTerminal = 'LXDE Terminal',
+  WezTerm = 'WezTerm',
   Warp = 'Warp',
   Ghostty = 'Ghostty',
 }
@@ -75,6 +76,8 @@ function getShellPath(shell: Shell): Promise<string | null> {
       return getPathIfAvailable('/usr/bin/kitty')
     case Shell.LXTerminal:
       return getPathIfAvailable('/usr/bin/lxterminal')
+    case Shell.WezTerm:
+      return getPathIfAvailable('/usr/bin/wezterm')
     case Shell.Warp:
       return getPathIfAvailable('/usr/bin/warp-terminal')
     case Shell.Ghostty:
@@ -104,6 +107,7 @@ export async function getAvailableShells(): Promise<
     alacrittyPath,
     kittyPath,
     lxterminalPath,
+    weztermPath,
     warpPath,
     ghosttyPath,
   ] = await Promise.all([
@@ -123,6 +127,7 @@ export async function getAvailableShells(): Promise<
     getShellPath(Shell.Alacritty),
     getShellPath(Shell.Kitty),
     getShellPath(Shell.LXTerminal),
+    getShellPath(Shell.WezTerm),
     getShellPath(Shell.Warp),
     getShellPath(Shell.Ghostty),
   ])
@@ -192,6 +197,10 @@ export async function getAvailableShells(): Promise<
     shells.push({ shell: Shell.LXTerminal, path: lxterminalPath })
   }
 
+  if (weztermPath) {
+    shells.push({ shell: Shell.WezTerm, path: weztermPath })
+  }
+
   if (warpPath) {
     shells.push({ shell: Shell.Warp, path: warpPath })
   }
@@ -216,6 +225,7 @@ export function launch(
     case Shell.Terminator:
     case Shell.XFCE:
     case Shell.Alacritty:
+    case Shell.LXTerminal:
       return spawn(foundShell.path, ['--working-directory', path])
     case Shell.Ptyxis:
       return spawn(foundShell.path, [
@@ -237,6 +247,8 @@ export function launch(
       return spawn(foundShell.path, ['-w', path])
     case Shell.Kitty:
       return spawn(foundShell.path, ['--single-instance', '--directory', path])
+    case Shell.WezTerm:
+      return spawn(foundShell.path, ['start', '--cwd', path])
     case Shell.LXTerminal:
     case Shell.Ghostty:
       return spawn(foundShell.path, ['--working-directory=' + path])

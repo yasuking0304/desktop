@@ -9,6 +9,7 @@ import {
   parseCustomIntegrationArguments,
   TargetPathArgument,
 } from '../../lib/custom-integration'
+import { t } from 'i18next'
 
 interface ICustomIntegrationFormProps {
   /** ID used to prefix the IDs of some child elements */
@@ -68,21 +69,29 @@ export class CustomIntegrationForm extends React.Component<
       <div className="custom-integration-form-container">
         <div className="custom-integration-form-path-container">
           <TextBox
-            label="Path"
+            label={t('custom-integration-form.path', 'Path')}
             value={this.state.path}
             ref={this.pathInputRef}
             onValueChanged={this.onPathChanged}
-            placeholder="Path to executable"
+            placeholder={t(
+              'custom-integration-form.path-to-executable',
+              'Path to executable'
+            )}
             ariaDescribedBy={`${this.props.id}-custom-integration-path-error`}
           />
-          <Button onClick={this.onChoosePath}>Choose…</Button>
+          <Button onClick={this.onChoosePath}>
+            {t('common.choose', 'Choose…')}
+          </Button>
         </div>
         {this.renderPathErrors()}
         <TextBox
-          label="Arguments"
+          label={t('custom-integration-form.arguments', 'Arguments')}
           value={this.state.arguments}
           onValueChanged={this.onParamsChanged}
-          placeholder="Command line arguments"
+          placeholder={t(
+            'custom-integration-form.command-line-arguments',
+            'Command line arguments'
+          )}
           ariaDescribedBy={`${this.props.id}-custom-integration-args-error`}
         />
         {this.renderArgsErrors()}
@@ -95,8 +104,10 @@ export class CustomIntegrationForm extends React.Component<
       return null
     }
 
-    const errorDescription =
+    const errorDescription = t(
+      'custom-integration-form.This-path0does-not-appear',
       'This path does not appear to be a valid executable.'
+    )
 
     return (
       <div className="custom-integration-form-error">
@@ -120,8 +131,15 @@ export class CustomIntegrationForm extends React.Component<
     }
 
     const errorDescription = this.state.showNonValidArgsError
-      ? 'These arguments are not valid.'
-      : `Arguments must include the target path placeholder (${TargetPathArgument}).`
+      ? t(
+          'custom-integration-form.these-arguments-are-not-valid',
+          'These arguments are not valid.'
+        )
+      : t(
+          'custom-integration-form.arguments-must-include-the-target-path',
+          `Arguments must include the target path placeholder ({0}}.`,
+          { 0: TargetPathArgument }
+        )
 
     return (
       <div className="custom-integration-form-error">

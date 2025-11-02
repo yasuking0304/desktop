@@ -7,6 +7,7 @@ import { Ref } from '../lib/ref'
 import { LinkButton } from '../lib/link-button'
 import { Progress } from '../../models/progress'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
+import { t } from 'i18next'
 
 interface ICreateTutorialRepositoryDialogProps {
   /**
@@ -72,7 +73,10 @@ export class CreateTutorialRepositoryDialog extends React.Component<ICreateTutor
     return (
       <Dialog
         id="create-tutorial-repository-dialog"
-        title="Start tutorial"
+        title={t(
+          'create-tutorial-repository-dialog.start-tutorial',
+          'Start tutorial'
+        )}
         onDismissed={this.props.onDismissed}
         onSubmit={this.onSubmit}
         dismissDisabled={loading}
@@ -81,18 +85,31 @@ export class CreateTutorialRepositoryDialog extends React.Component<ICreateTutor
       >
         <DialogContent>
           <div>
-            This will create a repository on your local machine, and push it to
-            your account <Ref>@{this.props.account.login}</Ref> on{' '}
+            {t(
+              'create-tutorial-repository-dialog.will-create-a-repository-1',
+              `This will create a repository on your local machine, and push it
+              to your account `
+            )}
+            <Ref>@{this.props.account.login}</Ref>
+            {t(
+              'create-tutorial-repository-dialog.will-create-a-repository-2',
+              ' on '
+            )}
             <LinkButton uri={getHTMLURL(account.endpoint)}>
               {account.friendlyEndpoint}
             </LinkButton>
-            . This repository will only be visible to you, and not visible
-            publicly.
+            {t(
+              'create-tutorial-repository-dialog.will-create-a-repository-3',
+              `. This repository will only be visible to you, and not visible
+            publicly.`
+            )}
           </div>
           {this.renderProgress()}
         </DialogContent>
         <DialogFooter>
-          <OkCancelButtonGroup okButtonText="Continue" />
+          <OkCancelButtonGroup
+            okButtonText={t('common.continue', 'Continue')}
+          />
         </DialogFooter>
       </Dialog>
     )

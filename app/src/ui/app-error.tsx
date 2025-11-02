@@ -13,6 +13,7 @@ import { OkCancelButtonGroup } from './dialog/ok-cancel-button-group'
 import { ErrorWithMetadata } from '../lib/error-with-metadata'
 import { RetryActionType, RetryAction } from '../models/retry-actions'
 import { Ref } from './lib/ref'
+import { t } from 'i18next'
 import { GitError as DugiteError } from 'dugite'
 import { LinkButton } from './lib/link-button'
 import { getFileFromExceedsError } from '../lib/helpers/regex'
@@ -108,7 +109,12 @@ export class AppError extends React.Component<IAppErrorProps, IAppErrorState> {
           <p>{error.message}</p>
           {files.length > 0 && (
             <>
-              <p>Files that exceed the limit</p>
+              <p>
+                {t(
+                  'app-error.files-that-exceed',
+                  'Files that exceed the limit'
+                )}
+              </p>
               <ul>
                 {files.map(file => (
                   <li key={file}>{file}</li>
@@ -117,9 +123,12 @@ export class AppError extends React.Component<IAppErrorProps, IAppErrorState> {
             </>
           )}
           <p>
-            See{' '}
-            <LinkButton uri="https://gh.io/lfs">https://gh.io/lfs</LinkButton>{' '}
-            for more information on managing large files on GitHub
+            {t('app-error.for-more-information-1', 'See ')}
+            <LinkButton uri="https://gh.io/lfs">https://gh.io/lfs</LinkButton>
+            {t(
+              'app-error.for-more-information-2',
+              ' for more information on managing large files on GitHub'
+            )}
           </p>
         </>
       )
@@ -149,14 +158,17 @@ export class AppError extends React.Component<IAppErrorProps, IAppErrorState> {
 
     switch (getDugiteError(error)) {
       case DugiteError.PushWithFileSizeExceedingLimit:
-        return 'File size limit exceeded'
+        return t(
+          'app-error.file-size-limit-exceeded',
+          'File size limit exceeded'
+        )
     }
 
     switch (getRetryActionType(error)) {
       case RetryActionType.Clone:
-        return 'Clone failed'
+        return t('app-error.clone-failed', 'Clone failed')
       case RetryActionType.Push:
-        return 'Failed to push'
+        return t('app-error.failed-to-push', 'Failed to push')
     }
 
     if (isErrorWithMetaData(error)) {
@@ -167,7 +179,7 @@ export class AppError extends React.Component<IAppErrorProps, IAppErrorState> {
       }
     }
 
-    return 'Error'
+    return t('common.error', 'Error')
   }
 
   private renderContentAfterErrorMessage(error: Error) {
@@ -180,7 +192,9 @@ export class AppError extends React.Component<IAppErrorProps, IAppErrorState> {
     if (retryAction && retryAction.type === RetryActionType.Clone) {
       return (
         <p>
-          Would you like to retry cloning <Ref>{retryAction.name}</Ref>?
+          {t('app-error.would-you-like-1', 'Would you like to retry cloning ')}
+          <Ref>{retryAction.name}</Ref>
+          {t('app-error.would-you-like-2', '?')}
         </p>
       )
     }
@@ -243,7 +257,11 @@ export class AppError extends React.Component<IAppErrorProps, IAppErrorState> {
     return (
       <DialogFooter>
         <OkCancelButtonGroup
-          okButtonText={__DARWIN__ ? 'Retry Clone' : 'Retry clone'}
+          okButtonText={
+            __DARWIN__
+              ? t('app-error.retry-clone-darwin', 'Retry Clone')
+              : t('app-error.retry-clone', 'Retry clone')
+          }
           onOkButtonClick={this.onRetryAction}
           onCancelButtonClick={this.onCloseButtonClick}
         />
@@ -255,9 +273,13 @@ export class AppError extends React.Component<IAppErrorProps, IAppErrorState> {
     return (
       <DialogFooter>
         <OkCancelButtonGroup
-          okButtonText="Close"
+          okButtonText={t('common.close', 'Close')}
           onOkButtonClick={this.onCloseButtonClick}
-          cancelButtonText={__DARWIN__ ? 'Open Preferences' : 'Open options'}
+          cancelButtonText={
+            __DARWIN__
+              ? t('app-error.open-settings-darwin', 'Open Settings')
+              : t('app-error.open-options', 'Open options')
+          }
           onCancelButtonClick={this.showPreferencesDialog}
         />
       </DialogFooter>

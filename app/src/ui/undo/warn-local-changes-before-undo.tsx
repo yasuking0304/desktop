@@ -6,6 +6,7 @@ import { Row } from '../lib/row'
 import { Checkbox, CheckboxValue } from '../lib/checkbox'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
 import { Commit } from '../../models/commit'
+import { t } from 'i18next'
 
 interface IWarnLocalChangesBeforeUndoProps {
   readonly dispatcher: Dispatcher
@@ -38,7 +39,9 @@ export class WarnLocalChangesBeforeUndo extends React.Component<
   }
 
   public render() {
-    const title = __DARWIN__ ? 'Undo Commit' : 'Undo commit'
+    const title = __DARWIN__
+      ? t('warn-local-changes-before-undo.undo-commit-darwin', 'Undo Commit')
+      : t('warn-local-changes-before-undo.undo-commit', 'Undo commit')
 
     return (
       <Dialog
@@ -54,7 +57,10 @@ export class WarnLocalChangesBeforeUndo extends React.Component<
       >
         {this.getWarningDialog()}
         <DialogFooter>
-          <OkCancelButtonGroup destructive={true} okButtonText="Continue" />
+          <OkCancelButtonGroup
+            destructive={true}
+            okButtonText={t('common.continue', 'Continue')}
+          />
         </DialogFooter>
       </Dialog>
     )
@@ -67,12 +73,18 @@ export class WarnLocalChangesBeforeUndo extends React.Component<
     return (
       <DialogContent>
         <Row id="undo-warning-message">
-          You have changes in progress. Undoing the commit might result in some
-          of these changes being lost. Do you want to continue anyway?
+          {t(
+            'warn-local-changes-before-undo.changes-in-progress-undo-commit',
+            `You have changes in progress. Undoing the commit might result in
+            some of these changes being lost. Do you want to continue anyway?`
+          )}
         </Row>
         <Row>
           <Checkbox
-            label="Do not show this message again"
+            label={t(
+              'common.do-not-show-message-again',
+              'Do not show this message again'
+            )}
             value={
               this.state.confirmUndoCommit
                 ? CheckboxValue.Off
@@ -90,27 +102,43 @@ export class WarnLocalChangesBeforeUndo extends React.Component<
       return (
         <DialogContent>
           <p>{this.getMergeCommitUndoWarningText()}</p>
-          <p>Do you want to continue anyway?</p>
+          <p>
+            {t(
+              'warn-local-changes-before-undo.do-you-want-to-continue-anyway',
+              'Do you want to continue anyway?'
+            )}
+          </p>
         </DialogContent>
       )
     }
     return (
       <DialogContent>
         <p>
-          You have changes in progress. Undoing the merge commit might result in
-          some of these changes being lost.
+          {t(
+            'warn-local-changes-before-undo.changes-in-progress-undo-merge',
+            `You have changes in progress. Undoing the merge commit might
+            result in some of these changes being lost.`
+          )}
         </p>
         <p>{this.getMergeCommitUndoWarningText()}</p>
-        <p>Do you want to continue anyway?</p>
+        <p>
+          {t(
+            'warn-local-changes-before-undo.do-you-want-to-continue-anyway',
+            'Do you want to continue anyway?'
+          )}
+        </p>
       </DialogContent>
     )
   }
 
   private getMergeCommitUndoWarningText() {
-    return `Undoing a merge commit will apply the changes from the merge into
-    your working directory, and committing again will create an entirely new
-    commit. This means you will lose the merge commit and, as a result, commits
-    from the merged branch could disappear from this branch.`
+    return t(
+      'warn-local-changes-before-undo.undoing-a merge-commit',
+      `Undoing a merge commit will apply the changes from the merge into
+      your working directory, and committing again will create an entirely new
+      commit. This means you will lose the merge commit and, as a result, commits
+      from the merged branch could disappear from this branch.`
+    )
   }
 
   private onSubmit = async () => {

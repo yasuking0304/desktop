@@ -8,10 +8,11 @@ import {
 } from '../../models/account'
 import { Select } from './select'
 import { GitEmailNotFoundWarning } from './git-email-not-found-warning'
+import { t } from 'i18next'
 import { getStealthEmailForAccount } from '../../lib/email'
 import memoizeOne from 'memoize-one'
 
-const OtherEmailSelectValue = 'Other'
+const OtherEmailSelectValue = t('common.other', 'Other')
 
 interface IGitConfigUserFormProps {
   readonly name: string
@@ -146,7 +147,8 @@ export class GitConfigUserForm extends React.Component<
       <div>
         <Row>
           <TextBox
-            label="Name"
+            label={t('common.name', 'Name')}
+            placeholder={t('common.your-name', 'Your Name')}
             value={this.props.name}
             disabled={this.props.disabled}
             onValueChanged={this.props.onNameChanged}
@@ -181,7 +183,7 @@ export class GitConfigUserForm extends React.Component<
     return (
       <Row>
         <Select
-          label="Email"
+          label={t('common.email', 'Email')}
           value={
             this.state.emailIsOther ? OtherEmailSelectValue : this.props.email
           }
@@ -209,15 +211,18 @@ export class GitConfigUserForm extends React.Component<
     // Only show the "Email" label above the textbox when the textbox is
     // presented independently, without the email dropdown, not when presented
     // as a consequence of the option "Other" selected in the dropdown.
-    const label = this.state.emailIsOther ? undefined : 'Email'
+    const label = this.state.emailIsOther
+      ? undefined
+      : t('common.email', 'Email')
     // If there is not a label, provide a screen reader announcement.
-    const ariaLabel = label ? undefined : 'Email'
+    const ariaLabel = label ? undefined : t('common.email', 'Email')
 
     return (
       <Row>
         <TextBox
           ref={this.emailInputRef}
           label={label}
+          placeholder={t('common.your-email', 'your-email@example.com')}
           type="email"
           value={this.props.email}
           disabled={this.props.disabled}

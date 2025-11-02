@@ -6,6 +6,7 @@ import { Dialog, DialogContent, DialogFooter } from '../dialog'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
 import { Ref } from '../lib/ref'
 import { LinkButton } from '../lib/link-button'
+import { t } from 'i18next'
 import { PasswordTextBox } from '../lib/password-text-box'
 
 interface IGenericGitAuthenticationProps {
@@ -46,7 +47,17 @@ export class GenericGitAuthentication extends React.Component<
     return (
       <Dialog
         id="generic-git-auth"
-        title={__DARWIN__ ? `Authentication Failed` : `Authentication failed`}
+        title={
+          __DARWIN__
+            ? t(
+                'generic-git-auth.authentication-failed-darwin',
+                'Authentication Failed'
+              )
+            : t(
+                'generic-git-auth.authentication-failed',
+                'Authentication failed'
+              )
+        }
         onDismissed={this.props.onDismiss}
         onSubmit={this.save}
         role="alertdialog"
@@ -54,22 +65,40 @@ export class GenericGitAuthentication extends React.Component<
       >
         <DialogContent>
           <p id="generic-git-auth-error">
-            We were unable to authenticate with{' '}
-            <Ref>{this.props.remoteUrl}</Ref>. Please enter{' '}
+            {t(
+              'generic-git-auth.we-were-unable-to-authenticate-1',
+              'We were unable to authenticate with '
+            )}
+            <Ref>{this.props.remoteUrl}</Ref>
+            {t(
+              'generic-git-auth.we-were-unable-to-authenticate-2',
+              '. Please enter '
+            )}
             {this.props.username ? (
               <>
-                the password for the user <Ref>{this.props.username}</Ref>
+                {t(
+                  'generic-git-auth.we-were-unable-to-authenticate-3',
+                  'the password for the user '
+                )}
+                <Ref>{this.props.username}</Ref>
+                {t('generic-git-auth.we-were-unable-to-authenticate-4', ' ')}
               </>
             ) : (
-              'your username and password'
+              t(
+                'generic-git-auth.we-were-unable-to-authenticate-5',
+                'your username and password'
+              )
             )}{' '}
-            to try again.
+            {t(
+              'generic-git-auth.we-were-unable-to-authenticate-6',
+              'to try again.'
+            )}
           </p>
 
           {this.props.username === undefined && (
             <Row>
               <TextBox
-                label="Username"
+                label={t('generic-git-auth.username', 'Username')}
                 autoFocus={true}
                 value={this.state.username}
                 onValueChanged={this.onUsernameChange}
@@ -79,7 +108,7 @@ export class GenericGitAuthentication extends React.Component<
 
           <Row>
             <PasswordTextBox
-              label="Password"
+              label={t('generic-git-auth.password', 'Password')}
               value={this.state.password}
               onValueChanged={this.onPasswordChange}
               ariaDescribedBy="generic-git-auth-password-description"
@@ -88,13 +117,16 @@ export class GenericGitAuthentication extends React.Component<
 
           <Row>
             <div id="generic-git-auth-password-description">
-              Depending on your repository's hosting service, you might need to
-              use a Personal Access Token (PAT) as your password. Learn more
-              about creating a PAT in our{' '}
+              {t(
+                'generic-git-auth.depending-on-your-repository-s-1',
+                `Depending on your repository's hosting service, you might need
+                 to use a Personal Access Token (PAT) as your password. Learn
+                 more about creating a PAT in our `
+              )}
               <LinkButton uri="https://github.com/desktop/desktop/tree/development/docs/integrations">
-                integration docs
+                {t('generic-git-auth.integration-docs', 'integration docs')}
               </LinkButton>
-              .
+              {t('generic-git-auth.depending-on-your-repository-s-2', '.')}
             </div>
           </Row>
         </DialogContent>

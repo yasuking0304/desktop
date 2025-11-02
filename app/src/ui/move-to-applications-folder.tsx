@@ -7,6 +7,7 @@ import {
 } from './dialog'
 import { Dispatcher } from './dispatcher'
 import { Checkbox, CheckboxValue } from './lib/checkbox'
+import { t } from 'i18next'
 
 interface IMoveToApplicationsFolderProps {
   readonly dispatcher: Dispatcher
@@ -35,7 +36,10 @@ export class MoveToApplicationsFolder extends React.Component<
   public render() {
     return (
       <Dialog
-        title="Move GitHub Desktop to the Applications folder?"
+        title={t(
+          'move-to-applications-folder.move-to-the-applications-folder',
+          'Move GitHub Desktop to the Applications folder?'
+        )}
         id="move-to-applications-folder"
         backdropDismissable={false}
         onDismissed={this.props.onDismissed}
@@ -44,17 +48,26 @@ export class MoveToApplicationsFolder extends React.Component<
       >
         <DialogContent>
           <p>
-            We've detected that you're not running GitHub Desktop from the
-            Applications folder of your machine. This could cause problems with
-            the app, including impacting your ability to sign in.
+            {t(
+              'move-to-applications-folder.detected-that-youre-not-running',
+              `We've detected that you're not running GitHub Desktop from the
+              Applications folder of your machine. This could cause problems
+              with the app, including impacting your ability to sign in.`
+            )}
           </p>
           <p>
-            Do you want to move GitHub Desktop to the Applications folder now?
-            This will also restart the app.
+            {t(
+              'move-to-applications-folder.do-you-want-to-move',
+              `Do you want to move GitHub Desktop to the Applications folder
+              now? This will also restart the app.`
+            )}
           </p>
           <div>
             <Checkbox
-              label="Do not show this message again"
+              label={t(
+                'common.do-not-show-message-again',
+                'Do not show this message again'
+              )}
               value={
                 this.state.askToMoveToApplicationsFolder
                   ? CheckboxValue.Off
@@ -73,9 +86,16 @@ export class MoveToApplicationsFolder extends React.Component<
     return (
       <DialogFooter>
         <OkCancelButtonGroup
-          okButtonText="Move and Restart"
-          okButtonTitle="This will move GitHub Desktop to the Applications folder in your machine and restart the app."
-          cancelButtonText="Not Now"
+          okButtonText={t(
+            'move-to-applications-folder.move-and-restart',
+            'Move and Restart'
+          )}
+          okButtonTitle={t(
+            'move-to-applications-folder.this-will-move-github-desktop',
+            `This will move GitHub Desktop to the Applications folder in your
+            machine and restart the app.`
+          )}
+          cancelButtonText={t('common.not-now-darwin', 'Not Now')}
           onCancelButtonClick={this.onNotNow}
         />
       </DialogFooter>

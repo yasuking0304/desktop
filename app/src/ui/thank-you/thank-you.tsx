@@ -4,6 +4,7 @@ import { ReleaseNote } from '../../models/release-notes'
 import { Dialog, DialogContent } from '../dialog'
 import { RichText } from '../lib/rich-text'
 import Confetti from 'react-confetti'
+import { t } from 'i18next'
 import { Emoji } from '../../lib/emoji'
 
 interface IThankYouProps {
@@ -91,9 +92,13 @@ export class ThankYou extends React.Component<IThankYouProps, IThankYouState> {
       this.props.latestVersion !== null ? ` ${this.props.latestVersion}` : ''
     const thankYouNote = (
       <>
-        Thanks so much for all your hard work on GitHub Desktop{version}. We're
+        {t(
+          'thank-you.thank-you-message',
+          `Thanks so much for all your hard work on GitHub Desktop{{0}}. We're
         so grateful for your willingness to contribute and make the app better
-        for everyone!
+        for everyone!`,
+          { 0: version }
+        )}
       </>
     )
 
@@ -101,13 +106,17 @@ export class ThankYou extends React.Component<IThankYouProps, IThankYouState> {
       <Dialog
         id="thank-you-notes"
         onDismissed={this.props.onDismissed}
-        title={`Thank you ${this.props.friendlyName}! 🎉`}
+        title={t('thank-you.thank-you-title', `Thank you {{0}}! 🎉`, {
+          0: this.props.friendlyName,
+        })}
         onDialogRef={this.onDialogRef}
       >
         <DialogContent>
           <div className="container">
             <div className="thank-you-note">{thankYouNote}</div>
-            <div className="contributions-heading">You contributed:</div>
+            <div className="contributions-heading">
+              {t('thank-you.you-contributed', 'You contributed:')}
+            </div>
             <div className="contributions">
               {this.renderList(this.props.userContributions)}
             </div>

@@ -3,6 +3,7 @@ import { DialogContent } from '../dialog'
 import { ForkContributionTarget } from '../../models/workflow-preferences'
 import { RepositoryWithForkedGitHubRepository } from '../../models/repository'
 import { ForkSettingsDescription } from './fork-contribution-target-description'
+import { t } from 'i18next'
 import { RadioGroup } from '../lib/radio-group'
 import { assertNever } from '../../lib/fatal-error'
 
@@ -19,9 +20,12 @@ export class ForkSettings extends React.Component<IForkSettingsProps, {}> {
   private renderForkOptionsLabel = (key: ForkContributionTarget) => {
     switch (key) {
       case ForkContributionTarget.Parent:
-        return 'To contribute to the parent repository'
+        return t(
+          'fork-settings.contribute-to-the-parent-repository',
+          'To contribute to the parent repository'
+        )
       case ForkContributionTarget.Self:
-        return 'For my own purposes'
+        return t('fork-settings.for-my-own-purposes', 'For my own purposes')
       default:
         return assertNever(key, `Unknown fork contribution target: ${key}`)
     }
@@ -35,7 +39,12 @@ export class ForkSettings extends React.Component<IForkSettingsProps, {}> {
 
     return (
       <DialogContent>
-        <h2 id="fork-usage-heading">I'll be using this fork…</h2>
+        <h2 id="fork-usage-heading">
+          {t(
+            'fork-settings.will-be-using-this-fork',
+            `I'll be using this fork…`
+          )}
+        </h2>
 
         <RadioGroup<ForkContributionTarget>
           ariaLabelledBy="fork-usage-heading"

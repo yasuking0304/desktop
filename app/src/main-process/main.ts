@@ -1,3 +1,4 @@
+import '../locales/i18n'
 import '../lib/logging/main/install'
 
 import {
@@ -49,7 +50,6 @@ import {
   showNotification,
 } from 'desktop-notifications'
 import { initializeDesktopNotifications } from './notifications'
-import parseCommandLineArgs from 'minimist'
 import { CLIAction } from '../lib/cli-action'
 
 app.setAppLogsPath()
@@ -106,7 +106,8 @@ const possibleProtocols = new Set(['x-github-client'])
 if (__DEV_SECRETS__) {
   possibleProtocols.add('x-github-desktop-dev-auth')
 } else {
-  possibleProtocols.add('x-github-desktop-auth')
+  //possibleProtocols.add('x-github-desktop-auth')
+  possibleProtocols.add('x-github-desktop-dev-auth') /** if tesing, beta */
 }
 // Also support Desktop Classic's protocols.
 if (__DARWIN__) {
@@ -236,60 +237,25 @@ if (__DARWIN__) {
 }
 
 async function handleCommandLineArguments(argv: string[]) {
-  const args = parseCommandLineArgs(argv, {
-    boolean: ['protocol-launcher'],
-  })
-
-  // Desktop registers it's protocol handler callback on Windows as
-  // `[executable path] --protocol-launcher "%1"`. Note that extra command
-  // line arguments might be added by Chromium
-  // (https://electronjs.org/docs/api/app#event-second-instance).
-
-  if (__WIN32__ && args['protocol-launcher'] === true) {
-    // On Windows we'll end up getting called with something like
-    // `--protocol-launcher --allow-file-access-from-files x-github-client://..`
-    // which minimist naturally interprets as
-    // `--allow-file-access-from-files=x:/github-client`. This is due to
-    // Chromium's hot take on parsing command line arguments, see:
-    // https://github.com/electron/electron/issues/20322#issuecomment-534137321
-    // So while we could add '--allow-file...' as a boolean we can't know for
-    // sure that Chromium won't add more switches later on which is why we have
-    // to resort to looking through all arguments looking for something that
-    // appears to be an app url.
-    const prefixes = Array.from(possibleProtocols, p => `${p}://`)
-    const matchingUrl = argv.find(arg => {
-      if (prefixes.some(p => arg.startsWith(p))) {
-        try {
-          new URL(arg)
-          return true
-        } catch (e) {
-          log.error(`Unable to parse argument as URL: ${arg}`)
-        }
-      }
-      return false
-    })
-
-    if (matchingUrl) {
-      handleAppURL(matchingUrl)
-    } else {
-      log.error(`Encountered --protocol-launcher without app url`)
+  for (const arg of argv) {
+    if (
+      arg.match(/^x-github-desktop/) &&
+      arg.match('auth://oauth') &&
+      arg.match('code=') &&
+      arg.match('state=')
+    ) {
+      handleAppURL(arg)
+      return
     }
-    // If --protocol-launcher is present we always want to bail and not
-    // risk a smuggled cli switch
-    return
+    if (
+      arg.match(/^x-github-client/) &&
+      arg.match('openRepo') &&
+      arg.match('branch=')
+    ) {
+      handleAppURL(arg)
+      return
+    }
   }
-
-  if (typeof args['cli-open'] === 'string') {
-    handleCLIAction({ kind: 'open-repository', path: args['cli-open'] })
-  } else if (typeof args['cli-clone'] === 'string') {
-    handleCLIAction({
-      kind: 'clone-url',
-      url: args['cli-clone'],
-      branch:
-        typeof args['cli-branch'] === 'string' ? args['cli-branch'] : undefined,
-    })
-  }
-
   return
 }
 
@@ -316,7 +282,7 @@ function setAsDefaultProtocolClient(protocol: string) {
   }
 }
 
-if (process.env.GITHUB_DESKTOP_DISABLE_HARDWARE_ACCELERATION) {
+if (process.env.GITHUB_DESKTOP_DISABLE_HARDWARE_ACCELERATION || __LINUX__) {
   log.info(
     `GITHUB_DESKTOP_DISABLE_HARDWARE_ACCELERATION environment variable set, disabling hardware acceleration`
   )

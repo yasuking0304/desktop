@@ -21,6 +21,7 @@ import { PopupType } from '../../models/popup'
 import { encodePathAsUrl } from '../../lib/path'
 import { TooltippedContent } from '../lib/tooltipped-content'
 import memoizeOne from 'memoize-one'
+import { t } from 'i18next'
 import { KeyboardShortcut } from '../keyboard-shortcut/keyboard-shortcut'
 import { generateRepositoryListContextMenu } from '../repositories-list/repository-list-item-context-menu'
 import { SectionFilterList } from '../lib/section-filter-list'
@@ -207,12 +208,14 @@ export class RepositoriesList extends React.Component<
     return (
       <div className="repository-list-item-tooltip list-item-tooltip">
         <div>
-          <div className="label">Full Name: </div>
+          <div className="label">
+            {t('repository-list.full-name', 'Full Name: ')}
+          </div>
           {realName}
           {alias && <> ({alias})</>}
         </div>
         <div>
-          <div className="label">Path: </div>
+          <div className="label">{t('repository-list.path', 'Path: ')}</div>
           {repository.path}
         </div>
         {aheadBehindTooltip && (
@@ -245,11 +248,11 @@ export class RepositoriesList extends React.Component<
     if (kind === 'enterprise') {
       return enableMultipleEnterpriseAccounts() ? group.host : 'Enterprise'
     } else if (kind === 'other') {
-      return 'Other'
+      return t('common.other', 'Other')
     } else if (kind === 'dotcom') {
       return group.owner.login
     } else if (kind === 'recent') {
-      return 'Recent'
+      return t('common.recent', 'Recent')
     } else {
       assertNever(kind, `Unknown repository group kind ${kind}`)
     }
@@ -370,7 +373,7 @@ export class RepositoriesList extends React.Component<
         ariaExpanded={this.state.newRepositoryMenuExpanded}
         onKeyDown={this.onNewRepositoryButtonKeyDown}
       >
-        Add
+        {t('repositories-list.add', 'Add')}
         <Octicon symbol={octicons.triangleDown} />
       </Button>
     )
@@ -388,21 +391,32 @@ export class RepositoriesList extends React.Component<
     return (
       <div className="no-items no-results-found">
         <img src={BlankSlateImage} className="blankslate-image" alt="" />
-        <div className="title">Sorry, I can't find that repository</div>
+        <div className="title">
+          {t(
+            'repositories-list.sorry-i-can-not-find-that-repository',
+            `Sorry, I can't find that repository`
+          )}
+        </div>
 
         <div className="protip">
-          ProTip! Press{' '}
+          {t('repositories-list.pro-tip-1', 'ProTip! Press ')}
           <div className="kbd-shortcut">
             <KeyboardShortcut darwinKeys={['⌘', 'O']} keys={['Ctrl', 'O']} />
-          </div>{' '}
-          to quickly add a local repository, and{' '}
+          </div>
+          {t(
+            'repositories-list.pro-tip-2',
+            ' to quickly add a local repository, and '
+          )}
           <div className="kbd-shortcut">
             <KeyboardShortcut
               darwinKeys={['⇧', '⌘', 'O']}
               keys={['Ctrl', 'Shift', 'O']}
             />
-          </div>{' '}
-          to clone from anywhere within the app
+          </div>
+          {t(
+            'repositories-list.pro-tip-3',
+            ' to clone from anywhere within the app'
+          )}
         </div>
       </div>
     )
@@ -411,17 +425,33 @@ export class RepositoriesList extends React.Component<
   private onNewRepositoryButtonClick = () => {
     const items: IMenuItem[] = [
       {
-        label: __DARWIN__ ? 'Clone Repository…' : 'Clone repository…',
+        label: __DARWIN__
+          ? t('repositories-list.clone-repository-darwin', 'Clone Repository…')
+          : t('repositories-list.clone-repository', 'Clone repository…'),
         action: this.onCloneRepository,
       },
       {
-        label: __DARWIN__ ? 'Create New Repository…' : 'Create new repository…',
+        label: __DARWIN__
+          ? t(
+              'repositories-list.create-new-repository-darwin',
+              'Create New Repository…'
+            )
+          : t(
+              'repositories-list.create-new-repository',
+              'Create new repository…'
+            ),
         action: this.onCreateNewRepository,
       },
       {
         label: __DARWIN__
-          ? 'Add Existing Repository…'
-          : 'Add existing repository…',
+          ? t(
+              'repositories-list.add-existing-repository-darwin',
+              'Add Existing Repository…'
+            )
+          : t(
+              'repositories-list.add-existing-repository',
+              'Add existing repository…'
+            ),
         action: this.onAddExistingRepository,
       },
     ]

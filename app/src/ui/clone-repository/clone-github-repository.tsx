@@ -8,6 +8,7 @@ import { Button } from '../lib/button'
 import { IAPIRepository } from '../../lib/api'
 import { CloneableRepositoryFilterList } from './cloneable-repository-filter-list'
 import { ClickSource } from '../lib/list'
+import { t } from 'i18next'
 import { enableMultipleEnterpriseAccounts } from '../../lib/feature-flag'
 import { AccountPicker } from '../account-picker'
 
@@ -122,11 +123,17 @@ export class CloneGithubRepository extends React.PureComponent<ICloneGithubRepos
         <Row className="local-path-field">
           <TextBox
             value={this.props.path}
-            label={__DARWIN__ ? 'Local Path' : 'Local path'}
-            placeholder="repository path"
+            label={
+              __DARWIN__
+                ? t('common.local-path-darwin', 'Local Path')
+                : t('common.local-path', 'Local path')
+            }
+            placeholder={t('common.repository-path', 'repository path')}
             onValueChanged={this.props.onPathChanged}
           />
-          <Button onClick={this.props.onChooseDirectory}>Choose…</Button>
+          <Button onClick={this.props.onChooseDirectory}>
+            {t('common.choose', 'Choose…')}
+          </Button>
         </Row>
       </DialogContent>
     )

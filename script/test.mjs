@@ -3,6 +3,9 @@ import { join, resolve } from 'path'
 import { readdir, readFile, stat } from 'fs/promises'
 import { parseEnv } from 'util'
 
+// To bypass multilingual checks
+process.env.GITHUB_DESKTOP_LANG = 'en_US'
+
 function reporter(r) {
   return ['--test-reporter', r, '--test-reporter-destination', 'stdout']
 }

@@ -1,3 +1,4 @@
+import '../locales/i18n'
 import { join, resolve } from 'path'
 import parse from 'minimist'
 import { execFile, spawn } from 'child_process'

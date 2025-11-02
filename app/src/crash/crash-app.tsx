@@ -11,6 +11,7 @@ import { getVersion } from '../ui/lib/app-proxy'
 import { getOS } from '../lib/get-os'
 import * as ipcRenderer from '../lib/ipc-renderer'
 import { getCurrentWindowState } from '../ui/main-process-proxy'
+import { t } from 'i18next'
 
 // This is a weird one, let's leave it as a placeholder
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -136,8 +137,14 @@ export class CrashApp extends React.Component<ICrashAppProps, ICrashAppState> {
   private renderTitle() {
     const message =
       this.state.type === 'launch'
-        ? 'GitHub Desktop failed to launch'
-        : 'GitHub Desktop encountered an error'
+        ? t(
+            'crash-app.github-desktop-failed',
+            'GitHub Desktop failed to launch'
+          )
+        : t(
+            'crash-app.gitHub-desktop-encountered',
+            'GitHub Desktop encountered an error'
+          )
 
     return (
       <header>
@@ -151,19 +158,34 @@ export class CrashApp extends React.Component<ICrashAppProps, ICrashAppState> {
     if (this.state.type === 'launch') {
       return (
         <p>
-          GitHub Desktop encountered a catastrophic error that prevents it from
-          launching. This has been reported to the team, but if you encounter
-          this repeatedly please report this issue to the GitHub Desktop{' '}
-          <LinkButton uri={issuesUri}>issue tracker</LinkButton>.
+          {t(
+            'crash-app.gitHub-desktop-encountered-a-catastrophic-1',
+            `GitHub Desktop encountered a catastrophic error that prevents it from
+             launching. This has been reported to the team, but if you encounter
+             this repeatedly please report this issue to the GitHub Desktop `
+          )}
+          <LinkButton uri={issuesUri}>
+            {t('crash-app.issue-tracker', 'issue tracker')}
+          </LinkButton>
+          {t('crash-app.gitHub-desktop-encountered-a-catastrophic-2', '.')}
         </p>
       )
     } else {
       return (
         <p>
-          GitHub Desktop has encountered an unrecoverable error and will need to
-          restart. This has been reported to the team, but if you encounter this
-          repeatedly please report this issue to the GitHub Desktop{' '}
-          <LinkButton uri={issuesUri}>issue tracker</LinkButton>.
+          {t(
+            'crash-app.gitHub-desktop-has-encountered-an-unrecoverable-1',
+            `GitHub Desktop has encountered an unrecoverable error and will need to
+             restart. This has been reported to the team, but if you encounter this
+             repeatedly please report this issue to the GitHub Desktop `
+          )}
+          <LinkButton uri={issuesUri}>
+            {t('crash-app.issue-tracker', 'issue tracker')}
+          </LinkButton>
+          {t(
+            'crash-app.gitHub-desktop-has-encountered-an-unrecoverable-2',
+            '.'
+          )}
         </p>
       )
     }
@@ -188,9 +210,13 @@ export class CrashApp extends React.Component<ICrashAppProps, ICrashAppState> {
     // We don't support restarting in dev mode since we can't
     // control the life time of the dev server.
     if (__DEV__) {
-      quitText = __DARWIN__ ? 'Quit' : 'Exit'
+      quitText = __DARWIN__
+        ? t('crash-app.quit', 'Quit')
+        : t('crash-app.exit', 'Exit')
     } else {
-      quitText = __DARWIN__ ? 'Quit and Restart' : 'Exit and restart'
+      quitText = __DARWIN__
+        ? t('crash-app.quit-and-restart', 'Quit and Restart')
+        : t('crash-app.exit-and-restart', 'Exit and restart')
     }
 
     return (

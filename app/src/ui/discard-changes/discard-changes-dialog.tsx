@@ -8,6 +8,7 @@ import { PathText } from '../lib/path-text'
 import { Checkbox, CheckboxValue } from '../lib/checkbox'
 import { TrashNameLabel } from '../lib/context-menu'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
+import { t } from 'i18next'
 
 interface IDiscardChangesProps {
   readonly repository: Repository
@@ -57,18 +58,39 @@ export class DiscardChanges extends React.Component<
 
   private getOkButtonLabel() {
     if (this.props.discardingAllChanges) {
-      return __DARWIN__ ? 'Discard All Changes' : 'Discard all changes'
+      return __DARWIN__
+        ? t(
+            'discard-changes-dialog.discard-all-changes-darwin',
+            'Discard All Changes'
+          )
+        : t('discard-changes-dialog.discard-all-changes', 'Discard all changes')
     }
-    return __DARWIN__ ? 'Discard Changes' : 'Discard changes'
+    return __DARWIN__
+      ? t('discard-changes-dialog.discard-changes-darwin', 'Discard Changes')
+      : t('discard-changes-dialog.discard-changes', 'Discard changes')
   }
 
   private getDialogTitle() {
     if (this.props.discardingAllChanges) {
       return __DARWIN__
-        ? 'Confirm Discard All Changes'
-        : 'Confirm discard all changes'
+        ? t(
+            'discard-changes-dialog.confirm-discard-all-changes-darwin',
+            'Confirm Discard All Changes'
+          )
+        : t(
+            'discard-changes-dialog.confirm-discard-all-changes',
+            'Confirm discard all changes'
+          )
     }
-    return __DARWIN__ ? 'Confirm Discard Changes' : 'Confirm discard changes'
+    return __DARWIN__
+      ? t(
+          'discard-changes-dialog.confirm-discard-changes-darwin',
+          'Confirm Discard Changes'
+        )
+      : t(
+          'discard-changes-dialog.confirm-discard-changes',
+          'Confirm discard changes'
+        )
   }
 
   public render() {
@@ -90,8 +112,11 @@ export class DiscardChanges extends React.Component<
         <DialogContent>
           {this.renderFileList()}
           <p id="discard-changes-confirmation-message">
-            Changes can be restored by retrieving them from the {TrashNameLabel}
-            .
+            {t(
+              'discard-changes-dialog.changes-can-be-restored',
+              'Changes can be restored by retrieving them from the {{0}}.',
+              { 0: TrashNameLabel }
+            )}
           </p>
           {this.renderConfirmDiscardChanges()}
         </DialogContent>
@@ -112,7 +137,10 @@ export class DiscardChanges extends React.Component<
     if (this.props.showDiscardChangesSetting) {
       return (
         <Checkbox
-          label="Do not show this message again"
+          label={t(
+            'common.do-not-show-message-again',
+            'Do not show this message again'
+          )}
           value={
             this.state.confirmDiscardChanges
               ? CheckboxValue.Off
@@ -133,14 +161,22 @@ export class DiscardChanges extends React.Component<
     if (this.props.files.length > MaxFilesToList) {
       return (
         <p id="discard-changes-confirmation-file-list">
-          Are you sure you want to discard all {this.props.files.length} changed
-          files?
+          {t(
+            'discard-changes-dialog.are-you-sure-discard-all-changed',
+            'Are you sure you want to discard all {{0}} changed files?',
+            { 0: this.props.files.length }
+          )}
         </p>
       )
     } else {
       return (
         <div id="discard-changes-confirmation-file-list">
-          <p>Are you sure you want to discard all changes to:</p>
+          <p>
+            {t(
+              'discard-changes-dialog.are-you-sure-discard-all-changed-list',
+              'Are you sure you want to discard all changes to:'
+            )}
+          </p>
           <div className="file-list">
             <ul>
               {this.props.files.map(p => (

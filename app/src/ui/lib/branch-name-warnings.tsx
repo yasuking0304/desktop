@@ -5,6 +5,7 @@ import { Row } from './row'
 import { Octicon } from '../octicons'
 import * as octicons from '../octicons/octicons.generated'
 import { Ref } from './ref'
+import { t } from 'i18next'
 
 export function renderBranchHasRemoteWarning(branch: Branch) {
   if (branch.upstream != null) {
@@ -12,8 +13,16 @@ export function renderBranchHasRemoteWarning(branch: Branch) {
       <Row className="warning-helper-text">
         <Octicon symbol={octicons.alert} />
         <p>
-          This branch is tracking <Ref>{branch.upstream}</Ref> and renaming this
-          branch will not change the branch name on the remote.
+          {t(
+            'branch-name-warnings.this-branch-is-tracking-1',
+            'This branch is tracking '
+          )}
+          <Ref>{branch.upstream}</Ref>
+          {t(
+            'branch-name-warnings.this-branch-is-tracking-2',
+            ` and renaming this
+            branch will not change the branch name on the remote.`
+          )}
         </p>
       </Row>
     )
@@ -39,7 +48,15 @@ export function renderBranchNameExistsOnRemoteWarning(
     <Row className="warning-helper-text">
       <Octicon symbol={octicons.alert} />
       <p>
-        A branch named <Ref>{sanitizedName}</Ref> already exists on the remote.
+        {t(
+          'branch-name-warnings.branch-name-already-exists-1',
+          'A branch named '
+        )}
+        <Ref>{sanitizedName}</Ref>
+        {t(
+          'branch-name-warnings.branch-name-already-exists-2',
+          ' already exists on the remote.'
+        )}
       </p>
     </Row>
   )

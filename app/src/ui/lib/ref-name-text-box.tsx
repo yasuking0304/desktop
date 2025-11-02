@@ -3,6 +3,7 @@ import * as React from 'react'
 import { sanitizedRefName } from '../../lib/sanitize-ref-name'
 import { TextBox } from './text-box'
 import { Ref } from './ref'
+import { t } from 'i18next'
 import { InputWarning } from './input-description/input-warning'
 import { InputError } from './input-description/input-error'
 
@@ -50,6 +51,11 @@ interface IRefNameProps {
    * A sanitized value for the ref name is passed.
    */
   readonly onBlur?: (sanitizedValue: string) => void
+
+  /**
+   * The placeholder of the text box.
+   */
+  readonly placeholder?: string
 }
 
 interface IRefNameState {
@@ -99,6 +105,7 @@ export class RefNameTextBox extends React.Component<
       <div className="ref-name-text-box">
         <TextBox
           label={this.props.label}
+          placeholder={this.props.placeholder}
           value={this.state.proposedValue}
           ref={this.textBoxRef}
           ariaLabelledBy={this.props.ariaLabelledBy}
@@ -171,7 +178,8 @@ export class RefNameTextBox extends React.Component<
           trackedUserInput={proposedValue}
           ariaLiveMessage={`Error: ${proposedValue} is not a valid name.`}
         >
-          <Ref>{proposedValue}</Ref> is not a valid name.
+          <Ref>{proposedValue}</Ref>
+          {t('ref-name-text-box.is-not-a-valid-name', ' is not a valid name.')}
         </InputError>
       )
     }
@@ -189,18 +197,38 @@ export class RefNameTextBox extends React.Component<
   }
 
   private getWarningMessageAsString(sanitizedValue: string): string {
-    return `Warning: Will be ${
-      this.props.warningMessageVerb ?? 'created '
-    } as ${sanitizedValue}. Spaces and invalid characters have been replaced by hyphens.`
+    const warningMessage =
+      this.props.warningMessageVerb ?? t('ref-name-text-box.created', 'created')
+    return (
+      t(
+        'ref-name-text-box.get-warning-message-as-string',
+        'Warning: Will be {{0}} as {{1}}. ',
+        { 0: warningMessage, 1: sanitizedValue }
+      ) &&
+      t(
+        'ref-name-text-box.spaces-and-invalid-characters',
+        'Spaces and invalid characters have been replaced by hyphens.'
+      )
+    )
   }
 
   private renderWarningMessage(sanitizedValue: string) {
+    const warningMessage =
+      this.props.warningMessageVerb ?? t('ref-name-text-box.created', 'created')
     return (
       <>
-        Will be {this.props.warningMessageVerb ?? 'created'} as{' '}
-        <Ref>{sanitizedValue}</Ref>.{' '}
+        {t('ref-name-text-box.render-warning-message-1', 'Will be {{0}} as ', {
+          0: warningMessage,
+        })}
+        <Ref>{sanitizedValue}</Ref>
+        {t('ref-name-text-box.render-warning-message-2', '. ', {
+          0: warningMessage,
+        })}
         <span className="sr-only">
-          Spaces and invalid characters have been replaced by hyphens.
+          {t(
+            'ref-name-text-box.spaces-and-invalid-characters',
+            'Spaces and invalid characters have been replaced by hyphens.'
+          )}
         </span>
       </>
     )

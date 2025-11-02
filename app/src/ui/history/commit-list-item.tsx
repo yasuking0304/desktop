@@ -22,6 +22,7 @@ import {
   DropTargetType,
 } from '../../models/drag-drop'
 import classNames from 'classnames'
+import { t } from 'i18next'
 import { Account } from '../../models/account'
 import { Emoji } from '../../lib/emoji'
 import { enableAccessibleListToolTips } from '../../lib/feature-flag'
@@ -124,7 +125,7 @@ export class CommitListItem extends React.PureComponent<
     const isDraggable = this.props.isDraggable || false
     const hasEmptySummary = commit.summary.length === 0
     const commitSummary = hasEmptySummary
-      ? 'Empty commit message'
+      ? t('commit-list-item.empty-commit-message', 'Empty commit message')
       : commit.summary
 
     const summaryClassNames = classNames('summary', {

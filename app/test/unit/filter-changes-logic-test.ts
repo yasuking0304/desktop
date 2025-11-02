@@ -11,6 +11,7 @@ import {
 } from '../../src/ui/changes/filter-changes-logic'
 import { IFileListFilterState } from '../../src/lib/app-state'
 import { IChangesListItem } from '../../src/ui/changes/filter-changes-list'
+import '../../src/locales/i18n'
 
 // Helper function to create a test file
 function createTestFile(

@@ -7,6 +7,7 @@ import {
   DropdownItemType,
   forcePushIcon,
 } from './push-pull-button'
+import { t } from 'i18next'
 
 interface IPushPullButtonDropDownProps {
   readonly itemTypes: ReadonlyArray<DropdownItemType>
@@ -71,8 +72,14 @@ export class PushPullButtonDropDown extends React.Component<IPushPullButtonDropD
     switch (type) {
       case DropdownItemType.Fetch:
         return {
-          title: `Fetch ${remoteName}`,
-          description: `Fetch the latest changes from ${remoteName}`,
+          title: t('push-pull-button-dropdown.fetch', `Fetch {{0}}}`, {
+            0: remoteName,
+          }),
+          description: t(
+            'push-pull-button-dropdown.fetch-the-latest-changes',
+            `Fetch the latest changes from {{0}}`,
+            { 0: remoteName }
+          ),
           action: this.props.fetch,
           icon: syncClockwise,
         }
@@ -80,17 +87,29 @@ export class PushPullButtonDropDown extends React.Component<IPushPullButtonDropD
         const forcePushWarning = this.props
           .askForConfirmationOnForcePush ? null : (
           <div className="warning">
-            <span className="warning-title">Warning:</span> A force push will
-            rewrite history on the remote. Any collaborators working on this
-            branch will need to reset their own local branch to match the
-            history of the remote.
+            <span className="warning-title">
+              {t('push-pull-button-dropdown.warning-title', 'Warning:')}
+            </span>
+            {t(
+              'push-pull-button-dropdown.warning-description',
+              ` A force push will
+              rewrite history on the remote. Any collaborators working on this
+              branch will need to reset their own local branch to match the
+              history of the remote.`
+            )}
           </div>
         )
         return {
-          title: `Force push ${remoteName}`,
+          title: t('push-pull-button-dropdown.force-push', `Force push {{0}}`, {
+            0: remoteName,
+          }),
           description: (
             <>
-              Overwrite any changes on {remoteName} with your local changes
+              {t(
+                'push-pull-button-dropdown.overwrite-any-changes',
+                'Overwrite any changes on {{0}} with your local changes',
+                { 0: remoteName }
+              )}
               {forcePushWarning}
             </>
           ),

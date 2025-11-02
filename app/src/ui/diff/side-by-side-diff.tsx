@@ -67,6 +67,7 @@ import {
   expandWholeTextDiff,
 } from './text-diff-expansion'
 import { IMenuItem } from '../../lib/menu-item'
+import { t } from 'i18next'
 import { DiffContentsWarning } from './diff-contents-warning'
 import { findDOMNode } from 'react-dom'
 import escapeRegExp from 'lodash/escapeRegExp'
@@ -1419,13 +1420,15 @@ export class SideBySideDiff extends React.Component<
 
     const items: IMenuItem[] = [
       {
-        label: 'Copy',
+        label: t('side-by-side-diff.copy', 'Copy'),
         // When using role="copy", the enabled attribute is not taken into account.
         role: selectionLength > 0 ? 'copy' : undefined,
         enabled: selectionLength > 0,
       },
       {
-        label: __DARWIN__ ? 'Select All' : 'Select all',
+        label: __DARWIN__
+          ? t('side-by-side-diff.select-all-darwin', 'Select All')
+          : t('side-by-side-diff.select-all', 'Select all'),
         action: () => this.onSelectAll(),
       },
     ]
@@ -1480,7 +1483,12 @@ export class SideBySideDiff extends React.Component<
 
     return this.diffToRestore === null
       ? {
-          label: __DARWIN__ ? 'Expand Whole File' : 'Expand whole file',
+          label: __DARWIN__
+            ? t(
+                'side-by-side-diff.expand-whole-file-darwin',
+                'Expand Whole File'
+              )
+            : t('side-by-side-diff.expand-whole-file', 'Expand whole file'),
           action: this.onExpandWholeFile,
           // If there is only one hunk that can't be expanded, disable this item
           enabled:
@@ -1489,8 +1497,14 @@ export class SideBySideDiff extends React.Component<
         }
       : {
           label: __DARWIN__
-            ? 'Collapse Expanded Lines'
-            : 'Collapse expanded lines',
+            ? t(
+                'side-by-side-diff.collapse-expanded-lines-darwin',
+                'Collapse Expanded Lines'
+              )
+            : t(
+                'side-by-side-diff.collapse-expanded-lines',
+                'Collapse expanded lines'
+              ),
           action: this.onCollapseExpandedLines,
         }
   }
@@ -1572,19 +1586,33 @@ export class SideBySideDiff extends React.Component<
     let type = ''
 
     if (rangeType === DiffRangeType.Additions) {
-      type = __DARWIN__ ? 'Added' : 'added'
+      type = __DARWIN__
+        ? t('side-by-side-diff.added-darwin', 'Added')
+        : t('side-by-side-diff.added', 'added')
     } else if (rangeType === DiffRangeType.Deletions) {
-      type = __DARWIN__ ? 'Removed' : 'removed'
+      type = __DARWIN__
+        ? t('side-by-side-diff.removed-darwin', 'Removed')
+        : t('side-by-side-diff.removed', 'removed')
     } else if (rangeType === DiffRangeType.Mixed) {
-      type = __DARWIN__ ? 'Modified' : 'modified'
+      type = __DARWIN__
+        ? t('side-by-side-diff.modified-darwin', 'Modified')
+        : t('side-by-side-diff.modified', 'modified')
     } else {
       assertNever(rangeType, `Invalid range type: ${rangeType}`)
     }
 
     const plural = numLines > 1 ? 's' : ''
     return __DARWIN__
-      ? `Discard ${type} Line${plural}${suffix}`
-      : `Discard ${type} line${plural}${suffix}`
+      ? t('side-by-side-diff.discard-darwin', `Discard {{0}} Line{{1}}{{2}}`, {
+          0: type,
+          1: plural,
+          2: suffix,
+        })
+      : t('side-by-side-diff.discard', `Discard {{0}} line{{1}}{{2}}`, {
+          0: type,
+          1: plural,
+          2: suffix,
+        })
   }
 
   private onDiscardChanges(startLine: number, endLine: number = startLine) {

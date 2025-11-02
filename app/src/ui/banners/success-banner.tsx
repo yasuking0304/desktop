@@ -3,6 +3,7 @@ import { LinkButton } from '../lib/link-button'
 import { Octicon } from '../octicons'
 import * as octicons from '../octicons/octicons.generated'
 import { Banner } from './banner'
+import { t } from 'i18next'
 
 interface ISuccessBannerProps {
   readonly timeout: number
@@ -25,7 +26,9 @@ export class SuccessBanner extends React.Component<ISuccessBannerProps, {}> {
     if (this.props.onUndo === undefined) {
       return
     }
-    return <LinkButton onClick={this.undo}>Undo</LinkButton>
+    return (
+      <LinkButton onClick={this.undo}>{t('common.undo', 'Undo')}</LinkButton>
+    )
   }
 
   public render() {

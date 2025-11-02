@@ -17,6 +17,7 @@ import { ConfigLockFileExists } from './config-lock-file-exists'
 import { RadioButton } from './radio-button'
 import { Select } from './select'
 import { GitEmailNotFoundWarning } from './git-email-not-found-warning'
+import { t } from 'i18next'
 
 interface IConfigureGitUserProps {
   /** The logged-in accounts. */
@@ -185,8 +186,9 @@ export class ConfigureGitUser extends React.Component<
 
     return (
       <div id="commit-list" className="commit-list-example">
-        <div className="header">Example commit</div>
-
+        <div className="header">
+          {t('configure-git-user.example-commit', 'Example commit')}
+        </div>
         <CommitListItem
           commit={dummyCommit}
           emoji={emoji}
@@ -211,14 +213,21 @@ export class ConfigureGitUser extends React.Component<
     return (
       <div>
         <RadioButton
-          label={`Use my GitHub${accountTypeSuffix} account name and email address`}
+          label={t(
+            'configure-git-user.use-github-account',
+            'Use my GitHub{{0}} account name and email address',
+            { 0: accountTypeSuffix }
+          )}
           checked={this.state.useGitHubAuthorInfo}
           onSelected={this.onUseGitHubInfoSelected}
           value="github-account"
           autoFocus={true}
         />
         <RadioButton
-          label="Configure manually"
+          label={t(
+            'configure-git-user.configure-manually',
+            'Configure manually'
+          )}
           checked={!this.state.useGitHubAuthorInfo}
           onSelected={this.onUseGitConfigInfoSelected}
           value="git-config"
@@ -235,7 +244,7 @@ export class ConfigureGitUser extends React.Component<
     return (
       <>
         <Select
-          label="Email"
+          label={t('common.email', 'Email')}
           value={this.state.gitHubEmail}
           onChange={this.onSelectedGitHubEmailChange}
         >
@@ -292,7 +301,9 @@ export class ConfigureGitUser extends React.Component<
             : this.renderGitConfigForm()}
         </div>
         <Row>
-          <Button type="submit">{this.props.saveLabel || 'Save'}</Button>
+          <Button type="submit">
+            {this.props.saveLabel || t('common.save', 'Save')}
+          </Button>
           {this.props.children}
         </Row>
       </Form>

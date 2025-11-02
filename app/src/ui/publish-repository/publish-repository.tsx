@@ -11,6 +11,7 @@ import { sanitizedRepositoryName } from '../add-repository/sanitized-repository-
 import { Octicon } from '../octicons'
 import * as octicons from '../octicons/octicons.generated'
 import { RepositoryPublicationSettings } from '../../models/publish-settings'
+import { t } from 'i18next'
 import { enableMultipleEnterpriseAccounts } from '../../lib/feature-flag'
 import { AccountPicker } from '../account-picker'
 
@@ -137,7 +138,7 @@ export class PublishRepository extends React.Component<
 
     return (
       <Select
-        label="Organization"
+        label={t('common.organization', 'Organization')}
         value={selectedIndex.toString()}
         onChange={this.onOrgChange}
       >
@@ -162,7 +163,7 @@ export class PublishRepository extends React.Component<
 
         <Row>
           <TextBox
-            label="Name"
+            label={t('common.name', 'Name')}
             value={this.name}
             onValueChanged={this.onNameChange}
           />
@@ -172,7 +173,7 @@ export class PublishRepository extends React.Component<
 
         <Row>
           <TextBox
-            label="Description"
+            label={t('common.description', 'Description')}
             value={this.props.settings.description}
             onValueChanged={this.onDescriptionChange}
           />
@@ -185,7 +186,10 @@ export class PublishRepository extends React.Component<
               checked={this.props.settings.private}
               onChange={this.onPrivateChange}
             />
-            Keep this code private
+            {t(
+              'publish-repository.keep-this-code-private',
+              'Keep this code private'
+            )}
           </label>
         </Row>
 
@@ -203,7 +207,9 @@ export class PublishRepository extends React.Component<
     return (
       <Row className="warning-helper-text">
         <Octicon symbol={octicons.alert} />
-        Will be created as {sanitizedName}
+        {t('publish-repository.will-be-create-as', 'Will be created as {{0}}', {
+          0: sanitizedName,
+        })}
       </Row>
     )
   }

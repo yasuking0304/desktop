@@ -14,6 +14,7 @@ import * as Path from 'path'
 import { isErrnoException } from '../errno-exception'
 import { merge } from '../merge'
 import { withTrampolineEnv } from '../trampoline/trampoline-environment'
+import { t } from 'i18next'
 import { createTailStream } from './create-tail-stream'
 import { createTerminalStream } from '../create-terminal-stream'
 import { kStringMaxLength } from 'buffer'
@@ -403,17 +404,53 @@ export function getDescriptionForError(
 ): string | null {
   if (isAuthFailureError(error)) {
     const menuHint = __DARWIN__
-      ? 'GitHub Desktop > Settings.'
-      : 'File > Options.'
-    return `Authentication failed. Some common reasons include:
+      ? t('core.menu-preferences-darwin', 'GitHub Desktop > Settings.')
+      : t('core.menu-preferences', 'File > Options.')
 
-- You are not logged in to your account: see ${menuHint}
-- You may need to log out and log back in to refresh your token.
-- You do not have permission to access this repository.
-- The repository is archived on GitHub. Check the repository settings to confirm you are still permitted to push commits.
-- If you use SSH authentication, check that your key is added to the ssh-agent and associated with your account.
-- If you use SSH authentication, ensure the host key verification passes for your repository hosting service.
-- If you used username / password authentication, you might need to use a Personal Access Token instead of your account password. Check the documentation of your repository hosting service.`
+    const massageAuthenticationFailed = t(
+      'core.error.authentication-failed',
+      'Authentication failed. Some common reasons include:'
+    )
+    const massageFailReason1 = t(
+      'core.error.you-are-not-logged',
+      '- You are not logged in to your account: see {{0}}',
+      { 0: menuHint }
+    )
+    const massageFailReason2 = t(
+      'core.error.you-may-need-to-log-out',
+      '- You may need to log out and log back in to refresh your token.'
+    )
+    const massageFailReason3 = t(
+      'core.error.you-do-not-have-permission',
+      '- You do not have permission to access this repository.'
+    )
+    const massageFailReason4 = t(
+      'core.error.the-repository-is-archived-on-github',
+      `- The repository is archived on GitHub. Check the repository settings to confirm you are still permitted to push commits.`
+    )
+    const massageFailReason5 = t(
+      'core.error.if-you-use-ssh-authentication-check-that',
+      `- If you use SSH authentication, check that your key is added to the ssh-agent and associated with your account.`
+    )
+    const massageFailReason6 = t(
+      'core.error.if-you-use-ssh-authentication-ensure',
+      `- If you use SSH authentication, ensure the host key verification passes for your repository hosting service.`
+    )
+    const massageFailReason7 = t(
+      'core.error.if-you-used-username',
+      `- If you used username / password authentication, you might need to use a Personal Access Token instead of your account password. Check the documentation of your repository hosting service.`
+    )
+
+    return `${massageAuthenticationFailed}
+
+${massageFailReason1}
+${massageFailReason2}
+${massageFailReason3}
+${massageFailReason4}
+${massageFailReason5}
+${massageFailReason6}
+${massageFailReason7}
+`
   }
 
   switch (error) {

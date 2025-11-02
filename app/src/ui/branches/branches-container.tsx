@@ -36,6 +36,7 @@ import {
   enableResizingToolbarButtons,
 } from '../../lib/feature-flag'
 import { PullRequestQuickView } from '../pull-request-quick-view'
+import { t } from 'i18next'
 import { Emoji } from '../../lib/emoji'
 import classNames from 'classnames'
 
@@ -178,10 +179,19 @@ export class BranchesContainer extends React.Component<
         <Button
           className="merge-button"
           onClick={this.onMergeClick}
-          tooltip={`Choose a branch to merge into ${currentBranch.name}`}
+          tooltip={t(
+            'branches-container.choose-a-branch-to-marge-into',
+            `Choose a branch to merge into {{0}}`,
+            { 0: currentBranch.name }
+          )}
         >
           <Octicon className="icon" symbol={octicons.gitMerge} />
-          Choose a branch to merge into <strong>{currentBranch.name}</strong>
+          {t(
+            'branches-container.choose-a-branch-to-marge-1',
+            'Choose a branch to merge into '
+          )}
+          <strong>{currentBranch.name}</strong>
+          {t('branches-container.choose-a-branch-to-marge-2', ' ')}
         </Button>
       </Row>
     )
@@ -208,9 +218,13 @@ export class BranchesContainer extends React.Component<
         selectedIndex={this.props.selectedTab}
         allowDragOverSwitching={true}
       >
-        <span id="branches-tab">Branches</span>
+        <span id="branches-tab">
+          {t('branches-container.branches', 'Branches')}
+        </span>
         <span id="pull-requests-tab" className="pull-request-tab">
-          {__DARWIN__ ? 'Pull Requests' : 'Pull requests'}
+          {__DARWIN__
+            ? t('branches-container.pull-requests-darwin', 'Pull Requests')
+            : t('branches-container.pull-requests', 'Pull requests')}
           {this.renderOpenPullRequestsBubble()}
         </span>
       </TabBar>
@@ -304,7 +318,9 @@ export class BranchesContainer extends React.Component<
       return null
     }
 
-    const label = __DARWIN__ ? 'New Branch' : 'New branch'
+    const label = __DARWIN__
+      ? t('branches-container.new-branch-darwin', 'New Branch')
+      : t('branches-container.new-branch', 'New branch')
 
     return (
       /**

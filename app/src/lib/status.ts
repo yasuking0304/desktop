@@ -10,6 +10,7 @@ import {
 } from '../models/status'
 import { assertNever } from './fatal-error'
 import { ManualConflictResolution } from '../models/manual-conflict-resolution'
+import { t } from 'i18next'
 
 /**
  * Convert a given `AppFileStatusKind` value to a human-readable string to be
@@ -39,6 +40,37 @@ export function mapStatus(status: AppFileStatus): string {
       return 'Conflicted'
     case AppFileStatusKind.Copied:
       return 'Copied'
+    default:
+      return assertNever(status, `Unknown file status ${status}`)
+  }
+}
+
+/**
+ * Convert a given `AppFileStatusKind` value to a localized language string to be
+ * presented to users which describes the state of a file.
+ */
+export function mapStatusCaption(status: AppFileStatus): string {
+  switch (status.kind) {
+    case AppFileStatusKind.New:
+    case AppFileStatusKind.Untracked:
+      return t('status.new', 'New')
+    case AppFileStatusKind.Modified:
+      return t('status.modified', 'Modified')
+    case AppFileStatusKind.Deleted:
+      return t('status.deleted', 'Deleted')
+    case AppFileStatusKind.Renamed:
+      return t('status.renamed', 'Renamed')
+    case AppFileStatusKind.Conflicted:
+      if (isConflictWithMarkers(status)) {
+        const conflictsCount = status.conflictMarkerCount
+        return conflictsCount > 0
+          ? t('status.conflicted', 'Conflicted')
+          : t('status.resolved', 'Resolved')
+      }
+
+      return t('status.conflicted', 'Conflicted')
+    case AppFileStatusKind.Copied:
+      return t('status.copied', 'Copied')
     default:
       return assertNever(status, `Unknown file status ${status}`)
   }
@@ -98,15 +130,25 @@ export function getUnmergedStatusEntryDescription(
   entry: UnmergedStatusEntry,
   branch?: string
 ): string {
-  const suffix = branch ? ` from ${branch}` : ''
+  const suffix = branch
+    ? t('status.suffix-from-branch', ` from {{0}}`, { 0: branch })
+    : ''
 
   switch (entry) {
     case GitStatusEntry.Added:
-      return `Using the added file${suffix}`
+      return t('status.using-the-added-file', `Using the added file{{0}}`, {
+        0: suffix,
+      })
     case GitStatusEntry.UpdatedButUnmerged:
-      return `Using the modified file${suffix}`
+      return t(
+        'status.using-the-modified-file',
+        `Using the modified file{{0}}`,
+        { 0: suffix }
+      )
     case GitStatusEntry.Deleted:
-      return `Using the deleted file${suffix}`
+      return t('status.using-the-deleted-file', `Using the deleted file{{0}}`, {
+        0: suffix,
+      })
     default:
       return assertNever(entry, 'Unknown status entry to format')
   }
@@ -119,16 +161,28 @@ export function getLabelForManualResolutionOption(
   entry: UnmergedStatusEntry,
   branch?: string
 ): string {
-  const suffix = branch ? ` from ${branch}` : ''
+  const suffix = branch
+    ? t('status.suffix-from-branch', ` from {{0}}`, { 0: branch })
+    : ''
 
   switch (entry) {
     case GitStatusEntry.Added:
-      return `Use the added file${suffix}`
+      return t('status.use-the-added-file', `Use the added file{{0}}`, {
+        0: suffix,
+      })
     case GitStatusEntry.UpdatedButUnmerged:
-      return `Use the modified file${suffix}`
+      return t('status.use-the-modified-file', `Use the modified file{{0}}`, {
+        0: suffix,
+      })
     case GitStatusEntry.Deleted:
-      const deleteSuffix = branch ? ` on ${branch}` : ''
-      return `Do not include this file${deleteSuffix}`
+      const deleteSuffix = branch
+        ? t('status.delete-suffix-on-branch', ` on {{0}}`, { 0: branch })
+        : ''
+      return t(
+        'status.do-not-include-this-file',
+        `Do not include this file{{0}}`,
+        { 0: deleteSuffix }
+      )
     default:
       return assertNever(entry, 'Unknown status entry to format')
   }

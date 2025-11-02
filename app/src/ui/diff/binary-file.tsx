@@ -4,6 +4,7 @@ import * as Path from 'path'
 import { Repository } from '../../models/repository'
 
 import { LinkButton } from '../lib/link-button'
+import { t } from 'i18next'
 
 interface IBinaryFileProps {
   readonly repository: Repository
@@ -25,10 +26,18 @@ export class BinaryFile extends React.Component<IBinaryFileProps, {}> {
   public render() {
     return (
       <div className="panel binary" id="diff">
-        <div className="image-header">This binary file has changed.</div>
+        <div className="image-header">
+          {t(
+            'binary-file.this-binary-file-has-changed',
+            'This binary file has changed.'
+          )}
+        </div>
         <div className="image-header">
           <LinkButton onClick={this.open}>
-            Open file in external program.
+            {t(
+              'binary-file.open-file-in-external-program',
+              'Open file in external program.'
+            )}
           </LinkButton>
         </div>
       </div>

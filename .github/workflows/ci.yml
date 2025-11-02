@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - development
+      - linux
+      - 'linux-release-*'
+    tags:
+      - 'release-*.*.*-linux*'
   pull_request:
   workflow_call:
     inputs:
@@ -67,7 +71,7 @@ jobs:
     name: ${{ matrix.friendlyName }} ${{ matrix.arch }}
     runs-on: ${{ matrix.os }}
     permissions:
-      contents: read
+      contents: write
     strategy:
       fail-fast: false
       matrix:
@@ -78,23 +82,23 @@ jobs:
             friendlyName: macOS
           - os: windows-2022
             friendlyName: Windows
+          - os: ubuntu-18.04
+            friendlyName: Ubuntu
+        exclude:
+          - os: ubuntu-18.04
+            arch: arm64
     timeout-minutes: 60
     environment: ${{ inputs.environment }}
     env:
       RELEASE_CHANNEL: ${{ inputs.environment }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
         with:
-          repository: ${{ inputs.repository || github.repository }}
-          ref: ${{ inputs.ref }}
           submodules: recursive
-      - uses: actions/setup-python@v5
+      - name: Use Node.js ${{ matrix.node }}
+        uses: actions/setup-node@v3
         with:
-          python-version: '3.11'
-      - name: Use Node.js ${{ env.NODE_VERSION }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version: ${{ matrix.node }}
           cache: yarn
       - name: Install and build dependencies
         run: yarn
@@ -109,20 +113,10 @@ jobs:
       - name: Build production app
         run: yarn build:prod
         env:
-          DESKTOP_OAUTH_CLIENT_ID: ${{ secrets.DESKTOP_OAUTH_CLIENT_ID }}
-          DESKTOP_OAUTH_CLIENT_SECRET:
-            ${{ secrets.DESKTOP_OAUTH_CLIENT_SECRET }}
-          APPLE_ID: ${{ secrets.APPLE_ID }}
-          APPLE_ID_PASSWORD: ${{ secrets.APPLE_ID_PASSWORD }}
-          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
-          APPLE_APPLICATION_CERT: ${{ secrets.APPLE_APPLICATION_CERT }}
-          KEY_PASSWORD: ${{ secrets.APPLE_APPLICATION_CERT_PASSWORD }}
           npm_config_arch: ${{ matrix.arch }}
           TARGET_ARCH: ${{ matrix.arch }}
       - name: Prepare testing environment
         run: yarn test:setup
-        env:
-          npm_config_arch: ${{ matrix.arch }}
       - name: Run unit tests
         if: |
           (runner.os == 'Windows' && matrix.arch == 'x64') || (runner.os == 'macOS' && matrix.arch == 'arm64')
@@ -149,11 +143,11 @@ jobs:
         uses: actions/upload-artifact@v4
         if: ${{ inputs.upload-artifacts }}
         with:
-          name: ${{matrix.friendlyName}}-${{matrix.arch}}
-          path: |
-            dist/GitHub Desktop-${{matrix.arch}}.zip
-            dist/GitHubDesktop-*.nupkg
-            dist/GitHubDesktopSetup-${{matrix.arch}}.exe
-            dist/GitHubDesktopSetup-${{matrix.arch}}.msi
-            dist/bundle-size.json
-          if-no-files-found: error
+          files: |
+            dist/*.AppImage
+            dist/*.deb
+            dist/*.rpm
+            dist/*.txt
+          draft: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

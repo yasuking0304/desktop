@@ -17,6 +17,7 @@ import { DiffHunkExpansionType, DiffSelectionType } from '../../models/diff'
 import { PopoverAnchorPosition } from '../lib/popover'
 import { WhitespaceHintPopover } from './whitespace-hint-popover'
 import { TooltipDirection } from '../lib/tooltip'
+import { t } from 'i18next'
 import { Button } from '../lib/button'
 import { diffCheck, diffDash } from '../octicons/diff'
 
@@ -472,7 +473,7 @@ export class SideBySideDiffRow extends React.Component<
       case DiffHunkExpansionType.Up:
         return {
           icon: octicons.foldUp,
-          title: 'Expand Up',
+          title: t('side-by-side-diff-row.expand-up', 'Expand Up'),
           handler: this.onExpandHunk(hunkIndex, expansionType),
         }
       // This can only be the last dummy hunk. In this case, we expand the
@@ -480,13 +481,13 @@ export class SideBySideDiffRow extends React.Component<
       case DiffHunkExpansionType.Down:
         return {
           icon: octicons.foldDown,
-          title: 'Expand Down',
+          title: t('side-by-side-diff-row.expand-down', 'Expand Down'),
           handler: this.onExpandHunk(hunkIndex - 1, expansionType),
         }
       case DiffHunkExpansionType.Short:
         return {
           icon: octicons.fold,
-          title: 'Expand All',
+          title: t('side-by-side-diff-row.expand-all', 'Expand All'),
           handler: this.onExpandHunk(hunkIndex, expansionType),
         }
     }

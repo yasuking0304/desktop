@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { ForkContributionTarget } from '../../models/workflow-preferences'
 import { RepositoryWithForkedGitHubRepository } from '../../models/repository'
+import { t } from 'i18next'
 
 interface IForkSettingsDescription {
   readonly repository: RepositoryWithForkedGitHubRepository
@@ -18,23 +19,59 @@ export function ForkSettingsDescription(props: IForkSettingsDescription) {
   return (
     <ul className="fork-settings-description">
       <li>
-        Pull requests targeting <strong>{targetRepository.fullName}</strong>{' '}
-        will be shown in the pull request list.
+        {t(
+          'fork-contribution-target-description.pull-requests-targeting-1',
+          'Pull requests targeting '
+        )}
+        <strong>{targetRepository.fullName}</strong>
+        {t(
+          'fork-contribution-target-description.pull-requests-targeting-2',
+          ' will be shown in the pull request list.'
+        )}
       </li>
       <li>
-        Issues will be created in <strong>{targetRepository.fullName}</strong>.
+        {t(
+          'fork-contribution-target-description.issues-will-be-created-1',
+          'Issues will be created in '
+        )}
+        <strong>{targetRepository.fullName}</strong>
+        {t(
+          'fork-contribution-target-description.issues-will-be-created-2',
+          '.'
+        )}
       </li>
       <li>
-        "View on GitHub" will open <strong>{targetRepository.fullName}</strong>{' '}
-        in the browser.
+        {t(
+          'fork-contribution-target-description.view-on-gitgub-1',
+          '"View on Github" will open '
+        )}
+        <strong>{targetRepository.fullName}</strong>
+        {t(
+          'fork-contribution-target-description.view-on-gitgub-2',
+          ' in the browser.'
+        )}
       </li>
       <li>
-        New branches will be based on{' '}
-        <strong>{targetRepository.fullName}</strong>'s default branch.
+        {t(
+          'fork-contribution-target-description.new-branches-1',
+          'New branches will be based on '
+        )}
+        <strong>{targetRepository.fullName}</strong>
+        {t(
+          'fork-contribution-target-description.new-branches-2',
+          `'s default branch.`
+        )}
       </li>
       <li>
-        Autocompletion of user and issues will be based on{' '}
-        <strong>{targetRepository.fullName}</strong>.
+        {t(
+          'fork-contribution-target-description.autocompletion-of-user-1',
+          'Autocompletion of user and issues will be based on '
+        )}
+        <strong>{targetRepository.fullName}</strong>
+        {t(
+          'fork-contribution-target-description.autocompletion-of-user-2',
+          '.'
+        )}
       </li>
     </ul>
   )

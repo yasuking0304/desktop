@@ -12,6 +12,7 @@ import { Row } from '../lib/row'
 import { DialogContent, DialogPreferredFocusClassName } from '../dialog'
 import { Avatar } from '../lib/avatar'
 import { CallToAction } from '../lib/call-to-action'
+import { t } from 'i18next'
 import { enableMultipleEnterpriseAccounts } from '../../lib/feature-flag'
 import { getHTMLURL } from '../../lib/api'
 
@@ -112,7 +113,9 @@ export class Accounts extends React.Component<IAccountsProps, {}> {
           </div>
         </div>
         <Button onClick={this.logout(account)} className={className}>
-          {__DARWIN__ ? 'Sign Out' : 'Sign out'}
+          {__DARWIN__
+            ? t('common.sign-out-darwin', 'Sign Out')
+            : t('common.sign-out', 'Sign out')}
         </Button>
       </Row>
     )
@@ -127,19 +130,28 @@ export class Accounts extends React.Component<IAccountsProps, {}> {
   }
 
   private renderSignIn(type: SignInType) {
-    const signInTitle = __DARWIN__ ? 'Sign Into' : 'Sign into'
+    const signInTitle = __DARWIN__
+      ? t('common.sign-into-1-darwin', 'Sign Into')
+      : t('common.sign-into-1', 'Sign into')
+    const signInTitle2 = __DARWIN__
+      ? t('common.sign-into-2-darwin', ' ')
+      : t('common.sign-into-2', ' ')
     switch (type) {
       case SignInType.DotCom: {
         return (
           <CallToAction
-            actionTitle={signInTitle + ' GitHub.com'}
+            actionTitle={signInTitle + ' GitHub.com' + signInTitle2}
             onAction={this.onDotComSignIn}
             // The DotCom account is shown first, so its sign in/out button should be
             // focused initially when the dialog is opened.
             buttonClassName={DialogPreferredFocusClassName}
           >
             <div>
-              Sign in to your GitHub.com account to access your repositories.
+              {t(
+                'clone-repository.render-sign-in',
+                `Sign in to your GitHub.com account to
+                 access your repositories.`
+              )}
             </div>
           </CallToAction>
         )
@@ -147,12 +159,15 @@ export class Accounts extends React.Component<IAccountsProps, {}> {
       case SignInType.Enterprise:
         return (
           <CallToAction
-            actionTitle={signInTitle + ' GitHub Enterprise'}
+            actionTitle={signInTitle + ' GitHub Enterprise' + signInTitle2}
             onAction={this.onEnterpriseSignIn}
           >
             <div>
-              If you are using GitHub Enterprise at work, sign in to it to get
-              access to your repositories.
+              {t(
+                'clone-repository.render-sign-in-enterprise',
+                `If you are using GitHub Enterprise at work.
+                 sign in to it to get access to your repositories.`
+              )}
             </div>
           </CallToAction>
         )

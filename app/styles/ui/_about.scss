@@ -37,6 +37,10 @@ dialog#about {
       margin-top: var(--spacing);
     }
 
+    .unofficial-build {
+      margin-top: var(--spacing);
+    }
+
     .version-text {
       cursor: pointer;
       .octicon {

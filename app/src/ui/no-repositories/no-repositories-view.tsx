@@ -12,6 +12,7 @@ import { Account, accountEquals } from '../../models/account'
 import { CloneableRepositoryFilterList } from '../clone-repository/cloneable-repository-filter-list'
 import { IAPIRepository } from '../../lib/api'
 import { ClickSource } from '../lib/list'
+import { t } from 'i18next'
 import { AccountPicker } from '../account-picker'
 
 interface INoRepositoriesProps {
@@ -96,8 +97,15 @@ export class NoRepositoriesView extends React.Component<
       <UiView id="no-repositories">
         <section aria-label="Let's get started!">
           <header>
-            <h1>Let's get started!</h1>
-            <p>Add a repository to GitHub Desktop to start collaborating</p>
+            <h1>
+              {t('no-repositories-view.lets-get-start', `Let's get started!`)}
+            </h1>
+            <p>
+              {t(
+                'no-repositories-view.add-a-repositry',
+                'Add a repository to GitHub Desktop to start collaborating'
+              )}
+            </p>
           </header>
 
           <div className="content">
@@ -247,7 +255,7 @@ export class NoRepositoriesView extends React.Component<
         className="clone-selected-repository"
         onClick={this.onCloneSelectedRepository}
       >
-        Clone{' '}
+        {t('no-repositories-view.clone', 'Clone ')}
         <strong>
           {selectedItem.owner.login}/{selectedItem.name}
         </strong>
@@ -304,8 +312,14 @@ export class NoRepositoriesView extends React.Component<
       return this.renderButtonGroupButton(
         octicons.mortarBoard,
         __DARWIN__
-          ? 'Return to In Progress Tutorial'
-          : 'Return to in progress tutorial',
+          ? t(
+              'no-repositories-view.return-to-in-progress-tutorial-darwin',
+              'Return to In Progress Tutorial'
+            )
+          : t(
+              'no-repositories-view.return-to-in-progress-tutorial',
+              'Return to in progress tutorial'
+            ),
         this.props.onResumeTutorialRepository,
         'submit'
       )
@@ -313,8 +327,14 @@ export class NoRepositoriesView extends React.Component<
       return this.renderButtonGroupButton(
         octicons.mortarBoard,
         __DARWIN__
-          ? 'Create a Tutorial Repository…'
-          : 'Create a tutorial repository…',
+          ? t(
+              'no-repositories-view.create-a-tutorial-repository-darwin',
+              'Create a Tutorial Repository…'
+            )
+          : t(
+              'no-repositories-view.create-a-tutorial-repository',
+              'Create a tutorial repository…'
+            ),
         this.props.onCreateTutorialRepository,
         'submit'
       )
@@ -325,8 +345,14 @@ export class NoRepositoriesView extends React.Component<
     return this.renderButtonGroupButton(
       octicons.repoClone,
       __DARWIN__
-        ? 'Clone a Repository from the Internet…'
-        : 'Clone a repository from the Internet…',
+        ? t(
+            'no-repositories-view.clone-a-repository-darwin',
+            'Clone a Repository from the Internet…'
+          )
+        : t(
+            'no-repositories-view.clone-a-repository',
+            'Clone a repository from the Internet…'
+          ),
       this.onShowClone,
       undefined,
       !this.isUserSignedIn()
@@ -337,8 +363,14 @@ export class NoRepositoriesView extends React.Component<
     return this.renderButtonGroupButton(
       octicons.plus,
       __DARWIN__
-        ? 'Create a New Repository on your Local Drive…'
-        : 'Create a New Repository on your local drive…',
+        ? t(
+            'no-repositories-view.create-a-new-repository-darwin',
+            'Create a New Repository on your Local Drive…'
+          )
+        : t(
+            'no-repositories-view.create-a-new-repository',
+            'Create a New Repository on your local drive…'
+          ),
       this.props.onCreate
     )
   }
@@ -347,8 +379,14 @@ export class NoRepositoriesView extends React.Component<
     return this.renderButtonGroupButton(
       octicons.fileDirectory,
       __DARWIN__
-        ? 'Add an Existing Repository from your Local Drive…'
-        : 'Add an Existing Repository from your local drive…',
+        ? t(
+            'no-repositories-view.add-an-existing-repository-darwin',
+            'Add an Existing Repository from your Local Drive…'
+          )
+        : t(
+            'no-repositories-view.add-an-existing-repository',
+            'Add an Existing Repository from your local drive…'
+          ),
       this.props.onAdd
     )
   }
@@ -366,8 +404,12 @@ export class NoRepositoriesView extends React.Component<
         <div className="drag-drop-info">
           <Octicon symbol={octicons.lightBulb} />
           <div>
-            <strong>ProTip!</strong> You can drag &amp; drop an existing
-            repository folder here to add it to Desktop
+            <strong>{t('no-repositories-view.protip', 'ProTip!')};</strong>
+            {t(
+              'no-repositories-view.tips',
+              `You can drag & drop an existing
+              repository folder here to add it to Desktop`
+            )}
           </div>
         </div>
       </div>

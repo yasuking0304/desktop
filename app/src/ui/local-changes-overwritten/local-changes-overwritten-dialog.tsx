@@ -11,6 +11,7 @@ import { RetryAction, RetryActionType } from '../../models/retry-actions'
 import { Dispatcher } from '../dispatcher'
 import { PathText } from '../lib/path-text'
 import { assertNever } from '../../lib/fatal-error'
+import { t } from 'i18next'
 
 interface ILocalChangesOverwrittenDialogProps {
   readonly repository: Repository
@@ -50,12 +51,15 @@ export class LocalChangesOverwrittenDialog extends React.Component<
   public render() {
     const overwrittenText =
       this.props.files.length > 0
-        ? ' The following files would be overwritten:'
+        ? t(
+            'local-changes-overwritten-dialog.the-following-files-would-be-overwritten',
+            'The following files would be overwritten:'
+          )
         : null
 
     return (
       <Dialog
-        title="Error"
+        title={t('common.error', 'Error')}
         id="local-changes-overwritten"
         loading={this.state.stashing}
         disabled={this.state.stashing}
@@ -68,8 +72,12 @@ export class LocalChangesOverwrittenDialog extends React.Component<
         <DialogContent>
           <div id="local-changes-error-description">
             <p>
-              Unable to {this.getRetryActionName()} when changes are present on
-              your branch.{overwrittenText}
+              {t(
+                'local-changes-overwritten-dialog.unable-to-action',
+                `Unable to {{0}} when changes are present on
+                your branch. {{1}}`,
+                { 0: this.getRetryActionName(), 1: overwrittenText }
+              )}
             </p>
             {this.renderFiles()}
             {this.renderStashText()}
@@ -104,7 +112,14 @@ export class LocalChangesOverwrittenDialog extends React.Component<
       return null
     }
 
-    return <p>You can stash your changes now and recover them afterwards.</p>
+    return (
+      <p>
+        {t(
+          'local-changes-overwritten-dialog.you-can-stash-your-changes',
+          'You can stash your changes now and recover them afterwards.'
+        )}
+      </p>
+    )
   }
 
   private renderFooter() {
@@ -117,11 +132,21 @@ export class LocalChangesOverwrittenDialog extends React.Component<
         <OkCancelButtonGroup
           okButtonText={
             __DARWIN__
-              ? 'Stash Changes and Continue'
-              : 'Stash changes and continue'
+              ? t(
+                  'local-changes-overwritten-dialog.Stash-Changes-darwin',
+                  'Stash Changes and Continue'
+                )
+              : t(
+                  'local-changes-overwritten-dialog.Stash-Changes',
+                  'Stash changes and continue'
+                )
           }
-          okButtonTitle="This will create a stash with your current changes. You can recover them by restoring the stash afterwards."
-          cancelButtonText="Close"
+          okButtonTitle={t(
+            'local-changes-overwritten-dialog.this-will-create-a-stash',
+            `This will create a stash with your current changes.
+             You can recover them by restoring the stash afterwards.`
+          )}
+          cancelButtonText={t('common.close', 'Close')}
         />
       </DialogFooter>
     )

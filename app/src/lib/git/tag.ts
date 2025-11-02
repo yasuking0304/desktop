@@ -32,7 +32,68 @@ export async function deleteTag(
 ): Promise<void> {
   const args = ['tag', '-d', name]
 
-  await git(args, repository.path, 'deleteTag')
+  const result = await git(args, repository.path, 'deleteTag', {
+    successExitCodes: new Set([0, 1]),
+  })
+  if (result.exitCode !== 0) {
+    throw result.gitError
+  }
+
+  // delete the tag from the remote if it exists
+  const tags = Array.from((await getRemoteTags(repository)).keys())
+
+  if (tags.some(v => v === name)) {
+    const args = ['push', 'origin', '--delete', name]
+
+    const result = await git(args, repository.path, 'deleteTag', {
+      successExitCodes: new Set([0, 1]),
+    })
+    if (result.exitCode === 1) {
+      const args = ['push', 'upstream', '--delete', name]
+
+      await git(args, repository.path, 'deleteTag')
+    }
+  }
+}
+
+/**
+ * Gets all the remote tags. Returns a Map with the tag name and the commit it points to.
+ *
+ * @param repository    The repository in which to get all the tags from.
+ */
+export async function getRemoteTags(
+  repository: Repository
+): Promise<Map<string, string>> {
+  const args = ['ls-remote', '--tags']
+
+  const tags = await git(args, repository.path, 'getRemoteTags', {
+    successExitCodes: new Set([0, 1, 128]),
+  })
+
+  const tagsArray: Array<[string, string]> = tags.stdout
+    .split('\n')
+    .filter(line => line !== '')
+    .map(line => {
+      const [commitSha, rawTagName] = line.split(/\s+/)
+
+      // Normalize tag names by removing the leading ref/tags/ and the trailing ^{}.
+      //
+      // git show-ref returns two entries for annotated tags:
+      // deadbeef refs/tags/annotated-tag
+      // de510b99 refs/tags/annotated-tag^{}
+      //
+      // The first entry sha correspond to the blob object of the annotation, while the second
+      // entry corresponds to the actual commit where the tag was created.
+      // By normalizing the tag name we can make sure that the commit sha gets stored in the returned
+      // Map of commits (since git will always print the entry with the commit sha at the end).
+      const tagName = rawTagName
+        .replace(/^refs\/tags\//, '')
+        .replace(/\^\{\}$/, '')
+
+      return [tagName, commitSha]
+    })
+
+  return new Map(tagsArray)
 }
 
 /**

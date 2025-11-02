@@ -5,6 +5,7 @@ import { Dispatcher } from '../dispatcher'
 import { TrashNameLabel } from '../lib/context-menu'
 import { RetryAction } from '../../models/retry-actions'
 import { Checkbox, CheckboxValue } from '../lib/checkbox'
+import { t } from 'i18next'
 
 interface IDiscardChangesRetryDialogProps {
   readonly dispatcher: Dispatcher
@@ -34,8 +35,14 @@ export class DiscardChangesRetryDialog extends React.Component<
       <Dialog
         title={
           __DARWIN__
-            ? 'Discarded Changes Will Be Unrecoverable'
-            : 'Discarded changes will be unrecoverable'
+            ? t(
+                'discard-changes-retry-dialog.discarded-Changes-darwin',
+                'Discarded Changes Will Be Unrecoverable'
+              )
+            : t(
+                'discard-changes-retry-dialog.discarded-Changes',
+                'Discarded changes will be unrecoverable'
+              )
         }
         id="discard-changes-retry"
         loading={retrying}
@@ -45,17 +52,41 @@ export class DiscardChangesRetryDialog extends React.Component<
         type="error"
       >
         <DialogContent>
-          <p>Failed to discard changes to {TrashNameLabel}.</p>
+          <p>
+            {t(
+              'discard-changes-retry-dialog.fail-to-discard-changes',
+              'Failed to discard changes to {{0}}.',
+              { 0: TrashNameLabel }
+            )}
+          </p>
           <div>
-            Common reasons are:
+            {t(
+              'discard-changes-retry-dialog.common-reasons-are',
+              'Common reasons are:'
+            )}
             <ul>
               <li>
-                The {TrashNameLabel} is configured to delete items immediately.
+                {t(
+                  'discard-changes-retry-dialog.delete-items-immediately',
+                  'The {{0}} is configured to delete items immediately.',
+                  { 0: TrashNameLabel }
+                )}
               </li>
-              <li>Restricted access to move the file(s).</li>
+              <li>
+                {t(
+                  'discard-changes-retry-dialog.restricted-access',
+                  'Restricted access to move the file(s).'
+                )}
+              </li>
             </ul>
           </div>
-          <p>These changes will be unrecoverable from the {TrashNameLabel}.</p>
+          <p>
+            {t(
+              'discard-changes-retry-dialog.changes-will-be-unrecoverable',
+              'These changes will be unrecoverable from the {{0}}.',
+              { 0: TrashNameLabel }
+            )}
+          </p>
           {this.renderConfirmDiscardChanges()}
         </DialogContent>
         {this.renderFooter()}
@@ -66,7 +97,10 @@ export class DiscardChangesRetryDialog extends React.Component<
   private renderConfirmDiscardChanges() {
     return (
       <Checkbox
-        label="Do not show this message again"
+        label={t(
+          'common.do-not-show-message-again',
+          'Do not show this message again'
+        )}
         value={
           this.state.confirmDiscardChanges
             ? CheckboxValue.Off
@@ -83,11 +117,20 @@ export class DiscardChangesRetryDialog extends React.Component<
         <OkCancelButtonGroup
           okButtonText={
             __DARWIN__
-              ? 'Permanently Discard Changes'
-              : 'Permanently discard changes'
+              ? t(
+                  'discard-changes-retry-dialog.discard-changes-darwin',
+                  'Permanently Discard Changes'
+                )
+              : t(
+                  'discard-changes-retry-dialog.discard-changes',
+                  'Permanently discard changes'
+                )
           }
-          okButtonTitle={`This will discard changes and they will be unrecoverable.`}
-          cancelButtonText="Cancel"
+          okButtonTitle={t(
+            'discard-changes-retry-dialog.discard-changes-ok',
+            'This will discard changes and they will be unrecoverable.'
+          )}
+          cancelButtonText={t('common.cancel', 'Cancel')}
           destructive={true}
         />
       </DialogFooter>

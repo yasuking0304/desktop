@@ -8,6 +8,7 @@ import { Button } from '../lib/button'
 import { Loading } from '../lib/loading'
 import { BrowserRedirectMessage } from '../lib/authentication-form'
 import { SamplesURL } from '../../lib/stats'
+import { t } from 'i18next'
 
 /**
  * The URL to the sign-up page on GitHub.com. Used in conjunction
@@ -33,14 +34,19 @@ export class Start extends React.Component<IStartProps, {}> {
       >
         <div className="start-content">
           <h1 className="welcome-title">
-            Welcome to <span>GitHub Desktop</span>
+            {t('start.welcome-to-1', 'Welcome to ')}
+            <span>GitHub Desktop</span>
+            {t('start.welcome-to-2', ' ')}
           </h1>
           {!this.props.loadingBrowserAuth ? (
             <>
               <p id="start-description" className="welcome-text">
-                GitHub Desktop is a seamless way to contribute to projects on
+                {t(
+                  'start.welcome-text',
+                  `GitHub Desktop is a seamless way to contribute to projects on
                 GitHub and GitHub Enterprise. Sign in below to get started with
-                your existing projects.
+                your existing projects.`
+                )}
               </p>
             </>
           ) : (
@@ -57,50 +63,70 @@ export class Start extends React.Component<IStartProps, {}> {
               role="link"
             >
               {this.props.loadingBrowserAuth && <Loading />}
-              Sign in to GitHub.com
+              {t('start.sign-in-github-com', 'Sign in to GitHub.com')}
               <Octicon symbol={octicons.linkExternal} />
             </Button>
             {this.props.loadingBrowserAuth ? (
-              <Button onClick={this.cancelBrowserAuth}>Cancel</Button>
+              <Button onClick={this.cancelBrowserAuth}>
+                {t('common.cancel', 'Cancel')}
+              </Button>
             ) : (
               <Button onClick={this.signInToEnterprise}>
-                Sign in to GitHub Enterprise
+                {t(
+                  'start.sign-in-github-enterprise',
+                  'Sign in to GitHub Enterprise'
+                )}
               </Button>
             )}
           </div>
           <div className="skip-action-container">
             <p className="welcome-text">
-              New to GitHub?{' '}
+              {t('start.new-to-github', 'New to GitHub? ')}
               <LinkButton
                 uri={CreateAccountURL}
                 className="create-account-link"
               >
-                Create your free account.
+                {t(
+                  'start.create-your-free-account',
+                  'Create your free account.'
+                )}
               </LinkButton>
             </p>
             <LinkButton className="skip-button" onClick={this.skip}>
-              Skip this step
+              {t('start.skip-this-step', 'Skip this step')}
             </LinkButton>
           </div>
         </div>
 
         <div className="start-footer">
           <p>
-            By creating an account, you agree to the{' '}
+            {t(
+              'start.by-creating-an-account-1',
+              'By creating an account, you agree to the '
+            )}
             <LinkButton uri={'https://github.com/site/terms'}>
-              Terms of Service
+              {t('start.terms-of-service', 'Terms of Service')}
             </LinkButton>
-            . For more information about GitHub's privacy practices, see the{' '}
+            {t('start.by-creating-an-account-2', '.')}
+            {t(
+              'start.privacy-practices-1',
+              ` For more information about GitHub's privacy practices, see the `
+            )}
             <LinkButton uri={'https://github.com/site/privacy'}>
-              GitHub Privacy Statement.
+              {t('start.github-privacy-statement', 'GitHub Privacy Statement')}
             </LinkButton>
+            {t('start.privacy-practices-2', '.')}
           </p>
           <p>
-            GitHub Desktop sends usage metrics to improve the product and inform
-            feature decisions.{' '}
+            {t(
+              'start.welcome-sends-usage-1',
+              `GitHub Desktop sends usage metrics to improve the product and inform
+              feature decisions. `
+            )}
             <LinkButton uri={SamplesURL}>
-              Learn more about user metrics.
+              {t('start.learn-more-about', 'Learn more about user metrics.')}
             </LinkButton>
+            {t('start.welcome-sends-usage-2', ' ')}
           </p>
         </div>
       </section>

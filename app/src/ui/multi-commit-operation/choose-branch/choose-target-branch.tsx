@@ -13,6 +13,7 @@ import {
   renderDefaultBranch,
 } from '../../branches'
 import { ClickSource } from '../../lib/list'
+import { t } from 'i18next'
 import { getDefaultAriaLabelForBranch } from '../../branches/branch-renderer'
 import { Repository } from '../../../models/repository'
 
@@ -151,17 +152,35 @@ export class ChooseTargetBranchDialog extends React.Component<
 
     if (isCreateBranchState) {
       return __DARWIN__
-        ? 'Cherry-pick to New Branch'
-        : 'Cherry-pick to new branch'
+        ? t(
+            'choose-target-branch.cherry-pick-to-new-branch-darwin',
+            'Cherry-pick to New Branch'
+          )
+        : t(
+            'choose-target-branch.cherry-pick-to-new-branch',
+            'Cherry-pick to new branch'
+          )
     }
 
-    const pluralize = this.props.commitCount > 1 ? 'commits' : 'commit'
-    const okButtonText = `Cherry-pick ${this.props.commitCount} ${pluralize}`
-
+    const pluralize =
+      this.props.commitCount > 1
+        ? t('choose-target-branch.multiple-commits', 'commits')
+        : t('choose-target-branch.one-or-less-commit', 'commit')
+    const okButtonText = t(
+      'choose-target-branch.okbutton',
+      `Cherry-pick {{0}} {{1}}`,
+      { 0: this.props.commitCount, 1: pluralize }
+    )
     if (selectedBranch !== null) {
       return (
         <>
-          {okButtonText} to <strong>{selectedBranch.name}</strong>…
+          {t('choose-target-branch.ok-button-text-to-1', '{{0}} to ', {
+            0: okButtonText,
+          })}
+          <strong>{selectedBranch.name}</strong>
+          {t('choose-target-branch.ok-button-text-to-2', '…', {
+            0: okButtonText,
+          })}
         </>
       )
     }
@@ -180,10 +199,16 @@ export class ChooseTargetBranchDialog extends React.Component<
 
   public render() {
     const tooltip = this.selectedBranchIsCurrentBranch()
-      ? 'You are not able to cherry-pick from and to the same branch'
+      ? t(
+          'choose-target-branch.you-are-not-able-to-cherry-pick',
+          'You are not able to cherry-pick from and to the same branch'
+        )
       : undefined
 
-    const pluralize = this.props.commitCount > 1 ? 'commits' : 'commit'
+    const pluralize =
+      this.props.commitCount > 1
+        ? t('choose-target-branch.multiple-commits', 'commits')
+        : t('choose-target-branch.one-or-less-commit', 'commit')
     return (
       <Dialog
         id="cherry-pick"
@@ -191,7 +216,11 @@ export class ChooseTargetBranchDialog extends React.Component<
         onSubmit={this.onSubmit}
         title={
           <strong>
-            Cherry-pick {this.props.commitCount} {pluralize} to a branch
+            {t(
+              'choose-target-branch.cherry-pick-number-commit-to-a-branch',
+              `Cherry-pick {{0}} {{1}}  to a branch`,
+              { 0: this.props.commitCount, 1: pluralize }
+            )}
           </strong>
         }
       >

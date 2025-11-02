@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { Dialog, DialogContent, DefaultDialogFooter } from '../dialog'
 import { LinkButton } from '../lib/link-button'
+import { t } from 'i18next'
 
 interface ITermsAndConditionsProps {
   /** A function called when the dialog is dismissed. */
@@ -11,7 +12,10 @@ const contact = 'https://github.com/contact'
 const logos = 'https://github.com/logos'
 const privacyStatement =
   'https://help.github.com/articles/github-privacy-statement/'
-const license = 'https://creativecommons.org/licenses/by/4.0/'
+const license = t(
+  'url.creativecommons_org_licenses',
+  'https://creativecommons.org/licenses/by/4.0/'
+)
 
 export class TermsAndConditions extends React.Component<
   ITermsAndConditionsProps,
@@ -21,7 +25,10 @@ export class TermsAndConditions extends React.Component<
     return (
       <Dialog
         id="terms-and-conditions"
-        title="GitHub Open Source Applications Terms and Conditions"
+        title={t(
+          'terms-and-conditions.terms-and-conditions',
+          'GitHub Open Source Applications Terms and Conditions'
+        )}
         onSubmit={this.props.onDismissed}
         onDismissed={this.props.onDismissed}
       >
@@ -39,7 +46,12 @@ export class TermsAndConditions extends React.Component<
             or copy the Software.
           </p>
 
-          <h2>Connecting to GitHub</h2>
+          <h2>
+            {t(
+              'terms-and-conditions.connecting-to-github',
+              'Connecting to GitHub'
+            )}
+          </h2>
 
           <p>
             If you configure the Software to work with one or more accounts on
@@ -55,7 +67,12 @@ export class TermsAndConditions extends React.Component<
             will also be a violation of these Application Terms.
           </p>
 
-          <h2>Open Source Licenses and Notices</h2>
+          <h2>
+            {t(
+              'terms-and-conditions.open-source-licenses-and-notices',
+              'Open Source Licenses and Notices'
+            )}
+          </h2>
 
           <p>
             The open source license for the Software is included in the "Open
@@ -83,7 +100,7 @@ export class TermsAndConditions extends React.Component<
             components of the Software.
           </p>
 
-          <h2>GitHub's Logos</h2>
+          <h2>{t('terms-and-conditions.github-s-logos', `GitHub's Logos`)}</h2>
 
           <p>
             The license grant included with the Software is not for GitHub's
@@ -102,7 +119,7 @@ export class TermsAndConditions extends React.Component<
             <LinkButton uri={logos}>logos</LinkButton>.
           </p>
 
-          <h2>Privacy</h2>
+          <h2>{t('terms-and-conditions.privacy', 'Privacy')}</h2>
 
           <p>
             The Software may collect personal information. You may control what
@@ -110,14 +127,27 @@ export class TermsAndConditions extends React.Component<
             Software does collect personal information on GitHub's behalf,
             GitHub will process that information in accordance with the
             <LinkButton uri={privacyStatement}>
-              GitHub Privacy Statement
+              {t(
+                'terms-and-conditions.github-privacy-statement',
+                'GitHub Privacy Statement'
+              )}
             </LinkButton>
             .
           </p>
 
-          <h2>Additional Services</h2>
+          <h2>
+            {t(
+              'terms-and-conditions.additional-services',
+              'Additional Services'
+            )}
+          </h2>
 
-          <h3>Auto-Update Services</h3>
+          <h3>
+            {t(
+              'terms-and-conditions.auto-update-services',
+              'Auto-Update Services'
+            )}
+          </h3>
 
           <p>
             The Software may include an auto-update service ("Service"). If you
@@ -126,7 +156,12 @@ export class TermsAndConditions extends React.Component<
             the Software when a new version is available.
           </p>
 
-          <h3>Disclaimers and Limitations of Liability</h3>
+          <h3>
+            {t(
+              'terms-and-conditions.disclaimers-and-limitations-of-liability',
+              'Disclaimers and Limitations of Liability'
+            )}
+          </h3>
 
           <p>
             THE SERVICE IS PROVIDED ON AN "AS IS" BASIS, AND NO WARRANTY, EITHER
@@ -166,7 +201,7 @@ export class TermsAndConditions extends React.Component<
             discontinuance of the Service.
           </p>
 
-          <h2>Miscellanea</h2>
+          <h2>{t('terms-and-conditions.miscellanea', 'Miscellanea')}</h2>
 
           <ol>
             <li>
@@ -216,7 +251,10 @@ export class TermsAndConditions extends React.Component<
               License to GitHub Policies. These Application Terms are licensed
               under the{' '}
               <LinkButton uri={license}>
-                Creative Commons Attribution license
+                {t(
+                  'terms-and-conditions.creative-commons-attribute',
+                  'Creative Commons Attribution license'
+                )}
               </LinkButton>
               . You may use it freely under the terms of the Creative Commons
               license.

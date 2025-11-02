@@ -1,7 +1,7 @@
 import * as React from 'react'
 import classNames from 'classnames'
 import { createUniqueId, releaseUniqueId } from './id-pool'
-import { showContextualMenu } from '../../lib/menu-item'
+import { showContextualMenu, getEditMenuItemOfReact } from '../../lib/menu-item'
 import { Octicon } from '../octicons'
 import * as octicons from '../octicons/octicons.generated'
 import { AriaLiveContainer } from '../accessibility/aria-live-container'
@@ -249,7 +249,7 @@ export class TextBox extends React.Component<ITextBoxProps, ITextBoxState> {
 
   private onContextMenu = (event: React.MouseEvent<any>) => {
     event.preventDefault()
-    showContextualMenu([{ role: 'editMenu' }])
+    showContextualMenu(getEditMenuItemOfReact())
   }
 
   private onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {

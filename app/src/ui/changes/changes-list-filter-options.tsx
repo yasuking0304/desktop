@@ -17,6 +17,7 @@ import { Button } from '../lib/button'
 import classNames from 'classnames'
 import { IChangesListItem } from './filter-changes-list'
 import { WorkingDirectoryStatus } from '../../models/status'
+import { t } from 'i18next'
 
 interface IChangesListFilterOptionsProps {
   readonly fileListFilter: IFileListFilterState
@@ -156,7 +157,9 @@ export class ChangesListFilterOptions extends React.Component<
         onClickOutside={this.closeFilterOptions}
       >
         <div className="filter-popover-header">
-          <h3 id="filter-options-header">Filter Options</h3>
+          <h3 id="filter-options-header">
+            {t('changes-list-filter-options.filter-options', 'Filter Options')}
+          </h3>
           <button
             className="close"
             onClick={this.closeFilterOptions}
@@ -173,7 +176,11 @@ export class ChangesListFilterOptions extends React.Component<
                 : CheckboxValue.Off
             }
             onChange={this.onFilterToIncludedInCommit}
-            label={`Included in commit (${includedFilesCount})`}
+            label={t(
+              'changes-list-filter-options.included-in-commit-with-number',
+              `Included in commit ({{0}})`,
+              { 0: includedFilesCount }
+            )}
           />
           <Checkbox
             value={
@@ -182,7 +189,11 @@ export class ChangesListFilterOptions extends React.Component<
                 : CheckboxValue.Off
             }
             onChange={this.onFilterExcludedFiles}
-            label={`Excluded from commit (${excludedFilesCount})`}
+            label={t(
+              'changes-list-filter-options.excluded-from-commit-with-number',
+              `Excluded from commit ({{0}})`,
+              { 0: excludedFilesCount }
+            )}
           />
           <Checkbox
             value={
@@ -191,7 +202,11 @@ export class ChangesListFilterOptions extends React.Component<
                 : CheckboxValue.Off
             }
             onChange={this.onFilterNewFiles}
-            label={`New files (${newFilesCount})`}
+            label={t(
+              'changes-list-filter-options.new-files-with-number',
+              `New files ({{0}})`,
+              { 0: newFilesCount }
+            )}
           />
           <Checkbox
             value={
@@ -200,7 +215,11 @@ export class ChangesListFilterOptions extends React.Component<
                 : CheckboxValue.Off
             }
             onChange={this.onFilterModifiedFiles}
-            label={`Modified files (${modifiedFilesCount})`}
+            label={t(
+              'changes-list-filter-options.modified-files-with-number',
+              `Modified files ({{0}})`,
+              { 0: modifiedFilesCount }
+            )}
           />
           <Checkbox
             value={
@@ -209,12 +228,18 @@ export class ChangesListFilterOptions extends React.Component<
                 : CheckboxValue.Off
             }
             onChange={this.onFilterDeletedFiles}
-            label={`Deleted files (${deletedFilesCount})`}
+            label={t(
+              'changes-list-filter-options.deleted-files-with-number',
+              `Deleted files ({0})`,
+              { 0: deletedFilesCount }
+            )}
           />
         </div>
         {filtersActive && (
           <div className="filter-options-footer">
-            <Button onClick={this.onClearAllFilters}>Clear filters</Button>
+            <Button onClick={this.onClearAllFilters}>
+              {t('changes-list-filter-options.clear-filters', 'Clear filters')}
+            </Button>
           </div>
         )}
       </Popover>
@@ -230,9 +255,16 @@ export class ChangesListFilterOptions extends React.Component<
       this.props.fileListFilter
     )
     const hasActiveFilters = activeFiltersCount > 0
-    const buttonTextLabel = `Filter Options ${
-      hasActiveFilters ? `(${activeFiltersCount} applied)` : ''
-    }`
+    const activeFiltersText = hasActiveFilters
+      ? t('changes-list-filter-options.active-filters', '({{0}} applied)', {
+          0: activeFiltersCount,
+        })
+      : ''
+    const buttonTextLabel = t(
+      'changes-list-filter-options.filter-button-label',
+      `Filter Options {{0}}`,
+      { 0: activeFiltersText }
+    )
 
     return (
       <>

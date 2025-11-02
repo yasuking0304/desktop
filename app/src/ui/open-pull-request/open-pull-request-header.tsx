@@ -3,6 +3,7 @@ import { Branch } from '../../models/branch'
 import { BranchSelect } from '../branches/branch-select'
 import { DialogHeader } from '../dialog/header'
 import { Ref } from '../lib/ref'
+import { t } from 'i18next'
 import { Repository } from '../../models/repository'
 import { IChangesetData } from '../../lib/git'
 
@@ -64,7 +65,12 @@ export class OpenPullRequestDialogHeader extends React.Component<IOpenPullReques
   }
 
   public render() {
-    const title = __DARWIN__ ? 'Open a Pull Request' : 'Open a pull request'
+    const title = __DARWIN__
+      ? t(
+          'open-pull-request-header.open-a-pull-request-darwin',
+          'Open a Pull Request'
+        )
+      : t('open-pull-request-header.open-a-pull-request', 'Open a pull request')
     const {
       baseBranch,
       currentBranch,
@@ -77,7 +83,14 @@ export class OpenPullRequestDialogHeader extends React.Component<IOpenPullReques
       onDismissed,
     } = this.props
     const { linesAdded, linesDeleted } = changesetData
-    const commits = `${commitCount} commit${commitCount > 1 ? 's' : ''}`
+    const commits =
+      commitCount > 1
+        ? t('open-pull-request-header.multiple-commits', `{{0}} commits`, {
+            0: commitCount,
+          })
+        : t('open-pull-request-header.one-or-less-commit', `{{0}} commit`, {
+            0: commitCount,
+          })
 
     return (
       <DialogHeader
@@ -87,7 +100,9 @@ export class OpenPullRequestDialogHeader extends React.Component<IOpenPullReques
       >
         <div className="break"></div>
         <div className="base-branch-details">
-          Merge {commits} into{' '}
+          {t('open-pull-request-header.merge-into-1', 'Merge {{0}} into', {
+            0: commits,
+          })}{' '}
           <BranchSelect
             repository={this.props.repository}
             branch={baseBranch}
@@ -103,7 +118,9 @@ export class OpenPullRequestDialogHeader extends React.Component<IOpenPullReques
               </>
             }
           />{' '}
-          from <Ref>{currentBranch.name}</Ref>.
+          {t('open-pull-request-header.merge-into-2', 'from')}{' '}
+          <Ref>{currentBranch.name}</Ref>
+          {t('open-pull-request-header.merge-into-3', '.')}
         </div>
         <div className="lines-added-deleted">
           <div className="sr-only">Lines changed:</div>

@@ -4,6 +4,7 @@ import { Commit, shortenSHA } from '../../models/commit'
 import { Ref } from './ref'
 import { TooltipDirection } from './tooltip'
 import { TooltippedContent } from './tooltipped-content'
+import { t } from 'i18next'
 
 interface ITooltippedCommitSHAProps {
   readonly className?: string
@@ -56,7 +57,9 @@ export class TooltippedCommitSHA extends React.Component<
     return (
       <>
         <code>{this.longSHA}</code>
-        <button onClick={this.onCopySHAButtonClick}>Copy</button>
+        <button onClick={this.onCopySHAButtonClick}>
+          {t('common.copy', 'Copy')}
+        </button>
       </>
     )
   }

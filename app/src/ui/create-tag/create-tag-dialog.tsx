@@ -9,6 +9,7 @@ import { startTimer } from '../lib/timing'
 import { Ref } from '../lib/ref'
 import { RefNameTextBox } from '../lib/ref-name-text-box'
 import { enablePreviousTagSuggestions } from '../../lib/feature-flag'
+import { t } from 'i18next'
 
 interface ICreateTagProps {
   readonly repository: Repository
@@ -56,7 +57,11 @@ export class CreateTag extends React.Component<
     return (
       <Dialog
         id="create-tag"
-        title={__DARWIN__ ? 'Create a Tag' : 'Create a tag'}
+        title={
+          __DARWIN__
+            ? t('create-tag-dialog.create-a-tag-darwin', 'Create a Tag')
+            : t('create-tag-dialog.create-a-tag', 'Create a tag')
+        }
         onSubmit={this.createTag}
         onDismissed={this.props.onDismissed}
         loading={this.state.isCreatingTag}
@@ -66,7 +71,12 @@ export class CreateTag extends React.Component<
 
         <DialogContent>
           <RefNameTextBox
-            label="Name"
+            label={t('common.name', 'Name')}
+            placeholder={
+              __DARWIN__
+                ? t('common.tag-name-darwin', 'Tag Name')
+                : t('common.tag-name', 'Tag name')
+            }
             initialValue={this.props.initialName}
             onValueChange={this.updateTagName}
           />
@@ -76,7 +86,11 @@ export class CreateTag extends React.Component<
 
         <DialogFooter>
           <OkCancelButtonGroup
-            okButtonText={__DARWIN__ ? 'Create Tag' : 'Create tag'}
+            okButtonText={
+              __DARWIN__
+                ? t('create-tag-dialog.create-tag-darwin', 'Create Tag')
+                : t('create-tag-dialog.create-tag', 'Create tag')
+            }
             okButtonDisabled={disabled}
           />
         </DialogFooter>
@@ -96,14 +110,22 @@ export class CreateTag extends React.Component<
       return null
     }
 
-    const title = __DARWIN__ ? 'Previous Tags' : 'Previous tags'
+    const title = __DARWIN__
+      ? t('create-tag-dialog.previous-tag-darwin', 'Previous Tags')
+      : t('create-tag-dialog.previous-tag', 'Previous tags')
     const lastThreeTags = previousTags.slice(-3)
 
     return (
       <>
         <p>{title}</p>
         {lastThreeTags.length === 0 ? (
-          <p>{`No matches found for '${tagName}'`}</p>
+          <p>
+            {t(
+              'create-tag-dialog.no-matches-found',
+              `No matches found for '{{0}}'`,
+              { 0: tagName }
+            )}
+          </p>
         ) : (
           lastThreeTags.map((item: string, index: number) => (
             <Ref key={index}>{item}</Ref>
@@ -116,7 +138,13 @@ export class CreateTag extends React.Component<
   private getCurrentError(): JSX.Element | null {
     if (this.state.tagName.length > MaxTagNameLength) {
       return (
-        <>The tag name cannot be longer than {MaxTagNameLength} characters</>
+        <>
+          {t(
+            'create-tag-dialog.tag-name-too-long',
+            `The tag name cannot be longer than {{0}} characters`,
+            { 0: MaxTagNameLength }
+          )}
+        </>
       )
     }
 
@@ -125,7 +153,9 @@ export class CreateTag extends React.Component<
     if (alreadyExists) {
       return (
         <>
-          A tag named <Ref>{this.state.tagName}</Ref> already exists
+          {t('create-tag-dialog.tag-named-already-exists-1', 'A tag named ')}
+          <Ref>{this.state.tagName}</Ref>
+          {t('create-tag-dialog.tag-named-already-exists-2', ' already exists')}
         </>
       )
     }

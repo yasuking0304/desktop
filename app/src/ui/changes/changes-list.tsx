@@ -54,6 +54,7 @@ import { createObservableRef } from '../lib/observable-ref'
 import { TooltipDirection } from '../lib/tooltip'
 import { Popup } from '../../models/popup'
 import { EOL } from 'os'
+import { t } from 'i18next'
 import { TooltippedContent } from '../lib/tooltipped-content'
 import { RepoRulesInfo } from '../../models/repo-rules'
 import { IAheadBehind } from '../../models/branch'
@@ -396,11 +397,19 @@ export class ChangesList extends React.Component<
     const label =
       files.length === 1
         ? __DARWIN__
-          ? `Discard Changes`
-          : `Discard changes`
+          ? t('changes-list.discard-changes-darwin', `Discard Changes`)
+          : t('changes-list.discard-changes', `Discard changes`)
         : __DARWIN__
-        ? `Discard ${files.length} Selected Changes`
-        : `Discard ${files.length} selected changes`
+        ? t(
+            'changes-list.discard-selected-changes-darwin',
+            `Discard {{0}} Selected Changes`,
+            { 0: files.length }
+          )
+        : t(
+            'changes-list.discard-selected-changes',
+            `Discard {{0}} selected changes`,
+            { 0: files.length }
+          )
 
     return this.props.askForConfirmationOnDiscardChanges ? `${label}…` : label
   }
@@ -420,15 +429,23 @@ export class ChangesList extends React.Component<
       hasConflictedFiles(this.props.workingDirectory)
 
     const stashAllChangesLabel = __DARWIN__
-      ? 'Stash All Changes'
-      : 'Stash all changes'
+      ? t('changes-list.stash-all-changes-darwin', 'Stash All Changes')
+      : t('changes-list.stash-all-changes', 'Stash all changes')
     const confirmStashAllChangesLabel = __DARWIN__
-      ? 'Stash All Changes…'
-      : 'Stash all changes…'
+      ? t('changes-list.confirm-stash-all-changes-darwin', 'Stash All Changes…')
+      : t('changes-list.confirm-stash-all-changes', 'Stash all changes…')
 
     const items: IMenuItem[] = [
       {
-        label: __DARWIN__ ? 'Discard All Changes…' : 'Discard all changes…',
+        label: __DARWIN__
+          ? t(
+              'changes-list.confirm-discard-all-changes-darwin',
+              'Discard All Changes…'
+            )
+          : t(
+              'changes-list.confirm-discard-all-changes',
+              'Discard all changes…'
+            ),
         action: this.onDiscardAllChanges,
         enabled: hasLocalChanges,
       },
@@ -515,7 +532,9 @@ export class ChangesList extends React.Component<
     const { externalEditorLabel } = this.props
 
     const openInExternalEditor = externalEditorLabel
-      ? `Open in ${externalEditorLabel}`
+      ? t('changes-list.open-in-external-editor', `Open in {{0}}`, {
+          0: externalEditorLabel,
+        })
       : DefaultEditorLabel
 
     return {
@@ -572,8 +591,14 @@ export class ChangesList extends React.Component<
       const enabled = Path.basename(path) !== GitIgnoreFileName
       items.push({
         label: __DARWIN__
-          ? 'Ignore File (Add to .gitignore)'
-          : 'Ignore file (add to .gitignore)',
+          ? t(
+              'changes-list.ignore-file-add-to-gitignore-darwin',
+              'Ignore File (Add to .gitignore)'
+            )
+          : t(
+              'changes-list.ignore-file-add-to-gitignore',
+              'Ignore file (add to .gitignore)'
+            ),
         action: () => this.props.onIgnoreFile(path),
         enabled,
       })
@@ -594,8 +619,14 @@ export class ChangesList extends React.Component<
 
         items.push({
           label: __DARWIN__
-            ? 'Ignore Folder (Add to .gitignore)'
-            : 'Ignore folder (add to .gitignore)',
+            ? t(
+                'changes-list.ignore-folder-add-to-gitignore-darwin',
+                'Ignore Folder (Add to .gitignore)'
+              )
+            : t(
+                'changes-list.ignore-folder-add-to-gitignore',
+                'Ignore folder (add to .gitignore)'
+              ),
           submenu,
           enabled,
         })
@@ -603,8 +634,16 @@ export class ChangesList extends React.Component<
     } else if (paths.length > 1) {
       items.push({
         label: __DARWIN__
-          ? `Ignore ${paths.length} Selected Files (Add to .gitignore)`
-          : `Ignore ${paths.length} selected files (add to .gitignore)`,
+          ? t(
+              'changes-list.ignore-selected-file-add-to-gitignore-darwin',
+              `Ignore {{0}} Selected Files (Add to .gitignore)`,
+              { 0: paths.length }
+            )
+          : t(
+              'changes-list.ignore-selected-file-add-to-gitignore',
+              `Ignore {{0}} selected files (add to .gitignore)`,
+              { 0: paths.length }
+            ),
         action: () => {
           // Filter out any .gitignores that happens to be selected, ignoring
           // those doesn't make sense.
@@ -623,8 +662,16 @@ export class ChangesList extends React.Component<
       .forEach(extension => {
         items.push({
           label: __DARWIN__
-            ? `Ignore All ${extension} Files (Add to .gitignore)`
-            : `Ignore all ${extension} files (add to .gitignore)`,
+            ? t(
+                'changes-list.ignore-all-file-add-to-gitignore-darwin',
+                `Ignore All {{0}} Files (Add to .gitignore)`,
+                { 0: extension }
+              )
+            : t(
+                'changes-list.ignore-all-file-add-to-gitignore',
+                `Ignore all {{0}} files (add to .gitignore)`,
+                { 0: extension }
+              ),
           action: () => this.props.onIgnorePattern(`*${extension}`),
         })
       })
@@ -634,16 +681,28 @@ export class ChangesList extends React.Component<
         { type: 'separator' },
         {
           label: __DARWIN__
-            ? 'Include Selected Files'
-            : 'Include selected files',
+            ? t(
+                'changes-list.include-selected-files-darwin',
+                'Include Selected Files'
+              )
+            : t(
+                'changes-list.include-selected-files',
+                'Include selected files'
+              ),
           action: () => {
             selectedFiles.map(file => this.props.onIncludeChanged(file, true))
           },
         },
         {
           label: __DARWIN__
-            ? 'Exclude Selected Files'
-            : 'Exclude selected files',
+            ? t(
+                'changes-list.exclude-selected-files-darwin',
+                'Exclude Selected Files'
+              )
+            : t(
+                'changes-list.exclude-selected-files',
+                'Exclude selected files'
+              ),
           action: () => {
             selectedFiles.map(file => this.props.onIncludeChanged(file, false))
           },
@@ -735,7 +794,7 @@ export class ChangesList extends React.Component<
     prepopulateCommitSummary: boolean
   ) {
     if (!prepopulateCommitSummary) {
-      return 'Summary (required)'
+      return t('changes-list.summary-required', 'Summary (required)')
     }
 
     const firstFile = files[0]
@@ -744,15 +803,21 @@ export class ChangesList extends React.Component<
     switch (firstFile.status.kind) {
       case AppFileStatusKind.New:
       case AppFileStatusKind.Untracked:
-        return `Create ${fileName}`
+        return t('changes-list.create-filename', `Create {{0}}`, {
+          0: fileName,
+        })
       case AppFileStatusKind.Deleted:
-        return `Delete ${fileName}`
+        return t('changes-list.delete-filename', `Delete {{0}}`, {
+          0: fileName,
+        })
       default:
         // TODO:
         // this doesn't feel like a great message for AppFileStatus.Copied or
         // AppFileStatus.Renamed but without more insight (and whether this
         // affects other parts of the flow) we can just default to this for now
-        return `Update ${fileName}`
+        return t('changes-list.update-filename', `Update {{0}}`, {
+          0: fileName,
+        })
     }
   }
 
@@ -971,7 +1036,9 @@ export class ChangesList extends React.Component<
         }
       >
         <Octicon className="stack-icon" symbol={StashIcon} />
-        <div className="text">Stashed Changes</div>
+        <div className="text">
+          {t('changes-list.stashed-changes', 'Stashed Changes')}
+        </div>
         <Octicon symbol={octicons.chevronRight} />
       </button>
     )
@@ -1007,14 +1074,28 @@ export class ChangesList extends React.Component<
     const { workingDirectory, rebaseConflictState, isCommitting } = this.props
     const { files } = workingDirectory
 
-    const filesPlural = files.length === 1 ? 'file' : 'files'
-    const filesDescription = `${files.length} changed ${filesPlural}`
+    const filesPlural =
+      files.length === 1
+        ? t('changes-list.file', 'file')
+        : t('changes-list.files', 'files')
+    const filesDescription = t(
+      'changes-list.files-description',
+      '{{0}} changed {{1}}',
+      { 0: files.length, 1: filesPlural }
+    )
 
     const selectedChangeCount = files.filter(
       file => file.selection.getSelectionType() !== DiffSelectionType.None
     ).length
-    const totalFilesPlural = files.length === 1 ? 'file' : 'files'
-    const selectedChangesDescription = `${selectedChangeCount}/${files.length} changed ${totalFilesPlural} included`
+    const totalFilesPlural =
+      files.length === 1
+        ? t('changes-list.file', 'file')
+        : t('changes-list.files', 'files')
+    const selectedChangesDescription = t(
+      'changes-list.files-changes-description',
+      '{{0}}/{{1}} changed {{2}} included',
+      { 0: selectedChangeCount, 1: files.length, 2: totalFilesPlural }
+    )
 
     const includeAllValue = getIncludeAllValue(
       workingDirectory,

@@ -14,6 +14,7 @@ import {
 } from './environment'
 import { WorkingDirectoryFileChange } from '../../models/status'
 import { ManualConflictResolution } from '../../models/manual-conflict-resolution'
+import { t } from 'i18next'
 import { CommitOneLine, shortenSHA } from '../../models/commit'
 import { IRemote } from '../../models/remote'
 
@@ -106,11 +107,15 @@ export async function checkoutBranch(
 ): Promise<true> {
   const opts = await getCheckoutOpts(
     repository,
-    `Checking out branch ${branch.name}`,
+    t('checkout.checking-out-branch', `Checking out branch {{0}}`, {
+      0: branch.name,
+    }),
     branch.name,
     currentRemote,
     progressCallback,
-    `Switching to ${__DARWIN__ ? 'Branch' : 'branch'}`
+    __DARWIN__
+      ? t('checkout.switching-to-branch-darwin', 'Switching to Branch')
+      : t('checkout.switching-to-branch', 'Switching to branch')
   )
 
   const baseArgs = getCheckoutArgs(progressCallback)
@@ -144,7 +149,9 @@ export async function checkoutCommit(
   currentRemote: IRemote | null,
   progressCallback?: ProgressCallback
 ): Promise<true> {
-  const title = `Checking out ${__DARWIN__ ? 'Commit' : 'commit'}`
+  const title = __DARWIN__
+    ? t('checkout.checking-out-commit-darwin', 'Checking out Commit')
+    : t('checkout.checking-out-commit', 'Checking out commit')
   const opts = await getCheckoutOpts(
     repository,
     title,

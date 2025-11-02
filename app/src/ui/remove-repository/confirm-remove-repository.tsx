@@ -5,6 +5,7 @@ import { Ref } from '../lib/ref'
 import { Repository } from '../../models/repository'
 import { TrashNameLabel } from '../lib/context-menu'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
+import { t } from 'i18next'
 
 interface IConfirmRemoveRepositoryProps {
   /** The repository to be removed */
@@ -57,7 +58,17 @@ export class ConfirmRemoveRepository extends React.Component<
         id="confirm-remove-repository"
         key="remove-repository-confirmation"
         type="warning"
-        title={__DARWIN__ ? 'Remove Repository' : 'Remove repository'}
+        title={
+          __DARWIN__
+            ? t(
+                'confirm-remove-repository.remove-repositry-darwin',
+                'Remove Repository'
+              )
+            : t(
+                'confirm-remove-repository.remove-repositry',
+                'Remove repository'
+              )
+        }
         dismissDisabled={isRemovingRepository}
         loading={isRemovingRepository}
         disabled={isRemovingRepository}
@@ -66,11 +77,23 @@ export class ConfirmRemoveRepository extends React.Component<
       >
         <DialogContent>
           <p>
-            Are you sure you want to remove the repository "
-            {this.props.repository.name}" from GitHub Desktop?
+            {t(
+              'confirm-remove-repository.you-want-to-remove-repository-1',
+              'Are you sure you want to remove the repository "'
+            )}
+            {this.props.repository.name}
+            {t(
+              'confirm-remove-repository.you-want-to-remove-repository-2',
+              '" from GitHub Desktop?'
+            )}
           </p>
           <div className="description">
-            <p>The repository will be removed from GitHub Desktop:</p>
+            <p>
+              {t(
+                'confirm-remove-repository.the-repository-will-be-removed',
+                'The repository will be removed from GitHub Desktop:'
+              )}
+            </p>
             <p>
               <Ref>{this.props.repository.path}</Ref>
             </p>
@@ -78,7 +101,11 @@ export class ConfirmRemoveRepository extends React.Component<
 
           <div>
             <Checkbox
-              label={'Also move this repository to ' + TrashNameLabel}
+              label={t(
+                'confirm-remove-repository.also-move-this-repository',
+                'Also move this repository to {{0}}',
+                { 0: TrashNameLabel }
+              )}
               value={
                 this.state.deleteRepoFromDisk
                   ? CheckboxValue.On
@@ -89,7 +116,10 @@ export class ConfirmRemoveRepository extends React.Component<
           </div>
         </DialogContent>
         <DialogFooter>
-          <OkCancelButtonGroup destructive={true} okButtonText="Remove" />
+          <OkCancelButtonGroup
+            destructive={true}
+            okButtonText={t('common.remove', 'Remove')}
+          />
         </DialogFooter>
       </Dialog>
     )

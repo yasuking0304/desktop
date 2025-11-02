@@ -6,6 +6,7 @@ import { enableRecurseSubmodulesFlag } from '../feature-flag'
 import { IRemote } from '../../models/remote'
 import { envForRemoteOperation } from './environment'
 import { getConfigValue } from './config'
+import { t } from 'i18next'
 
 async function getPullArgs(
   repository: Repository,
@@ -45,7 +46,7 @@ export async function pull(
   }
 
   if (progressCallback) {
-    const title = `Pulling ${remote.name}`
+    const title = t('common.pulling', `Pulling {{0}}`, { 0: remote.name })
     const kind = 'pull'
 
     opts = await executionOptionsWithProgress(

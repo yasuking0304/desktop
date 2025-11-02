@@ -10,6 +10,7 @@ import {
 import { updateStore, IUpdateState, UpdateStatus } from '../lib/update-store'
 import { Disposable } from 'event-kit'
 import { Dispatcher } from '../dispatcher'
+import { t } from 'i18next'
 
 interface IInstallingUpdateProps {
   /**
@@ -74,13 +75,20 @@ export class InstallingUpdate extends React.Component<IInstallingUpdateProps> {
       >
         <DialogContent>
           <Row className="updating-message">
-            Do not close GitHub Desktop while the update is in progress. Closing
-            now may break your installation.
+            {t(
+              'installing-update.update-is-in-progress',
+              `Do not close GitHub Desktop while the update is in progress. Closing
+            now may break your installation.`
+            )}
           </Row>
         </DialogContent>
         <DialogFooter>
           <OkCancelButtonGroup
-            okButtonText={__DARWIN__ ? 'Quit Anyway' : 'Quit anyway'}
+            okButtonText={
+              __DARWIN__
+                ? t('installing-update.quit-anyway-darwin', 'Quit Anyway')
+                : t('installing-update.quit-anyway', 'Quit anyway')
+            }
             onOkButtonClick={this.onQuitAnywayButtonClicked}
             onCancelButtonClick={this.props.onDismissed}
             destructive={true}

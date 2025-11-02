@@ -19,6 +19,7 @@ import {
   PublishSettingsType,
 } from '../../models/publish-settings'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
+import { t } from 'i18next'
 import memoizeOne from 'memoize-one'
 
 enum PublishTab {
@@ -143,7 +144,11 @@ export class Publish extends React.Component<IPublishProps, IPublishState> {
     return (
       <Dialog
         id="publish-repository"
-        title={__DARWIN__ ? 'Publish Repository' : 'Publish repository'}
+        title={
+          __DARWIN__
+            ? t('publish.publish-repository-darwin', 'Publish Repository')
+            : t('publish.publish-repository', 'Publish repository')
+        }
         onDismissed={this.props.onDismissed}
         onSubmit={this.publishRepository}
         disabled={this.state.publishing}
@@ -271,13 +276,19 @@ export class Publish extends React.Component<IPublishProps, IPublishState> {
   }
 
   private renderSignInTab(tab: PublishTab) {
-    const signInTitle = __DARWIN__ ? 'Sign In' : 'Sign in'
+    const signInTitle = __DARWIN__
+      ? t('common.sign-in-darwin', 'Sign In')
+      : t('common.sign-in', 'Sign in')
     switch (tab) {
       case PublishTab.DotCom:
         return (
           <CallToAction actionTitle={signInTitle} onAction={this.signInDotCom}>
             <div>
-              Sign in to your GitHub.com account to access your repositories.
+              {t(
+                'clone-repository.render-sign-in',
+                `Sign in to your GitHub.com account to
+                 access your repositories.`
+              )}
             </div>
           </CallToAction>
         )
@@ -288,8 +299,11 @@ export class Publish extends React.Component<IPublishProps, IPublishState> {
             onAction={this.signInEnterprise}
           >
             <div>
-              If you are using GitHub Enterprise at work, sign in to it to get
-              access to your repositories.
+              {t(
+                'clone-repository.render-sign-in-enterprise',
+                `If you are using GitHub Enterprise at work.
+                 sign in to it to get access to your repositories.`
+              )}
             </div>
           </CallToAction>
         )
@@ -308,7 +322,9 @@ export class Publish extends React.Component<IPublishProps, IPublishState> {
         <DialogFooter>
           <OkCancelButtonGroup
             okButtonText={
-              __DARWIN__ ? 'Publish Repository' : 'Publish repository'
+              __DARWIN__
+                ? t('publish.publish-repository-darwin', 'Publish Repository')
+                : t('publish.publish-repository', 'Publish repository')
             }
             okButtonDisabled={disabled}
           />

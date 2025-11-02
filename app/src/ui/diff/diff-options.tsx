@@ -3,6 +3,7 @@ import { Checkbox, CheckboxValue } from '../lib/checkbox'
 import { Octicon } from '../octicons'
 import * as octicons from '../octicons/octicons.generated'
 import { RadioButton } from '../lib/radio-button'
+import { t } from 'i18next'
 import {
   Popover,
   PopoverAnchorPosition,
@@ -82,7 +83,11 @@ export class DiffOptions extends React.Component<
   }
 
   public render() {
-    const buttonLabel = `Diff ${__DARWIN__ ? 'Settings' : 'Options'}`
+    const buttonLabel = t('diff-options.caption-diff', 'Diff {{0}}', {
+      0: __DARWIN__
+        ? t('diff-options.caption-options-darwin', 'Settings')
+        : t('diff-options.caption-options', 'Options'),
+    })
     return (
       <div className="diff-options-component" ref={this.diffOptionsRef}>
         <button
@@ -109,7 +114,12 @@ export class DiffOptions extends React.Component<
   }
 
   private renderPopover() {
-    const header = `Diff ${__DARWIN__ ? 'Settings' : 'Options'}`
+    const settings_caption = __DARWIN__
+      ? t('diff-options.caption-options-darwin', 'Settings')
+      : t('diff-options.caption-options', 'Options')
+    const header = t('diff-options.caption-diff', 'Diff {{0}}', {
+      0: settings_caption,
+    })
     return (
       <Popover
         ariaLabelledby="diff-options-popover-header"
@@ -136,11 +146,11 @@ export class DiffOptions extends React.Component<
   private renderShowSideBySide() {
     return (
       <fieldset role="radiogroup">
-        <legend>Diff display</legend>
+        <legend>{t('diff-options.diff-display', 'Diff display')}</legend>
         <RadioButton
           value="Unified"
           checked={!this.props.showSideBySideDiff}
-          label="Unified"
+          label={t('diff-options.unified', 'Unified')}
           onSelected={this.onUnifiedSelected}
         />
         <RadioButton
@@ -148,7 +158,7 @@ export class DiffOptions extends React.Component<
           checked={this.props.showSideBySideDiff}
           label={
             <>
-              <div>Split</div>
+              <div>{t('diff-options.split', 'Split')}</div>
             </>
           }
           onSelected={this.onSideBySideSelected}
@@ -160,7 +170,7 @@ export class DiffOptions extends React.Component<
   private renderHideWhitespaceChanges() {
     return (
       <fieldset>
-        <legend>Whitespace</legend>
+        <legend>{t('diff-options.whitespace', 'Whitespace')}</legend>
         <Checkbox
           value={
             this.props.hideWhitespaceChanges
@@ -169,13 +179,24 @@ export class DiffOptions extends React.Component<
           }
           onChange={this.onHideWhitespaceChangesChanged}
           label={
-            __DARWIN__ ? 'Hide Whitespace Changes' : 'Hide whitespace changes'
+            __DARWIN__
+              ? t(
+                  'diff-options.hide-whitespace-changes-darwin',
+                  'Hide Whitespace Changes'
+                )
+              : t(
+                  'diff-options.hide-whitespace-changes',
+                  'Hide whitespace changes'
+                )
           }
         />
         {this.props.isInteractiveDiff && (
           <p className="secondary-text">
-            Interacting with individual lines or hunks will be disabled while
-            hiding whitespace.
+            {t(
+              'diff-options.interacting-with-individual-lines',
+              `Interacting with individual lines or hunks will be disabled while
+            hiding whitespace.`
+            )}
           </p>
         )}
       </fieldset>

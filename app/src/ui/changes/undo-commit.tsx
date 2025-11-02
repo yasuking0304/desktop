@@ -4,6 +4,7 @@ import { Commit } from '../../models/commit'
 import { RichText } from '../lib/rich-text'
 import { RelativeTime } from '../relative-time'
 import { Button } from '../lib/button'
+import { t } from 'i18next'
 import { Emoji } from '../../lib/emoji'
 
 interface IUndoCommitProps {
@@ -37,7 +38,8 @@ export class UndoCommit extends React.Component<IUndoCommitProps, {}> {
       <div id="undo-commit" role="group" aria-label="Undo commit">
         <div className="commit-info">
           <div className="ago">
-            Committed <RelativeTime date={authorDate} />
+            {t('common.committed', 'Committed')}{' '}
+            <RelativeTime date={authorDate} />
           </div>
           <RichText
             emoji={this.props.emoji}
@@ -53,7 +55,7 @@ export class UndoCommit extends React.Component<IUndoCommitProps, {}> {
             onClick={this.props.onUndo}
             tooltip={title}
           >
-            Undo
+            {t('common.undo', 'Undo')}
           </Button>
         </div>
       </div>

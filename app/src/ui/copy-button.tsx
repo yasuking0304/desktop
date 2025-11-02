@@ -5,6 +5,7 @@ import { Octicon } from './octicons'
 import { sleep } from '../lib/promise'
 import { Button } from './lib/button'
 import { AriaLiveContainer } from './accessibility/aria-live-container'
+import { t } from 'i18next'
 
 interface ICopyButtonProps {
   readonly copyContent: string
@@ -50,7 +51,7 @@ export class CopyButton extends React.Component<
     const { ariaLabel } = this.props
     const { showCopied } = this.state
 
-    const copiedMessage = 'Copied!'
+    const copiedMessage = t('copy-button.copied', 'Copied!')
     const ariaMessage = showCopied ? copiedMessage : ''
     return (
       <Button
