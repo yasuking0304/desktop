@@ -1,11 +1,11 @@
 {
   "releases": {
     "3.5.4-beta2": [
-      "[Improved] The contrast on the pull request check run button icons now meet minimum 3:1 contrast requirements - #21189",
       "[Fixed] Check run status icons in the re-run checks dialog have a status tooltip that is accessible by screenreaders - #21191",
       "[Fixed] Fix: Show whitespace hint on context menu in diff row - #20848. Thanks @zekariasasaminew!",
       "[Fixed] Improve dialog dismissal and sign-in button state handling - #21144. Thanks @zekariasasaminew!",
-      "[Fixed] Fix \"Update Email\" button after login into a different account - #21176"
+      "[Fixed] Fix \"Update Email\" button after login into a different account - #21176",
+      "[Improved] The contrast on the pull request check run button icons now meet minimum 3:1 contrast requirements - #21189"
     ],
     "3.5.4-beta1": [
       "[Added] Display line change count in PR Preview Dialog - #21126. Thanks @iammola!",
