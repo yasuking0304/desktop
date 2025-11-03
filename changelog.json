@@ -3,8 +3,8 @@
     "3.5.4-beta2": [
       "[Fixed] Check run status icons in the re-run checks dialog have a status tooltip that is accessible by screenreaders - #21191",
       "[Fixed] The Whitespace hint popover appears when right-clicking diff lines while \"Hide whitespace changes\" is enabled - #20848. Thanks @zekariasasaminew!",
-      "[Fixed] The cancel button in the sign-in dialog is enabled - #21144. Thanks @zekariasasaminew!",
-      "[Fixed] Fix \"Update Email\" button after login into a different account - #21176",
+      "[Fixed] The cancel button in the sign-in dialog is enabled after sign-in attempt - #21144. Thanks @zekariasasaminew!",
+      "[Fixed] The \"Update Email\" button in the \"Misattributed Commit\" popover works after login from a different account - #21176",
       "[Improved] The contrast on the pull request check run button icons now meet minimum 3:1 contrast requirements - #21189"
     ],
     "3.5.4-beta1": [
