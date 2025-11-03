@@ -122,13 +122,20 @@ export class Git extends React.Component<IGitProps> {
   private renderCorePathsSetting() {
     return (
       <div className="git-settings-path-component">
-        <h2 id="git-settings-path-heading">Settings related to the path</h2>
-
+        <h2 id="git-settings-path-heading">
+          {t(
+            'git.settings-related-to-the-path',
+            'Settings related to the path'
+          )}
+        </h2>
         <div className="git-setting-path-section">
           <div role="group" aria-labelledby="git-settings-path-heading">
             {__WIN32__ ? (
               <Checkbox
-                label="Enable paths longer than 260 characters on Windows"
+                label={t(
+                  'git.enable-paths-lt-260-characters',
+                  'Enable paths longer than 260 characters on Windows'
+                )}
                 value={
                   this.props.coreLongpaths
                     ? CheckboxValue.On
@@ -138,10 +145,10 @@ export class Git extends React.Component<IGitProps> {
               />
             ) : null}
             <Checkbox
-              label={
-                'Display escaped non-ASCII characters in path names ' +
-                '(recommended to turn off for users in the Asian region)'
-              }
+              label={t(
+                'git.display-escaped-non-ascii-characters',
+                'Display escaped non-ASCII characters in path names\n(recommended to turn off for users in the Asian region)'
+              )}
               value={
                 this.props.coreQuotepath ? CheckboxValue.On : CheckboxValue.Off
               }

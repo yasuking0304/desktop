@@ -95,8 +95,8 @@ interface IPreferencesState {
   readonly initialCommitterName: string | null
   readonly initialCommitterEmail: string | null
   readonly initialDefaultBranch: string | null
-  readonly initialCoreLongpaths: boolean | null
-  readonly initialCoreQuotepath: boolean | null
+  readonly initialCoreLongpaths: boolean
+  readonly initialCoreQuotepath: boolean
   readonly disallowedCharactersMessage: string | null
   readonly useWindowsOpenSSH: boolean
   readonly showCommitLengthWarning: boolean
@@ -166,12 +166,12 @@ export class Preferences extends React.Component<
       committerEmail: '',
       defaultBranch: '',
       coreLongpaths: false,
-      coreQuotepath: false,
+      coreQuotepath: true,
       initialCommitterName: null,
       initialCommitterEmail: null,
       initialDefaultBranch: null,
-      initialCoreLongpaths: null,
-      initialCoreQuotepath: null,
+      initialCoreLongpaths: false,
+      initialCoreQuotepath:true,
       disallowedCharactersMessage: null,
       availableEditors: [],
       useCustomEditor: this.props.useCustomEditor,
@@ -209,17 +209,13 @@ export class Preferences extends React.Component<
     const initialCommitterName = await getGlobalConfigValue('user.name')
     const initialCommitterEmail = await getGlobalConfigValue('user.email')
     const initialDefaultBranch = await getDefaultBranch()
-    const initialCoreLongpaths = await getGlobalBooleanConfigValue(
-      'core.longpaths'
-    )
-    const initialCoreQuotepath = await getGlobalBooleanConfigValue(
-      'core.quotepath'
-    )
+    const initialCoreLongpaths =
+      (await getGlobalBooleanConfigValue('core.longpaths')) ?? false
+    const initialCoreQuotepath =
+      (await getGlobalBooleanConfigValue('core.quotepath')) ?? true
 
     let committerName = initialCommitterName
     let committerEmail = initialCommitterEmail
-    let committerCoreLongpaths = initialCoreLongpaths
-    let committerCoreQuotepath = initialCoreQuotepath
 
     if (!committerName || !committerEmail) {
       const { accounts } = this.props
@@ -238,8 +234,6 @@ export class Preferences extends React.Component<
 
     committerName = committerName || ''
     committerEmail = committerEmail || ''
-    committerCoreLongpaths = committerCoreLongpaths ?? false
-    committerCoreQuotepath = committerCoreQuotepath ?? true
 
     const [editors, shells] = await Promise.all([
       getAvailableEditors(),
@@ -253,11 +247,12 @@ export class Preferences extends React.Component<
       committerName,
       committerEmail,
       defaultBranch: initialDefaultBranch,
-      coreLongpaths: committerCoreLongpaths,
-      coreQuotepath: committerCoreQuotepath,
+      coreLongpaths: initialCoreLongpaths,
+      coreQuotepath: initialCoreQuotepath,
       initialCommitterName,
       initialCommitterEmail,
       initialDefaultBranch,
+      initialCoreLongpaths,
       useWindowsOpenSSH: this.props.useWindowsOpenSSH,
       showCommitLengthWarning: this.props.showCommitLengthWarning,
       notificationsEnabled: this.props.notificationsEnabled,
@@ -764,18 +759,14 @@ export class Preferences extends React.Component<
         shouldRefreshAuthor = true
       }
 
-      if (
-        this.state.coreLongpaths !== (this.state.initialCoreLongpaths ?? false)
-      ) {
+      if (this.state.coreLongpaths !== this.state.initialCoreLongpaths) {
         await setGlobalConfigValue(
           'core.longpaths',
           this.state.coreLongpaths ? 'true' : 'false'
         )
       }
 
-      if (
-        this.state.coreQuotepath !== (this.state.initialCoreQuotepath ?? true)
-      ) {
+      if (this.state.coreQuotepath !== this.state.initialCoreQuotepath) {
         await setGlobalConfigValue(
           'core.quotepath',
           this.state.coreQuotepath ? 'true' : 'false'

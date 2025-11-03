@@ -987,13 +987,16 @@
   },
   "git": {
     "default-branch-name-for-new-repositories": "新儲存庫的預設分支名稱",
+    "display-escaped-non-ascii-characters": "Display escaped non-ASCII characters in path names\n(recommended to turn off for users in the Asian region)",
     "edit-your-global-git-config-1": "這些首選項將 ",
     "edit-your-global-git-config-2": " 編輯你的全域 Git 設定檔",
     "edit-your-global-git-config-3": "。",
+    "enable-paths-lt-260-characters": "Enable paths longer than 260 characters on Windows",
     "gitHub-default-branch-description-1": "GitHub 的預設分支名稱是 ",
     "gitHub-default-branch-description-2": ". ",
     "gitHub-default-branch-description-3": "您可能想要根據不同的工作流程來更改它, 或者因為您的整合仍然需要歷史預設分支名稱 ",
-    "gitHub-default-branch-description-4": "。"
+    "gitHub-default-branch-description-4": "。",
+    "settings-related-to-the-path": "Settings related to the path"
   },
   "git-config": {
     "for-this-repository": "您要用於此儲存庫的名稱和電子郵件地址",

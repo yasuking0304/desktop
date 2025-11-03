@@ -987,13 +987,16 @@
   },
   "git": {
     "default-branch-name-for-new-repositories": "Default branch name for new repositories",
+    "display-escaped-non-ascii-characters": "Display escaped non-ASCII characters in path names\n(recommended to turn off for users in the Asian region)",
     "edit-your-global-git-config-1": "These preferences will ",
     "edit-your-global-git-config-2": " edit your global Git config file",
     "edit-your-global-git-config-3": ".",
+    "enable-paths-lt-260-characters": "Enable paths longer than 260 characters on Windows",
     "gitHub-default-branch-description-1": "GitHub's default branch name is ",
     "gitHub-default-branch-description-2": ". ",
     "gitHub-default-branch-description-3": "You may want to change it due to different workflows, or because your integrations still require the historical default branch name of ",
-    "gitHub-default-branch-description-4": "."
+    "gitHub-default-branch-description-4": ".",
+    "settings-related-to-the-path": "Settings related to the path"
   },
   "git-config": {
     "for-this-repository": "For this repository I wish to",
