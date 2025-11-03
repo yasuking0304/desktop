@@ -5,7 +5,7 @@
       "[Fixed] The Whitespace hint popover appears when right-clicking diff lines while \"Hide whitespace changes\" is enabled - #20848. Thanks @zekariasasaminew!",
       "[Fixed] The cancel button in the sign-in dialog is enabled after sign-in attempt - #21144. Thanks @zekariasasaminew!",
       "[Fixed] The \"Update Email\" button in the \"Misattributed Commit\" popover works after login from a different account - #21176",
-      "[Improved] The contrast on the pull request check run button icons now meet minimum 3:1 contrast requirements - #21189"
+      "[Improved] The contrast on the pull request check run button icons meets minimum 3:1 contrast requirements - #21189"
     ],
     "3.5.4-beta1": [
       "[Added] Display line change count in PR Preview Dialog - #21126. Thanks @iammola!",
