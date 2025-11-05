@@ -16,6 +16,10 @@
       "[Improved] Allow users to skip commit message override confirmation - #21025. Thanks @ilyassesalama!",
       "[Improved] Allow generating commits with Copilot in non-GitHub repositories - #20698. Thanks @schroedermarius!"
     ],
+    "3.5.4-beta3": [
+      "[Fixed] Updated Git LFS to 3.7.1 to address CVE-2025-26625 - #21223",
+      "[Fixed] Menu bar does not flicker when profile modal is open - #21150. Thanks @zekariasasaminew!"
+    ],
     "3.5.4-beta2": [
       "[Fixed] Check run status icons in the re-run checks dialog have a status tooltip that is accessible by screenreaders - #21191",
       "[Fixed] The Whitespace hint popover appears when right-clicking diff lines while \"Hide whitespace changes\" is enabled - #20848. Thanks @zekariasasaminew!",
