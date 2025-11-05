@@ -482,6 +482,8 @@ const editors: WindowsExternalEditor[] = [
     registryKeys: [
       CurrentUserUninstallKey('62625861-8486-5be9-9e46-1da50df5f8ff'),
       CurrentUserUninstallKey('{DADADADA-ADAD-ADAD-ADAD-ADADADADADAD}}_is1'),
+      // ARM64 version of Cursor
+      CurrentUserUninstallKey('{DBDBDBDB-BDBD-BDBD-BDBD-BDBDBDBDBDBD}}_is1'),
     ],
     installLocationRegistryKey: 'DisplayIcon',
     displayNamePrefixes: ['Cursor', 'Cursor (User)'],
