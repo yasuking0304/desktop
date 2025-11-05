@@ -2,7 +2,7 @@
   "releases": {
     "3.5.4-beta3": [
       "[Fixed] Updated Git LFS to 3.7.1 to address CVE-2025-26625 - #21223",
-      "[Fixed] Fix: menu bar flickering when profile modal is open by adding capture phase click listener - #21150. Thanks @zekariasasaminew!"
+      "[Fixed] Menu bar does not flicker when profile modal is open - #21150. Thanks @zekariasasaminew!"
     ],
     "3.5.4-beta2": [
       "[Fixed] Check run status icons in the re-run checks dialog have a status tooltip that is accessible by screenreaders - #21191",
