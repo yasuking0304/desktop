@@ -987,16 +987,16 @@
   },
   "git": {
     "default-branch-name-for-new-repositories": "새 리포지토리의 기본 지점 이름",
-    "display-escaped-non-ascii-characters": "Display escaped non-ASCII characters in path names\n(recommended to turn off for users in the Asian region)",
+    "display-escaped-non-ascii-characters": "경로 이름에 이스케이프 된 비 ASCII 문자를 표시합니다 \n(한국 사용자는 끄는 것이 좋습니다)",
     "edit-your-global-git-config-1": "이 설정은",
     "edit-your-global-git-config-2": "글로벌용 Git 구성 파일 편집",
     "edit-your-global-git-config-3": "할 수 있습니다.",
-    "enable-paths-lt-260-characters": "Enable paths longer than 260 characters on Windows",
+    "enable-paths-lt-260-characters": "Windows에서 260자 이상의 경로 사용",
     "gitHub-default-branch-description-1": "GitHub의 기본 지점 이름은 ",
     "gitHub-default-branch-description-2": "입니다.",
     "gitHub-default-branch-description-3": "워크플로가 다르거나 통합되는 과정에서 ",
     "gitHub-default-branch-description-4": "이전의 기본 브랜치 이름이 여전히 필요하기 때문에 이를 변경해야 할 수도 있습니다.",
-    "settings-related-to-the-path": "Settings related to the path"
+    "settings-related-to-the-path": "경로 관련 설정"
   },
   "git-config": {
     "for-this-repository": "이 리포지토리에 사용할 이름과 이메일 주소",
