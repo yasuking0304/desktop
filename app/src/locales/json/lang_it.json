@@ -425,6 +425,8 @@
     "enable-commit-spellcheck": "Enable commit spellcheck",
     "enable-commit-spellcheck-darwin": "Enable Commit Spellcheck",
     "generate-commit-message": "Generate commit message with Copilot{{0}}",
+    "generate-commit-message-with-copilot": "Generate commit message with Copilot",
+    "generate-commit-message-with-copilot-darwin": "Generate Commit Message with Copilot",
     "generating-commit-details": "Generating commit details…",
     "link-create-a-fork": "create a fork",
     "link-switch-branches": "switch branches",
@@ -985,7 +987,7 @@
   },
   "git": {
     "default-branch-name-for-new-repositories": "Default branch name for new repositories",
-    "display-escaped-non-ascii-characters": "Display non-ASCII characters as escaped\n(recommended to turn off in Asian regions)",
+    "display-escaped-non-ascii-characters": "Display escaped non-ASCII characters in path names\n(recommended to turn off for users in the Asian region)",
     "edit-your-global-git-config-1": "These preferences will ",
     "edit-your-global-git-config-2": " edit your global Git config file",
     "edit-your-global-git-config-3": ".",

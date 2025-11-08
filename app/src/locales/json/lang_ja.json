@@ -425,6 +425,8 @@
     "enable-commit-spellcheck": "コミットスペルチェックを有効にする",
     "enable-commit-spellcheck-darwin": "コミットスペルチェックを有効にする",
     "generate-commit-message": "Copilotでコミットメッセージを生成{{0}}",
+    "generate-commit-message-with-copilot": "Copilotでコミットメッセージを生成",
+    "generate-commit-message-with-copilot-darwin": "Copilotでコミットメッセージを生成",
     "generating-commit-details": "コミットの詳細を生成中…",
     "link-create-a-fork": "フォークの作成",
     "link-switch-branches": "ブランチの切り替え",
@@ -985,7 +987,7 @@
   },
   "git": {
     "default-branch-name-for-new-repositories": "新しいリポジトリのデフォルトのブランチ名",
-    "display-escaped-non-ascii-characters": "非ASCII文字を変換して表示する\n(日本語環境ではOFFでの使用を推奨します)",
+    "display-escaped-non-ascii-characters": "非ASCII文字をエスケープして表示する\n(日本語環境ではOFFでの使用を推奨します)",
     "edit-your-global-git-config-1": "これらの設定は、",
     "edit-your-global-git-config-2": "グローバル向け Git 構成ファイルを編集",
     "edit-your-global-git-config-3": "することになります。",

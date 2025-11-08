@@ -2311,20 +2311,12 @@ export function getHTMLURL(endpoint: string): string {
 /**
  * Get the API URL for an HTML URL. For example:
  *
- * http://github.mycompany.com -> http://github.mycompany.com/api/v3
+ * http://github.mycompany.com -> https://github.mycompany.com/api/v3
  */
 export function getEnterpriseAPIURL(endpoint: string): string {
-  if (isGHE(endpoint)) {
-    const url = new window.URL(endpoint)
+  const { host } = new window.URL(endpoint)
 
-    url.pathname = '/'
-    url.hostname = `api.${url.hostname}`
-
-    return url.toString()
-  }
-
-  const parsed = URL.parse(endpoint)
-  return `${parsed.protocol}//${parsed.hostname}/api/v3`
+  return isGHE(endpoint) ? `https://api.${host}/` : `https://${host}/api/v3`
 }
 
 export const getAPIEndpoint = (endpoint: string) =>
@@ -2473,6 +2465,7 @@ export async function isGitHubHost(url: string) {
       signal: ac.signal,
       credentials: 'omit',
       method: 'HEAD',
+      redirect: 'error',
     })
 
     tryUpdateEndpointVersionFromResponse(endpoint, response)

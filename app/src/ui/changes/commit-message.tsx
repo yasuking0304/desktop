@@ -826,6 +826,50 @@ export class CommitMessage extends React.Component<
     }
   }
 
+  private getGenerateCommitMessageMenuItem(): IMenuItem | null {
+    const {
+      accounts,
+      onGenerateCommitMessage,
+      filesSelected,
+      isCommitting,
+      isGeneratingCommitMessage,
+      commitToAmend,
+    } = this.props
+
+    if (
+      !accounts.some(enableCommitMessageGeneration) ||
+      onGenerateCommitMessage === undefined
+    ) {
+      return null
+    }
+
+    const noFilesSelected = filesSelected.length === 0
+    const noChangesAvailable = !commitToAmend && noFilesSelected
+
+    return {
+      label: __DARWIN__
+        ?  t(
+          'commit-message.generate-commit-message-with-copilot-darwin',
+          'Generate Commit Message with Copilot'
+        )
+        : t(
+          'commit-message.generate-commit-message-with-copilot',
+          'Generate commit message with Copilot'
+        ),
+      action: () => {
+        const { commitMessage } = this.state
+        onGenerateCommitMessage(
+          filesSelected,
+          !!commitMessage.summary || !!commitMessage.description
+        )
+      },
+      enabled:
+        isCommitting !== true &&
+        !isGeneratingCommitMessage &&
+        !noChangesAvailable,
+    }
+  }
+
   private onContextMenu = (event: React.MouseEvent<HTMLDivElement>) => {
     if (
       event.target instanceof HTMLTextAreaElement ||
@@ -834,19 +878,35 @@ export class CommitMessage extends React.Component<
       return
     }
 
-    showContextualMenu([this.getAddRemoveCoAuthorsMenuItem()])
+    const items: IMenuItem[] = [this.getAddRemoveCoAuthorsMenuItem()]
+
+    const generateMenuItem = this.getGenerateCommitMessageMenuItem()
+    if (generateMenuItem) {
+      items.push(generateMenuItem)
+    }
+
+    showContextualMenu(items)
   }
 
   private onAutocompletingInputContextMenu = () => {
-    const items: IMenuItem[] = [
-      this.getAddRemoveCoAuthorsMenuItem(),
+    const items: IMenuItem[] = [this.getAddRemoveCoAuthorsMenuItem()]
+
+    const generateMenuItem = this.getGenerateCommitMessageMenuItem()
+    if (generateMenuItem) {
+      items.push(generateMenuItem)
+    }
+
+    items.push(
       { type: 'separator' },
       ...getEditMenuItemOfReact(),
-      { type: 'separator' },
+      { type: 'separator' }
+    )
+
+    items.push(
       this.getCommitSpellcheckEnabilityMenuItem(
         this.props.commitSpellcheckEnabled
       ),
-    ]
+    )
 
     showContextualMenu(items, true)
   }
@@ -894,22 +954,17 @@ export class CommitMessage extends React.Component<
   }
 
   private renderCopilotButton() {
+    if (!this.isCopilotButtonEnabled) {
+      return null
+    }
+
     const {
-      accounts,
-      onGenerateCommitMessage,
       filesSelected,
       isCommitting,
       isGeneratingCommitMessage,
       commitToAmend,
       shouldShowGenerateCommitMessageCallOut,
     } = this.props
-
-    if (
-      !accounts.some(enableCommitMessageGeneration) ||
-      onGenerateCommitMessage === undefined
-    ) {
-      return null
-    }
 
     const noFilesSelected = filesSelected.length === 0
     const noChangesAvailable = !commitToAmend && noFilesSelected
@@ -933,7 +988,7 @@ export class CommitMessage extends React.Component<
         )
     return (
       <>
-        <div className="separator" />
+        {this.isCoAuthorInputEnabled && <div className="separator" />}
         <Button
           className="copilot-button"
           onClick={this.onCopilotButtonClick}
@@ -1044,14 +1099,25 @@ export class CommitMessage extends React.Component<
   }
 
   /**
+   * Whether the Copilot button should be available
+   */
+  private get isCopilotButtonEnabled() {
+    const { accounts, onGenerateCommitMessage } = this.props
+    return (
+      accounts.some(enableCommitMessageGeneration) &&
+      onGenerateCommitMessage !== undefined
+    )
+  }
+
+  /**
    * Whether or not there's anything to render in the action bar
    */
   private get isActionBarEnabled() {
-    return this.isCoAuthorInputEnabled
+    return this.isCoAuthorInputEnabled || this.isCopilotButtonEnabled
   }
 
   private renderActionBar() {
-    if (!this.isCoAuthorInputEnabled) {
+    if (!this.isActionBarEnabled) {
       return null
     }
 
