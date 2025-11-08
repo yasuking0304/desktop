@@ -62,7 +62,6 @@ jobs:
           cache: yarn
       - run: yarn
       - run: yarn validate-electron-version
-      - run: yarn validate-macos-version
       - run: yarn lint
       - run: yarn validate-changelog
       - name: Ensure a clean working directory
@@ -105,6 +104,9 @@ jobs:
         env:
           npm_config_arch: ${{ matrix.arch }}
           TARGET_ARCH: ${{ matrix.arch }}
+      - name: Validate macOS version
+        if: runner.os == 'macOS'
+        run: yarn validate-macos-version
       - name: Run desktop-trampoline tests
         run: |
           cd vendor/desktop-trampoline

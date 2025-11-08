@@ -449,6 +449,7 @@ export class CommitMessageAvatar extends React.Component<
         }
         anchorPosition={PopoverAnchorPosition.RightBottom}
         decoration={PopoverDecoration.Balloon}
+        onMousedownOutside={this.closePopover}
         onClickOutside={this.closePopover}
         ariaLabelledby="commit-avatar-popover-header"
       >
