@@ -216,6 +216,8 @@ export class Preferences extends React.Component<
 
     let committerName = initialCommitterName
     let committerEmail = initialCommitterEmail
+    let committerCoreLongpaths = initialCoreLongpaths
+    let committerCoreQuotepath = initialCoreQuotepath
 
     if (!committerName || !committerEmail) {
       const { accounts } = this.props
@@ -234,6 +236,8 @@ export class Preferences extends React.Component<
 
     committerName = committerName || ''
     committerEmail = committerEmail || ''
+    committerCoreLongpaths = committerCoreLongpaths ?? false
+    committerCoreQuotepath = committerCoreQuotepath ?? true
 
     const [editors, shells] = await Promise.all([
       getAvailableEditors(),
@@ -469,6 +473,8 @@ export class Preferences extends React.Component<
               onNameChanged={this.onCommitterNameChanged}
               onEmailChanged={this.onCommitterEmailChanged}
               onDefaultBranchChanged={this.onDefaultBranchChanged}
+              onCoreLongpathsChanged={this.onCoreLongpathsChanged}
+              onCoreQuotepathChanged={this.onCoreQuotepathChanged}
               isLoadingGitConfig={this.state.isLoadingGitConfig}
               onCoreLongpathsChanged={this.onCoreLongpathsChanged}
               onCoreQuotepathChanged={this.onCoreQuotepathChanged}
