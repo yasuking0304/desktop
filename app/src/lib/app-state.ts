@@ -236,6 +236,9 @@ export interface IAppState {
   /** Should the app prompt the user to confirm they want to commit with changes are hidden by filter? */
   readonly askForConfirmationOnCommitFilteredChanges: boolean
 
+  /** Should the app prompt the user to confirm commit message override? */
+  readonly askForConfirmationOnCommitMessageOverride: boolean
+
   /** How the app should handle uncommitted changes when switching branches */
   readonly uncommittedChangesStrategy: UncommittedChangesStrategy
 

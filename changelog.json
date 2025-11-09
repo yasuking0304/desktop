@@ -1,5 +1,62 @@
 {
   "releases": {
+    "3.5.4": [
+      "[Fixed] Update Git LFS to 3.7.1 to address CVE-2025-26625",
+      "[Fixed] Check run status icons in the re-run checks dialog have a status tooltip that is accessible by screenreaders - #21191",
+      "[Fixed] The Whitespace hint popover appears when right-clicking diff lines while \"Hide whitespace changes\" is enabled - #20848. Thanks @zekariasasaminew!",
+      "[Fixed] The cancel button in the sign-in dialog is enabled after sign-in attempt - #21144. Thanks @zekariasasaminew!",
+      "[Fixed] The \"Update Email\" button in the \"Misattributed Commit\" popover works after login from a different account - #21176",
+      "[Fixed] Improve host discovery when using authenticating proxies - #19039 #19120",
+      "[Fixed] Fix diff search results highlights not visible on addition hunks - #21134",
+      "[Fixed] Add Copilot commit message generation to context menu - #21000. Thanks @zekariasasaminew!",
+      "[Fixed] Override system accent color for checkboxes and radio buttons - #21088",
+      "[Improved] The icon contrast on the pull request check run button meets minimum 3:1 contrast requirements - #21189",
+      "[Improved] Increased title bar height on macOS Tahoe - #21135. Thanks @berkcebi!",
+      "[Improved] Display line change count in PR Preview Dialog - #21126. Thanks @iammola!",
+      "[Improved] Allow users to skip commit message override confirmation - #21025. Thanks @ilyassesalama!",
+      "[Improved] Allow generating commits with Copilot in non-GitHub repositories - #20698. Thanks @schroedermarius!"
+    ],
+    "3.5.4-beta3": [
+      "[Fixed] Updated Git LFS to 3.7.1 to address CVE-2025-26625 - #21223",
+      "[Fixed] Menu bar does not flicker when profile modal is open - #21150. Thanks @zekariasasaminew!"
+    ],
+    "3.5.4-beta2": [
+      "[Fixed] Check run status icons in the re-run checks dialog have a status tooltip that is accessible by screenreaders - #21191",
+      "[Fixed] The Whitespace hint popover appears when right-clicking diff lines while \"Hide whitespace changes\" is enabled - #20848. Thanks @zekariasasaminew!",
+      "[Fixed] The cancel button in the sign-in dialog is enabled after sign-in attempt - #21144. Thanks @zekariasasaminew!",
+      "[Fixed] The \"Update Email\" button in the \"Misattributed Commit\" popover works after login from a different account - #21176",
+      "[Improved] The icon contrast on the pull request check run button meets minimum 3:1 contrast requirements - #21189"
+    ],
+    "3.5.4-beta1": [
+      "[Added] Display line change count in PR Preview Dialog - #21126. Thanks @iammola!",
+      "[Added] Allow users to skip commit message override confirmation - #21025. Thanks @ilyassesalama!",
+      "[Added] Allow generating commits with Copilot in non-GitHub repositories - #20698. Thanks @schroedermarius!",
+      "[Fixed] Improve host discovery when using authenticating proxies - #19039 #19120",
+      "[Fixed] Fix diff search results highlights not visible on addition hunks - #21134",
+      "[Fixed] Add Copilot commit message generation to context menu - #21000. Thanks @zekariasasaminew!",
+      "[Fixed] Override system accent color for checkboxes and radio buttons - #21088",
+      "[Improved] Increased title bar height on macOS Tahoe - #21135. Thanks @berkcebi!"
+    ],
+    "3.5.3": [
+      "[Added] Add Ptyxis shell integration - #20963. Thanks @logonoff!",
+      "[Fixed] Copilot message generation in progress message is announced to screen readers - #21008",
+      "[Fixed] Fix: Improve spacing between graphic and text - #7500. Thanks @robbierotman!",
+      "[Fixed] Focus lands on first interactive control instead of 'Continue' button in the conflict resolution dialog - #20880",
+      "[Improved] Upgrade Electron to v38.2.0 - #21060",
+      "[Improved] The text color of the 'File does not exist' merge conflict warning meets 4.5:1 contrast requirements - #20902",
+      "[Improved] Provides the tooltips for list items in a single condensed tooltip that allows keyboard users and screen reader users access upon navigation of a list item - #20804",
+      "[Removed] Remove support for macOS 11 - #21060"
+    ],
+    "3.5.3-beta4": ["[Improved] Upgrade Electron to v38.2.0 - #21060"],
+    "3.5.3-beta3": [
+      "[Fixed] Copilot message generation in progress message is announced to screen readers - #21008",
+      "[Fixed] Add Ptyxis shell integration - #20963. Thanks @logonoff!",
+      "[Fixed] Fix: Improve spacing between graphic and text - #7500. Thanks @robbierotman!",
+      "[Improved] Upgrade Electron to v38.1.0 - #21012"
+    ],
+    "3.5.3-beta2": [
+      "[Improved] The text color of the 'File does not exist' merge conflict warning meets 4.5:1 contrast requirements - #20902"
+    ],
     "3.5.3-beta1": [
       "[Improved] Provides the tooltips for list items in a single condensed tooltip that allows keyboard users and screen reader users access upon navigation of a list item - #20804",
       "[Fixed] Focus lands on first interactive control instead of 'Continue' button in the conflict resolution dialog - #20880"

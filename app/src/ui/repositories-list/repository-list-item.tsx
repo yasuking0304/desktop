@@ -9,6 +9,9 @@ import { IMatches } from '../../lib/fuzzy-find'
 import { IAheadBehind } from '../../models/branch'
 import classNames from 'classnames'
 import { createObservableRef } from '../lib/observable-ref'
+import { Tooltip } from '../lib/tooltip'
+import { enableAccessibleListToolTips } from '../../lib/feature-flag'
+import { TooltippedContent } from '../lib/tooltipped-content'
 
 interface IRepositoryListItemProps {
   readonly repository: Repositoryish
@@ -53,6 +56,13 @@ export class RepositoryListItem extends React.Component<
 
     return (
       <div className="repository-list-item" ref={this.listItemRef}>
+        <Tooltip
+          target={this.listItemRef}
+          disabled={enableAccessibleListToolTips()}
+        >
+          {this.renderTooltip()}
+        </Tooltip>
+
         <Octicon
           className="icon-for-repository"
           symbol={iconForRepository(repository)}
@@ -72,6 +82,23 @@ export class RepositoryListItem extends React.Component<
             hasChanges: hasChanges,
           })}
       </div>
+    )
+  }
+
+  private renderTooltip() {
+    const repo = this.props.repository
+    const gitHubRepo = repo instanceof Repository ? repo.gitHubRepository : null
+    const alias = repo instanceof Repository ? repo.alias : null
+    const realName = gitHubRepo ? gitHubRepo.fullName : repo.name
+
+    return (
+      <>
+        <div>
+          <strong>{realName}</strong>
+          {alias && <> ({alias})</>}
+        </div>
+        <div>{repo.path}</div>
+      </>
     )
   }
 
@@ -108,19 +135,35 @@ const renderAheadBehindIndicator = (aheadBehind: IAheadBehind) => {
     return null
   }
 
+  const aheadBehindTooltip =
+    'The currently checked out branch is' +
+    (behind ? ` ${commitGrammar(behind)} behind ` : '') +
+    (behind && ahead ? 'and' : '') +
+    (ahead ? ` ${commitGrammar(ahead)} ahead of ` : '') +
+    'its tracked branch.'
+
   return (
-    <div className="ahead-behind">
+    <TooltippedContent
+      className="ahead-behind"
+      tagName="div"
+      tooltip={aheadBehindTooltip}
+      disabled={enableAccessibleListToolTips()}
+    >
       {ahead > 0 && <Octicon symbol={octicons.arrowUp} />}
       {behind > 0 && <Octicon symbol={octicons.arrowDown} />}
-    </div>
+    </TooltippedContent>
   )
 }
 
 const renderChangesIndicator = () => {
   return (
-    <span className="change-indicator-wrapper">
+    <TooltippedContent
+      className="change-indicator-wrapper"
+      tooltip="There are uncommitted changes in this repository"
+      disabled={enableAccessibleListToolTips()}
+    >
       <Octicon symbol={octicons.dotFill} />
-    </span>
+    </TooltippedContent>
   )
 }
 

@@ -425,6 +425,8 @@
     "enable-commit-spellcheck": "啟用提交拼字檢查",
     "enable-commit-spellcheck-darwin": "啟用提交拼字檢查",
     "generate-commit-message": "使用 Copilot 產生提交訊息{{0}}",
+    "generate-commit-message-with-copilot": "使用 Copilot 產生提交訊息",
+    "generate-commit-message-with-copilot-darwin": "使用 Copilot 產生提交訊息",
     "generating-commit-details": "正在產生提交詳細資料…",
     "link-create-a-fork": "建立一個分叉",
     "link-switch-branches": "切換分支",
@@ -985,13 +987,16 @@
   },
   "git": {
     "default-branch-name-for-new-repositories": "新儲存庫的預設分支名稱",
+    "display-escaped-non-ascii-characters": "顯示路徑名中的轉義非 ASCII 字元\n（建議中國用戶停用此功能）",
     "edit-your-global-git-config-1": "這些首選項將 ",
     "edit-your-global-git-config-2": " 編輯你的全域 Git 設定檔",
     "edit-your-global-git-config-3": "。",
+    "enable-paths-lt-260-characters": "在 Windows 系統中啟用長度超過 260 個字元的路徑",
     "gitHub-default-branch-description-1": "GitHub 的預設分支名稱是 ",
     "gitHub-default-branch-description-2": ". ",
     "gitHub-default-branch-description-3": "您可能想要根據不同的工作流程來更改它, 或者因為您的整合仍然需要歷史預設分支名稱 ",
-    "gitHub-default-branch-description-4": "。"
+    "gitHub-default-branch-description-4": "。",
+    "settings-related-to-the-path": "與路徑相關的設定"
   },
   "git-config": {
     "for-this-repository": "您要用於此儲存庫的名稱和電子郵件地址",

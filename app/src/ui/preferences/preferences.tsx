@@ -11,6 +11,7 @@ import { Dialog, DialogFooter, DialogError } from '../dialog'
 import {
   getGlobalConfigValue,
   setGlobalConfigValue,
+  getGlobalBooleanConfigValue,
 } from '../../lib/git/config'
 import { lookupPreferredEmail } from '../../lib/email'
 import { Shell, getAvailableShells } from '../../lib/shells'
@@ -68,6 +69,7 @@ interface IPreferencesProps {
   readonly confirmForcePush: boolean
   readonly confirmUndoCommit: boolean
   readonly askForConfirmationOnCommitFilteredChanges: boolean
+  readonly confirmCommitMessageOverride: boolean
   readonly uncommittedChangesStrategy: UncommittedChangesStrategy
   readonly selectedExternalEditor: string | null
   readonly selectedShell: Shell
@@ -88,9 +90,13 @@ interface IPreferencesState {
   readonly committerName: string
   readonly committerEmail: string
   readonly defaultBranch: string
+  readonly coreLongpaths: boolean
+  readonly coreQuotepath: boolean
   readonly initialCommitterName: string | null
   readonly initialCommitterEmail: string | null
   readonly initialDefaultBranch: string | null
+  readonly initialCoreLongpaths: boolean
+  readonly initialCoreQuotepath: boolean
   readonly disallowedCharactersMessage: string | null
   readonly useWindowsOpenSSH: boolean
   readonly showCommitLengthWarning: boolean
@@ -105,6 +111,7 @@ interface IPreferencesState {
   readonly confirmForcePush: boolean
   readonly confirmUndoCommit: boolean
   readonly askForConfirmationOnCommitFilteredChanges: boolean
+  readonly confirmCommitMessageOverride: boolean
   readonly uncommittedChangesStrategy: UncommittedChangesStrategy
   readonly availableEditors: ReadonlyArray<string>
   readonly useCustomEditor: boolean
@@ -158,9 +165,13 @@ export class Preferences extends React.Component<
       committerName: '',
       committerEmail: '',
       defaultBranch: '',
+      coreLongpaths: false,
+      coreQuotepath: true,
       initialCommitterName: null,
       initialCommitterEmail: null,
       initialDefaultBranch: null,
+      initialCoreLongpaths: false,
+      initialCoreQuotepath:true,
       disallowedCharactersMessage: null,
       availableEditors: [],
       useCustomEditor: this.props.useCustomEditor,
@@ -180,6 +191,7 @@ export class Preferences extends React.Component<
       confirmForcePush: false,
       confirmUndoCommit: false,
       askForConfirmationOnCommitFilteredChanges: false,
+      confirmCommitMessageOverride: true,
       uncommittedChangesStrategy: defaultUncommittedChangesStrategy,
       selectedExternalEditor: this.props.selectedExternalEditor,
       availableShells: [],
@@ -197,9 +209,15 @@ export class Preferences extends React.Component<
     const initialCommitterName = await getGlobalConfigValue('user.name')
     const initialCommitterEmail = await getGlobalConfigValue('user.email')
     const initialDefaultBranch = await getDefaultBranch()
+    const initialCoreLongpaths =
+      (await getGlobalBooleanConfigValue('core.longpaths')) ?? false
+    const initialCoreQuotepath =
+      (await getGlobalBooleanConfigValue('core.quotepath')) ?? true
 
     let committerName = initialCommitterName
     let committerEmail = initialCommitterEmail
+    let committerCoreLongpaths = initialCoreLongpaths
+    let committerCoreQuotepath = initialCoreQuotepath
 
     if (!committerName || !committerEmail) {
       const { accounts } = this.props
@@ -218,6 +236,8 @@ export class Preferences extends React.Component<
 
     committerName = committerName || ''
     committerEmail = committerEmail || ''
+    committerCoreLongpaths = committerCoreLongpaths ?? false
+    committerCoreQuotepath = committerCoreQuotepath ?? true
 
     const [editors, shells] = await Promise.all([
       getAvailableEditors(),
@@ -231,9 +251,12 @@ export class Preferences extends React.Component<
       committerName,
       committerEmail,
       defaultBranch: initialDefaultBranch,
+      coreLongpaths: initialCoreLongpaths,
+      coreQuotepath: initialCoreQuotepath,
       initialCommitterName,
       initialCommitterEmail,
       initialDefaultBranch,
+      initialCoreLongpaths,
       useWindowsOpenSSH: this.props.useWindowsOpenSSH,
       showCommitLengthWarning: this.props.showCommitLengthWarning,
       notificationsEnabled: this.props.notificationsEnabled,
@@ -249,6 +272,7 @@ export class Preferences extends React.Component<
       confirmUndoCommit: this.props.confirmUndoCommit,
       askForConfirmationOnCommitFilteredChanges:
         this.props.askForConfirmationOnCommitFilteredChanges,
+      confirmCommitMessageOverride: this.props.confirmCommitMessageOverride,
       uncommittedChangesStrategy: this.props.uncommittedChangesStrategy,
       availableShells,
       availableEditors,
@@ -444,10 +468,16 @@ export class Preferences extends React.Component<
               email={this.state.committerEmail}
               accounts={this.props.accounts}
               defaultBranch={this.state.defaultBranch}
+              coreLongpaths={this.state.coreLongpaths}
+              coreQuotepath={this.state.coreQuotepath}
               onNameChanged={this.onCommitterNameChanged}
               onEmailChanged={this.onCommitterEmailChanged}
               onDefaultBranchChanged={this.onDefaultBranchChanged}
+              onCoreLongpathsChanged={this.onCoreLongpathsChanged}
+              onCoreQuotepathChanged={this.onCoreQuotepathChanged}
               isLoadingGitConfig={this.state.isLoadingGitConfig}
+              onCoreLongpathsChanged={this.onCoreLongpathsChanged}
+              onCoreQuotepathChanged={this.onCoreQuotepathChanged}
               onEditGlobalGitConfig={this.props.onEditGlobalGitConfig}
             />
           </>
@@ -487,6 +517,9 @@ export class Preferences extends React.Component<
             askForConfirmationOnCommitFilteredChanges={
               this.state.askForConfirmationOnCommitFilteredChanges
             }
+            confirmCommitMessageOverride={
+              this.state.confirmCommitMessageOverride
+            }
             onConfirmRepositoryRemovalChanged={
               this.onConfirmRepositoryRemovalChanged
             }
@@ -500,6 +533,9 @@ export class Preferences extends React.Component<
             onConfirmUndoCommitChanged={this.onConfirmUndoCommitChanged}
             onAskForConfirmationOnCommitFilteredChanges={
               this.onAskForConfirmationOnCommitFilteredChanges
+            }
+            onConfirmCommitMessageOverrideChanged={
+              this.onConfirmCommitMessageOverrideChanged
             }
             uncommittedChangesStrategy={this.state.uncommittedChangesStrategy}
             onUncommittedChangesStrategyChanged={
@@ -625,6 +661,10 @@ export class Preferences extends React.Component<
     this.setState({ askForConfirmationOnCommitFilteredChanges: value })
   }
 
+  private onConfirmCommitMessageOverrideChanged = (value: boolean) => {
+    this.setState({ confirmCommitMessageOverride: value })
+  }
+
   private onUncommittedChangesStrategyChanged = (
     uncommittedChangesStrategy: UncommittedChangesStrategy
   ) => {
@@ -646,6 +686,14 @@ export class Preferences extends React.Component<
 
   private onDefaultBranchChanged = (defaultBranch: string) => {
     this.setState({ defaultBranch })
+  }
+
+  private onCoreLongpathsChanged = (coreLongpaths: boolean) => {
+    this.setState({ coreLongpaths })
+  }
+
+  private onCoreQuotepathChanged = (coreQuotepath: boolean) => {
+    this.setState({ coreQuotepath })
   }
 
   private onSelectedEditorChanged = (editor: string) => {
@@ -715,6 +763,20 @@ export class Preferences extends React.Component<
       if (this.state.committerEmail !== this.state.initialCommitterEmail) {
         await setGlobalConfigValue('user.email', this.state.committerEmail)
         shouldRefreshAuthor = true
+      }
+
+      if (this.state.coreLongpaths !== this.state.initialCoreLongpaths) {
+        await setGlobalConfigValue(
+          'core.longpaths',
+          this.state.coreLongpaths ? 'true' : 'false'
+        )
+      }
+
+      if (this.state.coreQuotepath !== this.state.initialCoreQuotepath) {
+        await setGlobalConfigValue(
+          'core.quotepath',
+          this.state.coreQuotepath ? 'true' : 'false'
+        )
       }
 
       if (this.props.repository !== null && shouldRefreshAuthor) {
@@ -810,6 +872,9 @@ export class Preferences extends React.Component<
     await dispatcher.setConfirmUndoCommitSetting(this.state.confirmUndoCommit)
     await dispatcher.setConfirmCommitFilteredChanges(
       this.state.askForConfirmationOnCommitFilteredChanges
+    )
+    await dispatcher.setConfirmCommitMessageOverrideSetting(
+      this.state.confirmCommitMessageOverride
     )
 
     if (this.state.selectedExternalEditor) {

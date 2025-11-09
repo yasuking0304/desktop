@@ -3617,7 +3617,7 @@ electron-installer-redhat@3.4.0:
     word-wrap "^1.2.3"
     yargs "^16.0.2"
 
-electron-packager@^17.1.2:
+electron-packager@^17.1.1:
   version "17.1.2"
   resolved "https://registry.yarnpkg.com/electron-packager/-/electron-packager-17.1.2.tgz#18030b28024d242b706d0a8a67ed4cd1a57311aa"
   integrity sha512-XofXdikjYI7MVBcnXeoOvRR+yFFFHOLs3J7PF5KYQweigtgLshcH4W660PsvHr4lYZ03JBpLyEcUB8DzHZ+BNw==
@@ -3671,10 +3671,10 @@ electron-winstaller@*, electron-winstaller@^5.0.0:
     lodash.template "^4.2.2"
     temp "^0.9.0"
 
-electron@36.1.0:
-  version "36.1.0"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-36.1.0.tgz#9919b77e61cd1400acc6dd24f9db8451fba5f8eb"
-  integrity sha512-gnp3BnbKdGsVc7cm1qlEaZc8pJsR08mIs8H/yTo8gHEtFkGGJbDTVZOYNAfbQlL0aXh+ozv+CnyiNeDNkT1Upg==
+electron@38.2.0:
+  version "38.2.0"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-38.2.0.tgz#fc6bb321923320cc76aa036c7677642ab0239d70"
+  integrity sha512-Cw5Mb+N5NxsG0Hc1qr8I65Kt5APRrbgTtEEn3zTod30UNJRnAE1xbGk/1NOaDn3ODzI/MYn6BzT9T9zreP7xWA==
   dependencies:
     "@electron/get" "^2.0.0"
     "@types/node" "^22.7.7"
