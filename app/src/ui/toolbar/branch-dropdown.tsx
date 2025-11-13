@@ -342,14 +342,13 @@ export class BranchDropdown extends React.Component<IBranchDropdownProps> {
   }
 
   private onViewBranchOnGitHub = () => {
-    const { repository } = this.props
-    const { tip } = this.props.repositoryState.branchesState
+    const tip = this.props.repositoryState.branchesState.tip
+    const gitHubRepository = this.props.repository.gitHubRepository
 
     if (tip.kind !== TipState.Valid) {
       return
     }
 
-    const gitHubRepository = repository.gitHubRepository
     if (!gitHubRepository || gitHubRepository.htmlURL === null) {
       return
     }
