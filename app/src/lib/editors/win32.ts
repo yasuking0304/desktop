@@ -496,6 +496,15 @@ const editors: WindowsExternalEditor[] = [
     displayNamePrefixes: ['Windsurf', 'Windsurf (User)'],
     publishers: ['Codeium'],
   },
+  {
+    name: 'Zed',
+    registryKeys: [
+      CurrentUserUninstallKey('{2DB0DA96-CA55-49BB-AF4F-64AF36A86712}_is1'),
+    ],
+    installLocationRegistryKey: 'DisplayIcon',
+    displayNamePrefixes: ['Zed'],
+    publishers: ['Zed Industries'],
+  },
 ]
 
 function getKeyOrEmpty(
