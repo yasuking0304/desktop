@@ -309,6 +309,9 @@ export class BranchDropdown extends React.Component<IBranchDropdownProps> {
       name: tip.branch.name,
       isLocal: tip.branch.type === BranchType.Local,
       onRenameBranch: this.onRenameBranch,
+      onViewBranchOnGitHub: tip.branch.upstreamRemoteName
+        ? this.onViewBranchOnGithub
+        : undefined,
       onViewPullRequestOnGitHub: this.props.currentPullRequest
         ? this.onViewPullRequestOnGithub
         : undefined,
@@ -336,6 +339,27 @@ export class BranchDropdown extends React.Component<IBranchDropdownProps> {
       repository: this.props.repository,
       branch,
     })
+  }
+
+  private onViewBranchOnGithub = () => {
+    const { repository } = this.props
+    const { tip } = this.props.repositoryState.branchesState
+
+    if (tip.kind !== TipState.Valid) {
+      return
+    }
+
+    const gitHubRepository = repository.gitHubRepository
+    if (!gitHubRepository || gitHubRepository.htmlURL === null) {
+      return
+    }
+
+    const branchName = tip.branch.upstreamWithoutRemote ?? tip.branch.name
+    const url = `${gitHubRepository.htmlURL}/tree/${encodeURIComponent(
+      branchName
+    )}`
+
+    this.props.dispatcher.openInBrowser(url)
   }
 
   private onViewPullRequestOnGithub = () => {
