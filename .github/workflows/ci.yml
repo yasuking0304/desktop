@@ -100,6 +100,9 @@ jobs:
         env:
           npm_config_arch: ${{ matrix.arch }}
           TARGET_ARCH: ${{ matrix.arch }}
+      - name: Validate macOS version
+        if: runner.os == 'macOS'
+        run: yarn validate-macos-version
       - name: Run desktop-trampoline tests
         run: |
           cd vendor/desktop-trampoline

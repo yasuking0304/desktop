@@ -1,4 +1,6 @@
 import * as React from 'react'
+import { Repository } from '../../models/repository'
+import { WorkingDirectoryFileChange } from '../../models/status'
 import {
   Dialog,
   DialogContent,
@@ -6,8 +8,8 @@ import {
   OkCancelButtonGroup,
 } from '../dialog'
 import { Dispatcher } from '../dispatcher'
-import { Repository } from '../../models/repository'
-import { WorkingDirectoryFileChange } from '../../models/status'
+import { Checkbox, CheckboxValue } from '../lib/checkbox'
+import { Row } from '../lib/row'
 
 interface IGenerateCommitMessageOverrideWarningProps {
   readonly dispatcher: Dispatcher
@@ -20,9 +22,20 @@ interface IGenerateCommitMessageOverrideWarningProps {
   readonly onDismissed: () => void
 }
 
-export class GenerateCommitMessageOverrideWarning extends React.Component<IGenerateCommitMessageOverrideWarningProps> {
+interface IGenerateCommitMessageOverrideWarningState {
+  readonly confirmCommitMessageOverride: boolean
+}
+
+export class GenerateCommitMessageOverrideWarning extends React.Component<
+  IGenerateCommitMessageOverrideWarningProps,
+  IGenerateCommitMessageOverrideWarningState
+> {
   public constructor(props: IGenerateCommitMessageOverrideWarningProps) {
     super(props)
+
+    this.state = {
+      confirmCommitMessageOverride: true,
+    }
   }
 
   public render() {
@@ -37,10 +50,21 @@ export class GenerateCommitMessageOverrideWarning extends React.Component<IGener
         role="alertdialog"
       >
         <DialogContent>
-          <p id="generate-commit-message-override-warning-body">
+          <Row id="generate-commit-message-override-warning-body">
             The commit message you have entered will be overridden by the
             generated commit message.
-          </p>
+          </Row>
+          <Row>
+            <Checkbox
+              label="Do not show this message again"
+              value={
+                this.state.confirmCommitMessageOverride
+                  ? CheckboxValue.Off
+                  : CheckboxValue.On
+              }
+              onChange={this.onConfirmCommitMessageOverrideChanged}
+            />
+          </Row>
         </DialogContent>
         <DialogFooter>
           <OkCancelButtonGroup destructive={true} okButtonText="Override" />
@@ -49,7 +73,18 @@ export class GenerateCommitMessageOverrideWarning extends React.Component<IGener
     )
   }
 
+  private onConfirmCommitMessageOverrideChanged = (
+    event: React.FormEvent<HTMLInputElement>
+  ) => {
+    const value = !event.currentTarget.checked
+    this.setState({ confirmCommitMessageOverride: value })
+  }
+
   private onOverride = async () => {
+    if (!this.state.confirmCommitMessageOverride) {
+      await this.props.dispatcher.setConfirmCommitMessageOverrideSetting(false)
+    }
+
     this.props.dispatcher.generateCommitMessage(
       this.props.repository,
       this.props.filesSelected
