@@ -1745,7 +1745,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
       }
 
       this.repositoryStateCache.updateCompareState(repository, () => ({
-        commitSHAs: commits.concat(newCommits ?? []),
+        commitSHAs: commits.concat(newCommits),
       }))
       this.emitUpdate()
     }

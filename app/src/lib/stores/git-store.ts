@@ -603,6 +603,8 @@ export class GitStore extends BaseStore {
    * If the tip of the repository does not have commits (i.e. is unborn), this
    * should be invoked with `null`, which clears any existing commits from the
    * store.
+   * 
+   * @returns The list of commit SHAs that were ammended to the list of commits, or null if not applicable
    */
   public async loadLocalCommits(
     branch: Branch | null,
