@@ -48,7 +48,7 @@ function compareVersions(version1: string, version2: string): number {
   return 0 // some version
 }
 
-function patchCliui() {
+export function patchCliui() {
   /**
    * The following version cinbinations cause problems,
    * so wrap-ansi is prohibited.
@@ -108,7 +108,7 @@ export async function packageElectronBuilder(): Promise<Array<string>> {
     'electron-builder'
   )
 
-  patchCliui()
+  // patchCliui()
 
   const configPath = path.resolve(__dirname, 'electron-builder.yml')
 

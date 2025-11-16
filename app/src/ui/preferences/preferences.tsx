@@ -171,7 +171,7 @@ export class Preferences extends React.Component<
       initialCommitterEmail: null,
       initialDefaultBranch: null,
       initialCoreLongpaths: false,
-      initialCoreQuotepath:true,
+      initialCoreQuotepath: true,
       disallowedCharactersMessage: null,
       availableEditors: [],
       useCustomEditor: this.props.useCustomEditor,
@@ -476,8 +476,6 @@ export class Preferences extends React.Component<
               onCoreLongpathsChanged={this.onCoreLongpathsChanged}
               onCoreQuotepathChanged={this.onCoreQuotepathChanged}
               isLoadingGitConfig={this.state.isLoadingGitConfig}
-              onCoreLongpathsChanged={this.onCoreLongpathsChanged}
-              onCoreQuotepathChanged={this.onCoreQuotepathChanged}
               onEditGlobalGitConfig={this.props.onEditGlobalGitConfig}
             />
           </>
