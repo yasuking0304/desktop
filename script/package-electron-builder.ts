@@ -65,18 +65,37 @@ export function patchCliui() {
     'node_modules',
     'cliui'
   )
+  if (!fs.existsSync(cliuiPath)) {
+    return
+  }
   const wrapAnsiPath = path.resolve(
     cliuiPath,
     '..',
-    'wrap-ansi'
+    'wrap-ansi',
+    'package.json'
   )
-  const wrapAnsiVersion = require(path.resolve(wrapAnsiPath, 'package.json'))[
-    'version'
-  ]
+  const wrapAnsiVersion = fs.existsSync(wrapAnsiPath)
+    ? require(wrapAnsiPath)['version']
+    : '99.99.0'
   if (compareVersions(wrapAnsiVersion, '8.0.0') < 0) {
     console.log('wrap-ansi version is valid: %s', wrapAnsiVersion)
     return
   }
+
+  const wrapStylePath = path.resolve(
+    cliuiPath,
+    '..',
+    'wrap-styles',
+    'package.json'
+  )
+  const wrapStylesVersion = fs.existsSync(wrapStylePath)
+    ? require(wrapStylePath)['version']
+    : '99.99.0'
+  if (compareVersions(wrapStylesVersion, '4.0.0') < 0) {
+    console.log('wrap-ansi version is valid: %s', wrapAnsiVersion)
+    return
+  }
+
   const cliuiVersion = require(path.resolve(cliuiPath, 'package.json'))[
     'version'
   ]
@@ -108,7 +127,7 @@ export async function packageElectronBuilder(): Promise<Array<string>> {
     'electron-builder'
   )
 
-  // patchCliui()
+  patchCliui()
 
   const configPath = path.resolve(__dirname, 'electron-builder.yml')
 
