@@ -1526,6 +1526,7 @@
     "discarding-stash": "Discarding stash",
     "force-pushing": "Force pushing",
     "if-i-have-changes-and-i-switch-branches": "If I have changes and I switch branches...",
+    "overriding-commit-message": "Overriding commit message with generated message",
     "removing-repositories": "Removing repositories",
     "show-a-confirmation": "Show a confirmation dialog before...",
     "show-commit-length-warning": "Show commit length warning",

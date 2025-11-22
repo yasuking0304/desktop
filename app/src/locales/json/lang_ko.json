@@ -1526,6 +1526,7 @@
     "discarding-stash": "일시 퇴피 장소 파기",
     "force-pushing": "강제 푸시",
     "if-i-have-changes-and-i-switch-branches": "수정 중인 분기를 전환하려는 경우…",
+    "overriding-commit-message": "Copilot 에서 생성된 메시지로 커밋 메시지 덮어쓰기",
     "removing-repositories": "리포지토리 삭제",
     "show-a-confirmation": "사전 확인 대화 상자 표시…",
     "show-commit-length-warning": "커밋 요약 길이 경고 표시",
