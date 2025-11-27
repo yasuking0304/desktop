@@ -355,7 +355,13 @@ export class BranchDropdown extends React.Component<IBranchDropdownProps> {
       return
     }
 
-    const branchName = tip.branch.upstreamWithoutRemote ?? tip.branch.name
+    if (!tip.branch.upstreamWithoutRemote) {
+      return
+    }
+
+    const url = `${gitHubRepository.htmlURL}/tree/${encodeURIComponent(
+      tip.branch.upstreamWithoutRemote
+    )}`
     const url = `${gitHubRepository.htmlURL}/tree/${encodeURIComponent(
       branchName
     )}`
