@@ -2,7 +2,10 @@ import * as React from 'react'
 import { Dispatcher } from '../dispatcher'
 import * as octicons from '../octicons/octicons.generated'
 import { OcticonSymbol, syncClockwise } from '../octicons'
-import { Repository } from '../../models/repository'
+import {
+  isRepositoryWithGitHubRepository,
+  Repository,
+} from '../../models/repository'
 import { Resizable } from '../resizable'
 import { TipState } from '../../models/tip'
 import { ToolbarDropdown, DropdownState } from './dropdown'
@@ -361,9 +364,6 @@ export class BranchDropdown extends React.Component<IBranchDropdownProps> {
 
     const url = `${gitHubRepository.htmlURL}/tree/${encodeURIComponent(
       tip.branch.upstreamWithoutRemote
-    )}`
-    const url = `${gitHubRepository.htmlURL}/tree/${encodeURIComponent(
-      branchName
     )}`
 
     this.props.dispatcher.openInBrowser(url)
