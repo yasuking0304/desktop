@@ -52,7 +52,7 @@ export async function renameBranch(
 ): Promise<void> {
   try {
     await git(
-      ['branch', force ? '-m' : '-M', branch.nameWithoutRemote, newName],
+      ['branch', force ? '-M' : '-m', branch.nameWithoutRemote, newName],
       repository.path,
       'renameBranch'
     )
