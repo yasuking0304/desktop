@@ -48,6 +48,8 @@ jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     env:
       RELEASE_CHANNEL: ${{ inputs.environment }}
     steps:
