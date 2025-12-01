@@ -41,7 +41,9 @@ export function generateBranchContextMenuItems(
 
   if (onViewBranchOnGitHub !== undefined) {
     items.push({
-      label: 'View Branch on GitHub',
+      label: __DARWIN__
+        ? t('menu.view-branch-on-github-darwin', 'View Branch on GitHub')
+        : t('menu.view-branch-on-github', 'View branch on GitHub'),
       action: () => onViewBranchOnGitHub(),
     })
   }
