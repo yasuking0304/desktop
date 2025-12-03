@@ -3340,6 +3340,11 @@ export class AppStore extends TypedBaseStore<IAppState> {
           result,
           state.commitToAmend
         )
+      } else {
+        // The commit failed, but we should still refresh to ensure we
+        // accurately reflect the repository state post failure. See
+        // https://github.com/desktop/desktop/issues/21229
+        this._refreshRepository(repository)
       }
 
       return result !== undefined
