@@ -137,9 +137,9 @@ function packageWindows() {
 
     const metadataPath = join(acsPath, 'metadata.json')
     const acsMetadata = {
-      Endpoint: 'https://eus.codesigning.azure.net/',
-      CodeSigningAccountName: 'github-desktop',
-      CertificateProfileName: 'desktop',
+      Endpoint: 'https://wus.codesigning.azure.net/',
+      CodeSigningAccountName: 'GitHubInc',
+      CertificateProfileName: 'GitHubInc',
       CorrelationId: `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID}`,
     }
     writeFileSync(metadataPath, JSON.stringify(acsMetadata))
