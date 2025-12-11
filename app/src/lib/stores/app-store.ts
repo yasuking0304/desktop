@@ -910,6 +910,8 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
       updateAccounts(endpointTokens)
 
+      this.refreshSelectedRepositoryAfterAccountChange()
+
       this.emitUpdate()
     })
     this.accountsStore.onDidError(error => this.emitError(error))
@@ -4336,6 +4338,25 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
     await this.refreshBranchProtectionState(freshRepo)
     return freshRepo
+  }
+
+  /**
+   * Refreshes the GitHub repository information for the currently selected
+   * repository when the active account changes. This ensures that permission
+   * information is updated after signing in/out.
+   */
+  private async refreshSelectedRepositoryAfterAccountChange() {
+    const repository = this.selectedRepository
+
+    if (repository === null || repository instanceof CloningRepository) {
+      return
+    }
+
+    if (!isRepositoryWithGitHubRepository(repository)) {
+      return
+    }
+
+    await this.repositoryWithRefreshedGitHubRepository(repository)
   }
 
   private async updateBranchProtectionsFromAPI(repository: Repository) {
