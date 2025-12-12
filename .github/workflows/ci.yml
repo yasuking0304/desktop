@@ -44,6 +44,8 @@ jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     env:
       RELEASE_CHANNEL: ${{ inputs.environment }}
     steps:
@@ -70,10 +72,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-13-xlarge, windows-2022]
+        os: [macos-14-xlarge, windows-2022]
         arch: [x64, arm64]
         include:
-          - os: macos-13-xlarge
+          - os: macos-14-xlarge
             friendlyName: macOS
           - os: windows-2022
             friendlyName: Windows
@@ -136,7 +138,7 @@ jobs:
         run: |
           $acsZip = Join-Path $env:RUNNER_TEMP "acs.zip"
           $acsDir = Join-Path $env:RUNNER_TEMP "acs"
-          Invoke-WebRequest -Uri https://www.nuget.org/api/v2/package/Microsoft.Trusted.Signing.Client/1.0.52 -OutFile $acsZip -Verbose
+          Invoke-WebRequest -Uri https://www.nuget.org/api/v2/package/Microsoft.Trusted.Signing.Client/1.0.95 -OutFile $acsZip -Verbose
           Expand-Archive $acsZip -Destination $acsDir -Force -Verbose
           # Replace ancient signtool in electron-winstall with one that supports ACS
           Copy-Item -Path "C:\Program Files (x86)\Windows Kits\10\bin\10.0.22621.0\x64\*" -Include signtool.exe,signtool.exe.manifest,Microsoft.Windows.Build.Signing.mssign32.dll.manifest,mssign32.dll,Microsoft.Windows.Build.Signing.wintrust.dll.manifest,wintrust.dll,Microsoft.Windows.Build.Appx.AppxSip.dll.manifest,AppxSip.dll,Microsoft.Windows.Build.Appx.AppxPackaging.dll.manifest,AppxPackaging.dll,Microsoft.Windows.Build.Appx.OpcServices.dll.manifest,OpcServices.dll -Destination "node_modules\electron-winstaller\vendor" -Verbose
