@@ -954,7 +954,7 @@ export class CommitMessage extends React.Component<
     const noChangesAvailable = !commitToAmend && noFilesSelected
 
     const ariaLabel = isGeneratingCommitMessage
-      ? "Generating commit details…'"
+      ? 'Generating commit details…'
       : 'Generate commit message with Copilot' +
         (noChangesAvailable
           ? '. Files must be selected to generate a commit message.'
