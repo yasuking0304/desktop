@@ -167,7 +167,7 @@ button {
 }
 
 kbd {
-  border-radius: var(--border-radius);
+  border-radius: calc(var(--border-radius) - 1px);
   border: var(--contrast-border);
 
   display: inline-block;
@@ -176,14 +176,16 @@ kbd {
   line-height: 1;
   min-height: 16px;
 
-  font-family: var(--font-family);
+  font-family: var(--font-family-sans-serif);
   text-align: center;
   min-width: 1.5em;
 
-  @include darwin {
-    // On macOS, kbd elements are not separated by a +, so let's add a margin
-    &:not(:last-child) {
-      margin-right: 2px;
-    }
+  &:not(:last-child) {
+    margin-right: 1px;
   }
+
+  &:not(:first-child) {
+    margin-left: 1px;
+  }
+
 }
