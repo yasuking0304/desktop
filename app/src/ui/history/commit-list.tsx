@@ -664,8 +664,8 @@ export class CommitList extends React.Component<
         <h4>{reorderCommitsHintTitle}</h4>
         <p>
           {t('commit-list-item.reorder-choose-locate-1', 'Use ')}
-          <KeyboardShortcut darwinKeys={['↑']} keys={['↑']} />
-          <KeyboardShortcut darwinKeys={['↓']} keys={['↓']} />
+          <KeyboardShortcut darwinKeys={['↑']} keys={['↑']} isSymbol={true} />
+          <KeyboardShortcut darwinKeys={['↓']} keys={['↓']} isSymbol={true} />
           {t(
             'commit-list-item.reorder-choose-locate-2',
             'to choose a new location.'
@@ -673,7 +673,7 @@ export class CommitList extends React.Component<
         </p>
         <p>
           {t('commit-list-item.reorder-comfirm-locate-1', 'Press ')}
-          <KeyboardShortcut darwinKeys={['⏎']} keys={['⏎']} />
+          <KeyboardShortcut darwinKeys={['⏎']} keys={['⏎']} isSymbol={true} />
           {t('commit-list-item.reorder-comfirm-locate-2', 'to confirm.')}
         </p>
       </Popover>
