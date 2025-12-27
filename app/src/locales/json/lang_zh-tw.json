@@ -2069,6 +2069,12 @@
     "selecting-lines": "隱藏空白變更時, 選擇行將會停用。",
     "show-whitespace-changes": "顯示空白變化嗎?"
   },
+  "window-controls": {
+    "close": "關閉",
+    "maximize": "最大化",
+    "minimize": "最小化",
+    "restore": "復原"
+  },
   "workflow-push-rejected": {
     "continue-in-browser": "在瀏覽器中繼續",
     "continue-in-browser-darwin": "在瀏覽器中繼續",

@@ -2069,6 +2069,12 @@
     "selecting-lines": "行の選択は、空白の変更を非表示にすると無効になります。",
     "show-whitespace-changes": "空白の変更を表示しますか?"
   },
+  "window-controls": {
+    "close": "閉じる",
+    "maximize": "最大化",
+    "minimize": "最小化",
+    "restore": "復元"
+  },
   "workflow-push-rejected": {
     "continue-in-browser": "ブラウザーで続行",
     "continue-in-browser-darwin": "ブラウザーで続行",

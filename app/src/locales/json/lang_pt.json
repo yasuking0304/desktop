@@ -2069,6 +2069,12 @@
     "selecting-lines": "Selecting lines is disabled when hiding whitespace changes.",
     "show-whitespace-changes": "Show whitespace changes?"
   },
+  "window-controls": {
+    "close": "Close",
+    "maximize": "Maximize",
+    "minimize": "Minimize",
+    "restore": "Restore"
+  },
   "workflow-push-rejected": {
     "continue-in-browser": "Continue in browser",
     "continue-in-browser-darwin": "Continue in Browser",

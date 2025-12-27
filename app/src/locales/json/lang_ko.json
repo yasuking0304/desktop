@@ -2069,6 +2069,12 @@
     "selecting-lines": "행 선택은 빈 변경사항을 숨기면 비활성화됩니다.",
     "show-whitespace-changes": "공백 변경사항을 표시하시겠습니까?"
   },
+  "window-controls": {
+    "close": "닫기",
+    "maximize": "최대화",
+    "minimize": "최소화",
+    "restore": "복원"
+  },
   "workflow-push-rejected": {
     "continue-in-browser": "브라우저로 계속",
     "continue-in-browser-darwin": "브라우저로 계속",
