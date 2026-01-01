@@ -848,14 +848,14 @@ export class CommitMessage extends React.Component<
 
     return {
       label: __DARWIN__
-        ?  t(
-          'commit-message.generate-commit-message-with-copilot-darwin',
-          'Generate Commit Message with Copilot'
-        )
+        ? t(
+            'commit-message.generate-commit-message-with-copilot-darwin',
+            'Generate Commit Message with Copilot'
+          )
         : t(
-          'commit-message.generate-commit-message-with-copilot',
-          'Generate commit message with Copilot'
-        ),
+            'commit-message.generate-commit-message-with-copilot',
+            'Generate commit message with Copilot'
+          ),
       action: () => {
         const { commitMessage } = this.state
         onGenerateCommitMessage(
@@ -896,16 +896,14 @@ export class CommitMessage extends React.Component<
       items.push(generateMenuItem)
     }
 
-    items.push(
-      { type: 'separator' },
-      ...getEditMenuItemOfReact(),
-      { type: 'separator' }
-    )
+    items.push({ type: 'separator' }, ...getEditMenuItemOfReact(), {
+      type: 'separator',
+    })
 
     items.push(
       this.getCommitSpellcheckEnabilityMenuItem(
         this.props.commitSpellcheckEnabled
-      ),
+      )
     )
 
     showContextualMenu(items, true)

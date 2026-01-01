@@ -52,7 +52,7 @@ function compareVersions(version1: string, version2: string): number {
   return 0 // some version
 }
 
-function patchCliui() {
+export function patchCliui() {
   /**
    * The following version cinbinations cause problems,
    * so wrap-ansi is prohibited.
@@ -69,14 +69,37 @@ function patchCliui() {
     'node_modules',
     'cliui'
   )
-  const wrapAnsiPath = path.resolve(cliuiPath, '..', 'wrap-ansi')
-  const wrapAnsiVersion = require(path.resolve(wrapAnsiPath, 'package.json'))[
-    'version'
-  ]
+  if (!fs.existsSync(cliuiPath)) {
+    return
+  }
+  const wrapAnsiPath = path.resolve(
+    cliuiPath,
+    '..',
+    'wrap-ansi',
+    'package.json'
+  )
+  const wrapAnsiVersion = fs.existsSync(wrapAnsiPath)
+    ? require(wrapAnsiPath)['version']
+    : '99.99.0'
   if (compareVersions(wrapAnsiVersion, '8.0.0') < 0) {
     console.log('wrap-ansi version is valid: %s', wrapAnsiVersion)
     return
   }
+
+  const wrapStylePath = path.resolve(
+    cliuiPath,
+    '..',
+    'wrap-styles',
+    'package.json'
+  )
+  const wrapStylesVersion = fs.existsSync(wrapStylePath)
+    ? require(wrapStylePath)['version']
+    : '99.99.0'
+  if (compareVersions(wrapStylesVersion, '4.0.0') < 0) {
+    console.log('wrap-ansi version is valid: %s', wrapAnsiVersion)
+    return
+  }
+
   const cliuiVersion = require(path.resolve(cliuiPath, 'package.json'))[
     'version'
   ]

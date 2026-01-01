@@ -790,7 +790,10 @@ export class CreateRepository extends React.Component<
               disabled={loadingDefaultDir}
               ariaDescribedBy="existing-repository-path-error path-is-subfolder-of-repository"
             />
-            <Button onClick={this.showFilePicker} disabled={loadingDefaultDir}>
+            <Button
+              onClick={this.showFilePicker}
+              disabled={loadingDefaultDir}
+            >
               {t('common.choose', 'Choose…')}
             </Button>
           </Row>

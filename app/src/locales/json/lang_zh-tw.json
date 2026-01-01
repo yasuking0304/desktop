@@ -1526,6 +1526,7 @@
     "discarding-stash": "丟棄儲藏",
     "force-pushing": "強制推動",
     "if-i-have-changes-and-i-switch-branches": "如果我有變化並且我切換分支…",
+    "overriding-commit-message": "使用 Copilot 生成的訊息覆寫提交訊息",
     "removing-repositories": "刪除儲存庫",
     "show-a-confirmation": "之前顯示確認對話框…",
     "show-commit-length-warning": "顯示提交摘要長度警告",
@@ -2067,6 +2068,12 @@
   "whitespace-hint-popover": {
     "selecting-lines": "隱藏空白變更時, 選擇行將會停用。",
     "show-whitespace-changes": "顯示空白變化嗎?"
+  },
+  "window-controls": {
+    "close": "關閉",
+    "maximize": "最大化",
+    "minimize": "最小化",
+    "restore": "復原"
   },
   "workflow-push-rejected": {
     "continue-in-browser": "在瀏覽器中繼續",

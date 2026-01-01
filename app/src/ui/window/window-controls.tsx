@@ -10,6 +10,7 @@ import {
 } from '../main-process-proxy'
 import * as ipcRenderer from '../../lib/ipc-renderer'
 import { Button } from '../lib/button'
+import { t } from 'i18next'
 
 // These paths are all drawn to a 10x10 view box and replicate the symbols
 // seen on Windows 10 window controls.
@@ -22,6 +23,13 @@ const minimizePath = 'M 0,5 10,5 10,6 0,6 Z'
 
 interface IWindowControlState {
   readonly windowState: WindowState | null
+}
+
+const windowStateCaption = {
+  maximize: t('window-controls.maximize', 'Maximize'),
+  minimize: t('window-controls.minimize', 'Minimize'),
+  restore: t('window-controls.restore', 'Restore'),
+  close: t('window-controls.close', 'Close'),
 }
 
 /**
@@ -94,7 +102,7 @@ export class WindowControls extends React.Component<{}, IWindowControlState> {
     path: string
   ) {
     const className = classNames('window-control', name)
-    const title = name[0].toUpperCase() + name.substring(1)
+    const title = windowStateCaption[name as keyof typeof windowStateCaption]
 
     return (
       <Button

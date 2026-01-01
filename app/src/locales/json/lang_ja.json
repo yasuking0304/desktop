@@ -56,7 +56,7 @@
   },
   "advanced": {
     "background-updates": "バックグラウンド更新",
-    "help-github-desktop-improve-by-submitting-1": "GitHub Desktop が ",
+    "help-github-desktop-improve-by-submitting-1": "GitHub Desktop の ",
     "help-github-desktop-improve-by-submitting-2": " を送信することで改善に貢献する",
     "network-and-credentials": "ネットワークと資格情報",
     "show-status-icons-in-the-repository-list": "リポジトリ リストにステータス アイコンを表示",
@@ -1526,6 +1526,7 @@
     "discarding-stash": "一時退避場所の破棄",
     "force-pushing": "強制プッシュ",
     "if-i-have-changes-and-i-switch-branches": "修正中のブランチを切り替える場合…",
+    "overriding-commit-message": "Copilotで生成されたメッセージでコミットメッセージを上書き",
     "removing-repositories": "リポジトリを削除する",
     "show-a-confirmation": "事前に確認ダイアログを表示…",
     "show-commit-length-warning": "コミット概要の長さの警告を表示",
@@ -2067,6 +2068,12 @@
   "whitespace-hint-popover": {
     "selecting-lines": "行の選択は、空白の変更を非表示にすると無効になります。",
     "show-whitespace-changes": "空白の変更を表示しますか?"
+  },
+  "window-controls": {
+    "close": "閉じる",
+    "maximize": "最大化",
+    "minimize": "最小化",
+    "restore": "復元"
   },
   "workflow-push-rejected": {
     "continue-in-browser": "ブラウザーで続行",
