@@ -10,7 +10,7 @@ permissions:
 jobs:
   add-comment-to-unable-to-reproduce-issues:
     if: github.event.label.name == 'unable-to-reproduce'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GH_REPO: ${{ github.repository }}
