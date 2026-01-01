@@ -211,38 +211,9 @@
     "zib": "ZiB"
   },
   "changes-list": {
-    "confirm-discard-all-changes": "모든 변경사항 삭제...",
-    "confirm-discard-all-changes-darwin": "모든 변경사항 삭제...",
-    "confirm-stash-all-changes": "모든 변경 사항을 일시적으로 저장…",
-    "confirm-stash-all-changes-darwin": "모든 변경 사항을 일시 저장…",
-    "create-filename": "작성 {{0}}",
-    "delete-filename": "삭제 {{0}}",
-    "discard-changes": "변경 취소",
-    "discard-changes-darwin": "변경 폐기",
-    "discard-selected-changes": "선택한 {{0}}개의 변경사항을 삭제합니다.",
-    "discard-selected-changes-darwin": "선택한 {{0}}개의 변경사항을 삭제합니다.",
-    "exclude-selected-files": "선택한 파일 제외",
-    "exclude-selected-files-darwin": "선택한 파일 제외",
     "file": "파일 수",
     "files": "파일 수",
-    "files-changes-description": "선택 중인 변경된 {{2}} ({{0}}/{{1}})",
-    "files-description": "변경된 {{1}} ({{0}})",
-    "ignore-all-file-add-to-gitignore": "모든 {{0}} 파일 제외(.gitignore에 추가)",
-    "ignore-all-file-add-to-gitignore-darwin": "모든 {{0}} 파일 제외(gitignore에 추가)",
-    "ignore-file-add-to-gitignore": "파일 제외(.gitignore에 추가)",
-    "ignore-file-add-to-gitignore-darwin": "파일 제외(.gitignore에 추가)",
-    "ignore-folder-add-to-gitignore": "디렉토리 제외(.gitignore에 추가)",
-    "ignore-folder-add-to-gitignore-darwin": "디렉토리 제외(.gitignore에 추가)",
-    "ignore-selected-file-add-to-gitignore": "선택한 {{0}} 파일을 무시합니다(.gitignore에 추가)",
-    "ignore-selected-file-add-to-gitignore-darwin": "선택한 {{0}} 파일을 무시합니다(.gitignore에 추가)",
-    "include-selected-files": "선택한 파일 포함",
-    "include-selected-files-darwin": "선택한 파일 포함",
-    "open-in-external-editor": "{{0}}에서 열기",
-    "stash-all-changes": "모든 변경 사항을 일시 저장",
-    "stash-all-changes-darwin": "모든 변경 사항을 일시 저장",
-    "stashed-changes": "일시 퇴피한 변경",
-    "summary-required": "개요(필수 입력)",
-    "update-filename": "업데이트 {{0}}"
+    "files-description": "변경된 {{1}} ({{0}})"
   },
   "changes-list-filter-options": {
     "active-filters": "({{0}}개 적용)",
@@ -460,19 +431,6 @@
     "you-can-choose-an-email-2": "에서 이 리포지토리의 로컬 이메일 주소를 선택할 수 있습니다."
   },
   "commit-summary": {
-    "collapse": "접는",
-    "empty-commit-message": "빈 커밋 메시지",
-    "expand": "배포",
-    "not-included": "포함되지 않습니다.",
-    "number-files-added": "추가 {{0}}",
-    "number-files-changed": "{{0}}{{1}} 변경",
-    "number-files-deleted": "삭제 {{0}}",
-    "number-files-midified": "변경 {{0}}",
-    "number-lines-added": "{{0}}{{1}} 추가",
-    "number-lines-deleted": "{{0}}{{1}} 삭제",
-    "number-unreachable-commits": "불가능한 {{0}}{{1}}",
-    "showing-changes-from-1": "변경 보기: ",
-    "showing-changes-from-2": " {{0}} {{1}}",
     "tag": "태그",
     "tags": "태그",
     "this-commit-has-not-been-pushed": "이 커밋은 원격 리포지토리에 푸시되지 않았습니다",
@@ -485,7 +443,7 @@
     "branch-name-darwin": "브랜치 이름(한글이나 한자는 사용할 수 없음)",
     "cancel": "취소",
     "change": "변경",
-    "changes-files": "변경 파일 수",
+    "changes-files": "변경파일",
     "choose": "선택…",
     "clone": "클론",
     "close": "닫기",
@@ -512,8 +470,6 @@
     "ignore": "무시",
     "install-and-restart": "설치하고 다시 시작",
     "install-and-restart-darwin": "설치하고 다시 시작",
-    "line": "행",
-    "lines": "행",
     "local-path": "로컬 경로",
     "local-path-darwin": "로컬 경로",
     "multiple-commits": "개체 커밋",
@@ -525,6 +481,7 @@
     "ok": "Ok",
     "one-commit": "개체 커밋",
     "one-or-less-commit": "개체 커밋",
+    "open": "열다",
     "opetarion-alias": "별칭 {{0}}",
     "opetarion-alias-darwin": "별칭 {{0}}",
     "options": "옵션",
@@ -986,6 +943,11 @@
     "we-were-unable-to-authenticate-6": "다시 시도해 주세요."
   },
   "git": {
+    "autor": "계정",
+    "beta": "Beta",
+    "cache-git-hook-env-variables": "Git 후크의 환경 변수 캐싱",
+    "cache-hook-env-description": "성능을 향상시키기 위해 후크 환경 변수를 캐시합니다. 후크가 자주 변경되는 환경 변수에 의존하는 경우 비활성화하십시오.",
+    "default-branch": "기본 브랜치",
     "default-branch-name-for-new-repositories": "새 리포지토리의 기본 지점 이름",
     "display-escaped-non-ascii-characters": "경로 이름에 이스케이프 된 비 ASCII 문자를 표시합니다 \n(한국 사용자는 끄는 것이 좋습니다)",
     "edit-your-global-git-config-1": "이 설정은",
@@ -996,7 +958,15 @@
     "gitHub-default-branch-description-2": "입니다.",
     "gitHub-default-branch-description-3": "워크플로가 다르거나 통합되는 과정에서 ",
     "gitHub-default-branch-description-4": "이전의 기본 브랜치 이름이 여전히 필요하기 때문에 이를 변경해야 할 수도 있습니다.",
-    "settings-related-to-the-path": "경로 관련 설정"
+    "github-desktop-hook-support-is-experime-1": "GitHub Desktop 후크 지원은 테스트 단계이며 현재는 커밋 관련 후크만 지원합니다. ",
+    "github-desktop-hook-support-is-experime-2": "문제가 발생하거나 의견이 있으시면 알려주십시오",
+    "github-desktop-hook-support-is-experime-3": ".",
+    "hooks": "후크",
+    "load-git-hook-env-from-shell": "쉘에서 Git 후크 환경 변수 로드",
+    "other-settings": "기타",
+    "settings-related-to-the-path": "경로 관련 설정",
+    "shell-to-use-when-loading-env": "환경을 로드할 때 사용할 셸",
+    "when-enabled-attempt-to-load-env-variables": "사용하도록 설정하면 GitHub Desktop은 Git 후크를 실행할 때 셸에서 환경 변수를 로드합니다. 이것은 Git 후크가 쉘 설정 파일에 설정된 환경 변수에 의존하는 경우에 유용합니다. nvm, rbenv, asdf 등의 버전 관리 도구에서 일반적으로 사용되는 기술입니다."
   },
   "git-config": {
     "for-this-repository": "이 리포지토리에 사용할 이름과 이메일 주소",
@@ -1187,6 +1157,8 @@
     "open-in-external-editor-darwin": "{{0}}에서 열기",
     "open-in-shell": "{{0}}에서 열기(&P)",
     "open-in-shell-darwin": "{{0}}에서 열기",
+    "open-with-external-editor": "외부 편집기에서 열기(&W)…",
+    "open-with-external-editor-darwin": "외부 편집기에서 열기…",
     "open-working-directory": "Explorer에서 보기(&X)",
     "open-working-directory-darwin": "Finder로 표시",
     "open-working-directory-linux": "파일 관리자에서 보기",
@@ -1270,6 +1242,7 @@
     "view-on-github-darwin": "GitHub에서 확인",
     "view-pull-request": "GitHub에서 끌어오기 요청(&P)",
     "view-pull-request-darwin": "GitHub에서 끌어오기 요청 참조",
+    "view-pull-request-on-github": "View Pull Request on GitHub",
     "window-darwin": "창",
     "zoom-darwin": "줌",
     "zoom-in": "줌(확대)",
@@ -1484,6 +1457,13 @@
     "open-your-card": "카드 열기",
     "throw-it-away": "숨기기"
   },
+  "open-with-external-editor": {
+    "configure-custom-editor": "편집기 설정 사용자 정의…",
+    "configure-custom-editor-darwin": "편집기 설정 사용자 정의…",
+    "open-with": "…에서 열기",
+    "open-with-darwin": "…에서 열기",
+    "select-an-editor": "편집기 선택"
+  },
   "oversized-files-warning": {
     "commit-anyway": "어쨌든 커밋",
     "commit-anyway-darwin": "어쨌든 커밋",
@@ -1526,6 +1506,7 @@
     "discarding-stash": "일시 퇴피 장소 파기",
     "force-pushing": "강제 푸시",
     "if-i-have-changes-and-i-switch-branches": "수정 중인 분기를 전환하려는 경우…",
+    "overriding-commit-message": "Copilot 에서 생성된 메시지로 커밋 메시지 덮어쓰기",
     "removing-repositories": "리포지토리 삭제",
     "show-a-confirmation": "사전 확인 대화 상자 표시…",
     "show-commit-length-warning": "커밋 요약 길이 경고 표시",
@@ -2067,6 +2048,12 @@
   "whitespace-hint-popover": {
     "selecting-lines": "행 선택은 빈 변경사항을 숨기면 비활성화됩니다.",
     "show-whitespace-changes": "공백 변경사항을 표시하시겠습니까?"
+  },
+  "window-controls": {
+    "close": "닫기",
+    "maximize": "최대화",
+    "minimize": "최소화",
+    "restore": "복원"
   },
   "workflow-push-rejected": {
     "continue-in-browser": "브라우저로 계속",

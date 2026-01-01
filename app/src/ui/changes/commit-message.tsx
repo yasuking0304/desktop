@@ -24,7 +24,7 @@ import { Commit, ICommitContext } from '../../models/commit'
 import { startTimer } from '../lib/timing'
 import { CommitWarning, CommitWarningIcon } from './commit-warning'
 import { LinkButton } from '../lib/link-button'
-import { Foldout, FoldoutType } from '../../lib/app-state'
+import { CommitOptions, Foldout, FoldoutType } from '../../lib/app-state'
 import { IAvatarUser, getAvatarUserFromAuthor } from '../../models/avatar'
 import { showContextualMenu, getEditMenuItemOfReact } from '../../lib/menu-item'
 import { Account, isEnterpriseAccount } from '../../models/account'
@@ -63,8 +63,13 @@ import { formatCommitMessage } from '../../lib/format-commit-message'
 import { useRepoRulesLogic } from '../../lib/helpers/repo-rules'
 import { isDotCom } from '../../lib/endpoint-capabilities'
 import { WorkingDirectoryFileChange } from '../../models/status'
-import { enableCommitMessageGeneration } from '../../lib/feature-flag'
+import {
+  enableCommitMessageGeneration,
+  enableHooksEnvironment,
+} from '../../lib/feature-flag'
 import { AriaLiveContainer } from '../accessibility/aria-live-container'
+import { HookProgress } from '../../lib/git'
+import { assertNever } from '../../lib/fatal-error'
 
 const addAuthorIcon: OcticonSymbolVariant = {
   w: 18,
@@ -108,6 +113,8 @@ interface ICommitMessageProps {
   readonly repositoryAccount: Account | null
   readonly autocompletionProviders: ReadonlyArray<IAutocompletionProvider<any>>
   readonly isCommitting?: boolean
+  readonly hookProgress: HookProgress | null
+  readonly onShowCommitProgress: (() => void) | undefined
   readonly isGeneratingCommitMessage?: boolean
   readonly shouldShowGenerateCommitMessageCallOut?: boolean
   readonly commitToAmend: Commit | null
@@ -195,6 +202,24 @@ interface ICommitMessageProps {
   /** Optional to add an id to a message that should be provided as an aria
    * description of the submit button */
   readonly submitButtonAriaDescribedBy?: string
+
+  /**
+   * Whether there are any hooks in the repository that could be
+   * skipped during commit with the --no-verify flag
+   */
+  readonly hasCommitHooks: boolean
+
+  /**
+   * Whether or not to skip blocking commit hooks when creating commits
+   * by means of passing the `--no-verify` flag to git commit
+   */
+  readonly skipCommitHooks: boolean
+
+  /** Callback to set commit options for the given repository */
+  readonly onUpdateCommitOptions: (
+    repository: Repository,
+    options: CommitOptions
+  ) => void
 }
 
 interface ICommitMessageState {
@@ -848,14 +873,14 @@ export class CommitMessage extends React.Component<
 
     return {
       label: __DARWIN__
-        ?  t(
-          'commit-message.generate-commit-message-with-copilot-darwin',
-          'Generate Commit Message with Copilot'
-        )
+        ? t(
+            'commit-message.generate-commit-message-with-copilot-darwin',
+            'Generate Commit Message with Copilot'
+          )
         : t(
-          'commit-message.generate-commit-message-with-copilot',
-          'Generate commit message with Copilot'
-        ),
+            'commit-message.generate-commit-message-with-copilot',
+            'Generate commit message with Copilot'
+          ),
       action: () => {
         const { commitMessage } = this.state
         onGenerateCommitMessage(
@@ -896,16 +921,14 @@ export class CommitMessage extends React.Component<
       items.push(generateMenuItem)
     }
 
-    items.push(
-      { type: 'separator' },
-      ...getEditMenuItemOfReact(),
-      { type: 'separator' }
-    )
+    items.push({ type: 'separator' }, ...getEditMenuItemOfReact(), {
+      type: 'separator',
+    })
 
     items.push(
       this.getCommitSpellcheckEnabilityMenuItem(
         this.props.commitSpellcheckEnabled
-      ),
+      )
     )
 
     showContextualMenu(items, true)
@@ -1021,6 +1044,50 @@ export class CommitMessage extends React.Component<
     )
   }
 
+  private renderCommitOptionsButton() {
+    if (!this.isCommitOptionsButtonEnabled) {
+      return null
+    }
+
+    const ariaLabel = 'Configure commit options'
+
+    return (
+      <>
+        {(this.isCoAuthorInputEnabled || this.isCopilotButtonEnabled) && (
+          <div className="separator" />
+        )}
+        <Button
+          className={classNames('commit-options-button', {
+            'default-options': !this.props.skipCommitHooks,
+          })}
+          onClick={this.onCommitOptionsButtonClick}
+          ariaLabel={ariaLabel}
+          tooltip={ariaLabel}
+        >
+          <Octicon symbol={octicons.gear} />
+        </Button>
+      </>
+    )
+  }
+
+  private onCommitOptionsButtonClick = (
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    e.preventDefault()
+    showContextualMenu([
+      {
+        type: 'checkbox',
+        checked: this.props.skipCommitHooks,
+        label: __DARWIN__ ? 'Bypass Commit Hooks' : 'Bypass Commit hooks',
+        action: () => {
+          this.props.onUpdateCommitOptions(this.props.repository, {
+            skipCommitHooks: !this.props.skipCommitHooks,
+          })
+        },
+      },
+    ])
+  }
+
   private renderCoAuthorToggleButton() {
     if (this.props.repository.gitHubRepository === null) {
       return null
@@ -1109,11 +1176,19 @@ export class CommitMessage extends React.Component<
     )
   }
 
+  private get isCommitOptionsButtonEnabled() {
+    return enableHooksEnvironment() && this.props.hasCommitHooks
+  }
+
   /**
    * Whether or not there's anything to render in the action bar
    */
   private get isActionBarEnabled() {
-    return this.isCoAuthorInputEnabled || this.isCopilotButtonEnabled
+    return (
+      this.isCoAuthorInputEnabled ||
+      this.isCopilotButtonEnabled ||
+      this.isCommitOptionsButtonEnabled
+    )
   }
 
   private renderActionBar() {
@@ -1131,6 +1206,7 @@ export class CommitMessage extends React.Component<
       <div className={className}>
         {this.renderCoAuthorToggleButton()}
         {this.renderCopilotButton()}
+        {this.renderCommitOptionsButton()}
       </div>
     )
   }
@@ -1636,6 +1712,40 @@ export class CommitMessage extends React.Component<
     )
   }
 
+  private renderCommitProgress() {
+    const { isCommitting, hookProgress, onShowCommitProgress } = this.props
+    if (!isCommitting || !hookProgress) {
+      return null
+    }
+
+    const { status, hookName } = hookProgress
+
+    const text =
+      hookName === 'pre-auto-gc' && status === 'finished'
+        ? 'Optimizing repository…'
+        : status === 'started'
+        ? `${hookName} hook running…`
+        : status === 'finished'
+        ? `${hookName} hook finished`
+        : status === 'failed'
+        ? `${hookName} hook failed`
+        : assertNever(status, `Unknown hook status: ${status}`)
+
+    const cn = classNames('commit-progress', {
+      'with-button': onShowCommitProgress !== undefined,
+    })
+    return (
+      <div className={cn}>
+        <div className="description">{text}</div>
+        {onShowCommitProgress && (
+          <Button tooltip="Show commit progress" onClick={onShowCommitProgress}>
+            <Octicon symbol={octicons.terminal} />
+          </Button>
+        )}
+      </div>
+    )
+  }
+
   public render() {
     const className = classNames('commit-message-component', {
       'with-action-bar': this.isActionBarEnabled,
@@ -1756,6 +1866,7 @@ export class CommitMessage extends React.Component<
         {this.renderBranchProtectionsRepoRulesCommitWarning()}
 
         {this.renderSubmitButton()}
+        {this.renderCommitProgress()}
         <span className="sr-only" aria-live="polite" aria-atomic="true">
           {this.state.isCommittingStatusMessage}
         </span>

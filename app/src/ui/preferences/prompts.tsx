@@ -5,7 +5,6 @@ import { Checkbox, CheckboxValue } from '../lib/checkbox'
 import { t } from 'i18next'
 import { RadioGroup } from '../lib/radio-group'
 import { assertNever } from '../../lib/fatal-error'
-import { enableFilteredChangesList } from '../../lib/feature-flag'
 
 interface IPromptsPreferencesProps {
   readonly confirmRepositoryRemoval: boolean
@@ -218,10 +217,6 @@ export class Prompts extends React.Component<
   }
 
   private renderCommittingFilteredChangesPrompt = () => {
-    if (!enableFilteredChangesList()) {
-      return
-    }
-
     return (
       <Checkbox
         label={t(
@@ -322,7 +317,10 @@ export class Prompts extends React.Component<
               onChange={this.onConfirmUndoCommitChanged}
             />
             <Checkbox
-              label="Overriding commit message with generated message"
+              label={t(
+                'prompts.overriding-commit-message',
+                'Overriding commit message with generated message'
+              )}
               value={
                 this.state.confirmCommitMessageOverride
                   ? CheckboxValue.On

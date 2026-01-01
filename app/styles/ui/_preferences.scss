@@ -1,4 +1,31 @@
 #preferences {
+  .dialog-content.git-preferences {
+    padding: 0;
+
+    .git-preferences-content {
+      padding: var(--spacing-double);
+    }
+
+    .git-hook-shell-select {
+      margin-bottom: var(--spacing);
+    }
+
+    .hooks-warning {
+      margin-bottom: var(--spacing);
+      a {
+        display: inline;
+      }
+    }
+
+    .git-hooks-support-description,
+    .git-hooks-env-description,
+    .git-hooks-cache-description {
+      margin-top: var(--spacing);
+      font-size: var(--font-size-sm);
+      color: var(--text-secondary-color);
+    }
+  }
+
   .preferences-container {
     display: flex;
     .tab-container {
@@ -130,8 +157,6 @@
   }
 
   .default-branch-component {
-    margin-top: var(--spacing-double);
-
     .ref-name-text-box {
       margin-top: var(--spacing);
     }
@@ -149,10 +174,6 @@
 
   .edit-global-git-config-component {
     margin-top: var(--spacing);
-  }
-
-  .git-settings-path-component {
-    margin-top: var(--spacing-double);
   }
 
   .theme-selector {

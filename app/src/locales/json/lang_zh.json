@@ -211,38 +211,9 @@
     "zib": "ZiB"
   },
   "changes-list": {
-    "confirm-discard-all-changes": "放弃所有更改…",
-    "confirm-discard-all-changes-darwin": "放弃所有更改…",
-    "confirm-stash-all-changes": "隐藏所有更改…",
-    "confirm-stash-all-changes-darwin": "隐藏所有更改…",
-    "create-filename": "创建 {{0}}",
-    "delete-filename": "删除 {{0}}",
-    "discard-changes": "放弃更改",
-    "discard-changes-darwin": "放弃更改",
-    "discard-selected-changes": "放弃 {{0}}个选定的更改",
-    "discard-selected-changes-darwin": "放弃 {{0}}个选定的更改",
-    "exclude-selected-files": "排除选定的文件",
-    "exclude-selected-files-darwin": "排除选定的文件",
     "file": "文件",
     "files": "文件",
-    "files-changes-description": "已更改 包含的{{2}} ({{0}}/{{1}})",
-    "files-description": "{{0}}项更改{{1}}",
-    "ignore-all-file-add-to-gitignore": "忽略所有 {{0}}文件 (添加到 .gitignore)",
-    "ignore-all-file-add-to-gitignore-darwin": "忽略所有 {{0}}文件 (添加到 .gitignore)",
-    "ignore-file-add-to-gitignore": "忽略文件 (添加到 .gitignore)",
-    "ignore-file-add-to-gitignore-darwin": "忽略文件 (添加到 .gitignore)",
-    "ignore-folder-add-to-gitignore": "忽略文件夹 (添加到 .gitignore)",
-    "ignore-folder-add-to-gitignore-darwin": "忽略文件夹 (添加到 .gitignore)",
-    "ignore-selected-file-add-to-gitignore": "忽略 {{0}}个选定的文件 (添加到 .gitignore)",
-    "ignore-selected-file-add-to-gitignore-darwin": "忽略 {{0}}个选定的文件 (添加到 .gitignore)",
-    "include-selected-files": "包括选定的文件",
-    "include-selected-files-darwin": "包括选定的文件",
-    "open-in-external-editor": "在 {{0}} 中打开",
-    "stash-all-changes": "隐藏所有更改",
-    "stash-all-changes-darwin": "隐藏所有更改",
-    "stashed-changes": "隐藏的更改",
-    "summary-required": "摘要(必填)",
-    "update-filename": "更新 {{0}}"
+    "files-description": "{{0}}项更改{{1}}"
   },
   "changes-list-filter-options": {
     "active-filters": "({{0}}已申请)",
@@ -460,19 +431,6 @@
     "you-can-choose-an-email-2": " 中选择此存储库本地的电子邮件。"
   },
   "commit-summary": {
-    "collapse": "折叠",
-    "empty-commit-message": "空的提交信息",
-    "expand": "展开",
-    "not-included": " 不包括。",
-    "number-files-added": "已添加 {{0}}",
-    "number-files-changed": "{{0}} 更改了 {{1}}",
-    "number-files-deleted": "已删除{{0}}",
-    "number-files-midified": "{{0}}修改",
-    "number-lines-added": "已添加 {{0}}{{1}}",
-    "number-lines-deleted": "{{0}}{{1}} 已删除",
-    "number-unreachable-commits": "{{0}} 无法访问 {{1}}",
-    "showing-changes-from-1": "结帐更改:",
-    "showing-changes-from-2": " {{0}} {{1}}",
     "tag": "标记",
     "tags": "标记",
     "this-commit-has-not-been-pushed": "此提交尚未推送到远程存储库",
@@ -512,8 +470,6 @@
     "ignore": "忽視",
     "install-and-restart": "安装并重启",
     "install-and-restart-darwin": "安装并重启",
-    "line": "行",
-    "lines": "行",
     "local-path": "本地路径",
     "local-path-darwin": "本地路径",
     "multiple-commits": "次提交",
@@ -525,6 +481,7 @@
     "ok": "Ok",
     "one-commit": "次提交",
     "one-or-less-commit": "次提交",
+    "open": "打开",
     "opetarion-alias": "{{0}}别名",
     "opetarion-alias-darwin": "{{0}}别名",
     "options": "选项",
@@ -986,6 +943,11 @@
     "we-were-unable-to-authenticate-6": "请重试。"
   },
   "git": {
+    "autor": "账户",
+    "beta": "Beta",
+    "cache-git-hook-env-variables": "缓存 Git 钩子环境变量",
+    "cache-hook-env-description": "缓存钩子环境变量以提高性能。如果您的钩子依赖于经常变化的环境变量，请禁用此功能。",
+    "default-branch": "默认分支",
     "default-branch-name-for-new-repositories": "新存储库的默认分支名称",
     "display-escaped-non-ascii-characters": "显示路径名中的转义非 ASCII 字符\n（建议中国用户禁用此功能）",
     "edit-your-global-git-config-1": "这些首选项将 ",
@@ -996,7 +958,15 @@
     "gitHub-default-branch-description-2": "。 ",
     "gitHub-default-branch-description-3": "您可能想要根据不同的工作流程来更改它, 或者因为您的集成仍然需要历史默认分支名称 ",
     "gitHub-default-branch-description-4": "。",
-    "settings-related-to-the-path": "与路径相关的设置"
+    "github-desktop-hook-support-is-experime-1": "GitHub Desktop hook support is experimental and currently only supports hooks related to committing. Please ",
+    "github-desktop-hook-support-is-experime-2": "let us know",
+    "github-desktop-hook-support-is-experime-3": " if you encounter any issues or have feedback!",
+    "hooks": "Hooks",
+    "load-git-hook-env-from-shell": "从 shell 载入 Git 钩子环境变量",
+    "other-settings": "其他设置",
+    "settings-related-to-the-path": "与路径相关的设置",
+    "shell-to-use-when-loading-env": "加载环境时使用的 Shell",
+    "when-enabled-attempt-to-load-env-variables": "When enabled, GitHub Desktop will attempt to load environment variables from your shell when executing Git hooks. This is useful if your Git hooks depend on environment variables set in your shell configuration files, a common practive for version managers such as nvm, rbenv, asdf, etc."
   },
   "git-config": {
     "for-this-repository": "您要用于此存储库的名称和电子邮件地址",
@@ -1187,6 +1157,8 @@
     "open-in-external-editor-darwin": "在 {{0}} 中打开",
     "open-in-shell": "在 {{0}} 中打开(&P)",
     "open-in-shell-darwin": "在 {{0}} 中打开",
+    "open-with-external-editor": "在外部编辑器中打开(&W)…",
+    "open-with-external-editor-darwin": "在外部编辑器中打开…",
     "open-working-directory": "显示于 Explorer(&X)",
     "open-working-directory-darwin": "显示于 Finder",
     "open-working-directory-linux": "显示于 File Manager",
@@ -1270,6 +1242,7 @@
     "view-on-github-darwin": "在 GitHub 上结帐",
     "view-pull-request": "结帐 GitHub 上的拉取请求(&P)",
     "view-pull-request-darwin": "结帐 GitHub 上的拉取请求",
+    "view-pull-request-on-github": "View Pull Request on GitHub",
     "window-darwin": "窗口",
     "zoom-darwin": "缩放",
     "zoom-in": "缩放(放大)",
@@ -1484,6 +1457,13 @@
     "open-your-card": "打开你的卡",
     "throw-it-away": "扔掉"
   },
+  "open-with-external-editor": {
+    "configure-custom-editor": "自定义编辑器设置…",
+    "configure-custom-editor-darwin": "自定义编辑器设置…",
+    "open-with": "在外部编辑器中打开…",
+    "open-with-darwin": "在外部编辑器中打开…",
+    "select-an-editor": "选择编辑器"
+  },
   "oversized-files-warning": {
     "commit-anyway": "无论如何都要承诺",
     "commit-anyway-darwin": "无论如何都要承诺",
@@ -1526,6 +1506,7 @@
     "discarding-stash": "丢弃储藏",
     "force-pushing": "强制推动",
     "if-i-have-changes-and-i-switch-branches": "如果我有变化并且我切换分支…",
+    "overriding-commit-message": "使用 Copilot 生成的消息覆盖提交消息",
     "removing-repositories": "删除存储库",
     "show-a-confirmation": "之前显示确认对话框…",
     "show-commit-length-warning": "显示提交摘要长度警告",
@@ -2067,6 +2048,12 @@
   "whitespace-hint-popover": {
     "selecting-lines": "隐藏空白变化时, 选择行将被禁用。",
     "show-whitespace-changes": "显示空白变化吗?"
+  },
+  "window-controls": {
+    "close": "关闭",
+    "maximize": "最大化",
+    "minimize": "最小化",
+    "restore": "还原"
   },
   "workflow-push-rejected": {
     "continue-in-browser": "在浏览器中继续",

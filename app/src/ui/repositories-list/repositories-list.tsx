@@ -26,7 +26,6 @@ import { KeyboardShortcut } from '../keyboard-shortcut/keyboard-shortcut'
 import { generateRepositoryListContextMenu } from '../repositories-list/repository-list-item-context-menu'
 import { SectionFilterList } from '../lib/section-filter-list'
 import { assertNever } from '../../lib/fatal-error'
-import { enableMultipleEnterpriseAccounts } from '../../lib/feature-flag'
 import { IAheadBehind } from '../../models/branch'
 
 const BlankSlateImage = encodePathAsUrl(__dirname, 'static/empty-no-repo.svg')
@@ -246,7 +245,7 @@ export class RepositoriesList extends React.Component<
   private getGroupLabel(group: RepositoryListGroup) {
     const { kind } = group
     if (kind === 'enterprise') {
-      return enableMultipleEnterpriseAccounts() ? group.host : 'Enterprise'
+      return group.host
     } else if (kind === 'other') {
       return t('common.other', 'Other')
     } else if (kind === 'dotcom') {

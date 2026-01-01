@@ -56,7 +56,7 @@
   },
   "advanced": {
     "background-updates": "バックグラウンド更新",
-    "help-github-desktop-improve-by-submitting-1": "GitHub Desktop が ",
+    "help-github-desktop-improve-by-submitting-1": "GitHub Desktop の ",
     "help-github-desktop-improve-by-submitting-2": " を送信することで改善に貢献する",
     "network-and-credentials": "ネットワークと資格情報",
     "show-status-icons-in-the-repository-list": "リポジトリ リストにステータス アイコンを表示",
@@ -211,38 +211,9 @@
     "zib": "ZiB"
   },
   "changes-list": {
-    "confirm-discard-all-changes": "すべての変更を破棄する…",
-    "confirm-discard-all-changes-darwin": "すべての変更を破棄する…",
-    "confirm-stash-all-changes": "すべての変更を一時退避する…",
-    "confirm-stash-all-changes-darwin": "すべての変更を一時退避する…",
-    "create-filename": "作成 {{0}}",
-    "delete-filename": "削除 {{0}}",
-    "discard-changes": "変更の破棄",
-    "discard-changes-darwin": "変更の破棄",
-    "discard-selected-changes": "選択した {{0}}つの変更を破棄します",
-    "discard-selected-changes-darwin": "選択した {{0}}つの変更を破棄します",
-    "exclude-selected-files": "選択したファイルを除外",
-    "exclude-selected-files-darwin": "選択したファイルを除外",
     "file": "ファイル数",
     "files": "ファイル数",
-    "files-changes-description": "選択中の変更された{{2}} ({{0}}/{{1}})",
-    "files-description": "変更された{{1}} ({{0}})",
-    "ignore-all-file-add-to-gitignore": "すべての {{0}} ファイルを除外する (.gitignore に追加)",
-    "ignore-all-file-add-to-gitignore-darwin": "すべての {{0}} ファイルを除外する (gitignore に追加)",
-    "ignore-file-add-to-gitignore": "ファイルを除外する (.gitignore に追加)",
-    "ignore-file-add-to-gitignore-darwin": "ファイルを除外する (.gitignore に追加)",
-    "ignore-folder-add-to-gitignore": "ディレクトリを除外する (.gitignore に追加)",
-    "ignore-folder-add-to-gitignore-darwin": "ディレクトリを除外する (.gitignore に追加)",
-    "ignore-selected-file-add-to-gitignore": "選択した {{0}}ファイルを無視する (.gitignore に追加)",
-    "ignore-selected-file-add-to-gitignore-darwin": "選択した {{0}}ファイルを無視する (.gitignore に追加)",
-    "include-selected-files": "選択したファイルを含める",
-    "include-selected-files-darwin": "選択したファイルを含める",
-    "open-in-external-editor": "{{0}} で開く",
-    "stash-all-changes": "すべての変更を一時退避する",
-    "stash-all-changes-darwin": "すべての変更を一時退避する",
-    "stashed-changes": "一時退避した変更",
-    "summary-required": "概要 (必須入力)",
-    "update-filename": "Update {{0}}"
+    "files-description": "変更された{{1}} ({{0}})"
   },
   "changes-list-filter-options": {
     "active-filters": "({{0}}件適用)",
@@ -460,19 +431,6 @@
     "you-can-choose-an-email-2": "から、このリポジトリのローカルなメールアドレスを選択可能です。"
   },
   "commit-summary": {
-    "collapse": "折りたたむ",
-    "empty-commit-message": "空のコミットメッセージ",
-    "expand": "展開する",
-    "not-included": " 含まれていません。",
-    "number-files-added": "追加 {{0}}",
-    "number-files-changed": "{{0}}{{1}} 変更 ",
-    "number-files-deleted": "削除 {{0}}",
-    "number-files-midified": "変更 {{0}}",
-    "number-lines-added": "{{0}}{{1}} 追加",
-    "number-lines-deleted": "{{0}}{{1}} 削除",
-    "number-unreachable-commits": "到達不能な {{0}}{{1}}",
-    "showing-changes-from-1": "変更の表示: ",
-    "showing-changes-from-2": " {{0}} {{1}}",
     "tag": "タグ",
     "tags": "タグ",
     "this-commit-has-not-been-pushed": "このコミットはリモートリポジトリにプッシュされていません",
@@ -485,7 +443,7 @@
     "branch-name-darwin": "ブランチ名(日本語は使用できません)",
     "cancel": "キャンセル",
     "change": "変更",
-    "changes-files": "変更ファイル数",
+    "changes-files": "変更ファイル",
     "choose": "選択…",
     "clone": "クローン",
     "close": "閉じる",
@@ -512,8 +470,6 @@
     "ignore": "無視",
     "install-and-restart": "インストールして再起動",
     "install-and-restart-darwin": "インストールして再起動",
-    "line": "行",
-    "lines": "行",
     "local-path": "ローカルパス",
     "local-path-darwin": "ローカルパス",
     "multiple-commits": "個のコミット",
@@ -525,6 +481,7 @@
     "ok": "Ok",
     "one-commit": "個のコミット",
     "one-or-less-commit": "個のコミット",
+    "open": "開く",
     "opetarion-alias": "エイリアス{{0}}",
     "opetarion-alias-darwin": "エイリアス{{0}}",
     "options": "オプション",
@@ -865,8 +822,8 @@
   "editor-error": {
     "open-options": "オプションを開く",
     "open-settings-darwin": "設定を開く",
-    "unable-to-open-external-editor": "外部エディタを開けません",
-    "unable-to-open-external-editor-darwin": "外部エディタを開けません"
+    "unable-to-open-external-editor": "外部エディターを開けません",
+    "unable-to-open-external-editor-darwin": "外部エディターを開けません"
   },
   "enterprise-server-entry": {
     "enterprise-or-ae-address": "Enterprise または AEアドレス"
@@ -986,6 +943,11 @@
     "we-were-unable-to-authenticate-6": "、もう一度やり直してください。"
   },
   "git": {
+    "autor": "アカウント",
+    "beta": "Beta",
+    "cache-git-hook-env-variables": "Gitフックの環境変数をキャッシュする",
+    "cache-hook-env-description": "パフォーマンスを向上させるために、フックの環境変数をキャッシュします。フックが頻繁に変更される環境変数に依存している場合は無効にしてください。",
+    "default-branch": "デフォルトブランチ",
     "default-branch-name-for-new-repositories": "新しいリポジトリのデフォルトのブランチ名",
     "display-escaped-non-ascii-characters": "非ASCII文字をエスケープして表示する\n(日本語環境ではOFFでの使用を推奨します)",
     "edit-your-global-git-config-1": "これらの設定は、",
@@ -996,7 +958,15 @@
     "gitHub-default-branch-description-2": "です。 ",
     "gitHub-default-branch-description-3": " ワークフローが異なったり統合する過程で ",
     "gitHub-default-branch-description-4": " という過去のデフォルトのブランチ名が依然として必要なため、これを変更することが必要になる場合があります。",
-    "settings-related-to-the-path": "パスに関する設定"
+    "github-desktop-hook-support-is-experime-1": "GitHub Desktop フックのサポートは試験段階であり、現在はコミット関連のフックのみをサポートしています。",
+    "github-desktop-hook-support-is-experime-2": "問題が発生したり、フィードバックがある場合はお知らせください",
+    "github-desktop-hook-support-is-experime-3": "。",
+    "hooks": "フック",
+    "load-git-hook-env-from-shell": "シェルからGitフック環境変数を読み込む",
+    "other-settings": "その他",
+    "settings-related-to-the-path": "パスに関する設定",
+    "shell-to-use-when-loading-env": "環境をロードするときに使用するシェル",
+    "when-enabled-attempt-to-load-env-variables": "有効にすると、GitHub Desktop は Git フックの実行時にシェルから環境変数を読み込みます。これは、Gitフックがシェル設定ファイルで設定された環境変数に依存している場合に便利です。nvm、rbenv、asdf などのバージョン管理ツールで一般的に使われている方法です。"
   },
   "git-config": {
     "for-this-repository": "このリポジトリで使用する名前とメールアドレス",
@@ -1187,6 +1157,8 @@
     "open-in-external-editor-darwin": "{{0}} で開く",
     "open-in-shell": "{{0}} で開く(&P)",
     "open-in-shell-darwin": "{{0}} で開く",
+    "open-with-external-editor": "外部エディターで開く(&W)",
+    "open-with-external-editor-darwin": "外部エディターで開く…",
     "open-working-directory": "Explorerで表示(&X)",
     "open-working-directory-darwin": "Finderで表示",
     "open-working-directory-linux": "ファイルマネージャーで表示",
@@ -1270,6 +1242,7 @@
     "view-on-github-darwin": "GitHub で確認",
     "view-pull-request": "GitHub でプルリクエストを参照(&P)",
     "view-pull-request-darwin": "GitHub でプルリクエストを参照",
+    "view-pull-request-on-github": "View Pull Request on GitHub",
     "window-darwin": "ウィンドウ",
     "zoom-darwin": "ズーム",
     "zoom-in": "ズーム(拡大)",
@@ -1484,6 +1457,13 @@
     "open-your-card": "カードを開く",
     "throw-it-away": "非表示にする"
   },
+  "open-with-external-editor": {
+    "configure-custom-editor": "エディターのカスタマイズ…",
+    "configure-custom-editor-darwin": "エディターのカスタマイズ…",
+    "open-with": "外部エディターで開く…",
+    "open-with-darwin": "外部エディターで開く…",
+    "select-an-editor": "外部エディターを選択"
+  },
   "oversized-files-warning": {
     "commit-anyway": "とにかくコミットする",
     "commit-anyway-darwin": "とにかくコミットする",
@@ -1526,6 +1506,7 @@
     "discarding-stash": "一時退避場所の破棄",
     "force-pushing": "強制プッシュ",
     "if-i-have-changes-and-i-switch-branches": "修正中のブランチを切り替える場合…",
+    "overriding-commit-message": "Copilotで生成されたメッセージでコミットメッセージを上書き",
     "removing-repositories": "リポジトリを削除する",
     "show-a-confirmation": "事前に確認ダイアログを表示…",
     "show-commit-length-warning": "コミット概要の長さの警告を表示",
@@ -2067,6 +2048,12 @@
   "whitespace-hint-popover": {
     "selecting-lines": "行の選択は、空白の変更を非表示にすると無効になります。",
     "show-whitespace-changes": "空白の変更を表示しますか?"
+  },
+  "window-controls": {
+    "close": "閉じる",
+    "maximize": "最大化",
+    "minimize": "最小化",
+    "restore": "復元"
   },
   "workflow-push-rejected": {
     "continue-in-browser": "ブラウザーで続行",

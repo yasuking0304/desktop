@@ -25,7 +25,7 @@ import {
   ITextDiff,
 } from '../../../src/models/diff'
 import { findInteractiveDiffRange } from '../../../src/ui/diff/diff-explorer'
-import * as FSE from 'fs-extra'
+import { readFile } from 'fs/promises'
 import * as Path from 'path'
 import { structuredPatch } from 'diff'
 
@@ -121,7 +121,7 @@ describe('git/apply', () => {
         DiffSelectionType.None
       ).withLineSelection(4, true)
 
-      const previousContents = await FSE.readFile(
+      const previousContents = await readFile(
         Path.join(repository.path, filePath),
         'utf8'
       )
@@ -133,7 +133,7 @@ describe('git/apply', () => {
         selection
       )
 
-      const fileContents = await FSE.readFile(
+      const fileContents = await readFile(
         Path.join(repository.path, filePath),
         'utf8'
       )
@@ -162,14 +162,14 @@ describe('git/apply', () => {
         true
       )
 
-      const previousContents = await FSE.readFile(
+      const previousContents = await readFile(
         Path.join(repository.path, filePath),
         'utf8'
       )
 
       await discardChangesFromSelection(repository, filePath, diff, selection)
 
-      const fileContents = await FSE.readFile(
+      const fileContents = await readFile(
         Path.join(repository.path, filePath),
         'utf8'
       )
@@ -193,7 +193,7 @@ describe('git/apply', () => {
         DiffSelectionType.None
       ).withLineSelection(16, true)
 
-      const previousContents = await FSE.readFile(
+      const previousContents = await readFile(
         Path.join(repository.path, filePath),
         'utf8'
       )
@@ -205,7 +205,7 @@ describe('git/apply', () => {
         selection
       )
 
-      const fileContents = await FSE.readFile(
+      const fileContents = await readFile(
         Path.join(repository.path, filePath),
         'utf8'
       )
@@ -233,7 +233,7 @@ describe('git/apply', () => {
         true
       )
 
-      const previousContents = await FSE.readFile(
+      const previousContents = await readFile(
         Path.join(repository.path, filePath),
         'utf8'
       )
@@ -245,7 +245,7 @@ describe('git/apply', () => {
         selection
       )
 
-      const fileContents = await FSE.readFile(
+      const fileContents = await readFile(
         Path.join(repository.path, filePath),
         'utf8'
       )

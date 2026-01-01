@@ -107,6 +107,10 @@ const knownAvatars: ReadonlyArray<IAvatarUser> = [
   ...dotComBot('dependabot[bot]', 49699333, 29110),
   ...dotComBot('github-actions[bot]', 41898282, 15368),
   ...dotComBot('github-pages[bot]', 52472962, 34598),
+  // https://github.com/apps/copilot-pull-request-reviewer
+  ...dotComBot('Copilot', 175728472, 946600),
+  // https://github.com/apps/copilot-swe-agent
+  ...dotComBot('Copilot', 198982749, 1143301),
 ]
 
 // Preload some of the more popular bot avatars so we don't have to hit the API

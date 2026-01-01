@@ -10,10 +10,6 @@ import classNames from 'classnames'
 import { t } from 'i18next'
 import memoizeOne from 'memoize-one'
 import { IMenuItem, showContextualMenu } from '../../lib/menu-item'
-import {
-  enableCheckoutCommit,
-  enableResetToCommit,
-} from '../../lib/feature-flag'
 import { getDotComAPIEndpoint } from '../../lib/api'
 import { clipboard } from 'electron'
 import { RowIndexPath } from '../lib/list/list-row-index-path'
@@ -664,8 +660,8 @@ export class CommitList extends React.Component<
         <h4>{reorderCommitsHintTitle}</h4>
         <p>
           {t('commit-list-item.reorder-choose-locate-1', 'Use ')}
-          <KeyboardShortcut darwinKeys={['↑']} keys={['↑']} />
-          <KeyboardShortcut darwinKeys={['↓']} keys={['↓']} />
+          <KeyboardShortcut darwinKeys={['↑']} keys={['↑']} isSymbol={true} />
+          <KeyboardShortcut darwinKeys={['↓']} keys={['↓']} isSymbol={true} />
           {t(
             'commit-list-item.reorder-choose-locate-2',
             'to choose a new location.'
@@ -673,7 +669,7 @@ export class CommitList extends React.Component<
         </p>
         <p>
           {t('commit-list-item.reorder-comfirm-locate-1', 'Press ')}
-          <KeyboardShortcut darwinKeys={['⏎']} keys={['⏎']} />
+          <KeyboardShortcut darwinKeys={['⏎']} keys={['⏎']} isSymbol={true} />
           {t('commit-list-item.reorder-comfirm-locate-2', 'to confirm.')}
         </p>
       </Popover>
@@ -794,31 +790,27 @@ export class CommitList extends React.Component<
       })
     }
 
-    if (enableResetToCommit()) {
-      items.push({
-        label: __DARWIN__
-          ? t('commit-list-item.reset-to-commit-darwin', 'Reset to Commit…')
-          : t('commit-list-item.reset-to-commit', 'Reset to commit…'),
-        action: () => {
-          if (this.props.onResetToCommit) {
-            this.props.onResetToCommit(commit)
-          }
-        },
-        enabled: canBeResetTo && this.props.onResetToCommit !== undefined,
-      })
-    }
+    items.push({
+      label: __DARWIN__
+        ? t('commit-list-item.reset-to-commit-darwin', 'Reset to Commit…')
+        : t('commit-list-item.reset-to-commit', 'Reset to commit…'),
+      action: () => {
+        if (this.props.onResetToCommit) {
+          this.props.onResetToCommit(commit)
+        }
+      },
+      enabled: canBeResetTo && this.props.onResetToCommit !== undefined,
+    })
 
-    if (enableCheckoutCommit()) {
-      items.push({
-        label: __DARWIN__
-          ? t('commit-list-item.checkout-commit-darwin', 'Checkout Commit')
-          : t('commit-list-item.checkout-commit', 'Checkout commit'),
-        action: () => {
-          this.props.onCheckoutCommit?.(commit)
-        },
-        enabled: canBeCheckedOut && this.props.onCheckoutCommit !== undefined,
-      })
-    }
+    items.push({
+      label: __DARWIN__
+        ? t('commit-list-item.checkout-commit-darwin', 'Checkout Commit')
+        : t('commit-list-item.checkout-commit', 'Checkout commit'),
+      action: () => {
+        this.props.onCheckoutCommit?.(commit)
+      },
+      enabled: canBeCheckedOut && this.props.onCheckoutCommit !== undefined,
+    })
 
     items.push({
       label: __DARWIN__

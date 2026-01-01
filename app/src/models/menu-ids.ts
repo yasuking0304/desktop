@@ -26,6 +26,7 @@ export type MenuIDs =
   | 'open-working-directory'
   | 'show-repository-settings'
   | 'open-external-editor'
+  | 'open-with-external-editor'
   | 'remove-repository'
   | 'new-repository'
   | 'add-local-repository'
