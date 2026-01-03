@@ -167,6 +167,7 @@ button {
 }
 
 kbd {
+  background-color: var(--secondary-button-background);
   border-radius: calc(var(--border-radius) - 1px);
   border: var(--contrast-border);
 
