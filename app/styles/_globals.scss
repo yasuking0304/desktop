@@ -167,12 +167,13 @@ button {
 }
 
 kbd {
+  background-color: var(--secondary-button-background);
   border-radius: calc(var(--border-radius) - 1px);
   border: var(--contrast-border);
 
   display: inline-block;
 
-  padding: 1px 2px;
+  padding: 1px 3px;
   line-height: 1;
   min-height: 16px;
 
@@ -190,5 +191,6 @@ kbd {
 
   &.symbol-keyboard-shortcut {
     font-family: var(--font-family-monospace);
+    padding: 2px 3px 1px;
   }
 }

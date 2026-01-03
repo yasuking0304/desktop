@@ -668,13 +668,13 @@ export class CommitList extends React.Component<
           <KeyboardShortcut darwinKeys={['↓']} keys={['↓']} isSymbol={true} />
           {t(
             'commit-list-item.reorder-choose-locate-2',
-            'to choose a new location.'
+            ' to choose a new location.'
           )}
         </p>
         <p>
           {t('commit-list-item.reorder-comfirm-locate-1', 'Press ')}
           <KeyboardShortcut darwinKeys={['⏎']} keys={['⏎']} isSymbol={true} />
-          {t('commit-list-item.reorder-comfirm-locate-2', 'to confirm.')}
+          {t('commit-list-item.reorder-comfirm-locate-2', ' to confirm.')}
         </p>
       </Popover>
     )
