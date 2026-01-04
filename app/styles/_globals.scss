@@ -60,6 +60,7 @@ body {
 }
 
 :not(input, textarea) {
+
   &,
   &::after,
   &::before {
@@ -190,7 +191,10 @@ kbd {
   }
 
   &.symbol-keyboard-shortcut {
-    font-family: var(--font-family-monospace);
-    padding: 2px 3px 1px;
+    @include win32 {
+      font-family: var(--font-family-monospace);
+    }
+
+    padding: 2px 2px 1px;
   }
 }
