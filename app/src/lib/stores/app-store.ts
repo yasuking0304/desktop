@@ -127,6 +127,7 @@ import {
   IMultiCommitOperationState,
   IConstrainedValue,
   ICompareState,
+  CommitOptions,
 } from '../app-state'
 import {
   findEditorOrDefault,
@@ -350,6 +351,7 @@ import {
 } from '../custom-integration'
 import { updateStore } from '../../ui/lib/update-store'
 import { BypassReasonType } from '../../ui/secret-scanning/bypass-push-protection-dialog'
+import { getRepoHooks } from '../hooks/get-repo-hooks'
 
 const LastSelectedRepositoryIDKey = 'last-selected-repository-id'
 
@@ -910,6 +912,8 @@ export class AppStore extends TypedBaseStore<IAppState> {
       )
 
       updateAccounts(endpointTokens)
+
+      this.refreshSelectedRepositoryAfterAccountChange()
 
       this.emitUpdate()
     })
@@ -1724,8 +1728,24 @@ export class AppStore extends TypedBaseStore<IAppState> {
     if (formState.kind === HistoryTabMode.History) {
       const commits = state.compareState.commitSHAs
 
-      const newCommits = await gitStore.loadCommitBatch('HEAD', commits.length)
-      if (newCommits == null) {
+      const tip = state.branchesState.tip
+
+      let newCommits: string[] | null = null
+
+      // Prioritize pulling from the local commits if the last one we pulled is local
+      if (
+        commits.length > 0 &&
+        tip.kind === TipState.Valid &&
+        gitStore.localCommitSHAs.includes(commits[commits.length - 1])
+      ) {
+        newCommits = await gitStore.loadLocalCommits(tip.branch, commits.length)
+      }
+
+      if (!newCommits || newCommits.length === 0) {
+        newCommits = await gitStore.loadCommitBatch('HEAD', commits.length)
+      }
+
+      if (!newCommits) {
         return
       }
 
@@ -3319,10 +3339,44 @@ export class AppStore extends TypedBaseStore<IAppState> {
     const gitStore = this.gitStoreCache.get(repository)
 
     return this.withIsCommitting(repository, async () => {
-      const result = await gitStore.performFailableOperation(async () => {
-        const message = await formatCommitMessage(repository, context)
-        return createCommit(repository, message, selectedFiles, context.amend)
-      })
+      const result = await gitStore.performFailableOperation(
+        async () => {
+          const message = await formatCommitMessage(repository, context)
+          let aborted = false
+          return createCommit(repository, message, selectedFiles, {
+            amend: context.amend,
+            onHookProgress: hookProgress => {
+              this.repositoryStateCache.update(repository, state => ({
+                ...state,
+                hookProgress,
+              }))
+              this.emitUpdate()
+            },
+            onHookFailure: (hookName, terminalOutput) =>
+              new Promise(resolve => {
+                this._showPopup({
+                  type: PopupType.HookFailed,
+                  hookName,
+                  terminalOutput,
+                  resolve: resolution => {
+                    if (resolution === 'abort') {
+                      aborted = true
+                    }
+                    resolve(resolution)
+                  },
+                })
+              }),
+            onTerminalOutputAvailable: subscribeToCommitOutput => {
+              this.repositoryStateCache.update(repository, state => ({
+                ...state,
+                subscribeToCommitOutput,
+              }))
+            },
+            skipCommitHooks: state.skipCommitHooks,
+          }).catch(err => (aborted ? undefined : Promise.reject(err)))
+        },
+        { gitContext: { kind: 'commit' }, repository }
+      )
 
       if (result !== undefined) {
         await this._recordCommitStats(
@@ -3352,6 +3406,11 @@ export class AppStore extends TypedBaseStore<IAppState> {
           result,
           state.commitToAmend
         )
+      } else {
+        // The commit failed, but we should still refresh to ensure we
+        // accurately reflect the repository state post failure. See
+        // https://github.com/desktop/desktop/issues/21229
+        this._refreshRepository(repository)
       }
 
       return result !== undefined
@@ -3614,6 +3673,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
       gitStore.updateLastFetched(),
       gitStore.loadStashEntries(),
       this._refreshAuthor(repository),
+      this._refreshHasCommitHooks(repository),
       refreshSectionPromise,
     ])
 
@@ -3867,6 +3927,25 @@ export class AppStore extends TypedBaseStore<IAppState> {
       commitAuthor,
     }))
     this.emitUpdate()
+  }
+
+  public _updateCommitOptions(
+    repository: Repository,
+    commitOptions: CommitOptions
+  ): void {
+    this.repositoryStateCache.update(repository, () => commitOptions)
+    this.emitUpdate()
+  }
+
+  private async _refreshHasCommitHooks(repository: Repository): Promise<void> {
+    const hooks = ['pre-commit', 'commit-msg']
+    // Break early if we find either one of the hooks
+    for await (const {} of getRepoHooks(repository.path, hooks)) {
+      const hasCommitHooks = true
+      this.repositoryStateCache.update(repository, () => ({ hasCommitHooks }))
+      this.emitUpdate()
+      return
+    }
   }
 
   /** This shouldn't be called directly. See `Dispatcher`. */
@@ -4347,6 +4426,25 @@ export class AppStore extends TypedBaseStore<IAppState> {
     return freshRepo
   }
 
+  /**
+   * Refreshes the GitHub repository information for the currently selected
+   * repository when the active account changes. This ensures that permission
+   * information is updated after signing in/out.
+   */
+  private async refreshSelectedRepositoryAfterAccountChange() {
+    const repository = this.selectedRepository
+
+    if (repository === null || repository instanceof CloningRepository) {
+      return
+    }
+
+    if (!isRepositoryWithGitHubRepository(repository)) {
+      return
+    }
+
+    await this.repositoryWithRefreshedGitHubRepository(repository)
+  }
+
   private async updateBranchProtectionsFromAPI(repository: Repository) {
     if (repository.gitHubRepository === null) {
       return
@@ -4698,13 +4796,30 @@ export class AppStore extends TypedBaseStore<IAppState> {
       const gitStore = this.gitStoreCache.get(repository)
       await gitStore.performFailableOperation(
         async () => {
+          let aborted = false
           await pushRepo(
             repository,
             safeRemote,
             branch.name,
             branch.upstreamWithoutRemote,
             gitStore.tagsToPush,
-            options,
+            {
+              onHookFailure: (hookName, terminalOutput) =>
+                new Promise(resolve => {
+                  this._showPopup({
+                    type: PopupType.HookFailed,
+                    hookName,
+                    terminalOutput,
+                    resolve: resolution => {
+                      if (resolution === 'abort') {
+                        aborted = true
+                      }
+                      resolve(resolution)
+                    },
+                  })
+                }),
+              ...options,
+            },
             progress => {
               this.updatePushPullFetchProgress(repository, {
                 ...progress,
@@ -4712,7 +4827,12 @@ export class AppStore extends TypedBaseStore<IAppState> {
                 value: pushWeight * progress.value,
               })
             }
-          )
+          ).catch(err => (aborted ? undefined : Promise.reject(err)))
+
+          if (aborted) {
+            return
+          }
+
           gitStore.clearTagsToPush()
 
           await gitStore.fetchRemotes([safeRemote], false, fetchProgress => {
@@ -4784,6 +4904,8 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
     this.repositoryStateCache.update(repository, () => ({
       isCommitting: true,
+      hookProgress: null,
+      subscribeToCommitOutput: null,
     }))
     this.emitUpdate()
 
@@ -4792,6 +4914,8 @@ export class AppStore extends TypedBaseStore<IAppState> {
     } finally {
       this.repositoryStateCache.update(repository, () => ({
         isCommitting: false,
+        hookProgress: null,
+        subscribeToCommitOutput: null,
       }))
       this.emitUpdate()
     }
@@ -5907,6 +6031,39 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
         await launchExternalEditor(fullPath, match)
       }
+    } catch (error) {
+      this.emitError(error)
+    }
+  }
+
+  /** Open a path using a selected editor without changing preferences. */
+  public async _openInSelectedExternalEditor(
+    fullPath: string,
+    selectedEditor: string | null,
+    customEditor: ICustomIntegration | null
+  ): Promise<void> {
+    try {
+      if (customEditor && customEditor.path) {
+        await launchCustomExternalEditor(fullPath, customEditor)
+        return
+      }
+
+      if (!selectedEditor) {
+        return
+      }
+
+      const match = await findEditorOrDefault(selectedEditor)
+      if (match === null) {
+        this.emitError(
+          new ExternalEditorError(
+            `No suitable editors installed for GitHub Desktop to launch. Install ${suggestedExternalEditor.name} for your platform and restart GitHub Desktop to try again.`,
+            { suggestDefaultEditor: true }
+          )
+        )
+        return
+      }
+
+      await launchExternalEditor(fullPath, match)
     } catch (error) {
       this.emitError(error)
     }

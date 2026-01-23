@@ -1,4 +1,10 @@
-import { git, parseCommitSHA } from './core'
+import {
+  git,
+  HookProgress,
+  parseCommitSHA,
+  TerminalOutput,
+  TerminalOutputCallback,
+} from './core'
 import { stageFiles } from './update-index'
 import { Repository } from '../../models/repository'
 import { WorkingDirectoryFileChange } from '../../models/status'
@@ -16,7 +22,16 @@ export async function createCommit(
   repository: Repository,
   message: string,
   files: ReadonlyArray<WorkingDirectoryFileChange>,
-  amend: boolean = false
+  options?: {
+    amend?: boolean
+    onHookProgress?: (progress: HookProgress) => void
+    onHookFailure?: (
+      hookName: string,
+      terminalOutput: TerminalOutput
+    ) => Promise<'abort' | 'ignore'>
+    onTerminalOutputAvailable?: TerminalOutputCallback
+    skipCommitHooks?: boolean
+  }
 ): Promise<string> {
   // Clear the staging area, our diffs reflect the difference between the
   // working directory and the last commit (if any) so our commits should
@@ -27,8 +42,12 @@ export async function createCommit(
 
   const args = ['-F', '-']
 
-  if (amend) {
+  if (options?.amend) {
     args.push('--amend')
+  }
+
+  if (options?.skipCommitHooks) {
+    args.push('--no-verify')
   }
 
   const result = await git(
@@ -37,6 +56,18 @@ export async function createCommit(
     'createCommit',
     {
       stdin: message,
+      // https://git-scm.com/docs/githooks/2.46.1
+      interceptHooks: [
+        'pre-commit',
+        'prepare-commit-msg',
+        'commit-msg',
+        'post-commit',
+        'post-rewrite',
+        'pre-auto-gc',
+      ],
+      onHookProgress: options?.onHookProgress,
+      onHookFailure: options?.onHookFailure,
+      onTerminalOutputAvailable: options?.onTerminalOutputAvailable,
     }
   )
   return parseCommitSHA(result)

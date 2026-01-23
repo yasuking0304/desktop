@@ -44,7 +44,11 @@ import {
   MultiCommitOperationDetail,
   MultiCommitOperationStep,
 } from '../models/multi-commit-operation'
-import { IChangesetData } from './git'
+import type {
+  HookProgress,
+  IChangesetData,
+  TerminalOutputListener,
+} from './git'
 import { Popup } from '../models/popup'
 import { RepoRulesInfo } from '../models/repo-rules'
 import { IAPIRepoRuleset } from './api'
@@ -549,6 +553,9 @@ export interface IRepositoryState {
   /** The date the repository was last fetched. */
   readonly lastFetched: Date | null
 
+  readonly hookProgress: HookProgress | null
+  readonly subscribeToCommitOutput: TerminalOutputListener | null
+
   /**
    * If we're currently working on switching to a new branch this
    * provides insight into the progress of that operation.
@@ -582,7 +589,21 @@ export interface IRepositoryState {
   /** State associated with a multi commit operation such as rebase,
    * cherry-pick, squash, reorder... */
   readonly multiCommitOperationState: IMultiCommitOperationState | null
+
+  /**
+   * Whether there are any hooks in the repository that could be
+   * skipped during commit with the --no-verify flag
+   */
+  readonly hasCommitHooks: boolean
+
+  /**
+   * Whether or not to skip blocking commit hooks when creating commits
+   * by means of passing the `--no-verify` flag to git commit
+   */
+  readonly skipCommitHooks: boolean
 }
+
+export type CommitOptions = Pick<IRepositoryState, 'skipCommitHooks'>
 
 export interface IBranchesState {
   /**

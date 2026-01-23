@@ -1,7 +1,7 @@
 /* eslint-disable no-sync */
 /// <reference path="./globals.d.ts" />
 
-import { readFileSync } from 'fs-extra'
+import { readFileSync } from 'fs'
 import { dirname, join } from 'path'
 
 import * as distInfo from './dist-info'

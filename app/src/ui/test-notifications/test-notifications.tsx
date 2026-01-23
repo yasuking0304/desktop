@@ -122,9 +122,11 @@ class TestNotificationItemRowContent extends React.Component<{
   readonly leftAccessory?: JSX.Element
   readonly html_url?: string
   readonly dispatcher: Dispatcher
+  readonly linkButtonDescription: string
 }> {
   public render() {
-    const { leftAccessory, html_url, children } = this.props
+    const { leftAccessory, html_url, children, linkButtonDescription } =
+      this.props
 
     return (
       <div className="row-content">
@@ -132,24 +134,17 @@ class TestNotificationItemRowContent extends React.Component<{
         <div className="main-content">{children}</div>
         {html_url && (
           <div className="right-accessory">
-            <Button onClick={this.onExternalLinkClick} role="link">
+            <LinkButton
+              uri={html_url}
+              title={linkButtonDescription}
+              ariaLabel={linkButtonDescription}
+            >
               <Octicon symbol={octicons.linkExternal} />
-            </Button>
+            </LinkButton>
           </div>
         )}
       </div>
     )
-  }
-
-  private onExternalLinkClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const { dispatcher, html_url } = this.props
-
-    if (html_url === undefined) {
-      return
-    }
-
-    e.stopPropagation()
-    dispatcher.openInBrowser(html_url)
   }
 }
 
@@ -658,6 +653,7 @@ export class TestNotifications extends React.Component<
       <TestNotificationItemRowContent
         dispatcher={this.props.dispatcher}
         html_url={comment.html_url}
+        linkButtonDescription={`Open in browser: ${comment.body}`}
         leftAccessory={this.renderReviewStateIcon('COMMENTED')}
       >
         {comment.body}
@@ -674,6 +670,7 @@ export class TestNotifications extends React.Component<
       <TestNotificationItemRowContent
         dispatcher={this.props.dispatcher}
         html_url={review.html_url}
+        linkButtonDescription={`Open in browser: ${review.body}`}
         leftAccessory={this.renderReviewStateIcon(review.state)}
       >
         {review.body || <i>Review without body</i>}
@@ -704,6 +701,7 @@ export class TestNotifications extends React.Component<
       <TestNotificationItemRowContent
         dispatcher={this.props.dispatcher}
         html_url={htmlURL}
+        linkButtonDescription={`Open pull request #${pullRequest.pullRequestNumber} in browser`}
         leftAccessory={this.renderPullRequestStateIcon(pullRequest)}
       >
         <b>

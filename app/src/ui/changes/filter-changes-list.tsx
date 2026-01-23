@@ -20,7 +20,7 @@ import {
 import { Account } from '../../models/account'
 import { Author, UnknownAuthor } from '../../models/author'
 import { Checkbox, CheckboxValue } from '../lib/checkbox'
-import { IFileListFilterState } from '../../lib/app-state'
+import { CommitOptions, IFileListFilterState } from '../../lib/app-state'
 import {
   isSafeFileExtension,
   DefaultEditorLabel,
@@ -74,6 +74,7 @@ import {
   applyFilters,
 } from './filter-changes-logic'
 import { ChangesListFilterOptions } from './changes-list-filter-options'
+import { HookProgress } from '../../lib/git'
 
 export interface IChangesListItem extends IFilterListItem {
   readonly id: string
@@ -158,6 +159,8 @@ interface IFilterChangesListProps {
   readonly dispatcher: Dispatcher
   readonly availableWidth: number
   readonly isCommitting: boolean
+  readonly hookProgress: HookProgress | null
+  readonly onShowCommitProgress?: (() => void) | undefined
   readonly isGeneratingCommitMessage: boolean
   readonly shouldShowGenerateCommitMessageCallOut: boolean
   readonly commitToAmend: Commit | null
@@ -220,6 +223,24 @@ interface IFilterChangesListProps {
 
   /** Whether or not to show the changes filter */
   readonly showChangesFilter: boolean
+
+  /**
+   * Whether there are any hooks in the repository that could be
+   * skipped during commit with the --no-verify flag
+   */
+  readonly hasCommitHooks: boolean
+
+  /**
+   * Whether or not to skip blocking commit hooks when creating commits
+   * by means of passing the `--no-verify` flag to git commit
+   */
+  readonly skipCommitHooks: boolean
+
+  /** Callback to set commit options for the given repository */
+  readonly onUpdateCommitOptions: (
+    repository: Repository,
+    options: CommitOptions
+  ) => void
 }
 
 interface IFilterChangesListState {
@@ -927,6 +948,7 @@ export class FilterChangesList extends React.Component<
       repositoryAccount,
       dispatcher,
       isCommitting,
+      hookProgress,
       isGeneratingCommitMessage,
       commitToAmend,
       currentBranchProtected,
@@ -1003,6 +1025,8 @@ export class FilterChangesList extends React.Component<
         focusCommitMessage={this.props.focusCommitMessage}
         autocompletionProviders={this.props.autocompletionProviders}
         isCommitting={isCommitting}
+        hookProgress={hookProgress}
+        onShowCommitProgress={this.props.onShowCommitProgress}
         isGeneratingCommitMessage={isGeneratingCommitMessage}
         shouldShowGenerateCommitMessageCallOut={
           shouldShowGenerateCommitMessageCallOut
@@ -1041,6 +1065,9 @@ export class FilterChangesList extends React.Component<
         accounts={this.props.accounts}
         onSuccessfulCommitCreated={this.onSuccessfulCommitCreated}
         submitButtonAriaDescribedBy={'hidden-changes-warning'}
+        hasCommitHooks={this.props.hasCommitHooks}
+        skipCommitHooks={this.props.skipCommitHooks}
+        onUpdateCommitOptions={this.props.onUpdateCommitOptions}
       />
     )
   }

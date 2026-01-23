@@ -9,7 +9,6 @@ import * as ipcWebContents from '../ipc-webcontents'
 import { mkdir } from 'fs/promises'
 import { t } from 'i18next'
 import { buildTestMenu } from './build-test-menu'
-import { enableFilteredChangesList } from '../../lib/feature-flag'
 
 const createPullRequestLabel = __DARWIN__
   ? t('menu.create-pull-request-darwin', 'Create Pull Request')
@@ -271,28 +270,18 @@ export function buildDefaultMenu({
           ? emit('hide-stashed-changes')
           : emit('show-stashed-changes'),
       },
-      ...(enableFilteredChangesList()
-        ? [
-            {
-              label: __DARWIN__
-                ? isChangesFilterVisible
-                  ? t('menu.hide-changes-filter-darwin', 'Hide Changes Filter')
-                  : t('menu.show-changes-filter-darwin', 'Show Changes Filter')
-                : isChangesFilterVisible
-                ? t(
-                    'menu.hide-toggle-changes-filter',
-                    'Hide Toggle Chan&ges Filter'
-                  )
-                : t(
-                    'menu.show-toggle-changes-filter',
-                    'Show Toggle Chan&ges Filter'
-                  ),
-              id: 'toggle-changes-filter',
-              accelerator: 'CmdOrCtrl+L',
-              click: emit('toggle-changes-filter'),
-            },
-          ]
-        : []),
+      {
+        label: __DARWIN__
+          ? isChangesFilterVisible
+            ? t('menu.hide-changes-filter-darwin', 'Hide Changes Filter')
+            : t('menu.show-changes-filter-darwin', 'Show Changes Filter')
+          : isChangesFilterVisible
+          ? t('menu.hide-toggle-changes-filter', 'Hide Toggle Chan&ges Filter')
+          : t('menu.show-toggle-changes-filter', 'Show Toggle Chan&ges Filter'),
+        id: 'toggle-changes-filter',
+        accelerator: 'CmdOrCtrl+L',
+        click: emit('toggle-changes-filter'),
+      },
       {
         label: __DARWIN__
           ? t('menu.toggle-full-screen-darwin', 'Toggle Full Screen')
@@ -456,6 +445,12 @@ export function buildDefaultMenu({
         id: 'open-external-editor',
         accelerator: 'CmdOrCtrl+Shift+A',
         click: emit('open-external-editor'),
+      },
+      {
+        label: __DARWIN__ ? 'Open With…' : 'Open &with…',
+        id: 'open-with-external-editor',
+        accelerator: 'CmdOrCtrl+Shift+Alt+A',
+        click: emit('open-with-external-editor'),
       },
       separator,
       {

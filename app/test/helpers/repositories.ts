@@ -1,15 +1,12 @@
-import * as Path from 'path'
-import * as FSE from 'fs-extra'
 import { createTempDirectory } from './temp'
-import klawSync, { Item } from 'klaw-sync'
 import { Repository } from '../../src/models/repository'
 import { exec } from 'dugite'
 import { makeCommit, switchTo } from './repository-scaffolding'
-import { writeFile } from 'fs-extra'
+import { glob, writeFile } from 'fs/promises'
 import { DefaultGitDescription, git } from '../../src/lib/git'
 import { TestContext } from 'node:test'
-import { mkdir } from 'fs/promises'
-import { join } from 'path'
+import { cp, mkdir, rename } from 'fs/promises'
+import { dirname, join } from 'path'
 
 /**
  * Set up the named fixture repository to be used in a test.
@@ -20,35 +17,12 @@ export async function setupFixtureRepository(
   t: TestContext,
   repositoryName: string
 ): Promise<string> {
-  const testRepoFixturePath = Path.join(
-    __dirname,
-    '..',
-    'fixtures',
-    repositoryName
-  )
+  const fixturePath = join(__dirname, '..', 'fixtures', repositoryName)
   const testRepoPath = await createTempDirectory(t)
-  await FSE.copy(testRepoFixturePath, testRepoPath)
+  await cp(fixturePath, testRepoPath, { recursive: true })
 
-  await FSE.rename(
-    Path.join(testRepoPath, '_git'),
-    Path.join(testRepoPath, '.git')
-  )
-
-  const ignoreHiddenFiles = function (item: Item) {
-    const basename = Path.basename(item.path)
-    return basename === '.' || basename[0] !== '.'
-  }
-
-  const entries = klawSync(testRepoPath)
-  const visiblePaths = entries.filter(ignoreHiddenFiles)
-  const submodules = visiblePaths.filter(
-    entry => Path.basename(entry.path) === '_git'
-  )
-
-  for (const submodule of submodules) {
-    const directory = Path.dirname(submodule.path)
-    const newPath = Path.join(directory, '.git')
-    await FSE.rename(submodule.path, newPath)
+  for await (const e of glob('**/_git', { cwd: testRepoPath })) {
+    await rename(join(testRepoPath, e), join(testRepoPath, dirname(e), '.git'))
   }
 
   return testRepoPath
@@ -194,7 +168,7 @@ export async function setupConflictedRepoWithUnrelatedCommittedChange(
   }
   await makeCommit(repo, thirdCommit)
 
-  await writeFile(Path.join(repo.path, 'perlin'), 'noise')
+  await writeFile(join(repo.path, 'perlin'), 'noise')
 
   await exec(['merge', 'master'], repo.path)
 
@@ -253,7 +227,7 @@ export async function setupConflictedRepoWithMultipleFiles(
 
   await makeCommit(repo, thirdCommit)
 
-  await FSE.writeFile(Path.join(repo.path, 'dog'), 'touch')
+  await writeFile(join(repo.path, 'dog'), 'touch')
 
   await exec(['merge', 'master'], repo.path)
 

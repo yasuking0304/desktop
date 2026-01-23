@@ -165,10 +165,7 @@ export class CommitListItem extends React.PureComponent<
                 tooltip={!enableAccessibleListToolTips()}
               />
               <div className="byline">
-                <CommitAttribution
-                  gitHubRepository={this.props.gitHubRepository}
-                  commits={[commit]}
-                />
+                <CommitAttribution avatarUsers={this.state.avatarUsers} />
                 {renderRelativeTime(date)}
               </div>
             </div>

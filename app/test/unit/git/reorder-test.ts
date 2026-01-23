@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test'
 import assert from 'node:assert'
-import * as FSE from 'fs-extra'
+import { writeFile } from 'fs/promises'
 import * as Path from 'path'
 import {
   continueRebase,
@@ -156,7 +156,7 @@ describe('git/reorder', () => {
     // If there are conflicts, we need to resend in git editor for changing the
     // git message on continue
     const thirdMessagePath = await getTempFilePath('reorderCommitMessage-third')
-    await FSE.writeFile(thirdMessagePath, 'third - fixed')
+    await writeFile(thirdMessagePath, 'third - fixed')
 
     // continue rebase
     let continueResult = await continueRebase(
@@ -175,7 +175,7 @@ describe('git/reorder', () => {
     status = await getStatusOrThrow(repository)
     files = status.workingDirectory.files
 
-    await FSE.writeFile(
+    await writeFile(
       Path.join(repository.path, 'second.md'),
       '# resolve conflict from putting "third" before "second"'
     )
@@ -183,7 +183,7 @@ describe('git/reorder', () => {
     const secondMessagePath = await getTempFilePath(
       'reorderCommitMessage-second'
     )
-    await FSE.writeFile(secondMessagePath, 'second - fixed')
+    await writeFile(secondMessagePath, 'second - fixed')
 
     continueResult = await continueRebase(
       repository,

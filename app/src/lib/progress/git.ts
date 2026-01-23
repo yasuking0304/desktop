@@ -1,3 +1,5 @@
+import { stripVTControlCharacters } from 'util'
+
 /**
  * Identifies a particular subset of progress events from Git by
  * title.
@@ -193,10 +195,14 @@ export class GitProgressParser {
    * registered with the parser.
    */
   public parse(line: string): IGitProgress | IGitOutput {
-    const progress = parse(line)
+    // In case we're parsing hook output or similar we want to
+    // strip out any control characters that may be present. IGitProgress
+    // is supposed to be readable text that can be used in tooltips and such.
+    const text = stripVTControlCharacters(line)
+    const progress = parse(text)
 
     if (!progress) {
-      return { kind: 'context', text: line, percent: this.lastPercent }
+      return { kind: 'context', text, percent: this.lastPercent }
     }
 
     let percent = 0
@@ -218,7 +224,7 @@ export class GitProgressParser {
       }
     }
 
-    return { kind: 'context', text: line, percent: this.lastPercent }
+    return { kind: 'context', text, percent: this.lastPercent }
   }
 }
 

@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test'
 import assert from 'node:assert'
-import * as FSE from 'fs-extra'
+import { writeFile } from 'fs/promises'
 import * as Path from 'path'
 import {
   continueRebase,
@@ -244,7 +244,7 @@ describe('git/cherry-pick', () => {
     // If there are conflicts, we need to resend in git editor for changing the
     // git message on continue
     const messagePath = await getTempFilePath('squashCommitMessage')
-    await FSE.writeFile(messagePath, 'Test Summary\n\nTest Body')
+    await writeFile(messagePath, 'Test Summary\n\nTest Body')
 
     // continue rebase
     let continueResult = await continueRebase(
@@ -263,7 +263,7 @@ describe('git/cherry-pick', () => {
     status = await getStatusOrThrow(repository)
     files = status.workingDirectory.files
 
-    await FSE.writeFile(
+    await writeFile(
       Path.join(repository.path, 'second.md'),
       '# resolve conflict from adding add after resolving squash'
     )

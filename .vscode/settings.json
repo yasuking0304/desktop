@@ -36,5 +36,11 @@
     "javascriptreact",
     "typescript",
     "typescriptreact"
-  ]
+  ],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[typescript][javascript][typescriptreact]": {
+    "editor.codeActionsOnSave": {
+      "source.removeUnusedImports": "explicit"
+    }
+  }
 }
