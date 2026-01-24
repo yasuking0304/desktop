@@ -82,15 +82,29 @@ export class Git extends React.Component<IGitProps> {
     return (
       <>
         <div className="hooks-warning">
-          GitHub Desktop hook support is experimental and currently only
-          supports hooks related to committing. Please{' '}
-          <LinkButton uri="https://github.com/desktop/desktop/issues/new/choose">
-            let us know
-          </LinkButton>{' '}
-          if you encounter any issues or have feedback!
+          {t(
+            'git.github-desktop-hook-support-is-experime-1',
+            `GitHub Desktop hook support is experimental and currently only
+          supports hooks related to committing. Please `
+          )}
+          <LinkButton
+            uri={t(
+              'url.github-desktop-issue',
+              'https://github.com/desktop/desktop/issues/new/choose'
+            )}
+          >
+            {t('git.github-desktop-hook-support-is-experime-2', 'let us know')}
+          </LinkButton>
+          {t(
+            'git.github-desktop-hook-support-is-experime-3',
+            ' if you encounter any issues or have feedback!'
+          )}
         </div>
         <Checkbox
-          label="Load Git hook environment variables from shell"
+          label={t(
+            'git.load-git-hook-env-from-shell',
+            'Load Git hook environment variables from shell'
+          )}
           ariaDescribedBy="git-hooks-env-description"
           value={
             this.props.enableGitHookEnv ? CheckboxValue.On : CheckboxValue.Off
@@ -98,18 +112,24 @@ export class Git extends React.Component<IGitProps> {
           onChange={this.onEnableGitHookEnvChanged}
         />
         <p className="git-hooks-env-description">
-          When enabled, GitHub Desktop will attempt to load environment
-          variables from your shell when executing Git hooks. This is useful if
-          your Git hooks depend on environment variables set in your shell
-          configuration files, a common practive for version managers such as
-          nvm, rbenv, asdf, etc.
+          {t(
+            'git.when-enabled-attempt-to-load-env-variables',
+            `When enabled, GitHub Desktop will attempt to load environment
+             variables from your shell when executing Git hooks. This is useful
+             if your Git hooks depend on environment variables set in your
+             shell configuration files, a common practive for version managers
+             such as nvm, rbenv, asdf, etc.`
+          )}
         </p>
 
         {this.props.enableGitHookEnv && __WIN32__ && (
           <>
             <Select
               className="git-hook-shell-select"
-              label={'Shell to use when loading environment'}
+              label={t(
+                'git.shell-to-use-when-loading-env',
+                'Shell to use when loading environment'
+              )}
               value={this.props.selectedShell}
               onChange={this.onSelectedShellChanged}
             >
@@ -127,7 +147,10 @@ export class Git extends React.Component<IGitProps> {
         {this.props.enableGitHookEnv && (
           <>
             <Checkbox
-              label="Cache Git hook environment variables"
+              label={t(
+                'git.cache-git-hook-env-variables',
+                'Cache Git hook environment variables'
+              )}
               ariaDescribedBy="git-hooks-cache-description"
               onChange={this.onCacheGitHookEnvChanged}
               value={
@@ -138,8 +161,11 @@ export class Git extends React.Component<IGitProps> {
             />
 
             <div className="git-hooks-cache-description">
-              Cache hook environment variables to improve performance. Disable
-              if your hooks rely on frequently changing environment variables.
+              {t(
+                'git.cache-hook-env-description',
+                `Cache hook environment variables to improve performance. Disable
+              if your hooks rely on frequently changing environment variables.`
+              )}
             </div>
           </>
         )}
@@ -154,11 +180,13 @@ export class Git extends React.Component<IGitProps> {
           selectedIndex={this.selectedTabIndex}
           onTabClicked={this.onTabClicked}
         >
-          <span>Author</span>
-          <span>Default branch</span>
+          <span>{t('git.autor', 'Author')}</span>
+          <span>{t('git.default-branch', 'Default branch')}</span>
           <span>
-            Hooks <span className="beta-pill">Beta</span>
+            {t('git.hooks', 'Hooks')}{' '}
+            <span className="beta-pill">{t('git.beta', 'Beta')}</span>
           </span>
+          <span>{t('git.path-settings', 'Path Settings')}</span>
         </TabBar>
         <div className="git-preferences-content">{this.renderCurrentTab()}</div>
       </DialogContent>
@@ -172,6 +200,8 @@ export class Git extends React.Component<IGitProps> {
       return this.renderDefaultBranchSetting()
     } else if (this.selectedTabIndex === 2) {
       return this.renderHooksSettings()
+    } else if (this.selectedTabIndex == 3) {
+      return this.renderCorePathsSetting()
     }
 
     return null
@@ -221,8 +251,8 @@ export class Git extends React.Component<IGitProps> {
           {t(
             'git.gitHub-default-branch-description-3',
             `You may want to
-          change it due to different workflows, or because your integrations
-          still require the historical default branch name of `
+             change it due to different workflows, or because your integrations
+             still require the historical default branch name of `
           )}
           <Ref>master</Ref>
           {t('git.gitHub-default-branch-description-4', '.')}
@@ -262,13 +292,20 @@ export class Git extends React.Component<IGitProps> {
   private renderCorePathsSetting() {
     return (
       <div className="git-settings-path-component">
-        <h2 id="git-settings-path-heading">Settings related to the path</h2>
-
+        <h2 id="git-settings-path-heading">
+          {t(
+            'git.settings-related-to-the-path',
+            'Settings related to the path'
+          )}
+        </h2>
         <div className="git-setting-path-section">
           <div role="group" aria-labelledby="git-settings-path-heading">
             {__WIN32__ ? (
               <Checkbox
-                label="Enable paths longer than 260 characters on Windows"
+                label={t(
+                  'git.enable-paths-lt-260-characters',
+                  'Enable paths longer than 260 characters on Windows'
+                )}
                 value={
                   this.props.coreLongpaths
                     ? CheckboxValue.On
@@ -278,10 +315,10 @@ export class Git extends React.Component<IGitProps> {
               />
             ) : null}
             <Checkbox
-              label={
-                'Display escaped non-ASCII characters in path names ' +
-                '(recommended to turn off for users in the Asian region)'
-              }
+              label={t(
+                'git.display-escaped-non-ascii-characters',
+                'Display escaped non-ASCII characters in path names\n(recommended to turn off for users in the Asian region)'
+              )}
               value={
                 this.props.coreQuotepath ? CheckboxValue.On : CheckboxValue.Off
               }
@@ -289,6 +326,7 @@ export class Git extends React.Component<IGitProps> {
             />
           </div>
         </div>
+        {this.renderEditGlobalGitConfigInfo()}
       </div>
     )
   }
