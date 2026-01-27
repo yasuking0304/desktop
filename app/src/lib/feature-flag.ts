@@ -41,11 +41,6 @@ function enableBetaFeatures(): boolean {
 export const enableTestMenuItems = () =>
   enableDevelopmentFeatures() || __RELEASE_CHANNEL__ === 'test'
 
-/** Should git pass `--recurse-submodules` when performing operations? */
-export function enableRecurseSubmodulesFlag(): boolean {
-  return true
-}
-
 export function enableReadmeOverwriteWarning(): boolean {
   return enableBetaFeatures()
 }

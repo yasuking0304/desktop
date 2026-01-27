@@ -2,10 +2,9 @@ import { createTempDirectory } from './temp'
 import { Repository } from '../../src/models/repository'
 import { exec } from 'dugite'
 import { makeCommit, switchTo } from './repository-scaffolding'
-import { glob, writeFile } from 'fs/promises'
+import { glob, writeFile, cp, mkdir, rename, rm } from 'fs/promises'
 import { DefaultGitDescription, git } from '../../src/lib/git'
 import { TestContext } from 'node:test'
-import { cp, mkdir, rename } from 'fs/promises'
 import { dirname, join } from 'path'
 
 /**
@@ -271,4 +270,52 @@ export async function setupLocalForkOfRepository(
   const path = await createTempDirectory(t)
   await git(['clone', '--local', `${upstream.path}`, path], path, 'clone')
   return new Repository(path, -1, null, false)
+}
+
+/**
+ * Setup a repository with an uninitialized submodule in a branch
+ *
+ * @returns the new local repository
+ *
+ * The repository will have:
+ * - Two commits on the main branch
+ * - A branch named 'branch-with-submodule' with a submodule added
+ * - The submodule is uninitialized (its .git/modules entry is removed)
+ *
+ * This simulates a scenario where a submodule exists in a branch but
+ * hasn't been initialized yet when checking out that branch.
+ */
+export async function setupRepositoryWithUninitializedSubmodule(
+  t: TestContext
+): Promise<Repository> {
+  const repo = await setupTwoCommitRepo(t)
+
+  // Create a submodule repository
+  const submoduleRepo = await setupTwoCommitRepo(t)
+
+  // Create a new branch and add the submodule
+  await exec(['checkout', '-b', 'branch-with-submodule'], repo.path)
+
+  await exec(
+    [
+      '-c',
+      'protocol.file.allow=always',
+      'submodule',
+      'add',
+      submoduleRepo.path,
+      'test-submodule',
+    ],
+    repo.path
+  )
+  await exec(['commit', '-m', 'Add submodule'], repo.path)
+
+  // Go back to main branch
+  await exec(['checkout', 'master'], repo.path)
+
+  // Remove the .git/modules directory for the submodule to make it uninitialized
+  const modulesPath = join(repo.path, '.git', 'modules', 'test-submodule')
+  await rm(modulesPath, { recursive: true, force: true })
+  await rm(join(repo.path, 'test-submodule'), { recursive: true, force: true })
+
+  return repo
 }

@@ -2,7 +2,6 @@ import { git, gitRebaseArguments, IGitStringExecutionOptions } from './core'
 import { Repository } from '../../models/repository'
 import { IPullProgress } from '../../models/progress'
 import { PullProgressParser, executionOptionsWithProgress } from '../progress'
-import { enableRecurseSubmodulesFlag } from '../feature-flag'
 import { IRemote } from '../../models/remote'
 import { envForRemoteOperation } from './environment'
 import { getConfigValue } from './config'
@@ -17,7 +16,7 @@ async function getPullArgs(
     ...gitRebaseArguments(),
     'pull',
     ...(await getDefaultPullDivergentBranchArguments(repository)),
-    ...(enableRecurseSubmodulesFlag() ? ['--recurse-submodules'] : []),
+    '--recurse-submodules',
     ...(progressCallback ? ['--progress'] : []),
     remote,
   ]
