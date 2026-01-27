@@ -58,6 +58,57 @@
     "@github/multimap" "^1.0.0"
     "@github/stable-socket" "^1.1.0"
 
+"@github/copilot-darwin-arm64@0.0.394":
+  version "0.0.394"
+  resolved "https://registry.yarnpkg.com/@github/copilot-darwin-arm64/-/copilot-darwin-arm64-0.0.394.tgz#6e3c2f8cd8702954a06cf4b70e5f5d4bcbe52125"
+  integrity sha512-qDmDFiFaYFW45UhxylN2JyQRLVGLCpkr5UmgbfH5e0aksf+69qytK/MwpD2Cq12KdTjyGMEorlADkSu5eftELA==
+
+"@github/copilot-darwin-x64@0.0.394":
+  version "0.0.394"
+  resolved "https://registry.yarnpkg.com/@github/copilot-darwin-x64/-/copilot-darwin-x64-0.0.394.tgz#7855fdc98c1e7db90d0006141e8e1d892de9a159"
+  integrity sha512-iN4YwSVFxhASiBjLk46f+AzRTNHCvYcmyTKBASxieMIhnDxznYmpo+haFKPCv2lCsEWU8s5LARCnXxxx8J1wKA==
+
+"@github/copilot-linux-arm64@0.0.394":
+  version "0.0.394"
+  resolved "https://registry.yarnpkg.com/@github/copilot-linux-arm64/-/copilot-linux-arm64-0.0.394.tgz#435da8c9bedb0d7dbd60c1fd20a59dcc675688d0"
+  integrity sha512-9NeGvmO2tGztuneXZfYAyW3fDk6Pdl6Ffg8MAUaevA/p0awvA+ti/Vh0ZSTcI81nDTjkzONvrcIcjYAN7x0oSg==
+
+"@github/copilot-linux-x64@0.0.394":
+  version "0.0.394"
+  resolved "https://registry.yarnpkg.com/@github/copilot-linux-x64/-/copilot-linux-x64-0.0.394.tgz#71c106db17942f450e76f5342c93b0b8c0786f15"
+  integrity sha512-toahsYQORrP/TPSBQ7sxj4/fJg3YUrD0ksCj/Z4y2vT6EwrE9iC2BspKgQRa4CBoCqxYDNB2blc+mQ1UuzPOxg==
+
+"@github/copilot-sdk@^0.1.18":
+  version "0.1.18"
+  resolved "https://registry.yarnpkg.com/@github/copilot-sdk/-/copilot-sdk-0.1.18.tgz#3cf27f20272f7dd2269eb8ee5d02214771f0a367"
+  integrity sha512-BjHJihKOQXjd05mlG+aJ0fo/56q72CfbSHpTJvoSnQMJQ1oG2ztsYoQshFMCJYap/q0FtsYnIMu5x2v8nIzN8Q==
+  dependencies:
+    "@github/copilot" "^0.0.394"
+    vscode-jsonrpc "^8.2.1"
+    zod "^4.3.5"
+
+"@github/copilot-win32-arm64@0.0.394":
+  version "0.0.394"
+  resolved "https://registry.yarnpkg.com/@github/copilot-win32-arm64/-/copilot-win32-arm64-0.0.394.tgz#01f46501935cd98f938e9911455f72decea48ae1"
+  integrity sha512-R7XBP3l+oeDuBrP0KD80ZBEMsZoxAW8QO2MNsDUV8eVrNJnp6KtGHoA+iCsKYKNOD6wHA/q5qm/jR+gpsz46Aw==
+
+"@github/copilot-win32-x64@0.0.394":
+  version "0.0.394"
+  resolved "https://registry.yarnpkg.com/@github/copilot-win32-x64/-/copilot-win32-x64-0.0.394.tgz#a08a0c8c21bf1b65bcda63bb8e47ce5af7953225"
+  integrity sha512-/XYV8srP+pMXbf9Gc3wr58zCzBZvsdA3X4poSvr2uU8yCZ6E4pD0agFaZ1c/CikANJi8nb0Id3kulhEhePz/3A==
+
+"@github/copilot@^0.0.394":
+  version "0.0.394"
+  resolved "https://registry.yarnpkg.com/@github/copilot/-/copilot-0.0.394.tgz#0968323ee2078900b8d33a920aef9e9944ed9948"
+  integrity sha512-koSiaHvVwjgppgh+puxf6dgsR8ql/WST1scS5bjzMsJFfWk7f4xtEXla7TCQfSGoZkCmCsr2Tis27v5TpssiCg==
+  optionalDependencies:
+    "@github/copilot-darwin-arm64" "0.0.394"
+    "@github/copilot-darwin-x64" "0.0.394"
+    "@github/copilot-linux-arm64" "0.0.394"
+    "@github/copilot-linux-x64" "0.0.394"
+    "@github/copilot-win32-arm64" "0.0.394"
+    "@github/copilot-win32-x64" "0.0.394"
+
 "@github/multimap@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@github/multimap/-/multimap-1.0.0.tgz#541bf212d088d1c2762691762d0017a84382cfba"
@@ -1429,6 +1480,11 @@ uuid@^8.3.2:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
   integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
 
+vscode-jsonrpc@^8.2.1:
+  version "8.2.1"
+  resolved "https://registry.yarnpkg.com/vscode-jsonrpc/-/vscode-jsonrpc-8.2.1.tgz#a322cc0f1d97f794ffd9c4cd2a898a0bde097f34"
+  integrity sha512-kdjOSJ2lLIn7r1rtrMbbNCHjyMPfRnowdKjBQ+mGq6NAW5QY2bEZC/khaC5OR8svbbjvLEaIXkOq45e2X9BIbQ==
+
 warning@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/warning/-/warning-3.0.0.tgz#32e5377cb572de4ab04753bdf8821c01ed605b7c"
@@ -1516,3 +1572,8 @@ yallist@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/yallist/-/yallist-4.0.0.tgz#9bb92790d9c0effec63be73519e11a35019a3a72"
   integrity sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==
+
+zod@^4.3.5:
+  version "4.3.6"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-4.3.6.tgz#89c56e0aa7d2b05107d894412227087885ab112a"
+  integrity sha512-rftlrkhHZOcjDwkGlnUtZZkvaPHCsDATp4pGpuOOMDaTdDDXF91wuVDJoWoPsKX/3YPQ5fHuF3STjcYyKr+Qhg==
