@@ -455,6 +455,11 @@ export class PushPullButton extends React.Component<
     }
 
     if (tipState === TipState.Unborn) {
+      // If we have a remote, allow fetching to check for new commits
+      // that may have been pushed by others
+      if (remoteName !== null) {
+        return this.fetchButton(remoteName, lastFetched, this.fetch)
+      }
       return this.unbornRepositoryButton()
     }
 
