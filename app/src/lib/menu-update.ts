@@ -312,10 +312,7 @@ function getRepositoryMenuBuilder(state: IAppState): MenuStateBuilder {
       'pull',
       hasPublishedBranch && !networkActionInProgress
     )
-    menuStateBuilder.setEnabled(
-      'fetch',
-      hasRemote && !networkActionInProgress
-    )
+    menuStateBuilder.setEnabled('fetch', hasRemote && !networkActionInProgress)
     menuStateBuilder.setEnabled(
       'create-branch',
       !tipStateIsUnknown && !branchIsUnborn && !rebaseInProgress
