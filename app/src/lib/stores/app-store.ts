@@ -5051,18 +5051,37 @@ export class AppStore extends TypedBaseStore<IAppState> {
             this.statsStore.increment('pullWithDefaultSettingCount')
           }
 
-          const pullSucceeded = await gitStore.performFailableOperation(
-            async () => {
-              await pullRepo(repository, remote, progress => {
-                this.updatePushPullFetchProgress(repository, {
-                  ...progress,
-                  value: progress.value * pullWeight,
+          let aborted = false
+          const pullSucceeded = await gitStore
+            .performFailableOperation(
+              async () => {
+                await pullRepo(repository, remote, {
+                  progressCallback: progress => {
+                    this.updatePushPullFetchProgress(repository, {
+                      ...progress,
+                      value: progress.value * pullWeight,
+                    })
+                  },
+                  onHookFailure: (hookName, terminalOutput) =>
+                    new Promise(resolve => {
+                      this._showPopup({
+                        type: PopupType.HookFailed,
+                        hookName,
+                        terminalOutput,
+                        resolve: resolution => {
+                          if (resolution === 'abort') {
+                            aborted = true
+                          }
+                          resolve(resolution)
+                        },
+                      })
+                    }),
                 })
-              })
-              return true
-            },
-            { gitContext, retryAction }
-          )
+                return true
+              },
+              { gitContext, retryAction }
+            )
+            .catch(err => (aborted ? false : Promise.reject(err)))
 
           // If the pull failed we shouldn't try to update the remote HEAD
           // because there's a decent chance that it failed either because we
