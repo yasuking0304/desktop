@@ -108,8 +108,8 @@ export async function checkoutBranch(
   allowFileProtocol: boolean = false
 ): Promise<true> {
   const title = t('checkout.checking-out-branch', `Checking out branch {{0}}`, {
-      0: branch.name,
-    }),
+    0: branch.name,
+  })
   const opts = await getCheckoutOpts(
     repository,
     title,
@@ -118,7 +118,7 @@ export async function checkoutBranch(
     progressCallback
       ? clampProgress(0, CheckoutStepWeight, progressCallback)
       : undefined,
-   __DARWIN__
+    __DARWIN__
       ? t('checkout.switching-to-branch-darwin', 'Switching to Branch')
       : t('checkout.switching-to-branch', 'Switching to branch')
   )
