@@ -829,16 +829,22 @@ export class API {
 
   /** Create a new API client from the given account. */
   public static fromAccount(account: Account): API {
-    return new API(account.endpoint, account.token)
+    return new API(account.endpoint, account.token, account.copilotEndpoint)
   }
 
   private endpoint: string
   private token: string
+  private copilotEndpoint?: string
 
   /** Create a new API client for the endpoint, authenticated with the token. */
-  public constructor(endpoint: string, token: string) {
+  public constructor(
+    endpoint: string,
+    token: string,
+    copilotEndpoint?: string
+  ) {
     this.endpoint = endpoint
     this.token = token
+    this.copilotEndpoint = copilotEndpoint
   }
 
   /**
@@ -1991,7 +1997,10 @@ export class API {
   public async getDiffChangesCommitMessage(
     diff: string
   ): Promise<ICopilotCommitMessage> {
-    return generateCommitMessage(diff)
+    if (!this.copilotEndpoint) {
+      throw new Error('No Copilot endpoint available')
+    }
+    return generateCommitMessage(this.copilotEndpoint, diff)
   }
 
   /**
@@ -2084,6 +2093,7 @@ export async function fetchUser(
       user.id,
       user.name || user.login,
       user.plan?.name,
+      copilotInfo?.copilotEndpoint,
       copilotInfo?.isCopilotDesktopEnabled,
       features
     )

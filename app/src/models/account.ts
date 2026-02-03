@@ -36,6 +36,7 @@ export class Account {
    * @param id The GitHub.com or GitHub Enterprise database id for this account.
    * @param name The friendly name associated with this account
    * @param plan The plan associated with this account
+   * @param copilotEndpoint The endpoint for the Copilot API
    * @param isCopilotDesktopEnabled Whether Copilot for Desktop is enabled for this account
    * @param features The Desktop-specific features available to this account
    */
@@ -48,6 +49,7 @@ export class Account {
     public readonly id: number,
     public readonly name: string,
     public readonly plan?: string,
+    public readonly copilotEndpoint?: string,
     public readonly isCopilotDesktopEnabled?: boolean,
     public readonly features?: ReadonlyArray<string>
   ) {}
@@ -62,6 +64,7 @@ export class Account {
       this.id,
       this.name,
       this.plan,
+      this.copilotEndpoint,
       this.isCopilotDesktopEnabled,
       this.features
     )
