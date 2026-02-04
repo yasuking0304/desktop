@@ -90,7 +90,7 @@ export class Git extends React.Component<IGitProps> {
           <LinkButton
             uri={t(
               'url.github-desktop-issue',
-              'https://github.com/desktop/desktop/issues/new/choose'
+              'https://github.com/yasuking0304/desktop/issues/new/choose'
             )}
           >
             {t('git.github-desktop-hook-support-is-experime-2', 'let us know')}

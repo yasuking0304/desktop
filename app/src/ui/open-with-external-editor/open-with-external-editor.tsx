@@ -11,6 +11,7 @@ import {
 } from '../../lib/custom-integration'
 import { getAvailableEditors } from '../../lib/editors/lookup'
 import { enableCustomIntegration } from '../../lib/feature-flag'
+import { t } from 'i18next'
 
 const CustomIntegrationValue = 'other'
 
@@ -105,7 +106,10 @@ export class OpenWithExternalEditor extends React.Component<
 
     return (
       <Select
-        label="Select an editor"
+        label={t(
+          'open-with-external-editor.select-an-editor',
+          'Select an editor'
+        )}
         value={
           this.state.useCustomEditor
             ? CustomIntegrationValue
@@ -121,8 +125,14 @@ export class OpenWithExternalEditor extends React.Component<
         {enableCustomIntegration() && (
           <option key={CustomIntegrationValue} value={CustomIntegrationValue}>
             {__DARWIN__
-              ? 'Configure Custom Editor…'
-              : 'Configure custom editor…'}
+              ? t(
+                  'open-with-external-editor.configure-custom-editor-darwin',
+                  'Configure Custom Editor…'
+                )
+              : t(
+                  'open-with-external-editor.configure-custom-editor',
+                  'Configure custom editor…'
+                )}
           </option>
         )}
       </Select>
@@ -148,7 +158,9 @@ export class OpenWithExternalEditor extends React.Component<
   }
 
   public render() {
-    const title = __DARWIN__ ? 'Open With…' : 'Open with…'
+    const title = __DARWIN__
+      ? t('open-with-external-editor.open-with-darwin', 'Open With…')
+      : t('open-with-external-editor.open-with', 'Open with…')
     const disabled =
       (!this.state.useCustomEditor && this.state.selectedEditor === null) ||
       (this.state.useCustomEditor && !this.state.customEditor.path)
@@ -166,7 +178,7 @@ export class OpenWithExternalEditor extends React.Component<
         </DialogContent>
         <DialogFooter>
           <OkCancelButtonGroup
-            okButtonText="Open"
+            okButtonText={t('common.open', 'Open')}
             okButtonDisabled={disabled}
             onCancelButtonClick={this.props.onDismissed}
           />

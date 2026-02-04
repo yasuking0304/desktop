@@ -481,6 +481,7 @@
     "ok": "Ok",
     "one-commit": "commit",
     "one-or-less-commit": "commit",
+    "open": "Open",
     "opetarion-alias": "{{0}} alias",
     "opetarion-alias-darwin": "{{0}} Alias",
     "options": "Options",
@@ -1156,6 +1157,8 @@
     "open-in-external-editor-darwin": "Open in {{0}}",
     "open-in-shell": "O&pen in {{0}}",
     "open-in-shell-darwin": "Open in {{0}}",
+    "open-with-external-editor": "Open &with…",
+    "open-with-external-editor-darwin": "Open With…",
     "open-working-directory": "Show in E&xplorer",
     "open-working-directory-darwin": "Show in Finder",
     "open-working-directory-linux": "Show in your File Manager",
@@ -1239,6 +1242,7 @@
     "view-on-github-darwin": "View on GitHub",
     "view-pull-request": "View &pull request on GitHub",
     "view-pull-request-darwin": "View Pull Request on GitHub",
+    "view-pull-request-on-github": "View Pull Request on GitHub",
     "window-darwin": "Window",
     "zoom-darwin": "Zoom",
     "zoom-in": "Zoom in",
@@ -1453,6 +1457,13 @@
     "open-your-card": "Open Your Card",
     "throw-it-away": "Throw It Away"
   },
+  "open-with-external-editor": {
+    "configure-custom-editor": "Configure custom editor…",
+    "configure-custom-editor-darwin": "Configure Custom Editor…",
+    "open-with": "Open with…",
+    "open-with-darwin": "Open With…",
+    "select-an-editor": "Select an editor"
+  },
   "oversized-files-warning": {
     "commit-anyway": "Commit anyway",
     "commit-anyway-darwin": "Commit Anyway",
@@ -1495,6 +1506,7 @@
     "discarding-stash": "Discarding stash",
     "force-pushing": "Force pushing",
     "if-i-have-changes-and-i-switch-branches": "If I have changes and I switch branches...",
+    "overriding-commit-message": "Overriding commit message with generated message",
     "removing-repositories": "Removing repositories",
     "show-a-confirmation": "Show a confirmation dialog before...",
     "show-commit-length-warning": "Show commit length warning",
@@ -2036,6 +2048,12 @@
   "whitespace-hint-popover": {
     "selecting-lines": "Selecting lines is disabled when hiding whitespace changes.",
     "show-whitespace-changes": "Show whitespace changes?"
+  },
+  "window-controls": {
+    "close": "Close",
+    "maximize": "Maximize",
+    "minimize": "Minimize",
+    "restore": "Restore"
   },
   "workflow-push-rejected": {
     "continue-in-browser": "Continue in browser",

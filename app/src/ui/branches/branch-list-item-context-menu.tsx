@@ -41,14 +41,19 @@ export function generateBranchContextMenuItems(
 
   if (onViewBranchOnGitHub !== undefined) {
     items.push({
-      label: 'View Branch on GitHub',
+      label: __DARWIN__
+        ? t('menu.view-branch-on-github-darwin', 'View Branch on GitHub')
+        : t('menu.view-branch-on-github', 'View branch on GitHub'),
       action: () => onViewBranchOnGitHub(),
     })
   }
 
   if (onViewPullRequestOnGitHub !== undefined) {
     items.push({
-      label: 'View Pull Request on GitHub',
+      label: t(
+        'menu.view-pull-request-on-github',
+        'View Pull Request on GitHub'
+      ),
       action: () => onViewPullRequestOnGitHub(),
     })
   }

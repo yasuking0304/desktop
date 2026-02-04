@@ -56,7 +56,7 @@
   },
   "advanced": {
     "background-updates": "バックグラウンド更新",
-    "help-github-desktop-improve-by-submitting-1": "GitHub Desktop が ",
+    "help-github-desktop-improve-by-submitting-1": "GitHub Desktop の ",
     "help-github-desktop-improve-by-submitting-2": " を送信することで改善に貢献する",
     "network-and-credentials": "ネットワークと資格情報",
     "show-status-icons-in-the-repository-list": "リポジトリ リストにステータス アイコンを表示",
@@ -481,6 +481,7 @@
     "ok": "Ok",
     "one-commit": "個のコミット",
     "one-or-less-commit": "個のコミット",
+    "open": "開く",
     "opetarion-alias": "エイリアス{{0}}",
     "opetarion-alias-darwin": "エイリアス{{0}}",
     "options": "オプション",
@@ -821,8 +822,8 @@
   "editor-error": {
     "open-options": "オプションを開く",
     "open-settings-darwin": "設定を開く",
-    "unable-to-open-external-editor": "外部エディタを開けません",
-    "unable-to-open-external-editor-darwin": "外部エディタを開けません"
+    "unable-to-open-external-editor": "外部エディターを開けません",
+    "unable-to-open-external-editor-darwin": "外部エディターを開けません"
   },
   "enterprise-server-entry": {
     "enterprise-or-ae-address": "Enterprise または AEアドレス"
@@ -1156,6 +1157,8 @@
     "open-in-external-editor-darwin": "{{0}} で開く",
     "open-in-shell": "{{0}} で開く(&P)",
     "open-in-shell-darwin": "{{0}} で開く",
+    "open-with-external-editor": "外部エディターで開く(&W)",
+    "open-with-external-editor-darwin": "外部エディターで開く…",
     "open-working-directory": "Explorerで表示(&X)",
     "open-working-directory-darwin": "Finderで表示",
     "open-working-directory-linux": "ファイルマネージャーで表示",
@@ -1239,6 +1242,7 @@
     "view-on-github-darwin": "GitHub で確認",
     "view-pull-request": "GitHub でプルリクエストを参照(&P)",
     "view-pull-request-darwin": "GitHub でプルリクエストを参照",
+    "view-pull-request-on-github": "View Pull Request on GitHub",
     "window-darwin": "ウィンドウ",
     "zoom-darwin": "ズーム",
     "zoom-in": "ズーム(拡大)",
@@ -1453,6 +1457,13 @@
     "open-your-card": "カードを開く",
     "throw-it-away": "非表示にする"
   },
+  "open-with-external-editor": {
+    "configure-custom-editor": "エディターのカスタマイズ…",
+    "configure-custom-editor-darwin": "エディターのカスタマイズ…",
+    "open-with": "外部エディターで開く…",
+    "open-with-darwin": "外部エディターで開く…",
+    "select-an-editor": "外部エディターを選択"
+  },
   "oversized-files-warning": {
     "commit-anyway": "とにかくコミットする",
     "commit-anyway-darwin": "とにかくコミットする",
@@ -1495,6 +1506,7 @@
     "discarding-stash": "一時退避場所の破棄",
     "force-pushing": "強制プッシュ",
     "if-i-have-changes-and-i-switch-branches": "修正中のブランチを切り替える場合…",
+    "overriding-commit-message": "Copilotで生成されたメッセージでコミットメッセージを上書き",
     "removing-repositories": "リポジトリを削除する",
     "show-a-confirmation": "事前に確認ダイアログを表示…",
     "show-commit-length-warning": "コミット概要の長さの警告を表示",
@@ -2036,6 +2048,12 @@
   "whitespace-hint-popover": {
     "selecting-lines": "行の選択は、空白の変更を非表示にすると無効になります。",
     "show-whitespace-changes": "空白の変更を表示しますか?"
+  },
+  "window-controls": {
+    "close": "閉じる",
+    "maximize": "最大化",
+    "minimize": "最小化",
+    "restore": "復元"
   },
   "workflow-push-rejected": {
     "continue-in-browser": "ブラウザーで続行",

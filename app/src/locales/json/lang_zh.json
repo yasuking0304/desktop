@@ -481,6 +481,7 @@
     "ok": "Ok",
     "one-commit": "次提交",
     "one-or-less-commit": "次提交",
+    "open": "Open",
     "opetarion-alias": "{{0}}别名",
     "opetarion-alias-darwin": "{{0}}别名",
     "options": "选项",
@@ -1156,6 +1157,8 @@
     "open-in-external-editor-darwin": "在 {{0}} 中打开",
     "open-in-shell": "在 {{0}} 中打开(&P)",
     "open-in-shell-darwin": "在 {{0}} 中打开",
+    "open-with-external-editor": "Open &with…",
+    "open-with-external-editor-darwin": "Open With…",
     "open-working-directory": "显示于 Explorer(&X)",
     "open-working-directory-darwin": "显示于 Finder",
     "open-working-directory-linux": "显示于 File Manager",
@@ -1239,6 +1242,7 @@
     "view-on-github-darwin": "在 GitHub 上结帐",
     "view-pull-request": "结帐 GitHub 上的拉取请求(&P)",
     "view-pull-request-darwin": "结帐 GitHub 上的拉取请求",
+    "view-pull-request-on-github": "View Pull Request on GitHub",
     "window-darwin": "窗口",
     "zoom-darwin": "缩放",
     "zoom-in": "缩放(放大)",
@@ -1453,6 +1457,13 @@
     "open-your-card": "打开你的卡",
     "throw-it-away": "扔掉"
   },
+  "open-with-external-editor": {
+    "configure-custom-editor": "Configure custom editor…",
+    "configure-custom-editor-darwin": "Configure Custom Editor…",
+    "open-with": "Open with…",
+    "open-with-darwin": "Open With…",
+    "select-an-editor": "Select an editor"
+  },
   "oversized-files-warning": {
     "commit-anyway": "无论如何都要承诺",
     "commit-anyway-darwin": "无论如何都要承诺",
@@ -1495,6 +1506,7 @@
     "discarding-stash": "丢弃储藏",
     "force-pushing": "强制推动",
     "if-i-have-changes-and-i-switch-branches": "如果我有变化并且我切换分支…",
+    "overriding-commit-message": "使用 Copilot 生成的消息覆盖提交消息",
     "removing-repositories": "删除存储库",
     "show-a-confirmation": "之前显示确认对话框…",
     "show-commit-length-warning": "显示提交摘要长度警告",
@@ -2036,6 +2048,12 @@
   "whitespace-hint-popover": {
     "selecting-lines": "隐藏空白变化时, 选择行将被禁用。",
     "show-whitespace-changes": "显示空白变化吗?"
+  },
+  "window-controls": {
+    "close": "关闭",
+    "maximize": "最大化",
+    "minimize": "最小化",
+    "restore": "还原"
   },
   "workflow-push-rejected": {
     "continue-in-browser": "在浏览器中继续",

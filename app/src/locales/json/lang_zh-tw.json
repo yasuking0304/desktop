@@ -395,7 +395,7 @@
     "do-not-have-write-access-to-3": " 嗎?",
     "enable-commit-spellcheck": "啟用提交拼字檢查",
     "enable-commit-spellcheck-darwin": "啟用提交拼字檢查",
-    "generate-commit-message": "使用 Copilot 產生提交訊息{{0}}",
+    "generate-commit-message": "使用 Copilot 生成的訊息覆寫提交訊息",
     "generate-commit-message-with-copilot": "使用 Copilot 產生提交訊息",
     "generate-commit-message-with-copilot-darwin": "使用 Copilot 產生提交訊息",
     "generating-commit-details": "正在產生提交詳細資料…",
@@ -481,6 +481,7 @@
     "ok": "Ok",
     "one-commit": "次提交",
     "one-or-less-commit": "次提交",
+    "open": "Open",
     "opetarion-alias": "{{0}}別名",
     "opetarion-alias-darwin": "{{0}}別名",
     "options": "選項",
@@ -1156,6 +1157,8 @@
     "open-in-external-editor-darwin": "在 {{0}} 中開啟",
     "open-in-shell": "在 {{0}} 中開啟(&P)",
     "open-in-shell-darwin": "在 {{0}} 中開啟",
+    "open-with-external-editor": "Open &with…",
+    "open-with-external-editor-darwin": "Open With…",
     "open-working-directory": "顯示於 Explorer(&X)",
     "open-working-directory-darwin": "顯示於 Finder",
     "open-working-directory-linux": "顯示於 File Manager",
@@ -1239,6 +1242,7 @@
     "view-on-github-darwin": "在 GitHub 結帳",
     "view-pull-request": "結帳 GitHub 上的拉取請求(&P)",
     "view-pull-request-darwin": "結帳 GitHub 上的拉取請求",
+    "view-pull-request-on-github": "View Pull Request on GitHub",
     "window-darwin": "視窗",
     "zoom-darwin": "縮放",
     "zoom-in": "縮放(放大)",
@@ -1453,6 +1457,13 @@
     "open-your-card": "打開你的卡片",
     "throw-it-away": "丟掉"
   },
+  "open-with-external-editor": {
+    "configure-custom-editor": "Configure custom editor…",
+    "configure-custom-editor-darwin": "Configure Custom Editor…",
+    "open-with": "Open with…",
+    "open-with-darwin": "Open With…",
+    "select-an-editor": "Select an editor"
+  },
   "oversized-files-warning": {
     "commit-anyway": "無論如何都要承諾",
     "commit-anyway-darwin": "無論如何都要承諾",
@@ -1495,6 +1506,7 @@
     "discarding-stash": "丟棄儲藏",
     "force-pushing": "強制推動",
     "if-i-have-changes-and-i-switch-branches": "如果我有變化並且我切換分支…",
+    "overriding-commit-message": "使用 Copilot 生成的訊息覆寫提交訊息",
     "removing-repositories": "刪除儲存庫",
     "show-a-confirmation": "之前顯示確認對話框…",
     "show-commit-length-warning": "顯示提交摘要長度警告",
@@ -2036,6 +2048,12 @@
   "whitespace-hint-popover": {
     "selecting-lines": "隱藏空白變更時, 選擇行將會停用。",
     "show-whitespace-changes": "顯示空白變化嗎?"
+  },
+  "window-controls": {
+    "close": "關閉",
+    "maximize": "最大化",
+    "minimize": "最小化",
+    "restore": "復原"
   },
   "workflow-push-rejected": {
     "continue-in-browser": "在瀏覽器中繼續",

@@ -481,6 +481,7 @@
     "ok": "Ok",
     "one-commit": "개체 커밋",
     "one-or-less-commit": "개체 커밋",
+    "open": "Open",
     "opetarion-alias": "별칭 {{0}}",
     "opetarion-alias-darwin": "별칭 {{0}}",
     "options": "옵션",
@@ -1156,6 +1157,8 @@
     "open-in-external-editor-darwin": "{{0}}에서 열기",
     "open-in-shell": "{{0}}에서 열기(&P)",
     "open-in-shell-darwin": "{{0}}에서 열기",
+    "open-with-external-editor": "Open &with…",
+    "open-with-external-editor-darwin": "Open With…",
     "open-working-directory": "Explorer에서 보기(&X)",
     "open-working-directory-darwin": "Finder로 표시",
     "open-working-directory-linux": "파일 관리자에서 보기",
@@ -1239,6 +1242,7 @@
     "view-on-github-darwin": "GitHub에서 확인",
     "view-pull-request": "GitHub에서 끌어오기 요청(&P)",
     "view-pull-request-darwin": "GitHub에서 끌어오기 요청 참조",
+    "view-pull-request-on-github": "View Pull Request on GitHub",
     "window-darwin": "창",
     "zoom-darwin": "줌",
     "zoom-in": "줌(확대)",
@@ -1453,6 +1457,13 @@
     "open-your-card": "카드 열기",
     "throw-it-away": "숨기기"
   },
+  "open-with-external-editor": {
+    "configure-custom-editor": "Configure custom editor…",
+    "configure-custom-editor-darwin": "Configure Custom Editor…",
+    "open-with": "Open with…",
+    "open-with-darwin": "Open With…",
+    "select-an-editor": "Select an editor"
+  },
   "oversized-files-warning": {
     "commit-anyway": "어쨌든 커밋",
     "commit-anyway-darwin": "어쨌든 커밋",
@@ -1495,6 +1506,7 @@
     "discarding-stash": "일시 퇴피 장소 파기",
     "force-pushing": "강제 푸시",
     "if-i-have-changes-and-i-switch-branches": "수정 중인 분기를 전환하려는 경우…",
+    "overriding-commit-message": "Overriding commit message with generated message",
     "removing-repositories": "리포지토리 삭제",
     "show-a-confirmation": "사전 확인 대화 상자 표시…",
     "show-commit-length-warning": "커밋 요약 길이 경고 표시",
@@ -2036,6 +2048,12 @@
   "whitespace-hint-popover": {
     "selecting-lines": "행 선택은 빈 변경사항을 숨기면 비활성화됩니다.",
     "show-whitespace-changes": "공백 변경사항을 표시하시겠습니까?"
+  },
+  "window-controls": {
+    "close": "Close",
+    "maximize": "Maximize",
+    "minimize": "Minimize",
+    "restore": "Restore"
   },
   "workflow-push-rejected": {
     "continue-in-browser": "브라우저로 계속",
