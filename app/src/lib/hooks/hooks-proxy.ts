@@ -1,7 +1,7 @@
 import { spawn } from 'child_process'
 import { basename, resolve } from 'path'
 import { ProcessProxyConnection as Connection } from 'process-proxy'
-import type { HookProgress, TerminalOutput } from '../git'
+import type { HookCallbackOptions } from '../git'
 import { resolveGitBinary } from 'dugite'
 import { ShellEnvResult } from './get-shell-env'
 import { shellFriendlyNames } from './config'
@@ -61,11 +61,8 @@ const exitWithError = (conn: Connection, msg: string, exitCode = 1) =>
 
 export const createHooksProxy = (
   getShellEnv: (cwd: string) => Promise<ShellEnvResult>,
-  onHookProgress?: (progress: HookProgress) => void,
-  onHookFailure?: (
-    hookName: string,
-    terminalOutput: TerminalOutput
-  ) => Promise<'abort' | 'ignore'>
+  onHookProgress?: HookCallbackOptions['onHookProgress'],
+  onHookFailure?: HookCallbackOptions['onHookFailure']
 ) => {
   return async (conn: Connection) => {
     const startTime = Date.now()
@@ -82,9 +79,15 @@ export const createHooksProxy = (
     conn.stderr.write(`Running ${hookName} hook...\n`)
     onHookProgress?.({ hookName, status: 'started', abort })
 
+    // GIT_ vars are considered safe to pass to hooks unless explicitly excluded
+    // GITHEAD_ are set by git-merge (https://github.com/git/git/blob/83a69f19359e6d9bc980563caca38b2b5729808c/builtin/merge.c#L1590)
+    const safePrefixes = ['GIT_', 'GITHEAD_']
+
     const safeEnv = Object.fromEntries(
       Object.entries(proxyEnv).filter(
-        ([k]) => k.startsWith('GIT_') && !excludedEnvVars.has(k)
+        ([k]) =>
+          safePrefixes.some(prefix => k.startsWith(prefix)) &&
+          !excludedEnvVars.has(k)
       )
     )
 

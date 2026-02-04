@@ -7,7 +7,7 @@ import {
   DefaultDialogFooter,
 } from './dialog'
 import { dialogTransitionTimeout } from './app'
-import { coerceToString, GitError, isAuthFailureError } from '../lib/git/core'
+import { GitError, isAuthFailureError } from '../lib/git/core'
 import { Popup, PopupType } from '../models/popup'
 import { OkCancelButtonGroup } from './dialog/ok-cancel-button-group'
 import { ErrorWithMetadata } from '../lib/error-with-metadata'
@@ -19,6 +19,7 @@ import { LinkButton } from './lib/link-button'
 import { getFileFromExceedsError } from '../lib/helpers/regex'
 import { CopilotError } from '../lib/copilot-error'
 import { Terminal } from './terminal'
+import { coerceToString } from '../lib/git/coerce-to-string'
 
 interface IAppErrorProps {
   /** The error to be displayed  */

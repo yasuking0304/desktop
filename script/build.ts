@@ -227,7 +227,7 @@ function packageApp() {
 
 function removeAndCopy(source: string, destination: string) {
   rmSync(destination, { recursive: true, force: true })
-  cpSync(source, destination, { recursive: true })
+  cpSync(source, destination, { recursive: true, verbatimSymlinks: true })
 }
 
 function copyEmoji() {
@@ -251,9 +251,16 @@ function copyStaticResources() {
   const destination = path.join(outRoot, 'static')
   rmSync(destination, { recursive: true, force: true })
   if (existsSync(platformSpecific)) {
-    cpSync(platformSpecific, destination, { recursive: true })
+    cpSync(platformSpecific, destination, {
+      recursive: true,
+      verbatimSymlinks: true,
+    })
   }
-  cpSync(common, destination, { recursive: true, force: false })
+  cpSync(common, destination, {
+    recursive: true,
+    force: false,
+    verbatimSymlinks: true,
+  })
 }
 
 function moveAnalysisFiles() {
@@ -267,7 +274,11 @@ function moveAnalysisFiles() {
     //
     // unlinkSync below ensures that the analysis file isn't bundled into
     // the app by accident
-    cpSync(analysisSource, destination, { recursive: true, force: true })
+    cpSync(analysisSource, destination, {
+      recursive: true,
+      force: true,
+      verbatimSymlinks: true,
+    })
     unlinkSync(analysisSource)
   }
 }
@@ -314,7 +325,7 @@ function copyDependencies() {
   cpSync(
     path.resolve(trampolineSource, desktopAskpassTrampolineFile),
     path.resolve(desktopTrampolineDir, desktopAskpassTrampolineFile),
-    { recursive: true }
+    { recursive: true, verbatimSymlinks: true }
   )
 
   // Dev builds for macOS require a SSH wrapper to use SSH_ASKPASS
@@ -328,7 +339,7 @@ function copyDependencies() {
         sshWrapperFile
       ),
       path.resolve(desktopTrampolineDir, sshWrapperFile),
-      { recursive: true }
+      { recursive: true, verbatimSymlinks: true }
     )
   }
 
@@ -338,6 +349,7 @@ function copyDependencies() {
   mkdirSync(gitDir, { recursive: true })
   cpSync(path.resolve(projectRoot, 'app/node_modules/dugite/git'), gitDir, {
     recursive: true,
+    verbatimSymlinks: true,
   })
 
   console.log('  Copying desktop credential helper…')
@@ -359,7 +371,7 @@ function copyDependencies() {
   cpSync(
     path.resolve(trampolineSource, desktopCredentialHelperTrampolineFile),
     path.resolve(gitCoreDir, desktopCredentialHelperFile),
-    { recursive: true }
+    { recursive: true, verbatimSymlinks: true }
   )
 
   if (process.platform === 'darwin') {
@@ -369,7 +381,7 @@ function copyDependencies() {
     cpSync(
       path.resolve(projectRoot, 'app/node_modules/app-path/main'),
       appPathMain,
-      { recursive: true }
+      { recursive: true, verbatimSymlinks: true }
     )
   }
 
@@ -380,7 +392,7 @@ function copyDependencies() {
       outRoot,
       process.platform === 'win32' ? 'process-proxy.exe' : 'process-proxy'
     ),
-    { recursive: true }
+    { recursive: true, verbatimSymlinks: true }
   )
 
   console.log('  Copying printenvz binary')
@@ -390,7 +402,7 @@ function copyDependencies() {
       outRoot,
       process.platform === 'win32' ? 'printenvz.exe' : 'printenvz'
     ),
-    { recursive: true }
+    { recursive: true, verbatimSymlinks: true }
   )
 }
 

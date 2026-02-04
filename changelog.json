@@ -1,5 +1,14 @@
 {
   "releases": {
+    "3.5.5-beta3": [
+      "[Added] Support merge hooks - #21502",
+      "[Added] Support pull hooks - #21486",
+      "[Added] Support pre-push hook - #21461",
+      "[Added] Add Warp terminal support for Windows - #21471. Thanks @Cocodrulo!",
+      "[Fixed] Fix bad repository state when switching between branches with submodules - #21188",
+      "[Improved] Remove mention of --no-verify - #21488",
+      "[Improved] Update Electron to version 40.1.0 - #21537"
+    ],
     "3.5.5-beta2": [
       "[New] Enable one-time opening of a repository in an alternate editor` - #21436. Thanks @jackfreem!",
       "[Fixed] Git output containing multibyte characters is handled correctly avoiding unexpected crashes - #21469",

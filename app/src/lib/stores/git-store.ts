@@ -75,6 +75,7 @@ import {
   createBranch,
   updateRemoteHEAD,
   getRemoteHEAD,
+  MergeOptions,
 } from '../git'
 import { GitError as DugiteError } from '../../lib/git'
 import { GitError } from 'dugite'
@@ -1487,7 +1488,7 @@ export class GitStore extends BaseStore {
   /** Merge the named branch into the current branch. */
   public merge(
     branch: Branch,
-    isSquash: boolean = false
+    options?: MergeOptions
   ): Promise<MergeResult | undefined> {
     if (this.tip.kind !== TipState.Valid) {
       throw new Error(
@@ -1496,9 +1497,22 @@ export class GitStore extends BaseStore {
     }
 
     const currentBranch = this.tip.branch.name
+    let aborted = false
+    const onHookFailure = options?.onHookFailure
 
     return this.performFailableOperation(
-      () => merge(this.repository, branch.name, isSquash),
+      () =>
+        merge(this.repository, branch.name, {
+          ...options,
+          onHookFailure:
+            onHookFailure === undefined
+              ? undefined
+              : (hookName, terminalOutput) =>
+                  onHookFailure(hookName, terminalOutput).then(result => {
+                    aborted = result === 'abort'
+                    return result
+                  }),
+        }).catch(e => (aborted ? MergeResult.Failed : Promise.reject(e))),
       {
         gitContext: {
           kind: 'merge',
