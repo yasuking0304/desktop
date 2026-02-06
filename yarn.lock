@@ -710,6 +710,48 @@
   resolved "https://registry.yarnpkg.com/@github/browserslist-config/-/browserslist-config-1.0.0.tgz#952fe6da3e6b8ed6a368f3a1a08a9d2ef84e8d04"
   integrity sha512-gIhjdJp/c2beaIWWIlsXdqXVRUz3r2BxBCpfz/F3JXHvSAQ1paMYjLH+maEATtENg+k5eLV7gA+9yPp762ieuw==
 
+"@github/copilot-darwin-arm64@0.0.405":
+  version "0.0.405"
+  resolved "https://registry.yarnpkg.com/@github/copilot-darwin-arm64/-/copilot-darwin-arm64-0.0.405.tgz#ae37aca673dd8318a600a762fd3ac2cebee06974"
+  integrity sha512-RVFpU1cEMqjR0rLpwLwbIfT7XzqqVoQX99G6nsj+WrHu3TIeCgfffyd2YShd4QwZYsMRoTfKB+rirQ+0G5Uiig==
+
+"@github/copilot-darwin-x64@0.0.405":
+  version "0.0.405"
+  resolved "https://registry.yarnpkg.com/@github/copilot-darwin-x64/-/copilot-darwin-x64-0.0.405.tgz#b9d3578b1862ec9b92bf4fcd98bb431342528a12"
+  integrity sha512-Xj2FyPzpZlfqPTuMrXtPNEijSmm2ivHvyMWgy5Ijv7Slabxe+2s3WXDaokE3SQHodK6M0Yle2yrx9kxiwWA+qw==
+
+"@github/copilot-linux-arm64@0.0.405":
+  version "0.0.405"
+  resolved "https://registry.yarnpkg.com/@github/copilot-linux-arm64/-/copilot-linux-arm64-0.0.405.tgz#a088845445e236421814eb3acf25f49a6455388e"
+  integrity sha512-16Wiq8EYB6ghwqZdYytnNkcCN4sT3jyt9XkjfMxI5DDdjLuPc8wbj5VV5pw8S6lZvBL4eAwXGE3+fPqXKxH6GQ==
+
+"@github/copilot-linux-x64@0.0.405":
+  version "0.0.405"
+  resolved "https://registry.yarnpkg.com/@github/copilot-linux-x64/-/copilot-linux-x64-0.0.405.tgz#ad2569005a708d9421f9f9699f8a066cc88b7128"
+  integrity sha512-HXpg7p235//pAuCvcL9m2EeIrL/K6OUEkFeHF3BFHzqUJR4a69gKLsxtUg0ZctypHqo2SehGCRAyVippTVlTyg==
+
+"@github/copilot-win32-arm64@0.0.405":
+  version "0.0.405"
+  resolved "https://registry.yarnpkg.com/@github/copilot-win32-arm64/-/copilot-win32-arm64-0.0.405.tgz#be60c07ab829c8960d9d4f0b3251bc5fdfe65383"
+  integrity sha512-4JCUMiRjP7zB3j1XpEtJq7b7cxTzuwDJ9o76jayAL8HL9NhqKZ6Ys6uxhDA6f/l0N2GVD1TEICxsnPgadz6srg==
+
+"@github/copilot-win32-x64@0.0.405":
+  version "0.0.405"
+  resolved "https://registry.yarnpkg.com/@github/copilot-win32-x64/-/copilot-win32-x64-0.0.405.tgz#91cb46029271bef139d7a8a4ad13a27b15ad2d96"
+  integrity sha512-uHoJ9N8kZbTLbzgqBE1szHwLElv2f+P2OWlqmRSawQhwPl0s7u55dka7mZYvj2ZoNvIyb0OyShCO56OpmCcy/w==
+
+"@github/copilot@^0.0.405":
+  version "0.0.405"
+  resolved "https://registry.yarnpkg.com/@github/copilot/-/copilot-0.0.405.tgz#62dfc481b4f41a4fe88bc52578aab52d9ec37705"
+  integrity sha512-zp0kGSkoKrO4MTWefAxU5w2VEc02QnhPY3FmVxOeduh6ayDIz2V368mXxs46ThremdMnMyZPL1k989BW4NpOVw==
+  optionalDependencies:
+    "@github/copilot-darwin-arm64" "0.0.405"
+    "@github/copilot-darwin-x64" "0.0.405"
+    "@github/copilot-linux-arm64" "0.0.405"
+    "@github/copilot-linux-x64" "0.0.405"
+    "@github/copilot-win32-arm64" "0.0.405"
+    "@github/copilot-win32-x64" "0.0.405"
+
 "@github/markdownlint-github@^0.1.0":
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@github/markdownlint-github/-/markdownlint-github-0.1.0.tgz#f4f535215bbc6bde348f96fd1c155d8a1f5f5ccc"

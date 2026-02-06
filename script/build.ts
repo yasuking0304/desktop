@@ -328,6 +328,15 @@ function copyDependencies() {
     { recursive: true, verbatimSymlinks: true }
   )
 
+  console.log('  Copying copilot…')
+  const copilotSource = path.resolve(
+    projectRoot,
+    `node_modules/@github/copilot-${process.platform}-${process.arch}/copilot`
+  )
+  const copilotDestination = path.resolve(outRoot, 'copilot')
+  rmSync(copilotDestination, { recursive: true, force: true })
+  cpSync(copilotSource, copilotDestination)
+
   // Dev builds for macOS require a SSH wrapper to use SSH_ASKPASS
   if (process.platform === 'darwin' && isDevelopmentBuild) {
     console.log('  Copying ssh-wrapper')
