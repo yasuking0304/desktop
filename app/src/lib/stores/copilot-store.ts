@@ -50,14 +50,13 @@ the JSON object, just return it as plain text. For example:
 
 /**
  * This store manages the Copilot client lifecycle based on the user's
- * GitHub.com account. It recreates the client when the account or token
- * changes that use Copilot features.
+ * GitHub.com account. It tracks account changes and creates the client
+ * lazily when a Copilot feature is used.
  *
  * Currently, Copilot is only available for GitHub.com accounts.
  */
 export class CopilotStore {
   private readonly emitter = new Emitter()
-  private client: CopilotClient | null = null
   private currentAccount: Account | null = null
 
   public constructor(private readonly accountsStore: AccountsStore) {
@@ -66,7 +65,7 @@ export class CopilotStore {
   }
 
   /**
-   * Initialize the Copilot client from the current accounts.
+   * Initialize the account from the current accounts.
    */
   private async initializeFromAccounts(): Promise<void> {
     const accounts = await this.accountsStore.getAll()
@@ -74,71 +73,48 @@ export class CopilotStore {
   }
 
   /**
-   * Handler for account updates. Recreates the Copilot client if the
-   * GitHub.com account has changed.
+   * Handler for account updates. Updates the stored account reference.
    */
   private onAccountsUpdated = (accounts: ReadonlyArray<Account>): void => {
     // Copilot is only available on GitHub.com, so we look for a dotcom account
     const dotComAccount = accounts.find(isDotComAccount) ?? null
+    this.currentAccount = dotComAccount
 
-    // Check if the account or token has changed
-    if (this.shouldRecreateClient(dotComAccount)) {
-      this.recreateClient(dotComAccount)
+    if (dotComAccount === null) {
+      log.info('CopilotStore: No GitHub.com account available')
+    } else {
+      log.info(`CopilotStore: Account updated for '${dotComAccount.login}'`)
     }
   }
 
   /**
-   * Determines if the client should be recreated based on account changes.
+   * Creates a new Copilot client for the current account.
+   *
+   * @throws Error if no GitHub.com account is available
    */
-  private shouldRecreateClient(newAccount: Account | null): boolean {
-    if (this.currentAccount === null && newAccount === null) {
-      return false
+  private createClient(): CopilotClient {
+    if (this.currentAccount === null || !this.currentAccount.token) {
+      throw new Error(
+        'Cannot create Copilot client: No GitHub.com account available'
+      )
     }
 
-    if (this.currentAccount === null || newAccount === null) {
-      return true
-    }
-
-    // Recreate if the account ID or token has changed
-    return (
-      this.currentAccount.id !== newAccount.id ||
-      this.currentAccount.token !== newAccount.token
-    )
-  }
-
-  /**
-   * Stops the existing client and creates a new one for the given account.
-   */
-  private recreateClient(account: Account | null): void {
-    this.stopClient()
-    this.currentAccount = account
-
-    if (account === null || !account.token) {
-      log.info('CopilotStore: No GitHub.com account available, client stopped')
-      return
-    }
-
-    this.client = new CopilotClient({
+    return new CopilotClient({
       cliPath: getCopilotCLIPath(),
       logLevel: 'all',
       autoStart: true,
-      githubToken: account.token,
+      githubToken: this.currentAccount.token,
     })
-
-    log.info(`CopilotStore: Created new client for '${account.login}'`)
   }
 
   /**
-   * Stops the current Copilot client if one exists.
+   * Stops the given Copilot client.
    */
-  private async stopClient(): Promise<void> {
-    if (this.client !== null) {
-      try {
-        await this.client.stop()
-      } catch (e) {
-        log.warn('CopilotStore: Error stopping client', e)
-      }
-      this.client = null
+  private async stopClient(client: CopilotClient): Promise<void> {
+    try {
+      await client.stop()
+    } catch (e) {
+      log.warn('CopilotStore: Error stopping client', e)
     }
   }
 
@@ -152,19 +128,20 @@ export class CopilotStore {
   public async generateCommitMessage(
     diff: string
   ): Promise<ICopilotCommitMessage> {
-    if (this.client === null || this.currentAccount === null) {
+    if (this.currentAccount === null) {
       throw new Error(
         'Cannot generate commit message: No GitHub.com account available'
       )
     }
 
+    const client = this.createClient()
     let session: Awaited<
       ReturnType<CopilotClient['createSession']>
     > | null = null
 
     try {
       // Create a session for commit message generation
-      session = await this.client.createSession({
+      session = await client.createSession({
         model: 'gpt-5-mini',
         reasoningEffort: 'low',
         systemMessage: {
@@ -201,15 +178,18 @@ export class CopilotStore {
           // Ignore cleanup errors
         }
       }
+
+      // Stop the client after use
+      await this.stopClient(client)
     }
   }
 
   /**
-   * Returns whether the Copilot client is available (i.e., a GitHub.com
-   * account is signed in).
+   * Returns whether Copilot is available (i.e., a GitHub.com account is
+   * signed in).
    */
   public get isAvailable(): boolean {
-    return this.client !== null && this.currentAccount !== null
+    return this.currentAccount !== null
   }
 
   /**
