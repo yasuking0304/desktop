@@ -23,6 +23,7 @@ const assertValidLicensesIn = async (dir: string) => {
     'Python-2.0',
     'MPL-2.0',
     'CC0-1.0',
+    'Copilot CLI License',
   ]
 
   for (const key in summary) {
