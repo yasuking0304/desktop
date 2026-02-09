@@ -331,7 +331,7 @@ function copyDependencies() {
   console.log('  Copying copilot…')
   const copilotSource = path.resolve(
     projectRoot,
-    `node_modules/@github/copilot-${process.platform}-${process.arch}/copilot`
+    `app/node_modules/@github/copilot-${process.platform}-${process.arch}/copilot`
   )
   const copilotDestination = path.resolve(outRoot, 'copilot')
   rmSync(copilotDestination, { recursive: true, force: true })
