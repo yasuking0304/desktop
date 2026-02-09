@@ -78,10 +78,10 @@
   resolved "https://registry.yarnpkg.com/@github/copilot-linux-x64/-/copilot-linux-x64-0.0.403.tgz#17a7eba380be8553610ee6632d6a81ba229722eb"
   integrity sha512-eoswUc9vo4TB+/9PgFJLVtzI4dPjkpJXdCsAioVuoqPdNxHxlIHFe9HaVcqMRZxUNY1YHEBZozy+IpUEGjgdfQ==
 
-"@github/copilot-sdk@^0.1.22":
-  version "0.1.22"
-  resolved "https://registry.yarnpkg.com/@github/copilot-sdk/-/copilot-sdk-0.1.22.tgz#33ab3f09b515dfae87178681bbb95e764b050ba5"
-  integrity sha512-ZGOEBmYOfu/vLXKjjoiw4lO3Cb8QBUuAWXcW/qzmPPsM9+Qe00qVr2AuDTU/Gft9Dm/yZcPK2QuTZc7LVeom9w==
+"@github/copilot-sdk@^0.1.23":
+  version "0.1.23"
+  resolved "https://registry.yarnpkg.com/@github/copilot-sdk/-/copilot-sdk-0.1.23.tgz#120986bf5719880dedf076c0f2a55f855566ff40"
+  integrity sha512-0by81bsBQlDKE5VbcegZfUMvPyPm1aXwSGS2rGaMAFxv3ps+dACf1Voruxik7hQTae0ziVFJjuVrlxZoRaXBLw==
   dependencies:
     "@github/copilot" "^0.0.403"
     vscode-jsonrpc "^8.2.1"
