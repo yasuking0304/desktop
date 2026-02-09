@@ -808,9 +808,8 @@ export interface IAPICreatePushProtectionBypassResponse {
  * An object for making authenticated requests to the GitHub API
  */
 export class API {
-  private static readonly tokenInvalidatedListeners = new Set<
-    TokenInvalidatedCallback
-  >()
+  private static readonly tokenInvalidatedListeners =
+    new Set<TokenInvalidatedCallback>()
 
   public static onTokenInvalidated(callback: TokenInvalidatedCallback) {
     this.tokenInvalidatedListeners.add(callback)
@@ -1964,7 +1963,8 @@ export class API {
         return undefined
       }
 
-      const json: ViewerCopilotResponse = (await response.json()) as ViewerCopilotResponse
+      const json: ViewerCopilotResponse =
+        (await response.json()) as ViewerCopilotResponse
       const { viewer } = json.data
       return {
         isCopilotDesktopEnabled: viewer.isCopilotDesktopEnabled,

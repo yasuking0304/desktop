@@ -135,9 +135,8 @@ export class CopilotStore {
     }
 
     const client = this.createClient()
-    let session: Awaited<
-      ReturnType<CopilotClient['createSession']>
-    > | null = null
+    let session: Awaited<ReturnType<CopilotClient['createSession']>> | null =
+      null
 
     try {
       // Create a session for commit message generation
