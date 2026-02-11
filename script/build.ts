@@ -329,17 +329,68 @@ function copyDependencies() {
   )
 
   console.log('  Copying copilot…')
-  const copilotSource = path.resolve(
-    projectRoot,
-    `app/node_modules/@github/copilot-${
-      process.platform
-    }-${getDistArchitecture()}/copilot${
-      process.platform === 'win32' ? '.exe' : ''
-    }`
+  const githubPkgDir = path.resolve(projectRoot, `app/node_modules/@github/`)
+  const copilotPkgDir = path.resolve(
+    githubPkgDir,
+    `copilot-${process.platform}-${getDistArchitecture()}`
   )
+  const copilotBinaryName = `copilot${
+    process.platform === 'win32' ? '.exe' : ''
+  }`
+  const copilotSource = path.resolve(copilotPkgDir, copilotBinaryName)
   const copilotDestination = path.resolve(outRoot, 'copilot')
   rmSync(copilotDestination, { recursive: true, force: true })
-  cpSync(copilotSource, copilotDestination)
+
+  try {
+    cpSync(copilotSource, copilotDestination)
+  } catch (e) {
+    // HACK: this is a temporary workaround so that we can bundle copilot in
+    // some cross-compilation scenarios, where the use of such an old version of
+    // yarn as package manager doesn't let us pick the right binary from
+    // @github/copilot optional dependencies (which target different combinations
+    // of platform and architecture). In those cases, we'll attempt to download
+    // the right binary from the GitHub release corresponding to the version of
+    // copilot we're using in the app.
+    console.log(`  Failed to copy copilot from ${copilotSource}: ${e}`)
+    console.log('  Attempting to download copilot from GitHub release…')
+
+    const copilotPkg = JSON.parse(
+      readFileSync(
+        path.join(
+          projectRoot,
+          'app',
+          'node_modules',
+          '@github',
+          'copilot',
+          'package.json'
+        ),
+        'utf8'
+      )
+    )
+    const copilotVersion: string = copilotPkg.version
+    const assetName = `copilot-${
+      process.platform
+    }-${getDistArchitecture()}.tar.gz`
+    const downloadUrl = `https://github.com/github/copilot-cli/releases/download/v${copilotVersion}/${assetName}`
+    const extractDir = path.join(os.tmpdir(), `copilot-extract-${Date.now()}`)
+    const tarballPath = path.join(extractDir, assetName)
+
+    mkdirSync(extractDir, { recursive: true })
+
+    console.log(`  Downloading ${downloadUrl}…`)
+    cp.execSync(`curl -sL -o "${tarballPath}" "${downloadUrl}"`, {
+      stdio: 'inherit',
+    })
+
+    console.log(`  Extracting ${tarballPath}…`)
+    cp.execSync(`tar -xzf "${tarballPath}" -C "${extractDir}"`)
+
+    cpSync(path.join(extractDir, copilotBinaryName), copilotDestination)
+    console.log('  Successfully downloaded and copied copilot binary')
+
+    rmSync(extractDir, { recursive: true, force: true })
+    console.log('  Cleaned up temporary files')
+  }
 
   // Dev builds for macOS require a SSH wrapper to use SSH_ASKPASS
   if (process.platform === 'darwin' && isDevelopmentBuild) {
