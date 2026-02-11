@@ -1,5 +1,9 @@
 {
   "releases": {
+    "3.5.5-beta4": [
+      "[New] Enable hooks support by default - #21590",
+      "[Added] Support rebase hooks - #21586"
+    ],
     "3.5.5-beta3": [
       "[Added] Support merge hooks - #21502",
       "[Added] Support pull hooks - #21486",
