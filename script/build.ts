@@ -333,7 +333,9 @@ function copyDependencies() {
     projectRoot,
     `app/node_modules/@github/copilot-${
       process.platform
-    }-${getDistArchitecture()}/copilot`
+    }-${getDistArchitecture()}/copilot${
+      process.platform === 'win32' ? '.exe' : ''
+    }`
   )
   const copilotDestination = path.resolve(outRoot, 'copilot')
   rmSync(copilotDestination, { recursive: true, force: true })
