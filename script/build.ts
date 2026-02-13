@@ -368,22 +368,30 @@ function copyDependencies() {
       )
     )
     const copilotVersion: string = copilotPkg.version
-    const assetName = `copilot-${
-      process.platform
-    }-${getDistArchitecture()}.tar.gz`
+    const isWindows = process.platform === 'win32'
+    const assetName = `copilot-${process.platform}-${getDistArchitecture()}.${
+      isWindows ? 'zip' : 'tar.gz'
+    }`
     const downloadUrl = `https://github.com/github/copilot-cli/releases/download/v${copilotVersion}/${assetName}`
     const extractDir = path.join(os.tmpdir(), `copilot-extract-${Date.now()}`)
-    const tarballPath = path.join(extractDir, assetName)
+    const archivePath = path.join(extractDir, assetName)
 
     mkdirSync(extractDir, { recursive: true })
 
     console.log(`  Downloading ${downloadUrl}…`)
-    cp.execSync(`curl -sL -o "${tarballPath}" "${downloadUrl}"`, {
+    cp.execSync(`curl -sL -o "${archivePath}" "${downloadUrl}"`, {
       stdio: 'inherit',
     })
 
-    console.log(`  Extracting ${tarballPath}…`)
-    cp.execSync(`tar -xzf "${tarballPath}" -C "${extractDir}"`)
+    console.log(`  Extracting ${archivePath}…`)
+    if (isWindows) {
+      cp.execSync(
+        `powershell -Command "Expand-Archive -Path '${archivePath}' -DestinationPath '${extractDir}'"`,
+        { stdio: 'inherit' }
+      )
+    } else {
+      cp.execSync(`tar -xzf "${archivePath}" -C "${extractDir}"`)
+    }
 
     cpSync(path.join(extractDir, copilotBinaryName), copilotDestination)
     console.log('  Successfully downloaded and copied copilot binary')
