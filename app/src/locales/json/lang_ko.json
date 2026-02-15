@@ -481,7 +481,7 @@
     "ok": "Ok",
     "one-commit": "개체 커밋",
     "one-or-less-commit": "개체 커밋",
-    "open": "Open",
+    "open": "열다",
     "opetarion-alias": "별칭 {{0}}",
     "opetarion-alias-darwin": "별칭 {{0}}",
     "options": "옵션",
@@ -963,7 +963,7 @@
     "github-desktop-hook-support-is-experime-3": ".",
     "hooks": "후크",
     "load-git-hook-env-from-shell": "쉘에서 Git 후크 환경 변수 로드",
-    "path-settings": "경로 설정",
+    "other-settings": "기타",
     "settings-related-to-the-path": "경로 관련 설정",
     "shell-to-use-when-loading-env": "환경을 로드할 때 사용할 셸",
     "when-enabled-attempt-to-load-env-variables": "사용하도록 설정하면 GitHub Desktop은 Git 후크를 실행할 때 셸에서 환경 변수를 로드합니다. 이것은 Git 후크가 쉘 설정 파일에 설정된 환경 변수에 의존하는 경우에 유용합니다. nvm, rbenv, asdf 등의 버전 관리 도구에서 일반적으로 사용되는 기술입니다."
@@ -1157,8 +1157,8 @@
     "open-in-external-editor-darwin": "{{0}}에서 열기",
     "open-in-shell": "{{0}}에서 열기(&P)",
     "open-in-shell-darwin": "{{0}}에서 열기",
-    "open-with-external-editor": "Open &with…",
-    "open-with-external-editor-darwin": "Open With…",
+    "open-with-external-editor": "외부 편집기에서 열기(&W)…",
+    "open-with-external-editor-darwin": "외부 편집기에서 열기…",
     "open-working-directory": "Explorer에서 보기(&X)",
     "open-working-directory-darwin": "Finder로 표시",
     "open-working-directory-linux": "파일 관리자에서 보기",
@@ -1458,11 +1458,11 @@
     "throw-it-away": "숨기기"
   },
   "open-with-external-editor": {
-    "configure-custom-editor": "Configure custom editor…",
-    "configure-custom-editor-darwin": "Configure Custom Editor…",
-    "open-with": "Open with…",
-    "open-with-darwin": "Open With…",
-    "select-an-editor": "Select an editor"
+    "configure-custom-editor": "편집기 설정 사용자 정의…",
+    "configure-custom-editor-darwin": "편집기 설정 사용자 정의…",
+    "open-with": "…에서 열기",
+    "open-with-darwin": "…에서 열기",
+    "select-an-editor": "편집기 선택"
   },
   "oversized-files-warning": {
     "commit-anyway": "어쨌든 커밋",
@@ -2050,10 +2050,10 @@
     "show-whitespace-changes": "공백 변경사항을 표시하시겠습니까?"
   },
   "window-controls": {
-    "close": "Close",
-    "maximize": "Maximize",
-    "minimize": "Minimize",
-    "restore": "Restore"
+    "close": "닫기",
+    "maximize": "최대화",
+    "minimize": "최소화",
+    "restore": "복원"
   },
   "workflow-push-rejected": {
     "continue-in-browser": "브라우저로 계속",

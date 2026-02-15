@@ -963,7 +963,7 @@
     "github-desktop-hook-support-is-experime-3": "。",
     "hooks": "フック",
     "load-git-hook-env-from-shell": "シェルからGitフック環境変数を読み込む",
-    "path-settings": "パス設定",
+    "other-settings": "その他",
     "settings-related-to-the-path": "パスに関する設定",
     "shell-to-use-when-loading-env": "環境をロードするときに使用するシェル",
     "when-enabled-attempt-to-load-env-variables": "有効にすると、GitHub Desktop は Git フックの実行時にシェルから環境変数を読み込みます。これは、Gitフックがシェル設定ファイルで設定された環境変数に依存している場合に便利です。nvm、rbenv、asdf などのバージョン管理ツールで一般的に使われている方法です。"

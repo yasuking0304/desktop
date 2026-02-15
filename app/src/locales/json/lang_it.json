@@ -963,7 +963,7 @@
     "github-desktop-hook-support-is-experime-3": " if you encounter any issues or have feedback!",
     "hooks": "Hooks",
     "load-git-hook-env-from-shell": "Load Git hook environment variables from shell",
-    "path-settings": "Path Settings",
+    "other-settings": "Others",
     "settings-related-to-the-path": "Settings related to the path",
     "shell-to-use-when-loading-env": "Shell to use when loading environment",
     "when-enabled-attempt-to-load-env-variables": "When enabled, GitHub Desktop will attempt to load environment variables from your shell when executing Git hooks. This is useful if your Git hooks depend on environment variables set in your shell configuration files, a common practive for version managers such as nvm, rbenv, asdf, etc."

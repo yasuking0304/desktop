@@ -481,7 +481,7 @@
     "ok": "Ok",
     "one-commit": "次提交",
     "one-or-less-commit": "次提交",
-    "open": "Open",
+    "open": "打开",
     "opetarion-alias": "{{0}}别名",
     "opetarion-alias-darwin": "{{0}}别名",
     "options": "选项",
@@ -963,7 +963,7 @@
     "github-desktop-hook-support-is-experime-3": " if you encounter any issues or have feedback!",
     "hooks": "Hooks",
     "load-git-hook-env-from-shell": "从 shell 载入 Git 钩子环境变量",
-    "path-settings": "路径设置",
+    "other-settings": "其他设置",
     "settings-related-to-the-path": "与路径相关的设置",
     "shell-to-use-when-loading-env": "加载环境时使用的 Shell",
     "when-enabled-attempt-to-load-env-variables": "When enabled, GitHub Desktop will attempt to load environment variables from your shell when executing Git hooks. This is useful if your Git hooks depend on environment variables set in your shell configuration files, a common practive for version managers such as nvm, rbenv, asdf, etc."
@@ -1157,8 +1157,8 @@
     "open-in-external-editor-darwin": "在 {{0}} 中打开",
     "open-in-shell": "在 {{0}} 中打开(&P)",
     "open-in-shell-darwin": "在 {{0}} 中打开",
-    "open-with-external-editor": "Open &with…",
-    "open-with-external-editor-darwin": "Open With…",
+    "open-with-external-editor": "在外部编辑器中打开(&W)…",
+    "open-with-external-editor-darwin": "在外部编辑器中打开…",
     "open-working-directory": "显示于 Explorer(&X)",
     "open-working-directory-darwin": "显示于 Finder",
     "open-working-directory-linux": "显示于 File Manager",
@@ -1458,11 +1458,11 @@
     "throw-it-away": "扔掉"
   },
   "open-with-external-editor": {
-    "configure-custom-editor": "Configure custom editor…",
-    "configure-custom-editor-darwin": "Configure Custom Editor…",
-    "open-with": "Open with…",
-    "open-with-darwin": "Open With…",
-    "select-an-editor": "Select an editor"
+    "configure-custom-editor": "自定义编辑器设置…",
+    "configure-custom-editor-darwin": "自定义编辑器设置…",
+    "open-with": "在外部编辑器中打开…",
+    "open-with-darwin": "在外部编辑器中打开…",
+    "select-an-editor": "选择编辑器"
   },
   "oversized-files-warning": {
     "commit-anyway": "无论如何都要承诺",

@@ -186,7 +186,7 @@ export class Git extends React.Component<IGitProps> {
             {t('git.hooks', 'Hooks')}{' '}
             <span className="beta-pill">{t('git.beta', 'Beta')}</span>
           </span>
-          <span>{t('git.path-settings', 'Path Settings')}</span>
+          <span>{t('git.other-settings', 'Other Settings')}</span>
         </TabBar>
         <div className="git-preferences-content">{this.renderCurrentTab()}</div>
       </DialogContent>
