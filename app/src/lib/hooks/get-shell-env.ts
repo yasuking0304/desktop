@@ -15,10 +15,11 @@ export type ShellEnvResult =
 
 export const getShellEnv = async (
   cwd?: string,
-  shellKind?: SupportedHooksEnvShell
+  shellKind?: SupportedHooksEnvShell,
+  printenvzPath?: string
 ): Promise<ShellEnvResult> => {
   const ext = __WIN32__ ? '.exe' : ''
-  const printenvzPath = join(__dirname, `printenvz${ext}`)
+  printenvzPath ??= join(__dirname, `printenvz${ext}`)
 
   const shellInfo = await getShell(shellKind)
 

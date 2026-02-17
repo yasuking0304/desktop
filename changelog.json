@@ -1,5 +1,9 @@
 {
   "releases": {
+    "3.5.5-beta6": [
+      "[Improved] Locate Git for Windows via PATH and registry - #21621",
+      "[Improved] Include hook exit code in terminal output - #21620"
+    ],
     "3.5.5-beta5": [
       "[Fixed] Account for Windows EOL formatting when loading shell environment - #21619",
       "[Fixed] It's now possible to disable loading of environment for Git hooks - #21617"
