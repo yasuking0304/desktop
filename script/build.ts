@@ -339,23 +339,40 @@ function copyDependencies() {
     recursive: true,
   })
 
-  const targetDirPattern = `${process.platform}-${getDistArchitecture()}`
+  const nonValidPlatforms = ['darwin', 'linux', 'win32'].filter(
+    p => p !== process.platform
+  )
+  const nonValidArchitectures = ['x64', 'arm64'].filter(
+    a => a !== getDistArchitecture()
+  )
 
   // Removing unnecessary prebuild binaries from the copilot package to reduce
   // bundle size
   const prebuildsDirs = [
     path.join(copilotDestination, 'prebuilds'),
     path.join(copilotDestination, 'ripgrep', 'bin'),
+    path.join(copilotDestination, 'clipboard', 'node_modules', '@teddyzhu'),
   ]
 
   for (const prebuildsDir of prebuildsDirs) {
     const prebuilds = readdirSync(prebuildsDir)
     for (const prebuild of prebuilds) {
-      if (!prebuild.includes(targetDirPattern)) {
-        rmSync(path.join(prebuildsDir, prebuild), {
-          recursive: true,
-          force: true,
-        })
+      for (const platform of nonValidPlatforms) {
+        if (prebuild.includes(platform)) {
+          rmSync(path.join(prebuildsDir, prebuild), {
+            recursive: true,
+            force: true,
+          })
+        }
+      }
+
+      for (const arch of nonValidArchitectures) {
+        if (prebuild.includes(arch)) {
+          rmSync(path.join(prebuildsDir, prebuild), {
+            recursive: true,
+            force: true,
+          })
+        }
       }
     }
   }
