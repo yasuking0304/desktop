@@ -104,6 +104,13 @@ export class CopilotStore {
       )
     }
 
+    // This relies on the fact that Copilot CLI is bundled with the app, but not
+    // as a "single executable application", but the files from the npm package.
+    // That means Desktop will use its own executable to run as Copilot CLI's
+    // index.js as node.
+    // However, when trying to do this directly without the --eval flag, Copilot
+    // CLI fails to parse the arguments correctly, so we ended up using --eval
+    // and just importing the index.js from the CLI as a workaround.
     return new CopilotClient({
       cliPath: await getCopilotCLIPath(),
       cliArgs: ['--eval', "import './index.js'", '--'],
