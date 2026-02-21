@@ -15,13 +15,18 @@ export class KeyboardShortcut extends React.Component<IKeyboardShortCutProps> {
     const className = this.props.isSymbol
       ? 'symbol-keyboard-shortcut'
       : undefined
-    return keys.map((k, i) => {
-      return (
-        <React.Fragment key={k + i}>
-          <kbd className={className}>{k}</kbd>
-          {!__DARWIN__ && i < keys.length - 1 ? <>+</> : null}
-        </React.Fragment>
-      )
-    })
+
+    return (
+      <>
+        {keys.map((k, i) => {
+          return (
+            <React.Fragment key={k + i}>
+              <kbd className={className}>{k}</kbd>
+              {!__DARWIN__ && i < keys.length - 1 ? <>+</> : null}
+            </React.Fragment>
+          )
+        })}
+      </>
+    )
   }
 }

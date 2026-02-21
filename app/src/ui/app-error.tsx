@@ -7,7 +7,7 @@ import {
   DefaultDialogFooter,
 } from './dialog'
 import { dialogTransitionTimeout } from './app'
-import { coerceToString, GitError, isAuthFailureError } from '../lib/git/core'
+import { GitError, isAuthFailureError } from '../lib/git/core'
 import { Popup, PopupType } from '../models/popup'
 import { OkCancelButtonGroup } from './dialog/ok-cancel-button-group'
 import { ErrorWithMetadata } from '../lib/error-with-metadata'
@@ -18,6 +18,8 @@ import { GitError as DugiteError } from 'dugite'
 import { LinkButton } from './lib/link-button'
 import { getFileFromExceedsError } from '../lib/helpers/regex'
 import { CopilotError } from '../lib/copilot-error'
+import { Terminal } from './terminal'
+import { coerceToString } from '../lib/git/coerce-to-string'
 
 interface IAppErrorProps {
   /** The error to be displayed  */
@@ -96,7 +98,7 @@ export class AppError extends React.Component<IAppErrorProps, IAppErrorState> {
     // If the error message is just the raw git output, display it in
     // fixed-width font
     if (isRawGitError(e)) {
-      return <p className="monospace">{e.message}</p>
+      return <Terminal terminalOutput={e.message} rows={15} cols={80} />
     }
 
     if (
@@ -176,6 +178,8 @@ export class AppError extends React.Component<IAppErrorProps, IAppErrorState> {
       switch (gitContext?.kind) {
         case 'create-repository':
           return `Failed creating repository`
+        case 'commit':
+          return `Commit failed`
       }
     }
 

@@ -50,7 +50,10 @@ export function generateBranchContextMenuItems(
 
   if (onViewPullRequestOnGitHub !== undefined) {
     items.push({
-      label: 'View Pull Request on GitHub',
+      label: t(
+        'menu.view-pull-request-on-github',
+        'View Pull Request on GitHub'
+      ),
       action: () => onViewPullRequestOnGitHub(),
     })
   }

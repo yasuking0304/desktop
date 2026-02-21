@@ -6,7 +6,13 @@ import { LinkButton } from '../lib/link-button'
 import { Account } from '../../models/account'
 import { GitConfigUserForm } from '../lib/git-config-user-form'
 import { t } from 'i18next'
+import { TabBar } from '../tab-bar'
 import { Checkbox, CheckboxValue } from '../lib/checkbox'
+import { Select } from '../lib/select'
+import {
+  shellFriendlyNames,
+  SupportedHooksEnvShell,
+} from '../../lib/hooks/config'
 
 interface IGitProps {
   readonly name: string
@@ -25,30 +31,195 @@ interface IGitProps {
   readonly onCoreQuotepathChanged: (coreQuotepath: boolean) => void
 
   readonly onEditGlobalGitConfig: () => void
+
+  readonly selectedTabIndex?: number
+  readonly onSelectedTabIndexChanged: (index: number) => void
+
+  readonly onEnableGitHookEnvChanged: (enableGitHookEnv: boolean) => void
+  readonly onCacheGitHookEnvChanged: (cacheGitHookEnv: boolean) => void
+  readonly onSelectedShellChanged: (selectedShell: string) => void
+
+  readonly enableGitHookEnv: boolean
+  readonly cacheGitHookEnv: boolean
+  readonly selectedShell: string
 }
 
+const windowsShells: ReadonlyArray<SupportedHooksEnvShell> = [
+  'git-bash',
+  'pwsh',
+  'powershell',
+  'cmd',
+]
+
 export class Git extends React.Component<IGitProps> {
+  private get selectedTabIndex() {
+    return this.props.selectedTabIndex ?? 0
+  }
+
+  private onTabClicked = (index: number) => {
+    this.props.onSelectedTabIndexChanged?.(index)
+  }
+
+  private onEnableGitHookEnvChanged = (
+    event: React.FormEvent<HTMLInputElement>
+  ) => {
+    this.props.onEnableGitHookEnvChanged(event.currentTarget.checked)
+  }
+
+  private onCacheGitHookEnvChanged = (
+    event: React.FormEvent<HTMLInputElement>
+  ) => {
+    this.props.onCacheGitHookEnvChanged(event.currentTarget.checked)
+  }
+
+  private onSelectedShellChanged = (
+    event: React.FormEvent<HTMLSelectElement>
+  ) => {
+    this.props.onSelectedShellChanged(event.currentTarget.value)
+  }
+
+  private renderHooksSettings() {
+    return (
+      <>
+        <div className="hooks-warning">
+          {t(
+            'git.github-desktop-hook-support-is-experime-1',
+            `GitHub Desktop hook support is experimental and currently only
+          supports hooks related to committing. Please `
+          )}
+          <LinkButton
+            uri={t(
+              'url.github-desktop-issue',
+              'https://github.com/yasuking0304/desktop/issues/new/choose'
+            )}
+          >
+            {t('git.github-desktop-hook-support-is-experime-2', 'let us know')}
+          </LinkButton>
+          {t(
+            'git.github-desktop-hook-support-is-experime-3',
+            ' if you encounter any issues or have feedback!'
+          )}
+        </div>
+        <Checkbox
+          label={t(
+            'git.load-git-hook-env-from-shell',
+            'Load Git hook environment variables from shell'
+          )}
+          ariaDescribedBy="git-hooks-env-description"
+          value={
+            this.props.enableGitHookEnv ? CheckboxValue.On : CheckboxValue.Off
+          }
+          onChange={this.onEnableGitHookEnvChanged}
+        />
+        <p className="git-hooks-env-description">
+          {t(
+            'git.when-enabled-attempt-to-load-env-variables',
+            `When enabled, GitHub Desktop will attempt to load environment
+             variables from your shell when executing Git hooks. This is useful
+             if your Git hooks depend on environment variables set in your
+             shell configuration files, a common practive for version managers
+             such as nvm, rbenv, asdf, etc.`
+          )}
+        </p>
+
+        {this.props.enableGitHookEnv && __WIN32__ && (
+          <>
+            <Select
+              className="git-hook-shell-select"
+              label={t(
+                'git.shell-to-use-when-loading-env',
+                'Shell to use when loading environment'
+              )}
+              value={this.props.selectedShell}
+              onChange={this.onSelectedShellChanged}
+            >
+              {windowsShells
+                .map(s => ({ key: s, title: shellFriendlyNames[s] }))
+                .map(s => (
+                  <option key={s.key} value={s.key}>
+                    {s.title}
+                  </option>
+                ))}
+            </Select>
+          </>
+        )}
+
+        {this.props.enableGitHookEnv && (
+          <>
+            <Checkbox
+              label={t(
+                'git.cache-git-hook-env-variables',
+                'Cache Git hook environment variables'
+              )}
+              ariaDescribedBy="git-hooks-cache-description"
+              onChange={this.onCacheGitHookEnvChanged}
+              value={
+                this.props.cacheGitHookEnv
+                  ? CheckboxValue.On
+                  : CheckboxValue.Off
+              }
+            />
+
+            <div className="git-hooks-cache-description">
+              {t(
+                'git.cache-hook-env-description',
+                `Cache hook environment variables to improve performance. Disable
+              if your hooks rely on frequently changing environment variables.`
+              )}
+            </div>
+          </>
+        )}
+      </>
+    )
+  }
+
   public render() {
     return (
-      <DialogContent>
-        {this.renderGitConfigAuthorInfo()}
-        {this.renderDefaultBranchSetting()}
-        {this.renderCorePathsSetting()}
-        {this.renderEditYourGlobalGitConfig()}
+      <DialogContent className="git-preferences">
+        <TabBar
+          selectedIndex={this.selectedTabIndex}
+          onTabClicked={this.onTabClicked}
+        >
+          <span>{t('git.autor', 'Author')}</span>
+          <span>{t('git.default-branch', 'Default branch')}</span>
+          <span>
+            {t('git.hooks', 'Hooks')}{' '}
+            <span className="beta-pill">{t('git.beta', 'Beta')}</span>
+          </span>
+          <span>{t('git.other-settings', 'Other Settings')}</span>
+        </TabBar>
+        <div className="git-preferences-content">{this.renderCurrentTab()}</div>
       </DialogContent>
     )
   }
 
+  private renderCurrentTab() {
+    if (this.selectedTabIndex === 0) {
+      return this.renderGitConfigAuthorInfo()
+    } else if (this.selectedTabIndex === 1) {
+      return this.renderDefaultBranchSetting()
+    } else if (this.selectedTabIndex === 2) {
+      return this.renderHooksSettings()
+    } else if (this.selectedTabIndex == 3) {
+      return this.renderCorePathsSetting()
+    }
+
+    return null
+  }
+
   private renderGitConfigAuthorInfo() {
     return (
-      <GitConfigUserForm
-        email={this.props.email}
-        name={this.props.name}
-        isLoadingGitConfig={this.props.isLoadingGitConfig}
-        accounts={this.props.accounts}
-        onEmailChanged={this.props.onEmailChanged}
-        onNameChanged={this.props.onNameChanged}
-      />
+      <>
+        <GitConfigUserForm
+          email={this.props.email}
+          name={this.props.name}
+          isLoadingGitConfig={this.props.isLoadingGitConfig}
+          accounts={this.props.accounts}
+          onEmailChanged={this.props.onEmailChanged}
+          onNameChanged={this.props.onNameChanged}
+        />
+        {this.renderEditGlobalGitConfigInfo()}
+      </>
     )
   }
 
@@ -80,30 +251,29 @@ export class Git extends React.Component<IGitProps> {
           {t(
             'git.gitHub-default-branch-description-3',
             `You may want to
-          change it due to different workflows, or because your integrations
-          still require the historical default branch name of `
+             change it due to different workflows, or because your integrations
+             still require the historical default branch name of `
           )}
           <Ref>master</Ref>
           {t('git.gitHub-default-branch-description-4', '.')}
         </p>
+        {this.renderEditGlobalGitConfigInfo()}
       </div>
     )
   }
 
-  private renderEditYourGlobalGitConfig() {
+  private renderEditGlobalGitConfigInfo() {
     return (
-      <div className="edit-global-git-config-component">
-        <p className="git-settings-description">
-          {t('git.edit-your-global-git-config-1', 'These preferences will ')}
-          <LinkButton onClick={this.props.onEditGlobalGitConfig}>
-            {t(
-              'git.edit-your-global-git-config-2',
-              ' edit your global Git config file'
-            )}
-          </LinkButton>
-          {t('git.edit-your-global-git-config-3', '.')}
-        </p>
-      </div>
+      <p className="git-settings-description">
+        {t('git.edit-your-global-git-config-1', 'These preferences will ')}
+        <LinkButton onClick={this.props.onEditGlobalGitConfig}>
+          {t(
+            'git.edit-your-global-git-config-2',
+            ' edit your global Git config file'
+          )}
+        </LinkButton>
+        {t('git.edit-your-global-git-config-3', '.')}
+      </p>
     )
   }
 
@@ -156,6 +326,7 @@ export class Git extends React.Component<IGitProps> {
             />
           </div>
         </div>
+        {this.renderEditGlobalGitConfigInfo()}
       </div>
     )
   }

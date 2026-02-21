@@ -10,10 +10,6 @@ import classNames from 'classnames'
 import { t } from 'i18next'
 import memoizeOne from 'memoize-one'
 import { IMenuItem, showContextualMenu } from '../../lib/menu-item'
-import {
-  enableCheckoutCommit,
-  enableResetToCommit,
-} from '../../lib/feature-flag'
 import { getDotComAPIEndpoint } from '../../lib/api'
 import { clipboard } from 'electron'
 import { RowIndexPath } from '../lib/list/list-row-index-path'
@@ -794,31 +790,27 @@ export class CommitList extends React.Component<
       })
     }
 
-    if (enableResetToCommit()) {
-      items.push({
-        label: __DARWIN__
-          ? t('commit-list-item.reset-to-commit-darwin', 'Reset to Commit…')
-          : t('commit-list-item.reset-to-commit', 'Reset to commit…'),
-        action: () => {
-          if (this.props.onResetToCommit) {
-            this.props.onResetToCommit(commit)
-          }
-        },
-        enabled: canBeResetTo && this.props.onResetToCommit !== undefined,
-      })
-    }
+    items.push({
+      label: __DARWIN__
+        ? t('commit-list-item.reset-to-commit-darwin', 'Reset to Commit…')
+        : t('commit-list-item.reset-to-commit', 'Reset to commit…'),
+      action: () => {
+        if (this.props.onResetToCommit) {
+          this.props.onResetToCommit(commit)
+        }
+      },
+      enabled: canBeResetTo && this.props.onResetToCommit !== undefined,
+    })
 
-    if (enableCheckoutCommit()) {
-      items.push({
-        label: __DARWIN__
-          ? t('commit-list-item.checkout-commit-darwin', 'Checkout Commit')
-          : t('commit-list-item.checkout-commit', 'Checkout commit'),
-        action: () => {
-          this.props.onCheckoutCommit?.(commit)
-        },
-        enabled: canBeCheckedOut && this.props.onCheckoutCommit !== undefined,
-      })
-    }
+    items.push({
+      label: __DARWIN__
+        ? t('commit-list-item.checkout-commit-darwin', 'Checkout Commit')
+        : t('commit-list-item.checkout-commit', 'Checkout commit'),
+      action: () => {
+        this.props.onCheckoutCommit?.(commit)
+      },
+      enabled: canBeCheckedOut && this.props.onCheckoutCommit !== undefined,
+    })
 
     items.push({
       label: __DARWIN__

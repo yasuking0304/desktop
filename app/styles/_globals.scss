@@ -188,7 +188,9 @@ kbd {
     margin-left: 1px;
   }
 
-  &.symbol-keyboard-shortcut {
-    font-family: var(--font-family-monospace);
+  @include win32 {
+    &.symbol-keyboard-shortcut {
+      font-family: var(--font-family-monospace);
+    }
   }
 }

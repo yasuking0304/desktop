@@ -15,7 +15,7 @@ import {
 } from '../helpers/repository-builder-branch-pruner'
 import { TestStatsStore } from '../helpers/test-stats-store'
 import { offsetFromNow } from '../../src/lib/offset-from'
-import * as FSE from 'fs-extra'
+import { unlink } from 'fs/promises'
 import * as path from 'path'
 import noop from 'lodash/noop'
 
@@ -117,7 +117,7 @@ describe('BranchPruner', () => {
   it('does not prune if there is no default branch', async t => {
     const lastPruneDate = new Date(offsetFromNow(-1, 'day'))
     const repoPath = await setupFixtureRepository(t, 'branch-prune-tests')
-    FSE.unlink(path.join(repoPath, '.git', 'refs', 'remotes', 'origin', 'HEAD'))
+    unlink(path.join(repoPath, '.git', 'refs', 'remotes', 'origin', 'HEAD'))
 
     const repo = await setupRepository(
       repoPath,

@@ -26,6 +26,7 @@
   "prettier.singleQuote": true,
   "prettier.trailingComma": "es5",
   "editor.formatOnSave": true,
+  "prettier.prettierPath": "./node_modules/prettier",
   "prettier.ignorePath": ".prettierignore",
   "eslint.options": {
     "configFile": ".eslintrc.yml",
@@ -36,5 +37,11 @@
     "javascriptreact",
     "typescript",
     "typescriptreact"
-  ]
+  ],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[typescript][javascript][typescriptreact]": {
+    "editor.codeActionsOnSave": {
+      "source.removeUnusedImports": "explicit"
+    }
+  }
 }

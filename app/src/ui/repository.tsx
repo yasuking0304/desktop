@@ -15,6 +15,7 @@ import {
   RepositorySectionTab,
   ChangesSelectionKind,
   IConstrainedValue,
+  CommitOptions,
 } from '../lib/app-state'
 import { Dispatcher } from './dispatcher'
 import { IssuesStore, GitHubUserStore } from '../lib/stores'
@@ -35,6 +36,7 @@ import { t } from 'i18next'
 import { PullRequestSuggestedNextAction } from '../models/pull-request'
 import { clamp } from '../lib/clamp'
 import { Emoji } from '../lib/emoji'
+import { PopupType } from '../models/popup'
 
 interface IRepositoryViewProps {
   readonly repository: Repository
@@ -114,6 +116,24 @@ interface IRepositoryViewProps {
 
   /** Whether or not to show the changes filter */
   readonly showChangesFilter: boolean
+
+  /**
+   * Whether there are any hooks in the repository that could be
+   * skipped during commit with the --no-verify flag
+   */
+  readonly hasCommitHooks: boolean
+
+  /**
+   * Whether or not to skip blocking commit hooks when creating commits
+   * by means of passing the `--no-verify` flag to git commit
+   */
+  readonly skipCommitHooks: boolean
+
+  /** Callback to set commit options for the given repository */
+  readonly onUpdateCommitOptions: (
+    repository: Repository,
+    options: CommitOptions
+  ) => void
 }
 
 interface IRepositoryViewState {
@@ -207,6 +227,17 @@ export class RepositoryView extends React.Component<
     )
   }
 
+  private onShowCommitProgress = () => {
+    if (!this.props.state.subscribeToCommitOutput) {
+      return
+    }
+
+    this.props.dispatcher.showPopup({
+      type: PopupType.CommitProgress,
+      subscribeToCommitOutput: this.props.state.subscribeToCommitOutput,
+    })
+  }
+
   private renderChangesSidebar(): JSX.Element {
     const tip = this.props.state.branchesState.tip
 
@@ -250,6 +281,12 @@ export class RepositoryView extends React.Component<
         availableWidth={availableWidth}
         gitHubUserStore={this.props.gitHubUserStore}
         isCommitting={this.props.state.isCommitting}
+        hookProgress={this.props.state.hookProgress}
+        onShowCommitProgress={
+          this.props.state.subscribeToCommitOutput
+            ? this.onShowCommitProgress
+            : undefined
+        }
         isGeneratingCommitMessage={this.props.state.isGeneratingCommitMessage}
         shouldShowGenerateCommitMessageCallOut={
           this.props.shouldShowGenerateCommitMessageCallOut
@@ -276,6 +313,9 @@ export class RepositoryView extends React.Component<
         commitSpellcheckEnabled={this.props.commitSpellcheckEnabled}
         showCommitLengthWarning={this.props.showCommitLengthWarning}
         showChangesFilter={this.props.showChangesFilter}
+        hasCommitHooks={this.props.hasCommitHooks}
+        skipCommitHooks={this.props.skipCommitHooks}
+        onUpdateCommitOptions={this.props.onUpdateCommitOptions}
       />
     )
   }

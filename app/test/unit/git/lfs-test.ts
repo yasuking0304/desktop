@@ -1,7 +1,7 @@
 import { describe, it } from 'node:test'
 import assert from 'node:assert'
 import * as Path from 'path'
-import { writeFile } from 'fs-extra'
+import { writeFile } from 'fs/promises'
 
 import {
   setupFixtureRepository,

@@ -73,6 +73,11 @@
   resolved "https://registry.yarnpkg.com/@types/trusted-types/-/trusted-types-2.0.7.tgz#baccb07a970b91707df3a3e8ba6896c57ead2d11"
   integrity sha512-ScaPdn1dQczgbl0QFTeTOmVHFULt394XJgOQNoyVhZ6r2vLnMLJfBPd53SB52T/3G36VI1/g2MZaX0cwDuXsfw==
 
+"@xterm/xterm@^5.5.0":
+  version "5.5.0"
+  resolved "https://registry.yarnpkg.com/@xterm/xterm/-/xterm-5.5.0.tgz#275fb8f6e14afa6e8a0c05d4ebc94523ff775396"
+  integrity sha512-hqJHYaQb5OptNunnyAnkHyM8aCjZ1MEIDTQu1iIbbTD/xops91NB5yq1ZK/dC2JDbVWtF23zUtl9JE2NqwT87A==
+
 ansi-html@0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/ansi-html/-/ansi-html-0.0.7.tgz#813584021962a9e9e6fd039f940d12f56ca7859e"
@@ -333,12 +338,10 @@ delegates@^1.0.0:
     node-addon-api "^7.0.0"
     uuid "^8.3.2"
 
-desktop-trampoline@desktop/desktop-trampoline#v0.9.10:
-  version "0.9.10"
-  resolved "https://codeload.github.com/desktop/desktop-trampoline/tar.gz/8f6ceec51d9434d4ada9022bb7d62f01f1d8f51b"
+"desktop-trampoline@file:../vendor/desktop-trampoline":
+  version "0.9.12"
   dependencies:
-    node-addon-api "^4.3.0"
-    prebuild-install "^7.1.2"
+    node-addon-api "^7.0.0"
 
 detect-libc@^1.0.3:
   version "1.0.3"
@@ -604,6 +607,11 @@ isexe@^2.0.0:
   resolved "https://registry.yarnpkg.com/isexe/-/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
   integrity sha1-6PvzdNxVb/iUehDcsFctYz8s+hA=
 
+isexe@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/isexe/-/isexe-3.1.1.tgz#4a407e2bd78ddfb14bea0c27c6f7072dde775f0d"
+  integrity sha512-LpB/54B+/2J5hqQ7imZHfdU31OlgQqx7ZicVlkm9kzg9/w8GKLEcFfJl/t7DCEDueOyBAD6zCCwTO6Fzs0NoEQ==
+
 js-tokens@^3.0.0:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-3.0.2.tgz#9866df395102130e38f7f996bceb65443209c25b"
@@ -651,10 +659,10 @@ lie@~3.3.0:
   dependencies:
     immediate "~3.0.5"
 
-lodash@^4.17.21:
-  version "4.17.21"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
-  integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
+lodash@^4.17.23:
+  version "4.17.23"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.23.tgz#f113b0378386103be4f6893388c73d0bde7f2c5a"
+  integrity sha512-LgVTMpQtIopCi79SJeDiP0TfWi5CNEc/L/aRdTh3yIvmZXTnheWpKjSZhnvMl8iXbC1tFg9gdHHDMLoV7CnG+w==
 
 logform@^2.3.2, logform@^2.4.0:
   version "2.4.0"
@@ -755,11 +763,6 @@ mkdirp@^0.5.1:
   integrity sha512-NKmAlESf6jMGym1++R0Ra7wvhV+wFW63FaSOFPwRahvea0gMUcGUhVeAg/0BC0wiv9ih5NYPB1Wn1UEI1/L+xQ==
   dependencies:
     minimist "^1.2.5"
-
-mri@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/mri/-/mri-1.1.0.tgz#5c0a3f29c8ccffbbb1ec941dcec09d71fa32f36a"
-  integrity sha1-XAo/KcjM/7ux7JQdzsCdcfoy82o=
 
 ms@^2.1.1:
   version "2.1.2"
@@ -951,24 +954,6 @@ prebuild-install@^7.0.1:
     napi-build-utils "^1.0.1"
     node-abi "^3.3.0"
     npmlog "^4.0.1"
-    pump "^3.0.0"
-    rc "^1.2.7"
-    simple-get "^4.0.0"
-    tar-fs "^2.0.0"
-    tunnel-agent "^0.6.0"
-
-prebuild-install@^7.1.2:
-  version "7.1.2"
-  resolved "https://registry.yarnpkg.com/prebuild-install/-/prebuild-install-7.1.2.tgz#a5fd9986f5a6251fbc47e1e5c65de71e68c0a056"
-  integrity sha512-UnNke3IQb6sgarcZIDU3gbMeTp/9SSU1DAIkil7PrqG1vZlBtY5msYccSKSHDqa3hNg436IXK+SNImReuA1wEQ==
-  dependencies:
-    detect-libc "^2.0.0"
-    expand-template "^2.0.3"
-    github-from-package "0.0.0"
-    minimist "^1.2.3"
-    mkdirp-classic "^0.5.3"
-    napi-build-utils "^1.0.1"
-    node-abi "^3.3.0"
     pump "^3.0.0"
     rc "^1.2.7"
     simple-get "^4.0.0"
@@ -1202,6 +1187,13 @@ shebang-regex@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-1.0.0.tgz#da42f49740c0b42db2ca9728571cb190c98efea3"
   integrity sha1-2kL0l0DAtC2yypcoVxyxkMmO/qM=
+
+shescape@^2.1.6:
+  version "2.1.6"
+  resolved "https://registry.yarnpkg.com/shescape/-/shescape-2.1.6.tgz#6185c81049e7e2d510d5b33cabf820b1eaa0b743"
+  integrity sha512-c9Ns1I+Tl0TC+cpsOT1FeZcvFalfd0WfHeD/CMccJH20xwochmJzq6AqtenndlyAw/BUi3BMcv92dYLVrqX+dw==
+  dependencies:
+    which "^3.0.0 || ^4.0.0 || ^5.0.0"
 
 signal-exit@^3.0.0:
   version "3.0.2"
@@ -1472,6 +1464,13 @@ which@^1.2.9:
   integrity sha512-HxJdYWq1MTIQbJ3nw0cqssHoTNU267KlrDuGZ1WYlxDStUtKUhOaJmh112/TZmHxxUfuJqPXSOm7tDyas0OSIQ==
   dependencies:
     isexe "^2.0.0"
+
+"which@^3.0.0 || ^4.0.0 || ^5.0.0", which@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/which/-/which-5.0.0.tgz#d93f2d93f79834d4363c7d0c23e00d07c466c8d6"
+  integrity sha512-JEdGzHwwkrbWoGOlIHqQ5gtprKGOenpDHpxE9zVR1bWbOtYRyPPHMe9FaP6x61CmNaTThSkb0DAJte5jD+DmzQ==
+  dependencies:
+    isexe "^3.1.1"
 
 wide-align@^1.1.0:
   version "1.1.3"

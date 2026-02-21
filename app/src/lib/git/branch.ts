@@ -1,4 +1,4 @@
-import { coerceToString, git, isGitError } from './core'
+import { git, isGitError } from './core'
 import { Repository } from '../../models/repository'
 import { Branch } from '../../models/branch'
 import { formatAsLocalRef } from './refs'
@@ -7,6 +7,7 @@ import { GitError as DugiteError } from 'dugite'
 import { envForRemoteOperation } from './environment'
 import { createForEachRefParser } from './git-delimiter-parser'
 import { IRemote } from '../../models/remote'
+import { coerceToString } from './coerce-to-string'
 
 /**
  * Create a new branch from the given start point.

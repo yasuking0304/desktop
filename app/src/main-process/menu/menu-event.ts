@@ -35,6 +35,7 @@ export type MenuEvent =
   | 'install-windows-cli'
   | 'uninstall-windows-cli'
   | 'open-external-editor'
+  | 'open-with-external-editor'
   | 'select-all'
   | 'show-stashed-changes'
   | 'hide-stashed-changes'

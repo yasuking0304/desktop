@@ -99,7 +99,6 @@ export function patchCliui() {
     console.log('wrap-ansi version is valid: %s', wrapAnsiVersion)
     return
   }
-
   const cliuiVersion = require(path.resolve(cliuiPath, 'package.json'))[
     'version'
   ]
