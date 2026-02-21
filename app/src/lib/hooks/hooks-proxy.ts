@@ -44,7 +44,7 @@ const debug = (message: string, error?: Error) => {
 
 const writeline = (stream: Writable, msg: string) =>
   new Promise<void>((resolve, reject) => {
-    stream.write(`${msg}$\n`, err => (err ? reject(err) : resolve()))
+    stream.write(`${msg}\n`, err => (err ? reject(err) : resolve()))
   })
 
 const tryExit = async (conn: Connection, exitCode = 0) =>

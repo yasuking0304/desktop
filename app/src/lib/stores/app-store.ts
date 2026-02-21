@@ -3966,7 +3966,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
   }
 
   /** This shouldn't be called directly. See `Dispatcher`. */
-  public _closePopupById(popupId: string) {
+  public _closePopupById(popupId: number) {
     if (this.popupManager.currentPopup === null) {
       return
     }
@@ -5633,7 +5633,12 @@ export class AppStore extends TypedBaseStore<IAppState> {
     repository: Repository,
     filesSelected: ReadonlyArray<WorkingDirectoryFileChange>
   ): Promise<boolean> {
-    const account = this.getState().accounts.find(enableCommitMessageGeneration)
+    // Prefer the account that is associated to this repository.
+    const repositoryAccount = getAccountForRepository(this.accounts, repository)
+    const account =
+      repositoryAccount && enableCommitMessageGeneration(repositoryAccount)
+        ? repositoryAccount
+        : this.accounts.find(enableCommitMessageGeneration)
 
     if (!account) {
       return false

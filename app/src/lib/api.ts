@@ -9,7 +9,6 @@ import {
   urlWithQueryString,
   getUserAgent,
 } from './http'
-import { uuid } from './uuid'
 import { GitProtocol } from './remote-parsing'
 import {
   getEndpointVersion,
@@ -1880,7 +1879,7 @@ export class API {
       },
       customHeaders: {
         'X-Initiator': 'user',
-        'X-Interaction-ID': uuid(),
+        'X-Interaction-ID': crypto.randomUUID(),
         'X-Interaction-Type': 'generateCommitMessage',
       },
     })
@@ -2454,7 +2453,7 @@ export async function isGitHubHost(url: string) {
 
   // Add a unique identifier to the URL to make sure our certificate error
   // supression only catches this request
-  const metaUrl = `${endpoint}/meta?ghd=${uuid()}`
+  const metaUrl = `${endpoint}/meta?ghd=${crypto.randomUUID()}`
 
   const ac = new AbortController()
   const timeoutId = setTimeout(() => ac.abort(), 2000)
