@@ -455,12 +455,7 @@ export class PushPullButton extends React.Component<
     }
 
     if (tipState === TipState.Unborn) {
-      // If we have a remote, allow fetching to check for new commits
-      // that may have been pushed by others
-      if (remoteName !== null) {
-        return this.fetchButton(remoteName, lastFetched, this.fetch)
-      }
-      return this.unbornRepositoryButton()
+      return this.fetchButton(remoteName, lastFetched, this.fetch)
     }
 
     if (tipState === TipState.Detached) {
@@ -538,18 +533,6 @@ export class PushPullButton extends React.Component<
         icon={octicons.upload}
         style={ToolbarButtonStyle.Subtitle}
         onClick={onClick}
-      />
-    )
-  }
-
-  private unbornRepositoryButton() {
-    return (
-      <ToolbarButton
-        {...this.defaultButtonProps()}
-        title="Publish branch"
-        description="Cannot publish: no commits"
-        icon={octicons.upload}
-        disabled={true}
       />
     )
   }
