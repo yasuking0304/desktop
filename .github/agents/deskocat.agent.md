@@ -21,6 +21,7 @@ Read the issue or task description. Then explore the codebase to answer:
 2. **What is the desired behavior?** Restate the goal in your own words.
 3. **What areas of the codebase are involved?** Identify specific files.
 4. **What is the risk tier?** (See Risk Classification below.)
+5. **Are there existing PRs for this issue?** Search open pull requests for duplicates — check for PRs that reference the same issue number, touch the same files, or address the same problem. If a relevant PR already exists, stop and report it instead of creating a duplicate.
 
 If the issue is ambiguous or underspecified, document your assumptions explicitly — don't guess silently.
 
