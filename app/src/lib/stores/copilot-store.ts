@@ -164,6 +164,7 @@ export class CopilotStore {
           mode: 'replace',
           content: CommitMessageSystemPrompt,
         },
+        onPermissionRequest: async () => ({ kind: 'approved' }),
       })
 
       // Send the diff and wait for response
