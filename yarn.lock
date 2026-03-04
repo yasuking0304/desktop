@@ -5836,10 +5836,10 @@ proc-log@^4.1.0, proc-log@^4.2.0:
   resolved "https://registry.yarnpkg.com/proc-log/-/proc-log-4.2.0.tgz#b6f461e4026e75fdfe228b265e9f7a00779d7034"
   integrity sha512-g8+OnU/L2v+wyiVK+D5fA34J7EH8jZ8DDlvwhRCMxmMj7UCBvxiO1mGeN+36JXIKF4zevU4kRBd8lVgG9vLelA==
 
-process-proxy@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/process-proxy/-/process-proxy-0.5.0.tgz#dd927887f6913351ea843405eac942be8510b5d9"
-  integrity sha512-XiQ1tajBwjngpJzGraW/3baiGWeorxF8Rcw4nPuKOn6CiEIV7Fx+kqqKRN6f8Y09bxp9IdAAQAbJK9BxWUDVWQ==
+process-proxy@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/process-proxy/-/process-proxy-0.6.0.tgz#6871a14a01218a2ca6f0c348255894dd32415d17"
+  integrity sha512-Ic7sU/XQQBJ1mdd8zLcrPakUdg5RrKmJKk3BV+5sLzbVhQRdQxOrG1ycA0dHeGr1TwFWHg37xArYiLEOiBx9kA==
 
 progress@^2.0.3:
   version "2.0.3"
