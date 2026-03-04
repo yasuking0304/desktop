@@ -427,7 +427,7 @@ const hideWhitespaceInPullRequestDiffKey =
 const commitSpellcheckEnabledDefault = true
 const commitSpellcheckEnabledKey = 'commit-spellcheck-enabled'
 
-export const tabSizeDefault: number = 8
+export const tabSizeDefault: number = 4
 const tabSizeKey: string = 'tab-size'
 
 const shellKey = 'shell'
