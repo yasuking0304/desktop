@@ -251,6 +251,7 @@ import { ManualConflictResolution } from '../../models/manual-conflict-resolutio
 import { BranchPruner } from './helpers/branch-pruner'
 import {
   enableCommitMessageGeneration,
+  enableCopilotSdkCommitMessageGeneration,
   enableCustomIntegration,
 } from '../feature-flag'
 import { Banner, BannerType } from '../../models/banner'
@@ -5641,7 +5642,9 @@ export class AppStore extends TypedBaseStore<IAppState> {
       }
 
       try {
-        const response = await this.copilotStore.generateCommitMessage(diff)
+        const response = enableCopilotSdkCommitMessageGeneration(account)
+          ? await this.copilotStore.generateCommitMessage(diff)
+          : await API.fromAccount(account).getDiffChangesCommitMessage(diff)
 
         this._setCommitMessage(repository, {
           summary: response.title,

@@ -99,6 +99,12 @@ export const enableCommitMessageGeneration = (account: Account) => {
   )
 }
 
+export const enableCopilotSdkCommitMessageGeneration = (account: Account) => {
+  return (account.features ?? []).includes(
+    'desktop_enable_copilot_sdk_commit_message_generation'
+  )
+}
+
 export function enableAccessibleListToolTips(): boolean {
   return enableBetaFeatures()
 }
