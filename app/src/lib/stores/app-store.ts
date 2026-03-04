@@ -62,7 +62,10 @@ import {
   AppFileStatusKind,
 } from '../../models/status'
 import { TipState, tipEquals, IValidBranch } from '../../models/tip'
-import { ICommitMessage } from '../../models/commit-message'
+import {
+  DefaultCommitMessage,
+  ICommitMessage,
+} from '../../models/commit-message'
 import {
   Progress,
   ICheckoutProgress,
@@ -425,7 +428,7 @@ const hideWhitespaceInPullRequestDiffKey =
 const commitSpellcheckEnabledDefault = true
 const commitSpellcheckEnabledKey = 'commit-spellcheck-enabled'
 
-export const tabSizeDefault: number = 8
+export const tabSizeDefault: number = 4
 const tabSizeKey: string = 'tab-size'
 
 const shellKey = 'shell'
@@ -3376,6 +3379,12 @@ export class AppStore extends TypedBaseStore<IAppState> {
             commitToAmend: null,
           }
         })
+
+        // Clear the commit message in the git store so that if the user
+        // switched away from the Changes tab while the commit was in progress,
+        // the persisted message (saved on unmount) doesn't reappear when they
+        // return to the Changes tab.
+        await gitStore.setCommitMessage(DefaultCommitMessage)
 
         await this.refreshChangesSection(repository, {
           includingStatus: true,
