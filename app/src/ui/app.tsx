@@ -263,7 +263,7 @@ export class App extends React.Component<IAppProps, IAppState> {
    * passed popupType, so it can be used in render() without creating
    * multiple instances when the component gets re-rendered.
    */
-  private getOnPopupDismissedFn = memoizeOne((popupId: string) => {
+  private getOnPopupDismissedFn = memoizeOne((popupId: number) => {
     return () => this.onPopupDismissed(popupId)
   })
 
@@ -1417,7 +1417,7 @@ export class App extends React.Component<IAppProps, IAppState> {
     )
   }
 
-  private onPopupDismissed = (popupId: string) => {
+  private onPopupDismissed = (popupId: number) => {
     return this.props.dispatcher.closePopupById(popupId)
   }
 
@@ -2621,12 +2621,12 @@ export class App extends React.Component<IAppProps, IAppState> {
   }
 
   private onDismissBypassPushProtection = (
-    popup: string,
+    popupId: number,
     popupDismiss: () => void
   ) => {
     return () => {
       popupDismiss()
-      this.onPopupDismissed(popup)
+      this.onPopupDismissed(popupId)
     }
   }
 

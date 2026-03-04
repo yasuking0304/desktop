@@ -404,7 +404,7 @@ export class Dispatcher {
   /**
    * Close the popup with given id.
    */
-  public closePopupById(popupId: string) {
+  public closePopupById(popupId: number) {
     return this.appStore._closePopupById(popupId)
   }
 

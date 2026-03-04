@@ -62,7 +62,10 @@ import {
   AppFileStatusKind,
 } from '../../models/status'
 import { TipState, tipEquals, IValidBranch } from '../../models/tip'
-import { ICommitMessage } from '../../models/commit-message'
+import {
+  DefaultCommitMessage,
+  ICommitMessage,
+} from '../../models/commit-message'
 import {
   Progress,
   ICheckoutProgress,
@@ -424,7 +427,7 @@ const hideWhitespaceInPullRequestDiffKey =
 const commitSpellcheckEnabledDefault = true
 const commitSpellcheckEnabledKey = 'commit-spellcheck-enabled'
 
-export const tabSizeDefault: number = 8
+export const tabSizeDefault: number = 4
 const tabSizeKey: string = 'tab-size'
 
 const shellKey = 'shell'
@@ -3365,6 +3368,12 @@ export class AppStore extends TypedBaseStore<IAppState> {
           }
         })
 
+        // Clear the commit message in the git store so that if the user
+        // switched away from the Changes tab while the commit was in progress,
+        // the persisted message (saved on unmount) doesn't reappear when they
+        // return to the Changes tab.
+        await gitStore.setCommitMessage(DefaultCommitMessage)
+
         await this.refreshChangesSection(repository, {
           includingStatus: true,
           clearPartialState: true,
@@ -3954,7 +3963,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
   }
 
   /** This shouldn't be called directly. See `Dispatcher`. */
-  public _closePopupById(popupId: string) {
+  public _closePopupById(popupId: number) {
     if (this.popupManager.currentPopup === null) {
       return
     }
@@ -5602,7 +5611,12 @@ export class AppStore extends TypedBaseStore<IAppState> {
     repository: Repository,
     filesSelected: ReadonlyArray<WorkingDirectoryFileChange>
   ): Promise<boolean> {
-    const account = this.getState().accounts.find(enableCommitMessageGeneration)
+    // Prefer the account that is associated to this repository.
+    const repositoryAccount = getAccountForRepository(this.accounts, repository)
+    const account =
+      repositoryAccount && enableCommitMessageGeneration(repositoryAccount)
+        ? repositoryAccount
+        : this.accounts.find(enableCommitMessageGeneration)
 
     if (!account) {
       return false
@@ -5872,12 +5886,9 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
     const gitStore = this.gitStoreCache.get(repository)
     const result = await gitStore.performFailableOperation(() =>
-      continueRebase(
-        repository,
-        workingDirectory.files,
-        manualResolutions,
-        progressCallback
-      )
+      continueRebase(repository, workingDirectory.files, manualResolutions, {
+        progressCallback,
+      })
     )
 
     return result || RebaseResult.Error

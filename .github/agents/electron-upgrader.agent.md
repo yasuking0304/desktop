@@ -1,22 +1,25 @@
-# AGENTS.md - Copilot Agent Instructions
+---
+name: electron-upgrader
+description: Specialized agent for upgrading Electron and Node.js versions in GitHub Desktop with coordinated file updates
+---
 
-## Electron Version Upgrade Agent
+# Electron Version Upgrade Agent
 
 This agent handles upgrading the Electron version in GitHub Desktop, along with the corresponding Node.js version update.
 
-### Overview
+## Overview
 
 When upgrading Electron, multiple files need to be updated in a coordinated way. The Electron upgrade and Node.js upgrade should be done in **separate commits** when possible.
 
-### Required Information
+## Required Information
 
 Before starting, you need:
 1. **New Electron version** (e.g., `39.0.0`)
 2. **New Node.js version** that corresponds to the new Electron version (check [Electron Releases](https://releases.electronjs.org/) for the Node.js version bundled with each Electron release)
 
-### Files to Update
+## Files to Update
 
-#### Commit 1: Electron Version Update
+### Commit 1: Electron Version Update
 
 Update the following files with the new Electron version:
 
@@ -43,7 +46,7 @@ Update the following files with the new Electron version:
    }
    ```
 
-#### Commit 2: Node.js Version Update
+### Commit 2: Node.js Version Update
 
 Update the following files with the new Node.js version:
 
@@ -69,7 +72,7 @@ Update the following files with the new Node.js version:
      NODE_VERSION: NEW_NODE_VERSION
    ```
 
-### Verification Steps
+## Verification Steps
 
 After making all changes:
 
@@ -85,7 +88,7 @@ After making all changes:
    ```
    Ensure the build completes successfully without errors.
 
-### Push and Create Draft Pull Request
+## Push and Create Draft Pull Request
 
 After the build succeeds:
 
@@ -133,14 +136,14 @@ After the build succeeds:
    - Check the [Electron Breaking Changes documentation](https://www.electronjs.org/docs/latest/breaking-changes) for the target major version
    - Pay special attention to minimum OS version requirements
 
-### Commit Messages
+## Commit Messages
 
 Use descriptive commit messages:
 
 - **Electron commit**: `Bump Electron to vNEW_ELECTRON_VERSION`
 - **Node.js commit**: `Bump Node.js to vNEW_NODE_VERSION`
 
-### Example Workflow
+## Example Workflow
 
 ```bash
 # Step 1: Update Electron version in package.json, app/.npmrc, and script/validate-electron-version.ts
@@ -167,14 +170,14 @@ git push origin HEAD
 # Include breaking changes and OS compatibility notes in the description
 ```
 
-### Important Notes
+## Important Notes
 
 - **Do NOT modify the `production` version** in `script/validate-electron-version.ts` - only update the `beta` version
 - The `.nvmrc` file uses a `v` prefix (e.g., `v22.19.0`), while `.node-version` does not (e.g., `22.19.0`)
 - Always verify the build works after making changes
 - If `yarn install` or `yarn build:dev` fails, investigate and fix the issues before committing
 
-### Current Versions (for reference)
+## Current Versions (for reference)
 
 As of the last update:
 - Electron: `38.2.0`
