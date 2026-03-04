@@ -30,9 +30,6 @@ import { addTrustedIPCSender } from './trusted-ipc-sender'
 import { getUpdaterGUID } from '../lib/get-updater-guid'
 import { CLIAction } from '../lib/cli-action'
 
-const lightWindowBackgroundColor = '#ffffff'
-const darkWindowBackgroundColor = '#24292e'
-
 export class AppWindow {
   private window: Electron.BrowserWindow
   private emitter = new Emitter()
@@ -64,7 +61,7 @@ export class AppWindow {
       show: false,
       // This fixes subpixel aliasing on Windows
       // See https://github.com/atom/atom/commit/683bef5b9d133cb194b476938c77cc07fd05b972
-      backgroundColor: this.getWindowBackgroundColor(),
+      backgroundColor: '#fff',
       webPreferences: {
         // Disable auxclick event
         // See https://developers.google.com/web/updates/2016/10/auxclick
@@ -207,7 +204,6 @@ export class AppWindow {
     this.window.loadURL(encodePathAsUrl(__dirname, 'index.html'))
 
     nativeTheme.addListener('updated', () => {
-      this.window.setBackgroundColor(this.getWindowBackgroundColor())
       ipcWebContents.send(this.window.webContents, 'native-theme-updated')
     })
 
@@ -499,12 +495,6 @@ export class AppWindow {
   public async showOpenDialog(options: Electron.OpenDialogOptions) {
     const { filePaths } = await dialog.showOpenDialog(this.window, options)
     return filePaths.length > 0 ? filePaths[0] : null
-  }
-
-  private getWindowBackgroundColor() {
-    return nativeTheme.shouldUseDarkColors
-      ? darkWindowBackgroundColor
-      : lightWindowBackgroundColor
   }
 }
 
