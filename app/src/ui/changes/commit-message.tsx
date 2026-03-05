@@ -214,6 +214,12 @@ interface ICommitMessageProps {
    */
   readonly skipCommitHooks: boolean
 
+  /**
+   * Whether or not to add a `Signed-off-by` trailer to commit messages
+   * by means of passing the `--signoff` flag to git commit
+   */
+  readonly signOffCommits: boolean
+
   /** Callback to set commit options for the given repository */
   readonly onUpdateCommitOptions: (
     repository: Repository,
@@ -1027,7 +1033,8 @@ export class CommitMessage extends React.Component<
         )}
         <Button
           className={classNames('commit-options-button', {
-            'default-options': !this.props.skipCommitHooks,
+            'default-options':
+              !this.props.skipCommitHooks && !this.props.signOffCommits,
           })}
           onClick={this.onCommitOptionsButtonClick}
           ariaLabel={ariaLabel}
@@ -1051,6 +1058,20 @@ export class CommitMessage extends React.Component<
         action: () => {
           this.props.onUpdateCommitOptions(this.props.repository, {
             skipCommitHooks: !this.props.skipCommitHooks,
+            signOffCommits: this.props.signOffCommits,
+          })
+        },
+      },
+      {
+        type: 'checkbox',
+        checked: this.props.signOffCommits,
+        label: __DARWIN__
+          ? 'Add Signed-off-by Trailer'
+          : 'Add Signed-off-by trailer',
+        action: () => {
+          this.props.onUpdateCommitOptions(this.props.repository, {
+            skipCommitHooks: this.props.skipCommitHooks,
+            signOffCommits: !this.props.signOffCommits,
           })
         },
       },
@@ -1146,7 +1167,7 @@ export class CommitMessage extends React.Component<
   }
 
   private get isCommitOptionsButtonEnabled() {
-    return enableHooksEnvironment() && this.props.hasCommitHooks
+    return enableHooksEnvironment()
   }
 
   /**
