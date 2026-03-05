@@ -9,6 +9,7 @@ import {
 } from '../dialog'
 import { Dispatcher } from '../dispatcher'
 import { Checkbox, CheckboxValue } from '../lib/checkbox'
+import { LinkButton } from '../lib/link-button'
 import { Row } from '../lib/row'
 
 interface IGenerateCommitMessageOverrideWarningProps {
@@ -46,13 +47,22 @@ export class GenerateCommitMessageOverrideWarning extends React.Component<
         type="warning"
         onDismissed={this.props.onDismissed}
         onSubmit={this.onOverride}
-        ariaDescribedBy="generate-commit-message-override-warning-body"
+        ariaDescribedBy="generate-commit-message-override-warning-body generate-commit-message-override-warning-tip"
         role="alertdialog"
       >
         <DialogContent>
           <Row id="generate-commit-message-override-warning-body">
             The commit message you have entered will be overridden by the
             generated commit message.
+          </Row>
+          <Row>
+            <p id="generate-commit-message-override-warning-tip">
+              Tip: You can use{' '}
+              <LinkButton uri="https://gh.io/desktop-copilot-custom-instructions">
+                Copilot Instructions
+              </LinkButton>{' '}
+              to customize how commit messages are generated.
+            </p>
           </Row>
           <Row>
             <Checkbox
