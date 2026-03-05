@@ -387,7 +387,6 @@ delegates@^1.0.0:
   version "0.2.6"
   dependencies:
     node-addon-api "^7.0.0"
-    uuid "^8.3.2"
 
 "desktop-trampoline@file:../vendor/desktop-trampoline":
   version "0.9.12"
@@ -424,17 +423,17 @@ dom-helpers@^5.0.1:
     "@babel/runtime" "^7.8.7"
     csstype "^3.0.2"
 
-dompurify@^3.2.4:
-  version "3.2.4"
-  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-3.2.4.tgz#af5a5a11407524431456cf18836c55d13441cd8e"
-  integrity sha512-ysFSFEDVduQpyhzAob/kkuJjf5zWkZD8/A9ywSp1byueyuCfHamrCBa14/Oc2iiB0e51B+NpxSl5gmzn+Ms/mg==
+dompurify@^3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-3.3.1.tgz#c7e1ddebfe3301eacd6c0c12a4af284936dbbb86"
+  integrity sha512-qkdCKzLNtrgPFP1Vo+98FRzJnBRGe4ffyCea9IwHB1fyxPOeNTHpLKYGd4Uk9xvNoH0ZoOjwZxNptyMwqrId1Q==
   optionalDependencies:
     "@types/trusted-types" "^2.0.7"
 
-dugite@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/dugite/-/dugite-3.0.0.tgz#56621ad397579d9a58c10c6a4f5e646b35937046"
-  integrity sha512-+q2i3y5TvlC2YaZofkdELHtmvHbT6yuBODimItxU6xEGtHqRt6rpApJzf6lAqtpo+y1gokhfsHyULH0yNZuTWQ==
+dugite@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/dugite/-/dugite-3.2.0.tgz#e2b3ba579f4cf50366e06d994064d7ee23ade86f"
+  integrity sha512-YgnAKcpjxC9zr3P1fDeAHF514uNfwV1ziudO8ablFJ16w21QHL3EHDhkU64YnqKIa88mbKUcQ0jfaa+wuKkk1g==
   dependencies:
     progress "^2.0.3"
     tar-stream "^3.1.7"
@@ -1469,16 +1468,6 @@ util-deprecate@^1.0.1, util-deprecate@~1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==
-
-uuid@^3.0.1:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.1.0.tgz#3dd3d3e790abc24d7b0d3a034ffababe28ebbc04"
-  integrity sha512-DIWtzUkw04M4k3bf1IcpS2tngXEL26YUD2M0tMDUpnUrz2hgzUBlD55a4FjdLGPvfHxS6uluGWvaVEqgBcVa+g==
-
-uuid@^8.3.2:
-  version "8.3.2"
-  resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
-  integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
 
 vscode-jsonrpc@^8.2.1:
   version "8.2.1"

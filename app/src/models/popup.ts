@@ -113,7 +113,7 @@ interface IBasePopup {
   /**
    * Unique id of the popup that it receives upon adding to the stack.
    */
-  readonly id?: string
+  readonly id?: number
 }
 
 export type PopupDetail =
