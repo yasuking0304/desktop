@@ -1020,10 +1020,6 @@ export class CommitMessage extends React.Component<
   }
 
   private renderCommitOptionsButton() {
-    if (!this.isCommitOptionsButtonEnabled) {
-      return null
-    }
-
     const ariaLabel = 'Configure commit options'
 
     return (
@@ -1050,8 +1046,11 @@ export class CommitMessage extends React.Component<
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
     e.preventDefault()
-    showContextualMenu([
-      {
+
+    const items: IMenuItem[] = []
+
+    if (enableHooksEnvironment() && this.props.hasCommitHooks) {
+      items.push({
         type: 'checkbox',
         checked: this.props.skipCommitHooks,
         label: __DARWIN__ ? 'Bypass Commit Hooks' : 'Bypass Commit hooks',
@@ -1061,21 +1060,24 @@ export class CommitMessage extends React.Component<
             signOffCommits: this.props.signOffCommits,
           })
         },
+      })
+    }
+
+    items.push({
+      type: 'checkbox',
+      checked: this.props.signOffCommits,
+      label: __DARWIN__
+        ? 'Add Signed-off-by Trailer'
+        : 'Add Signed-off-by trailer',
+      action: () => {
+        this.props.onUpdateCommitOptions(this.props.repository, {
+          skipCommitHooks: this.props.skipCommitHooks,
+          signOffCommits: !this.props.signOffCommits,
+        })
       },
-      {
-        type: 'checkbox',
-        checked: this.props.signOffCommits,
-        label: __DARWIN__
-          ? 'Add Signed-off-by Trailer'
-          : 'Add Signed-off-by trailer',
-        action: () => {
-          this.props.onUpdateCommitOptions(this.props.repository, {
-            skipCommitHooks: this.props.skipCommitHooks,
-            signOffCommits: !this.props.signOffCommits,
-          })
-        },
-      },
-    ])
+    })
+
+    showContextualMenu(items)
   }
 
   private renderCoAuthorToggleButton() {
@@ -1166,26 +1168,7 @@ export class CommitMessage extends React.Component<
     )
   }
 
-  private get isCommitOptionsButtonEnabled() {
-    return enableHooksEnvironment()
-  }
-
-  /**
-   * Whether or not there's anything to render in the action bar
-   */
-  private get isActionBarEnabled() {
-    return (
-      this.isCoAuthorInputEnabled ||
-      this.isCopilotButtonEnabled ||
-      this.isCommitOptionsButtonEnabled
-    )
-  }
-
   private renderActionBar() {
-    if (!this.isActionBarEnabled) {
-      return null
-    }
-
     const { isCommitting, isGeneratingCommitMessage } = this.props
 
     const className = classNames('action-bar', {
@@ -1681,7 +1664,7 @@ export class CommitMessage extends React.Component<
 
   public render() {
     const className = classNames('commit-message-component', {
-      'with-action-bar': this.isActionBarEnabled,
+      'with-action-bar': true,
       'with-co-authors': this.isCoAuthorInputVisible,
     })
 
