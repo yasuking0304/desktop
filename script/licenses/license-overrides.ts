@@ -1,8 +1,21 @@
 import { LicenseLookup } from 'legal-eagle'
+import { readFileSync } from 'fs'
+import { join } from 'path'
 
 export const copilotCLILicenseName = 'GitHub-CLI-1.0.0'
 
-const copilotCLIVersion = '0.0.403'
+const copilotCLIPkgPath = join(
+  __dirname,
+  '..',
+  '..',
+  'app',
+  'node_modules',
+  '@github',
+  'copilot',
+  'package.json'
+)
+const copilotCLIVersion = JSON.parse(readFileSync(copilotCLIPkgPath, 'utf8'))
+  .version as string
 const copilotCLILicense = `GitHub Copilot CLI License
 
 1. License Grant
