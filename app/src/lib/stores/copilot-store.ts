@@ -11,7 +11,12 @@ export interface ICopilotCommitMessage {
   readonly description: string
 }
 
-/** Returns the path of the copilot CLI binary. */
+/**
+ * Returns the path of the executable (Electron/Node) used to run the Copilot CLI.
+ *
+ * This corresponds to the value of `process.execPath` used when launching the
+ * Copilot CLI via an eval-based entry point (for example, `--eval "import './index.js'"`).
+ */
 export async function getCopilotCLIPath(): Promise<string> {
   return ipcRenderer.invoke('get-exec-path')
 }
