@@ -162,7 +162,9 @@ export class CopilotStore {
           mode: 'replace',
           content: CommitMessageSystemPrompt,
         },
-        onPermissionRequest: async () => ({ kind: 'approved' }),
+        onPermissionRequest: async () => ({
+          kind: 'denied-interactively-by-user',
+        }),
       })
 
       // Send the diff and wait for response
