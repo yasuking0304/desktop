@@ -2176,6 +2176,7 @@ export class App extends React.Component<IAppProps, IAppState> {
             accounts={this.state.accounts}
             hasCommitHooks={repositoryState.hasCommitHooks}
             skipCommitHooks={repositoryState.skipCommitHooks}
+            signOffCommits={repositoryState.signOffCommits}
             onUpdateCommitOptions={this.onUpdateCommitOptions}
           />
         )
@@ -3481,6 +3482,7 @@ export class App extends React.Component<IAppProps, IAppState> {
           }
           hasCommitHooks={selectedState.state.hasCommitHooks}
           skipCommitHooks={selectedState.state.skipCommitHooks}
+          signOffCommits={selectedState.state.signOffCommits}
           onUpdateCommitOptions={this.onUpdateCommitOptions}
         />
       )
