@@ -220,6 +220,13 @@ interface ICommitMessageProps {
    */
   readonly signOffCommits: boolean
 
+  /**
+   * Whether or not to allow creating a commit without any file changes
+   * by means of passing the `--allow-empty` flag to git commit.
+   * This option resets to false after each commit.
+   */
+  readonly allowEmptyCommit: boolean
+
   /** Callback to set commit options for the given repository */
   readonly onUpdateCommitOptions: (
     repository: Repository,
@@ -638,7 +645,8 @@ export class CommitMessage extends React.Component<
 
   private canCommit(): boolean {
     return (
-      ((this.props.anyFilesSelected === true &&
+      (((this.props.anyFilesSelected === true ||
+        this.props.allowEmptyCommit === true) &&
         this.state.commitMessage.summary.length > 0) ||
         this.props.prepopulateCommitSummary) &&
       !this.hasRepoRuleFailure()
@@ -1030,7 +1038,9 @@ export class CommitMessage extends React.Component<
         <Button
           className={classNames('commit-options-button', {
             'default-options':
-              !this.props.skipCommitHooks && !this.props.signOffCommits,
+              !this.props.skipCommitHooks &&
+              !this.props.signOffCommits &&
+              !this.props.allowEmptyCommit,
           })}
           onClick={this.onCommitOptionsButtonClick}
           ariaLabel={ariaLabel}
@@ -1058,6 +1068,7 @@ export class CommitMessage extends React.Component<
           this.props.onUpdateCommitOptions(this.props.repository, {
             skipCommitHooks: !this.props.skipCommitHooks,
             signOffCommits: this.props.signOffCommits,
+            allowEmptyCommit: this.props.allowEmptyCommit,
           })
         },
       })
@@ -1073,6 +1084,20 @@ export class CommitMessage extends React.Component<
         this.props.onUpdateCommitOptions(this.props.repository, {
           skipCommitHooks: this.props.skipCommitHooks,
           signOffCommits: !this.props.signOffCommits,
+          allowEmptyCommit: this.props.allowEmptyCommit,
+        })
+      },
+    })
+
+    items.push({
+      type: 'checkbox',
+      checked: this.props.allowEmptyCommit,
+      label: __DARWIN__ ? 'Allow Empty Commit' : 'Allow empty commit',
+      action: () => {
+        this.props.onUpdateCommitOptions(this.props.repository, {
+          skipCommitHooks: this.props.skipCommitHooks,
+          signOffCommits: this.props.signOffCommits,
+          allowEmptyCommit: !this.props.allowEmptyCommit,
         })
       },
     })
@@ -1520,7 +1545,11 @@ export class CommitMessage extends React.Component<
     const isSummaryBlank = isEmptyOrWhitespace(this.summaryOrPlaceholder)
     if (isSummaryBlank) {
       return `A commit summary is required to commit`
-    } else if (!this.props.anyFilesSelected && this.props.anyFilesAvailable) {
+    } else if (
+      !this.props.anyFilesSelected &&
+      this.props.anyFilesAvailable &&
+      !this.props.allowEmptyCommit
+    ) {
       return `Select one or more files to commit`
     } else if (this.props.isCommitting) {
       return `Committing changes…`

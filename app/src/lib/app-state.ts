@@ -607,11 +607,18 @@ export interface IRepositoryState {
    * by means of passing the `--signoff` flag to git commit
    */
   readonly signOffCommits: boolean
+
+  /**
+   * Whether or not to allow creating a commit without any file changes
+   * by means of passing the `--allow-empty` flag to git commit.
+   * This option resets to false after each commit.
+   */
+  readonly allowEmptyCommit: boolean
 }
 
 export type CommitOptions = Pick<
   IRepositoryState,
-  'skipCommitHooks' | 'signOffCommits'
+  'skipCommitHooks' | 'signOffCommits' | 'allowEmptyCommit'
 >
 
 export interface IBranchesState {
