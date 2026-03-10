@@ -12,16 +12,16 @@ on:
 jobs:
   no-response:
     if:
-      github.event_name == 'issue_comment' || github.event.schedule == '5 *
-      * * *'
+      github.event_name == 'issue_comment' || github.event.schedule == '5 * * *
+      *'
     uses: desktop/gh-cli-and-desktop-shared-workflows/.github/workflows/triage-no-response-close.yml@main
     permissions:
       issues: write
 
   pr-requirements:
     if:
-      github.event_name == 'issue_comment' || github.event.schedule == '5 *
-      * * *'
+      github.event_name == 'issue_comment' || github.event.schedule == '5 * * *
+      *'
     uses: desktop/gh-cli-and-desktop-shared-workflows/.github/workflows/triage-pr-requirements.yml@main
     permissions:
       issues: read
