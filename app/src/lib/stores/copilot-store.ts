@@ -135,7 +135,7 @@ export class CopilotStore {
     try {
       await client.stop()
     } catch (e) {
-      log.warn('CopilotStore: Error stopping client', e)
+      log.error('CopilotStore: Error stopping client', e)
     }
   }
 
