@@ -7,6 +7,7 @@ on:
   schedule:
     - cron: '5 * * * *' # Hourly — no-response close + PR requirements check
     - cron: '30 1 * * *' # Daily at 1:30 AM UTC — stale issues
+    - cron: '0 14 1 * *' # Monthly on the 1st at 2 PM UTC — pitch surfacing
 
 jobs:
   no-response:
@@ -23,5 +24,11 @@ jobs:
   stale:
     if: github.event.schedule == '30 1 * * *'
     uses: desktop/gh-cli-and-desktop-shared-workflows/.github/workflows/triage-stale-issues.yml@main
+    permissions:
+      issues: write
+
+  pitch-surface:
+    if: github.event.schedule == '0 14 1 * *' || github.event_name == 'workflow_dispatch'
+    uses: desktop/gh-cli-and-desktop-shared-workflows/.github/workflows/pitch-surface-top-issues.yml@main
     permissions:
       issues: write
