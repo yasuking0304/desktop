@@ -16,6 +16,7 @@ interface IGenerateCommitMessageOverrideWarningProps {
   readonly dispatcher: Dispatcher
   readonly repository: Repository
   readonly filesSelected: ReadonlyArray<WorkingDirectoryFileChange>
+  readonly showCopilotInstructionsTip: boolean
 
   /**
    * Callback to use when the dialog gets closed.
@@ -40,6 +41,10 @@ export class GenerateCommitMessageOverrideWarning extends React.Component<
   }
 
   public render() {
+    const ariaDescribedBy = this.props.showCopilotInstructionsTip
+      ? 'generate-commit-message-override-warning-body generate-commit-message-override-warning-tip'
+      : 'generate-commit-message-override-warning-body'
+
     return (
       <Dialog
         title="Commit message override"
@@ -47,7 +52,7 @@ export class GenerateCommitMessageOverrideWarning extends React.Component<
         type="warning"
         onDismissed={this.props.onDismissed}
         onSubmit={this.onOverride}
-        ariaDescribedBy="generate-commit-message-override-warning-body generate-commit-message-override-warning-tip"
+        ariaDescribedBy={ariaDescribedBy}
         role="alertdialog"
       >
         <DialogContent>
@@ -55,15 +60,17 @@ export class GenerateCommitMessageOverrideWarning extends React.Component<
             The commit message you have entered will be overridden by the
             generated commit message.
           </Row>
-          <Row>
-            <p id="generate-commit-message-override-warning-tip">
-              Tip: You can use{' '}
-              <LinkButton uri="https://gh.io/desktop-copilot-custom-instructions">
-                Copilot Instructions
-              </LinkButton>{' '}
-              to customize how commit messages are generated.
-            </p>
-          </Row>
+          {this.props.showCopilotInstructionsTip ? (
+            <Row>
+              <p id="generate-commit-message-override-warning-tip">
+                Tip: You can use{' '}
+                <LinkButton uri="https://gh.io/desktop-copilot-custom-instructions">
+                  Copilot Instructions
+                </LinkButton>{' '}
+                to customize how commit messages are generated.
+              </p>
+            </Row>
+          ) : null}
           <Row>
             <Checkbox
               label="Do not show this message again"
