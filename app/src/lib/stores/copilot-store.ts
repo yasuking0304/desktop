@@ -123,7 +123,6 @@ export class CopilotStore {
         ELECTRON_RUN_AS_NODE: '1',
       },
       cwd: getCopilotCLICwd(),
-      logLevel: 'all',
       autoStart: true,
       githubToken: this.currentAccount.token,
     })
