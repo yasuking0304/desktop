@@ -149,12 +149,6 @@ export class CopilotStore {
   public async generateCommitMessage(
     diff: string
   ): Promise<ICopilotCommitMessage> {
-    if (this.currentAccount === null) {
-      throw new Error(
-        'Cannot generate commit message: No GitHub.com account available'
-      )
-    }
-
     const client = await this.createClient()
     let session: Awaited<ReturnType<CopilotClient['createSession']>> | null =
       null
