@@ -235,6 +235,12 @@ interface IFilterChangesListProps {
    */
   readonly skipCommitHooks: boolean
 
+  /**
+   * Whether or not to add a `Signed-off-by` trailer to commit messages
+   * by means of passing the `--signoff` flag to git commit
+   */
+  readonly signOffCommits: boolean
+
   /** Callback to set commit options for the given repository */
   readonly onUpdateCommitOptions: (
     repository: Repository,
@@ -1005,6 +1011,7 @@ export class FilterChangesList extends React.Component<
         submitButtonAriaDescribedBy={'hidden-changes-warning'}
         hasCommitHooks={this.props.hasCommitHooks}
         skipCommitHooks={this.props.skipCommitHooks}
+        signOffCommits={this.props.signOffCommits}
         onUpdateCommitOptions={this.props.onUpdateCommitOptions}
       />
     )

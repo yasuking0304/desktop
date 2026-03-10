@@ -11,6 +11,7 @@ import { BaseStore } from './base-store'
 import { getStealthEmailForUser, getLegacyStealthEmailForUser } from '../email'
 import { DefaultMaxHits } from '../../ui/autocompletion/common'
 import { isDotCom } from '../endpoint-capabilities'
+import { copilotSweAgentBot } from '../../models/dot-com-bots'
 
 /** Don't fetch mentionables more often than every 10 minutes */
 const MaxFetchFrequency = 10 * 60 * 1000
@@ -134,12 +135,9 @@ export class GitHubUserStore extends BaseStore {
       isDotCom(repository.endpoint) &&
       !mentionables.some(x => x.login === 'Copilot')
     ) {
-      return mentionables.concat({
-        login: 'Copilot',
-        name: 'Copilot',
-        email: '198982749+Copilot@users.noreply.github.com',
-        avatarURL: `https://avatars.githubusercontent.com/in/1143301?v=4`,
-      })
+      const { userId, login, avatarURL, endpoint } = copilotSweAgentBot
+      const email = getStealthEmailForUser(userId, login, endpoint)
+      return mentionables.concat({ login, name: login, email, avatarURL })
     }
 
     return mentionables

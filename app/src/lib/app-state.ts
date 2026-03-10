@@ -601,9 +601,18 @@ export interface IRepositoryState {
    * by means of passing the `--no-verify` flag to git commit
    */
   readonly skipCommitHooks: boolean
+
+  /**
+   * Whether or not to add a `Signed-off-by` trailer to commit messages
+   * by means of passing the `--signoff` flag to git commit
+   */
+  readonly signOffCommits: boolean
 }
 
-export type CommitOptions = Pick<IRepositoryState, 'skipCommitHooks'>
+export type CommitOptions = Pick<
+  IRepositoryState,
+  'skipCommitHooks' | 'signOffCommits'
+>
 
 export interface IBranchesState {
   /**
