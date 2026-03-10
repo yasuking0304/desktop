@@ -91,9 +91,9 @@ export class CopilotStore {
     this.currentAccount = dotComAccount
 
     if (dotComAccount === null) {
-      log.info('CopilotStore: No GitHub.com account available')
+      log.debug('CopilotStore: No GitHub.com account available')
     } else {
-      log.info(`CopilotStore: Account updated for '${dotComAccount.login}'`)
+      log.debug(`CopilotStore: Account updated for '${dotComAccount.login}'`)
     }
   }
 
