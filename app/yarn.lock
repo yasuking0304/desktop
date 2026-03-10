@@ -380,10 +380,10 @@ dompurify@^3.2.4:
   optionalDependencies:
     "@types/trusted-types" "^2.0.7"
 
-dugite@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/dugite/-/dugite-3.2.0.tgz#e2b3ba579f4cf50366e06d994064d7ee23ade86f"
-  integrity sha512-YgnAKcpjxC9zr3P1fDeAHF514uNfwV1ziudO8ablFJ16w21QHL3EHDhkU64YnqKIa88mbKUcQ0jfaa+wuKkk1g==
+dugite@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/dugite/-/dugite-3.2.1.tgz#7fdab246449f8db5aa21b0284b78b140d0dbb2ca"
+  integrity sha512-x5RD8AO/9yHdbVOpCSMTWs0rPft8W2NZksTeDbSPoIS1zfzQIVniFlIA/KYv/j5NX6UhNRLvSigKAQ++ZZg7Og==
   dependencies:
     progress "^2.0.3"
     tar-stream "^3.1.7"

@@ -1,5 +1,14 @@
 {
   "releases": {
+    "3.5.6": [
+      "[New] Support adding Copilot as a co author and show avatars for mentionable users - #21634",
+      "[Fixed] Fix detection of IDEs installed from JetBrains Toolbox - #21498",
+      "[Fixed] Choose the best account for the current repository to generate commit messages - #21484",
+      "[Fixed] Remove trailing $ typo in hooks output - #21638",
+      "[Improved] Update Git to 2.53.0",
+      "[Improved] Update Git for Windows to 2.53.0.windows.2",
+      "[Improved] Update Git Credential Manager to 2.7.3"
+    ],
     "3.5.6-beta1": [
       "[New] Support adding Copilot as a co author and show avatars for mentionable users - #21634",
       "[Fixed] Fix detection of IDEs installed from JetBrains Toolbox - #21498",
