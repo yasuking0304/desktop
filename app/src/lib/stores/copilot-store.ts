@@ -186,13 +186,7 @@ export class CopilotStore {
       throw e
     } finally {
       // Clean up the session
-      if (session !== null) {
-        try {
-          await session.destroy()
-        } catch {
-          // Ignore cleanup errors
-        }
-      }
+      await session?.destroy().catch(() => {})
 
       // Stop the client after use
       await this.stopClient(client)
