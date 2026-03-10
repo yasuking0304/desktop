@@ -1,7 +1,10 @@
 import { CopilotClient } from '@github/copilot-sdk'
 import { AccountsStore } from './accounts-store'
 import { Account, isDotComAccount } from '../../models/account'
-import { ICopilotCommitMessage } from '../copilot-commit-message'
+import {
+  ICopilotCommitMessage,
+  parseCopilotCommitMessage,
+} from '../copilot-commit-message'
 import { Emitter, Disposable } from 'event-kit'
 import * as ipcRenderer from '../ipc-renderer'
 import { join } from 'path'
@@ -169,15 +172,7 @@ export class CopilotStore {
         throw new Error('No response from Copilot')
       }
 
-      // Parse the JSON response
-      const content = response.data.content
-      // Try to extract JSON from markdown code blocks if present
-      const jsonMatch =
-        content.match(/```json\s*([\s\S]*?)```/) ||
-        content.match(/```\s*([\s\S]*?)```/)
-      const jsonStr = jsonMatch ? jsonMatch[1].trim() : content.trim()
-
-      return JSON.parse(jsonStr)
+      return parseCopilotCommitMessage(response.data.content)
     } catch (e) {
       log.warn('CopilotStore: Failed to generate commit message', e)
       throw e

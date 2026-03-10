@@ -1,6 +1,9 @@
 import * as URL from 'url'
 import { Account } from '../models/account'
-import { ICopilotCommitMessage } from './copilot-commit-message'
+import {
+  ICopilotCommitMessage,
+  parseCopilotCommitMessage,
+} from './copilot-commit-message'
 
 import {
   request,
@@ -1990,7 +1993,7 @@ export class API {
         throw new Error('No message found in response')
       }
 
-      return JSON.parse(message)
+      return parseCopilotCommitMessage(message)
     } catch (e) {
       log.warn(
         `getDiffChangesCommitMessage: failed with endpoint ${this.endpoint}`,
