@@ -194,21 +194,6 @@ export class CopilotStore {
   }
 
   /**
-   * Returns whether Copilot is available (i.e., a GitHub.com account is
-   * signed in).
-   */
-  public get isAvailable(): boolean {
-    return this.currentAccount !== null
-  }
-
-  /**
-   * Returns the currently associated GitHub.com account, if any.
-   */
-  public get account(): Account | null {
-    return this.currentAccount
-  }
-
-  /**
    * Register a function to be called when an error occurs.
    */
   public onDidError(fn: (e: Error) => void): Disposable {
