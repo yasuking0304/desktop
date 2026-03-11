@@ -3914,9 +3914,14 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
   public _updateCommitOptions(
     repository: Repository,
-    commitOptions: CommitOptions
+    commitOptions: Partial<CommitOptions>
   ): void {
-    this.repositoryStateCache.update(repository, () => commitOptions)
+    this.repositoryStateCache.update(repository, state => ({
+      skipCommitHooks: state.skipCommitHooks,
+      signOffCommits: state.signOffCommits,
+      allowEmptyCommit: state.allowEmptyCommit,
+      ...commitOptions,
+    }))
     this.emitUpdate()
   }
 

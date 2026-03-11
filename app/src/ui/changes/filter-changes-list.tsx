@@ -251,7 +251,7 @@ interface IFilterChangesListProps {
   /** Callback to set commit options for the given repository */
   readonly onUpdateCommitOptions: (
     repository: Repository,
-    options: CommitOptions
+    options: Partial<CommitOptions>
   ) => void
 }
 

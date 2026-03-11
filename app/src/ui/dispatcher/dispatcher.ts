@@ -222,7 +222,10 @@ export class Dispatcher {
     return this.appStore._updateRepositoryMissing(repository, missing)
   }
 
-  public updateCommitOptions(repository: Repository, options: CommitOptions) {
+  public updateCommitOptions(
+    repository: Repository,
+    options: Partial<CommitOptions>
+  ) {
     this.appStore._updateCommitOptions(repository, options)
   }
 

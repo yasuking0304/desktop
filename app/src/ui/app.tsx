@@ -2605,7 +2605,7 @@ export class App extends React.Component<IAppProps, IAppState> {
 
   private onUpdateCommitOptions = (
     repository: Repository,
-    options: CommitOptions
+    options: Partial<CommitOptions>
   ) => {
     this.props.dispatcher.updateCommitOptions(repository, options)
   }

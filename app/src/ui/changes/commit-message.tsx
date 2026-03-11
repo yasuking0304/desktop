@@ -238,7 +238,7 @@ interface ICommitMessageProps {
   /** Callback to set commit options for the given repository */
   readonly onUpdateCommitOptions: (
     repository: Repository,
-    options: CommitOptions
+    options: Partial<CommitOptions>
   ) => void
 }
 
@@ -1075,8 +1075,6 @@ export class CommitMessage extends React.Component<
         action: () => {
           this.props.onUpdateCommitOptions(this.props.repository, {
             skipCommitHooks: !this.props.skipCommitHooks,
-            signOffCommits: this.props.signOffCommits,
-            allowEmptyCommit: this.props.allowEmptyCommit,
           })
         },
       })
@@ -1090,9 +1088,7 @@ export class CommitMessage extends React.Component<
         : 'Add Signed-off-by trailer',
       action: () => {
         this.props.onUpdateCommitOptions(this.props.repository, {
-          skipCommitHooks: this.props.skipCommitHooks,
           signOffCommits: !this.props.signOffCommits,
-          allowEmptyCommit: this.props.allowEmptyCommit,
         })
       },
     })
@@ -1104,8 +1100,6 @@ export class CommitMessage extends React.Component<
         label: __DARWIN__ ? 'Allow Empty Commit' : 'Allow empty commit',
         action: () => {
           this.props.onUpdateCommitOptions(this.props.repository, {
-            skipCommitHooks: this.props.skipCommitHooks,
-            signOffCommits: this.props.signOffCommits,
             allowEmptyCommit: !this.props.allowEmptyCommit,
           })
         },
