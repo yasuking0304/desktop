@@ -227,6 +227,14 @@ interface ICommitMessageProps {
    */
   readonly allowEmptyCommit: boolean
 
+  /**
+   * Whether or not to show the "Allow empty commit" option in the commit
+   * options context menu. Should be false when the CommitMessage component
+   * is used in contexts where empty commits are not applicable, such as the
+   * squash commit dialog.
+   */
+  readonly showAllowEmptyCommitOption?: boolean
+
   /** Callback to set commit options for the given repository */
   readonly onUpdateCommitOptions: (
     repository: Repository,
@@ -1089,18 +1097,20 @@ export class CommitMessage extends React.Component<
       },
     })
 
-    items.push({
-      type: 'checkbox',
-      checked: this.props.allowEmptyCommit,
-      label: __DARWIN__ ? 'Allow Empty Commit' : 'Allow empty commit',
-      action: () => {
-        this.props.onUpdateCommitOptions(this.props.repository, {
-          skipCommitHooks: this.props.skipCommitHooks,
-          signOffCommits: this.props.signOffCommits,
-          allowEmptyCommit: !this.props.allowEmptyCommit,
-        })
-      },
-    })
+    if (this.props.showAllowEmptyCommitOption) {
+      items.push({
+        type: 'checkbox',
+        checked: this.props.allowEmptyCommit,
+        label: __DARWIN__ ? 'Allow Empty Commit' : 'Allow empty commit',
+        action: () => {
+          this.props.onUpdateCommitOptions(this.props.repository, {
+            skipCommitHooks: this.props.skipCommitHooks,
+            signOffCommits: this.props.signOffCommits,
+            allowEmptyCommit: !this.props.allowEmptyCommit,
+          })
+        },
+      })
+    }
 
     showContextualMenu(items)
   }

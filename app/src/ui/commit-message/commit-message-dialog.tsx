@@ -121,6 +121,14 @@ interface ICommitMessageDialogProps {
    */
   readonly allowEmptyCommit: boolean
 
+  /**
+   * Whether or not to show the "Allow empty commit" option in the commit
+   * options context menu. Defaults to false since CommitMessageDialog is
+   * currently only used for squash commits where empty commits are not
+   * applicable.
+   */
+  readonly showAllowEmptyCommitOption?: boolean
+
   /** Callback to set commit options for the given repository */
   readonly onUpdateCommitOptions: (
     repository: Repository,
@@ -202,6 +210,9 @@ export class CommitMessageDialog extends React.Component<
             skipCommitHooks={this.props.skipCommitHooks}
             signOffCommits={this.props.signOffCommits}
             allowEmptyCommit={this.props.allowEmptyCommit}
+            showAllowEmptyCommitOption={
+              this.props.showAllowEmptyCommitOption ?? false
+            }
             onUpdateCommitOptions={this.props.onUpdateCommitOptions}
           />
         </DialogContent>

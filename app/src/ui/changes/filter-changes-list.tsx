@@ -1020,6 +1020,7 @@ export class FilterChangesList extends React.Component<
         skipCommitHooks={this.props.skipCommitHooks}
         signOffCommits={this.props.signOffCommits}
         allowEmptyCommit={this.props.allowEmptyCommit}
+        showAllowEmptyCommitOption={true}
         onUpdateCommitOptions={this.props.onUpdateCommitOptions}
       />
     )
