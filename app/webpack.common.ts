@@ -88,7 +88,7 @@ export const renderer = merge({}, commonConfig, {
       resource.request = 'vscode-jsonrpc/lib/node/main.js'
     }),
     new webpack.NormalModuleReplacementPlugin(
-      /vscode-jsonrpc[\\/]node\.js$/,
+      /vscode-jsonrpc[\\/]node(\.js)?$/,
       resource => {
         resource.request = 'vscode-jsonrpc/lib/node/main.js'
       }
