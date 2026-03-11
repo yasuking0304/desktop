@@ -5657,7 +5657,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
       try {
         const response = enableCopilotSdkCommitMessageGeneration(account)
-          ? await this.copilotStore.generateCommitMessage(diff)
+          ? await this.copilotStore.generateCommitMessage(diff, repository.path)
           : await API.fromAccount(account).getDiffChangesCommitMessage(diff)
 
         this._setCommitMessage(repository, {

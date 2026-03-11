@@ -19,7 +19,7 @@ export async function getCopilotCLIPath(): Promise<string> {
   return ipcRenderer.invoke('get-exec-path')
 }
 
-function getCopilotCLICwd(): string {
+function getCopilotCLIDir(): string {
   return join(__dirname, 'copilot')
 }
 
@@ -100,7 +100,7 @@ export class CopilotStore {
    *
    * @throws Error if no GitHub.com account is available
    */
-  private async createClient(): Promise<CopilotClient> {
+  private async createClient(repositoryPath: string): Promise<CopilotClient> {
     if (this.currentAccount === null || !this.currentAccount.token) {
       throw new Error(
         'Cannot create Copilot client: No GitHub.com account available'
@@ -114,13 +114,14 @@ export class CopilotStore {
     // However, when trying to do this directly without the --eval flag, Copilot
     // CLI fails to parse the arguments correctly, so we ended up using --eval
     // and just importing the index.js from the CLI as a workaround.
+    const cliDir = getCopilotCLIDir()
     return new CopilotClient({
       cliPath: await getCopilotCLIPath(),
-      cliArgs: ['--eval', "import './index.js'", '--'],
+      cliArgs: ['--eval', `import '${join(cliDir, 'index.js')}'`, '--'],
       env: {
         ELECTRON_RUN_AS_NODE: '1',
       },
-      cwd: getCopilotCLICwd(),
+      cwd: repositoryPath,
       autoStart: true,
       githubToken: this.currentAccount.token,
     })
@@ -145,9 +146,10 @@ export class CopilotStore {
    * @throws Error if no GitHub.com account is available or if generation fails
    */
   public async generateCommitMessage(
-    diff: string
+    diff: string,
+    repositoryPath: string
   ): Promise<ICopilotCommitMessage> {
-    const client = await this.createClient()
+    const client = await this.createClient(repositoryPath)
     let session: Awaited<ReturnType<CopilotClient['createSession']>> | null =
       null
 
