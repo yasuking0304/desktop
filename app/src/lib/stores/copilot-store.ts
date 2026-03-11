@@ -157,7 +157,10 @@ export class CopilotStore {
         model: 'gpt-5-mini',
         reasoningEffort: 'low',
         systemMessage: {
-          mode: 'replace',
+          // It's important to 'append' the system prompt so that it doesn't
+          // override any instructions, like copilot-instructions.md (in which
+          // we rely for custom commit message generation instructions).
+          mode: 'append',
           content: CommitMessageSystemPrompt,
         },
         onPermissionRequest: async () => ({
