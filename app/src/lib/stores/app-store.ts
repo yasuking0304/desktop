@@ -2,6 +2,7 @@ import * as Path from 'path'
 import {
   AccountsStore,
   CloningRepositoriesStore,
+  CopilotStore,
   GitHubUserStore,
   GitStore,
   IssuesStore,
@@ -141,7 +142,10 @@ import {
 import { assertNever, fatalError, forceUnwrap } from '../fatal-error'
 
 import { formatCommitMessage } from '../format-commit-message'
-import { getAccountForRepository } from '../get-account-for-repository'
+import {
+  getAccountForCommitMessageGeneration,
+  getAccountForRepository,
+} from '../get-account-for-repository'
 import {
   abortMerge,
   addRemote,
@@ -252,7 +256,7 @@ import {
 import { ManualConflictResolution } from '../../models/manual-conflict-resolution'
 import { BranchPruner } from './helpers/branch-pruner'
 import {
-  enableCommitMessageGeneration,
+  enableCopilotSdkCommitMessageGeneration,
   enableCustomIntegration,
 } from '../feature-flag'
 import { Banner, BannerType } from '../../models/banner'
@@ -639,7 +643,8 @@ export class AppStore extends TypedBaseStore<IAppState> {
     private readonly pullRequestCoordinator: PullRequestCoordinator,
     private readonly repositoryStateCache: RepositoryStateCache,
     private readonly apiRepositoriesStore: ApiRepositoriesStore,
-    private readonly notificationsStore: NotificationsStore
+    private readonly notificationsStore: NotificationsStore,
+    private readonly copilotStore: CopilotStore
   ) {
     super()
 
@@ -5612,12 +5617,10 @@ export class AppStore extends TypedBaseStore<IAppState> {
     repository: Repository,
     filesSelected: ReadonlyArray<WorkingDirectoryFileChange>
   ): Promise<boolean> {
-    // Prefer the account that is associated to this repository.
-    const repositoryAccount = getAccountForRepository(this.accounts, repository)
-    const account =
-      repositoryAccount && enableCommitMessageGeneration(repositoryAccount)
-        ? repositoryAccount
-        : this.accounts.find(enableCommitMessageGeneration)
+    const account = getAccountForCommitMessageGeneration(
+      this.accounts,
+      repository
+    )
 
     if (!account) {
       return false
@@ -5653,9 +5656,10 @@ export class AppStore extends TypedBaseStore<IAppState> {
         return false
       }
 
-      const api = API.fromAccount(account)
       try {
-        const response = await api.getDiffChangesCommitMessage(diff)
+        const response = enableCopilotSdkCommitMessageGeneration(account)
+          ? await this.copilotStore.generateCommitMessage(diff, repository.path)
+          : await API.fromAccount(account).getDiffChangesCommitMessage(diff)
 
         this._setCommitMessage(repository, {
           summary: response.title,

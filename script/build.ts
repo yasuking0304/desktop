@@ -338,6 +338,55 @@ function copyDependencies() {
     { recursive: true, verbatimSymlinks: true }
   )
 
+  console.log('  Copying copilot…')
+  const copilotPkgDir = path.resolve(
+    projectRoot,
+    `app/node_modules/@github/copilot`
+  )
+
+  const copilotDestination = path.resolve(outRoot, 'copilot')
+  cpSync(copilotPkgDir, copilotDestination, {
+    recursive: true,
+  })
+
+  const nonValidPlatforms = ['darwin', 'linux', 'win32'].filter(
+    p => p !== process.platform
+  )
+  const nonValidArchitectures = ['x64', 'arm64'].filter(
+    a => a !== getDistArchitecture()
+  )
+
+  // Removing unnecessary prebuild binaries from the copilot package to reduce
+  // bundle size
+  const prebuildsDirs = [
+    path.join(copilotDestination, 'prebuilds'),
+    path.join(copilotDestination, 'ripgrep', 'bin'),
+    path.join(copilotDestination, 'clipboard', 'node_modules', '@teddyzhu'),
+  ]
+
+  for (const prebuildsDir of prebuildsDirs) {
+    const prebuilds = readdirSync(prebuildsDir)
+    for (const prebuild of prebuilds) {
+      for (const platform of nonValidPlatforms) {
+        if (prebuild.includes(platform)) {
+          rmSync(path.join(prebuildsDir, prebuild), {
+            recursive: true,
+            force: true,
+          })
+        }
+      }
+
+      for (const arch of nonValidArchitectures) {
+        if (prebuild.includes(arch)) {
+          rmSync(path.join(prebuildsDir, prebuild), {
+            recursive: true,
+            force: true,
+          })
+        }
+      }
+    }
+  }
+
   // Dev builds for macOS require a SSH wrapper to use SSH_ASKPASS
   if (process.platform === 'darwin' && isDevelopmentBuild) {
     console.log('  Copying ssh-wrapper')
