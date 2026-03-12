@@ -3353,6 +3353,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
             },
             noVerify: state.skipCommitHooks,
             signOff: state.signOffCommits,
+            allowEmpty: state.allowEmptyCommit,
           }).catch(err => (aborted ? undefined : Promise.reject(err)))
         },
         { gitContext: { kind: 'commit' }, repository }
@@ -3371,6 +3372,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
         this.repositoryStateCache.update(repository, () => {
           return {
             commitToAmend: null,
+            allowEmptyCommit: false,
           }
         })
 
@@ -3917,9 +3919,14 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
   public _updateCommitOptions(
     repository: Repository,
-    commitOptions: CommitOptions
+    commitOptions: Partial<CommitOptions>
   ): void {
-    this.repositoryStateCache.update(repository, () => commitOptions)
+    this.repositoryStateCache.update(repository, state => ({
+      skipCommitHooks: state.skipCommitHooks,
+      signOffCommits: state.signOffCommits,
+      allowEmptyCommit: state.allowEmptyCommit,
+      ...commitOptions,
+    }))
     this.emitUpdate()
   }
 

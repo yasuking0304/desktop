@@ -2181,6 +2181,7 @@ export class App extends React.Component<IAppProps, IAppState> {
             hasCommitHooks={repositoryState.hasCommitHooks}
             skipCommitHooks={repositoryState.skipCommitHooks}
             signOffCommits={repositoryState.signOffCommits}
+            allowEmptyCommit={repositoryState.allowEmptyCommit}
             onUpdateCommitOptions={this.onUpdateCommitOptions}
           />
         )
@@ -2617,7 +2618,7 @@ export class App extends React.Component<IAppProps, IAppState> {
 
   private onUpdateCommitOptions = (
     repository: Repository,
-    options: CommitOptions
+    options: Partial<CommitOptions>
   ) => {
     this.props.dispatcher.updateCommitOptions(repository, options)
   }
@@ -3496,6 +3497,7 @@ export class App extends React.Component<IAppProps, IAppState> {
           hasCommitHooks={selectedState.state.hasCommitHooks}
           skipCommitHooks={selectedState.state.skipCommitHooks}
           signOffCommits={selectedState.state.signOffCommits}
+          allowEmptyCommit={selectedState.state.allowEmptyCommit}
           onUpdateCommitOptions={this.onUpdateCommitOptions}
         />
       )
