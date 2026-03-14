@@ -45,6 +45,9 @@ Object.entries(testEnv).forEach(([k, v]) => (process.env[k] = v))
 const args = [
   '--disable-warning=ExperimentalWarning',
   '--experimental-test-module-mocks',
+  // Allow CJS resolution to find ESM-only packages (e.g. @github/copilot-sdk)
+  // whose "exports" only declare an "import" condition with no "require" fallback.
+  '--conditions=import',
   ...['--import', 'tsx'],
   ...['--import', './app/test/globals.mts'],
   ...switchArgs,

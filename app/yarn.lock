@@ -58,6 +58,57 @@
     "@github/multimap" "^1.0.0"
     "@github/stable-socket" "^1.1.0"
 
+"@github/copilot-darwin-arm64@0.0.420":
+  version "0.0.420"
+  resolved "https://registry.yarnpkg.com/@github/copilot-darwin-arm64/-/copilot-darwin-arm64-0.0.420.tgz#560ca002fa491c04fdb6f74f84fee87e52575c53"
+  integrity sha512-sj8Oxcf3oKDbeUotm2gtq5YU1lwCt3QIzbMZioFD/PMLOeqSX/wrecI+c0DDYXKofFhALb0+DxxnWgbEs0mnkQ==
+
+"@github/copilot-darwin-x64@0.0.420":
+  version "0.0.420"
+  resolved "https://registry.yarnpkg.com/@github/copilot-darwin-x64/-/copilot-darwin-x64-0.0.420.tgz#1d5cf40ac4e04bbd69fb0a79abf3743897c5f795"
+  integrity sha512-2acA93IqXz1uuz3TVUm0Y7BVrBr0MySh1kQa8LqMILhTsG0YHRMm8ybzTp2HA7Mi1tl5CjqMSk163kkS7OzfUA==
+
+"@github/copilot-linux-arm64@0.0.420":
+  version "0.0.420"
+  resolved "https://registry.yarnpkg.com/@github/copilot-linux-arm64/-/copilot-linux-arm64-0.0.420.tgz#e247517854927a14f5c076bfa99309160afec2d7"
+  integrity sha512-h/IvEryTOYm1HzR2GNq8s2aDtN4lvT4MxldfZuS42CtWJDOfVG2jLLsoHWU1T3QV8j1++PmDgE//HX0JLpLMww==
+
+"@github/copilot-linux-x64@0.0.420":
+  version "0.0.420"
+  resolved "https://registry.yarnpkg.com/@github/copilot-linux-x64/-/copilot-linux-x64-0.0.420.tgz#00d22974499f0fab6354fe4e22f6be59b800ab98"
+  integrity sha512-iL2NpZvXIDZ+3lw7sO2fo5T0nKmP5dZbU2gdYcv+SFBm/ONhCxIY5VRX4yN/9VkFaa9ePv5JzCnsl3vZINiDxg==
+
+"@github/copilot-sdk@^0.1.29":
+  version "0.1.29"
+  resolved "https://registry.yarnpkg.com/@github/copilot-sdk/-/copilot-sdk-0.1.29.tgz#8809df61ab53f100f8390234d9946cdc2acae24b"
+  integrity sha512-GdcN6bJTeesr1HP6IrhN2MznIf1B3ufqd3PX+uKbDLXNriOmP65Ai29/hxzTidNLHyOf6rW4NwmFfkMXiKfCBw==
+  dependencies:
+    "@github/copilot" "^0.0.420"
+    vscode-jsonrpc "^8.2.1"
+    zod "^4.3.6"
+
+"@github/copilot-win32-arm64@0.0.420":
+  version "0.0.420"
+  resolved "https://registry.yarnpkg.com/@github/copilot-win32-arm64/-/copilot-win32-arm64-0.0.420.tgz#733c45aced1e42c2877ae44012074abbcce3d55d"
+  integrity sha512-Njlc2j9vYSBAL+lC6FIEhQ3C+VxO3xavwKnw0ecVRiNLcGLyPrTdzPfPQOmEjC63gpVCqLabikoDGv8fuLPA2w==
+
+"@github/copilot-win32-x64@0.0.420":
+  version "0.0.420"
+  resolved "https://registry.yarnpkg.com/@github/copilot-win32-x64/-/copilot-win32-x64-0.0.420.tgz#d45f47f2f08d4bba87760b8afb21af19d1988780"
+  integrity sha512-rZlH35oNehAP2DvQbu4vQFVNeCh/1p3rUjafBYaEY0Nkhx7RmdrYBileL5U3PtRPPRsBPaq3Qp+pVIrGoCDLzQ==
+
+"@github/copilot@^0.0.420":
+  version "0.0.420"
+  resolved "https://registry.yarnpkg.com/@github/copilot/-/copilot-0.0.420.tgz#596349de076566a310836a7e06e6807b87ea6bfe"
+  integrity sha512-UpPuSjxUxQ+j02WjZEFffWf0scLb23LvuGHzMFtaSsweR+P/BdbtDUI5ZDIA6T0tVyyt6+X1/vgfsJiRqd6jig==
+  optionalDependencies:
+    "@github/copilot-darwin-arm64" "0.0.420"
+    "@github/copilot-darwin-x64" "0.0.420"
+    "@github/copilot-linux-arm64" "0.0.420"
+    "@github/copilot-linux-x64" "0.0.420"
+    "@github/copilot-win32-arm64" "0.0.420"
+    "@github/copilot-win32-x64" "0.0.420"
+
 "@github/multimap@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@github/multimap/-/multimap-1.0.0.tgz#541bf212d088d1c2762691762d0017a84382cfba"
@@ -372,17 +423,17 @@ dom-helpers@^5.0.1:
     "@babel/runtime" "^7.8.7"
     csstype "^3.0.2"
 
-dompurify@^3.3.1:
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-3.3.1.tgz#c7e1ddebfe3301eacd6c0c12a4af284936dbbb86"
-  integrity sha512-qkdCKzLNtrgPFP1Vo+98FRzJnBRGe4ffyCea9IwHB1fyxPOeNTHpLKYGd4Uk9xvNoH0ZoOjwZxNptyMwqrId1Q==
+dompurify@^3.3.2:
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-3.3.2.tgz#58c515d0f8508b8749452a028aa589ad80b36325"
+  integrity sha512-6obghkliLdmKa56xdbLOpUZ43pAR6xFy1uOrxBaIDjT+yaRuuybLjGS9eVBoSR/UPU5fq3OXClEHLJNGvbxKpQ==
   optionalDependencies:
     "@types/trusted-types" "^2.0.7"
 
-dugite@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/dugite/-/dugite-3.2.0.tgz#e2b3ba579f4cf50366e06d994064d7ee23ade86f"
-  integrity sha512-YgnAKcpjxC9zr3P1fDeAHF514uNfwV1ziudO8ablFJ16w21QHL3EHDhkU64YnqKIa88mbKUcQ0jfaa+wuKkk1g==
+dugite@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/dugite/-/dugite-3.2.1.tgz#7fdab246449f8db5aa21b0284b78b140d0dbb2ca"
+  integrity sha512-x5RD8AO/9yHdbVOpCSMTWs0rPft8W2NZksTeDbSPoIS1zfzQIVniFlIA/KYv/j5NX6UhNRLvSigKAQ++ZZg7Og==
   dependencies:
     progress "^2.0.3"
     tar-stream "^3.1.7"
@@ -1187,13 +1238,6 @@ shebang-regex@^1.0.0:
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-1.0.0.tgz#da42f49740c0b42db2ca9728571cb190c98efea3"
   integrity sha1-2kL0l0DAtC2yypcoVxyxkMmO/qM=
 
-shescape@^2.1.6:
-  version "2.1.6"
-  resolved "https://registry.yarnpkg.com/shescape/-/shescape-2.1.6.tgz#6185c81049e7e2d510d5b33cabf820b1eaa0b743"
-  integrity sha512-c9Ns1I+Tl0TC+cpsOT1FeZcvFalfd0WfHeD/CMccJH20xwochmJzq6AqtenndlyAw/BUi3BMcv92dYLVrqX+dw==
-  dependencies:
-    which "^3.0.0 || ^4.0.0 || ^5.0.0"
-
 signal-exit@^3.0.0:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
@@ -1425,6 +1469,11 @@ util-deprecate@^1.0.1, util-deprecate@~1.0.1:
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==
 
+vscode-jsonrpc@^8.2.1:
+  version "8.2.1"
+  resolved "https://registry.yarnpkg.com/vscode-jsonrpc/-/vscode-jsonrpc-8.2.1.tgz#a322cc0f1d97f794ffd9c4cd2a898a0bde097f34"
+  integrity sha512-kdjOSJ2lLIn7r1rtrMbbNCHjyMPfRnowdKjBQ+mGq6NAW5QY2bEZC/khaC5OR8svbbjvLEaIXkOq45e2X9BIbQ==
+
 warning@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/warning/-/warning-3.0.0.tgz#32e5377cb572de4ab04753bdf8821c01ed605b7c"
@@ -1454,7 +1503,7 @@ which@^1.2.9:
   dependencies:
     isexe "^2.0.0"
 
-"which@^3.0.0 || ^4.0.0 || ^5.0.0", which@^5.0.0:
+which@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/which/-/which-5.0.0.tgz#d93f2d93f79834d4363c7d0c23e00d07c466c8d6"
   integrity sha512-JEdGzHwwkrbWoGOlIHqQ5gtprKGOenpDHpxE9zVR1bWbOtYRyPPHMe9FaP6x61CmNaTThSkb0DAJte5jD+DmzQ==
@@ -1512,3 +1561,8 @@ yallist@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/yallist/-/yallist-4.0.0.tgz#9bb92790d9c0effec63be73519e11a35019a3a72"
   integrity sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==
+
+zod@^4.3.6:
+  version "4.3.6"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-4.3.6.tgz#89c56e0aa7d2b05107d894412227087885ab112a"
+  integrity sha512-rftlrkhHZOcjDwkGlnUtZZkvaPHCsDATp4pGpuOOMDaTdDDXF91wuVDJoWoPsKX/3YPQ5fHuF3STjcYyKr+Qhg==
