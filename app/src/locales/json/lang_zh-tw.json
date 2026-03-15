@@ -377,6 +377,10 @@
   "commit-message": {
     "add-co-authors": "新增共同作者",
     "add-co-authors-darwin": "新增共同作者",
+    "add-signed-off-by-trailer": "Signed-off-by 添加拖車",
+    "add-signed-off-by-Trailer-darwin": "Signed-off-by 添加拖車",
+    "allow-empty-commit": "允許空提交",
+    "allow-empty-commit-darwin": "允許空提交",
     "amend": "修改之前的提交",
     "amending": "修改前一次提交",
     "commit": "提交",
@@ -387,6 +391,7 @@
     "commit-title-2": " ",
     "committing": "提交",
     "committing-changes": "提交更改…",
+    "configure-commit-options": "提交選項的設定",
     "description-field": "描述欄位",
     "disable-commit-spellcheck": "停用提交拼字檢查",
     "disable-commit-spellcheck-darwin": "停用提交拼字檢查",
@@ -1587,7 +1592,6 @@
   },
   "push-pull-button": {
     "cannot-publish-detached-head": "無法發佈 detached HEAD",
-    "cannot-publish-unborn-head": "無法發佈 unborn HEAD",
     "fetch": "取得至 {{0}}",
     "force-push": "強制推播 {{0}}",
     "hang-on": "請稍等…",

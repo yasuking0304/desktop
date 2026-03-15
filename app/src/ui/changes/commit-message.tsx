@@ -1067,7 +1067,10 @@ export class CommitMessage extends React.Component<
   }
 
   private renderCommitOptionsButton() {
-    const ariaLabel = 'Configure commit options'
+    const ariaLabel = t(
+      'commit-message.configure-commit-options',
+      'Configure commit options'
+    )
 
     return (
       <>
@@ -1115,8 +1118,14 @@ export class CommitMessage extends React.Component<
       type: 'checkbox',
       checked: this.props.signOffCommits,
       label: __DARWIN__
-        ? 'Add Signed-off-by Trailer'
-        : 'Add Signed-off-by trailer',
+        ? t(
+            'commit-message.add-signed-off-by-Trailer-darwin',
+            'Add Signed-off-by Trailer'
+          )
+        : t(
+            'commit-message.add-signed-off-by-trailer',
+            'Add Signed-off-by trailer'
+          ),
       action: () => {
         this.props.onUpdateCommitOptions(this.props.repository, {
           signOffCommits: !this.props.signOffCommits,
@@ -1128,7 +1137,9 @@ export class CommitMessage extends React.Component<
       items.push({
         type: 'checkbox',
         checked: this.props.allowEmptyCommit,
-        label: __DARWIN__ ? 'Allow Empty Commit' : 'Allow empty commit',
+        label: __DARWIN__
+          ? t('commit-message.allow-empty-commit-darwin', 'Allow Empty Commit')
+          : t('commit-message.allow-empty-commit', 'Allow empty commit'),
         action: () => {
           this.props.onUpdateCommitOptions(this.props.repository, {
             allowEmptyCommit: !this.props.allowEmptyCommit,

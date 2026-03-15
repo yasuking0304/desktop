@@ -377,6 +377,10 @@
   "commit-message": {
     "add-co-authors": "협업자 추가",
     "add-co-authors-darwin": "협업자 추가",
+    "add-signed-off-by-trailer": "Signed-off-by 트레일러 추가",
+    "add-signed-off-by-Trailer-darwin": "Signed-off-by 트레일러 추가",
+    "allow-empty-commit": "빈 커밋 허용",
+    "allow-empty-commit-darwin": "빈 커밋 허용",
     "amend": "마지막 커밋 수정",
     "amending": "마지막 커밋 수정 중",
     "commit": "커밋",
@@ -387,6 +391,7 @@
     "commit-title-2": " 에 {{0}}",
     "committing": "커밋 중",
     "committing-changes": "변경 커밋 중…",
+    "configure-commit-options": "커밋 옵션 설정",
     "description-field": "설명 필드",
     "disable-commit-spellcheck": "커밋 맞춤법 검사 사용 안함",
     "disable-commit-spellcheck-darwin": "커밋 맞춤법 검사 사용 안함",
@@ -1587,7 +1592,6 @@
   },
   "push-pull-button": {
     "cannot-publish-detached-head": "detached HEAD를 게시할 수 없습니다",
-    "cannot-publish-unborn-head": "unborn HEAD를 게시할 수 없습니다",
     "fetch": "{{0}}(으)로 가져오기",
     "force-push": "{{0}} 강제 푸시",
     "hang-on": "기다려주세요...",
