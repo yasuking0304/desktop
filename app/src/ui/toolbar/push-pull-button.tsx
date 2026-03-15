@@ -457,7 +457,7 @@ export class PushPullButton extends React.Component<
     }
 
     if (tipState === TipState.Unborn) {
-      return this.unbornRepositoryButton()
+      return this.fetchButton(remoteName, lastFetched, this.fetch)
     }
 
     if (tipState === TipState.Detached) {
@@ -540,21 +540,6 @@ export class PushPullButton extends React.Component<
         icon={octicons.upload}
         style={ToolbarButtonStyle.Subtitle}
         onClick={onClick}
-      />
-    )
-  }
-
-  private unbornRepositoryButton() {
-    return (
-      <ToolbarButton
-        {...this.defaultButtonProps()}
-        title={t('push-pull-button.publish-branch', 'Publish branch')}
-        description={t(
-          'push-pull-button.cannot-publish-unborn-head',
-          'Cannot publish: no commits'
-        )}
-        icon={octicons.upload}
-        disabled={true}
       />
     )
   }

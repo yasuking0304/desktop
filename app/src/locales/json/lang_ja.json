@@ -377,6 +377,10 @@
   "commit-message": {
     "add-co-authors": "コラボレーターの追加",
     "add-co-authors-darwin": "コラボレーターの追加",
+    "add-signed-off-by-trailer": "Signed-off-by トレーラーの追加",
+    "add-signed-off-by-Trailer-darwin": "Signed-off-by トレーラーの追加",
+    "allow-empty-commit": "空コミットを許可",
+    "allow-empty-commit-darwin": "空コミットを許可",
     "amend": "直前のコミットを修正",
     "amending": "直前のコミットを修正中",
     "commit": "コミット",
@@ -387,6 +391,7 @@
     "commit-title-2": " に{{0}}",
     "committing": "コミット中",
     "committing-changes": "変更をコミットしています…",
+    "configure-commit-options": "コミットオプションの設定",
     "description-field": "説明フィールド",
     "disable-commit-spellcheck": "コミットスペルチェックを無効にする",
     "disable-commit-spellcheck-darwin": "コミットスペルチェックを無効にする",
@@ -1587,7 +1592,6 @@
   },
   "push-pull-button": {
     "cannot-publish-detached-head": "detached HEAD を公開できません",
-    "cannot-publish-unborn-head": "unborn HEAD を公開できません",
     "fetch": "{{0}} にフェッチ",
     "force-push": "{{0}} の強制プッシュ",
     "hang-on": "お待ちください…",

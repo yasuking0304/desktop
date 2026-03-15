@@ -127,7 +127,10 @@ import { DiscardSelection } from './discard-changes/discard-selection-dialog'
 import { LocalChangesOverwrittenDialog } from './local-changes-overwritten/local-changes-overwritten-dialog'
 import memoizeOne from 'memoize-one'
 import { AheadBehindStore } from '../lib/stores/ahead-behind-store'
-import { getAccountForRepository } from '../lib/get-account-for-repository'
+import {
+  getAccountForCommitMessageGeneration,
+  getAccountForRepository,
+} from '../lib/get-account-for-repository'
 import { CommitOneLine } from '../models/commit'
 import { CommitDragElement } from './drag-elements/commit-drag-element'
 import classNames from 'classnames'
@@ -185,6 +188,7 @@ import { webUtils } from 'electron'
 import { showTestUI } from './lib/test-ui-components/test-ui-components'
 import { ConfirmCommitFilteredChanges } from './changes/confirm-commit-filtered-changes-dialog'
 import { AboutTestDialog } from './about/about-test-dialog'
+import { enableCopilotSdkCommitMessageGeneration } from '../lib/feature-flag'
 import {
   ISecretScanResult,
   PushProtectionErrorDialog,
@@ -264,7 +268,7 @@ export class App extends React.Component<IAppProps, IAppState> {
    * passed popupType, so it can be used in render() without creating
    * multiple instances when the component gets re-rendered.
    */
-  private getOnPopupDismissedFn = memoizeOne((popupId: string) => {
+  private getOnPopupDismissedFn = memoizeOne((popupId: number) => {
     return () => this.onPopupDismissed(popupId)
   })
 
@@ -1418,7 +1422,7 @@ export class App extends React.Component<IAppProps, IAppState> {
     )
   }
 
-  private onPopupDismissed = (popupId: string) => {
+  private onPopupDismissed = (popupId: number) => {
     return this.props.dispatcher.closePopupById(popupId)
   }
 
@@ -2184,6 +2188,8 @@ export class App extends React.Component<IAppProps, IAppState> {
             accounts={this.state.accounts}
             hasCommitHooks={repositoryState.hasCommitHooks}
             skipCommitHooks={repositoryState.skipCommitHooks}
+            signOffCommits={repositoryState.signOffCommits}
+            allowEmptyCommit={repositoryState.allowEmptyCommit}
             onUpdateCommitOptions={this.onUpdateCommitOptions}
           />
         )
@@ -2563,12 +2569,21 @@ export class App extends React.Component<IAppProps, IAppState> {
           />
         )
       case PopupType.GenerateCommitMessageOverrideWarning: {
+        const account = getAccountForCommitMessageGeneration(
+          this.state.accounts,
+          popup.repository
+        )
+
         return (
           <GenerateCommitMessageOverrideWarning
             key="generate-commit-message-override-warning"
             dispatcher={this.props.dispatcher}
             repository={popup.repository}
             filesSelected={popup.filesSelected}
+            showCopilotInstructionsTip={
+              account !== undefined &&
+              enableCopilotSdkCommitMessageGeneration(account)
+            }
             onDismissed={onPopupDismissedFn}
           />
         )
@@ -2611,7 +2626,7 @@ export class App extends React.Component<IAppProps, IAppState> {
 
   private onUpdateCommitOptions = (
     repository: Repository,
-    options: CommitOptions
+    options: Partial<CommitOptions>
   ) => {
     this.props.dispatcher.updateCommitOptions(repository, options)
   }
@@ -2629,12 +2644,12 @@ export class App extends React.Component<IAppProps, IAppState> {
   }
 
   private onDismissBypassPushProtection = (
-    popup: string,
+    popupId: number,
     popupDismiss: () => void
   ) => {
     return () => {
       popupDismiss()
-      this.onPopupDismissed(popup)
+      this.onPopupDismissed(popupId)
     }
   }
 
@@ -3497,6 +3512,8 @@ export class App extends React.Component<IAppProps, IAppState> {
           }
           hasCommitHooks={selectedState.state.hasCommitHooks}
           skipCommitHooks={selectedState.state.skipCommitHooks}
+          signOffCommits={selectedState.state.signOffCommits}
+          allowEmptyCommit={selectedState.state.allowEmptyCommit}
           onUpdateCommitOptions={this.onUpdateCommitOptions}
         />
       )

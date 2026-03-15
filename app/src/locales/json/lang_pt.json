@@ -377,6 +377,10 @@
   "commit-message": {
     "add-co-authors": "Add co-authors",
     "add-co-authors-darwin": "Add Co-Authors",
+    "add-signed-off-by-trailer": "Add Signed-off-by trailer",
+    "add-signed-off-by-Trailer-darwin": "Add Signed-off-by Trailer",
+    "allow-empty-commit": "Allow empty commit",
+    "allow-empty-commit-darwin": "Allow Empty Commit",
     "amend": "Amend",
     "amending": "Amending",
     "commit": "Commit",
@@ -387,6 +391,7 @@
     "commit-title-2": " ",
     "committing": "Committing",
     "committing-changes": "Committing changes…",
+    "configure-commit-options": "Configure commit options",
     "description-field": "Description",
     "disable-commit-spellcheck": "Disable commit spellcheck",
     "disable-commit-spellcheck-darwin": "Disable Commit Spellcheck",
@@ -958,7 +963,15 @@
     "gitHub-default-branch-description-2": ". ",
     "gitHub-default-branch-description-3": "You may want to change it due to different workflows, or because your integrations still require the historical default branch name of ",
     "gitHub-default-branch-description-4": ".",
-    "settings-related-to-the-path": "Settings related to the path"
+    "github-desktop-hook-support-is-experime-1": "GitHub Desktop hook support is experimental and currently only supports hooks related to committing. Please ",
+    "github-desktop-hook-support-is-experime-2": "let us know",
+    "github-desktop-hook-support-is-experime-3": " if you encounter any issues or have feedback!",
+    "hooks": "Hooks",
+    "load-git-hook-env-from-shell": "Load Git hook environment variables from shell",
+    "other-settings": "Others",
+    "settings-related-to-the-path": "Settings related to the path",
+    "shell-to-use-when-loading-env": "Shell to use when loading environment",
+    "when-enabled-attempt-to-load-env-variables": "When enabled, GitHub Desktop will attempt to load environment variables from your shell when executing Git hooks. This is useful if your Git hooks depend on environment variables set in your shell configuration files, a common practive for version managers such as nvm, rbenv, asdf, etc."
   },
   "git-config": {
     "for-this-repository": "For this repository I wish to",
@@ -1579,7 +1592,6 @@
   },
   "push-pull-button": {
     "cannot-publish-detached-head": "Cannot publish detached HEAD",
-    "cannot-publish-unborn-head": "Cannot publish unborn HEAD",
     "fetch": "Fetch {{0}}",
     "force-push": "Force push {{0}}",
     "hang-on": "Hang on…",

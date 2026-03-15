@@ -1284,10 +1284,10 @@
   dependencies:
     undici-types "~6.20.0"
 
-"@types/node@^24.9.0":
-  version "24.10.9"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-24.10.9.tgz#1aeb5142e4a92957489cac12b07f9c7fe26057d0"
-  integrity sha512-ne4A0IpG3+2ETuREInjPNhUGis1SFjv1d5asp8MzEAGtOZeTeHVDOYqOgqfhvseqg/iXty2hjBf1zAOb7RNiNw==
+"@types/node@^22.7.7":
+  version "22.19.15"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.19.15.tgz#6091d99fdf7c08cb57dc8b1345d407ba9a1df576"
+  integrity sha512-F0R/h2+dsy5wJAUe3tAU6oqa2qbWY5TpNfL/RGmo1y38hiyO1w3x2jPtt76wmuaJI4DQnOBu21cNXQ2STIUUWg==
   dependencies:
     undici-types "~7.16.0"
 
@@ -1494,11 +1494,6 @@
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@types/username/-/username-3.0.0.tgz#a0e2db87e8f81e6bcb7375e0ed78ecfb779974b1"
   integrity sha512-z+eSNnP/qpGe6KROv7nq9COUIPP8loXDr7uw84NqGqYCNKJKrsCLVnLtZxmpbq3UYDxMxCrmz99FMThzYJjRaw==
-
-"@types/uuid@^3.4.0":
-  version "3.4.9"
-  resolved "https://registry.yarnpkg.com/@types/uuid/-/uuid-3.4.9.tgz#fcf01997bbc9f7c09ae5f91383af076d466594e1"
-  integrity sha512-XDwyIlt/47l2kWLTzw/mtrpLdB+GPSskR2n/PIcPn+VYhVO77rGhRncIR5GPU0KRzXuqkDO+J5qqrG0Y8P6jzQ==
 
 "@types/webgl2@^0.0.11":
   version "0.0.11"
@@ -3217,10 +3212,10 @@ electron-winstaller@*, electron-winstaller@^5.0.0:
     lodash.template "^4.2.2"
     temp "^0.9.0"
 
-electron@36.9.5:
-  version "36.9.5"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-36.9.5.tgz#78e117e8cf97d53687f8d5a412e8bf9336229320"
-  integrity sha512-1UCss2IqxqujSzg/2jkRjuiT3G+EEXgd6UKB5kUekwQW1LJ6d4QCr8YItfC3Rr9VIGRDJ29eOERmnRNO1Eh+NA==
+electron@37.10.3:
+  version "37.10.3"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-37.10.3.tgz#ad7645c0d1ab5ca940fb91cfaf87267e474eaf80"
+  integrity sha512-3IjCGSjQmH50IbW2PFveaTzK+KwcFX9PEhE7KXb9v5IT8cLAiryAN7qezm/XzODhDRlLu0xKG1j8xWBtZ/bx/g==
   dependencies:
     "@electron/get" "^2.0.0"
     "@types/node" "^24.9.0"
@@ -4024,9 +4019,9 @@ fast-levenshtein@^2.0.6:
   integrity sha1-PYpcZog6FqMMqGQ+hR8Zuqd5eRc=
 
 fast-xml-parser@^4.4.1:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/fast-xml-parser/-/fast-xml-parser-4.5.0.tgz#2882b7d01a6825dfdf909638f2de0256351def37"
-  integrity sha512-/PlTQCI96+fZMAOLMZK4CWG1ItCbfZ/0jx7UIJFChPNrx7tcEgerUgWbeieCM9MfHInUDyK8DWYZ+YrywDJuTg==
+  version "4.5.4"
+  resolved "https://registry.yarnpkg.com/fast-xml-parser/-/fast-xml-parser-4.5.4.tgz#64e52ddf1308001893bd225d5b1768840511c797"
+  integrity sha512-jE8ugADnYOBsu1uaoayVl1tVKAMNOXyjwvv2U6udEA2ORBhDooJDWoGxTkhd4Qn4yh59JVVt/pKXtjPwx9OguQ==
   dependencies:
     strnum "^1.0.5"
 
@@ -6670,10 +6665,10 @@ process-nextick-args@~2.0.0:
   resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-2.0.1.tgz#7820d9b16120cc55ca9ae7792680ae7dba6d7fe2"
   integrity sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==
 
-process-proxy@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/process-proxy/-/process-proxy-0.5.0.tgz#dd927887f6913351ea843405eac942be8510b5d9"
-  integrity sha512-XiQ1tajBwjngpJzGraW/3baiGWeorxF8Rcw4nPuKOn6CiEIV7Fx+kqqKRN6f8Y09bxp9IdAAQAbJK9BxWUDVWQ==
+process-proxy@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/process-proxy/-/process-proxy-0.6.0.tgz#6871a14a01218a2ca6f0c348255894dd32415d17"
+  integrity sha512-Ic7sU/XQQBJ1mdd8zLcrPakUdg5RrKmJKk3BV+5sLzbVhQRdQxOrG1ycA0dHeGr1TwFWHg37xArYiLEOiBx9kA==
 
 progress@^2.0.3:
   version "2.0.3"

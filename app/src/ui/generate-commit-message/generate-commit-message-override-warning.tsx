@@ -9,6 +9,7 @@ import {
 } from '../dialog'
 import { Dispatcher } from '../dispatcher'
 import { Checkbox, CheckboxValue } from '../lib/checkbox'
+import { LinkButton } from '../lib/link-button'
 import { Row } from '../lib/row'
 import { t } from 'i18next'
 
@@ -16,6 +17,7 @@ interface IGenerateCommitMessageOverrideWarningProps {
   readonly dispatcher: Dispatcher
   readonly repository: Repository
   readonly filesSelected: ReadonlyArray<WorkingDirectoryFileChange>
+  readonly showCopilotInstructionsTip: boolean
 
   /**
    * Callback to use when the dialog gets closed.
@@ -40,6 +42,10 @@ export class GenerateCommitMessageOverrideWarning extends React.Component<
   }
 
   public render() {
+    const ariaDescribedBy = this.props.showCopilotInstructionsTip
+      ? 'generate-commit-message-override-warning-body generate-commit-message-override-warning-tip'
+      : 'generate-commit-message-override-warning-body'
+
     return (
       <Dialog
         title={t(
@@ -50,7 +56,7 @@ export class GenerateCommitMessageOverrideWarning extends React.Component<
         type="warning"
         onDismissed={this.props.onDismissed}
         onSubmit={this.onOverride}
-        ariaDescribedBy="generate-commit-message-override-warning-body"
+        ariaDescribedBy={ariaDescribedBy}
         role="alertdialog"
       >
         <DialogContent>
@@ -61,6 +67,17 @@ export class GenerateCommitMessageOverrideWarning extends React.Component<
               generated commit message.`
             )}
           </Row>
+          {this.props.showCopilotInstructionsTip ? (
+            <Row>
+              <p id="generate-commit-message-override-warning-tip">
+                Tip: You can use{' '}
+                <LinkButton uri="https://gh.io/desktop-copilot-custom-instructions">
+                  Copilot Instructions
+                </LinkButton>{' '}
+                to customize how commit messages are generated.
+              </p>
+            </Row>
+          ) : null}
           <Row>
             <Checkbox
               label="Do not show this message again"

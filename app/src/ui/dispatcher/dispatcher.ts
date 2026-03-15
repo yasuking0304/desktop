@@ -222,7 +222,10 @@ export class Dispatcher {
     return this.appStore._updateRepositoryMissing(repository, missing)
   }
 
-  public updateCommitOptions(repository: Repository, options: CommitOptions) {
+  public updateCommitOptions(
+    repository: Repository,
+    options: Partial<CommitOptions>
+  ) {
     this.appStore._updateCommitOptions(repository, options)
   }
 
@@ -404,7 +407,7 @@ export class Dispatcher {
   /**
    * Close the popup with given id.
    */
-  public closePopupById(popupId: string) {
+  public closePopupById(popupId: number) {
     return this.appStore._closePopupById(popupId)
   }
 

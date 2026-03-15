@@ -14,3 +14,5 @@ app/test/fixtures
 gemoji
 *.md
 script/GitHub-Desktop.yml
+app/static/logos/prod/**/*.json
+app/static/logos/dev/**/*.json

@@ -377,6 +377,10 @@
   "commit-message": {
     "add-co-authors": "Add co-authors",
     "add-co-authors-darwin": "Add Co-Authors",
+    "add-signed-off-by-trailer": "Add Signed-off-by trailer",
+    "add-signed-off-by-Trailer-darwin": "Add Signed-off-by Trailer",
+    "allow-empty-commit": "Allow empty commit",
+    "allow-empty-commit-darwin": "Allow Empty Commit",
     "amend": "Amend",
     "amending": "Amending",
     "commit": "Commit",
@@ -387,6 +391,7 @@
     "commit-title-2": " ",
     "committing": "Committing",
     "committing-changes": "Committing changes…",
+    "configure-commit-options": "Configure commit options",
     "description-field": "Description",
     "disable-commit-spellcheck": "Disable commit spellcheck",
     "disable-commit-spellcheck-darwin": "Disable Commit Spellcheck",
@@ -1587,7 +1592,6 @@
   },
   "push-pull-button": {
     "cannot-publish-detached-head": "Cannot publish detached HEAD",
-    "cannot-publish-unborn-head": "Cannot publish unborn HEAD",
     "fetch": "Fetch {{0}}",
     "force-push": "Force push {{0}}",
     "hang-on": "Hang on…",
