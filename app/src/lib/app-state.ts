@@ -335,7 +335,11 @@ export interface IAppState {
    * Whether or not the app should use spell check on commit summary and description
    */
   readonly commitSpellcheckEnabled: boolean
-
+  /**
+   * Whether or not the app should use multi-language support in Copilot features,
+   * which allows users to get suggestions in languages other than English.
+   */
+  readonly supportCopilotMultilingual: boolean
   /**
    * Record of what logged in users have been checked to see if thank you is in
    * order for external contributions in latest release.

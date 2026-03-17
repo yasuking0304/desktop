@@ -254,6 +254,8 @@ interface IFilterChangesListProps {
     repository: Repository,
     options: Partial<CommitOptions>
   ) => void
+
+  readonly supportCopilotMultilingual: boolean
 }
 
 interface IFilterChangesListState {
@@ -1072,6 +1074,9 @@ export class FilterChangesList extends React.Component<
         onShowPopup={this.onShowPopup}
         onShowFoldout={this.onShowFoldout}
         onCommitSpellcheckEnabledChanged={this.onCommitSpellcheckEnabledChanged}
+        onCopilotMultiLanguageSupportChanged={
+          this.onCopilotMultiLanguageSupportChanged
+        }
         onStopAmending={this.onStopAmending}
         onShowCreateForkDialog={this.onShowCreateForkDialog}
         onFilesToCommitNotVisible={this.onFilesToCommitNotVisible}
@@ -1083,6 +1088,7 @@ export class FilterChangesList extends React.Component<
         signOffCommits={this.props.signOffCommits}
         allowEmptyCommit={this.props.allowEmptyCommit}
         showAllowEmptyCommitOption={true}
+        supportCopilotMultilingual={this.props.supportCopilotMultilingual}
         onUpdateCommitOptions={this.props.onUpdateCommitOptions}
       />
     )
@@ -1141,6 +1147,9 @@ export class FilterChangesList extends React.Component<
 
   private onCommitSpellcheckEnabledChanged = (enabled: boolean) =>
     this.props.dispatcher.setCommitSpellcheckEnabled(enabled)
+
+  private onCopilotMultiLanguageSupportChanged = (enabled: boolean) =>
+    this.props.dispatcher.setCopilotMultiLanguageSupport(enabled)
 
   private onStopAmending = () =>
     this.props.dispatcher.stopAmendingRepository(this.props.repository)

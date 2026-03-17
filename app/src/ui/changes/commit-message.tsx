@@ -193,6 +193,7 @@ interface ICommitMessageProps {
   readonly onShowPopup: (popup: Popup) => void
   readonly onShowFoldout: (foldout: Foldout) => void
   readonly onCommitSpellcheckEnabledChanged: (enabled: boolean) => void
+  readonly onCopilotMultiLanguageSupportChanged: (enabled: boolean) => void
   readonly onStopAmending: () => void
   readonly onShowCreateForkDialog: () => void
   readonly onFilesToCommitNotVisible?: (onCommitAnyway: () => {}) => void
@@ -241,6 +242,12 @@ interface ICommitMessageProps {
     repository: Repository,
     options: Partial<CommitOptions>
   ) => void
+
+  /**
+   * Whether or not the app should use multilingual support in Copilot features,
+   *  which allows users to get suggestions in languages other than English.
+   */
+  readonly supportCopilotMultilingual: boolean
 }
 
 interface ICommitMessageState {
@@ -1148,6 +1155,26 @@ export class CommitMessage extends React.Component<
       })
     }
 
+    if (this.props.onGenerateCommitMessage) {
+      items.push({
+        type: 'checkbox',
+        checked: this.props.supportCopilotMultilingual,
+        label: __DARWIN__
+          ? t(
+              'commit-message.multilingual-support-darwin',
+              "Copilot's multilingual support"
+            )
+          : t(
+              'commit-message.multilingual-support',
+              "Copilot's multilingual support"
+            ),
+        action: () => {
+          this.props.onCopilotMultiLanguageSupportChanged(
+            !this.props.supportCopilotMultilingual
+          )
+        },
+      })
+    }
     showContextualMenu(items)
   }
 

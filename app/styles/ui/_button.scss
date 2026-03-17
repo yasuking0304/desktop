@@ -79,6 +79,17 @@
   &.link-with-icon .octicon {
     margin-left: var(--spacing-half);
   }
+  &.brand {
+    text-decoration: none;
+    background-color: var(--brand-button-accent-background);
+    border-radius: var(--brand-button-border-radius);
+    color: var(--brand-button-text-color);
+    padding: 6px;
+    margin-top: var(--spacing-half);
+  }
+  &.brand:hover {
+    background-color: var(--brand-button-accent-hover-background);
+  }
 }
 
 .small-button {

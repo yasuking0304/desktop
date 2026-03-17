@@ -80,6 +80,7 @@
   },
   "app-error": {
     "clone-failed": "클론 실패",
+    "copilot-exceeded-its-quota": "Copilot 사용 한도를 초과했습니다",
     "failed-to-push": "푸시에 실패했습니다",
     "file-size-limit-exceeded": "파일 크기 제한을 초과했습니다.",
     "files-that-exceed": "제한을 초과하는 파일",
@@ -87,13 +88,16 @@
     "for-more-information-2": "를 참조하세요.",
     "open-options": "옵션 열기",
     "open-settings-darwin": "옵션 열기",
+    "payment-required": "계속하려면 요금을 지불하거나, 월말까지 할당량 초기화를 기다려야 합니다.",
     "retry-clone": "클론 재시도",
     "retry-clone-darwin": "클론 재시도",
+    "upgrade-to-increase-limit": "업그레이드하면 사용 한도 금액을 늘릴 수 있습니다",
     "would-you-like-1": " ",
     "would-you-like-2": "클론을 다시 시도하시겠습니까?"
   },
   "app-store": {
     "checking-out": "체크아웃",
+    "copilot-multilingual-prompt": "한국어로 출력을 부탁드립니다. ",
     "error": {
       "pruner-is-already-active": "A branch pruner is already active and cannot start updating on {{0}}",
       "should-only-have-on-background-fetcher-active": "We should only have on background fetcher active at once, but we're trying to start background fetching on {{0}} while another background fetcher is still active!"
@@ -406,6 +410,8 @@
     "generating-commit-details": "커밋 세부정보 생성 중…",
     "link-create-a-fork": "포크 만들기",
     "link-switch-branches": "브랜치 전환",
+    "multilingual-support": "Copilot의 한국어 지원",
+    "multilingual-support-darwin": "Copilot의 한국어 지원",
     "must-be-selected": ". 커밋 메시지를 생성하려면 파일을 선택해야 합니다.",
     "please-information-description-field": "설명 필드에 추가 정보를 입력합니다.",
     "protected-branch-1": " ",
@@ -565,8 +571,7 @@
     "checking-out-a-commit": "커밋을 체크아웃하면 분리된 HEAD가 만들어져 모든 브랜치에 더 이상 존재하지 않습니다. 이 커밋을 체크아웃하시겠습니까?",
     "checkout": "체크아웃",
     "checkout-commit": "커밋을 체크아웃하시겠습니까?",
-    "checkout-commit-darwin": "커밋을 체크아웃하시겠습니까?",
-    "do-not-show-this-messaeg-again": "향후 이 메시지를 표시하지 않음"
+    "checkout-commit-darwin": "커밋을 체크아웃하시겠습니까?"
   },
   "confirm-discard-stash": {
     "are-you-sure-you-want-to-discard": "이러한 후퇴된 변경사항을 삭제하시겠습니까?",

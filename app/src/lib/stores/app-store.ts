@@ -431,6 +431,8 @@ const hideWhitespaceInPullRequestDiffKey =
 
 const commitSpellcheckEnabledDefault = true
 const commitSpellcheckEnabledKey = 'commit-spellcheck-enabled'
+const supportMultiLingualCopilotDefault = false
+const supportMultiLingualCopilotKey = 'copilot-multi-language-support'
 
 export const tabSizeDefault: number = 4
 const tabSizeKey: string = 'tab-size'
@@ -564,6 +566,8 @@ export class AppStore extends TypedBaseStore<IAppState> {
     hideWhitespaceInPullRequestDiffDefault
   /** Whether or not the spellchecker is enabled for commit summary and description */
   private commitSpellcheckEnabled: boolean = commitSpellcheckEnabledDefault
+  private supportCopilotMultilingual: boolean =
+    supportMultiLingualCopilotDefault
   private showSideBySideDiff: boolean = ShowSideBySideDiffDefault
 
   private uncommittedChangesStrategy = defaultUncommittedChangesStrategy
@@ -1116,6 +1120,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
       currentOnboardingTutorialStep: this.currentOnboardingTutorialStep,
       repositoryIndicatorsEnabled: this.repositoryIndicatorsEnabled,
       commitSpellcheckEnabled: this.commitSpellcheckEnabled,
+      supportCopilotMultilingual: this.supportCopilotMultilingual,
       currentDragElement: this.currentDragElement,
       lastThankYou: this.lastThankYou,
       useCustomEditor: this.useCustomEditor,
@@ -2341,6 +2346,10 @@ export class AppStore extends TypedBaseStore<IAppState> {
     this.commitSpellcheckEnabled = getBoolean(
       commitSpellcheckEnabledKey,
       commitSpellcheckEnabledDefault
+    )
+    this.supportCopilotMultilingual = getBoolean(
+      supportMultiLingualCopilotKey,
+      supportMultiLingualCopilotDefault
     )
     this.showSideBySideDiff = getShowSideBySideDiff()
 
@@ -3847,6 +3856,17 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
     setBoolean(commitSpellcheckEnabledKey, commitSpellcheckEnabled)
     this.commitSpellcheckEnabled = commitSpellcheckEnabled
+
+    this.emitUpdate()
+  }
+
+  public _setCopilotMultiLanguageSupport(supportCopilotMultilingual: boolean) {
+    if (this.supportCopilotMultilingual === supportCopilotMultilingual) {
+      return
+    }
+
+    setBoolean(supportMultiLingualCopilotKey, supportCopilotMultilingual)
+    this.supportCopilotMultilingual = supportCopilotMultilingual
 
     this.emitUpdate()
   }
@@ -5693,11 +5713,21 @@ export class AppStore extends TypedBaseStore<IAppState> {
       if (!diff) {
         return false
       }
-
+      const diffMultilingual = this.supportCopilotMultilingual
+        ? t(
+            'app-store.copilot-multilingual-prompt',
+            'Please output in English. '
+          ) && diff
+        : diff
       try {
         const response = enableCopilotSdkCommitMessageGeneration(account)
-          ? await this.copilotStore.generateCommitMessage(diff, repository.path)
-          : await API.fromAccount(account).getDiffChangesCommitMessage(diff)
+          ? await this.copilotStore.generateCommitMessage(
+              diffMultilingual,
+              repository.path
+            )
+          : await API.fromAccount(account).getDiffChangesCommitMessage(
+              diffMultilingual
+            )
 
         this._setCommitMessage(repository, {
           summary: response.title,

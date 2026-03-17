@@ -80,20 +80,24 @@
   },
   "app-error": {
     "clone-failed": "クローンの失敗",
+    "copilot-exceeded-its-quota": "Copilot の利用限度数を超過しました",
     "failed-to-push": "プッシュに失敗しました",
-    "file-size-limit-exceeded": "ファイルサイズの制限を超えました",
-    "files-that-exceed": "制限を超えたファイル",
+    "file-size-limit-exceeded": "ファイルサイズ制限を超過しました",
+    "files-that-exceed": "制限を超過したファイル",
     "for-more-information-1": "GitHubで大きなファイルを管理する方法の詳細については、",
     "for-more-information-2": " を参照してください。",
     "open-options": "オプションを開く",
     "open-settings-darwin": "オプションを開く",
+    "payment-required": "続けるために課金を行うか、月末のクォータリセットを待つ必要があります。",
     "retry-clone": "クローンの再試行",
     "retry-clone-darwin": "クローンの再試行",
+    "upgrade-to-increase-limit": "アップグレードすることで、利用限度額を増やすことができます",
     "would-you-like-1": " ",
     "would-you-like-2": " のクローンを再試行しますか?"
   },
   "app-store": {
     "checking-out": "チェックアウト",
+    "copilot-multilingual-prompt": "日本語でお願いします。 ",
     "error": {
       "pruner-is-already-active": "A branch pruner is already active and cannot start updating on {{0}}",
       "should-only-have-on-background-fetcher-active": "We should only have on background fetcher active at once, but we're trying to start background fetching on {{0}} while another background fetcher is still active!"
@@ -406,6 +410,8 @@
     "generating-commit-details": "コミットの詳細を生成中…",
     "link-create-a-fork": "フォークの作成",
     "link-switch-branches": "ブランチの切り替え",
+    "multilingual-support": "Copilotの日本語サポート",
+    "multilingual-support-darwin": "Copilotの日本語サポート",
     "must-be-selected": "。コミットメッセージを生成するにはファイルを選択する必要があります。",
     "please-information-description-field": "説明フィールドに追加情報を入力します。",
     "protected-branch-1": " ",
@@ -565,8 +571,7 @@
     "checking-out-a-commit": "コミットをチェックアウトすると分離された HEAD が作成され、どのブランチにも存在しなくなります。 このコミットをチェックアウトしてもよろしいですか?",
     "checkout": "チェックアウト",
     "checkout-commit": "コミットをチェックアウトしますか?",
-    "checkout-commit-darwin": "コミットをチェックアウトしますか?",
-    "do-not-show-this-messaeg-again": "今後このメッセージを表示しない"
+    "checkout-commit-darwin": "コミットをチェックアウトしますか?"
   },
   "confirm-discard-stash": {
     "are-you-sure-you-want-to-discard": "これらの退避された変更を破棄してもよろしいですか?",

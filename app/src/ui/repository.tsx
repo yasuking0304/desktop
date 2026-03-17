@@ -142,6 +142,9 @@ interface IRepositoryViewProps {
    */
   readonly allowEmptyCommit: boolean
 
+  /** Whether or not to support Copilot's Multilingual Support */
+  readonly supportCopilotMultilingual: boolean
+
   /** Callback to set commit options for the given repository */
   readonly onUpdateCommitOptions: (
     repository: Repository,
@@ -330,6 +333,7 @@ export class RepositoryView extends React.Component<
         skipCommitHooks={this.props.skipCommitHooks}
         signOffCommits={this.props.signOffCommits}
         allowEmptyCommit={this.props.allowEmptyCommit}
+        supportCopilotMultilingual={this.props.supportCopilotMultilingual}
         onUpdateCommitOptions={this.props.onUpdateCommitOptions}
       />
     )

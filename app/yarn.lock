@@ -1510,7 +1510,7 @@ which@^1.2.9:
   dependencies:
     isexe "^2.0.0"
 
-which@^5.0.0:
+"which@^3.0.0 || ^4.0.0 || ^5.0.0", which@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/which/-/which-5.0.0.tgz#d93f2d93f79834d4363c7d0c23e00d07c466c8d6"
   integrity sha512-JEdGzHwwkrbWoGOlIHqQ5gtprKGOenpDHpxE9zVR1bWbOtYRyPPHMe9FaP6x61CmNaTThSkb0DAJte5jD+DmzQ==

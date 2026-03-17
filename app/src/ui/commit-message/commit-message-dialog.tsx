@@ -129,6 +129,12 @@ interface ICommitMessageDialogProps {
    */
   readonly showAllowEmptyCommitOption?: boolean
 
+  /**
+   * Whether or not the app should use multilingual support in Copilot features,
+   *  which allows users to get suggestions in languages other than English.
+   */
+  readonly supportCopilotMultilingual: boolean
+
   /** Callback to set commit options for the given repository */
   readonly onUpdateCommitOptions: (
     repository: Repository,
@@ -210,6 +216,10 @@ export class CommitMessageDialog extends React.Component<
             skipCommitHooks={this.props.skipCommitHooks}
             signOffCommits={this.props.signOffCommits}
             allowEmptyCommit={this.props.allowEmptyCommit}
+            supportCopilotMultilingual={this.props.supportCopilotMultilingual}
+            onCopilotMultiLanguageSupportChanged={
+              this.onCopilotMultiLanguageSupportChanged
+            }
             showAllowEmptyCommitOption={
               this.props.showAllowEmptyCommitOption ?? false
             }
@@ -251,4 +261,6 @@ export class CommitMessageDialog extends React.Component<
       this.props.dispatcher.showCreateForkDialog(this.props.repository)
     }
   }
+  private onCopilotMultiLanguageSupportChanged = (enabled: boolean) =>
+    this.props.dispatcher.setCopilotMultiLanguageSupport(enabled)
 }

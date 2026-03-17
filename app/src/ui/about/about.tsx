@@ -154,6 +154,7 @@ export class About extends React.Component<IAboutProps> {
           )}
           <Row>
             <LinkButton
+              className="brand"
               uri={t(
                 'url.unofficial-github-desktop-wiki',
                 'https://github.com/yasuking0304/desktop/wiki'

@@ -2763,6 +2763,10 @@ export class Dispatcher {
     this.appStore._setCommitSpellcheckEnabled(commitSpellcheckEnabled)
   }
 
+  public setCopilotMultiLanguageSupport(copilotMultiLanguageSupport: boolean) {
+    this.appStore._setCopilotMultiLanguageSupport(copilotMultiLanguageSupport)
+  }
+
   public setUseWindowsOpenSSH(useWindowsOpenSSH: boolean) {
     this.appStore._setUseWindowsOpenSSH(useWindowsOpenSSH)
   }
