@@ -12,12 +12,24 @@ const options: SpawnSyncOptions = {
   cwd: root,
   stdio: 'inherit',
 }
-
+/** Check if the caller has set the OFFLINe environment variable */
+function isOffline() {
+  return process.env.OFFLINE === '1'
+}
 const captureOutputOptions: SpawnSyncOptions = {
   cwd: root,
   encoding: 'utf8',
 }
+/** Format the arguments to ensure these work offline */
+function getYarnArgs(baseArgs: Array<string>): Array<string> {
+  const args = baseArgs
 
+  if (isOffline()) {
+    args.splice(1, 0, '--offline')
+  }
+
+  return args
+}
 // Some Windows CI runners do not expose an `npx` executable on PATH, so
 // invoke the locally installed Playwright CLI through the current Node binary.
 // Resolve from the exported package root since `playwright/cli` is not exported.
