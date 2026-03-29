@@ -2763,8 +2763,16 @@ export class Dispatcher {
     this.appStore._setCommitSpellcheckEnabled(commitSpellcheckEnabled)
   }
 
-  public setCopilotMultiLanguageSupport(copilotMultiLanguageSupport: boolean) {
-    this.appStore._setCopilotMultiLanguageSupport(copilotMultiLanguageSupport)
+  public setCopilotMultiLingualSupport(copilotMultiLingualSupport: boolean) {
+    this.appStore._setCopilotMultiLingualSupport(copilotMultiLingualSupport)
+  }
+
+  public setCopilotConventionalCommitsFormat(
+    copilotConventionalCommitsFormat: boolean
+  ) {
+    this.appStore._setCopilotConventionalCommitsFormat(
+      copilotConventionalCommitsFormat
+    )
   }
 
   public setUseWindowsOpenSSH(useWindowsOpenSSH: boolean) {

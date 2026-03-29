@@ -255,7 +255,8 @@ interface IFilterChangesListProps {
     options: Partial<CommitOptions>
   ) => void
 
-  readonly supportCopilotMultilingual: boolean
+  readonly supportCopilotMultiLingual: boolean
+  readonly copilotConventionalCommitsFormat: boolean
 }
 
 interface IFilterChangesListState {
@@ -1074,8 +1075,11 @@ export class FilterChangesList extends React.Component<
         onShowPopup={this.onShowPopup}
         onShowFoldout={this.onShowFoldout}
         onCommitSpellcheckEnabledChanged={this.onCommitSpellcheckEnabledChanged}
-        onCopilotMultiLanguageSupportChanged={
-          this.onCopilotMultiLanguageSupportChanged
+        onCopilotMultiLingualSupportChanged={
+          this.onCopilotMultiLingualSupportChanged
+        }
+        onCopilotConventionalCommitsFormatChanged={
+          this.onCopilotConventionalCommitsFormatChanged
         }
         onStopAmending={this.onStopAmending}
         onShowCreateForkDialog={this.onShowCreateForkDialog}
@@ -1088,7 +1092,10 @@ export class FilterChangesList extends React.Component<
         signOffCommits={this.props.signOffCommits}
         allowEmptyCommit={this.props.allowEmptyCommit}
         showAllowEmptyCommitOption={true}
-        supportCopilotMultilingual={this.props.supportCopilotMultilingual}
+        supportCopilotMultiLingual={this.props.supportCopilotMultiLingual}
+        copilotConventionalCommitsFormat={
+          this.props.copilotConventionalCommitsFormat
+        }
         onUpdateCommitOptions={this.props.onUpdateCommitOptions}
       />
     )
@@ -1148,8 +1155,11 @@ export class FilterChangesList extends React.Component<
   private onCommitSpellcheckEnabledChanged = (enabled: boolean) =>
     this.props.dispatcher.setCommitSpellcheckEnabled(enabled)
 
-  private onCopilotMultiLanguageSupportChanged = (enabled: boolean) =>
-    this.props.dispatcher.setCopilotMultiLanguageSupport(enabled)
+  private onCopilotMultiLingualSupportChanged = (enabled: boolean) =>
+    this.props.dispatcher.setCopilotMultiLingualSupport(enabled)
+
+  private onCopilotConventionalCommitsFormatChanged = (enabled: boolean) =>
+    this.props.dispatcher.setCopilotConventionalCommitsFormat(enabled)
 
   private onStopAmending = () =>
     this.props.dispatcher.stopAmendingRepository(this.props.repository)

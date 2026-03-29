@@ -9,6 +9,7 @@
     "check-out-the-beta-channel-3": " をご覧ください",
     "checking-for-updates": "更新の確認…",
     "click-here-for-update-information": "更新情報はこちらをクリック",
+    "conventional-commits": "Conventional Commits",
     "could-not-determine-the-last-time-update-check": "更新チェックが最後に実行された時刻を特定できませんでした。古いバージョンを実行している可能性があります。手動でアップデートを確認し、問題が解決しない場合は GitHub サポートにお問い合わせください。",
     "downloading-updates": "更新プログラムのダウンロード…",
     "license-and-open-source-notices": "ライセンスおよびオープンソースの通知",
@@ -396,6 +397,8 @@
     "committing": "コミット中",
     "committing-changes": "変更をコミットしています…",
     "configure-commit-options": "コミットオプションの設定",
+    "conventional-commits-support": "CopilotでConventional Commits形式出力",
+    "conventional-commits-support-darwin": "CopilotでConventional Commits形式出力",
     "description-field": "説明フィールド",
     "disable-commit-spellcheck": "コミットスペルチェックを無効にする",
     "disable-commit-spellcheck-darwin": "コミットスペルチェックを無効にする",
@@ -2017,6 +2020,7 @@
     "would-you-like-to-update": "予期された URL を使用するようにリモートを更新しますか?"
   },
   "url": {
+    "conventional-commits-uri": "https://www.conventionalcommits.org/ja",
     "creativecommons_org_licenses": "https://creativecommons.jp/licenses/",
     "git-scm-com-docs-gitignore": "https://git-scm.com/docs/gitignore",
     "github-desktop-issue": "https://github.com/yasuking0304/desktop/issues/new/choose",

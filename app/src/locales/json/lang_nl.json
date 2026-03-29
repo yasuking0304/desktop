@@ -9,6 +9,7 @@
     "check-out-the-beta-channel-3": " ",
     "checking-for-updates": "Checking for updates…",
     "click-here-for-update-information": "Click here for Update information",
+    "conventional-commits": "Conventionele Commits",
     "could-not-determine-the-last-time-update-check": "Couldn't determine the last time an update check was performed. You may be running an old version. Please try manually checking for updates and contact GitHub Support if the problem persists",
     "downloading-updates": "Downloading update…",
     "license-and-open-source-notices": "License and Open Source Notices",
@@ -396,6 +397,8 @@
     "committing": "Committing",
     "committing-changes": "Committing changes…",
     "configure-commit-options": "Configure commit options",
+    "conventional-commits-support": "Copilot generated in Conventionele Commits format",
+    "conventional-commits-support-darwin": "Copilot generated in Conventionele Commits format",
     "description-field": "Description",
     "disable-commit-spellcheck": "Disable commit spellcheck",
     "disable-commit-spellcheck-darwin": "Disable Commit Spellcheck",
@@ -2017,6 +2020,7 @@
     "would-you-like-to-update": "Would you like to update the remote to use the expected URL?"
   },
   "url": {
+    "conventional-commits-uri": "https://www.conventionalcommits.org/nl",
     "creativecommons_org_licenses": "https://creativecommons.org/licenses/by/4.0/",
     "git-scm-com-docs-gitignore": "https://git-scm.com/docs/gitignore",
     "github-desktop-issue": "https://github.com/yasuking0304/desktop/issues/new/choose",

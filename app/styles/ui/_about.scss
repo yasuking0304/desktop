@@ -37,6 +37,15 @@ dialog#about {
       margin-top: var(--spacing);
     }
 
+    p.conventional-commits {
+      .link-button-component {
+        padding: 3px;
+      }
+    }
+    .conventional-commits-container {
+      margin-top: var(--spacing);
+    }
+
     .unofficial-build {
       margin-top: var(--spacing);
     }

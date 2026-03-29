@@ -9,6 +9,7 @@
     "check-out-the-beta-channel-3": "을 참조하십시오",
     "checking-for-updates": "업데이트 확인…",
     "click-here-for-update-information": "여기를 클릭하여 업데이트 정보를 확인하세요.",
+    "conventional-commits": "Conventional Commits",
     "could-not-determine-the-last-time-update-check": "업데이트 확인이 마지막으로 실행된 시간을 확인할 수 없습니다. 이전 버전을 실행 중일 수 있습니다. 수동으로 업데이트를 확인하고 문제가 해결되지 않으면 GitHub 지원팀에 문의하세요.",
     "downloading-updates": "업데이트 다운로드…",
     "license-and-open-source-notices": "라이센스 및 오픈 소스 알림",
@@ -396,6 +397,8 @@
     "committing": "커밋 중",
     "committing-changes": "변경 커밋 중…",
     "configure-commit-options": "커밋 옵션 설정",
+    "conventional-commits-support": "Copilot에서 Conventional Commits 형식으로 출력",
+    "conventional-commits-support-darwin": "Copilot에서 Conventional Commits 형식으로 출력",
     "description-field": "설명 필드",
     "disable-commit-spellcheck": "커밋 맞춤법 검사 사용 안함",
     "disable-commit-spellcheck-darwin": "커밋 맞춤법 검사 사용 안함",
@@ -2017,6 +2020,7 @@
     "would-you-like-to-update": "예상된 URL을 사용하도록 원격을 업데이트하시겠습니까?"
   },
   "url": {
+    "conventional-commits-uri": "https://www.conventionalcommits.org/ko",
     "creativecommons_org_licenses": "https://ccl.cckorea.org/about/",
     "git-scm-com-docs-gitignore": "https://git-scm.com/docs/gitignore",
     "github-desktop-issue": "https://github.com/yasuking0304/desktop/issues/new/choose",

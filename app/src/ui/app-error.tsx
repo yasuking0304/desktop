@@ -150,7 +150,7 @@ export class AppError extends React.Component<IAppErrorProps, IAppErrorState> {
         <>
           <p>{convertMessage}</p>
           <p>
-            <LinkButton uri={copilotPlansURL} className="brand">
+            <LinkButton uri={copilotPlansURL} className="brand increase-limit">
               {t(
                 'app-error.upgrade-to-increase-limit',
                 'You can upgrade to increase your spending limit'
