@@ -1185,15 +1185,13 @@ export class CommitMessage extends React.Component<
       items.push({
         type: 'checkbox',
         checked: this.props.copilotConventionalCommitsFormat,
-        label: __DARWIN__
-          ? t(
-              'commit-message.conventional-commits-support-darwin',
-              "Copilot generated in Conventional Commits format"
-            )
-          : t(
-              'commit-message.conventional-commits-support',
-              'Copilot generated in Conventional Commits format'
-            ),
+        label: t(
+          'commit-message.copilot-generated-in-conventional-commits-format',
+          `Copilot generated in Conventional Commits format.
+           However, please exclude the following from
+           "translation:", "fix:", "feat:", "BREAKING CHANGE:", "build:",
+           "chore:", "ci:", "docs:", "style:", "refactor:", "perf:", and "test:".`
+        ),
         action: () => {
           this.props.onCopilotConventionalCommitsFormatChanged(
             !this.props.copilotConventionalCommitsFormat
