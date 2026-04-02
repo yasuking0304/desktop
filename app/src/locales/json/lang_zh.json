@@ -1364,7 +1364,7 @@
     "publish-repository": "发布存储库",
     "publish-your-repository": "发布你的分支",
     "publish-your-repository-to-github": "将您的存储库发布到 GitHub",
-    "pull": "拉动 {{0}}",
+    "pull": "拉取 {{0}}",
     "pull-number-commits-from-the-remote": "从 {{2}} 远程拉取 {{0}} {{1}}",
     "push": "推送 {{0}}",
     "push-to-the-remote": "将 {{0}} 推送至远程 {{1}}",
@@ -1605,7 +1605,7 @@
     "publish-branch-to-remote": "将此分支发布到 远程",
     "publish-repository": "发布存储库",
     "publish-this-repository": "将此存储库发布到 GitHub",
-    "pull": "拉动 {{0}}",
+    "pull": "拉取 {{0}}",
     "pull-with-rebase": "变基后拉至 {{0}}",
     "push": "推送 {{0}}",
     "rebase-in-progress": "正在进行变基"
