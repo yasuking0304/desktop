@@ -5749,7 +5749,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
             )
           : '') +
         (this.copilotConventionalCommitsFormat
-          ? ' Format the commit message according to Conventional Commits specification. '
+          ? ' Format the commit message according to Conventional Commits specification. However, please exclude the following from translation: fix:, feat: BREAKING CHANGE:, build:, chore:, ci:, docs:, style:, refactor:, perf:, and test:.'
           : '') +
         ' ' +
         diff
