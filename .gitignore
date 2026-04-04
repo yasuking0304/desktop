@@ -21,3 +21,4 @@ junit*.xml
 tslint-rules/
 app/src/locales/json/lang_*_old.json
 script/GitHub-Desktop.yml
+playwright-videos/

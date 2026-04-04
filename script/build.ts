@@ -58,6 +58,7 @@ import assert from 'assert'
 const isPublishableBuild = isPublishable()
 const isNonProductionRelease = getChannel() !== 'production'
 const isDevelopmentBuild = getChannel() === 'development'
+const shouldSkipPackaging = process.env.DESKTOP_SKIP_PACKAGE === '1'
 
 const projectRoot = path.join(__dirname, '..')
 const entitlementsSuffix = isDevelopmentBuild ? '-dev' : ''
@@ -113,6 +114,11 @@ verifyInjectedSassVariables(outRoot)
     })
   })
   .then(() => {
+    if (shouldSkipPackaging) {
+      console.log('Skipping packaging…')
+      return [outRoot]
+    }
+
     console.log('Packaging…')
     return packageApp()
   })

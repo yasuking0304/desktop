@@ -154,6 +154,7 @@ export class About extends React.Component<IAboutProps> {
           )}
           <Row>
             <LinkButton
+              className="brand"
               uri={t(
                 'url.unofficial-github-desktop-wiki',
                 'https://github.com/yasuking0304/desktop/wiki'
@@ -378,12 +379,22 @@ export class About extends React.Component<IAboutProps> {
                 )}
               </LinkButton>
             </p>
-            <p className="terms-and-license">
+            <p className="no-padding terms-and-license">
               <LinkButton uri="https://gh.io/copilot-for-desktop-transparency">
                 {t(
                   'about.responsible-use-of-copilot',
                   'Responsible use of Copilot in GitHub Desktop'
                 )}
+              </LinkButton>
+            </p>
+            <p className="no-padding conventional-commits">
+              <LinkButton
+                uri={t(
+                  'url.conventional-commits-uri',
+                  'https://www.conventionalcommits.org'
+                )}
+              >
+                {t('about.conventional-commits', 'Conventional Commits')}
               </LinkButton>
             </p>
           </div>

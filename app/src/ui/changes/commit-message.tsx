@@ -193,6 +193,8 @@ interface ICommitMessageProps {
   readonly onShowPopup: (popup: Popup) => void
   readonly onShowFoldout: (foldout: Foldout) => void
   readonly onCommitSpellcheckEnabledChanged: (enabled: boolean) => void
+  readonly onCopilotMultiLingualSupportChanged: (enabled: boolean) => void
+  readonly onCopilotConventionalCommitsFormatChanged: (enabled: boolean) => void
   readonly onStopAmending: () => void
   readonly onShowCreateForkDialog: () => void
   readonly onFilesToCommitNotVisible?: (onCommitAnyway: () => {}) => void
@@ -241,6 +243,16 @@ interface ICommitMessageProps {
     repository: Repository,
     options: Partial<CommitOptions>
   ) => void
+
+  /**
+   * Whether or not the app should use multilingual support in Copilot features,
+   *  which allows users to get suggestions in languages other than English.
+   */
+  readonly supportCopilotMultiLingual: boolean
+  /** Whether or not the app should use conventional commits
+   *  support in Copilot features
+   */
+  readonly copilotConventionalCommitsFormat: boolean
 }
 
 interface ICommitMessageState {
@@ -1148,6 +1160,47 @@ export class CommitMessage extends React.Component<
       })
     }
 
+    if (this.props.onGenerateCommitMessage) {
+      items.push({
+        type: 'checkbox',
+        checked: this.props.supportCopilotMultiLingual,
+        label: __DARWIN__
+          ? t(
+              'commit-message.multilingual-support-darwin',
+              "Copilot's multilingual support"
+            )
+          : t(
+              'commit-message.multilingual-support',
+              "Copilot's multilingual Support"
+            ),
+        action: () => {
+          this.props.onCopilotMultiLingualSupportChanged(
+            !this.props.supportCopilotMultiLingual
+          )
+        },
+      })
+    }
+
+    if (this.props.onGenerateCommitMessage) {
+      items.push({
+        type: 'checkbox',
+        checked: this.props.copilotConventionalCommitsFormat,
+        label: __DARWIN__
+          ? t(
+              'commit-message.conventional-commits-support-darwin',
+              'Copilot generated in Conventional Commits format'
+            )
+          : t(
+              'commit-message.conventional-commits-support',
+              'Copilot generated in Conventional Commits format'
+            ),
+        action: () => {
+          this.props.onCopilotConventionalCommitsFormatChanged(
+            !this.props.copilotConventionalCommitsFormat
+          )
+        },
+      })
+    }
     showContextualMenu(items)
   }
 

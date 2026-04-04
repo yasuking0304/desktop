@@ -12,12 +12,14 @@ const options: SpawnSyncOptions = {
   cwd: root,
   stdio: 'inherit',
 }
-
 /** Check if the caller has set the OFFLINe environment variable */
 function isOffline() {
   return process.env.OFFLINE === '1'
 }
-
+const captureOutputOptions: SpawnSyncOptions = {
+  cwd: root,
+  encoding: 'utf8',
+}
 /** Format the arguments to ensure these work offline */
 function getYarnArgs(baseArgs: Array<string>): Array<string> {
   const args = baseArgs
@@ -28,6 +30,14 @@ function getYarnArgs(baseArgs: Array<string>): Array<string> {
 
   return args
 }
+// Some Windows CI runners do not expose an `npx` executable on PATH, so
+// invoke the locally installed Playwright CLI through the current Node binary.
+// Resolve from the exported package root since `playwright/cli` is not exported.
+const playwrightPackagePath = require.resolve('playwright/package.json')
+const playwrightCliPath = Path.join(
+  Path.dirname(playwrightPackagePath),
+  'cli.js'
+)
 
 function findYarnVersion(callback: (path: string) => void) {
   glob('vendor/yarn-*.js', (error, files) => {
@@ -76,5 +86,30 @@ findYarnVersion(path => {
     if (result.status !== 0) {
       process.exit(result.status || 1)
     }
+  }
+
+  // Capture output here so CI failures include the Playwright-specific error.
+  result = spawnSync(
+    process.execPath,
+    [playwrightCliPath, 'install', 'ffmpeg'],
+    captureOutputOptions
+  )
+
+  if (result.status !== 0) {
+    console.error(
+      'Error: failed to install Playwright ffmpeg (video recording may not work)',
+      '\nplatform:',
+      process.platform,
+      '\nstatus:',
+      result.status,
+      '\nsignal:',
+      result.signal,
+      '\nerror:',
+      result.error,
+      '\nstdout:',
+      result.stdout,
+      '\nstderr:',
+      result.stderr
+    )
   }
 })

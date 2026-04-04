@@ -254,6 +254,9 @@ interface IFilterChangesListProps {
     repository: Repository,
     options: Partial<CommitOptions>
   ) => void
+
+  readonly supportCopilotMultiLingual: boolean
+  readonly copilotConventionalCommitsFormat: boolean
 }
 
 interface IFilterChangesListState {
@@ -1072,6 +1075,12 @@ export class FilterChangesList extends React.Component<
         onShowPopup={this.onShowPopup}
         onShowFoldout={this.onShowFoldout}
         onCommitSpellcheckEnabledChanged={this.onCommitSpellcheckEnabledChanged}
+        onCopilotMultiLingualSupportChanged={
+          this.onCopilotMultiLingualSupportChanged
+        }
+        onCopilotConventionalCommitsFormatChanged={
+          this.onCopilotConventionalCommitsFormatChanged
+        }
         onStopAmending={this.onStopAmending}
         onShowCreateForkDialog={this.onShowCreateForkDialog}
         onFilesToCommitNotVisible={this.onFilesToCommitNotVisible}
@@ -1083,6 +1092,10 @@ export class FilterChangesList extends React.Component<
         signOffCommits={this.props.signOffCommits}
         allowEmptyCommit={this.props.allowEmptyCommit}
         showAllowEmptyCommitOption={true}
+        supportCopilotMultiLingual={this.props.supportCopilotMultiLingual}
+        copilotConventionalCommitsFormat={
+          this.props.copilotConventionalCommitsFormat
+        }
         onUpdateCommitOptions={this.props.onUpdateCommitOptions}
       />
     )
@@ -1141,6 +1154,12 @@ export class FilterChangesList extends React.Component<
 
   private onCommitSpellcheckEnabledChanged = (enabled: boolean) =>
     this.props.dispatcher.setCommitSpellcheckEnabled(enabled)
+
+  private onCopilotMultiLingualSupportChanged = (enabled: boolean) =>
+    this.props.dispatcher.setCopilotMultiLingualSupport(enabled)
+
+  private onCopilotConventionalCommitsFormatChanged = (enabled: boolean) =>
+    this.props.dispatcher.setCopilotConventionalCommitsFormat(enabled)
 
   private onStopAmending = () =>
     this.props.dispatcher.stopAmendingRepository(this.props.repository)

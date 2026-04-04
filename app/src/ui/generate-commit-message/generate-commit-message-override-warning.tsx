@@ -80,7 +80,10 @@ export class GenerateCommitMessageOverrideWarning extends React.Component<
           ) : null}
           <Row>
             <Checkbox
-              label="Do not show this message again"
+              label={t(
+                'common.do-not-show-message-again',
+                'Do not show this message again'
+              )}
               value={
                 this.state.confirmCommitMessageOverride
                   ? CheckboxValue.Off

@@ -59,6 +59,8 @@ interface IChangesSidebarProps {
   readonly hookProgress: HookProgress | null
   readonly onShowCommitProgress: (() => void) | undefined
   readonly isGeneratingCommitMessage: boolean
+  readonly supportCopilotMultiLingual: boolean
+  readonly copilotConventionalCommitsFormat: boolean
   readonly shouldShowGenerateCommitMessageCallOut: boolean
   readonly commitToAmend: Commit | null
   readonly isPushPullFetchInProgress: boolean
@@ -488,6 +490,10 @@ export class ChangesSidebar extends React.Component<IChangesSidebarProps, {}> {
           skipCommitHooks={this.props.skipCommitHooks}
           signOffCommits={this.props.signOffCommits}
           allowEmptyCommit={this.props.allowEmptyCommit}
+          supportCopilotMultiLingual={this.props.supportCopilotMultiLingual}
+          copilotConventionalCommitsFormat={
+            this.props.copilotConventionalCommitsFormat
+          }
           onUpdateCommitOptions={this.props.onUpdateCommitOptions}
         />
         {this.renderUndoCommit(rebaseConflictState)}

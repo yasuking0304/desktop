@@ -81,25 +81,6 @@ export class Git extends React.Component<IGitProps> {
   private renderHooksSettings() {
     return (
       <>
-        <div className="hooks-warning">
-          {t(
-            'git.github-desktop-hook-support-is-experime-1',
-            `GitHub Desktop hook support is experimental and currently only
-          supports hooks related to committing. Please `
-          )}
-          <LinkButton
-            uri={t(
-              'url.github-desktop-issue',
-              'https://github.com/yasuking0304/desktop/issues/new/choose'
-            )}
-          >
-            {t('git.github-desktop-hook-support-is-experime-2', 'let us know')}
-          </LinkButton>
-          {t(
-            'git.github-desktop-hook-support-is-experime-3',
-            ' if you encounter any issues or have feedback!'
-          )}
-        </div>
         <Checkbox
           label={t(
             'git.load-git-hook-env-from-shell',
@@ -111,7 +92,7 @@ export class Git extends React.Component<IGitProps> {
           }
           onChange={this.onEnableGitHookEnvChanged}
         />
-        <p className="git-hooks-env-description">
+        <p id="git-hooks-env-description" className="git-hooks-env-description">
           {t(
             'git.when-enabled-attempt-to-load-env-variables',
             `When enabled, GitHub Desktop will attempt to load environment
@@ -160,7 +141,10 @@ export class Git extends React.Component<IGitProps> {
               }
             />
 
-            <div className="git-hooks-cache-description">
+            <div
+              id="git-hooks-cache-description"
+              className="git-settings-description"
+            >
               {t(
                 'git.cache-hook-env-description',
                 `Cache hook environment variables to improve performance. Disable
@@ -182,10 +166,7 @@ export class Git extends React.Component<IGitProps> {
         >
           <span>{t('git.autor', 'Author')}</span>
           <span>{t('git.default-branch', 'Default branch')}</span>
-          <span>
-            {t('git.hooks', 'Hooks')}{' '}
-            <span className="beta-pill">{t('git.beta', 'Beta')}</span>
-          </span>
+          <span>{t('git.hooks', 'Hooks')}</span>
           <span>{t('git.other-settings', 'Other Settings')}</span>
         </TabBar>
         <div className="git-preferences-content">{this.renderCurrentTab()}</div>

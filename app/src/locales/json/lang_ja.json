@@ -9,6 +9,7 @@
     "check-out-the-beta-channel-3": " をご覧ください",
     "checking-for-updates": "更新の確認…",
     "click-here-for-update-information": "更新情報はこちらをクリック",
+    "conventional-commits": "Conventional Commits",
     "could-not-determine-the-last-time-update-check": "更新チェックが最後に実行された時刻を特定できませんでした。古いバージョンを実行している可能性があります。手動でアップデートを確認し、問題が解決しない場合は GitHub サポートにお問い合わせください。",
     "downloading-updates": "更新プログラムのダウンロード…",
     "license-and-open-source-notices": "ライセンスおよびオープンソースの通知",
@@ -80,20 +81,24 @@
   },
   "app-error": {
     "clone-failed": "クローンの失敗",
+    "copilot-exceeded-its-quota": "Copilot の利用限度数を超過しました",
     "failed-to-push": "プッシュに失敗しました",
-    "file-size-limit-exceeded": "ファイルサイズの制限を超えました",
-    "files-that-exceed": "制限を超えたファイル",
+    "file-size-limit-exceeded": "ファイルサイズ制限を超過しました",
+    "files-that-exceed": "制限を超過したファイル",
     "for-more-information-1": "GitHubで大きなファイルを管理する方法の詳細については、",
     "for-more-information-2": " を参照してください。",
     "open-options": "オプションを開く",
     "open-settings-darwin": "オプションを開く",
+    "payment-required": "続けるために課金を行うか、月末のクォータリセットを待つ必要があります。",
     "retry-clone": "クローンの再試行",
     "retry-clone-darwin": "クローンの再試行",
+    "upgrade-to-increase-limit": "アップグレードすることで、利用限度額を増やすことができます",
     "would-you-like-1": " ",
     "would-you-like-2": " のクローンを再試行しますか?"
   },
   "app-store": {
     "checking-out": "チェックアウト",
+    "copilot-multilingual-prompt": "日本語でお願いします。 ",
     "error": {
       "pruner-is-already-active": "A branch pruner is already active and cannot start updating on {{0}}",
       "should-only-have-on-background-fetcher-active": "We should only have on background fetcher active at once, but we're trying to start background fetching on {{0}} while another background fetcher is still active!"
@@ -392,6 +397,8 @@
     "committing": "コミット中",
     "committing-changes": "変更をコミットしています…",
     "configure-commit-options": "コミットオプションの設定",
+    "conventional-commits-support": "CopilotでConventional Commits形式出力",
+    "conventional-commits-support-darwin": "CopilotでConventional Commits形式出力",
     "description-field": "説明フィールド",
     "disable-commit-spellcheck": "コミットスペルチェックを無効にする",
     "disable-commit-spellcheck-darwin": "コミットスペルチェックを無効にする",
@@ -406,6 +413,8 @@
     "generating-commit-details": "コミットの詳細を生成中…",
     "link-create-a-fork": "フォークの作成",
     "link-switch-branches": "ブランチの切り替え",
+    "multilingual-support": "Copilotの日本語サポート",
+    "multilingual-support-darwin": "Copilotの日本語サポート",
     "must-be-selected": "。コミットメッセージを生成するにはファイルを選択する必要があります。",
     "please-information-description-field": "説明フィールドに追加情報を入力します。",
     "protected-branch-1": " ",
@@ -565,8 +574,7 @@
     "checking-out-a-commit": "コミットをチェックアウトすると分離された HEAD が作成され、どのブランチにも存在しなくなります。 このコミットをチェックアウトしてもよろしいですか?",
     "checkout": "チェックアウト",
     "checkout-commit": "コミットをチェックアウトしますか?",
-    "checkout-commit-darwin": "コミットをチェックアウトしますか?",
-    "do-not-show-this-messaeg-again": "今後このメッセージを表示しない"
+    "checkout-commit-darwin": "コミットをチェックアウトしますか?"
   },
   "confirm-discard-stash": {
     "are-you-sure-you-want-to-discard": "これらの退避された変更を破棄してもよろしいですか?",
@@ -949,7 +957,6 @@
   },
   "git": {
     "autor": "アカウント",
-    "beta": "Beta",
     "cache-git-hook-env-variables": "Gitフックの環境変数をキャッシュする",
     "cache-hook-env-description": "パフォーマンスを向上させるために、フックの環境変数をキャッシュします。フックが頻繁に変更される環境変数に依存している場合は無効にしてください。",
     "default-branch": "デフォルトブランチ",
@@ -963,9 +970,6 @@
     "gitHub-default-branch-description-2": "です。 ",
     "gitHub-default-branch-description-3": " ワークフローが異なったり統合する過程で ",
     "gitHub-default-branch-description-4": " という過去のデフォルトのブランチ名が依然として必要なため、これを変更することが必要になる場合があります。",
-    "github-desktop-hook-support-is-experime-1": "GitHub Desktop フックのサポートは試験段階であり、現在はコミット関連のフックのみをサポートしています。",
-    "github-desktop-hook-support-is-experime-2": "問題が発生したり、フィードバックがある場合はお知らせください",
-    "github-desktop-hook-support-is-experime-3": "。",
     "hooks": "フック",
     "load-git-hook-env-from-shell": "シェルからGitフック環境変数を読み込む",
     "other-settings": "その他",
@@ -2012,6 +2016,7 @@
     "would-you-like-to-update": "予期された URL を使用するようにリモートを更新しますか?"
   },
   "url": {
+    "conventional-commits-uri": "https://www.conventionalcommits.org/ja",
     "creativecommons_org_licenses": "https://creativecommons.jp/licenses/",
     "git-scm-com-docs-gitignore": "https://git-scm.com/docs/gitignore",
     "github-desktop-issue": "https://github.com/yasuking0304/desktop/issues/new/choose",

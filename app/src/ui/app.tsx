@@ -1481,6 +1481,8 @@ export class App extends React.Component<IAppProps, IAppState> {
             dispatcher={this.props.dispatcher}
             repository={popup.repository}
             branch={popup.branch}
+            accounts={this.state.accounts}
+            cachedRepoRulesets={this.state.cachedRepoRulesets}
             onDismissed={onPopupDismissedFn}
           />
         )
@@ -2190,6 +2192,10 @@ export class App extends React.Component<IAppProps, IAppState> {
             skipCommitHooks={repositoryState.skipCommitHooks}
             signOffCommits={repositoryState.signOffCommits}
             allowEmptyCommit={repositoryState.allowEmptyCommit}
+            supportCopilotMultiLingual={this.state.supportCopilotMultiLingual}
+            copilotConventionalCommitsFormat={
+              this.state.copilotConventionalCommitsFormat
+            }
             onUpdateCommitOptions={this.onUpdateCommitOptions}
           />
         )
@@ -3515,6 +3521,10 @@ export class App extends React.Component<IAppProps, IAppState> {
           signOffCommits={selectedState.state.signOffCommits}
           allowEmptyCommit={selectedState.state.allowEmptyCommit}
           onUpdateCommitOptions={this.onUpdateCommitOptions}
+          supportCopilotMultiLingual={this.state.supportCopilotMultiLingual}
+          copilotConventionalCommitsFormat={
+            this.state.copilotConventionalCommitsFormat
+          }
         />
       )
     } else if (selectedState.type === SelectionType.CloningRepository) {
