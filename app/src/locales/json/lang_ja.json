@@ -431,10 +431,17 @@
     "will-modify-your-most-recent-commit-4": " します。"
   },
   "commit-message-avatar": {
+    "committing-as": "{{0}} でコミットします",
+    "email": "メールアドレス: {{0}}",
+    "for-your-repository": " ",
+    "git-settings": "{{0}} > Git > アカウント",
     "ignore": "無視",
     "learn-more": "詳細情報",
     "learn-more-about": "詳しくはコミットユーザーについてをご覧ください",
-    "repository-settings": "リポジトリ設定",
+    "open-git-author": "アカウントの設定",
+    "open-git-settings": "リポジトリの設定",
+    "open-git-settings-darwin": "リポジトリの設定",
+    "repository-settings": "リポジトリの設定",
     "update-email": "メールの更新",
     "update-email-1": "グローバル Git 設定 (",
     "update-email-2": ")",
@@ -442,7 +449,11 @@
     "you-can-also-choose-an-email-1": " ",
     "you-can-also-choose-an-email-2": "から、このリポジトリのローカルなメールアドレスを選択することも可能です。",
     "you-can-choose-an-email-1": " ",
-    "you-can-choose-an-email-2": "から、このリポジトリのローカルなメールアドレスを選択可能です。"
+    "you-can-choose-an-email-2": "から、このリポジトリのローカルなメールアドレスを選択可能です。",
+    "you-can-set-email-local-1": " ",
+    "you-can-set-email-local-2": "リポジトリの設定",
+    "you-can-set-email-local-3": "で、このリポジトリのローカルなGit設定を更新することができます。",
+    "you-can-update-your-git-config": "{{2}}で{{0}}のGit設定{{1}}を更新することができます。"
   },
   "commit-summary": {
     "tag": "タグ",
@@ -479,11 +490,13 @@
     "files": "ファイル",
     "finish": "完了",
     "github-desktop": "GitHub Desktop",
+    "global": "グローバル",
     "history": "コミット履歴",
     "i-understand": "了解しました",
     "ignore": "無視",
     "install-and-restart": "インストールして再起動",
     "install-and-restart-darwin": "インストールして再起動",
+    "local": "ローカル",
     "local-path": "ローカルパス",
     "local-path-darwin": "ローカルパス",
     "multiple-commits": "個のコミット",
@@ -956,7 +969,7 @@
     "we-were-unable-to-authenticate-6": "、もう一度やり直してください。"
   },
   "git": {
-    "autor": "アカウント",
+    "author": "アカウント",
     "cache-git-hook-env-variables": "Gitフックの環境変数をキャッシュする",
     "cache-hook-env-description": "パフォーマンスを向上させるために、フックの環境変数をキャッシュします。フックが頻繁に変更される環境変数に依存している場合は無効にしてください。",
     "default-branch": "デフォルトブランチ",

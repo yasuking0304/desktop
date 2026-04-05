@@ -431,9 +431,16 @@
     "will-modify-your-most-recent-commit-4": " 합니다."
   },
   "commit-message-avatar": {
+    "committing-as": "Committing as {{0}}",
+    "email": "Email: {{0}}",
+    "for-your-repository": "for your repository",
+    "git-settings": "git {{0}}",
     "ignore": "무시",
     "learn-more": "자세한 정보",
     "learn-more-about": "자세한 내용은 커밋 사용자 소개",
+    "open-git-author": "Open Git Author",
+    "open-git-settings": "Open git settings",
+    "open-git-settings-darwin": "Open Git Settings",
     "repository-settings": "리포지토리 설정",
     "update-email": "메일 업데이트",
     "update-email-1": "전역 Git 설정(",
@@ -442,7 +449,11 @@
     "you-can-also-choose-an-email-1": " ",
     "you-can-also-choose-an-email-2": "에서 이 리포지토리의 로컬 이메일 주소를 선택할 수도 있습니다.",
     "you-can-choose-an-email-1": " ",
-    "you-can-choose-an-email-2": "에서 이 리포지토리의 로컬 이메일 주소를 선택할 수 있습니다."
+    "you-can-choose-an-email-2": "에서 이 리포지토리의 로컬 이메일 주소를 선택할 수 있습니다.",
+    "you-can-set-email-local-1": "You can also set an email local to this repository from the ",
+    "you-can-set-email-local-2": "repository settings",
+    "you-can-set-email-local-3": ".",
+    "you-can-update-your-git-config": "You can update your {{0}} git configuration {{1}} in  your {{2}}."
   },
   "commit-summary": {
     "tag": "태그",
@@ -479,11 +490,13 @@
     "files": "파일",
     "finish": "완료",
     "github-desktop": "GitHub Desktop",
+    "global": "global",
     "history": "커밋 내역",
     "i-understand": "알겠습니다",
     "ignore": "무시",
     "install-and-restart": "설치하고 다시 시작",
     "install-and-restart-darwin": "설치하고 다시 시작",
+    "local": "local",
     "local-path": "로컬 경로",
     "local-path-darwin": "로컬 경로",
     "multiple-commits": "개체 커밋",
@@ -956,7 +969,7 @@
     "we-were-unable-to-authenticate-6": "다시 시도해 주세요."
   },
   "git": {
-    "autor": "계정",
+    "author": "계정",
     "cache-git-hook-env-variables": "Git 후크의 환경 변수 캐싱",
     "cache-hook-env-description": "성능을 향상시키기 위해 후크 환경 변수를 캐시합니다. 후크가 자주 변경되는 환경 변수에 의존하는 경우 비활성화하십시오.",
     "default-branch": "기본 브랜치",

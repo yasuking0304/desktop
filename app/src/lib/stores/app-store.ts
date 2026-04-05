@@ -6026,7 +6026,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
     // choose to store for the --squash merge operation)
     if (commitResult === undefined) {
       log.error(
-        `[_abortSquashMerge] - Could not abort squash merge - commiting squash msg failed`
+        `[_abortSquashMerge] - Could not abort squash merge - committing squash msg failed`
       )
       return
     }

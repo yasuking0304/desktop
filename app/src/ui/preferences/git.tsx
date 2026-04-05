@@ -164,7 +164,7 @@ export class Git extends React.Component<IGitProps> {
           selectedIndex={this.selectedTabIndex}
           onTabClicked={this.onTabClicked}
         >
-          <span>{t('git.autor', 'Author')}</span>
+          <span>{t('git.author', 'Author')}</span>
           <span>{t('git.default-branch', 'Default branch')}</span>
           <span>{t('git.hooks', 'Hooks')}</span>
           <span>{t('git.other-settings', 'Other Settings')}</span>
