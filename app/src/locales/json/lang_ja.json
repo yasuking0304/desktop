@@ -453,7 +453,7 @@
     "you-can-set-email-local-1": " ",
     "you-can-set-email-local-2": "リポジトリの設定",
     "you-can-set-email-local-3": "で、このリポジトリのローカルなGit設定を更新することができます。",
-    "you-can-update-your-git-config": "{{2}}で{{0}}のGit設定{{1}}を更新することができます。"
+    "you-can-update-your-git-config": "{{2}}で、{{0}}なGit設定{{1}}を更新することができます。"
   },
   "commit-summary": {
     "tag": "タグ",
