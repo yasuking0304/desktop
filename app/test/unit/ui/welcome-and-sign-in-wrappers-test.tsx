@@ -85,7 +85,7 @@ describe('welcome and sign-in wrappers', () => {
       </SignIn>
     )
 
-    const input = screen.getByLabelText('Enterprise or AE address')
+    const input = screen.getByLabelText('Enterprise address')
     const continueButton = screen.getByRole('button', { name: 'Continue' })
 
     fireEvent.change(input, {
