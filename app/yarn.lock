@@ -23,7 +23,7 @@
   dependencies:
     regenerator-runtime "^0.14.0"
 
-"@babel/runtime@^7.12.5":
+"@babel/runtime@^7.12.5", "@babel/runtime@^7.23.2":
   version "7.29.2"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.29.2.tgz#9a6e2d05f4b6692e1801cd4fb176ad823930ed5e"
   integrity sha512-JiDShH45zKHWyGe4ZNVRrCjBz8Nh9TMmZG1kh4QTK8hCBTWBi8Da+i7s1fJw7/lYpM4ccepSNfqzZ/QvABBi5g==
@@ -41,6 +41,13 @@
     colorspace "1.1.x"
     enabled "2.0.x"
     kuler "^2.0.0"
+
+"@ericcornelissen/lregexp@^1.0.7":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@ericcornelissen/lregexp/-/lregexp-1.0.8.tgz#fcdc7635138bd8d74f057b4aadd9c1cec070c4ab"
+  integrity sha512-asaQOkMr8CzYVpmCnBvEe8zejcv8Q1+f3Q1qssOF85njH1VTJfSQUYwwClE41SRdvZmN26uL08GuQk04VN2myA==
+  dependencies:
+    is-supported-regexp-flag "^2.0.0"
 
 "@floating-ui/core@^1.6.0":
   version "1.6.9"
@@ -1046,6 +1053,11 @@ is-string@^1.0.7, is-string@^1.1.1:
     call-bound "^1.0.3"
     has-tostringtag "^1.0.2"
 
+is-supported-regexp-flag@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/is-supported-regexp-flag/-/is-supported-regexp-flag-2.0.0.tgz#abd2dd286ba5f24596d68df6dba52c4e199aba08"
+  integrity sha512-8i4+OYUjdUaJ88KAs1WojIThDFjIpeYNrSlYy1g/At2p9YjQ7HEmB1yn60un0jRFjM3TQbKPMAluTPEPncZfqA==
+
 is-symbol@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/is-symbol/-/is-symbol-1.1.1.tgz#f47761279f532e2b05a7024a7506dbbedacd0634"
@@ -1087,6 +1099,11 @@ isexe@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/isexe/-/isexe-3.1.1.tgz#4a407e2bd78ddfb14bea0c27c6f7072dde775f0d"
   integrity sha512-LpB/54B+/2J5hqQ7imZHfdU31OlgQqx7ZicVlkm9kzg9/w8GKLEcFfJl/t7DCEDueOyBAD6zCCwTO6Fzs0NoEQ==
+
+isexe@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/isexe/-/isexe-4.0.0.tgz#48f6576af8e87a18feb796b7ed5e2e5903b43dca"
+  integrity sha512-FFUtZMpoZ8RqHS3XeXEmHWLA4thH+ZxCv2lOiPIn1Xc7CxrqhWzNSDzD+/chS/zbYezmiwWLdQC09JdQKmthOw==
 
 js-tokens@^3.0.0:
   version "3.0.2"
@@ -1771,6 +1788,14 @@ shebang-regex@^1.0.0:
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-1.0.0.tgz#da42f49740c0b42db2ca9728571cb190c98efea3"
   integrity sha1-2kL0l0DAtC2yypcoVxyxkMmO/qM=
 
+shescape@^2.1.6:
+  version "2.1.11"
+  resolved "https://registry.yarnpkg.com/shescape/-/shescape-2.1.11.tgz#d1cec61065248a86ebaeaf75619eb0cb108136b7"
+  integrity sha512-kR+oVEEgfo2TzK6FZAXtZMZ4aaVFuy5WeToxgjh95KPqUOLoFb1M+PYOWrDV7QqfHgdwnBpPBeBbf07sDgyAtA==
+  dependencies:
+    "@ericcornelissen/lregexp" "^1.0.7"
+    which "^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0"
+
 side-channel-list@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/side-channel-list/-/side-channel-list-1.0.0.tgz#10cb5984263115d3b7a0e336591e290a830af8ad"
@@ -2124,6 +2149,13 @@ which@^1.2.9:
   integrity sha512-HxJdYWq1MTIQbJ3nw0cqssHoTNU267KlrDuGZ1WYlxDStUtKUhOaJmh112/TZmHxxUfuJqPXSOm7tDyas0OSIQ==
   dependencies:
     isexe "^2.0.0"
+
+"which@^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0":
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/which/-/which-6.0.1.tgz#021642443a198fb93b784a5606721cb18cfcbfce"
+  integrity sha512-oGLe46MIrCRqX7ytPUf66EAYvdeMIZYn3WaocqqKZAxrBpkqHfL/qvTyJ/bTk5+AqHCjXmrv3CEWgy368zhRUg==
+  dependencies:
+    isexe "^4.0.0"
 
 which@^5.0.0:
   version "5.0.0"

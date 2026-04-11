@@ -396,6 +396,12 @@ export interface IAppState {
 
   /** Whether the changes filter is shown */
   readonly showChangesFilter: boolean
+
+  readonly chatQuotas: number
+
+  readonly autoSuggestQuotas: number
+
+  readonly copilotResetDate: string
 }
 
 export enum FoldoutType {

@@ -295,7 +295,7 @@
       "we-could-not-find-that-repository": "そのリポジトリが見つかりませんでした。ログインしていること、ネットワークにアクセスできること、URL またはリポジトリのエイリアスの綴りが正しいことを確認してください。"
     },
     "render-sign-in": "GitHub.com アカウントにサインインして、リポジトリにアクセスします。",
-    "render-sign-in-enterprise": "職場にGitHub Enterprise または AEアカウントがある場合は、そちらでサインインしてリポジトリにアクセスしてください。",
+    "render-sign-in-enterprise": "職場にGitHub Enterpriseアカウントがある場合は、そちらでサインインしてリポジトリにアクセスしてください。",
     "select": "選択"
   },
   "cloneable-repository-filter-list": {
@@ -852,7 +852,7 @@
     "unable-to-open-external-editor-darwin": "外部エディターを開けません"
   },
   "enterprise-server-entry": {
-    "enterprise-or-ae-address": "Enterprise または AEアドレス"
+    "enterprise-or-ae-address": "Enterprise アドレス"
   },
   "expandable-commit-summary": {
     "added-lines": "{{0}}行追加",
@@ -972,6 +972,8 @@
     "author": "アカウント",
     "cache-git-hook-env-variables": "Gitフックの環境変数をキャッシュする",
     "cache-hook-env-description": "パフォーマンスを向上させるために、フックの環境変数をキャッシュします。フックが頻繁に変更される環境変数に依存している場合は無効にしてください。",
+    "copilot-chat-messages": "Chat messages",
+    "copilot-code-completions": "Code completions",
     "default-branch": "デフォルトブランチ",
     "default-branch-name-for-new-repositories": "新しいリポジトリのデフォルトのブランチ名",
     "display-escaped-non-ascii-characters": "非ASCII文字をエスケープして表示する\n(日本語環境ではOFFでの使用を推奨します)",
@@ -979,6 +981,7 @@
     "edit-your-global-git-config-2": "グローバル向け Git 構成ファイルを編集",
     "edit-your-global-git-config-3": "することになります。",
     "enable-paths-lt-260-characters": "Windowsで260文字を超えるパスを有効にする",
+    "generates-comments-using-copilot": "GitHub Desktop generates comments using Copilot's chat messages. Copilot quota will be reset on {{0}}.",
     "gitHub-default-branch-description-1": "GitHub のデフォルトのブランチ名は ",
     "gitHub-default-branch-description-2": "です。 ",
     "gitHub-default-branch-description-3": " ワークフローが異なったり統合する過程で ",
@@ -988,6 +991,7 @@
     "other-settings": "その他",
     "settings-related-to-the-path": "パスに関する設定",
     "shell-to-use-when-loading-env": "環境をロードするときに使用するシェル",
+    "show-copilot-information": "Show Copilot Information",
     "when-enabled-attempt-to-load-env-variables": "有効にすると、GitHub Desktop は Git フックの実行時にシェルから環境変数を読み込みます。これは、Gitフックがシェル設定ファイルで設定された環境変数に依存している場合に便利です。nvm、rbenv、asdf などのバージョン管理ツールで一般的に使われている方法です。"
   },
   "git-config": {

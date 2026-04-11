@@ -106,6 +106,7 @@ import {
   IAPIRepoRuleset,
   deleteToken,
   IAPICreatePushProtectionBypassResponse,
+  CopilotPlanInfo,
 } from '../api'
 import { shell } from '../app-shell'
 import {
@@ -641,6 +642,10 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
   private showChangesFilter: boolean = false
 
+  private chatQuotas: number = 0
+  private autoSuggestQuotas: number = 0
+  private copilotResetDate: string = ''
+
   public constructor(
     private readonly gitHubUserStore: GitHubUserStore,
     private readonly cloningRepositoriesStore: CloningRepositoriesStore,
@@ -1145,6 +1150,9 @@ export class AppStore extends TypedBaseStore<IAppState> {
       commitMessageGenerationButtonClicked:
         this.commitMessageGenerationButtonClicked,
       showChangesFilter: this.showChangesFilter,
+      chatQuotas: this.chatQuotas,
+      autoSuggestQuotas: this.autoSuggestQuotas,
+      copilotResetDate: this.copilotResetDate,
     }
   }
 
@@ -8752,6 +8760,33 @@ export class AppStore extends TypedBaseStore<IAppState> {
     setBoolean(showChangesFilterKey, this.showChangesFilter)
     this.updateMenuLabelsForSelectedRepository()
     this.emitUpdate()
+  }
+
+  public async _getCopilotInformation(): Promise<CopilotPlanInfo | undefined> {
+    const repository = this.selectedRepository
+    if (
+      repository === null ||
+      repository instanceof CloningRepository ||
+      isRepositoryWithGitHubRepository(repository) === false
+    ) {
+      log.error('[_createPushProtectionBypass] - No GitHub repository selected')
+      return undefined
+    }
+
+    const { endpoint } = repository.gitHubRepository
+
+    const account = getAccountForEndpoint(this.accounts, endpoint)
+
+    if (account === null) {
+      log.error(
+        `[_getCopilotInformation] - No account found for endpoint - ${endpoint}`
+      )
+      return undefined
+    }
+
+    const api = API.fromAccount(account)
+
+    return await api.fetchCopilotInternal()
   }
 }
 

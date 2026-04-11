@@ -295,7 +295,7 @@
       "we-could-not-find-that-repository": "리포지토리를 찾을 수 없습니다. 로그인했는지, 네트워크에 액세스할 수 있는지, URL 또는 리포지토리의 별칭 철자가 올바른지 확인하세요."
     },
     "render-sign-in": "GitHub.com 계정에 로그인하여 리포지토리에 액세스합니다.",
-    "render-sign-in-enterprise": "직장에 GitHub Enterprise 또는 AE 계정이 있는 경우 여기에서 로그인하여 리포지토리에 액세스하세요.",
+    "render-sign-in-enterprise": "직장에 GitHub Enterprise 계정이 있는 경우 여기에서 로그인하여 리포지토리에 액세스하세요.",
     "select": "선택"
   },
   "cloneable-repository-filter-list": {
@@ -852,7 +852,7 @@
     "unable-to-open-external-editor-darwin": "외부 편집기를 열 수 없습니다"
   },
   "enterprise-server-entry": {
-    "enterprise-or-ae-address": "Enterprise 또는 AE 주소"
+    "enterprise-or-ae-address": "Enterprise 주소"
   },
   "expandable-commit-summary": {
     "added-lines": "{{0}}행 추가",
@@ -972,6 +972,8 @@
     "author": "계정",
     "cache-git-hook-env-variables": "Git 후크의 환경 변수 캐싱",
     "cache-hook-env-description": "성능을 향상시키기 위해 후크 환경 변수를 캐시합니다. 후크가 자주 변경되는 환경 변수에 의존하는 경우 비활성화하십시오.",
+    "copilot-chat-messages": "Chat messages",
+    "copilot-code-completions": "Code completions",
     "default-branch": "기본 브랜치",
     "default-branch-name-for-new-repositories": "새 리포지토리의 기본 지점 이름",
     "display-escaped-non-ascii-characters": "경로 이름에 이스케이프 된 비 ASCII 문자를 표시합니다 \n(한국 사용자는 끄는 것이 좋습니다)",
@@ -979,6 +981,7 @@
     "edit-your-global-git-config-2": "글로벌용 Git 구성 파일 편집",
     "edit-your-global-git-config-3": "할 수 있습니다.",
     "enable-paths-lt-260-characters": "Windows에서 260자 이상의 경로 사용",
+    "generates-comments-using-copilot": "GitHub Desktop generates comments using Copilot's chat messages. Copilot quota will be reset on {{0}}.",
     "gitHub-default-branch-description-1": "GitHub의 기본 지점 이름은 ",
     "gitHub-default-branch-description-2": "입니다.",
     "gitHub-default-branch-description-3": "워크플로가 다르거나 통합되는 과정에서 ",
@@ -988,6 +991,7 @@
     "other-settings": "기타",
     "settings-related-to-the-path": "경로 관련 설정",
     "shell-to-use-when-loading-env": "환경을 로드할 때 사용할 셸",
+    "show-copilot-information": "Show Copilot Information",
     "when-enabled-attempt-to-load-env-variables": "사용하도록 설정하면 GitHub Desktop은 Git 후크를 실행할 때 셸에서 환경 변수를 로드합니다. 이것은 Git 후크가 쉘 설정 파일에 설정된 환경 변수에 의존하는 경우에 유용합니다. nvm, rbenv, asdf 등의 버전 관리 도구에서 일반적으로 사용되는 기술입니다."
   },
   "git-config": {

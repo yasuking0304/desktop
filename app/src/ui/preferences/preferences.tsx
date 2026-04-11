@@ -93,6 +93,9 @@ interface IPreferencesProps {
   readonly onEditGlobalGitConfig: () => void
   readonly underlineLinks: boolean
   readonly showDiffCheckMarks: boolean
+  readonly chatQuotas: number
+  readonly autoSuggestQuotas: number
+  readonly copilotResetDate: string
 }
 
 interface IPreferencesState {
@@ -151,6 +154,9 @@ interface IPreferencesState {
 
   readonly showDiffCheckMarks: boolean
 
+  readonly chatQuotas: number
+  readonly autoSuggestQuotas: number
+  readonly copilotResetDate: string
   readonly selectedGitTabIndex?: number
   readonly enableGitHookEnv: boolean | undefined
   readonly cacheGitHookEnv: boolean | undefined
@@ -223,6 +229,9 @@ export class Preferences extends React.Component<
       cacheGitHookEnv: getCacheHooksEnv(),
       selectedGitHookEnvShell: getGitHookEnvShell(),
       hooksPreferencesDirty: false,
+      chatQuotas: this.props.chatQuotas,
+      autoSuggestQuotas: this.props.autoSuggestQuotas,
+      copilotResetDate: this.props.copilotResetDate,
     }
   }
 
@@ -448,6 +457,18 @@ export class Preferences extends React.Component<
     })
   }
 
+  private onChatQuotasChanged = (chatQuotas: number) => {
+    this.setState({ chatQuotas })
+  }
+
+  private onAutoSuggestQuotasChanged = (autoSuggestQuotas: number) => {
+    this.setState({ autoSuggestQuotas })
+  }
+
+  private onCopilotResetDateChanged = (copilotResetDate: string) => {
+    this.setState({ copilotResetDate })
+  }
+
   private renderActiveTab() {
     const index = this.state.selectedIndex
     let View
@@ -500,6 +521,7 @@ export class Preferences extends React.Component<
           <>
             {error}
             <Git
+              dispatcher={this.props.dispatcher}
               name={this.state.committerName}
               email={this.state.committerEmail}
               accounts={this.props.accounts}
@@ -518,6 +540,9 @@ export class Preferences extends React.Component<
               onEnableGitHookEnvChanged={this.onEnableGitHookEnvChanged}
               onCacheGitHookEnvChanged={this.onCacheGitHookEnvChanged}
               onSelectedShellChanged={this.onSelectedGitHookEnvShellChanged}
+              onChatQuotasChanged={this.onChatQuotasChanged}
+              onAutoSuggestQuotasChanged={this.onAutoSuggestQuotasChanged}
+              onCopilotResetDateChanged={this.onCopilotResetDateChanged}
               enableGitHookEnv={
                 this.state.enableGitHookEnv ?? defaultHooksEnvEnabledValue
               }
@@ -525,6 +550,9 @@ export class Preferences extends React.Component<
               selectedShell={
                 this.state.selectedGitHookEnvShell ?? defaultGitHookEnvShell
               }
+              chatQuotas={this.state.chatQuotas}
+              autoSuggestQuotas={this.state.autoSuggestQuotas}
+              copilotResetDate={this.state.copilotResetDate}
             />
           </>
         )

@@ -852,7 +852,7 @@
     "unable-to-open-external-editor-darwin": "无法打开外部编辑器"
   },
   "enterprise-server-entry": {
-    "enterprise-or-ae-address": "企业或 AE 地址"
+    "enterprise-or-ae-address": "企业地址"
   },
   "expandable-commit-summary": {
     "added-lines": "已添加 {{0}} 行",
@@ -972,6 +972,8 @@
     "author": "账户",
     "cache-git-hook-env-variables": "缓存 Git 钩子环境变量",
     "cache-hook-env-description": "缓存钩子环境变量以提高性能。如果您的钩子依赖于经常变化的环境变量，请禁用此功能。",
+    "copilot-chat-messages": "Chat messages",
+    "copilot-code-completions": "Code completions",
     "default-branch": "默认分支",
     "default-branch-name-for-new-repositories": "新存储库的默认分支名称",
     "display-escaped-non-ascii-characters": "显示路径名中的转义非 ASCII 字符\n（建议中国用户禁用此功能）",
@@ -979,6 +981,7 @@
     "edit-your-global-git-config-2": " 编辑你的全局 Git 配置文件",
     "edit-your-global-git-config-3": "。",
     "enable-paths-lt-260-characters": "在 Windows 上使用超过 260 个字符的路径",
+    "generates-comments-using-copilot": "GitHub Desktop generates comments using Copilot's chat messages. Copilot quota will be reset on {{0}}.",
     "gitHub-default-branch-description-1": "GitHub 的默认分支名称是 ",
     "gitHub-default-branch-description-2": "。 ",
     "gitHub-default-branch-description-3": "您可能想要根据不同的工作流程来更改它, 或者因为您的集成仍然需要历史默认分支名称 ",
@@ -988,6 +991,7 @@
     "other-settings": "其他设置",
     "settings-related-to-the-path": "与路径相关的设置",
     "shell-to-use-when-loading-env": "加载环境时使用的 Shell",
+    "show-copilot-information": "Show Copilot Information",
     "when-enabled-attempt-to-load-env-variables": "When enabled, GitHub Desktop will attempt to load environment variables from your shell when executing Git hooks. This is useful if your Git hooks depend on environment variables set in your shell configuration files, a common practive for version managers such as nvm, rbenv, asdf, etc."
   },
   "git-config": {
