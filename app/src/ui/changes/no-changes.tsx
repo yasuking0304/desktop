@@ -32,6 +32,7 @@ import {
 } from '../../models/pull-request'
 import { t } from 'i18next'
 import { KeyboardShortcut } from '../keyboard-shortcut/keyboard-shortcut'
+import { formatNumber } from '../../lib/format-number'
 
 function formatMenuItemLabel(text: string) {
   if (__WIN32__ || __LINUX__) {
@@ -651,7 +652,7 @@ export class NoChanges extends React.Component<
       'no-changes.pull-number-commits-from-the-remote',
       `Pull {{0}} {{1}} from the {{2}} remote`,
       {
-        0: aheadBehind.behind,
+        0: formatNumber(aheadBehind.behind),
         1: commitContent,
         2: remote.name,
       }
@@ -698,7 +699,7 @@ export class NoChanges extends React.Component<
         aheadBehind.ahead === 1
           ? t('no-changes.one-local-commit', '1 local commit')
           : t('no-changes.multiple-local-commits', `{{0}} local commits`, {
-              0: aheadBehind.ahead,
+              0: formatNumber(aheadBehind.ahead),
             })
       )
     }
@@ -709,7 +710,7 @@ export class NoChanges extends React.Component<
         tagsToPush.length === 1
           ? t('no-changes.one-tag', '1 tag')
           : t('no-changes.multiple-tags', `{{0}} tags`, {
-              0: tagsToPush.length,
+              0: formatNumber(tagsToPush.length),
             })
       )
     }

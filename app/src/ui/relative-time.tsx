@@ -89,7 +89,7 @@ export function getRelativeTimeInfoFromDate(
       // More than a week ago, just the date will suffice
       return {
         absoluteText,
-        relativeText: formatDate(then, { dateStyle: 'medium' }),
+        relativeText: formatDate(then, { time: false, dateStyle: 'medium' }),
       }
     }
   }

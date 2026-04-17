@@ -27,6 +27,7 @@ import { Account } from '../../models/account'
 import { Emoji } from '../../lib/emoji'
 import { enableAccessibleListToolTips } from '../../lib/feature-flag'
 import { TooltippedContent } from '../lib/tooltipped-content'
+import { formatDate } from '../../lib/format-date'
 
 interface ICommitProps {
   readonly gitHubRepository: GitHubRepository | null
@@ -49,6 +50,7 @@ interface ICommitProps {
   readonly disableSquashing?: boolean
   readonly unpushedIndicatorTitle?: string
   readonly accounts: ReadonlyArray<Account>
+  readonly preferAbsoluteDates: boolean
 }
 
 interface ICommitListItemState {
@@ -166,7 +168,7 @@ export class CommitListItem extends React.PureComponent<
               />
               <div className="byline">
                 <CommitAttribution avatarUsers={this.state.avatarUsers} />
-                {renderRelativeTime(date)}
+                {renderRelativeTime(date, this.props.preferAbsoluteDates)}
               </div>
             </div>
           </div>
@@ -234,11 +236,15 @@ export class CommitListItem extends React.PureComponent<
   }
 }
 
-function renderRelativeTime(date: Date) {
+function renderRelativeTime(date: Date, preferAbsoluteDates: boolean) {
   return (
     <>
       {` • `}
-      <RelativeTime date={date} tooltip={!enableAccessibleListToolTips()} />
+      {preferAbsoluteDates ? (
+        formatDate(date)
+      ) : (
+        <RelativeTime date={date} tooltip={!enableAccessibleListToolTips()} />
+      )}
     </>
   )
 }

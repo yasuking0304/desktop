@@ -118,6 +118,15 @@
     }
   }
 
+  .formatting-section {
+    margin-top: var(--spacing);
+
+    .prefer-absolute-dates {
+      margin-top: var(--spacing);
+      margin-bottom: var(--spacing);
+    }
+  }
+
   .accounts-tab {
     .account-info {
       .user-info-container {
@@ -205,15 +214,12 @@
 
   .theme-selector {
     display: flex;
-    flex-wrap: wrap;
     margin: 0 calc(var(--spacing-half) * -1);
 
     .radio-button-component {
       display: block;
-      flex-shrink: 0;
       padding: var(--spacing-half);
       position: relative;
-      width: 50%;
       margin: 0;
 
       label {

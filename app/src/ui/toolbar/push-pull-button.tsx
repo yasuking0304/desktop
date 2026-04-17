@@ -31,6 +31,7 @@ import { PushPullButtonDropDown } from './push-pull-button-dropdown'
 import { t } from 'i18next'
 import { AriaLiveContainer } from '../accessibility/aria-live-container'
 import { enableResizingToolbarButtons } from '../../lib/feature-flag'
+import { formatCompactNumber } from '../../lib/format-number'
 
 export const DropdownItemClassName = 'push-pull-dropdown-item'
 
@@ -139,7 +140,7 @@ function renderAheadBehind(aheadBehind: IAheadBehind, numTagsToPush: number) {
   if (ahead > 0 || numTagsToPush > 0) {
     content.push(
       <span key="ahead">
-        {ahead + numTagsToPush}
+        {formatCompactNumber(ahead + numTagsToPush)}
         <Octicon symbol={octicons.arrowUp} />
       </span>
     )
@@ -148,7 +149,7 @@ function renderAheadBehind(aheadBehind: IAheadBehind, numTagsToPush: number) {
   if (behind > 0) {
     content.push(
       <span key="behind">
-        {behind}
+        {formatCompactNumber(behind)}
         <Octicon symbol={octicons.arrowDown} />
       </span>
     )

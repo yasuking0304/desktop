@@ -14,6 +14,7 @@ import {
   canStartOperation,
 } from './base-choose-branch-dialog'
 import { truncateWithEllipsis } from '../../../lib/truncate-with-ellipsis'
+import { formatNumber } from '../../../lib/format-number'
 
 interface IMergeChooseBranchDialogState {
   readonly commitCount: number
@@ -215,7 +216,7 @@ export class MergeChooseBranchDialog extends React.Component<
         {t('merge-choose-branch-dialog.this-will-merge-1', 'This will merge ')}
         <strong>
           {t('merge-choose-branch-dialog.number-commit', `{{0}} {{1}}`, {
-            0: commitCount,
+            0: formatNumber(commitCount),
             1: pluralized,
           })}
         </strong>
@@ -258,7 +259,7 @@ export class MergeChooseBranchDialog extends React.Component<
           {t(
             'merge-choose-branch-dialog.number-conflicted-file',
             `{{0}} conflicted {{1}}`,
-            { 0: count, 1: pluralized }
+            { 0: formatNumber(count), 1: pluralized }
           )}
         </strong>
         {t(

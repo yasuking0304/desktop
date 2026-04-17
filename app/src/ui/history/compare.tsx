@@ -34,6 +34,7 @@ import { t } from 'i18next'
 import { KeyboardInsertionData } from '../lib/list'
 import { Account } from '../../models/account'
 import { Emoji } from '../../lib/emoji'
+import { formatNumber } from '../../lib/format-number'
 
 interface ICompareSidebarProps {
   readonly repository: Repository
@@ -61,8 +62,8 @@ interface ICompareSidebarProps {
   readonly isMultiCommitOperationInProgress?: boolean
   readonly shasToHighlight: ReadonlyArray<string>
   readonly accounts: ReadonlyArray<Account>
+  readonly preferAbsoluteDates: boolean
 }
-
 interface ICompareSidebarState {
   /**
    * This branch should only be used when tracking interactions that the user is performing.
@@ -294,6 +295,7 @@ export class CompareSidebar extends React.Component<
         }
         keyboardReorderData={this.state.keyboardReorderData}
         accounts={this.props.accounts}
+        preferAbsoluteDates={this.props.preferAbsoluteDates}
       />
     )
   }
@@ -434,12 +436,12 @@ export class CompareSidebar extends React.Component<
         <TabBar selectedIndex={selectedTab} onTabClicked={this.onTabClicked}>
           <span>
             {t('compare.behind', `Behind ({{0}})`, {
-              0: formState.aheadBehind.behind,
+              0: formatNumber(formState.aheadBehind.behind),
             })}
           </span>
           <span>
             {t('compare.ahead', `Ahead ({{0}})`, {
-              0: formState.aheadBehind.ahead,
+              0: formatNumber(formState.aheadBehind.ahead),
             })}
           </span>
         </TabBar>

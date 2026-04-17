@@ -75,6 +75,7 @@ import {
 } from './filter-changes-logic'
 import { ChangesListFilterOptions } from './changes-list-filter-options'
 import { HookProgress } from '../../lib/git'
+import { formatNumber } from '../../lib/format-number'
 
 export interface IChangesListItem extends IFilterListItem {
   readonly id: string
@@ -1359,7 +1360,7 @@ export class FilterChangesList extends React.Component<
     const checkAllLabel = t(
       'filter-changes-list.files-description',
       '{{0}}{{1}} changed {{2}}',
-      { 0: numberDescrption, 1: files.length, 2: filesPlural }
+      { 0: numberDescrption, 1: formatNumber(files.length), 2: filesPlural }
     )
 
     return (
@@ -1425,7 +1426,7 @@ export class FilterChangesList extends React.Component<
         ? t('changes-list.file', 'file')
         : t('changes-list.files', 'files')
     return t('changes-list.files-description', '{{0}} changed {{1}}', {
-      0: files.length,
+      0: formatNumber(files.length),
       1: filesPlural,
     })
   }
@@ -1526,7 +1527,7 @@ export class FilterChangesList extends React.Component<
           {t(
             'filter-changes-list.Adjust the filters',
             'Adjust the filters to see all {{0}} changes',
-            { 0: filesSelected.length }
+            { 0: formatNumber(filesSelected.length) }
           )}
         </LinkButton>
       </div>

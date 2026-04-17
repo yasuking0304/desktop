@@ -64,6 +64,8 @@ jobs:
   on-issue-close:
     if: github.event.action == 'closed'
     uses: desktop/gh-cli-and-desktop-shared-workflows/.github/workflows/triage-on-issue-close.yml@main
+    with:
+      labels_to_remove: 'needs-triage,pitch'
     permissions:
       issues: write
 

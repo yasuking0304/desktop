@@ -540,6 +540,17 @@ DESKTOP_E2E_APP_MODE=unpackaged npx playwright test \
   app/test/e2e/my-feature.e2e.ts
 ```
 
+> ⚠️ **Do NOT use `yarn build:dev` for E2E tests.** The development build
+> produces an `index.html` that loads the renderer bundle from
+> `http://localhost:3000/build/renderer.js` (the webpack dev server). Without
+> the dev server running, the React app never mounts and the Playwright
+> `waitForFunction` on `desktop-app-container` will time out silently.
+>
+> Always use `yarn test:e2e:build:unpackaged` (or the combined
+> `yarn test:e2e:unpackaged`) which runs a **production** build with
+> `DESKTOP_SKIP_PACKAGE=1`. This bundles `renderer.js` directly into `out/`
+> so the app is self-contained.
+
 ### Handling the welcome flow and macOS dialogs
 
 If your test launches from a fresh state, you will encounter the welcome flow.
@@ -578,6 +589,59 @@ After running E2E tests, collect artifacts from `playwright-videos/`:
 
 Attach the screenshots and video to the Pull Request description or as
 comments to show the new UI additions and prove the feature works end-to-end.
+
+#### Faking data or state for ad-hoc E2E screenshots
+
+Some UI features are only visible under specific conditions — for example, a
+signed-in GitHub.com account, a populated model list, or an active Copilot
+subscription. In ad-hoc E2E tests whose sole purpose is capturing screenshots
+for a Pull Request, you can temporarily modify source code to bypass those
+conditions and show the full UI.
+
+**Workflow:**
+
+1. Make the minimum temporary changes needed (e.g. hardcode a store property,
+   inject fake data, force a boolean flag).
+2. Rebuild with `yarn test:e2e:build:unpackaged`.
+3. Run your ad-hoc E2E spec and capture screenshots/video.
+4. **Revert every temporary change** before committing. Verify with
+   `git diff <file>` that no fake data leaks into the branch.
+5. Delete the ad-hoc E2E spec.
+
+**Tips:**
+
+- **Prefer overriding in `getState()`** (in `AppStore`) rather than deep in a
+  store or API layer. This keeps the blast radius small — a single file, a
+  few lines — and easy to revert cleanly.
+- **Use realistic but obviously fake data.** If you inject model names, use
+  real-looking IDs and display names so the screenshots read naturally.
+- **Guard with `__DEV__` only if you plan to commit the fake data** (not
+  recommended). For ad-hoc screenshots the code is reverted immediately, so
+  a plain unconditional override is simpler and avoids issues with `__DEV__`
+  being `false` in production E2E builds (`RELEASE_CHANNEL=production`).
+- **Watch out for tree-shaking.** The E2E build uses `NODE_ENV=production`.
+  Constants like `__DEV__` are `false` in that mode, so any code guarded by
+  `if (__DEV__)` will be dead-code-eliminated by webpack. If you need the
+  fake data to survive the production build, don't guard it.
+- **Verify the revert is complete.** After capturing artifacts, run
+  `git diff -- <files you touched>` and confirm zero output before moving on.
+
+**Example — forcing a populated Copilot model list:**
+
+```ts
+// In AppStore.getState(), temporarily replace:
+copilotModels: this.copilotModels,
+copilotAvailable: this.copilotStore.isAvailable,
+
+// With:
+copilotModels:
+  this.copilotModels !== null && this.copilotModels.length > 0
+    ? this.copilotModels
+    : fakeModels,       // defined as a const above the class
+copilotAvailable: true,
+```
+
+After screenshots are captured, revert these two lines back to their originals.
 
 ---
 

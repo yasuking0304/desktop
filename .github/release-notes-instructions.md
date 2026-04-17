@@ -37,15 +37,27 @@ If it was done by an external contributor (not a member of the `desktop` org), a
 
 Do NOT generate entries for:
 - CI/CD changes, test-only changes, internal refactoring
-- Dependency bumps (unless fixing a security vulnerability)
+- Dependency bumps from Dependabot — even if they mention security fixes, these are routine automated updates to build/dev dependencies and are not user-facing
 - Build system or developer tooling changes
 - Documentation updates
 - PRs with `Notes: no-notes` in their body
 
-**Exception:** Security vulnerability fixes should always be included, even if they are dependency updates. Keep them general — do not include CVE numbers. Example:
+**Exception:** Updates to **embedded components that ship with the app** (e.g., Git, Git LFS, Git Credential Manager, Electron) should always be included, even when triggered by a security advisory. These are user-facing because they change the software users run. Example:
 ```
-[Fixed] Update embedded Git to address security vulnerability - #4791
+[Improved] Update Git for Windows to v2.53.0.windows.3 - #21957
 ```
+
+## Output Ordering
+
+Entries in the final output **must** be sorted by tag in the order listed in the Tags section above:
+
+1. All `[New]` entries first
+2. Then `[Added]`
+3. Then `[Fixed]`
+4. Then `[Improved]`
+5. Then `[Removed]`
+
+Within each tag group, order entries by significance (most impactful first).
 
 ## Writing Style
 

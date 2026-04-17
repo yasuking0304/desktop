@@ -38,5 +38,7 @@ jobs:
       github.event.schedule == '0 14 1 * *' || github.event_name ==
       'workflow_dispatch'
     uses: desktop/gh-cli-and-desktop-shared-workflows/.github/workflows/pitch-surface-top-issues.yml@main
+    with:
+      exclude_labels: 'skip-pitch'
     permissions:
       issues: write
