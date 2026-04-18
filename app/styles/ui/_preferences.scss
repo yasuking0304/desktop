@@ -71,6 +71,45 @@
         }
       }
     }
+
+    .git-copilot-info-component {
+      margin-top: var(--spacing-double);
+    }
+
+    .git-show-copilot-section {
+      display: flex;
+
+      .git-show-copilot-component {
+        display: flex;
+        min-width: 100%;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+
+      .git-copilot-info {
+        display: grid;
+        width: 48%;
+        .git-copilot-info-usage {
+          display: flex;
+          justify-content: space-between;
+          margin: 0px 0px 6px 0px;
+        }
+        .guage {
+          width: 100%;
+          display: grid;
+          height: 8px;
+          background: var(--progress-bar-background-color);
+          border-radius: 6px;
+          overflow: hidden;
+        }
+        .guage-progress {
+          background: var(--progress-bar-progress-color);
+        }
+      }
+    }
+    .git-copilot-generates-comments-info {
+      margin-top: var(--spacing-half);
+    }
   }
 
   .tab-bar {

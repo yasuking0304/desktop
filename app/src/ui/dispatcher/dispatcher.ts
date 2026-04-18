@@ -4091,4 +4091,8 @@ export class Dispatcher {
   public toggleChangesFilterVisibility() {
     this.appStore._toggleChangesFilterVisibility()
   }
+
+  public async getCopilotInformation() {
+    return await this.appStore._getCopilotInformation()
+  }
 }

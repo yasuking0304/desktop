@@ -431,9 +431,16 @@
     "will-modify-your-most-recent-commit-4": " to make these changes as a new commit."
   },
   "commit-message-avatar": {
+    "committing-as": "Committing as {{0}}",
+    "email": "Email: {{0}}",
+    "for-your-repository": "for your repository",
+    "git-settings": "{{0}} > Git > Author",
     "ignore": "Ignore",
     "learn-more": "Learn more",
     "learn-more-about": "Learn more about commit attribution",
+    "open-git-author": "Open Git Author",
+    "open-git-settings": "Open git settings",
+    "open-git-settings-darwin": "Open Git Settings",
     "repository-settings": "repository settings",
     "update-email": "Update email",
     "update-email-1": "The email in your global Git config (",
@@ -442,7 +449,11 @@
     "you-can-also-choose-an-email-1": "You can also choose an email local to this repository from the ",
     "you-can-also-choose-an-email-2": ".",
     "you-can-choose-an-email-1": "You can choose an email local to this repository from the ",
-    "you-can-choose-an-email-2": "."
+    "you-can-choose-an-email-2": ".",
+    "you-can-set-email-local-1": "You can also set an email local to this repository from the ",
+    "you-can-set-email-local-2": "repository settings",
+    "you-can-set-email-local-3": ".",
+    "you-can-update-your-git-config": "You can update your {{0}} git configuration {{1}} in  your {{2}}."
   },
   "commit-summary": {
     "tag": "tag",
@@ -479,11 +490,13 @@
     "files": "files",
     "finish": "Finish",
     "github-desktop": "GitHub Desktop",
+    "global": "global",
     "history": "History",
     "i-understand": "I understand",
     "ignore": "Ignore",
     "install-and-restart": "Install and restart",
     "install-and-restart-darwin": "Install and Restart",
+    "local": "local",
     "local-path": "Local path",
     "local-path-darwin": "Local Path",
     "multiple-commits": "commits",
@@ -839,7 +852,7 @@
     "unable-to-open-external-editor-darwin": "Unable to Open External Editor"
   },
   "enterprise-server-entry": {
-    "enterprise-or-ae-address": "Enterprise or AE address"
+    "enterprise-or-ae-address": "Enterprise address"
   },
   "expandable-commit-summary": {
     "added-lines": "{{0}} added lines",
@@ -956,9 +969,11 @@
     "we-were-unable-to-authenticate-6": "to try again."
   },
   "git": {
-    "autor": "Author",
+    "author": "Author",
     "cache-git-hook-env-variables": "Cache Git hook environment variables",
     "cache-hook-env-description": "Cache hook environment variables to improve performance. Disable if your hooks rely on frequently changing environment variables.",
+    "copilot-chat-messages": "Chat messages",
+    "copilot-code-completions": "Code completions",
     "default-branch": "Default branch",
     "default-branch-name-for-new-repositories": "Default branch name for new repositories",
     "display-escaped-non-ascii-characters": "Display escaped non-ASCII characters in path names\n(recommended to turn off for users in the Asian region)",
@@ -966,6 +981,7 @@
     "edit-your-global-git-config-2": " edit your global Git config file",
     "edit-your-global-git-config-3": ".",
     "enable-paths-lt-260-characters": "Enable paths longer than 260 characters on Windows",
+    "generates-comments-using-copilot": "GitHub Desktop generates comments using Copilot's chat messages. Copilot quota will be reset on {{0}}.",
     "gitHub-default-branch-description-1": "GitHub's default branch name is ",
     "gitHub-default-branch-description-2": ". ",
     "gitHub-default-branch-description-3": "You may want to change it due to different workflows, or because your integrations still require the historical default branch name of ",
@@ -975,6 +991,7 @@
     "other-settings": "Others",
     "settings-related-to-the-path": "Settings related to the path",
     "shell-to-use-when-loading-env": "Shell to use when loading environment",
+    "show-copilot-information": "Show Copilot Information",
     "when-enabled-attempt-to-load-env-variables": "When enabled, GitHub Desktop will attempt to load environment variables from your shell when executing Git hooks. This is useful if your Git hooks depend on environment variables set in your shell configuration files, a common practive for version managers such as nvm, rbenv, asdf, etc."
   },
   "git-config": {
