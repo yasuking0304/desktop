@@ -184,7 +184,7 @@ export class SignIn extends React.Component<ISignInProps, ISignInState> {
             label={t('common.enterprise-address', 'Enterprise address')}
             value={this.state.endpoint}
             onValueChanged={this.onEndpointChanged}
-            placeholder="https://github.example.com"
+            placeholder="https://example.ghe.com"
           />
         </Row>
       </DialogContent>

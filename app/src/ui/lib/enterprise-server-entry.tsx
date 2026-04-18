@@ -57,12 +57,12 @@ export class EnterpriseServerEntry extends React.Component<
         <TextBox
           label={t(
             'enterprise-server-entry.enterprise-or-ae-address',
-            'Enterprise or AE address'
+            'Enterprise address'
           )}
           autoFocus={true}
           disabled={disableEntry}
           onValueChanged={this.onServerAddressChanged}
-          placeholder="https://github.example.com"
+          placeholder="https://example.ghe.com"
         />
 
         {this.props.error ? <Errors>{this.props.error.message}</Errors> : null}

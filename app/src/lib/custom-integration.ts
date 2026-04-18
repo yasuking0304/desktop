@@ -70,7 +70,14 @@ export function expandTargetPathArgument(
   args: ReadonlyArray<string>,
   repoPath: string
 ): ReadonlyArray<string> {
-  return args.map(arg => arg.replaceAll(TargetPathArgument, repoPath))
+  return args.map(arg =>
+    arg
+      // If the placeholder is already quoted (e.g. "%TARGET_PATH%"), replace
+      // it including the surrounding quotes to avoid double-quoting the path.
+      .replaceAll(`"${TargetPathArgument}"`, `"${repoPath}"`)
+      // For unquoted occurrences, wrap the path in quotes.
+      .replaceAll(TargetPathArgument, `"${repoPath}"`)
+  )
 }
 
 /**

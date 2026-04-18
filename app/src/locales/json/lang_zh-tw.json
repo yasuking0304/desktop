@@ -431,9 +431,16 @@
     "will-modify-your-most-recent-commit-4": " 將這些變更作為新的提交。"
   },
   "commit-message-avatar": {
+    "committing-as": "Committing as {{0}}",
+    "email": "Email: {{0}}",
+    "for-your-repository": "for your repository",
+    "git-settings": "{{0}} > Git > 帳戶",
     "ignore": "忽視",
     "learn-more": "了解更多",
     "learn-more-about": "詳細了解提交歸因",
+    "open-git-author": "帳戶設定",
+    "open-git-settings": "Open git settings",
+    "open-git-settings-darwin": "Open Git Settings",
     "repository-settings": "儲存庫設定",
     "update-email": "更新電子郵件",
     "update-email-1": "全域 Git 設定中的電子郵件 (",
@@ -442,7 +449,11 @@
     "you-can-also-choose-an-email-1": "您也可以從 ",
     "you-can-also-choose-an-email-2": " 中選擇此儲存庫本地的電子郵件。",
     "you-can-choose-an-email-1": "您可以從 ",
-    "you-can-choose-an-email-2": " 中選擇此儲存庫本地的電子郵件。"
+    "you-can-choose-an-email-2": " 中選擇此儲存庫本地的電子郵件。",
+    "you-can-set-email-local-1": "You can also set an email local to this repository from the ",
+    "you-can-set-email-local-2": "repository settings",
+    "you-can-set-email-local-3": ".",
+    "you-can-update-your-git-config": "You can update your {{0}} git configuration {{1}} in  your {{2}}."
   },
   "commit-summary": {
     "tag": "標記",
@@ -479,11 +490,13 @@
     "files": "檔案",
     "finish": "結束",
     "github-desktop": "GitHub Desktop",
+    "global": "global",
     "history": "歷史記錄",
     "i-understand": "我明白",
     "ignore": "忽視",
     "install-and-restart": "安裝並重新啟動",
     "install-and-restart-darwin": "安裝並重新啟動",
+    "local": "local",
     "local-path": "本地路徑",
     "local-path-darwin": "本地路徑",
     "multiple-commits": "次提交",
@@ -839,7 +852,7 @@
     "unable-to-open-external-editor-darwin": "無法開啟外部編輯器"
   },
   "enterprise-server-entry": {
-    "enterprise-or-ae-address": "企業或 AE位址"
+    "enterprise-or-ae-address": "企業位址"
   },
   "expandable-commit-summary": {
     "added-lines": "{{0}}新增了行",
@@ -956,9 +969,11 @@
     "we-were-unable-to-authenticate-6": "請重試。"
   },
   "git": {
-    "autor": "帳戶",
+    "author": "帳戶",
     "cache-git-hook-env-variables": "緩存 Git 鉤子環境變量",
     "cache-hook-env-description": "緩存鉤子環境變量以提高性能。如果您的鉤子依賴於經常變化的環境變量，請禁用此功能。",
+    "copilot-chat-messages": "Chat messages",
+    "copilot-code-completions": "Code completions",
     "default-branch": "預設分支",
     "default-branch-name-for-new-repositories": "新儲存庫的預設分支名稱",
     "display-escaped-non-ascii-characters": "顯示路徑名中的轉義非 ASCII 字元\n（建議中國用戶停用此功能）",
@@ -966,6 +981,7 @@
     "edit-your-global-git-config-2": " 編輯你的全域 Git 設定檔",
     "edit-your-global-git-config-3": "。",
     "enable-paths-lt-260-characters": "在 Windows 系統中啟用長度超過 260 個字元的路徑",
+    "generates-comments-using-copilot": "GitHub Desktop generates comments using Copilot's chat messages. Copilot quota will be reset on {{0}}.",
     "gitHub-default-branch-description-1": "GitHub 的預設分支名稱是 ",
     "gitHub-default-branch-description-2": ". ",
     "gitHub-default-branch-description-3": "您可能想要根據不同的工作流程來更改它, 或者因為您的整合仍然需要歷史預設分支名稱 ",
@@ -975,6 +991,7 @@
     "other-settings": "其他設定",
     "settings-related-to-the-path": "與路徑相關的設定",
     "shell-to-use-when-loading-env": "載入環境時使用的 Shell",
+    "show-copilot-information": "Show Copilot Information",
     "when-enabled-attempt-to-load-env-variables": "When enabled, GitHub Desktop will attempt to load environment variables from your shell when executing Git hooks. This is useful if your Git hooks depend on environment variables set in your shell configuration files, a common practive for version managers such as nvm, rbenv, asdf, etc."
   },
   "git-config": {

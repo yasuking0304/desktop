@@ -9,6 +9,8 @@ yarn-error.log
 .idea/
 .eslintcache
 app/coverage
+script/coverage
+playwright-videos
 app/static/common
 app/test/fixtures
 gemoji

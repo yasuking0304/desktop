@@ -238,30 +238,59 @@ export class CommitMessageAvatar extends React.Component<
     const { user } = this.props
     const { isGitConfigLocal } = this.state
 
-    const location = isGitConfigLocal ? 'local' : 'global'
-    const locationDesc = isGitConfigLocal ? 'for your repository' : ''
-    const settingsName = __DARWIN__ ? 'settings' : 'options'
+    const location = isGitConfigLocal
+      ? t('common.local', 'local')
+      : t('common.global', 'global')
+    const locationDesc = isGitConfigLocal
+      ? t('commit-message-avatar.for-your-repository', 'for your repository')
+      : ''
+    const settingsName = __DARWIN__
+      ? t('common.settings', 'settings')
+      : t('common.options', 'options')
     const settings = isGitConfigLocal
-      ? 'repository settings'
-      : `git ${settingsName}`
-    const buttonText = __DARWIN__ ? 'Open Git Settings' : 'Open git settings'
-
+      ? t('commit-message-avatar.repository-settings', 'repository settings')
+      : t('commit-message-avatar.git-settings', `git {{0}}`, {
+          0: settingsName,
+        })
+    const buttonText = isGitConfigLocal
+      ? __DARWIN__
+        ? t(
+            'commit-message-avatar.open-git-settings-darwin',
+            'Open Git Settings'
+          )
+        : t('commit-message-avatar.open-git-settings', 'Open git settings')
+      : t('commit-message-avatar.open-git-author', 'Open Git Author')
     return (
       <>
-        <p>{user && user.name && `Email: ${user.email}`}</p>
+        <p>
+          {user &&
+            user.name &&
+            t('commit-message-avatar.email', 'Email: {{0}}', {
+              0: user.email,
+            })}
+        </p>
 
         <p>
-          You can update your {location} git configuration {locationDesc} in
-          your {settings}.
+          {t(
+            'commit-message-avatar.you-can-update-your-git-config',
+            'You can update your {{0}} git configuration {{1}} in  your {{2}}.',
+            { 0: location, 1: locationDesc, 2: settings }
+          )}
         </p>
 
         {!isGitConfigLocal && (
           <p className="secondary-text">
-            You can also set an email local to this repository from the{' '}
+            {t(
+              'commit-message-avatar.you-can-set-email-local-1',
+              'You can also set an email local to this repository from the '
+            )}
             <LinkButton onClick={this.onRepositorySettingsClick}>
-              repository settings
+              {t(
+                'commit-message-avatar.you-can-set-email-local-2',
+                'repository settings'
+              )}
             </LinkButton>
-            .
+            {t('commit-message-avatar.you-can-set-email-local-3', '.')}
           </p>
         )}
         <Row className="button-row">
@@ -414,7 +443,9 @@ export class CommitMessageAvatar extends React.Component<
     if (name) {
       return (
         <>
-          Committing as <strong>{name}</strong>
+          {t('commit-message-avatar.committing-as', 'Committing as {{0}}', {
+            0: name,
+          })}
         </>
       )
     }
