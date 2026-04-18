@@ -111,14 +111,22 @@
   },
   "appearance": {
     "dark": "Dark",
+    "date-format": "日付の形式",
+    "date-format-darwin": "Date Format",
     "diff": "差分",
+    "formatting": "表示フォーマット",
     "light": "Light",
     "loading-system-theme": "システムテーマのロード中",
+    "number-format": "数字の形式",
+    "number-format-darwin": "数字の形式",
+    "prefer-absolute-dates": "相対日付よりも絶対日付を優先する",
     "system": "システムの規定",
     "tab_size_default": "{{0}} (デフォルト)",
     "tab-size": "タブサイズ",
     "tab-size-darwn": "タブサイズ",
-    "theme": "外観テーマ"
+    "theme": "外観テーマ",
+    "time-format": "時間の形式",
+    "time-format-darwin": "Time Format"
   },
   "attribute-mismatch": {
     "git-lfs-filters-are-configured-1": "Git LFS フィルターは ",
@@ -472,6 +480,8 @@
     "choose": "選択…",
     "clone": "クローン",
     "close": "閉じる",
+    "commit": "コミット",
+    "commits": "コミット",
     "committed": "最新コミット",
     "continue": "次へ",
     "copy": "コピー",
@@ -512,6 +522,7 @@
     "opetarion-alias": "エイリアス{{0}}",
     "opetarion-alias-darwin": "エイリアス{{0}}",
     "options": "オプション",
+    "options-name": "オプション",
     "organization": "組織",
     "other": "その他",
     "override": "オーバーライド",
@@ -529,6 +540,7 @@
     "save": "保存",
     "select-all": "すべて選択",
     "settings": "設定",
+    "settings-name": "設定",
     "sign-in": "サインイン",
     "sign-in-darwin": "サインイン",
     "sign-into-1": " ",
@@ -972,8 +984,8 @@
     "author": "アカウント",
     "cache-git-hook-env-variables": "Gitフックの環境変数をキャッシュする",
     "cache-hook-env-description": "パフォーマンスを向上させるために、フックの環境変数をキャッシュします。フックが頻繁に変更される環境変数に依存している場合は無効にしてください。",
-    "copilot-chat-messages": "Chat messages",
-    "copilot-code-completions": "Code completions",
+    "copilot-chat-messages": "チャット メッセージ",
+    "copilot-code-completions": "インライン候補",
     "default-branch": "デフォルトブランチ",
     "default-branch-name-for-new-repositories": "新しいリポジトリのデフォルトのブランチ名",
     "display-escaped-non-ascii-characters": "非ASCII文字をエスケープして表示する\n(日本語環境ではOFFでの使用を推奨します)",
@@ -981,7 +993,7 @@
     "edit-your-global-git-config-2": "グローバル向け Git 構成ファイルを編集",
     "edit-your-global-git-config-3": "することになります。",
     "enable-paths-lt-260-characters": "Windowsで260文字を超えるパスを有効にする",
-    "generates-comments-using-copilot": "GitHub Desktop generates comments using Copilot's chat messages. Copilot quota will be reset on {{0}}.",
+    "generates-comments-using-copilot": "GitHub Desktopは、Copilotのチャットメッセージを使用してコミットコメントを生成します。Copilotのクォータは {{0}} にリセットされます。",
     "gitHub-default-branch-description-1": "GitHub のデフォルトのブランチ名は ",
     "gitHub-default-branch-description-2": "です。 ",
     "gitHub-default-branch-description-3": " ワークフローが異なったり統合する過程で ",
@@ -991,7 +1003,7 @@
     "other-settings": "その他",
     "settings-related-to-the-path": "パスに関する設定",
     "shell-to-use-when-loading-env": "環境をロードするときに使用するシェル",
-    "show-copilot-information": "Show Copilot Information",
+    "show-copilot-information": "Copilot {{0}} 使用状況",
     "when-enabled-attempt-to-load-env-variables": "有効にすると、GitHub Desktop は Git フックの実行時にシェルから環境変数を読み込みます。これは、Gitフックがシェル設定ファイルで設定された環境変数に依存している場合に便利です。nvm、rbenv、asdf などのバージョン管理ツールで一般的に使われている方法です。"
   },
   "git-config": {
@@ -1275,6 +1287,24 @@
     "zoom-in-darwin": "ズーム(拡大)",
     "zoom-out": "ズーム(縮小)",
     "zoom-out-darwin": "ズーム(縮小)"
+  },
+  "merge": {
+    "checking-ability": "自動で{0}できるかチェックしています…",
+    "conflicted-message-1": " ",
+    "conflicted-message-2": " ",
+    "conflicted-message-3": " ",
+    "conflicted-message-4": " から ",
+    "conflicted-message-5": " へのマージによって、{{0}}件の{{1}} が競合します。",
+    "invalid-merge": "このリポジトリに関連ない履歴をマージできません",
+    "invalid-rebase": "リベースを開始できません。有効なブランチを選択していることを確認してください。",
+    "will-merge-1": "This will merge",
+    "will-merge-2": " from ",
+    "will-merge-3": " into ",
+    "will-merge-4": " ",
+    "will-update": "This will update ",
+    "will-update-2": " by applying its ",
+    "will-update-3": " on top of ",
+    "will-update-4": " "
   },
   "merge-call-to-action": {
     "merge-into-1": "This will merge ",
@@ -1766,8 +1796,7 @@
   "shared": {
     "error": {
       "could-not-find-executable": "'{{0}}'の実行の際に '{{1}}' ファイルが見つかりませんでした。 {{2}}を開いて使用可能なシェルを選択してください。",
-      "could-not-find-executable-shell": "パス '{{0}}' にシェルの実行ファイルが見つかりませんでした。{{1}} を開いて利用可能なシェルを選択してください。",
-      "could-not-find-terminal": "Terminal が見つかりませんでした。 {{0}}を開いて使用可能なシェルを選択してください。"
+      "could-not-find-executable-shell": "パス '{{0}}' にシェルの実行ファイルが見つかりませんでした。{{1}} を開いて利用可能なシェルを選択してください。"
     }
   },
   "shell-error": {

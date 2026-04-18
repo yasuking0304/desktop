@@ -64,7 +64,7 @@ export class MergeCallToAction extends React.Component<
           <strong>{branch.name}</strong>
           {t('merge-call-to-action.this-will-merge-into-3', ' into ')}
           <strong>{currentBranch.name}</strong>
-          {t('merge-call-to-action.this-will-merge-into-4', ' ')}
+          {t('merge-call-to-action.this-will-merge-into-4', '')}
         </div>
       )
     }

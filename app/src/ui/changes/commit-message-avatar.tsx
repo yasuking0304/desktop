@@ -245,8 +245,8 @@ export class CommitMessageAvatar extends React.Component<
       ? t('commit-message-avatar.for-your-repository', 'for your repository')
       : ''
     const settingsName = __DARWIN__
-      ? t('common.settings', 'settings')
-      : t('common.options', 'options')
+      ? t('common.settings-name', 'settings')
+      : t('common.options-name', 'options')
     const settings = isGitConfigLocal
       ? t('commit-message-avatar.repository-settings', 'repository settings')
       : t('commit-message-avatar.git-settings', `git {{0}}`, {

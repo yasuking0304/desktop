@@ -28,7 +28,7 @@ import {
 import { HttpStatusCode } from './http-status-code'
 import { CopilotError } from './copilot-error'
 import { BypassReasonType } from '../ui/secret-scanning/bypass-push-protection-dialog'
-import { formatDate } from '../lib/format-date'
+import { CopilotPlanInfo, getCopilotPlanInfo } from './copilot-plan-info'
 
 const envEndpoint = process.env['DESKTOP_GITHUB_DOTCOM_API_ENDPOINT']
 const envHTMLURL = process.env['DESKTOP_GITHUB_DOTCOM_HTML_URL']
@@ -58,14 +58,6 @@ type ViewerCopilotResponse = {
       readonly isCopilotDesktopEnabled: boolean
     }
   }
-}
-
-/** Copilot-Plan info to Desktop */
-export type CopilotPlanInfo = {
-  readonly copilotLicenseType: string
-  readonly copilotResetDate: string
-  readonly chatQuotas: number
-  readonly autoSuggestQuotas: number
 }
 
 /** Copilot-related info relevant to Desktop */
@@ -2118,7 +2110,7 @@ export class API {
   /**
    * Fetches the Copilot internal info related to the user(beta).
    *
-   *
+   * @returns Copilot license information and usage quotas.
    */
   public async fetchCopilotInternal(): Promise<CopilotPlanInfo | undefined> {
     const customHeaders = {
@@ -2128,28 +2120,7 @@ export class API {
       const response = await this.ghRequest('GET', '/copilot_internal/user', {
         customHeaders,
       })
-      const featuresResponse = await response.json() // as ReadonlyArray<string>
-      const copilotPlanInfo = {
-        copilotLicenseType: featuresResponse['copilot_plan']?.match('pro+')
-          ? 'pro+'
-          : featuresResponse['copilot_plan']?.match('pro')
-          ? 'pro'
-          : 'free',
-        copilotResetDate: featuresResponse['limited_user_reset_date']
-          ? formatDate(new Date(featuresResponse['limited_user_reset_date']), {
-              dateStyle: 'long',
-            })
-          : undefined,
-        chatQuotas:
-          1 -
-          featuresResponse['limited_user_quotas']?.['chat'] /
-            featuresResponse['monthly_quotas']?.['chat'],
-        autoSuggestQuotas:
-          1 -
-          featuresResponse['limited_user_quotas']?.['completions'] /
-            featuresResponse['monthly_quotas']?.['completions'],
-      } as CopilotPlanInfo
-      return copilotPlanInfo
+      return await getCopilotPlanInfo({ response })
     } catch (e) {
       log.warn(`fetchCopilotInternal: failed with endpoint ${this.endpoint}`, e)
       return undefined

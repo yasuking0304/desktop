@@ -111,8 +111,8 @@ import {
   IAPIRepoRuleset,
   deleteToken,
   IAPICreatePushProtectionBypassResponse,
-  CopilotPlanInfo,
 } from '../api'
+import { CopilotPlanInfo } from '../copilot-plan-info'
 import { shell } from '../app-shell'
 import {
   CompareAction,
@@ -655,6 +655,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
   private chatQuotas: number = 0
   private autoSuggestQuotas: number = 0
   private copilotResetDate: string = ''
+  private copilotLicenseType: string = ''
   private selectedCopilotModels: CopilotModelSelections = {}
   private copilotModels: ReadonlyArray<ModelInfo> | null = null
 
@@ -1173,6 +1174,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
       chatQuotas: this.chatQuotas,
       autoSuggestQuotas: this.autoSuggestQuotas,
       copilotResetDate: this.copilotResetDate,
+      copilotLicenseType: this.copilotLicenseType,
       selectedCopilotModels: this.selectedCopilotModels,
       copilotModels: this.copilotModels,
       copilotAvailable: this.copilotStore.isAvailable,

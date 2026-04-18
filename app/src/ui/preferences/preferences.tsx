@@ -116,6 +116,7 @@ interface IPreferencesProps {
   readonly chatQuotas: number
   readonly autoSuggestQuotas: number
   readonly copilotResetDate: string
+  readonly copilotLicenseType: string
   readonly selectedCopilotModels: CopilotModelSelections
   readonly copilotModels: ReadonlyArray<ModelInfo> | null
   readonly copilotAvailable: boolean
@@ -180,6 +181,7 @@ interface IPreferencesState {
   readonly chatQuotas: number
   readonly autoSuggestQuotas: number
   readonly copilotResetDate: string
+  readonly copilotLicenseType: string
   readonly selectedGitTabIndex?: number
   readonly enableGitHookEnv: boolean | undefined
   readonly cacheGitHookEnv: boolean | undefined
@@ -261,6 +263,7 @@ export class Preferences extends React.Component<
       chatQuotas: this.props.chatQuotas,
       autoSuggestQuotas: this.props.autoSuggestQuotas,
       copilotResetDate: this.props.copilotResetDate,
+      copilotLicenseType: this.props.copilotLicenseType,
       selectedCopilotModels: this.props.selectedCopilotModels,
       selectedDateFormat: getDateFormatPreference(),
       selectedTimeFormat: getTimeFormatPreference(),
@@ -516,6 +519,9 @@ export class Preferences extends React.Component<
   private onCopilotResetDateChanged = (copilotResetDate: string) => {
     this.setState({ copilotResetDate })
   }
+  private onCopilotLicenseTypeChanged = (copilotLicenseType: string) => {
+    this.setState({ copilotLicenseType })
+  }
 
   private renderActiveTab() {
     const index = this.state.selectedIndex
@@ -601,6 +607,7 @@ export class Preferences extends React.Component<
               onChatQuotasChanged={this.onChatQuotasChanged}
               onAutoSuggestQuotasChanged={this.onAutoSuggestQuotasChanged}
               onCopilotResetDateChanged={this.onCopilotResetDateChanged}
+              onCopilotLicenseTypeChanged={this.onCopilotLicenseTypeChanged}
               enableGitHookEnv={
                 this.state.enableGitHookEnv ?? defaultHooksEnvEnabledValue
               }
@@ -611,6 +618,7 @@ export class Preferences extends React.Component<
               chatQuotas={this.state.chatQuotas}
               autoSuggestQuotas={this.state.autoSuggestQuotas}
               copilotResetDate={this.state.copilotResetDate}
+              copilotLicenseType={this.state.copilotLicenseType}
             />
           </>
         )

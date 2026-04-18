@@ -5,7 +5,7 @@ import { version, productName } from './package.json'
 const devClientId = '3a723b10ac5575cc5bb9'
 const devClientSecret = '22c34d87789a365981ed921352a7b9a8c3f69d54'
 /**
- * This flag only exists in the unofficial multi-language model.
+ * This flag only exists in the unofficial multilingual model.
  * If this value is true, an update check will not be performed.
  **/
 const unofficial = true

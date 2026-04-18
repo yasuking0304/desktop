@@ -111,14 +111,22 @@
   },
   "appearance": {
     "dark": "Dark",
+    "date-format": "Date format",
+    "date-format-darwin": "Date Format",
     "diff": "Diff",
+    "formatting": "Formatting",
     "light": "Light",
     "loading-system-theme": "Loading system theme",
+    "number-format": "Number format",
+    "number-format-darwin": "Number Format",
+    "prefer-absolute-dates": "Prefer absolute dates over relative",
     "system": "System",
     "tab_size_default": "{{0}} (default)",
     "tab-size": "Tab size",
     "tab-size-darwn": "Tab Size",
-    "theme": "Theme"
+    "theme": "Theme",
+    "time-format": "Time format",
+    "time-format-darwin": "Time Format"
   },
   "attribute-mismatch": {
     "git-lfs-filters-are-configured-1": "Git LFS filters are already configured in ",
@@ -472,6 +480,8 @@
     "choose": "Choose…",
     "clone": "Clone",
     "close": "Close",
+    "commit": "commit",
+    "commits": "commits",
     "committed": "Committed",
     "continue": "Continue",
     "copy": "Copy",
@@ -512,6 +522,7 @@
     "opetarion-alias": "{{0}} alias",
     "opetarion-alias-darwin": "{{0}} Alias",
     "options": "Options",
+    "options-name": "options",
     "organization": "Organization",
     "other": "Other",
     "override": "Override",
@@ -529,6 +540,7 @@
     "save": "Save",
     "select-all": "Select All",
     "settings": "Settings",
+    "settings-name": "settings",
     "sign-in": "Sign in",
     "sign-in-darwin": "Sign In",
     "sign-into-1": "Sign into",
@@ -981,7 +993,7 @@
     "edit-your-global-git-config-2": " edit your global Git config file",
     "edit-your-global-git-config-3": ".",
     "enable-paths-lt-260-characters": "Enable paths longer than 260 characters on Windows",
-    "generates-comments-using-copilot": "GitHub Desktop generates comments using Copilot's chat messages. Copilot quota will be reset on {{0}}.",
+    "generates-comments-using-copilot": "GitHub Desktop generates commit comments using Copilot's chat messages. Copilot quota will be reset on {{0}}.",
     "gitHub-default-branch-description-1": "GitHub's default branch name is ",
     "gitHub-default-branch-description-2": ". ",
     "gitHub-default-branch-description-3": "You may want to change it due to different workflows, or because your integrations still require the historical default branch name of ",
@@ -991,7 +1003,7 @@
     "other-settings": "Others",
     "settings-related-to-the-path": "Settings related to the path",
     "shell-to-use-when-loading-env": "Shell to use when loading environment",
-    "show-copilot-information": "Show Copilot Information",
+    "show-copilot-information": "Show Copilot {{0}} Information",
     "when-enabled-attempt-to-load-env-variables": "When enabled, GitHub Desktop will attempt to load environment variables from your shell when executing Git hooks. This is useful if your Git hooks depend on environment variables set in your shell configuration files, a common practive for version managers such as nvm, rbenv, asdf, etc."
   },
   "git-config": {
@@ -1275,6 +1287,24 @@
     "zoom-in-darwin": "Zoom In",
     "zoom-out": "Zoom out",
     "zoom-out-darwin": "Zoom Out"
+  },
+  "merge": {
+    "checking-ability": "Checking for ability to {0} automatically…",
+    "conflicted-message-1": "There will be",
+    "conflicted-message-2": " {{0}} conflicted {{1}}",
+    "conflicted-message-3": " when merging ",
+    "conflicted-message-4": " into ",
+    "conflicted-message-5": " ",
+    "invalid-merge": "Unable to merge unrelated histories in this repository",
+    "invalid-rebase": "Unable to start rebase. Check you have chosen a valid branch.",
+    "will-merge-1": "This will merge",
+    "will-merge-2": " from ",
+    "will-merge-3": " into ",
+    "will-merge-4": " ",
+    "will-update": "This will update ",
+    "will-update-2": " by applying its ",
+    "will-update-3": " on top of ",
+    "will-update-4": " "
   },
   "merge-call-to-action": {
     "merge-into-1": "This will merge ",
@@ -1766,8 +1796,7 @@
   "shared": {
     "error": {
       "could-not-find-executable": "Could not find executable for '{{0}}' at path '{{1}}'.  Please open {{2}} and select an available shell.",
-      "could-not-find-executable-shell": "Could not find executable for custom shell at path '{{0}}'.  Please open {{1}} and select an available shell.",
-      "could-not-find-terminal": "Could not find terminal applicaion. Please open {{0}} and select an available shell."
+      "could-not-find-executable-shell": "Could not find executable for custom shell at path '{{0}}'.  Please open {{1}} and select an available shell."
     }
   },
   "shell-error": {

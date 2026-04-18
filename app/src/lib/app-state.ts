@@ -407,6 +407,8 @@ export interface IAppState {
   readonly autoSuggestQuotas: number
 
   readonly copilotResetDate: string
+
+  readonly copilotLicenseType: string
   /**
    * Per-feature Copilot model selections. An absent key means the default
    * model will be used for that feature.

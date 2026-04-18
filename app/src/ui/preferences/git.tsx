@@ -14,6 +14,7 @@ import {
   SupportedHooksEnvShell,
 } from '../../lib/hooks/config'
 import { Dispatcher } from '../dispatcher'
+import { formatDate } from '../../lib/format-date'
 
 interface IGitProps {
   readonly dispatcher: Dispatcher
@@ -43,6 +44,7 @@ interface IGitProps {
   readonly onChatQuotasChanged: (chatQuotas: number) => void
   readonly onAutoSuggestQuotasChanged: (autoSuggestQuotas: number) => void
   readonly onCopilotResetDateChanged: (copilotResetDate: string) => void
+  readonly onCopilotLicenseTypeChanged: (copilotLicenseType: string) => void
 
   readonly enableGitHookEnv: boolean
   readonly cacheGitHookEnv: boolean
@@ -50,6 +52,7 @@ interface IGitProps {
   readonly chatQuotas: number
   readonly autoSuggestQuotas: number
   readonly copilotResetDate: string
+  readonly copilotLicenseType: string
 }
 
 const windowsShells: ReadonlyArray<SupportedHooksEnvShell> = [
@@ -68,10 +71,10 @@ export class Git extends React.Component<IGitProps> {
     this.props.onSelectedTabIndexChanged?.(index)
     if (index === 3) {
       this.props.dispatcher.getCopilotInformation().then(result => {
-        console.error('getCopilotInformation', result)
         this.props.onChatQuotasChanged(result?.chatQuotas || -1)
         this.props.onAutoSuggestQuotasChanged(result?.autoSuggestQuotas || -1)
         this.props.onCopilotResetDateChanged(result?.copilotResetDate || '')
+        this.props.onCopilotLicenseTypeChanged(result?.copilotLicenseType || '')
       })
     }
   }
@@ -197,7 +200,7 @@ export class Git extends React.Component<IGitProps> {
       return this.renderDefaultBranchSetting()
     } else if (this.selectedTabIndex === 2) {
       return this.renderHooksSettings()
-    } else if (this.selectedTabIndex == 3) {
+    } else if (this.selectedTabIndex === 3) {
       return this.renderOtherSetting()
     }
 
@@ -347,7 +350,9 @@ export class Git extends React.Component<IGitProps> {
     return (
       <div className="git-copilot-info-component">
         <h2 id="git-show-copilot-heading">
-          {t('git.show-copilot-information', 'Show Copilot Information')}
+          {t('git.show-copilot-information', 'Show Copilot {{0}} Information', {
+            0: this.props.copilotLicenseType,
+          })}
         </h2>
         <div className="git-show-copilot-section">
           <div
@@ -389,7 +394,10 @@ export class Git extends React.Component<IGitProps> {
             `GitHub Desktop generates comments using Copilot's chat messages.
              Copilot quota will be reset on {{0}}.`,
             {
-              0: this.props.copilotResetDate,
+              0: formatDate(new Date(this.props.copilotResetDate), {
+                time: false,
+                dateStyle: 'long',
+              }),
             }
           )}
         </div>

@@ -111,14 +111,22 @@
   },
   "appearance": {
     "dark": "暗色",
+    "date-format": "Date format",
+    "date-format-darwin": "Date Format",
     "diff": "差异",
+    "formatting": "Formatting",
     "light": "亮色",
     "loading-system-theme": "正在加载系统主题",
+    "number-format": "Number format",
+    "number-format-darwin": "Number Format",
+    "prefer-absolute-dates": "Prefer absolute dates over relative",
     "system": "跟随系统",
     "tab_size_default": "{{0}} (默认)",
     "tab-size": "选项卡大小",
     "tab-size-darwn": "选项卡大小",
-    "theme": "主题"
+    "theme": "主题",
+    "time-format": "Time format",
+    "time-format-darwin": "Time Format"
   },
   "attribute-mismatch": {
     "git-lfs-filters-are-configured-1": "Git LFS 过滤器已在您的",
@@ -472,6 +480,8 @@
     "choose": "选择…",
     "clone": "克隆",
     "close": "关闭",
+    "commit": "commit",
+    "commits": "commits",
     "committed": "最新提交",
     "continue": "继续",
     "copy": "复制",
@@ -512,6 +522,7 @@
     "opetarion-alias": "{{0}}别名",
     "opetarion-alias-darwin": "{{0}}别名",
     "options": "选项",
+    "options-name": "options",
     "organization": "组织",
     "other": "其他",
     "override": "覆盖",
@@ -529,6 +540,7 @@
     "save": "保存",
     "select-all": "选择全部",
     "settings": "设置",
+    "settings-name": "settings",
     "sign-in": "登录",
     "sign-in-darwin": "登录",
     "sign-into-1": "登录",
@@ -981,7 +993,7 @@
     "edit-your-global-git-config-2": " 编辑你的全局 Git 配置文件",
     "edit-your-global-git-config-3": "。",
     "enable-paths-lt-260-characters": "在 Windows 上使用超过 260 个字符的路径",
-    "generates-comments-using-copilot": "GitHub Desktop generates comments using Copilot's chat messages. Copilot quota will be reset on {{0}}.",
+    "generates-comments-using-copilot": "GitHub Desktop generates commit comments using Copilot's chat messages. Copilot quota will be reset on {{0}}.",
     "gitHub-default-branch-description-1": "GitHub 的默认分支名称是 ",
     "gitHub-default-branch-description-2": "。 ",
     "gitHub-default-branch-description-3": "您可能想要根据不同的工作流程来更改它, 或者因为您的集成仍然需要历史默认分支名称 ",
@@ -991,7 +1003,7 @@
     "other-settings": "其他设置",
     "settings-related-to-the-path": "与路径相关的设置",
     "shell-to-use-when-loading-env": "加载环境时使用的 Shell",
-    "show-copilot-information": "Show Copilot Information",
+    "show-copilot-information": "Show Copilot {{0}} Information",
     "when-enabled-attempt-to-load-env-variables": "When enabled, GitHub Desktop will attempt to load environment variables from your shell when executing Git hooks. This is useful if your Git hooks depend on environment variables set in your shell configuration files, a common practive for version managers such as nvm, rbenv, asdf, etc."
   },
   "git-config": {
@@ -1275,6 +1287,24 @@
     "zoom-in-darwin": "缩放(放大)",
     "zoom-out": "缩放(縮小)",
     "zoom-out-darwin": "缩放(縮小)"
+  },
+  "merge": {
+    "checking-ability": "Checking for ability to {0} automatically…",
+    "conflicted-message-1": "There will be",
+    "conflicted-message-2": " {{0}} conflicted {{1}}",
+    "conflicted-message-3": " when merging ",
+    "conflicted-message-4": " into ",
+    "conflicted-message-5": " ",
+    "invalid-merge": "Unable to merge unrelated histories in this repository",
+    "invalid-rebase": "Unable to start rebase. Check you have chosen a valid branch.",
+    "will-merge-1": "This will merge",
+    "will-merge-2": " from ",
+    "will-merge-3": " into ",
+    "will-merge-4": " ",
+    "will-update": "This will update ",
+    "will-update-2": " by applying its ",
+    "will-update-3": " on top of ",
+    "will-update-4": " "
   },
   "merge-call-to-action": {
     "merge-into-1": "This will merge ",
@@ -1766,8 +1796,7 @@
   "shared": {
     "error": {
       "could-not-find-executable": "在路径'{{1}}'处找不到'{{0}}'的可执行文件。请打开 {{2}} 并选择一个可用的 shell。",
-      "could-not-find-executable-shell": "无法找到位于'{{0}}'的自定义 shell 可执行文件。请打开 {{1}} 并选择一个可用的 shell。",
-      "could-not-find-terminal": "找不到终端应用程序。请打开 {{0}} 并选择一个可用的 shell。"
+      "could-not-find-executable-shell": "无法找到位于'{{0}}'的自定义 shell 可执行文件。请打开 {{1}} 并选择一个可用的 shell。"
     }
   },
   "shell-error": {

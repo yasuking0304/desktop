@@ -7,6 +7,7 @@ import { enableFormattingPreferences } from './feature-flag'
 import mem from 'mem'
 import QuickLRU from 'quick-lru'
 import { getLocale } from '../locales/i18locale'
+import { t } from 'i18next'
 
 // Initializing a date formatter is expensive but formatting is relatively cheap
 // so we cache them based on the locale and their options. The maxSize of a 100
@@ -53,7 +54,7 @@ export function formatDate(
   { date = true, time = true, dateStyle, timeStyle }: IFormatDateOptions = {}
 ): string {
   if (isNaN(value.valueOf())) {
-    return 'Invalid date'
+    return t('format-date.invalid-date', 'Invalid date')
   }
 
   if (!enableFormattingPreferences()) {

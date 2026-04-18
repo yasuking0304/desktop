@@ -111,14 +111,22 @@
   },
   "appearance": {
     "dark": "Dark",
+    "date-format": "Date format",
+    "date-format-darwin": "Date Format",
     "diff": "差異",
+    "formatting": "Formatting",
     "light": "Light",
     "loading-system-theme": "載入系統主題",
+    "number-format": "Number format",
+    "number-format-darwin": "Number Format",
+    "prefer-absolute-dates": "Prefer absolute dates over relative",
     "system": "System",
     "tab_size_default": "{{0}} (預設)",
     "tab-size": "選項卡大小",
     "tab-size-darwn": "選項卡大小",
-    "theme": "主題"
+    "theme": "主題",
+    "time-format": "Time format",
+    "time-format-darwin": "Time Format"
   },
   "attribute-mismatch": {
     "git-lfs-filters-are-configured-1": "Git LFS 過濾器已在您的",
@@ -472,6 +480,8 @@
     "choose": "選擇…",
     "clone": "克隆",
     "close": "關閉",
+    "commit": "commit",
+    "commits": "commits",
     "committed": "最新提交",
     "continue": "續",
     "copy": "複製",
@@ -512,6 +522,7 @@
     "opetarion-alias": "{{0}}別名",
     "opetarion-alias-darwin": "{{0}}別名",
     "options": "選項",
+    "options-name": "options",
     "organization": "組織",
     "other": "其他",
     "override": "覆蓋",
@@ -529,6 +540,7 @@
     "save": "儲存",
     "select-all": "選擇全部",
     "settings": "設定",
+    "settings-name": "settings",
     "sign-in": "登入",
     "sign-in-darwin": "登入",
     "sign-into-1": "登入",
@@ -981,7 +993,7 @@
     "edit-your-global-git-config-2": " 編輯你的全域 Git 設定檔",
     "edit-your-global-git-config-3": "。",
     "enable-paths-lt-260-characters": "在 Windows 系統中啟用長度超過 260 個字元的路徑",
-    "generates-comments-using-copilot": "GitHub Desktop generates comments using Copilot's chat messages. Copilot quota will be reset on {{0}}.",
+    "generates-comments-using-copilot": "GitHub Desktop generates commit comments using Copilot's chat messages. Copilot quota will be reset on {{0}}.",
     "gitHub-default-branch-description-1": "GitHub 的預設分支名稱是 ",
     "gitHub-default-branch-description-2": ". ",
     "gitHub-default-branch-description-3": "您可能想要根據不同的工作流程來更改它, 或者因為您的整合仍然需要歷史預設分支名稱 ",
@@ -991,7 +1003,7 @@
     "other-settings": "其他設定",
     "settings-related-to-the-path": "與路徑相關的設定",
     "shell-to-use-when-loading-env": "載入環境時使用的 Shell",
-    "show-copilot-information": "Show Copilot Information",
+    "show-copilot-information": "Show Copilot {{0}} Information",
     "when-enabled-attempt-to-load-env-variables": "When enabled, GitHub Desktop will attempt to load environment variables from your shell when executing Git hooks. This is useful if your Git hooks depend on environment variables set in your shell configuration files, a common practive for version managers such as nvm, rbenv, asdf, etc."
   },
   "git-config": {
@@ -1275,6 +1287,24 @@
     "zoom-in-darwin": "縮放(放大)",
     "zoom-out": "縮放(縮小)",
     "zoom-out-darwin": "縮放(縮小)"
+  },
+  "merge": {
+    "checking-ability": "Checking for ability to {0} automatically…",
+    "conflicted-message-1": "There will be",
+    "conflicted-message-2": " {{0}} conflicted {{1}}",
+    "conflicted-message-3": " when merging ",
+    "conflicted-message-4": " into ",
+    "conflicted-message-5": " ",
+    "invalid-merge": "Unable to merge unrelated histories in this repository",
+    "invalid-rebase": "Unable to start rebase. Check you have chosen a valid branch.",
+    "will-merge-1": "This will merge",
+    "will-merge-2": " from ",
+    "will-merge-3": " into ",
+    "will-merge-4": " ",
+    "will-update": "This will update ",
+    "will-update-2": " by applying its ",
+    "will-update-3": " on top of ",
+    "will-update-4": " "
   },
   "merge-call-to-action": {
     "merge-into-1": "This will merge ",
@@ -1766,8 +1796,7 @@
   "shared": {
     "error": {
       "could-not-find-executable": "在路徑'{{1}}'處找不到'{{0}}'的可執行檔。請開啟 {{2}} 並選擇一個可用的 shell。",
-      "could-not-find-executable-shell": "Could not find executable for custom shell at path '{{0}}'. Please open {{1}} and select an available shell.",
-      "could-not-find-terminal": "找不到終端應用程式。請開啟 {{0}} 並選擇一個可用的 shell。"
+      "could-not-find-executable-shell": "Could not find executable for custom shell at path '{{0}}'. Please open {{1}} and select an available shell."
     }
   },
   "shell-error": {

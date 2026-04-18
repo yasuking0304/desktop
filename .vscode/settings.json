@@ -29,7 +29,7 @@
   "prettier.prettierPath": "./node_modules/prettier",
   "prettier.ignorePath": ".prettierignore",
   "eslint.options": {
-    "configFile": ".eslintrc.yml",
+    "overrideConfigFile": ".eslintrc.yml",
     "rulePaths": ["eslint-rules"]
   },
   "eslint.validate": [

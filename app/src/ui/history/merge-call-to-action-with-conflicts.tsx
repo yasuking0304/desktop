@@ -17,6 +17,8 @@ import {
   isIdMultiCommitOperation,
 } from '../../models/multi-commit-operation'
 import { RebasePreview } from '../../models/rebase'
+import { t } from 'i18next'
+import { formatNumber } from '../../lib/format-number'
 
 interface IMergeCallToActionWithConflictsProps {
   readonly repository: Repository
@@ -249,8 +251,13 @@ export class MergeCallToActionWithConflicts extends React.Component<
   private renderLoadingMessage() {
     return (
       <div className="merge-message merge-message-loading">
-        Checking for ability to {this.state.selectedOperation.toLowerCase()}{' '}
-        automatically…
+        {t(
+          'merge.checking-ability',
+          'Checking for ability to {0} automatically…',
+          {
+            0: this.state.selectedOperation.toLowerCase(),
+          }
+        )}
       </div>
     )
   }
@@ -260,28 +267,34 @@ export class MergeCallToActionWithConflicts extends React.Component<
       return null
     }
 
-    const pluralized = this.commitCount === 1 ? 'commit' : 'commits'
+    const pluralized =
+      this.commitCount === 1
+        ? t('common.commit', 'commit')
+        : t('common.commits', 'commits')
 
     if (this.state.selectedOperation === MultiCommitOperationKind.Rebase) {
       return (
         <div className="merge-message">
-          This will update <strong>{currentBranch.name}</strong>
-          {` by applying its `}
+          {t('merge.will-update', 'This will update ')}
+          <strong>{currentBranch.name}</strong>
+          {t('merge.will-update-2', ' by applying its ')}
           <strong>{`${this.commitCount} ${pluralized}`}</strong>
-          {` on top of `}
+          {t('merge.will-update-3', ' on top of ')}
           <strong>{branch.name}</strong>
+          {t('merge.will-update-4', ' ')}
         </div>
       )
     }
 
     return (
       <div className="merge-message">
-        This will merge
+        {t('merge.will-merge-1', 'This will merge')}
         <strong>{` ${this.commitCount} ${pluralized}`}</strong>
-        {` from `}
+        {t('merge.will-merge-2', ' from ')}
         <strong>{branch.name}</strong>
-        {` into `}
+        {t('merge.will-merge-3', ' into ')}
         <strong>{currentBranch.name}</strong>
+        {t('merge.will-merge-4', ' ')}
       </div>
     )
   }
@@ -290,14 +303,20 @@ export class MergeCallToActionWithConflicts extends React.Component<
     if (this.state.selectedOperation === MultiCommitOperationKind.Rebase) {
       return (
         <div className="merge-message">
-          Unable to start rebase. Check you have chosen a valid branch.
+          {t(
+            'merge.invalid-rebase',
+            'Unable to start rebase. Check you have chosen a valid branch.'
+          )}
         </div>
       )
     }
 
     return (
       <div className="merge-message">
-        Unable to merge unrelated histories in this repository
+        {t(
+          'merge.invalid-merge',
+          'Unable to merge unrelated histories in this repository'
+        )}
       </div>
     )
   }
@@ -307,15 +326,25 @@ export class MergeCallToActionWithConflicts extends React.Component<
     branch: Branch,
     count: number
   ) {
-    const pluralized = count === 1 ? 'file' : 'files'
+    const pluralized =
+      count === 1 ? t('common.file', 'file') : t('common.files', 'files')
     return (
       <div className="merge-message">
-        There will be
-        <strong>{` ${count} conflicted ${pluralized}`}</strong>
-        {` when merging `}
+        {t('merge.conflicted-message-1', 'There will be')}
+        <strong>
+          {t('merge.conflicted-message-2', ' {{0}} conflicted {{1}}', {
+            0: formatNumber(count),
+            1: pluralized,
+          })}
+        </strong>
+        {t('merge.conflicted-message-3', ' when merging ')}
         <strong>{branch.name}</strong>
-        {` into `}
+        {t('merge.conflicted-message-4', ' into ')}
         <strong>{currentBranch.name}</strong>
+        {t('merge.conflicted-message-5', ' ', {
+          0: formatNumber(count),
+          1: pluralized,
+        })}
       </div>
     )
   }

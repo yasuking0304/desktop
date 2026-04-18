@@ -73,7 +73,7 @@ export class TwoUp extends React.Component<ITwoUpProps, {}> {
               px | <span className="strong">
                 {t('two-up.size', 'Size:')}
               </span>{' '}
-              {formatBytes(current.bytes)}
+              {formatBytes(current.bytes, 2)}
             </div>
           </div>
         </div>

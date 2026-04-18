@@ -1603,6 +1603,7 @@ export class App extends React.Component<IAppProps, IAppState> {
             chatQuotas={this.state.chatQuotas}
             autoSuggestQuotas={this.state.autoSuggestQuotas}
             copilotResetDate={this.state.copilotResetDate}
+            copilotLicenseType={this.state.copilotLicenseType}
             selectedCopilotModels={this.state.selectedCopilotModels}
             copilotModels={this.state.copilotModels}
             copilotAvailable={this.state.copilotAvailable}

@@ -215,11 +215,17 @@ export class Appearance extends React.Component<
 
     return (
       <div className="appearance-section formatting-section">
-        <h2 id="formatting-heading">Formatting</h2>
+        <h2 id="formatting-heading">
+          {t('appearance.formatting', 'Formatting')}
+        </h2>
 
         <Row>
           <Select
-            label={__DARWIN__ ? 'Date Format' : 'Date format'}
+            label={
+              __DARWIN__
+                ? t('appearance.date-format-darwin', 'Date Format')
+                : t('appearance.date-format', 'Date format')
+            }
             value={this.props.selectedDateFormat}
             onChange={this.onDateFormatChanged}
           >
@@ -231,7 +237,11 @@ export class Appearance extends React.Component<
           </Select>
 
           <Select
-            label={__DARWIN__ ? 'Time Format' : 'Time format'}
+            label={
+              __DARWIN__
+                ? t('appearance.time-format-darwin', 'Time Format')
+                : t('appearance.time-format', 'Time format')
+            }
             value={this.props.selectedTimeFormat}
             onChange={this.onTimeFormatChanged}
           >
@@ -244,7 +254,11 @@ export class Appearance extends React.Component<
         </Row>
 
         <Select
-          label={__DARWIN__ ? 'Number Format' : 'Number format'}
+          label={
+            __DARWIN__
+              ? t('appearance.number-format-darwin', 'Number Format')
+              : t('appearance.number-format', 'Number format')
+          }
           value={numberFormatToKey(this.props.selectedNumberFormat)}
           onChange={this.onNumberFormatChanged}
         >
@@ -260,7 +274,10 @@ export class Appearance extends React.Component<
 
         <Checkbox
           className="prefer-absolute-dates"
-          label="Prefer absolute dates over relative"
+          label={t(
+            'appearance.prefer-absolute-dates',
+            'Prefer absolute dates over relative'
+          )}
           value={
             this.props.preferAbsoluteDates
               ? CheckboxValue.On
