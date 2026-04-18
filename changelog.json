@@ -1,5 +1,6 @@
 {
   "releases": {
+    "3.5.8": ["[Improved] Update Git for Windows to v2.53.0.windows.3"],
     "3.5.7": [
       "[Added] Rename branch dialog now validates branch names against repository rulesets - #21822",
       "[Added] Allow empty commits via the commit options menu - #21771",
