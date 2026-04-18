@@ -65,7 +65,7 @@ export class ConfirmCheckoutCommitDialog extends React.Component<
           <Row>
             <Checkbox
               label={t(
-                'confirm-checkout-commit.do-not-show-this-messaeg-again',
+                'common.do-not-show-message-again',
                 'Do not show this message again'
               )}
               value={

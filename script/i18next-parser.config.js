@@ -12,7 +12,6 @@ module.exports = {
     'pt-br',
     'ro',
     'ru',
-    'sv',
     'zh',
     'zh-tw',
   ],

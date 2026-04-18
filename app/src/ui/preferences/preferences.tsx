@@ -44,6 +44,12 @@ import { Repository } from '../../models/repository'
 import { t } from 'i18next'
 import { Notifications } from './notifications'
 import { Accessibility } from './accessibility'
+import type { ModelInfo } from '@github/copilot-sdk'
+import { CopilotPreferences } from './copilot'
+import type {
+  CopilotFeature,
+  CopilotModelSelections,
+} from '../../lib/stores/copilot-store'
 import {
   ICustomIntegration,
   TargetPathArgument,
@@ -59,6 +65,20 @@ import {
   setGitHookEnvShell,
   setHooksEnvEnabled,
 } from '../../lib/hooks/config'
+import { enableCopilotSdkCommitMessageGeneration } from '../../lib/feature-flag'
+import {
+  DateFormat,
+  TimeFormat,
+  INumberFormat,
+  getPreferAbsoluteDates,
+  getDateFormatPreference,
+  getTimeFormatPreference,
+  getNumberFormatPreference,
+  setDateFormatPreference,
+  setTimeFormatPreference,
+  setNumberFormatPreference,
+} from '../../models/formatting-preferences'
+import { enableFormattingPreferences } from '../../lib/feature-flag'
 
 interface IPreferencesProps {
   readonly dispatcher: Dispatcher
@@ -93,6 +113,12 @@ interface IPreferencesProps {
   readonly onEditGlobalGitConfig: () => void
   readonly underlineLinks: boolean
   readonly showDiffCheckMarks: boolean
+  readonly chatQuotas: number
+  readonly autoSuggestQuotas: number
+  readonly copilotResetDate: string
+  readonly selectedCopilotModels: CopilotModelSelections
+  readonly copilotModels: ReadonlyArray<ModelInfo> | null
+  readonly copilotAvailable: boolean
 }
 
 interface IPreferencesState {
@@ -105,8 +131,8 @@ interface IPreferencesState {
   readonly initialCommitterName: string | null
   readonly initialCommitterEmail: string | null
   readonly initialDefaultBranch: string | null
-  readonly initialCoreLongpaths: boolean | null
-  readonly initialCoreQuotepath: boolean | null
+  readonly initialCoreLongpaths: boolean
+  readonly initialCoreQuotepath: boolean
   readonly disallowedCharactersMessage: string | null
   readonly useWindowsOpenSSH: boolean
   readonly showCommitLengthWarning: boolean
@@ -151,12 +177,21 @@ interface IPreferencesState {
 
   readonly showDiffCheckMarks: boolean
 
+  readonly chatQuotas: number
+  readonly autoSuggestQuotas: number
+  readonly copilotResetDate: string
   readonly selectedGitTabIndex?: number
   readonly enableGitHookEnv: boolean | undefined
   readonly cacheGitHookEnv: boolean | undefined
   readonly selectedGitHookEnvShell: string | undefined
   // Whether the preferences related to Git hooks environment have been changed
   readonly hooksPreferencesDirty: boolean
+
+  readonly selectedCopilotModels: CopilotModelSelections
+  readonly selectedDateFormat?: DateFormat
+  readonly selectedTimeFormat?: TimeFormat
+  readonly selectedNumberFormat?: INumberFormat
+  readonly preferAbsoluteDates?: boolean
 }
 
 /**
@@ -183,12 +218,12 @@ export class Preferences extends React.Component<
       committerEmail: '',
       defaultBranch: '',
       coreLongpaths: false,
-      coreQuotepath: false,
+      coreQuotepath: true,
       initialCommitterName: null,
       initialCommitterEmail: null,
       initialDefaultBranch: null,
-      initialCoreLongpaths: null,
-      initialCoreQuotepath: null,
+      initialCoreLongpaths: false,
+      initialCoreQuotepath: true,
       disallowedCharactersMessage: null,
       availableEditors: [],
       useCustomEditor: this.props.useCustomEditor,
@@ -223,6 +258,14 @@ export class Preferences extends React.Component<
       cacheGitHookEnv: getCacheHooksEnv(),
       selectedGitHookEnvShell: getGitHookEnvShell(),
       hooksPreferencesDirty: false,
+      chatQuotas: this.props.chatQuotas,
+      autoSuggestQuotas: this.props.autoSuggestQuotas,
+      copilotResetDate: this.props.copilotResetDate,
+      selectedCopilotModels: this.props.selectedCopilotModels,
+      selectedDateFormat: getDateFormatPreference(),
+      selectedTimeFormat: getTimeFormatPreference(),
+      selectedNumberFormat: getNumberFormatPreference(),
+      preferAbsoluteDates: getPreferAbsoluteDates(),
     }
   }
 
@@ -230,17 +273,13 @@ export class Preferences extends React.Component<
     const initialCommitterName = await getGlobalConfigValue('user.name')
     const initialCommitterEmail = await getGlobalConfigValue('user.email')
     const initialDefaultBranch = await getDefaultBranch()
-    const initialCoreLongpaths = await getGlobalBooleanConfigValue(
-      'core.longpaths'
-    )
-    const initialCoreQuotepath = await getGlobalBooleanConfigValue(
-      'core.quotepath'
-    )
+    const initialCoreLongpaths =
+      (await getGlobalBooleanConfigValue('core.longpaths')) ?? false
+    const initialCoreQuotepath =
+      (await getGlobalBooleanConfigValue('core.quotepath')) ?? true
 
     let committerName = initialCommitterName
     let committerEmail = initialCommitterEmail
-    let committerCoreLongpaths = initialCoreLongpaths
-    let committerCoreQuotepath = initialCoreQuotepath
 
     if (!committerName || !committerEmail) {
       const { accounts } = this.props
@@ -259,13 +298,16 @@ export class Preferences extends React.Component<
 
     committerName = committerName || ''
     committerEmail = committerEmail || ''
-    committerCoreLongpaths = committerCoreLongpaths ?? false
-    committerCoreQuotepath = committerCoreQuotepath ?? true
 
     const [editors, shells] = await Promise.all([
       getAvailableEditors(),
       getAvailableShells(),
     ])
+
+    // Kick off Copilot model list fetch (non-blocking)
+    if (this.isCopilotSdkEnabled) {
+      this.props.dispatcher.fetchCopilotModels()
+    }
 
     const availableEditors = editors.map(e => e.editor) ?? null
     const availableShells = shells.map(e => e.shell) ?? null
@@ -274,11 +316,12 @@ export class Preferences extends React.Component<
       committerName,
       committerEmail,
       defaultBranch: initialDefaultBranch,
-      coreLongpaths: committerCoreLongpaths,
-      coreQuotepath: committerCoreQuotepath,
+      coreLongpaths: initialCoreLongpaths,
+      coreQuotepath: initialCoreQuotepath,
       initialCommitterName,
       initialCommitterEmail,
       initialDefaultBranch,
+      initialCoreLongpaths,
       useWindowsOpenSSH: this.props.useWindowsOpenSSH,
       showCommitLengthWarning: this.props.showCommitLengthWarning,
       notificationsEnabled: this.props.notificationsEnabled,
@@ -333,7 +376,7 @@ export class Preferences extends React.Component<
           {this.renderDisallowedCharactersError()}
           <TabBar
             onTabClicked={this.onTabClicked}
-            selectedIndex={this.state.selectedIndex}
+            selectedIndex={this.tabToVisualIndex(this.state.selectedIndex)}
             type={TabBarType.Vertical}
           >
             <span id={this.getTabId(PreferencesTab.Accounts)}>
@@ -344,6 +387,12 @@ export class Preferences extends React.Component<
               <Octicon className="icon" symbol={octicons.person} />
               {t('preferences.integrations', 'Integrations')}
             </span>
+            {this.isCopilotSdkEnabled && (
+              <span id={this.getTabId(PreferencesTab.Copilot)}>
+                <Octicon className="icon" symbol={octicons.copilot} />
+                Copilot
+              </span>
+            )}
             <span id={this.getTabId(PreferencesTab.Git)}>
               <Octicon className="icon" symbol={octicons.gitCommit} />
               {t('preferences.git', 'Git')}
@@ -385,6 +434,9 @@ export class Preferences extends React.Component<
         break
       case PreferencesTab.Integrations:
         suffix = 'integrations'
+        break
+      case PreferencesTab.Copilot:
+        suffix = 'copilot'
         break
       case PreferencesTab.Git:
         suffix = 'git'
@@ -453,6 +505,18 @@ export class Preferences extends React.Component<
     })
   }
 
+  private onChatQuotasChanged = (chatQuotas: number) => {
+    this.setState({ chatQuotas })
+  }
+
+  private onAutoSuggestQuotasChanged = (autoSuggestQuotas: number) => {
+    this.setState({ autoSuggestQuotas })
+  }
+
+  private onCopilotResetDateChanged = (copilotResetDate: string) => {
+    this.setState({ copilotResetDate })
+  }
+
   private renderActiveTab() {
     const index = this.state.selectedIndex
     let View
@@ -488,6 +552,16 @@ export class Preferences extends React.Component<
         )
         break
       }
+      case PreferencesTab.Copilot:
+        View = (
+          <CopilotPreferences
+            selectedCopilotModels={this.state.selectedCopilotModels}
+            copilotModels={this.props.copilotModels}
+            copilotAvailable={this.props.copilotAvailable}
+            onSelectedCopilotModelChanged={this.onSelectedCopilotModelChanged}
+          />
+        )
+        break
       case PreferencesTab.Git: {
         const { existingLockFilePath } = this.state
         const error =
@@ -505,6 +579,7 @@ export class Preferences extends React.Component<
           <>
             {error}
             <Git
+              dispatcher={this.props.dispatcher}
               name={this.state.committerName}
               email={this.state.committerEmail}
               accounts={this.props.accounts}
@@ -514,15 +589,18 @@ export class Preferences extends React.Component<
               onNameChanged={this.onCommitterNameChanged}
               onEmailChanged={this.onCommitterEmailChanged}
               onDefaultBranchChanged={this.onDefaultBranchChanged}
-              isLoadingGitConfig={this.state.isLoadingGitConfig}
               onCoreLongpathsChanged={this.onCoreLongpathsChanged}
               onCoreQuotepathChanged={this.onCoreQuotepathChanged}
+              isLoadingGitConfig={this.state.isLoadingGitConfig}
               onEditGlobalGitConfig={this.props.onEditGlobalGitConfig}
               selectedTabIndex={this.state.selectedGitTabIndex}
               onSelectedTabIndexChanged={this.onSelectedGitTabIndexChanged}
               onEnableGitHookEnvChanged={this.onEnableGitHookEnvChanged}
               onCacheGitHookEnvChanged={this.onCacheGitHookEnvChanged}
               onSelectedShellChanged={this.onSelectedGitHookEnvShellChanged}
+              onChatQuotasChanged={this.onChatQuotasChanged}
+              onAutoSuggestQuotasChanged={this.onAutoSuggestQuotasChanged}
+              onCopilotResetDateChanged={this.onCopilotResetDateChanged}
               enableGitHookEnv={
                 this.state.enableGitHookEnv ?? defaultHooksEnvEnabledValue
               }
@@ -530,6 +608,9 @@ export class Preferences extends React.Component<
               selectedShell={
                 this.state.selectedGitHookEnvShell ?? defaultGitHookEnvShell
               }
+              chatQuotas={this.state.chatQuotas}
+              autoSuggestQuotas={this.state.autoSuggestQuotas}
+              copilotResetDate={this.state.copilotResetDate}
             />
           </>
         )
@@ -542,6 +623,22 @@ export class Preferences extends React.Component<
             onSelectedThemeChanged={this.onSelectedThemeChanged}
             selectedTabSize={this.props.selectedTabSize}
             onSelectedTabSizeChanged={this.onSelectedTabSizeChanged}
+            selectedDateFormat={
+              this.state.selectedDateFormat ?? getDateFormatPreference()
+            }
+            onSelectedDateFormatChanged={this.onSelectedDateFormatChanged}
+            selectedTimeFormat={
+              this.state.selectedTimeFormat ?? getTimeFormatPreference()
+            }
+            onSelectedTimeFormatChanged={this.onSelectedTimeFormatChanged}
+            selectedNumberFormat={
+              this.state.selectedNumberFormat ?? getNumberFormatPreference()
+            }
+            onSelectedNumberFormatChanged={this.onSelectedNumberFormatChanged}
+            preferAbsoluteDates={
+              this.state.preferAbsoluteDates ?? getPreferAbsoluteDates()
+            }
+            onPreferAbsoluteDatesChanged={this.onPreferAbsoluteDatesChanged}
           />
         )
         break
@@ -755,6 +852,24 @@ export class Preferences extends React.Component<
     this.setState({ selectedShell: shell })
   }
 
+  private onSelectedDateFormatChanged = (selectedDateFormat: DateFormat) => {
+    this.setState({ selectedDateFormat })
+  }
+
+  private onSelectedTimeFormatChanged = (selectedTimeFormat: TimeFormat) => {
+    this.setState({ selectedTimeFormat })
+  }
+
+  private onSelectedNumberFormatChanged = (
+    selectedNumberFormat: INumberFormat
+  ) => {
+    this.setState({ selectedNumberFormat })
+  }
+
+  private onPreferAbsoluteDatesChanged = (preferAbsoluteDates: boolean) => {
+    this.setState({ preferAbsoluteDates })
+  }
+
   private onUseCustomEditorChanged = (useCustomEditor: boolean) => {
     this.setState({ useCustomEditor })
   }
@@ -781,6 +896,21 @@ export class Preferences extends React.Component<
 
   private onShowDiffCheckMarksChanged = (showDiffCheckMarks: boolean) => {
     this.setState({ showDiffCheckMarks })
+  }
+
+  private onSelectedCopilotModelChanged = (
+    feature: CopilotFeature,
+    model: string | null
+  ) => {
+    this.setState(state => {
+      const selections = { ...state.selectedCopilotModels }
+      if (model === null) {
+        delete selections[feature]
+      } else {
+        selections[feature] = model
+      }
+      return { selectedCopilotModels: selections }
+    })
   }
 
   private onSelectedTabSizeChanged = (tabSize: number) => {
@@ -816,18 +946,14 @@ export class Preferences extends React.Component<
         shouldRefreshAuthor = true
       }
 
-      if (
-        this.state.coreLongpaths !== (this.state.initialCoreLongpaths ?? false)
-      ) {
+      if (this.state.coreLongpaths !== this.state.initialCoreLongpaths) {
         await setGlobalConfigValue(
           'core.longpaths',
           this.state.coreLongpaths ? 'true' : 'false'
         )
       }
 
-      if (
-        this.state.coreQuotepath !== (this.state.initialCoreQuotepath ?? true)
-      ) {
+      if (this.state.coreQuotepath !== this.state.initialCoreQuotepath) {
         await setGlobalConfigValue(
           'core.quotepath',
           this.state.coreQuotepath ? 'true' : 'false'
@@ -965,10 +1091,50 @@ export class Preferences extends React.Component<
 
     dispatcher.setDiffCheckMarksSetting(this.state.showDiffCheckMarks)
 
+    dispatcher.setSelectedCopilotModels(this.state.selectedCopilotModels)
+
+    if (enableFormattingPreferences()) {
+      if (this.state.selectedDateFormat !== undefined) {
+        setDateFormatPreference(this.state.selectedDateFormat)
+      }
+
+      if (this.state.selectedTimeFormat !== undefined) {
+        setTimeFormatPreference(this.state.selectedTimeFormat)
+      }
+
+      if (this.state.selectedNumberFormat !== undefined) {
+        setNumberFormatPreference(this.state.selectedNumberFormat)
+      }
+
+      if (this.state.preferAbsoluteDates !== undefined) {
+        dispatcher.setPreferAbsoluteDates(this.state.preferAbsoluteDates)
+      }
+    }
+
     this.props.onDismissed()
   }
 
-  private onTabClicked = (index: number) => {
-    this.setState({ selectedIndex: index })
+  private onTabClicked = (visualIndex: number) => {
+    this.setState({ selectedIndex: this.visualIndexToTab(visualIndex) })
+  }
+
+  private get isCopilotSdkEnabled(): boolean {
+    return this.props.accounts
+      .filter(isDotComAccount)
+      .some(enableCopilotSdkCommitMessageGeneration)
+  }
+
+  private tabToVisualIndex(tab: PreferencesTab): number {
+    if (!this.isCopilotSdkEnabled && tab > PreferencesTab.Copilot) {
+      return tab - 1
+    }
+    return tab
+  }
+
+  private visualIndexToTab(index: number): PreferencesTab {
+    if (!this.isCopilotSdkEnabled && index >= PreferencesTab.Copilot) {
+      return index + 1
+    }
+    return index
   }
 }

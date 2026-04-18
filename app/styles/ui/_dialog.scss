@@ -532,7 +532,7 @@ dialog {
     width: 600px;
 
     .dialog-content {
-      $default-tab-height: 430px;
+      $default-tab-height: 440px;
       min-height: $default-tab-height;
 
       &.accounts-tab {
@@ -560,6 +560,9 @@ dialog {
     .link-button-component {
       display: inline;
     }
+  }
+  &#rename-branch {
+    width: 400px;
   }
   &#push-branch-commits {
     width: 450px;

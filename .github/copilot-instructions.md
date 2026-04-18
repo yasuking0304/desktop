@@ -204,7 +204,7 @@ This project adheres to the Contributor Covenant [Code of Conduct](../CODE_OF_CO
 
 1. **Keep changes minimal**: Make the smallest possible changes to achieve the goal
 2. **Run tests frequently**: Test after each meaningful change
-3. **Lint before committing**: Ensure code passes all linting checks
+3. **Run `yarn lint:fix` after any code change**: This runs Prettier and ESLint with auto-fix to ensure formatting and lint rules are satisfied before committing
 4. **Update documentation**: Update docs if changes affect documented behavior
 5. **Follow existing patterns**: Match the style and patterns already in the codebase
 6. **Don't remove working code**: Only modify what's necessary for the task

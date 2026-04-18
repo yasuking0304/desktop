@@ -9,6 +9,7 @@
     "check-out-the-beta-channel-3": " をご覧ください",
     "checking-for-updates": "更新の確認…",
     "click-here-for-update-information": "更新情報はこちらをクリック",
+    "conventional-commits": "Conventional Commits",
     "could-not-determine-the-last-time-update-check": "更新チェックが最後に実行された時刻を特定できませんでした。古いバージョンを実行している可能性があります。手動でアップデートを確認し、問題が解決しない場合は GitHub サポートにお問い合わせください。",
     "downloading-updates": "更新プログラムのダウンロード…",
     "license-and-open-source-notices": "ライセンスおよびオープンソースの通知",
@@ -80,20 +81,24 @@
   },
   "app-error": {
     "clone-failed": "クローンの失敗",
+    "copilot-exceeded-its-quota": "Copilot の利用限度数を超過しました",
     "failed-to-push": "プッシュに失敗しました",
-    "file-size-limit-exceeded": "ファイルサイズの制限を超えました",
-    "files-that-exceed": "制限を超えたファイル",
+    "file-size-limit-exceeded": "ファイルサイズ制限を超過しました",
+    "files-that-exceed": "制限を超過したファイル",
     "for-more-information-1": "GitHubで大きなファイルを管理する方法の詳細については、",
     "for-more-information-2": " を参照してください。",
     "open-options": "オプションを開く",
     "open-settings-darwin": "オプションを開く",
+    "payment-required": "続けるために課金を行うか、月末のクォータリセットを待つ必要があります。",
     "retry-clone": "クローンの再試行",
     "retry-clone-darwin": "クローンの再試行",
+    "upgrade-to-increase-limit": "アップグレードすることで、利用限度額を増やすことができます",
     "would-you-like-1": " ",
     "would-you-like-2": " のクローンを再試行しますか?"
   },
   "app-store": {
     "checking-out": "チェックアウト",
+    "copilot-multilingual-prompt": "日本語でお願いします。 ",
     "error": {
       "pruner-is-already-active": "A branch pruner is already active and cannot start updating on {{0}}",
       "should-only-have-on-background-fetcher-active": "We should only have on background fetcher active at once, but we're trying to start background fetching on {{0}} while another background fetcher is still active!"
@@ -290,7 +295,7 @@
       "we-could-not-find-that-repository": "そのリポジトリが見つかりませんでした。ログインしていること、ネットワークにアクセスできること、URL またはリポジトリのエイリアスの綴りが正しいことを確認してください。"
     },
     "render-sign-in": "GitHub.com アカウントにサインインして、リポジトリにアクセスします。",
-    "render-sign-in-enterprise": "職場にGitHub Enterprise または AEアカウントがある場合は、そちらでサインインしてリポジトリにアクセスしてください。",
+    "render-sign-in-enterprise": "職場にGitHub Enterpriseアカウントがある場合は、そちらでサインインしてリポジトリにアクセスしてください。",
     "select": "選択"
   },
   "cloneable-repository-filter-list": {
@@ -377,6 +382,10 @@
   "commit-message": {
     "add-co-authors": "コラボレーターの追加",
     "add-co-authors-darwin": "コラボレーターの追加",
+    "add-signed-off-by-trailer": "Signed-off-by トレーラーの追加",
+    "add-signed-off-by-Trailer-darwin": "Signed-off-by トレーラーの追加",
+    "allow-empty-commit": "空コミットを許可",
+    "allow-empty-commit-darwin": "空コミットを許可",
     "amend": "直前のコミットを修正",
     "amending": "直前のコミットを修正中",
     "commit": "コミット",
@@ -387,6 +396,9 @@
     "commit-title-2": " に{{0}}",
     "committing": "コミット中",
     "committing-changes": "変更をコミットしています…",
+    "configure-commit-options": "コミットオプションの設定",
+    "conventional-commits-support": "CopilotでConventional Commits形式出力",
+    "conventional-commits-support-darwin": "CopilotでConventional Commits形式出力",
     "description-field": "説明フィールド",
     "disable-commit-spellcheck": "コミットスペルチェックを無効にする",
     "disable-commit-spellcheck-darwin": "コミットスペルチェックを無効にする",
@@ -401,6 +413,8 @@
     "generating-commit-details": "コミットの詳細を生成中…",
     "link-create-a-fork": "フォークの作成",
     "link-switch-branches": "ブランチの切り替え",
+    "multilingual-support": "Copilotの日本語サポート",
+    "multilingual-support-darwin": "Copilotの日本語サポート",
     "must-be-selected": "。コミットメッセージを生成するにはファイルを選択する必要があります。",
     "please-information-description-field": "説明フィールドに追加情報を入力します。",
     "protected-branch-1": " ",
@@ -417,10 +431,17 @@
     "will-modify-your-most-recent-commit-4": " します。"
   },
   "commit-message-avatar": {
+    "committing-as": "{{0}} でコミットします",
+    "email": "メールアドレス: {{0}}",
+    "for-your-repository": " ",
+    "git-settings": "{{0}} > Git > アカウント",
     "ignore": "無視",
     "learn-more": "詳細情報",
     "learn-more-about": "詳しくはコミットユーザーについてをご覧ください",
-    "repository-settings": "リポジトリ設定",
+    "open-git-author": "アカウントの設定",
+    "open-git-settings": "リポジトリの設定",
+    "open-git-settings-darwin": "リポジトリの設定",
+    "repository-settings": "リポジトリの設定",
     "update-email": "メールの更新",
     "update-email-1": "グローバル Git 設定 (",
     "update-email-2": ")",
@@ -428,7 +449,11 @@
     "you-can-also-choose-an-email-1": " ",
     "you-can-also-choose-an-email-2": "から、このリポジトリのローカルなメールアドレスを選択することも可能です。",
     "you-can-choose-an-email-1": " ",
-    "you-can-choose-an-email-2": "から、このリポジトリのローカルなメールアドレスを選択可能です。"
+    "you-can-choose-an-email-2": "から、このリポジトリのローカルなメールアドレスを選択可能です。",
+    "you-can-set-email-local-1": " ",
+    "you-can-set-email-local-2": "リポジトリの設定",
+    "you-can-set-email-local-3": "で、このリポジトリのローカルなGit設定を更新することができます。",
+    "you-can-update-your-git-config": "{{2}}で、{{0}}なGit設定{{1}}を更新することができます。"
   },
   "commit-summary": {
     "tag": "タグ",
@@ -465,11 +490,13 @@
     "files": "ファイル",
     "finish": "完了",
     "github-desktop": "GitHub Desktop",
+    "global": "グローバル",
     "history": "コミット履歴",
     "i-understand": "了解しました",
     "ignore": "無視",
     "install-and-restart": "インストールして再起動",
     "install-and-restart-darwin": "インストールして再起動",
+    "local": "ローカル",
     "local-path": "ローカルパス",
     "local-path-darwin": "ローカルパス",
     "multiple-commits": "個のコミット",
@@ -560,8 +587,7 @@
     "checking-out-a-commit": "コミットをチェックアウトすると分離された HEAD が作成され、どのブランチにも存在しなくなります。 このコミットをチェックアウトしてもよろしいですか?",
     "checkout": "チェックアウト",
     "checkout-commit": "コミットをチェックアウトしますか?",
-    "checkout-commit-darwin": "コミットをチェックアウトしますか?",
-    "do-not-show-this-messaeg-again": "今後このメッセージを表示しない"
+    "checkout-commit-darwin": "コミットをチェックアウトしますか?"
   },
   "confirm-discard-stash": {
     "are-you-sure-you-want-to-discard": "これらの退避された変更を破棄してもよろしいですか?",
@@ -826,7 +852,7 @@
     "unable-to-open-external-editor-darwin": "外部エディターを開けません"
   },
   "enterprise-server-entry": {
-    "enterprise-or-ae-address": "Enterprise または AEアドレス"
+    "enterprise-or-ae-address": "Enterprise アドレス"
   },
   "expandable-commit-summary": {
     "added-lines": "{{0}}行追加",
@@ -943,10 +969,11 @@
     "we-were-unable-to-authenticate-6": "、もう一度やり直してください。"
   },
   "git": {
-    "autor": "アカウント",
-    "beta": "Beta",
+    "author": "アカウント",
     "cache-git-hook-env-variables": "Gitフックの環境変数をキャッシュする",
     "cache-hook-env-description": "パフォーマンスを向上させるために、フックの環境変数をキャッシュします。フックが頻繁に変更される環境変数に依存している場合は無効にしてください。",
+    "copilot-chat-messages": "Chat messages",
+    "copilot-code-completions": "Code completions",
     "default-branch": "デフォルトブランチ",
     "default-branch-name-for-new-repositories": "新しいリポジトリのデフォルトのブランチ名",
     "display-escaped-non-ascii-characters": "非ASCII文字をエスケープして表示する\n(日本語環境ではOFFでの使用を推奨します)",
@@ -954,18 +981,17 @@
     "edit-your-global-git-config-2": "グローバル向け Git 構成ファイルを編集",
     "edit-your-global-git-config-3": "することになります。",
     "enable-paths-lt-260-characters": "Windowsで260文字を超えるパスを有効にする",
+    "generates-comments-using-copilot": "GitHub Desktop generates comments using Copilot's chat messages. Copilot quota will be reset on {{0}}.",
     "gitHub-default-branch-description-1": "GitHub のデフォルトのブランチ名は ",
     "gitHub-default-branch-description-2": "です。 ",
     "gitHub-default-branch-description-3": " ワークフローが異なったり統合する過程で ",
     "gitHub-default-branch-description-4": " という過去のデフォルトのブランチ名が依然として必要なため、これを変更することが必要になる場合があります。",
-    "github-desktop-hook-support-is-experime-1": "GitHub Desktop フックのサポートは試験段階であり、現在はコミット関連のフックのみをサポートしています。",
-    "github-desktop-hook-support-is-experime-2": "問題が発生したり、フィードバックがある場合はお知らせください",
-    "github-desktop-hook-support-is-experime-3": "。",
     "hooks": "フック",
     "load-git-hook-env-from-shell": "シェルからGitフック環境変数を読み込む",
     "other-settings": "その他",
     "settings-related-to-the-path": "パスに関する設定",
     "shell-to-use-when-loading-env": "環境をロードするときに使用するシェル",
+    "show-copilot-information": "Show Copilot Information",
     "when-enabled-attempt-to-load-env-variables": "有効にすると、GitHub Desktop は Git フックの実行時にシェルから環境変数を読み込みます。これは、Gitフックがシェル設定ファイルで設定された環境変数に依存している場合に便利です。nvm、rbenv、asdf などのバージョン管理ツールで一般的に使われている方法です。"
   },
   "git-config": {
@@ -1587,7 +1613,6 @@
   },
   "push-pull-button": {
     "cannot-publish-detached-head": "detached HEAD を公開できません",
-    "cannot-publish-unborn-head": "unborn HEAD を公開できません",
     "fetch": "{{0}} にフェッチ",
     "force-push": "{{0}} の強制プッシュ",
     "hang-on": "お待ちください…",
@@ -2008,6 +2033,7 @@
     "would-you-like-to-update": "予期された URL を使用するようにリモートを更新しますか?"
   },
   "url": {
+    "conventional-commits-uri": "https://www.conventionalcommits.org/ja",
     "creativecommons_org_licenses": "https://creativecommons.jp/licenses/",
     "git-scm-com-docs-gitignore": "https://git-scm.com/docs/gitignore",
     "github-desktop-issue": "https://github.com/yasuking0304/desktop/issues/new/choose",

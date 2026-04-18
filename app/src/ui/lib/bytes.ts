@@ -1,6 +1,8 @@
 import '../../locales/i18n'
 import { round } from './round'
 import { t } from 'i18next'
+import { formatCompactNumber } from '../../lib/format-number'
+import { enableFormattingPreferences } from '../../lib/feature-flag'
 
 const units = [
   t('bytes.b', 'B'),
@@ -41,18 +43,25 @@ const units_linux = [
  *                      readable form
  * @param decimals    - The number of decimals to round the result
  *                      to, defaults to zero
- * @param fixed       - Whether to always include the desired number
- *                      of decimals even though the number could be
- *                      made more compact by removing trailing zeroes.
  */
-export function formatBytes(bytes: number, decimals = 0, fixed = true) {
+export function formatBytes(bytes: number, decimals = 0) {
+  if (enableFormattingPreferences()) {
+    return formatCompactNumber(bytes, {
+      base: 1024,
+      units,
+      decimals,
+      unitSeparator: ' ',
+    })
+  }
+
+  // Legacy behavior when feature flag is disabled
   if (!Number.isFinite(bytes)) {
     return `${bytes}`
   }
   const unitIx = Math.floor(Math.log(Math.abs(bytes)) / Math.log(1024))
   const value = round(bytes / Math.pow(1024, unitIx), decimals)
   if (__LINUX__) {
-    return `${fixed ? value.toFixed(decimals) : value} ${units_linux[unitIx]}`
+    return `${value} ${units_linux[unitIx]}`
   }
-  return `${fixed ? value.toFixed(decimals) : value} ${units[unitIx]}`
+  return `${value} ${units[unitIx]}`
 }

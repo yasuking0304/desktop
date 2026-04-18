@@ -4,6 +4,7 @@ import { Row } from '../lib/row'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
 import { Checkbox, CheckboxValue } from '../lib/checkbox'
 import { LinkButton } from '../lib/link-button'
+import { t } from 'i18next'
 
 interface IConfirmCommitFilteredChangesProps {
   readonly onCommitAnyway: () => void
@@ -52,7 +53,10 @@ export class ConfirmCommitFilteredChanges extends React.Component<
           </p>
           <Row>
             <Checkbox
-              label="Do not show this message again"
+              label={t(
+                'common.do-not-show-message-again',
+                'Do not show this message again'
+              )}
               value={
                 this.state.askForConfirmationOnCommitFilteredChanges
                   ? CheckboxValue.Off

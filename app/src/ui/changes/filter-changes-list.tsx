@@ -75,6 +75,7 @@ import {
 } from './filter-changes-logic'
 import { ChangesListFilterOptions } from './changes-list-filter-options'
 import { HookProgress } from '../../lib/git'
+import { formatNumber } from '../../lib/format-number'
 
 export interface IChangesListItem extends IFilterListItem {
   readonly id: string
@@ -236,11 +237,27 @@ interface IFilterChangesListProps {
    */
   readonly skipCommitHooks: boolean
 
+  /**
+   * Whether or not to add a `Signed-off-by` trailer to commit messages
+   * by means of passing the `--signoff` flag to git commit
+   */
+  readonly signOffCommits: boolean
+
+  /**
+   * Whether or not to allow creating a commit without any file changes
+   * by means of passing the `--allow-empty` flag to git commit.
+   * This option resets to false after each commit.
+   */
+  readonly allowEmptyCommit: boolean
+
   /** Callback to set commit options for the given repository */
   readonly onUpdateCommitOptions: (
     repository: Repository,
-    options: CommitOptions
+    options: Partial<CommitOptions>
   ) => void
+
+  readonly supportCopilotMultiLingual: boolean
+  readonly copilotConventionalCommitsFormat: boolean
 }
 
 interface IFilterChangesListState {
@@ -1059,6 +1076,12 @@ export class FilterChangesList extends React.Component<
         onShowPopup={this.onShowPopup}
         onShowFoldout={this.onShowFoldout}
         onCommitSpellcheckEnabledChanged={this.onCommitSpellcheckEnabledChanged}
+        onCopilotMultiLingualSupportChanged={
+          this.onCopilotMultiLingualSupportChanged
+        }
+        onCopilotConventionalCommitsFormatChanged={
+          this.onCopilotConventionalCommitsFormatChanged
+        }
         onStopAmending={this.onStopAmending}
         onShowCreateForkDialog={this.onShowCreateForkDialog}
         onFilesToCommitNotVisible={this.onFilesToCommitNotVisible}
@@ -1067,6 +1090,13 @@ export class FilterChangesList extends React.Component<
         submitButtonAriaDescribedBy={'hidden-changes-warning'}
         hasCommitHooks={this.props.hasCommitHooks}
         skipCommitHooks={this.props.skipCommitHooks}
+        signOffCommits={this.props.signOffCommits}
+        allowEmptyCommit={this.props.allowEmptyCommit}
+        showAllowEmptyCommitOption={true}
+        supportCopilotMultiLingual={this.props.supportCopilotMultiLingual}
+        copilotConventionalCommitsFormat={
+          this.props.copilotConventionalCommitsFormat
+        }
         onUpdateCommitOptions={this.props.onUpdateCommitOptions}
       />
     )
@@ -1125,6 +1155,12 @@ export class FilterChangesList extends React.Component<
 
   private onCommitSpellcheckEnabledChanged = (enabled: boolean) =>
     this.props.dispatcher.setCommitSpellcheckEnabled(enabled)
+
+  private onCopilotMultiLingualSupportChanged = (enabled: boolean) =>
+    this.props.dispatcher.setCopilotMultiLingualSupport(enabled)
+
+  private onCopilotConventionalCommitsFormatChanged = (enabled: boolean) =>
+    this.props.dispatcher.setCopilotConventionalCommitsFormat(enabled)
 
   private onStopAmending = () =>
     this.props.dispatcher.stopAmendingRepository(this.props.repository)
@@ -1324,7 +1360,7 @@ export class FilterChangesList extends React.Component<
     const checkAllLabel = t(
       'filter-changes-list.files-description',
       '{{0}}{{1}} changed {{2}}',
-      { 0: numberDescrption, 1: files.length, 2: filesPlural }
+      { 0: numberDescrption, 1: formatNumber(files.length), 2: filesPlural }
     )
 
     return (
@@ -1390,7 +1426,7 @@ export class FilterChangesList extends React.Component<
         ? t('changes-list.file', 'file')
         : t('changes-list.files', 'files')
     return t('changes-list.files-description', '{{0}} changed {{1}}', {
-      0: files.length,
+      0: formatNumber(files.length),
       1: filesPlural,
     })
   }
@@ -1491,7 +1527,7 @@ export class FilterChangesList extends React.Component<
           {t(
             'filter-changes-list.Adjust the filters',
             'Adjust the filters to see all {{0}} changes',
-            { 0: filesSelected.length }
+            { 0: formatNumber(filesSelected.length) }
           )}
         </LinkButton>
       </div>

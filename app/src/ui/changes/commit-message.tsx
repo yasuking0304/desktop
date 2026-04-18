@@ -193,6 +193,8 @@ interface ICommitMessageProps {
   readonly onShowPopup: (popup: Popup) => void
   readonly onShowFoldout: (foldout: Foldout) => void
   readonly onCommitSpellcheckEnabledChanged: (enabled: boolean) => void
+  readonly onCopilotMultiLingualSupportChanged: (enabled: boolean) => void
+  readonly onCopilotConventionalCommitsFormatChanged: (enabled: boolean) => void
   readonly onStopAmending: () => void
   readonly onShowCreateForkDialog: () => void
   readonly onFilesToCommitNotVisible?: (onCommitAnyway: () => {}) => void
@@ -215,11 +217,42 @@ interface ICommitMessageProps {
    */
   readonly skipCommitHooks: boolean
 
+  /**
+   * Whether or not to add a `Signed-off-by` trailer to commit messages
+   * by means of passing the `--signoff` flag to git commit
+   */
+  readonly signOffCommits: boolean
+
+  /**
+   * Whether or not to allow creating a commit without any file changes
+   * by means of passing the `--allow-empty` flag to git commit.
+   * This option resets to false after each commit.
+   */
+  readonly allowEmptyCommit: boolean
+
+  /**
+   * Whether or not to show the "Allow empty commit" option in the commit
+   * options context menu. Should be false when the CommitMessage component
+   * is used in contexts where empty commits are not applicable, such as the
+   * squash commit dialog.
+   */
+  readonly showAllowEmptyCommitOption?: boolean
+
   /** Callback to set commit options for the given repository */
   readonly onUpdateCommitOptions: (
     repository: Repository,
-    options: CommitOptions
+    options: Partial<CommitOptions>
   ) => void
+
+  /**
+   * Whether or not the app should use multilingual support in Copilot features,
+   *  which allows users to get suggestions in languages other than English.
+   */
+  readonly supportCopilotMultiLingual: boolean
+  /** Whether or not the app should use conventional commits
+   *  support in Copilot features
+   */
+  readonly copilotConventionalCommitsFormat: boolean
 }
 
 interface ICommitMessageState {
@@ -633,7 +666,8 @@ export class CommitMessage extends React.Component<
 
   private canCommit(): boolean {
     return (
-      ((this.props.anyFilesSelected === true &&
+      (((this.props.anyFilesSelected === true ||
+        this.props.allowEmptyCommit === true) &&
         this.state.commitMessage.summary.length > 0) ||
         this.props.prepopulateCommitSummary) &&
       !this.hasRepoRuleFailure()
@@ -1045,11 +1079,10 @@ export class CommitMessage extends React.Component<
   }
 
   private renderCommitOptionsButton() {
-    if (!this.isCommitOptionsButtonEnabled) {
-      return null
-    }
-
-    const ariaLabel = 'Configure commit options'
+    const ariaLabel = t(
+      'commit-message.configure-commit-options',
+      'Configure commit options'
+    )
 
     return (
       <>
@@ -1058,7 +1091,10 @@ export class CommitMessage extends React.Component<
         )}
         <Button
           className={classNames('commit-options-button', {
-            'default-options': !this.props.skipCommitHooks,
+            'default-options':
+              !this.props.skipCommitHooks &&
+              !this.props.signOffCommits &&
+              !this.props.allowEmptyCommit,
           })}
           onClick={this.onCommitOptionsButtonClick}
           ariaLabel={ariaLabel}
@@ -1074,8 +1110,11 @@ export class CommitMessage extends React.Component<
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
     e.preventDefault()
-    showContextualMenu([
-      {
+
+    const items: IMenuItem[] = []
+
+    if (enableHooksEnvironment() && this.props.hasCommitHooks) {
+      items.push({
         type: 'checkbox',
         checked: this.props.skipCommitHooks,
         label: __DARWIN__ ? 'Bypass Commit Hooks' : 'Bypass Commit hooks',
@@ -1084,8 +1123,85 @@ export class CommitMessage extends React.Component<
             skipCommitHooks: !this.props.skipCommitHooks,
           })
         },
+      })
+    }
+
+    items.push({
+      type: 'checkbox',
+      checked: this.props.signOffCommits,
+      label: __DARWIN__
+        ? t(
+            'commit-message.add-signed-off-by-Trailer-darwin',
+            'Add Signed-off-by Trailer'
+          )
+        : t(
+            'commit-message.add-signed-off-by-trailer',
+            'Add Signed-off-by trailer'
+          ),
+      action: () => {
+        this.props.onUpdateCommitOptions(this.props.repository, {
+          signOffCommits: !this.props.signOffCommits,
+        })
       },
-    ])
+    })
+
+    if (this.props.showAllowEmptyCommitOption) {
+      items.push({
+        type: 'checkbox',
+        checked: this.props.allowEmptyCommit,
+        label: __DARWIN__
+          ? t('commit-message.allow-empty-commit-darwin', 'Allow Empty Commit')
+          : t('commit-message.allow-empty-commit', 'Allow empty commit'),
+        action: () => {
+          this.props.onUpdateCommitOptions(this.props.repository, {
+            allowEmptyCommit: !this.props.allowEmptyCommit,
+          })
+        },
+      })
+    }
+
+    if (this.props.onGenerateCommitMessage) {
+      items.push({
+        type: 'checkbox',
+        checked: this.props.supportCopilotMultiLingual,
+        label: __DARWIN__
+          ? t(
+              'commit-message.multilingual-support-darwin',
+              "Copilot's multilingual support"
+            )
+          : t(
+              'commit-message.multilingual-support',
+              "Copilot's multilingual Support"
+            ),
+        action: () => {
+          this.props.onCopilotMultiLingualSupportChanged(
+            !this.props.supportCopilotMultiLingual
+          )
+        },
+      })
+    }
+
+    if (this.props.onGenerateCommitMessage) {
+      items.push({
+        type: 'checkbox',
+        checked: this.props.copilotConventionalCommitsFormat,
+        label: __DARWIN__
+          ? t(
+              'commit-message.conventional-commits-support-darwin',
+              'Copilot generated in Conventional Commits format'
+            )
+          : t(
+              'commit-message.conventional-commits-support',
+              'Copilot generated in Conventional Commits format'
+            ),
+        action: () => {
+          this.props.onCopilotConventionalCommitsFormatChanged(
+            !this.props.copilotConventionalCommitsFormat
+          )
+        },
+      })
+    }
+    showContextualMenu(items)
   }
 
   private renderCoAuthorToggleButton() {
@@ -1176,26 +1292,7 @@ export class CommitMessage extends React.Component<
     )
   }
 
-  private get isCommitOptionsButtonEnabled() {
-    return enableHooksEnvironment() && this.props.hasCommitHooks
-  }
-
-  /**
-   * Whether or not there's anything to render in the action bar
-   */
-  private get isActionBarEnabled() {
-    return (
-      this.isCoAuthorInputEnabled ||
-      this.isCopilotButtonEnabled ||
-      this.isCommitOptionsButtonEnabled
-    )
-  }
-
   private renderActionBar() {
-    if (!this.isActionBarEnabled) {
-      return null
-    }
-
     const { isCommitting, isGeneratingCommitMessage } = this.props
 
     const className = classNames('action-bar', {
@@ -1592,7 +1689,11 @@ export class CommitMessage extends React.Component<
         'commit-message.summary-is-required-to-commit',
         `A commit summary is required to commit`
       )
-    } else if (!this.props.anyFilesSelected && this.props.anyFilesAvailable) {
+    } else if (
+      !this.props.anyFilesSelected &&
+      this.props.anyFilesAvailable &&
+      !this.props.allowEmptyCommit
+    ) {
       return t(
         'commit-message.select-one-or-more-files-to-commit',
         `Select one or more files to commit`
@@ -1748,7 +1849,7 @@ export class CommitMessage extends React.Component<
 
   public render() {
     const className = classNames('commit-message-component', {
-      'with-action-bar': this.isActionBarEnabled,
+      'with-action-bar': true,
       'with-co-authors': this.isCoAuthorInputVisible,
     })
 

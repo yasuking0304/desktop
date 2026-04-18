@@ -9,8 +9,12 @@ yarn-error.log
 .idea/
 .eslintcache
 app/coverage
+script/coverage
+playwright-videos
 app/static/common
 app/test/fixtures
 gemoji
 *.md
 script/GitHub-Desktop.yml
+app/static/logos/prod/**/*.json
+app/static/logos/dev/**/*.json

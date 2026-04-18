@@ -99,6 +99,20 @@ export const enableCommitMessageGeneration = (account: Account) => {
   )
 }
 
+export const enableCopilotSdkCommitMessageGeneration = (account: Account) => {
+  return (
+    enableBetaFeatures() &&
+    (account.features ?? []).includes(
+      'desktop_enable_copilot_sdk_commit_message_generation'
+    )
+  )
+}
+
+/** Should we enable Copilot-powered merge conflict resolution? */
+export function enableCopilotConflictResolution(): boolean {
+  return enableDevelopmentFeatures()
+}
+
 export function enableAccessibleListToolTips(): boolean {
   return enableBetaFeatures()
 }
@@ -106,3 +120,5 @@ export function enableAccessibleListToolTips(): boolean {
 export const enableHooksEnvironment = () => true
 
 export const enableHooksByDefault = enableBetaFeatures
+
+export const enableFormattingPreferences = enableBetaFeatures

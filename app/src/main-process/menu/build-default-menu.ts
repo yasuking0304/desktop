@@ -114,7 +114,10 @@ export function buildDefaultMenu({
   }
 
   const fileMenu: Electron.MenuItemConstructorOptions = {
-    label: __DARWIN__ ? t('menu.file-darwin', 'File') : t('menu.file', '&File'),
+    label:
+      __DARWIN__ || __LINUX__
+        ? t('menu.file-darwin', 'File')
+        : t('menu.file', '&File'),
     submenu: [
       {
         label: __DARWIN__
@@ -168,7 +171,10 @@ export function buildDefaultMenu({
   template.push(fileMenu)
 
   template.push({
-    label: __DARWIN__ ? t('menu.edit-darwin', 'Edit') : t('menu.edit', '&Edit'),
+    label:
+      __DARWIN__ || __LINUX__
+        ? t('menu.edit-darwin', 'Edit')
+        : t('menu.edit', '&Edit'),
     submenu: [
       {
         role: 'undo',
@@ -219,7 +225,10 @@ export function buildDefaultMenu({
   })
 
   template.push({
-    label: __DARWIN__ ? t('menu.view-darwin', 'View') : t('menu.view', '&View'),
+    label:
+      __DARWIN__ || __LINUX__
+        ? t('menu.view-darwin', 'View')
+        : t('menu.view', '&View'),
     submenu: [
       {
         label: __DARWIN__
@@ -370,9 +379,10 @@ export function buildDefaultMenu({
   const pushEventType = isForcePushForCurrentRepository ? 'force-push' : 'push'
 
   template.push({
-    label: __DARWIN__
-      ? t('menu.repository-darwin', 'Repository')
-      : t('menu.repository', '&Repository'),
+    label:
+      __DARWIN__ || __LINUX__
+        ? t('menu.repository-darwin', 'Repository')
+        : t('menu.repository', '&Repository'),
     id: 'repository',
     submenu: [
       {
@@ -603,9 +613,10 @@ export function buildDefaultMenu({
   })
 
   template.push({
-    label: __DARWIN__
-      ? t('menu.branch-darwin', 'Branch')
-      : t('menu.branch', '&Branch'),
+    label:
+      __DARWIN__ || __LINUX__
+        ? t('menu.branch-darwin', 'Branch')
+        : t('menu.branch', '&Branch'),
     id: 'branch',
     submenu: branchSubmenu,
   })
@@ -719,7 +730,9 @@ export function buildDefaultMenu({
     })
   } else {
     template.push({
-      label: t('menu.help', '&Help'),
+      label: __LINUX__
+        ? t('menu.help-darwin', 'Help')
+        : t('menu.help', '&Help'),
       submenu: [
         ...helpItems,
         separator,

@@ -35,6 +35,12 @@ $overlay-background-color: rgba(0, 0, 0, 0.4);
   --link-button-hover-color: #{$blue-600};
   --link-button-selected-hover-color: #{$blue-200};
 
+  --brand-button-accent-background: #{$green-600};
+  --brand-button-accent-hover-background: #{lighten($green-600, 2%)};
+  --brand-button-border-radius: 6px;
+  --brand-button-text-color: #{$white};
+  --brand-button-focus-border-color: #{$green-700};
+
   --secondary-button-background: #{$gray-100};
   --secondary-button-border-color: var(--box-border-contrast-color);
   --secondary-button-hover-border-color: var(--box-border-contrast-color);
@@ -556,6 +562,10 @@ $overlay-background-color: rgba(0, 0, 0, 0.4);
   --md-neutral-muted-color: rgba(175, 184, 193, 0.2);
   --md-accent-emphasis-color: #0969da;
   --md-accent-fg-color: #0969da;
+
+  // Progress bar colors
+  --progress-bar-background-color: #{$gray-200};
+  --progress-bar-progress-color: #1a7f37;
 }
 
 ::backdrop {

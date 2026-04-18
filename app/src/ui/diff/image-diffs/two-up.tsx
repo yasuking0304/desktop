@@ -52,7 +52,7 @@ export class TwoUp extends React.Component<ITwoUpProps, {}> {
               px | <span className="strong">
                 {t('two-up.size', 'Size:')}
               </span>{' '}
-              {formatBytes(previous.bytes, 2, false)}
+              {formatBytes(previous.bytes, 2)}
             </div>
           </div>
 
@@ -73,7 +73,7 @@ export class TwoUp extends React.Component<ITwoUpProps, {}> {
               px | <span className="strong">
                 {t('two-up.size', 'Size:')}
               </span>{' '}
-              {formatBytes(current.bytes, 2, false)}
+              {formatBytes(current.bytes)}
             </div>
           </div>
         </div>
@@ -86,11 +86,7 @@ export class TwoUp extends React.Component<ITwoUpProps, {}> {
             })}
           >
             {diffBytes !== 0
-              ? `${diffBytesSign}${formatBytes(
-                  diffBytes,
-                  2,
-                  false
-                )} (${diffPercent})`
+              ? `${diffBytesSign}${formatBytes(diffBytes, 2)} (${diffPercent})`
               : t('two-up.no-size-difference', 'No size difference')}
           </span>
         </div>

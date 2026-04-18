@@ -108,10 +108,42 @@ interface ICommitMessageDialogProps {
    */
   readonly skipCommitHooks: boolean
 
+  /**
+   * Whether or not to add a `Signed-off-by` trailer to commit messages
+   * by means of passing the `--signoff` flag to git commit
+   */
+  readonly signOffCommits: boolean
+
+  /**
+   * Whether or not to allow creating a commit without any file changes
+   * by means of passing the `--allow-empty` flag to git commit.
+   * This option resets to false after each commit.
+   */
+  readonly allowEmptyCommit: boolean
+
+  /**
+   * Whether or not to show the "Allow empty commit" option in the commit
+   * options context menu. Defaults to false since CommitMessageDialog is
+   * currently only used for squash commits where empty commits are not
+   * applicable.
+   */
+  readonly showAllowEmptyCommitOption?: boolean
+
+  /**
+   * Whether or not the app should use multilingual support in Copilot features,
+   *  which allows users to get suggestions in languages other than English.
+   */
+  readonly supportCopilotMultiLingual: boolean
+
+  /**
+   * Whether or not the app should use conventional commits support in Copilot features,
+   */
+  readonly copilotConventionalCommitsFormat: boolean
+
   /** Callback to set commit options for the given repository */
   readonly onUpdateCommitOptions: (
     repository: Repository,
-    options: CommitOptions
+    options: Partial<CommitOptions>
   ) => void
 }
 
@@ -187,6 +219,21 @@ export class CommitMessageDialog extends React.Component<
             onShowCommitProgress={undefined}
             hasCommitHooks={this.props.hasCommitHooks}
             skipCommitHooks={this.props.skipCommitHooks}
+            signOffCommits={this.props.signOffCommits}
+            allowEmptyCommit={this.props.allowEmptyCommit}
+            supportCopilotMultiLingual={this.props.supportCopilotMultiLingual}
+            onCopilotMultiLingualSupportChanged={
+              this.onCopilotMultiLingualSupportChanged
+            }
+            copilotConventionalCommitsFormat={
+              this.props.copilotConventionalCommitsFormat
+            }
+            onCopilotConventionalCommitsFormatChanged={
+              this.onCopilotConventionalCommitsFormatChanged
+            }
+            showAllowEmptyCommitOption={
+              this.props.showAllowEmptyCommitOption ?? false
+            }
             onUpdateCommitOptions={this.props.onUpdateCommitOptions}
           />
         </DialogContent>
@@ -225,4 +272,9 @@ export class CommitMessageDialog extends React.Component<
       this.props.dispatcher.showCreateForkDialog(this.props.repository)
     }
   }
+  private onCopilotMultiLingualSupportChanged = (enabled: boolean) =>
+    this.props.dispatcher.setCopilotMultiLingualSupport(enabled)
+
+  private onCopilotConventionalCommitsFormatChanged = (enabled: boolean) =>
+    this.props.dispatcher.setCopilotConventionalCommitsFormat(enabled)
 }

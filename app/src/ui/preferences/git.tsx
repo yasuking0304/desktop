@@ -13,8 +13,10 @@ import {
   shellFriendlyNames,
   SupportedHooksEnvShell,
 } from '../../lib/hooks/config'
+import { Dispatcher } from '../dispatcher'
 
 interface IGitProps {
+  readonly dispatcher: Dispatcher
   readonly name: string
   readonly email: string
   readonly defaultBranch: string
@@ -38,10 +40,16 @@ interface IGitProps {
   readonly onEnableGitHookEnvChanged: (enableGitHookEnv: boolean) => void
   readonly onCacheGitHookEnvChanged: (cacheGitHookEnv: boolean) => void
   readonly onSelectedShellChanged: (selectedShell: string) => void
+  readonly onChatQuotasChanged: (chatQuotas: number) => void
+  readonly onAutoSuggestQuotasChanged: (autoSuggestQuotas: number) => void
+  readonly onCopilotResetDateChanged: (copilotResetDate: string) => void
 
   readonly enableGitHookEnv: boolean
   readonly cacheGitHookEnv: boolean
   readonly selectedShell: string
+  readonly chatQuotas: number
+  readonly autoSuggestQuotas: number
+  readonly copilotResetDate: string
 }
 
 const windowsShells: ReadonlyArray<SupportedHooksEnvShell> = [
@@ -58,6 +66,14 @@ export class Git extends React.Component<IGitProps> {
 
   private onTabClicked = (index: number) => {
     this.props.onSelectedTabIndexChanged?.(index)
+    if (index === 3) {
+      this.props.dispatcher.getCopilotInformation().then(result => {
+        console.error('getCopilotInformation', result)
+        this.props.onChatQuotasChanged(result?.chatQuotas || -1)
+        this.props.onAutoSuggestQuotasChanged(result?.autoSuggestQuotas || -1)
+        this.props.onCopilotResetDateChanged(result?.copilotResetDate || '')
+      })
+    }
   }
 
   private onEnableGitHookEnvChanged = (
@@ -81,25 +97,6 @@ export class Git extends React.Component<IGitProps> {
   private renderHooksSettings() {
     return (
       <>
-        <div className="hooks-warning">
-          {t(
-            'git.github-desktop-hook-support-is-experime-1',
-            `GitHub Desktop hook support is experimental and currently only
-          supports hooks related to committing. Please `
-          )}
-          <LinkButton
-            uri={t(
-              'url.github-desktop-issue',
-              'https://github.com/yasuking0304/desktop/issues/new/choose'
-            )}
-          >
-            {t('git.github-desktop-hook-support-is-experime-2', 'let us know')}
-          </LinkButton>
-          {t(
-            'git.github-desktop-hook-support-is-experime-3',
-            ' if you encounter any issues or have feedback!'
-          )}
-        </div>
         <Checkbox
           label={t(
             'git.load-git-hook-env-from-shell',
@@ -111,7 +108,7 @@ export class Git extends React.Component<IGitProps> {
           }
           onChange={this.onEnableGitHookEnvChanged}
         />
-        <p className="git-hooks-env-description">
+        <p id="git-hooks-env-description" className="git-hooks-env-description">
           {t(
             'git.when-enabled-attempt-to-load-env-variables',
             `When enabled, GitHub Desktop will attempt to load environment
@@ -160,7 +157,10 @@ export class Git extends React.Component<IGitProps> {
               }
             />
 
-            <div className="git-hooks-cache-description">
+            <div
+              id="git-hooks-cache-description"
+              className="git-settings-description"
+            >
               {t(
                 'git.cache-hook-env-description',
                 `Cache hook environment variables to improve performance. Disable
@@ -180,12 +180,9 @@ export class Git extends React.Component<IGitProps> {
           selectedIndex={this.selectedTabIndex}
           onTabClicked={this.onTabClicked}
         >
-          <span>{t('git.autor', 'Author')}</span>
+          <span>{t('git.author', 'Author')}</span>
           <span>{t('git.default-branch', 'Default branch')}</span>
-          <span>
-            {t('git.hooks', 'Hooks')}{' '}
-            <span className="beta-pill">{t('git.beta', 'Beta')}</span>
-          </span>
+          <span>{t('git.hooks', 'Hooks')}</span>
           <span>{t('git.other-settings', 'Other Settings')}</span>
         </TabBar>
         <div className="git-preferences-content">{this.renderCurrentTab()}</div>
@@ -201,7 +198,7 @@ export class Git extends React.Component<IGitProps> {
     } else if (this.selectedTabIndex === 2) {
       return this.renderHooksSettings()
     } else if (this.selectedTabIndex == 3) {
-      return this.renderCorePathsSetting()
+      return this.renderOtherSetting()
     }
 
     return null
@@ -289,6 +286,14 @@ export class Git extends React.Component<IGitProps> {
     this.props.onCoreQuotepathChanged(event.currentTarget.checked)
   }
 
+  private renderOtherSetting() {
+    return (
+      <div className="other">
+        {this.renderCorePathsSetting()}
+        {this.renderCopilotInfo()}
+      </div>
+    )
+  }
   private renderCorePathsSetting() {
     return (
       <div className="git-settings-path-component">
@@ -327,6 +332,67 @@ export class Git extends React.Component<IGitProps> {
           </div>
         </div>
         {this.renderEditGlobalGitConfigInfo()}
+      </div>
+    )
+  }
+
+  private renderCopilotInfo() {
+    if (this.props.chatQuotas < 0 || this.props.autoSuggestQuotas < 0) {
+      return null
+    }
+    const chatQuotas = `${Math.round(this.props.chatQuotas * 100)}%`
+    const autoSuggestQuotas = `${Math.round(
+      this.props.autoSuggestQuotas * 100
+    )}%`
+    return (
+      <div className="git-copilot-info-component">
+        <h2 id="git-show-copilot-heading">
+          {t('git.show-copilot-information', 'Show Copilot Information')}
+        </h2>
+        <div className="git-show-copilot-section">
+          <div
+            role="group"
+            className="git-show-copilot-component"
+            aria-labelledby="git-show-copilot-heading"
+          >
+            <div className="git-copilot-info">
+              <div className="git-copilot-info-usage">
+                <span>
+                  {t('git.copilot-code-completions', 'Code completions')}
+                </span>
+                <span>{autoSuggestQuotas}</span>
+              </div>
+              <span className="guage">
+                <span
+                  className="guage-progress"
+                  style={{ width: `${autoSuggestQuotas}` }}
+                ></span>
+              </span>
+            </div>
+            <div className="git-copilot-info">
+              <div className="git-copilot-info-usage">
+                <span>{t('git.copilot-chat-messages', 'Chat messages')}</span>
+                <span>{chatQuotas}</span>
+              </div>
+              <span className="guage">
+                <span
+                  className="guage-progress"
+                  style={{ width: `${chatQuotas}` }}
+                ></span>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div className="git-copilot-generates-comments-info">
+          {t(
+            'git.generates-comments-using-copilot',
+            `GitHub Desktop generates comments using Copilot's chat messages.
+             Copilot quota will be reset on {{0}}.`,
+            {
+              0: this.props.copilotResetDate,
+            }
+          )}
+        </div>
       </div>
     )
   }

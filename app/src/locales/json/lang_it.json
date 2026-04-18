@@ -9,6 +9,7 @@
     "check-out-the-beta-channel-3": " ",
     "checking-for-updates": "Checking for updates…",
     "click-here-for-update-information": "Click here for Update information",
+    "conventional-commits": "Commit Convenzionali",
     "could-not-determine-the-last-time-update-check": "Couldn't determine the last time an update check was performed. You may be running an old version. Please try manually checking for updates and contact GitHub Support if the problem persists",
     "downloading-updates": "Downloading update…",
     "license-and-open-source-notices": "License and Open Source Notices",
@@ -80,6 +81,7 @@
   },
   "app-error": {
     "clone-failed": "Clone failed",
+    "copilot-exceeded-its-quota": "Copilot exceeded its quota",
     "failed-to-push": "Failed to push",
     "file-size-limit-exceeded": "File size limit exceeded",
     "files-that-exceed": "Files that exceed the limit",
@@ -87,13 +89,16 @@
     "for-more-information-2": " for more information on managing large files on GitHub",
     "open-options": "Open options",
     "open-settings-darwin": "Open Settings",
+    "payment-required": "You need to either make the payment or wait for the end of month quota reset.",
     "retry-clone": "Retry clone",
     "retry-clone-darwin": "Retry Clone",
+    "upgrade-to-increase-limit": "You can upgrade to increase your spending limit",
     "would-you-like-1": "Would you like to retry cloning ",
     "would-you-like-2": "?"
   },
   "app-store": {
     "checking-out": "Checking out",
+    "copilot-multilingual-prompt": "Si prega di scrivere in italiano. ",
     "error": {
       "pruner-is-already-active": "A branch pruner is already active and cannot start updating on {{0}}",
       "should-only-have-on-background-fetcher-active": "We should only have on background fetcher active at once, but we're trying to start background fetching on {{0}} while another background fetcher is still active!"
@@ -377,6 +382,10 @@
   "commit-message": {
     "add-co-authors": "Add co-authors",
     "add-co-authors-darwin": "Add Co-Authors",
+    "add-signed-off-by-trailer": "Add Signed-off-by trailer",
+    "add-signed-off-by-Trailer-darwin": "Add Signed-off-by Trailer",
+    "allow-empty-commit": "Allow empty commit",
+    "allow-empty-commit-darwin": "Allow Empty Commit",
     "amend": "Amend",
     "amending": "Amending",
     "commit": "Commit",
@@ -387,6 +396,9 @@
     "commit-title-2": " ",
     "committing": "Committing",
     "committing-changes": "Committing changes…",
+    "configure-commit-options": "Configure commit options",
+    "conventional-commits-support": "Copilot generated in Commit Convenzionali format",
+    "conventional-commits-support-darwin": "Copilot generated in Commit Convenzionali format",
     "description-field": "Description",
     "disable-commit-spellcheck": "Disable commit spellcheck",
     "disable-commit-spellcheck-darwin": "Disable Commit Spellcheck",
@@ -401,6 +413,8 @@
     "generating-commit-details": "Generating commit details…",
     "link-create-a-fork": "create a fork",
     "link-switch-branches": "switch branches",
+    "multilingual-support": "Copilot's multilingual support",
+    "multilingual-support-darwin": "Copilot's multilingual support",
     "must-be-selected": ". Files must be selected to generate a commit message.",
     "please-information-description-field": "Place extra information in the description field.",
     "protected-branch-1": " ",
@@ -417,9 +431,16 @@
     "will-modify-your-most-recent-commit-4": " to make these changes as a new commit."
   },
   "commit-message-avatar": {
+    "committing-as": "Committing as {{0}}",
+    "email": "Email: {{0}}",
+    "for-your-repository": "for your repository",
+    "git-settings": "{{0}} > Git > Author",
     "ignore": "Ignore",
     "learn-more": "Learn more",
     "learn-more-about": "Learn more about commit attribution",
+    "open-git-author": "Open Git Author",
+    "open-git-settings": "Open git settings",
+    "open-git-settings-darwin": "Open Git Settings",
     "repository-settings": "repository settings",
     "update-email": "Update email",
     "update-email-1": "The email in your global Git config (",
@@ -428,7 +449,11 @@
     "you-can-also-choose-an-email-1": "You can also choose an email local to this repository from the ",
     "you-can-also-choose-an-email-2": ".",
     "you-can-choose-an-email-1": "You can choose an email local to this repository from the ",
-    "you-can-choose-an-email-2": "."
+    "you-can-choose-an-email-2": ".",
+    "you-can-set-email-local-1": "You can also set an email local to this repository from the ",
+    "you-can-set-email-local-2": "repository settings",
+    "you-can-set-email-local-3": ".",
+    "you-can-update-your-git-config": "You can update your {{0}} git configuration {{1}} in  your {{2}}."
   },
   "commit-summary": {
     "tag": "tag",
@@ -465,11 +490,13 @@
     "files": "files",
     "finish": "Finish",
     "github-desktop": "GitHub Desktop",
+    "global": "global",
     "history": "History",
     "i-understand": "I understand",
     "ignore": "Ignore",
     "install-and-restart": "Install and restart",
     "install-and-restart-darwin": "Install and Restart",
+    "local": "local",
     "local-path": "Local path",
     "local-path-darwin": "Local Path",
     "multiple-commits": "commits",
@@ -560,8 +587,7 @@
     "checking-out-a-commit": "Checking out a commit will create a detached HEAD, and you will no longer be on any branch. Are you sure you want to checkout this commit?",
     "checkout": "Checkout",
     "checkout-commit": "Checkout commit?",
-    "checkout-commit-darwin": "Checkout Commit?",
-    "do-not-show-this-messaeg-again": "Do not show this message again"
+    "checkout-commit-darwin": "Checkout Commit?"
   },
   "confirm-discard-stash": {
     "are-you-sure-you-want-to-discard": "Are you sure you want to discard these stashed changes?",
@@ -826,7 +852,7 @@
     "unable-to-open-external-editor-darwin": "Unable to Open External Editor"
   },
   "enterprise-server-entry": {
-    "enterprise-or-ae-address": "Enterprise or AE address"
+    "enterprise-or-ae-address": "Enterprise address"
   },
   "expandable-commit-summary": {
     "added-lines": "{{0}} added lines",
@@ -943,10 +969,11 @@
     "we-were-unable-to-authenticate-6": "to try again."
   },
   "git": {
-    "autor": "Author",
-    "beta": "Beta",
+    "author": "Author",
     "cache-git-hook-env-variables": "Cache Git hook environment variables",
     "cache-hook-env-description": "Cache hook environment variables to improve performance. Disable if your hooks rely on frequently changing environment variables.",
+    "copilot-chat-messages": "Chat messages",
+    "copilot-code-completions": "Code completions",
     "default-branch": "Default branch",
     "default-branch-name-for-new-repositories": "Default branch name for new repositories",
     "display-escaped-non-ascii-characters": "Display escaped non-ASCII characters in path names\n(recommended to turn off for users in the Asian region)",
@@ -954,18 +981,17 @@
     "edit-your-global-git-config-2": " edit your global Git config file",
     "edit-your-global-git-config-3": ".",
     "enable-paths-lt-260-characters": "Enable paths longer than 260 characters on Windows",
+    "generates-comments-using-copilot": "GitHub Desktop generates comments using Copilot's chat messages. Copilot quota will be reset on {{0}}.",
     "gitHub-default-branch-description-1": "GitHub's default branch name is ",
     "gitHub-default-branch-description-2": ". ",
     "gitHub-default-branch-description-3": "You may want to change it due to different workflows, or because your integrations still require the historical default branch name of ",
     "gitHub-default-branch-description-4": ".",
-    "github-desktop-hook-support-is-experime-1": "GitHub Desktop hook support is experimental and currently only supports hooks related to committing. Please ",
-    "github-desktop-hook-support-is-experime-2": "let us know",
-    "github-desktop-hook-support-is-experime-3": " if you encounter any issues or have feedback!",
     "hooks": "Hooks",
     "load-git-hook-env-from-shell": "Load Git hook environment variables from shell",
     "other-settings": "Others",
     "settings-related-to-the-path": "Settings related to the path",
     "shell-to-use-when-loading-env": "Shell to use when loading environment",
+    "show-copilot-information": "Show Copilot Information",
     "when-enabled-attempt-to-load-env-variables": "When enabled, GitHub Desktop will attempt to load environment variables from your shell when executing Git hooks. This is useful if your Git hooks depend on environment variables set in your shell configuration files, a common practive for version managers such as nvm, rbenv, asdf, etc."
   },
   "git-config": {
@@ -1587,7 +1613,6 @@
   },
   "push-pull-button": {
     "cannot-publish-detached-head": "Cannot publish detached HEAD",
-    "cannot-publish-unborn-head": "Cannot publish unborn HEAD",
     "fetch": "Fetch {{0}}",
     "force-push": "Force push {{0}}",
     "hang-on": "Hang on…",
@@ -2008,6 +2033,7 @@
     "would-you-like-to-update": "Would you like to update the remote to use the expected URL?"
   },
   "url": {
+    "conventional-commits-uri": "https://www.conventionalcommits.org/it",
     "creativecommons_org_licenses": "https://creativecommons.org/licenses/by/4.0/",
     "git-scm-com-docs-gitignore": "https://git-scm.com/docs/gitignore",
     "github-desktop-issue": "https://github.com/yasuking0304/desktop/issues/new/choose",

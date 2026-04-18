@@ -16,14 +16,6 @@
         display: inline;
       }
     }
-
-    .git-hooks-support-description,
-    .git-hooks-env-description,
-    .git-hooks-cache-description {
-      margin-top: var(--spacing);
-      font-size: var(--font-size-sm);
-      color: var(--text-secondary-color);
-    }
   }
 
   .preferences-container {
@@ -48,10 +40,6 @@
 
       .checkbox-component:not(:last-child) {
         margin-bottom: var(--spacing-half);
-      }
-
-      .git-settings-description {
-        margin-top: var(--spacing);
       }
 
       .setting-hint-warning {
@@ -83,11 +71,59 @@
         }
       }
     }
+
+    .git-copilot-info-component {
+      margin-top: var(--spacing-double);
+    }
+
+    .git-show-copilot-section {
+      display: flex;
+
+      .git-show-copilot-component {
+        display: flex;
+        min-width: 100%;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+
+      .git-copilot-info {
+        display: grid;
+        width: 48%;
+        .git-copilot-info-usage {
+          display: flex;
+          justify-content: space-between;
+          margin: 0px 0px 6px 0px;
+        }
+        .guage {
+          width: 100%;
+          display: grid;
+          height: 8px;
+          background: var(--progress-bar-background-color);
+          border-radius: 6px;
+          overflow: hidden;
+        }
+        .guage-progress {
+          background: var(--progress-bar-progress-color);
+        }
+      }
+    }
+    .git-copilot-generates-comments-info {
+      margin-top: var(--spacing-half);
+    }
   }
 
   .tab-bar {
     .icon {
       width: 16px;
+    }
+  }
+
+  .formatting-section {
+    margin-top: var(--spacing);
+
+    .prefer-absolute-dates {
+      margin-top: var(--spacing);
+      margin-bottom: var(--spacing);
     }
   }
 
@@ -167,7 +203,7 @@
   }
 
   .git-settings-description {
-    margin-top: var(--spacing-double);
+    margin-top: var(--spacing);
     font-size: var(--font-size-sm);
     color: var(--text-secondary-color);
   }
@@ -178,15 +214,12 @@
 
   .theme-selector {
     display: flex;
-    flex-wrap: wrap;
     margin: 0 calc(var(--spacing-half) * -1);
 
     .radio-button-component {
       display: block;
-      flex-shrink: 0;
       padding: var(--spacing-half);
       position: relative;
-      width: 50%;
       margin: 0;
 
       label {

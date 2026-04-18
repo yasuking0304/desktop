@@ -1,5 +1,54 @@
 {
   "releases": {
+    "3.5.9-beta1": [
+      "[Added] Add date, time, and number formatting preferences to the Appearance settings - #21836",
+      "[Fixed] Fix a crash (Maximum update depth exceeded) that could occur while the conflicts dialog was open during a multi-commit operation - #21879",
+      "[Fixed] Remove discontinued GitHub AE references from the Enterprise sign-in screen - #21926. Thanks @toddmanion!",
+      "[Improved] Update Git for Windows to v2.53.0.windows.3 - #21957",
+      "[Improved] Update Copilot SDK to 0.2.1 and fix Copilot CLI process spawning issues on Windows - #21930",
+      "[Improved] Enable diff expansion and syntax highlighting for up to 1MB - #21876",
+      "[Improved] Update re2js regex engine to use optimized DFA path for improved performance - #21924. Thanks @le0pard!"
+    ],
+    "3.5.8": ["[Improved] Update Git for Windows to v2.53.0.windows.3"],
+    "3.5.7": [
+      "[Added] Rename branch dialog now validates branch names against repository rulesets - #21822",
+      "[Added] Allow empty commits via the commit options menu - #21771",
+      "[Added] Add option to include a Signed-off-by trailer on commits for Developer Certificate of Origin workflows - #21741",
+      "[Fixed] Discard Changes now completes even when the GitHub Desktop window is not focused - #21739",
+      "[Fixed] Allow origin fetch on empty repo - #4574 #4575. Thanks @jackfreem!",
+      "[Fixed] Fix window background color when resizing - #21548. Thanks @BaldrianSector!",
+      "[Fixed] Ignore Tab in terminal and keep textarea enabled - #21696",
+      "[Fixed] Clear commit message after a successful commit when switching to the History tab while the commit is in progress - #21721",
+      "[Improved] Liquid Glass icons for macOS Tahoe - #21010. Thanks @fabe and @caiofbpa!",
+      "[Improved] Update default tab size from 8 to 4 - #21705. Thanks @advaith1!",
+      "[Improved] Recognize Copilot CLI bot in commit attributions - #21727"
+    ],
+    "3.5.7-beta3": [
+      "[Added] Rename branch dialog now validates branch names against repository rulesets - #21822"
+    ],
+    "3.5.7-beta2": [
+      "[Added] Allow empty commits via the commit options menu - #21771"
+    ],
+    "3.5.7-beta1": [
+      "[Added] Add option to include a Signed-off-by trailer on commits for Developer Certificate of Origin workflows - #21741",
+      "[Fixed] Discard Changes now completes even when the GitHub Desktop window is not focused - #21739",
+      "[Fixed] Allow origin fetch on empty repo - #4574 #4575. Thanks @jackfreem!",
+      "[Fixed] Fix window background color when resizing - #21548. Thanks @BaldrianSector!",
+      "[Fixed] Ignore Tab in terminal and keep textarea enabled - #21696",
+      "[Fixed] Clear commit message after a successful commit when switching to the History tab while the commit is in progress - #21721",
+      "[Improved] Liquid Glass icons for macOS Tahoe - #21010. Thanks @fabe and @caiofbpa!",
+      "[Improved] Update default tab size from 8 to 4 - #21705. Thanks @advaith1!",
+      "[Improved] Recognize Copilot CLI bot in commit attributions - #21727"
+    ],
+    "3.5.6": [
+      "[New] Support adding Copilot as a co author and show avatars for mentionable users - #21634",
+      "[Fixed] Fix detection of IDEs installed from JetBrains Toolbox - #21498",
+      "[Fixed] Choose the best account for the current repository to generate commit messages - #21484",
+      "[Fixed] Remove trailing $ typo in hooks output - #21638",
+      "[Improved] Update Git to 2.53.0",
+      "[Improved] Update Git for Windows to 2.53.0.windows.2",
+      "[Improved] Update Git Credential Manager to 2.7.3"
+    ],
     "3.5.6-beta1": [
       "[New] Support adding Copilot as a co author and show avatars for mentionable users - #21634",
       "[Fixed] Fix detection of IDEs installed from JetBrains Toolbox - #21498",
@@ -10,7 +59,7 @@
     ],
     "3.5.5": [
       "[New] Support running hooks in user's shell environment and allow bypassing commit hooks - #21319",
-      "[New] Enable one-time opening of a repository in an alternate editor` - #21436. Thanks @jackfreem!",
+      "[New] Enable one-time opening of a repository in an alternate editor - #21436. Thanks @jackfreem!",
       "[Added] Add Warp terminal support for Windows - #21471. Thanks @Cocodrulo!",
       "[Added] \"View Branch on GitHub\" option on branch list context menu - #21071. Thanks @DylanDevelops!",
       "[Fixed] Fix bad repository state when switching between branches with submodules - #21188",

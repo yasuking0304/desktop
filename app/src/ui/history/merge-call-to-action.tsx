@@ -6,6 +6,7 @@ import { Branch } from '../../models/branch'
 import { Dispatcher } from '../dispatcher'
 import { Button } from '../lib/button'
 import { t } from 'i18next'
+import { formatNumber } from '../../lib/format-number'
 
 interface IMergeCallToActionProps {
   readonly repository: Repository
@@ -58,7 +59,7 @@ export class MergeCallToAction extends React.Component<
       return (
         <div className="merge-message merge-message-legacy">
           {t('merge-call-to-action.this-will-merge-into-1', 'This will merge ')}
-          <strong>{`${count} ${pluralized}`}</strong>
+          <strong>{`${formatNumber(count)} ${pluralized}`}</strong>
           {t('merge-call-to-action.this-will-merge-into-2', ' from ')}
           <strong>{branch.name}</strong>
           {t('merge-call-to-action.this-will-merge-into-3', ' into ')}

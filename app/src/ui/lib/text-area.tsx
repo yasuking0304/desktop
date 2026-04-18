@@ -1,6 +1,6 @@
 import * as React from 'react'
 import classNames from 'classnames'
-import { showContextualMenu } from '../../lib/menu-item'
+import { showContextualMenu, getEditMenuItemOfReact } from '../../lib/menu-item'
 
 interface ITextAreaProps {
   /** The label for the textarea field. */
@@ -68,7 +68,7 @@ export class TextArea extends React.Component<ITextAreaProps, {}> {
   }
   private onContextMenu = (event: React.MouseEvent<any>) => {
     event.preventDefault()
-    showContextualMenu([{ role: 'editMenu' }])
+    showContextualMenu(getEditMenuItemOfReact())
   }
 
   public render() {
@@ -93,6 +93,7 @@ export class TextArea extends React.Component<ITextAreaProps, {}> {
           onContextMenu={this.onContextMenu}
           aria-label={this.props.ariaLabel}
           aria-describedby={this.props.ariaDescribedBy}
+          spellCheck={false}
         />
       </label>
     )

@@ -34,6 +34,8 @@ interface IUnreachableCommitsDialogProps {
   readonly onDismissed: () => void
 
   readonly accounts: ReadonlyArray<Account>
+
+  readonly preferAbsoluteDates: boolean
 }
 
 interface IUnreachableCommitsDialogState {
@@ -120,6 +122,7 @@ export class UnreachableCommitsDialog extends React.Component<
             onCommitsSelected={this.onCommitsSelected}
             accounts={this.props.accounts}
             isInformationalView={true}
+            preferAbsoluteDates={this.props.preferAbsoluteDates}
           />
         </div>
       </>

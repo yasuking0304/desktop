@@ -127,7 +127,10 @@ import { DiscardSelection } from './discard-changes/discard-selection-dialog'
 import { LocalChangesOverwrittenDialog } from './local-changes-overwritten/local-changes-overwritten-dialog'
 import memoizeOne from 'memoize-one'
 import { AheadBehindStore } from '../lib/stores/ahead-behind-store'
-import { getAccountForRepository } from '../lib/get-account-for-repository'
+import {
+  getAccountForCommitMessageGeneration,
+  getAccountForRepository,
+} from '../lib/get-account-for-repository'
 import { CommitOneLine } from '../models/commit'
 import { CommitDragElement } from './drag-elements/commit-drag-element'
 import classNames from 'classnames'
@@ -185,6 +188,7 @@ import { webUtils } from 'electron'
 import { showTestUI } from './lib/test-ui-components/test-ui-components'
 import { ConfirmCommitFilteredChanges } from './changes/confirm-commit-filtered-changes-dialog'
 import { AboutTestDialog } from './about/about-test-dialog'
+import { enableCopilotSdkCommitMessageGeneration } from '../lib/feature-flag'
 import {
   ISecretScanResult,
   PushProtectionErrorDialog,
@@ -1477,6 +1481,8 @@ export class App extends React.Component<IAppProps, IAppState> {
             dispatcher={this.props.dispatcher}
             repository={popup.repository}
             branch={popup.branch}
+            accounts={this.state.accounts}
+            cachedRepoRulesets={this.state.cachedRepoRulesets}
             onDismissed={onPopupDismissedFn}
           />
         )
@@ -1594,6 +1600,12 @@ export class App extends React.Component<IAppProps, IAppState> {
             onEditGlobalGitConfig={this.editGlobalGitConfig}
             underlineLinks={this.state.underlineLinks}
             showDiffCheckMarks={this.state.showDiffCheckMarks}
+            chatQuotas={this.state.chatQuotas}
+            autoSuggestQuotas={this.state.autoSuggestQuotas}
+            copilotResetDate={this.state.copilotResetDate}
+            selectedCopilotModels={this.state.selectedCopilotModels}
+            copilotModels={this.state.copilotModels}
+            copilotAvailable={this.state.copilotAvailable}
           />
         )
       case PopupType.RepositorySettings: {
@@ -2184,6 +2196,12 @@ export class App extends React.Component<IAppProps, IAppState> {
             accounts={this.state.accounts}
             hasCommitHooks={repositoryState.hasCommitHooks}
             skipCommitHooks={repositoryState.skipCommitHooks}
+            signOffCommits={repositoryState.signOffCommits}
+            allowEmptyCommit={repositoryState.allowEmptyCommit}
+            supportCopilotMultiLingual={this.state.supportCopilotMultiLingual}
+            copilotConventionalCommitsFormat={
+              this.state.copilotConventionalCommitsFormat
+            }
             onUpdateCommitOptions={this.onUpdateCommitOptions}
           />
         )
@@ -2393,6 +2411,7 @@ export class App extends React.Component<IAppProps, IAppState> {
             emoji={emoji}
             onDismissed={onPopupDismissedFn}
             accounts={this.state.accounts}
+            preferAbsoluteDates={this.state.preferAbsoluteDates}
           />
         )
       }
@@ -2563,12 +2582,21 @@ export class App extends React.Component<IAppProps, IAppState> {
           />
         )
       case PopupType.GenerateCommitMessageOverrideWarning: {
+        const account = getAccountForCommitMessageGeneration(
+          this.state.accounts,
+          popup.repository
+        )
+
         return (
           <GenerateCommitMessageOverrideWarning
             key="generate-commit-message-override-warning"
             dispatcher={this.props.dispatcher}
             repository={popup.repository}
             filesSelected={popup.filesSelected}
+            showCopilotInstructionsTip={
+              account !== undefined &&
+              enableCopilotSdkCommitMessageGeneration(account)
+            }
             onDismissed={onPopupDismissedFn}
           />
         )
@@ -2611,7 +2639,7 @@ export class App extends React.Component<IAppProps, IAppState> {
 
   private onUpdateCommitOptions = (
     repository: Repository,
-    options: CommitOptions
+    options: Partial<CommitOptions>
   ) => {
     this.props.dispatcher.updateCommitOptions(repository, options)
   }
@@ -3460,6 +3488,7 @@ export class App extends React.Component<IAppProps, IAppState> {
           hideWhitespaceInChangesDiff={state.hideWhitespaceInChangesDiff}
           hideWhitespaceInHistoryDiff={state.hideWhitespaceInHistoryDiff}
           showDiffCheckMarks={state.showDiffCheckMarks}
+          preferAbsoluteDates={state.preferAbsoluteDates}
           showSideBySideDiff={state.showSideBySideDiff}
           focusCommitMessage={state.focusCommitMessage}
           askForConfirmationOnDiscardChanges={
@@ -3497,7 +3526,13 @@ export class App extends React.Component<IAppProps, IAppState> {
           }
           hasCommitHooks={selectedState.state.hasCommitHooks}
           skipCommitHooks={selectedState.state.skipCommitHooks}
+          signOffCommits={selectedState.state.signOffCommits}
+          allowEmptyCommit={selectedState.state.allowEmptyCommit}
           onUpdateCommitOptions={this.onUpdateCommitOptions}
+          supportCopilotMultiLingual={this.state.supportCopilotMultiLingual}
+          copilotConventionalCommitsFormat={
+            this.state.copilotConventionalCommitsFormat
+          }
         />
       )
     } else if (selectedState.type === SelectionType.CloningRepository) {

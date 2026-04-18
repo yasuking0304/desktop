@@ -27,6 +27,8 @@ export const githubPagesBot = dotComBot('github-pages[bot]', 52472962, 34598)
 export const copilotPRReviewerBot = dotComBot('Copilot', 175728472, 946600)
 // https://github.com/apps/copilot-swe-agent
 export const copilotSweAgentBot = dotComBot('Copilot', 198982749, 1143301)
+// https://github.com/apps/github-copilot-cli
+export const copilotCliBot = dotComBot('Copilot', 223556219, 1693627)
 
 export const knownDotComBots: ReadonlyArray<IKnownBot> = [
   dependabotBot,
@@ -34,4 +36,5 @@ export const knownDotComBots: ReadonlyArray<IKnownBot> = [
   githubPagesBot,
   copilotPRReviewerBot,
   copilotSweAgentBot,
+  copilotCliBot,
 ]

@@ -13,7 +13,6 @@ import ptLang from './json/lang_pt.json'
 import ptBrLang from './json/lang_pt-br.json'
 import roLang from './json/lang_ro.json'
 import ruLang from './json/lang_ru.json'
-import svLang from './json/lang_sv.json'
 import zhLang from './json/lang_zh.json'
 import zhTwLang from './json/lang_zh-tw.json'
 
@@ -35,7 +34,6 @@ i18n.init({
     pt_br: { translation: ptBrLang },
     ro: { translation: roLang },
     ru: { translation: ruLang },
-    sv: { translation: svLang },
     zh: { translation: zhLang },
     zh_tw: { translation: zhTwLang },
   },

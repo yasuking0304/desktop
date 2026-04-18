@@ -2,6 +2,7 @@ import * as Path from 'path'
 import {
   AccountsStore,
   CloningRepositoriesStore,
+  CopilotStore,
   GitHubUserStore,
   GitStore,
   IssuesStore,
@@ -11,6 +12,7 @@ import {
   SignInStore,
   UpstreamRemoteName,
 } from '.'
+import type { CopilotFeature, CopilotModelSelections } from './copilot-store'
 import { Account, isDotComAccount } from '../../models/account'
 import { AppMenu, IMenu } from '../../models/app-menu'
 import { Author } from '../../models/author'
@@ -18,6 +20,10 @@ import { Branch, BranchType, IAheadBehind } from '../../models/branch'
 import { BranchesTab } from '../../models/branches-tab'
 import { CloneRepositoryTab } from '../../models/clone-repository-tab'
 import { CloningRepository } from '../../models/cloning-repository'
+import {
+  getPreferAbsoluteDates,
+  setPreferAbsoluteDates,
+} from '../../models/formatting-preferences'
 import {
   Commit,
   ICommitContext,
@@ -62,7 +68,10 @@ import {
   AppFileStatusKind,
 } from '../../models/status'
 import { TipState, tipEquals, IValidBranch } from '../../models/tip'
-import { ICommitMessage } from '../../models/commit-message'
+import {
+  DefaultCommitMessage,
+  ICommitMessage,
+} from '../../models/commit-message'
 import {
   Progress,
   ICheckoutProgress,
@@ -102,6 +111,7 @@ import {
   IAPIRepoRuleset,
   deleteToken,
   IAPICreatePushProtectionBypassResponse,
+  CopilotPlanInfo,
 } from '../api'
 import { shell } from '../app-shell'
 import {
@@ -129,6 +139,7 @@ import {
   ICompareState,
   CommitOptions,
 } from '../app-state'
+import type { ModelInfo } from '@github/copilot-sdk'
 import {
   findEditorOrDefault,
   getAvailableEditors,
@@ -138,7 +149,10 @@ import {
 import { assertNever, fatalError, forceUnwrap } from '../fatal-error'
 
 import { formatCommitMessage } from '../format-commit-message'
-import { getAccountForRepository } from '../get-account-for-repository'
+import {
+  getAccountForCommitMessageGeneration,
+  getAccountForRepository,
+} from '../get-account-for-repository'
 import {
   abortMerge,
   addRemote,
@@ -249,7 +263,7 @@ import {
 import { ManualConflictResolution } from '../../models/manual-conflict-resolution'
 import { BranchPruner } from './helpers/branch-pruner'
 import {
-  enableCommitMessageGeneration,
+  enableCopilotSdkCommitMessageGeneration,
   enableCustomIntegration,
 } from '../feature-flag'
 import { Banner, BannerType } from '../../models/banner'
@@ -424,8 +438,12 @@ const hideWhitespaceInPullRequestDiffKey =
 
 const commitSpellcheckEnabledDefault = true
 const commitSpellcheckEnabledKey = 'commit-spellcheck-enabled'
+const supportMultiLingualCopilotDefault = false
+const supportMultiLingualCopilotKey = 'copilot-multi-lingual-support'
+const copilotConventionalCommitsFormatDefault = false
+const copilotConventionalCommitsFomatKey = 'copilot-conventional-commits-format'
 
-export const tabSizeDefault: number = 8
+export const tabSizeDefault: number = 4
 const tabSizeKey: string = 'tab-size'
 
 const shellKey = 'shell'
@@ -467,6 +485,8 @@ const commitMessageGenerationButtonClickedKey =
   'commit-message-generation-button-clicked'
 
 export const showChangesFilterKey = 'show-changes-filter'
+
+const selectedCopilotModelsKey = 'selected-copilot-models'
 export const showChangesFilterDefault = true
 
 export class AppStore extends TypedBaseStore<IAppState> {
@@ -557,6 +577,10 @@ export class AppStore extends TypedBaseStore<IAppState> {
     hideWhitespaceInPullRequestDiffDefault
   /** Whether or not the spellchecker is enabled for commit summary and description */
   private commitSpellcheckEnabled: boolean = commitSpellcheckEnabledDefault
+  private supportCopilotMultiLingual: boolean =
+    supportMultiLingualCopilotDefault
+  private copilotConventionalCommitsFormat: boolean =
+    copilotConventionalCommitsFormatDefault
   private showSideBySideDiff: boolean = ShowSideBySideDiffDefault
 
   private uncommittedChangesStrategy = defaultUncommittedChangesStrategy
@@ -617,6 +641,8 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
   private showDiffCheckMarks: boolean = showDiffCheckMarksDefault
 
+  private preferAbsoluteDates: boolean = false
+
   private cachedRepoRulesets = new Map<number, IAPIRepoRuleset>()
 
   private underlineLinks: boolean = underlineLinksDefault
@@ -625,6 +651,12 @@ export class AppStore extends TypedBaseStore<IAppState> {
   private commitMessageGenerationButtonClicked: boolean = false
 
   private showChangesFilter: boolean = false
+
+  private chatQuotas: number = 0
+  private autoSuggestQuotas: number = 0
+  private copilotResetDate: string = ''
+  private selectedCopilotModels: CopilotModelSelections = {}
+  private copilotModels: ReadonlyArray<ModelInfo> | null = null
 
   public constructor(
     private readonly gitHubUserStore: GitHubUserStore,
@@ -637,7 +669,8 @@ export class AppStore extends TypedBaseStore<IAppState> {
     private readonly pullRequestCoordinator: PullRequestCoordinator,
     private readonly repositoryStateCache: RepositoryStateCache,
     private readonly apiRepositoriesStore: ApiRepositoriesStore,
-    private readonly notificationsStore: NotificationsStore
+    private readonly notificationsStore: NotificationsStore,
+    private readonly copilotStore: CopilotStore
   ) {
     super()
 
@@ -945,6 +978,13 @@ export class AppStore extends TypedBaseStore<IAppState> {
     // updateStore is a global, App.tsx handles most of it but we carry the
     // UpdateState in the AppState so we need to emit whenever it updates.
     updateStore.onDidChange(() => this.emitUpdate())
+
+    this.copilotStore.onDidUpdate(() => {
+      this.copilotModels = this.copilotStore.isAvailable
+        ? this.copilotStore.cachedModelList ?? this.copilotModels
+        : null
+      this.emitUpdate()
+    })
   }
 
   /** Load the emoji from disk. */
@@ -1108,6 +1148,8 @@ export class AppStore extends TypedBaseStore<IAppState> {
       currentOnboardingTutorialStep: this.currentOnboardingTutorialStep,
       repositoryIndicatorsEnabled: this.repositoryIndicatorsEnabled,
       commitSpellcheckEnabled: this.commitSpellcheckEnabled,
+      supportCopilotMultiLingual: this.supportCopilotMultiLingual,
+      copilotConventionalCommitsFormat: this.copilotConventionalCommitsFormat,
       currentDragElement: this.currentDragElement,
       lastThankYou: this.lastThankYou,
       useCustomEditor: this.useCustomEditor,
@@ -1121,12 +1163,19 @@ export class AppStore extends TypedBaseStore<IAppState> {
       cachedRepoRulesets: this.cachedRepoRulesets,
       underlineLinks: this.underlineLinks,
       showDiffCheckMarks: this.showDiffCheckMarks,
+      preferAbsoluteDates: this.preferAbsoluteDates,
       updateState: updateStore.state,
       commitMessageGenerationDisclaimerLastSeen:
         this.commitMessageGenerationDisclaimerLastSeen,
       commitMessageGenerationButtonClicked:
         this.commitMessageGenerationButtonClicked,
       showChangesFilter: this.showChangesFilter,
+      chatQuotas: this.chatQuotas,
+      autoSuggestQuotas: this.autoSuggestQuotas,
+      copilotResetDate: this.copilotResetDate,
+      selectedCopilotModels: this.selectedCopilotModels,
+      copilotModels: this.copilotModels,
+      copilotAvailable: this.copilotStore.isAvailable,
     }
   }
 
@@ -2334,6 +2383,15 @@ export class AppStore extends TypedBaseStore<IAppState> {
       commitSpellcheckEnabledKey,
       commitSpellcheckEnabledDefault
     )
+    this.supportCopilotMultiLingual = getBoolean(
+      supportMultiLingualCopilotKey,
+      supportMultiLingualCopilotDefault
+    )
+    this.copilotConventionalCommitsFormat = getBoolean(
+      copilotConventionalCommitsFomatKey,
+      copilotConventionalCommitsFormatDefault
+    )
+
     this.showSideBySideDiff = getShowSideBySideDiff()
 
     this.selectedTheme = getPersistedThemeName()
@@ -2385,6 +2443,8 @@ export class AppStore extends TypedBaseStore<IAppState> {
       showDiffCheckMarksDefault
     )
 
+    this.preferAbsoluteDates = getPreferAbsoluteDates()
+
     this.commitMessageGenerationDisclaimerLastSeen =
       getNumber(commitMessageGenerationDisclaimerLastSeenKey) ?? null
 
@@ -2397,6 +2457,8 @@ export class AppStore extends TypedBaseStore<IAppState> {
       showChangesFilterKey,
       showChangesFilterDefault
     )
+
+    this.selectedCopilotModels = this.loadCopilotModelSelections()
 
     this.emitUpdateNow()
 
@@ -3356,6 +3418,8 @@ export class AppStore extends TypedBaseStore<IAppState> {
               }))
             },
             noVerify: state.skipCommitHooks,
+            signOff: state.signOffCommits,
+            allowEmpty: state.allowEmptyCommit,
           }).catch(err => (aborted ? undefined : Promise.reject(err)))
         },
         { gitContext: { kind: 'commit' }, repository }
@@ -3374,8 +3438,15 @@ export class AppStore extends TypedBaseStore<IAppState> {
         this.repositoryStateCache.update(repository, () => {
           return {
             commitToAmend: null,
+            allowEmptyCommit: false,
           }
         })
+
+        // Clear the commit message in the git store so that if the user
+        // switched away from the Changes tab while the commit was in progress,
+        // the persisted message (saved on unmount) doesn't reappear when they
+        // return to the Changes tab.
+        await gitStore.setCommitMessage(DefaultCommitMessage)
 
         await this.refreshChangesSection(repository, {
           includingStatus: true,
@@ -3834,6 +3905,35 @@ export class AppStore extends TypedBaseStore<IAppState> {
     this.emitUpdate()
   }
 
+  public _setCopilotMultiLingualSupport(supportCopilotMultiLingual: boolean) {
+    if (this.supportCopilotMultiLingual === supportCopilotMultiLingual) {
+      return
+    }
+
+    setBoolean(supportMultiLingualCopilotKey, supportCopilotMultiLingual)
+    this.supportCopilotMultiLingual = supportCopilotMultiLingual
+
+    this.emitUpdate()
+  }
+
+  public _setCopilotConventionalCommitsFormat(
+    copilotConventionalCommitsFormat: boolean
+  ) {
+    if (
+      this.copilotConventionalCommitsFormat === copilotConventionalCommitsFormat
+    ) {
+      return
+    }
+
+    setBoolean(
+      copilotConventionalCommitsFomatKey,
+      copilotConventionalCommitsFormat
+    )
+    this.copilotConventionalCommitsFormat = copilotConventionalCommitsFormat
+
+    this.emitUpdate()
+  }
+
   public _setUseWindowsOpenSSH(useWindowsOpenSSH: boolean) {
     setBoolean(UseWindowsOpenSSHKey, useWindowsOpenSSH)
     this.useWindowsOpenSSH = useWindowsOpenSSH
@@ -3914,9 +4014,14 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
   public _updateCommitOptions(
     repository: Repository,
-    commitOptions: CommitOptions
+    commitOptions: Partial<CommitOptions>
   ): void {
-    this.repositoryStateCache.update(repository, () => commitOptions)
+    this.repositoryStateCache.update(repository, state => ({
+      skipCommitHooks: state.skipCommitHooks,
+      signOffCommits: state.signOffCommits,
+      allowEmptyCommit: state.allowEmptyCommit,
+      ...commitOptions,
+    }))
     this.emitUpdate()
   }
 
@@ -5633,12 +5738,10 @@ export class AppStore extends TypedBaseStore<IAppState> {
     repository: Repository,
     filesSelected: ReadonlyArray<WorkingDirectoryFileChange>
   ): Promise<boolean> {
-    // Prefer the account that is associated to this repository.
-    const repositoryAccount = getAccountForRepository(this.accounts, repository)
-    const account =
-      repositoryAccount && enableCommitMessageGeneration(repositoryAccount)
-        ? repositoryAccount
-        : this.accounts.find(enableCommitMessageGeneration)
+    const account = getAccountForCommitMessageGeneration(
+      this.accounts,
+      repository
+    )
 
     if (!account) {
       return false
@@ -5673,10 +5776,29 @@ export class AppStore extends TypedBaseStore<IAppState> {
       if (!diff) {
         return false
       }
+      const diffPrompt =
+        (this.supportCopilotMultiLingual
+          ? t(
+              'app-store.copilot-multilingual-prompt',
+              'Please output in English. '
+            )
+          : '') +
+        (this.copilotConventionalCommitsFormat
+          ? ' Format the commit message according to Conventional Commits specification. However, please exclude the following from translation: fix:, feat: BREAKING CHANGE:, build:, chore:, ci:, docs:, style:, refactor:, perf:, and test:.'
+          : '') +
+        ' ' +
+        diff
 
-      const api = API.fromAccount(account)
       try {
-        const response = await api.getDiffChangesCommitMessage(diff)
+        const response = enableCopilotSdkCommitMessageGeneration(account)
+          ? await this.copilotStore.generateCommitMessage(
+              diffPrompt,
+              repository.path,
+              this.selectedCopilotModels['commit-message-generation'] ?? null
+            )
+          : await API.fromAccount(account).getDiffChangesCommitMessage(
+              diffPrompt
+            )
 
         this._setCommitMessage(repository, {
           summary: response.title,
@@ -5940,7 +6062,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
     // choose to store for the --squash merge operation)
     if (commitResult === undefined) {
       log.error(
-        `[_abortSquashMerge] - Could not abort squash merge - commiting squash msg failed`
+        `[_abortSquashMerge] - Could not abort squash merge - committing squash msg failed`
       )
       return
     }
@@ -8575,6 +8697,87 @@ export class AppStore extends TypedBaseStore<IAppState> {
     }
   }
 
+  /** This shouldn't be called directly. See 'Dispatcher'. */
+  public _setSelectedCopilotModel(
+    feature: CopilotFeature,
+    model: string | null
+  ) {
+    const current = this.selectedCopilotModels[feature] ?? null
+    if (model !== current) {
+      if (model === null) {
+        const updated = { ...this.selectedCopilotModels }
+        delete updated[feature]
+        this.selectedCopilotModels = updated
+      } else {
+        this.selectedCopilotModels = {
+          ...this.selectedCopilotModels,
+          [feature]: model,
+        }
+      }
+      this.saveCopilotModelSelections()
+    }
+  }
+
+  private loadCopilotModelSelections(): CopilotModelSelections {
+    const raw = localStorage.getItem(selectedCopilotModelsKey)
+    if (raw !== null) {
+      try {
+        const parsed: unknown = JSON.parse(raw)
+        if (typeof parsed === 'object' && parsed !== null) {
+          return parsed as CopilotModelSelections
+        }
+      } catch {
+        // fall through to migration
+      }
+    }
+
+    // Migrate from the old single-model key
+    const legacy = localStorage.getItem('selected-copilot-model')
+    if (legacy !== null) {
+      localStorage.removeItem('selected-copilot-model')
+      const selections: CopilotModelSelections = {
+        'commit-message-generation': legacy,
+      }
+      localStorage.setItem(selectedCopilotModelsKey, JSON.stringify(selections))
+      return selections
+    }
+
+    return {}
+  }
+
+  private saveCopilotModelSelections() {
+    const keys = Object.keys(this.selectedCopilotModels)
+    if (keys.length === 0) {
+      localStorage.removeItem(selectedCopilotModelsKey)
+    } else {
+      localStorage.setItem(
+        selectedCopilotModelsKey,
+        JSON.stringify(this.selectedCopilotModels)
+      )
+    }
+  }
+
+  /** This shouldn't be called directly. See 'Dispatcher'. */
+  public _setSelectedCopilotModels(models: CopilotModelSelections) {
+    this.selectedCopilotModels = { ...models }
+    this.saveCopilotModelSelections()
+  }
+
+  /** This shouldn't be called directly. See 'Dispatcher'. */
+  public async _fetchCopilotModels(): Promise<void> {
+    const models = await this.copilotStore.listModels()
+    this.copilotModels = [...models]
+    this.emitUpdate()
+  }
+
+  public _setPreferAbsoluteDates(value: boolean) {
+    if (value !== this.preferAbsoluteDates) {
+      this.preferAbsoluteDates = value
+      setPreferAbsoluteDates(value)
+      this.emitUpdate()
+    }
+  }
+
   public _updateFileListFilter(
     repository: Repository,
     filterUpdate: Partial<IFileListFilterState>
@@ -8666,6 +8869,33 @@ export class AppStore extends TypedBaseStore<IAppState> {
     setBoolean(showChangesFilterKey, this.showChangesFilter)
     this.updateMenuLabelsForSelectedRepository()
     this.emitUpdate()
+  }
+
+  public async _getCopilotInformation(): Promise<CopilotPlanInfo | undefined> {
+    const repository = this.selectedRepository
+    if (
+      repository === null ||
+      repository instanceof CloningRepository ||
+      isRepositoryWithGitHubRepository(repository) === false
+    ) {
+      log.error('[_createPushProtectionBypass] - No GitHub repository selected')
+      return undefined
+    }
+
+    const { endpoint } = repository.gitHubRepository
+
+    const account = getAccountForEndpoint(this.accounts, endpoint)
+
+    if (account === null) {
+      log.error(
+        `[_getCopilotInformation] - No account found for endpoint - ${endpoint}`
+      )
+      return undefined
+    }
+
+    const api = API.fromAccount(account)
+
+    return await api.fetchCopilotInternal()
   }
 }
 
