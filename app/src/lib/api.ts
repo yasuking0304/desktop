@@ -26,7 +26,7 @@ import {
   suppressCertificateErrorFor,
 } from './suppress-certificate-error'
 import { HttpStatusCode } from './http-status-code'
-import { CopilotError } from './copilot-error'
+import { CopilotError, parseCopilotPaymentRequiredError } from './copilot-error'
 import { BypassReasonType } from '../ui/secret-scanning/bypass-push-protection-dialog'
 import { CopilotPlanInfo, getCopilotPlanInfo } from './copilot-plan-info'
 
@@ -1897,10 +1897,10 @@ export class API {
         )
       }
     } else if (response.status === HttpStatusCode.PaymentRequired) {
-      const errorMsg =
-        (await response.text()) || 'You have reached your quota limit.'
-
-      throw new CopilotError(errorMsg, response.status)
+      throw parseCopilotPaymentRequiredError(
+        await response.text(),
+        response.headers.get('Retry-After')
+      )
     } else if (response.status === HttpStatusCode.Unauthorized) {
       throw new CopilotError(
         'Unauthorized: error with authentication.',

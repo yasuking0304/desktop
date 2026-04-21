@@ -17,7 +17,7 @@ import { t } from 'i18next'
 import { GitError as DugiteError } from 'dugite'
 import { LinkButton } from './lib/link-button'
 import { getFileFromExceedsError } from '../lib/helpers/regex'
-import { CopilotError } from '../lib/copilot-error'
+import { CopilotError, getCopilotErrorDisplayInfo } from '../lib/copilot-error'
 import { Terminal } from './terminal'
 import { coerceToString } from '../lib/git/coerce-to-string'
 
@@ -136,40 +136,39 @@ export class AppError extends React.Component<IAppErrorProps, IAppErrorState> {
       )
     }
 
-    if (isCopilotExceededQuotaError(e)) {
-      const copilotPlansURL = 'https://github.com/features/copilot/plans'
-      const convertMessage =
-        e.message.trim().toLowerCase() === 'payment required'
-          ? t(
-              'app-error.payment-required',
-              'You need to either make the payment or wait for the end of month quota reset.'
-            )
-          : e.message
+    if (e instanceof CopilotError) {
+      const displayInfo = getCopilotErrorDisplayInfo(e)
+      if (displayInfo !== null) {
+        const { actionText, actionURL, message, retryAfterMessage } =
+          displayInfo
 
-      return (
-        <>
-          <p>{convertMessage}</p>
-          <p>
-            <LinkButton uri={copilotPlansURL} className="brand increase-limit">
-              {t(
-                'app-error.upgrade-to-increase-limit',
-                'You can upgrade to increase your spending limit'
-              )}
-            </LinkButton>
-          </p>
-        </>
-      )
+        return (
+          <>
+            <p>{message}</p>
+            {retryAfterMessage !== undefined ? (
+              <p>{retryAfterMessage}</p>
+            ) : null}
+            {actionText !== undefined && actionURL !== undefined ? (
+              <p>
+                <LinkButton uri={actionURL} className="brand increase-limit">{actionText}</LinkButton>
+              </p>
+            ) : null}
+          </>
+        )
+      }
     }
 
     return <p>{e.message}</p>
   }
 
   private getTitle(error: Error) {
-    if (isCopilotExceededQuotaError(error)) {
-      return t(
-        'app-error.copilot-exceeded-its-quota',
-        'Copilot exceeded its quota'
-      )
+    const underlyingError = getUnderlyingError(error)
+
+    if (underlyingError instanceof CopilotError) {
+      const displayInfo = getCopilotErrorDisplayInfo(underlyingError)
+      if (displayInfo !== null) {
+        return displayInfo.title
+      }
     }
 
     switch (getDugiteError(error)) {
@@ -377,15 +376,6 @@ function getRetryActionType(error: Error) {
   }
 
   return error.metadata.retryAction?.type
-}
-
-function isCopilotExceededQuotaError(error: Error) {
-  const e = getUnderlyingError(error)
-
-  if (e instanceof CopilotError) {
-    return e.isQuotaExceededError
-  }
-  return false
 }
 
 function getDugiteError(error: Error) {
