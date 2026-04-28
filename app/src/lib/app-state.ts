@@ -1,5 +1,6 @@
 import type { ModelInfo } from '@github/copilot-sdk'
 import type { CopilotModelSelections } from './stores/copilot-store'
+import type { IBYOKProvider } from './copilot/byok'
 import { Account } from '../models/account'
 import { CommitIdentity } from '../models/commit-identity'
 import { IDiff, ImageDiffType } from '../models/diff'
@@ -423,6 +424,12 @@ export interface IAppState {
 
   /** Whether Copilot is available (i.e. a GitHub.com account is signed in). */
   readonly copilotAvailable: boolean
+
+  /**
+   * The list of user-configured Copilot model providers (BYOK). Empty when
+   * the user has not configured any custom providers.
+   */
+  readonly byokProviders: ReadonlyArray<IBYOKProvider>
 }
 
 export enum FoldoutType {

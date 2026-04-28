@@ -13,6 +13,19 @@ import {
   UpstreamRemoteName,
 } from '.'
 import type { CopilotFeature, CopilotModelSelections } from './copilot-store'
+import {
+  IBYOKProvider,
+  loadBYOKProviders,
+  saveBYOKProviders,
+  setBYOKSecret,
+  deleteBYOKSecret,
+  getBYOKSecret,
+  parseModelKey,
+} from '../copilot/byok'
+import type {
+  CopilotModelRequest,
+  CopilotProviderConfig,
+} from './copilot-store'
 import { Account, isDotComAccount } from '../../models/account'
 import { AppMenu, IMenu } from '../../models/app-menu'
 import { Author } from '../../models/author'
@@ -658,6 +671,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
   private copilotLicenseType: string = ''
   private selectedCopilotModels: CopilotModelSelections = {}
   private copilotModels: ReadonlyArray<ModelInfo> | null = null
+  private byokProviders: ReadonlyArray<IBYOKProvider> = []
 
   public constructor(
     private readonly gitHubUserStore: GitHubUserStore,
@@ -1178,6 +1192,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
       selectedCopilotModels: this.selectedCopilotModels,
       copilotModels: this.copilotModels,
       copilotAvailable: this.copilotStore.isAvailable,
+      byokProviders: this.byokProviders,
     }
   }
 
@@ -2461,6 +2476,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
     )
 
     this.selectedCopilotModels = this.loadCopilotModelSelections()
+    this.byokProviders = loadBYOKProviders()
 
     this.emitUpdateNow()
 
@@ -5796,7 +5812,9 @@ export class AppStore extends TypedBaseStore<IAppState> {
           ? await this.copilotStore.generateCommitMessage(
               diffPrompt,
               repository.path,
-              this.selectedCopilotModels['commit-message-generation'] ?? null
+              await this.resolveCopilotModelRequest(
+                this.selectedCopilotModels['commit-message-generation'] ?? null
+              )
             )
           : await API.fromAccount(account).getDiffChangesCommitMessage(
               diffPrompt
@@ -8762,13 +8780,221 @@ export class AppStore extends TypedBaseStore<IAppState> {
   /** This shouldn't be called directly. See 'Dispatcher'. */
   public _setSelectedCopilotModels(models: CopilotModelSelections) {
     this.selectedCopilotModels = { ...models }
+    // The Preferences dialog keeps its own copy of the selections in
+    // component state. If the user deletes/edits a BYOK provider through
+    // the popup stack while the dialog is open, that local copy can still
+    // reference a model that no longer exists; scrub on save so we never
+    // resurrect a stale selection.
+    this.scrubMissingCopilotModelSelections()
     this.saveCopilotModelSelections()
+  }
+
+  /**
+   * Resolves a stored Copilot model selection (the composite key persisted in
+   * `selectedCopilotModels`) into a {@link CopilotModelRequest} suitable for
+   * {@link CopilotStore.generateCommitMessage}. BYOK provider secrets are
+   * read from the OS keychain at call time.
+   */
+  private async resolveCopilotModelRequest(
+    selection: string | null
+  ): Promise<CopilotModelRequest> {
+    if (selection === null) {
+      return { kind: 'copilot', modelId: null }
+    }
+
+    const key = parseModelKey(selection)
+    if (key.kind === 'copilot') {
+      return {
+        kind: 'copilot',
+        modelId: key.modelId === '' ? null : key.modelId,
+      }
+    }
+
+    const provider = this.byokProviders.find(p => p.id === key.providerId)
+    const model = provider?.models.find(m => m.id === key.modelId)
+    if (provider === undefined || model === undefined) {
+      // Selection points at a deleted provider/model; fall back to default.
+      return { kind: 'copilot', modelId: null }
+    }
+
+    let secret: string | null = null
+    if (provider.authKind !== 'none') {
+      try {
+        secret = await getBYOKSecret(provider.id)
+      } catch (e) {
+        const message = e instanceof Error ? e.message : String(e)
+        throw new Error(
+          `Could not read the credential for the custom Copilot provider ` +
+            `'${provider.name}' from the OS keychain: ${message}`
+        )
+      }
+    }
+
+    if (provider.authKind !== 'none' && (secret === null || secret === '')) {
+      throw new Error(
+        `No ${
+          provider.authKind === 'bearer' ? 'bearer token' : 'API key'
+        } is stored for the custom Copilot provider '${provider.name}'. ` +
+          `Open Settings → Copilot → Providers and re-enter the credential.`
+      )
+    }
+
+    const providerConfig: CopilotProviderConfig = {
+      type: provider.type,
+      baseUrl: provider.baseUrl,
+      ...(provider.wireApi ? { wireApi: provider.wireApi } : {}),
+      ...(provider.type === 'azure' && provider.azureApiVersion
+        ? { azure: { apiVersion: provider.azureApiVersion } }
+        : {}),
+      ...(secret !== null && provider.authKind === 'apiKey'
+        ? { apiKey: secret }
+        : {}),
+      ...(secret !== null && provider.authKind === 'bearer'
+        ? { bearerToken: secret }
+        : {}),
+    }
+
+    return {
+      kind: 'byok',
+      modelId: model.id,
+      provider: providerConfig,
+      ...(model.reasoningEffort !== undefined
+        ? { reasoningEffort: model.reasoningEffort }
+        : {}),
+      ...(provider.requestTimeoutSeconds !== undefined &&
+      provider.requestTimeoutSeconds > 0
+        ? { timeoutMs: provider.requestTimeoutSeconds * 1000 }
+        : {}),
+    }
+  }
+
+  /** This shouldn't be called directly. See 'Dispatcher'. */
+  public async _addCopilotBYOKProvider(
+    provider: IBYOKProvider,
+    secret: string | null
+  ): Promise<void> {
+    // Write the secret first so a keychain failure doesn't leave a provider
+    // in localStorage without its credentials.
+    if (secret !== null && secret.length > 0) {
+      await setBYOKSecret(provider.id, secret)
+    }
+
+    this.byokProviders = [...this.byokProviders, provider]
+    saveBYOKProviders(this.byokProviders)
+
+    this.emitUpdate()
+  }
+
+  /**
+   * Updates a BYOK provider in place. Pass `secret = undefined` to leave the
+   * stored secret untouched, `null` to clear it, or a string to overwrite it.
+   *
+   * This shouldn't be called directly. See 'Dispatcher'.
+   */
+  public async _updateCopilotBYOKProvider(
+    provider: IBYOKProvider,
+    secret: string | null | undefined
+  ): Promise<void> {
+    const idx = this.byokProviders.findIndex(p => p.id === provider.id)
+    if (idx === -1) {
+      // Treat as add to keep the call idempotent from the UI's perspective.
+      return this._addCopilotBYOKProvider(provider, secret ?? null)
+    }
+
+    // Apply the keychain change first; if it throws, the persisted provider
+    // and its in-memory copy stay consistent with the existing secret.
+    if (secret === null) {
+      await deleteBYOKSecret(provider.id)
+    } else if (secret !== undefined && secret.length > 0) {
+      await setBYOKSecret(provider.id, secret)
+    }
+
+    const updated = [...this.byokProviders]
+    updated[idx] = provider
+    this.byokProviders = updated
+    saveBYOKProviders(this.byokProviders)
+
+    // If the user removed the model that was selected for any feature, fall
+    // back to the default for that feature.
+    this.scrubMissingCopilotModelSelections()
+
+    this.emitUpdate()
+  }
+
+  /** This shouldn't be called directly. See 'Dispatcher'. */
+  public async _deleteCopilotBYOKProvider(id: string): Promise<void> {
+    if (!this.byokProviders.some(p => p.id === id)) {
+      return
+    }
+
+    // Purge the secret first; on failure we keep the provider visible so the
+    // user can retry rather than ending up with an orphaned keychain entry
+    // and no UI to manage it.
+    await deleteBYOKSecret(id)
+
+    this.byokProviders = this.byokProviders.filter(p => p.id !== id)
+    saveBYOKProviders(this.byokProviders)
+
+    this.scrubMissingCopilotModelSelections()
+
+    this.emitUpdate()
+  }
+
+  /**
+   * Drops any per-feature model selection that points at a BYOK
+   * provider/model that no longer exists, or at a Copilot model that is
+   * no longer offered by the loaded model list. Copilot selections are
+   * only scrubbed once we have a definitive model list (i.e. the list has
+   * been fetched at least once); while still loading we leave them alone
+   * so a transient empty list doesn't downgrade valid selections.
+   */
+  private scrubMissingCopilotModelSelections(): void {
+    const updated: CopilotModelSelections = {}
+    let changed = false
+    const copilotModels = this.copilotModels
+    for (const [feature, raw] of Object.entries(this.selectedCopilotModels)) {
+      if (raw === undefined) {
+        continue
+      }
+      const key = parseModelKey(raw)
+      if (key.kind === 'byok') {
+        const provider = this.byokProviders.find(p => p.id === key.providerId)
+        if (
+          provider === undefined ||
+          !provider.models.some(m => m.id === key.modelId)
+        ) {
+          changed = true
+          continue
+        }
+      } else if (
+        key.kind === 'copilot' &&
+        key.modelId !== '' &&
+        copilotModels !== null &&
+        !copilotModels.some(m => m.id === key.modelId)
+      ) {
+        changed = true
+        continue
+      }
+      updated[feature as CopilotFeature] = raw
+    }
+
+    if (changed) {
+      this.selectedCopilotModels = updated
+      this.saveCopilotModelSelections()
+    }
   }
 
   /** This shouldn't be called directly. See 'Dispatcher'. */
   public async _fetchCopilotModels(): Promise<void> {
     const models = await this.copilotStore.listModels()
-    this.copilotModels = [...models]
+    // Only overwrite the cached model list when we actually got a list back.
+    // listModels() returns null when the result is unknown (no signed-in
+    // account or an SDK failure with no prior cache); treating that as an
+    // empty list would scrub the user's Copilot model selections.
+    if (models !== null) {
+      this.copilotModels = [...models]
+      this.scrubMissingCopilotModelSelections()
+    }
     this.emitUpdate()
   }
 

@@ -539,6 +539,16 @@ dialog {
         max-height: $default-tab-height;
         overflow: auto;
       }
+
+      &.copilot-tab {
+        padding: 0;
+
+        .copilot-tab-content {
+          padding: var(--spacing-double);
+          max-height: $default-tab-height;
+          overflow: auto;
+        }
+      }
     }
   }
 

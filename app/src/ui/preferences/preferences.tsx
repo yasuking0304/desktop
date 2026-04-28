@@ -50,6 +50,8 @@ import type {
   CopilotFeature,
   CopilotModelSelections,
 } from '../../lib/stores/copilot-store'
+import type { IBYOKProvider } from '../../lib/copilot/byok'
+import { PopupType } from '../../models/popup'
 import {
   ICustomIntegration,
   TargetPathArgument,
@@ -120,6 +122,7 @@ interface IPreferencesProps {
   readonly selectedCopilotModels: CopilotModelSelections
   readonly copilotModels: ReadonlyArray<ModelInfo> | null
   readonly copilotAvailable: boolean
+  readonly byokProviders: ReadonlyArray<IBYOKProvider>
 }
 
 interface IPreferencesState {
@@ -564,7 +567,12 @@ export class Preferences extends React.Component<
             selectedCopilotModels={this.state.selectedCopilotModels}
             copilotModels={this.props.copilotModels}
             copilotAvailable={this.props.copilotAvailable}
+            byokProviders={this.props.byokProviders}
+            showBYOKSettings={this.shouldShowBYOKSettings()}
             onSelectedCopilotModelChanged={this.onSelectedCopilotModelChanged}
+            onAddBYOKProvider={this.onAddBYOKProvider}
+            onEditBYOKProvider={this.onEditBYOKProvider}
+            onDeleteBYOKProvider={this.onDeleteBYOKProvider}
           />
         )
         break
@@ -918,6 +926,32 @@ export class Preferences extends React.Component<
         selections[feature] = model
       }
       return { selectedCopilotModels: selections }
+    })
+  }
+
+  private shouldShowBYOKSettings(): boolean {
+    const account = this.props.accounts.find(isDotComAccount)
+    return account ? enableCopilotSdkCommitMessageGeneration(account) : false
+  }
+
+  private onAddBYOKProvider = () => {
+    this.props.dispatcher.showPopup({
+      type: PopupType.EditCopilotBYOKProvider,
+      provider: null,
+    })
+  }
+
+  private onEditBYOKProvider = (provider: IBYOKProvider) => {
+    this.props.dispatcher.showPopup({
+      type: PopupType.EditCopilotBYOKProvider,
+      provider,
+    })
+  }
+
+  private onDeleteBYOKProvider = (provider: IBYOKProvider) => {
+    this.props.dispatcher.showPopup({
+      type: PopupType.ConfirmDeleteCopilotBYOKProvider,
+      provider,
     })
   }
 

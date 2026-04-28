@@ -71,6 +71,10 @@ import { Welcome } from './welcome'
 import { AppMenuBar } from './app-menu'
 import { UpdateAvailable, renderBanner } from './banners'
 import { Preferences } from './preferences'
+import { EditCopilotBYOKProviderDialog } from './copilot/edit-byok-provider-dialog'
+import { EditCopilotBYOKModelDialog } from './copilot/edit-byok-model-dialog'
+import { ConfirmDeleteCopilotBYOKProviderDialog } from './copilot/confirm-delete-byok-provider-dialog'
+import type { IBYOKProvider } from '../lib/copilot/byok'
 import { OpenWithExternalEditor } from './open-with-external-editor/open-with-external-editor'
 import { RepositorySettings } from './repository-settings'
 import { AppError } from './app-error'
@@ -1607,6 +1611,7 @@ export class App extends React.Component<IAppProps, IAppState> {
             selectedCopilotModels={this.state.selectedCopilotModels}
             copilotModels={this.state.copilotModels}
             copilotAvailable={this.state.copilotAvailable}
+            byokProviders={this.state.byokProviders}
           />
         )
       case PopupType.RepositorySettings: {
@@ -1718,6 +1723,35 @@ export class App extends React.Component<IAppProps, IAppState> {
             onDismissed={onPopupDismissedFn}
             onOpenShell={this.onOpenShellIgnoreWarning}
             path={popup.path}
+          />
+        )
+      case PopupType.EditCopilotBYOKProvider:
+        return (
+          <EditCopilotBYOKProviderDialog
+            key="edit-copilot-byok-provider"
+            dispatcher={this.props.dispatcher}
+            provider={popup.provider}
+            onSave={this.onSaveCopilotBYOKProvider}
+            onDismissed={onPopupDismissedFn}
+          />
+        )
+      case PopupType.EditCopilotBYOKModel:
+        return (
+          <EditCopilotBYOKModelDialog
+            key="edit-copilot-byok-model"
+            model={popup.model}
+            otherModelIds={popup.otherModelIds}
+            onSave={popup.onSave}
+            onDismissed={onPopupDismissedFn}
+          />
+        )
+      case PopupType.ConfirmDeleteCopilotBYOKProvider:
+        return (
+          <ConfirmDeleteCopilotBYOKProviderDialog
+            key="confirm-delete-copilot-byok-provider"
+            provider={popup.provider}
+            onConfirm={this.onConfirmDeleteCopilotBYOKProvider}
+            onDismissed={onPopupDismissedFn}
           />
         )
       case PopupType.About:
@@ -2825,6 +2859,21 @@ export class App extends React.Component<IAppProps, IAppState> {
 
   private onCheckForNonStaggeredUpdates = () =>
     this.checkForUpdates(false, true)
+
+  private onSaveCopilotBYOKProvider = (
+    provider: IBYOKProvider,
+    secret: string | null | undefined
+  ) => {
+    if (this.state.byokProviders.some(p => p.id === provider.id)) {
+      this.props.dispatcher.updateCopilotBYOKProvider(provider, secret)
+    } else {
+      this.props.dispatcher.addCopilotBYOKProvider(provider, secret ?? null)
+    }
+  }
+
+  private onConfirmDeleteCopilotBYOKProvider = (provider: IBYOKProvider) => {
+    this.props.dispatcher.deleteCopilotBYOKProvider(provider.id)
+  }
 
   private showAcknowledgements = () => {
     this.props.dispatcher.showPopup({ type: PopupType.Acknowledgements })

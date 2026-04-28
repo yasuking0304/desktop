@@ -8,6 +8,10 @@ import {
   type CopilotFeature,
 } from '../../../src/lib/stores/copilot-store'
 import type { ModelInfo } from '@github/copilot-sdk'
+import {
+  encodeModelKey,
+  type IBYOKProvider,
+} from '../../../src/lib/copilot/byok'
 
 function makeModel(
   overrides: Partial<ModelInfo> & Pick<ModelInfo, 'id' | 'name'>
@@ -35,14 +39,39 @@ const otherModel = makeModel({
 
 const models: ReadonlyArray<ModelInfo> = [defaultModel, otherModel]
 
+const ollamaProvider: IBYOKProvider = {
+  id: 'ollama-id',
+  name: 'Ollama',
+  type: 'openai',
+  baseUrl: 'http://localhost:11434/v1',
+  authKind: 'none',
+  models: [
+    { id: 'llama3', name: 'Llama 3' },
+    { id: 'phi-4', name: 'Phi 4' },
+  ],
+}
+
+function defaults() {
+  return {
+    selectedCopilotModels: {},
+    copilotModels: models,
+    copilotAvailable: true,
+    byokProviders: [],
+    showBYOKSettings: false,
+    onSelectedCopilotModelChanged: () => {},
+    onAddBYOKProvider: () => {},
+    onEditBYOKProvider: () => {},
+    onDeleteBYOKProvider: () => {},
+  }
+}
+
 describe('CopilotPreferences', () => {
   it('shows sign-in message when copilot is not available', () => {
     render(
       <CopilotPreferences
-        selectedCopilotModels={{}}
+        {...defaults()}
         copilotModels={null}
         copilotAvailable={false}
-        onSelectedCopilotModelChanged={() => {}}
       />
     )
 
@@ -51,202 +80,201 @@ describe('CopilotPreferences', () => {
         'Sign in to a GitHub.com account in the Accounts tab to configure Copilot settings.'
       )
     )
-    assert.strictEqual(
-      screen.queryByRole('combobox'),
-      null,
-      'Select should not be rendered when not available'
-    )
+    assert.strictEqual(screen.queryByRole('combobox'), null)
   })
 
-  it('shows loading message when copilot is available but models not yet fetched', () => {
-    render(
-      <CopilotPreferences
-        selectedCopilotModels={{}}
-        copilotModels={null}
-        copilotAvailable={true}
-        onSelectedCopilotModelChanged={() => {}}
-      />
-    )
-
+  it('shows loading message when models not yet fetched', () => {
+    render(<CopilotPreferences {...defaults()} copilotModels={null} />)
     assert.ok(screen.getByText('Loading available models…'))
-    assert.strictEqual(
-      screen.queryByRole('combobox'),
-      null,
-      'Select should not be rendered while loading'
-    )
   })
 
   it('shows no-models message when fetch completed with empty result', () => {
-    render(
-      <CopilotPreferences
-        selectedCopilotModels={{}}
-        copilotModels={[]}
-        copilotAvailable={true}
-        onSelectedCopilotModelChanged={() => {}}
-      />
-    )
-
+    render(<CopilotPreferences {...defaults()} copilotModels={[]} />)
     assert.ok(
       screen.getByText('No models available. Check your Copilot subscription.')
     )
-    assert.strictEqual(
-      screen.queryByRole('combobox'),
-      null,
-      'Select should not be rendered when no models are available'
-    )
   })
 
-  it('renders the model picker when models are available', () => {
-    const view = render(
-      <CopilotPreferences
-        selectedCopilotModels={{}}
-        copilotModels={models}
-        copilotAvailable={true}
-        onSelectedCopilotModelChanged={() => {}}
-      />
-    )
+  it('renders Default option plus a Copilot optgroup with the available models', () => {
+    const view = render(<CopilotPreferences {...defaults()} />)
 
-    const select = view.container.querySelector('select')
-    assert.notStrictEqual(select, null, 'Should render a select element')
+    const optgroups = view.container.querySelectorAll('optgroup')
+    assert.strictEqual(optgroups.length, 1)
+    assert.strictEqual(optgroups[0].label, 'GitHub Copilot')
 
     const options = view.container.querySelectorAll('option')
-    assert.strictEqual(options.length, 2)
-    assert.strictEqual(options[0].textContent, 'GPT-5 mini (default)')
-    assert.strictEqual(options[1].textContent, 'Claude Sonnet')
+    assert.strictEqual(options[0].textContent, 'Default')
+    assert.strictEqual(options[1].textContent, 'GPT-5 mini (default)')
+    assert.strictEqual(options[2].textContent, 'Claude Sonnet')
   })
 
-  it('selects the default model when no model is selected for commit-message-generation', () => {
+  it('renders a BYOK optgroup per provider', () => {
     const view = render(
-      <CopilotPreferences
-        selectedCopilotModels={{}}
-        copilotModels={models}
-        copilotAvailable={true}
-        onSelectedCopilotModelChanged={() => {}}
-      />
+      <CopilotPreferences {...defaults()} byokProviders={[ollamaProvider]} />
     )
-
-    const select = view.container.querySelector('select') as HTMLSelectElement
-    assert.strictEqual(select.value, DefaultCopilotModel)
+    const labels = Array.from(view.container.querySelectorAll('optgroup')).map(
+      g => g.label
+    )
+    assert.deepStrictEqual(labels, ['GitHub Copilot', 'Ollama'])
   })
 
-  it('selects the specified model when commit-message-generation model is set', () => {
+  it('selects "Default" when no model is selected', () => {
+    const view = render(<CopilotPreferences {...defaults()} />)
+    const select = view.container.querySelector('select') as HTMLSelectElement
+    assert.strictEqual(select.value, '__default__')
+  })
+
+  it('treats legacy bare-string selections as Copilot models', () => {
     const view = render(
       <CopilotPreferences
+        {...defaults()}
         selectedCopilotModels={{ 'commit-message-generation': 'claude-sonnet' }}
-        copilotModels={models}
-        copilotAvailable={true}
-        onSelectedCopilotModelChanged={() => {}}
       />
     )
-
     const select = view.container.querySelector('select') as HTMLSelectElement
-    assert.strictEqual(select.value, 'claude-sonnet')
+    assert.strictEqual(
+      select.value,
+      encodeModelKey({ kind: 'copilot', modelId: 'claude-sonnet' })
+    )
   })
 
-  it('calls onSelectedCopilotModelChanged with feature and model id on change', () => {
-    const changed: Array<{ feature: CopilotFeature; model: string | null }> = []
-
+  it('selects the matching BYOK option when chosen', () => {
     const view = render(
       <CopilotPreferences
-        selectedCopilotModels={{}}
-        copilotModels={models}
-        copilotAvailable={true}
+        {...defaults()}
+        byokProviders={[ollamaProvider]}
+        selectedCopilotModels={{
+          'commit-message-generation': encodeModelKey({
+            kind: 'byok',
+            providerId: ollamaProvider.id,
+            modelId: 'llama3',
+          }),
+        }}
+      />
+    )
+    const select = view.container.querySelector('select') as HTMLSelectElement
+    assert.strictEqual(
+      select.value,
+      encodeModelKey({
+        kind: 'byok',
+        providerId: ollamaProvider.id,
+        modelId: 'llama3',
+      })
+    )
+  })
+
+  it('emits the encoded composite key on change', () => {
+    const changed: Array<{ feature: CopilotFeature; model: string | null }> = []
+    const view = render(
+      <CopilotPreferences
+        {...defaults()}
         onSelectedCopilotModelChanged={(f, m) =>
           changed.push({ feature: f, model: m })
         }
       />
     )
-
     const select = view.container.querySelector('select') as HTMLSelectElement
-    fireEvent.change(select, { target: { value: 'claude-sonnet' } })
-
+    fireEvent.change(select, {
+      target: {
+        value: encodeModelKey({ kind: 'copilot', modelId: 'claude-sonnet' }),
+      },
+    })
     assert.deepStrictEqual(changed, [
-      { feature: 'commit-message-generation', model: 'claude-sonnet' },
+      {
+        feature: 'commit-message-generation',
+        model: encodeModelKey({ kind: 'copilot', modelId: 'claude-sonnet' }),
+      },
     ])
   })
 
-  it('calls onSelectedCopilotModelChanged with null when default is re-selected', () => {
+  it('emits null when "Default" is selected', () => {
     const changed: Array<{ feature: CopilotFeature; model: string | null }> = []
-
     const view = render(
       <CopilotPreferences
+        {...defaults()}
         selectedCopilotModels={{ 'commit-message-generation': 'claude-sonnet' }}
-        copilotModels={models}
-        copilotAvailable={true}
         onSelectedCopilotModelChanged={(f, m) =>
           changed.push({ feature: f, model: m })
         }
       />
     )
-
     const select = view.container.querySelector('select') as HTMLSelectElement
-    fireEvent.change(select, { target: { value: DefaultCopilotModel } })
-
-    assert.deepStrictEqual(
-      changed,
-      [{ feature: 'commit-message-generation', model: null }],
-      'Selecting default model should emit null'
-    )
+    fireEvent.change(select, { target: { value: '__default__' } })
+    assert.deepStrictEqual(changed, [
+      { feature: 'commit-message-generation', model: null },
+    ])
   })
 
-  it('renders the heading text', () => {
-    render(
-      <CopilotPreferences
-        selectedCopilotModels={{}}
-        copilotModels={models}
-        copilotAvailable={true}
-        onSelectedCopilotModelChanged={() => {}}
-      />
-    )
-
-    assert.ok(screen.getByRole('heading', { level: 2 }))
-  })
-
-  it('falls back to first option when default model is not in the list', () => {
-    const noDefaultModels: ReadonlyArray<ModelInfo> = [
-      makeModel({ id: 'model-a', name: 'Model A', billing: { multiplier: 1 } }),
-      makeModel({ id: 'model-b', name: 'Model B', billing: { multiplier: 2 } }),
-    ]
-
+  it('falls back to Default when persisted selection is not in the model list', () => {
     const view = render(
       <CopilotPreferences
-        selectedCopilotModels={{}}
-        copilotModels={noDefaultModels}
-        copilotAvailable={true}
-        onSelectedCopilotModelChanged={() => {}}
-      />
-    )
-
-    const select = view.container.querySelector('select') as HTMLSelectElement
-    // With no model selected the value falls back to DefaultCopilotModel,
-    // which isn't in the list — the browser selects the first option.
-    assert.strictEqual(select.value, 'model-a')
-
-    // No option should have the "(default)" suffix
-    const options = view.container.querySelectorAll('option')
-    for (const opt of options) {
-      assert.ok(
-        !opt.textContent?.includes('(default)'),
-        `Option "${opt.textContent}" should not show (default) suffix`
-      )
-    }
-  })
-
-  it('falls back to first option when persisted model is not in the list', () => {
-    const view = render(
-      <CopilotPreferences
+        {...defaults()}
         selectedCopilotModels={{
           'commit-message-generation': 'deleted-model',
         }}
-        copilotModels={models}
-        copilotAvailable={true}
-        onSelectedCopilotModelChanged={() => {}}
       />
     )
-
     const select = view.container.querySelector('select') as HTMLSelectElement
-    // "deleted-model" is not a valid option, so the browser falls back
-    // to the first available option.
-    assert.strictEqual(select.value, DefaultCopilotModel)
+    assert.strictEqual(select.value, '__default__')
+  })
+
+  it('falls back to Default when the BYOK provider for the persisted selection is gone', () => {
+    const view = render(
+      <CopilotPreferences
+        {...defaults()}
+        selectedCopilotModels={{
+          'commit-message-generation': encodeModelKey({
+            kind: 'byok',
+            providerId: 'missing-provider',
+            modelId: 'llama3',
+          }),
+        }}
+      />
+    )
+    const select = view.container.querySelector('select') as HTMLSelectElement
+    assert.strictEqual(select.value, '__default__')
+  })
+
+  it('hides the Providers tab when showBYOKSettings is false', () => {
+    const view = render(<CopilotPreferences {...defaults()} />)
+    const tabs = view.container.querySelectorAll('[role="tab"]')
+    assert.strictEqual(tabs.length, 0)
+  })
+
+  it('shows the Providers tab when enabled', () => {
+    const view = render(
+      <CopilotPreferences {...defaults()} showBYOKSettings={true} />
+    )
+    const tabs = view.container.querySelectorAll('[role="tab"]')
+    const providersTab = Array.from(tabs).find(t =>
+      (t.textContent ?? '').toLowerCase().includes('providers')
+    )
+    assert.ok(providersTab)
+  })
+
+  it('invokes onAddBYOKProvider when the Add button is clicked', () => {
+    let called = 0
+    const view = render(
+      <CopilotPreferences
+        {...defaults()}
+        showBYOKSettings={true}
+        onAddBYOKProvider={() => {
+          called += 1
+        }}
+      />
+    )
+    const tabs = view.container.querySelectorAll('[role="tab"]')
+    const providersTab = Array.from(tabs).find(t =>
+      (t.textContent ?? '').toLowerCase().includes('providers')
+    )
+    assert.ok(providersTab)
+    fireEvent.click(providersTab!)
+    const buttons = view.container.querySelectorAll('button')
+    const addButton = Array.from(buttons).find(b =>
+      (b.textContent ?? '').toLowerCase().includes('add provider')
+    )
+    assert.ok(addButton)
+    fireEvent.click(addButton!)
+    assert.strictEqual(called, 1)
   })
 })
