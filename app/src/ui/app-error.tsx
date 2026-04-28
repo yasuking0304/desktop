@@ -150,7 +150,9 @@ export class AppError extends React.Component<IAppErrorProps, IAppErrorState> {
             ) : null}
             {actionText !== undefined && actionURL !== undefined ? (
               <p>
-                <LinkButton uri={actionURL} className="brand increase-limit">{actionText}</LinkButton>
+                <LinkButton uri={actionURL} className="brand increase-limit">
+                  {actionText}
+                </LinkButton>
               </p>
             ) : null}
           </>

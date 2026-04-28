@@ -81,7 +81,6 @@
   },
   "app-error": {
     "clone-failed": "クローンの失敗",
-    "copilot-exceeded-its-quota": "Copilot の利用限度数を超過しました",
     "failed-to-push": "プッシュに失敗しました",
     "file-size-limit-exceeded": "ファイルサイズ制限を超過しました",
     "files-that-exceed": "制限を超過したファイル",
@@ -89,10 +88,8 @@
     "for-more-information-2": " を参照してください。",
     "open-options": "オプションを開く",
     "open-settings-darwin": "オプションを開く",
-    "payment-required": "続けるために課金を行うか、月末のクォータリセットを待つ必要があります。",
     "retry-clone": "クローンの再試行",
     "retry-clone-darwin": "クローンの再試行",
-    "upgrade-to-increase-limit": "アップグレードすることで、利用限度額を増やすことができます",
     "would-you-like-1": " ",
     "would-you-like-2": " のクローンを再試行しますか?"
   },
@@ -538,6 +535,8 @@
     "repository-name": "リポジトリ名(日本語は使用できません)",
     "repository-path": "リポジトリの存在するパス",
     "save": "保存",
+    "second": "秒",
+    "seconds": "秒",
     "select-all": "すべて選択",
     "settings": "設定",
     "settings-name": "設定",
@@ -636,6 +635,19 @@
   "conflicts-found-banner": {
     "resolve-conflicts-to-continue-1": " ",
     "resolve-conflicts-to-continue-2": " の競合を解決して続行します。"
+  },
+  "copilot-error": {
+    "billing-issue": "GitHub Copilotで課金エラーが発生しました。",
+    "billing-issue-title": "Copilotの課金に関する問題",
+    "billing-not-configured": "このアカウントではGitHub Copilotの課金が設定されていません。",
+    "billing-not-configured-title": "Copilotで課金が設定されていません",
+    "open-settings": "GitHub Copilotの設定を開く",
+    "quota-exceeded": "GitHub Copilotの利用制限に到達しました。",
+    "quota-exceeded-title": "割り当て量を超過しました",
+    "retry-after": "{{0}}{{1}}後にもう一度お試しください。",
+    "retry-after-generic": "{{0}}後にもう一度お試しください。",
+    "session-quota-exceeded": "GitHub Copilotのセッション制限に到達しました。",
+    "session-quota-exceeded-title": "セッションの割り当て量を超過しました"
   },
   "copy-button": {
     "copied": "コピーしました"

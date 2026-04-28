@@ -81,7 +81,6 @@
   },
   "app-error": {
     "clone-failed": "Clone failed",
-    "copilot-exceeded-its-quota": "Copilot exceeded its quota",
     "failed-to-push": "Failed to push",
     "file-size-limit-exceeded": "File size limit exceeded",
     "files-that-exceed": "Files that exceed the limit",
@@ -89,10 +88,8 @@
     "for-more-information-2": " for more information on managing large files on GitHub",
     "open-options": "Open options",
     "open-settings-darwin": "Open Settings",
-    "payment-required": "You need to either make the payment or wait for the end of month quota reset.",
     "retry-clone": "Retry clone",
     "retry-clone-darwin": "Retry Clone",
-    "upgrade-to-increase-limit": "You can upgrade to increase your spending limit",
     "would-you-like-1": "Would you like to retry cloning ",
     "would-you-like-2": "?"
   },
@@ -538,6 +535,8 @@
     "repository-name": "repository name",
     "repository-path": "repository path",
     "save": "Save",
+    "second": "second",
+    "seconds": "seconds",
     "select-all": "Select All",
     "settings": "Settings",
     "settings-name": "settings",
@@ -636,6 +635,19 @@
   "conflicts-found-banner": {
     "resolve-conflicts-to-continue-1": "Resolve conflicts to continue",
     "resolve-conflicts-to-continue-2": "."
+  },
+  "copilot-error": {
+    "billing-issue": "GitHub Copilot returned a billing error.",
+    "billing-issue-title": "Copilot billing issue",
+    "billing-not-configured": "GitHub Copilot billing is not configured for this account.",
+    "billing-not-configured-title": "Copilot billing not configured",
+    "open-settings": "Open GitHub Copilot settings",
+    "quota-exceeded": "You have reached your GitHub Copilot usage limit.",
+    "quota-exceeded-title": "Quota exceeded",
+    "retry-after": "You can try again in {{0}} {{1}}.",
+    "retry-after-generic": "You can try again after {{0}}.",
+    "session-quota-exceeded": "You have reached your GitHub Copilot session limit.",
+    "session-quota-exceeded-title": "Session quota exceeded"
   },
   "copy-button": {
     "copied": "Copied!"

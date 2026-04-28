@@ -81,7 +81,6 @@
   },
   "app-error": {
     "clone-failed": "클론 실패",
-    "copilot-exceeded-its-quota": "Copilot 사용 한도를 초과했습니다",
     "failed-to-push": "푸시에 실패했습니다",
     "file-size-limit-exceeded": "파일 크기 제한을 초과했습니다.",
     "files-that-exceed": "제한을 초과하는 파일",
@@ -89,10 +88,8 @@
     "for-more-information-2": "를 참조하세요.",
     "open-options": "옵션 열기",
     "open-settings-darwin": "옵션 열기",
-    "payment-required": "계속하려면 요금을 지불하거나, 월말까지 할당량 초기화를 기다려야 합니다.",
     "retry-clone": "클론 재시도",
     "retry-clone-darwin": "클론 재시도",
-    "upgrade-to-increase-limit": "업그레이드하면 사용 한도 금액을 늘릴 수 있습니다",
     "would-you-like-1": " ",
     "would-you-like-2": "클론을 다시 시도하시겠습니까?"
   },
@@ -538,9 +535,11 @@
     "repository-name": "리포지토리 이름(한글이나 한자는 사용할 수 없음)",
     "repository-path": "리포지토리가 있는 경로",
     "save": "저장",
+    "second": "초",
+    "seconds": "초",
     "select-all": "모두 선택",
     "settings": "설정",
-    "settings-name": "settings",
+    "settings-name": "설정",
     "sign-in": "로그인",
     "sign-in-darwin": "로그인",
     "sign-into-1": " ",
@@ -636,6 +635,19 @@
   "conflicts-found-banner": {
     "resolve-conflicts-to-continue-1": " ",
     "resolve-conflicts-to-continue-2": " 충돌을 해결하고 계속합니다."
+  },
+  "copilot-error": {
+    "billing-issue": "GitHub Copilot에서 결제 오류가 발생했습니다.",
+    "billing-issue-title": "Copilot 결제 문제",
+    "billing-not-configured": "이 계정에는 GitHub Copilot에 대한 결제가 설정되지 않았습니다.",
+    "billing-not-configured-title": "Copilot에서 결제가 설정되지 않았습니다",
+    "open-settings": "GitHub Copilot 설정 열기",
+    "quota-exceeded": "GitHub Copilot 사용 제한에 도달했습니다.",
+    "quota-exceeded-title": "할당량을 초과했습니다",
+    "retry-after": "{{0}}{{1}} 후에 다시 시도해 보세요.",
+    "retry-after-generic": "{{0}} 후에 다시 시도해 보세요.",
+    "session-quota-exceeded": "GitHub Copilot의 세션 제한에 도달했습니다.",
+    "session-quota-exceeded-title": "세션 할당량을 초과했습니다"
   },
   "copy-button": {
     "copied": "복사했습니다"
