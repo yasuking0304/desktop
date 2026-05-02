@@ -95,7 +95,7 @@ describe('CopilotPreferences', () => {
     )
   })
 
-  it('renders Default option plus a Copilot optgroup with the available models', () => {
+  it('renders a Copilot optgroup with the available models', () => {
     const view = render(<CopilotPreferences {...defaults()} />)
 
     const optgroups = view.container.querySelectorAll('optgroup')
@@ -103,9 +103,8 @@ describe('CopilotPreferences', () => {
     assert.strictEqual(optgroups[0].label, 'GitHub Copilot')
 
     const options = view.container.querySelectorAll('option')
-    assert.strictEqual(options[0].textContent, 'Default')
-    assert.strictEqual(options[1].textContent, 'GPT-5 mini (default)')
-    assert.strictEqual(options[2].textContent, 'Claude Sonnet')
+    assert.strictEqual(options[0].textContent, 'GPT-5 mini (default)')
+    assert.strictEqual(options[1].textContent, 'Claude Sonnet')
   })
 
   it('renders a BYOK optgroup per provider', () => {
@@ -118,10 +117,13 @@ describe('CopilotPreferences', () => {
     assert.deepStrictEqual(labels, ['GitHub Copilot', 'Ollama'])
   })
 
-  it('selects "Default" when no model is selected', () => {
+  it('selects the default Copilot model when no model is selected', () => {
     const view = render(<CopilotPreferences {...defaults()} />)
     const select = view.container.querySelector('select') as HTMLSelectElement
-    assert.strictEqual(select.value, '__default__')
+    assert.strictEqual(
+      select.value,
+      encodeModelKey({ kind: 'copilot', modelId: DefaultCopilotModel })
+    )
   })
 
   it('treats legacy bare-string selections as Copilot models', () => {
@@ -187,7 +189,7 @@ describe('CopilotPreferences', () => {
     ])
   })
 
-  it('emits null when "Default" is selected', () => {
+  it('emits the selected value directly on change', () => {
     const changed: Array<{ feature: CopilotFeature; model: string | null }> = []
     const view = render(
       <CopilotPreferences
@@ -199,13 +201,26 @@ describe('CopilotPreferences', () => {
       />
     )
     const select = view.container.querySelector('select') as HTMLSelectElement
-    fireEvent.change(select, { target: { value: '__default__' } })
+    fireEvent.change(select, {
+      target: {
+        value: encodeModelKey({
+          kind: 'copilot',
+          modelId: DefaultCopilotModel,
+        }),
+      },
+    })
     assert.deepStrictEqual(changed, [
-      { feature: 'commit-message-generation', model: null },
+      {
+        feature: 'commit-message-generation',
+        model: encodeModelKey({
+          kind: 'copilot',
+          modelId: DefaultCopilotModel,
+        }),
+      },
     ])
   })
 
-  it('falls back to Default when persisted selection is not in the model list', () => {
+  it('falls back to the default Copilot model when persisted selection is not in the model list', () => {
     const view = render(
       <CopilotPreferences
         {...defaults()}
@@ -215,10 +230,13 @@ describe('CopilotPreferences', () => {
       />
     )
     const select = view.container.querySelector('select') as HTMLSelectElement
-    assert.strictEqual(select.value, '__default__')
+    assert.strictEqual(
+      select.value,
+      encodeModelKey({ kind: 'copilot', modelId: DefaultCopilotModel })
+    )
   })
 
-  it('falls back to Default when the BYOK provider for the persisted selection is gone', () => {
+  it('falls back to the default Copilot model when the BYOK provider for the persisted selection is gone', () => {
     const view = render(
       <CopilotPreferences
         {...defaults()}
@@ -232,7 +250,50 @@ describe('CopilotPreferences', () => {
       />
     )
     const select = view.container.querySelector('select') as HTMLSelectElement
-    assert.strictEqual(select.value, '__default__')
+    assert.strictEqual(
+      select.value,
+      encodeModelKey({ kind: 'copilot', modelId: DefaultCopilotModel })
+    )
+  })
+
+  it('falls back to the first available Copilot model when DefaultCopilotModel is unavailable', () => {
+    const onlyOtherModel = [otherModel]
+    const view = render(
+      <CopilotPreferences
+        {...defaults()}
+        copilotModels={onlyOtherModel}
+        selectedCopilotModels={{
+          'commit-message-generation': 'deleted-model',
+        }}
+      />
+    )
+    const select = view.container.querySelector('select') as HTMLSelectElement
+    assert.strictEqual(
+      select.value,
+      encodeModelKey({ kind: 'copilot', modelId: otherModel.id })
+    )
+  })
+
+  it('falls back to the first BYOK model when no Copilot models are available', () => {
+    const view = render(
+      <CopilotPreferences
+        {...defaults()}
+        copilotModels={[]}
+        byokProviders={[ollamaProvider]}
+        selectedCopilotModels={{
+          'commit-message-generation': 'deleted-model',
+        }}
+      />
+    )
+    const select = view.container.querySelector('select') as HTMLSelectElement
+    assert.strictEqual(
+      select.value,
+      encodeModelKey({
+        kind: 'byok',
+        providerId: ollamaProvider.id,
+        modelId: ollamaProvider.models[0].id,
+      })
+    )
   })
 
   it('hides the Providers tab when showBYOKSettings is false', () => {
