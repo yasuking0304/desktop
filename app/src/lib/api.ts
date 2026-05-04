@@ -2108,6 +2108,7 @@ export class API {
   }
 
   /**
+   * TODO: This is a beta implementation. It uses a private API.
    * Fetches the Copilot internal info related to the user(beta).
    *
    * @returns Copilot license information and usage quotas.

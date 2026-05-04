@@ -637,18 +637,19 @@
     "resolve-conflicts-to-continue-2": "。"
   },
   "copilot-error": {
-    "billing-issue": "GitHub Copilot returned a billing error.",
-    "billing-issue-title": "Copilot billing issue",
-    "billing-not-configured": "GitHub Copilot billing is not configured for this account.",
-    "billing-not-configured-title": "Copilot billing not configured",
-    "open-settings": "Open GitHub Copilot settings",
-    "quota-exceeded": "You have reached your GitHub Copilot usage limit.",
-    "quota-exceeded-title": "Quota exceeded",
+    "billing-issue": "在 GitHub Copilot 上發生了付費錯誤。",
+    "billing-issue-title": "Copilot計費問題",
+    "billing-not-configured": "GitHub Copilot 計費未配置。",
+    "billing-not-configured-title": "Copilot計費未配置",
+    "open-settings": "開啟 GitHub Copilot 設置",
+    "quota-exceeded": "您已达到 GitHub Copilot 的使用限制。",
+    "quota-exceeded-title": "配額超出",
     "retry-after": "請 {{0}}{{1}}後再試。",
     "retry-after-generic": "請 {{0}}後再試。",
-    "session-quota-exceeded": "You have reached your GitHub Copilot session limit.",
-    "session-quota-exceeded-title": "Session quota exceeded"
+    "session-quota-exceeded": "您已達到 GitHub Copilot 的會話限制。",
+    "session-quota-exceeded-title": "會話配額超出"
   },
+
   "copy-button": {
     "copied": "已複製"
   },

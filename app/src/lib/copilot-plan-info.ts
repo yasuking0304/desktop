@@ -7,10 +7,10 @@ export type CopilotPlanInfo = {
 }
 
 /**
+ * TODO: This is a beta implementation. It uses a private API.
+ * NOTE: The structure of the response from the API varies depending on the user's plan.
  * Gets Copilot plan information for the user, including license type,
  * reset date, and remaining quotas for chat and code completions.
- *
- * NOTE: The structure of the response from the API varies depending on the user's plan.
  *
  * @param response
  * @returns A promise that resolves to a CopilotPlanInfo object containing the user's Copilot plan details.
@@ -25,14 +25,17 @@ export async function getCopilotPlanInfo({
   console.warn('userResponse', JSON.stringify(userResponse))
   const isPlanFreeOrPro = userResponse['copilot_plan']?.match('individual')
   const typeSku = userResponse['access_type_sku']
+  const plan = userResponse['copilot_plan']
   return {
-    copilotLicenseType: typeSku?.match('enterprise')
+    copilotLicenseType: plan?.match('enterprise')
       ? 'Enterprise'
-      : typeSku?.match('business')
+      : plan?.match('business')
       ? 'Business'
+      : plan?.match('pro')
+      ? 'Pro'
       : typeSku?.match('free')
       ? 'Free'
-      : 'Pro',
+      : 'Unknown',
     copilotResetDate: isPlanFreeOrPro
       ? userResponse['limited_user_reset_date']
       : userResponse['quota_snapshot'],
