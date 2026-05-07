@@ -111,7 +111,7 @@ export class Git extends React.Component<IGitProps> {
           }
           onChange={this.onEnableGitHookEnvChanged}
         />
-        <p id="git-hooks-env-description" className="git-hooks-env-description">
+        <p id="git-hooks-env-description" className="settings-description">
           {t(
             'git.when-enabled-attempt-to-load-env-variables',
             `When enabled, GitHub Desktop will attempt to load environment
@@ -162,7 +162,7 @@ export class Git extends React.Component<IGitProps> {
 
             <div
               id="git-hooks-cache-description"
-              className="git-settings-description"
+              className="settings-description"
             >
               {t(
                 'git.cache-hook-env-description',
@@ -241,7 +241,7 @@ export class Git extends React.Component<IGitProps> {
           warningMessageVerb="saved"
         />
 
-        <p id="default-branch-description" className="git-settings-description">
+        <p id="default-branch-description" className="settings-description">
           {t(
             'git.gitHub-default-branch-description-1',
             "GitHub's default branch name is "
@@ -264,7 +264,7 @@ export class Git extends React.Component<IGitProps> {
 
   private renderEditGlobalGitConfigInfo() {
     return (
-      <p className="git-settings-description">
+      <p className="settings-description">
         {t('git.edit-your-global-git-config-1', 'These preferences will ')}
         <LinkButton onClick={this.props.onEditGlobalGitConfig}>
           {t(

@@ -1,6 +1,10 @@
 import type { ModelInfo } from '@github/copilot-sdk'
 import type { CopilotModelSelections } from './stores/copilot-store'
 import type { IBYOKProvider } from './copilot/byok'
+import type {
+  IFileResolution,
+  IConflictResolutionProgress,
+} from './copilot-conflict-resolution'
 import { Account } from '../models/account'
 import { CommitIdentity } from '../models/commit-identity'
 import { IDiff, ImageDiffType } from '../models/diff'
@@ -1063,6 +1067,26 @@ export interface IMultiCommitOperationState {
    * operation, and therefore, should be warned on aborting the operation.
    */
   readonly userHasResolvedConflicts: boolean
+
+  /**
+   * Whether the user has opted into Copilot-powered conflict resolution for
+   * this operation. When true, subsequent conflict rounds will automatically
+   * route through ShowCopilotConflictsLoading instead of ShowConflicts.
+   */
+  readonly useCopilotConflictResolution: boolean
+
+  /**
+   * Resolutions returned by Copilot for the current conflict round. Null when
+   * Copilot hasn't been invoked or has not yet completed. Set after a
+   * successful resolution so the result dialog can display per-file reasoning.
+   */
+  readonly copilotResolutions: ReadonlyArray<IFileResolution> | null
+
+  /**
+   * Progress of the in-flight Copilot conflict resolution request. Null when
+   * no resolution is in progress.
+   */
+  readonly copilotResolutionProgress: IConflictResolutionProgress | null
 
   /**
    * The commit id of the tip of the branch user is modifying in the operation.

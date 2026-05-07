@@ -392,7 +392,8 @@ export class CopilotStore extends BaseStore {
       // Proactively fetch models so they are ready when the user opens the
       // Copilot tab in Settings, even if they signed in without reopening
       // the dialog.
-      this.getCachedModels().then(this.emitUpdate, this.emitUpdate)
+      const emit = () => this.emitUpdate()
+      this.getCachedModels().then(emit, emit)
     }
   }
 
@@ -432,7 +433,7 @@ export class CopilotStore extends BaseStore {
       },
       cwd: repositoryPath,
       autoStart: true,
-      githubToken: this.currentAccount.token,
+      gitHubToken: this.currentAccount.token,
     })
   }
 
@@ -524,7 +525,7 @@ export class CopilotStore extends BaseStore {
         },
         availableTools: [],
         onPermissionRequest: async () => ({
-          kind: 'denied-interactively-by-user',
+          kind: 'reject',
         }),
       })
 
@@ -695,7 +696,7 @@ export class CopilotStore extends BaseStore {
             content: ConflictResolutionSystemPrompt,
           },
           onPermissionRequest: async () => ({
-            kind: 'denied-interactively-by-user',
+            kind: 'reject',
           }),
         })
 

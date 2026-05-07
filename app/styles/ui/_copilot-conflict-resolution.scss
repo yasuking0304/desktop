@@ -1,0 +1,14 @@
+// Copilot conflict resolution - entry point button layout
+.conflicts-footer-with-copilot {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+
+  .copilot-resolve-button {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-half);
+  }
+}

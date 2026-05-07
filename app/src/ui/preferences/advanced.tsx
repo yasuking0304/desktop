@@ -108,10 +108,7 @@ export class Advanced extends React.Component<
             onChange={this.onRepositoryIndicatorsEnabledChanged}
             ariaDescribedBy="periodic-fetch-description"
           />
-          <div
-            id="periodic-fetch-description"
-            className="git-settings-description"
-          >
+          <div id="periodic-fetch-description" className="settings-description">
             <p>
               {t(
                 'advanced.these-icons-indicate',
@@ -162,7 +159,7 @@ export class Advanced extends React.Component<
           />
           <div
             id="use-external-credential-helper-description"
-            className="git-settings-description"
+            className="settings-description"
           >
             <p>
               {t('advanced.use-git-credential-manager-1', 'Use ')}

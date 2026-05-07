@@ -1,4 +1,5 @@
 import * as Path from 'path'
+import { writeFile } from 'fs/promises'
 import {
   AccountsStore,
   CloningRepositoriesStore,
@@ -218,6 +219,7 @@ import {
   getFilesDiffText,
   TerminalOutput,
   HookProgress,
+  git,
 } from '../git'
 import {
   installGlobalLFSFilters,
@@ -391,6 +393,7 @@ import {
   buildConflictContext,
   gatherCommitContext,
 } from '../copilot-conflict-context'
+import { resolveWithin } from '../path'
 
 const LastSelectedRepositoryIDKey = 'last-selected-repository-id'
 
@@ -5984,6 +5987,150 @@ export class AppStore extends TypedBaseStore<IAppState> {
   }
 
   /**
+   * Orchestrate Copilot conflict resolution: call the API, emit progress
+   * updates, and transition to the result dialog on success. File writes are
+   * deferred until the user confirms (see _applyCopilotConflictResolutions).
+   *
+   * This shouldn't be called directly. See `Dispatcher`.
+   */
+  public async _startCopilotConflictResolution(
+    repository: Repository
+  ): Promise<void> {
+    const state = this.repositoryStateCache.get(repository)
+    const { multiCommitOperationState } = state
+    if (multiCommitOperationState === null) {
+      return
+    }
+
+    const { step } = multiCommitOperationState
+    if (
+      step.kind !== MultiCommitOperationStepKind.ShowCopilotConflictsLoading
+    ) {
+      return
+    }
+
+    const { conflictState } = step
+
+    try {
+      const result = await this._resolveConflictsWithCopilot(
+        repository,
+        progress => {
+          // Bail if user cancelled while the request was in-flight
+          const current = this.repositoryStateCache.get(repository)
+          const mcoState = current.multiCommitOperationState
+          if (
+            mcoState === null ||
+            mcoState.step.kind !==
+              MultiCommitOperationStepKind.ShowCopilotConflictsLoading
+          ) {
+            return
+          }
+          this.repositoryStateCache.updateMultiCommitOperationState(
+            repository,
+            () => ({ copilotResolutionProgress: progress })
+          )
+          this.emitUpdate()
+        }
+      )
+
+      // Re-check state: user may have cancelled during the await
+      const currentState = this.repositoryStateCache.get(repository)
+      const currentMco = currentState.multiCommitOperationState
+      if (
+        currentMco === null ||
+        currentMco.step.kind !==
+          MultiCommitOperationStepKind.ShowCopilotConflictsLoading
+      ) {
+        return
+      }
+
+      if (result === null) {
+        throw new Error('Copilot conflict resolution returned no results')
+      }
+
+      // Store resolutions and transition to the result dialog.
+      // Files are NOT written to disk yet — that happens when the user
+      // clicks "Continue Merge" (see _applyCopilotConflictResolutions).
+      this.repositoryStateCache.updateMultiCommitOperationState(
+        repository,
+        () => ({
+          step: {
+            kind: MultiCommitOperationStepKind.ShowCopilotConflicts,
+            conflictState,
+          },
+          copilotResolutions: result.resolutions,
+          copilotResolutionProgress: null,
+        })
+      )
+
+      this.emitUpdate()
+    } catch (e) {
+      log.warn('AppStore: Copilot conflict resolution flow failed', e)
+
+      // Transition back to manual conflict resolution
+      this.repositoryStateCache.updateMultiCommitOperationState(
+        repository,
+        () => ({
+          step: {
+            kind: MultiCommitOperationStepKind.ShowConflicts,
+            conflictState,
+          },
+          useCopilotConflictResolution: false,
+          copilotResolutions: null,
+          copilotResolutionProgress: null,
+        })
+      )
+
+      this.emitUpdate()
+    }
+  }
+
+  /**
+   * Write Copilot-resolved file contents to disk and stage them.
+   * Called when the user clicks "Continue Merge" from the Copilot conflicts
+   * result dialog.
+   *
+   * This shouldn't be called directly. See `Dispatcher`.
+   */
+  public async _applyCopilotConflictResolutions(
+    repository: Repository
+  ): Promise<void> {
+    const state = this.repositoryStateCache.get(repository)
+    const { multiCommitOperationState } = state
+    if (multiCommitOperationState === null) {
+      return
+    }
+
+    const { copilotResolutions } = multiCommitOperationState
+    if (copilotResolutions === null || copilotResolutions.length === 0) {
+      return
+    }
+
+    const pathsToStage: string[] = []
+
+    for (const resolution of copilotResolutions) {
+      const absolutePath = await resolveWithin(repository.path, resolution.path)
+      if (absolutePath === null) {
+        log.warn(
+          `Copilot resolution skipped: path outside repository: ${resolution.path}`
+        )
+        continue
+      }
+
+      await writeFile(absolutePath, resolution.resolvedContent, 'utf8')
+      pathsToStage.push(resolution.path)
+    }
+
+    if (pathsToStage.length > 0) {
+      await git(
+        ['add', '--', ...pathsToStage],
+        repository.path,
+        'copilotConflictResolution'
+      )
+    }
+  }
+
+  /**
    * Set the global application menu.
    *
    * This is called in response to the main process emitting an event signalling
@@ -8341,6 +8488,23 @@ export class AppStore extends TypedBaseStore<IAppState> {
     this.emitUpdate()
   }
 
+  /** This shouldn't be called directly. See `Dispatcher`. */
+  public _setMultiCommitOperationStepWithCopilotResolution(
+    repository: Repository,
+    step: MultiCommitOperationStep,
+    useCopilotConflictResolution: boolean
+  ): void {
+    this.repositoryStateCache.updateMultiCommitOperationState(
+      repository,
+      () => ({
+        step,
+        useCopilotConflictResolution,
+      })
+    )
+
+    this.emitUpdate()
+  }
+
   public _setMultiCommitOperationTargetBranch(
     repository: Repository,
     targetBranch: Branch
@@ -8381,6 +8545,9 @@ export class AppStore extends TypedBaseStore<IAppState> {
         value: 0,
       },
       userHasResolvedConflicts: false,
+      useCopilotConflictResolution: false,
+      copilotResolutions: null,
+      copilotResolutionProgress: null,
       originalBranchTip,
       targetBranch,
     })

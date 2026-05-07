@@ -34,7 +34,7 @@ export class Accessibility extends React.Component<
           />
           <p
             id="underline-setting-description"
-            className="git-settings-description"
+            className="settings-description"
           >
             {t(
               'accessibility.underline-links-in-commit-messages',
@@ -60,7 +60,7 @@ export class Accessibility extends React.Component<
           />
           <p
             id="diff-checkmarks-setting-description"
-            className="git-settings-description"
+            className="settings-description"
           >
             {t(
               'accessibility.check-marks-will-be-displayed',

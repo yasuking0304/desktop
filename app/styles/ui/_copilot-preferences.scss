@@ -92,6 +92,12 @@
       flex-shrink: 0;
     }
   }
+
+  .copilot-feature-hint {
+    p {
+      margin: 0;
+    }
+  }
 }
 
 #edit-copilot-byok-provider {

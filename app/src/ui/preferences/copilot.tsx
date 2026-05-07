@@ -1,7 +1,9 @@
 import * as React from 'react'
 import { DialogContent } from '../dialog'
+import { Row } from '../lib/row'
 import { Select } from '../lib/select'
 import { Button } from '../lib/button'
+import { LinkButton } from '../lib/link-button'
 import { Octicon } from '../octicons'
 import * as octicons from '../octicons/octicons.generated'
 import { TabBar } from '../tab-bar'
@@ -138,42 +140,62 @@ export class CopilotPreferences extends React.Component<
     }
 
     return (
-      <Select
-        label={
-          __DARWIN__ ? 'Commit Message Generation' : 'Commit message generation'
-        }
-        value={value}
-        onChange={this.onCommitMessageModelChanged}
-      >
-        {copilotModels.length > 0 && (
-          <optgroup label="GitHub Copilot">
-            {copilotModels.map(m => (
-              <option
-                key={m.id}
-                value={encodeModelKey({ kind: 'copilot', modelId: m.id })}
-              >
-                {m.id === DefaultCopilotModel ? `${m.name} (default)` : m.name}
-              </option>
-            ))}
-          </optgroup>
-        )}
-        {byokProviders.map(p => (
-          <optgroup key={p.id} label={p.name}>
-            {p.models.map(m => (
-              <option
-                key={m.id}
-                value={encodeModelKey({
-                  kind: 'byok',
-                  providerId: p.id,
-                  modelId: m.id,
-                })}
-              >
-                {m.name}
-              </option>
-            ))}
-          </optgroup>
-        ))}
-      </Select>
+      <>
+        <Row className="copilot-feature-hint">
+          <p>
+            Tailor how Copilot behaves by using{' '}
+            <LinkButton uri="https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-custom-instructions">
+              custom instructions
+            </LinkButton>
+            .
+          </p>
+        </Row>
+        <Select
+          label={
+            __DARWIN__
+              ? 'Commit Message Generation'
+              : 'Commit message generation'
+          }
+          value={value}
+          onChange={this.onCommitMessageModelChanged}
+        >
+          {copilotModels.length > 0 && (
+            <optgroup label="GitHub Copilot">
+              {copilotModels.map(m => (
+                <option
+                  key={m.id}
+                  value={encodeModelKey({ kind: 'copilot', modelId: m.id })}
+                >
+                  {m.id === DefaultCopilotModel
+                    ? `${m.name} (default)`
+                    : m.name}
+                </option>
+              ))}
+            </optgroup>
+          )}
+          {byokProviders.map(p => (
+            <optgroup key={p.id} label={p.name}>
+              {p.models.map(m => (
+                <option
+                  key={m.id}
+                  value={encodeModelKey({
+                    kind: 'byok',
+                    providerId: p.id,
+                    modelId: m.id,
+                  })}
+                >
+                  {m.name}
+                </option>
+              ))}
+            </optgroup>
+          ))}
+        </Select>
+        <p className="settings-description">
+          <LinkButton uri="https://docs.github.com/en/desktop/making-changes-in-a-branch/committing-and-reviewing-changes-to-your-project-in-github-desktop#write-a-commit-message-and-push-your-changes">
+            Learn more about generating commit messages.
+          </LinkButton>
+        </p>
+      </>
     )
   }
 
