@@ -1015,7 +1015,7 @@
     "other-settings": "기타",
     "settings-related-to-the-path": "경로 관련 설정",
     "shell-to-use-when-loading-env": "환경을 로드할 때 사용할 셸",
-    "show-copilot-information": "Show Copilot {{0}} Information",
+    "show-copilot-information": "Copilot사용 상황",
     "when-enabled-attempt-to-load-env-variables": "사용하도록 설정하면 GitHub Desktop은 Git 후크를 실행할 때 셸에서 환경 변수를 로드합니다. 이것은 Git 후크가 쉘 설정 파일에 설정된 환경 변수에 의존하는 경우에 유용합니다. nvm, rbenv, asdf 등의 버전 관리 도구에서 일반적으로 사용되는 기술입니다."
   },
   "git-config": {

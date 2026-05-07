@@ -349,11 +349,16 @@ export class Git extends React.Component<IGitProps> {
     )}%`
     return (
       <div className="git-copilot-info-component">
-        <h2 id="git-show-copilot-heading">
-          {t('git.show-copilot-information', 'Show Copilot {{0}} Information', {
-            0: this.props.copilotLicenseType,
-          })}
-        </h2>
+        <div className="git-copilot-info-description">
+          <h2 id="git-show-copilot-heading">
+            {t('git.show-copilot-information', 'Show Copilot Information', {
+              0: this.props.copilotLicenseType,
+            })}
+          </h2>
+          <span className="git-copilot-license-type">
+            {this.props.copilotLicenseType}
+          </span>
+        </div>
         <div className="git-show-copilot-section">
           <div
             role="group"

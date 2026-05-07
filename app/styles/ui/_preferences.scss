@@ -77,6 +77,21 @@
 
     .git-copilot-info-component {
       margin-top: var(--spacing-double);
+      .git-copilot-info-description {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing);
+        .git-copilot-license-type {
+          margin-bottom: 0.8rem;
+          border: 1px solid var(--progress-bar-progress-color);
+          padding: 0px 7px;
+          border-radius: 10px;
+          color: var(--progress-bar-progress-color);
+        }
+        .git-copilot-license-type:empty {
+          display: none;
+        }
+      }
     }
 
     .git-show-copilot-section {
