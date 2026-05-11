@@ -627,14 +627,29 @@
   "conflicts-dialog": {
     "all-conflicted-files-have-been-resolved": "All conflicted files have been resolved. ",
     "all-resolutions-have-been-undone": "All resolutions have been undone.",
+    "cannot-resolve-while-aborting": "Cannot resolve while operation is being aborted",
     "file-has": "file has",
     "files-have": "files have",
     "many-conflicted-files-have-been-resolved": "{{0}} conflicted {{1}} been resolved.",
-    "tooltip-resolve-all-changes-before-continuing": "Resolve all changes before continuing"
+    "resolve-with-copilot": " Resolve with Copilot ",
+    "tooltip-resolve-all-changes-before-continuing": "Resolve all changes before continuing",
+    "use-copilot-to-suggest-resolutions": "Use Copilot to suggest resolutions for conflicted files"
   },
   "conflicts-found-banner": {
     "resolve-conflicts-to-continue-1": "Resolve conflicts to continue",
     "resolve-conflicts-to-continue-2": "."
+  },
+  "copilot-conflicts-dialog": {
+    "abort": "Abort {{0}}",
+    "back-to-manual": "Back to manual",
+    "continue": "Continue {{0}}",
+    "resolve-conflicts": "Resolve conflicts before {{0}}",
+    "resolved-by-copilot": "Copilot"
+  },
+  "copilot-conflicts-loading-dialog": {
+    "progress": "{0} of {1} files resolved",
+    "resolving": "Resolving conflicts with Copilot…",
+    "title": "Copilot"
   },
   "copilot-error": {
     "billing-issue": "GitHub Copilot returned a billing error.",

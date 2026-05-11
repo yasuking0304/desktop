@@ -8,6 +8,7 @@ import { IConflictResolutionProgress } from '../../../lib/copilot-conflict-resol
 import { OkCancelButtonGroup } from '../../dialog/ok-cancel-button-group'
 import { Octicon } from '../../octicons'
 import * as octicons from '../../octicons/octicons.generated'
+import { t } from 'i18next'
 
 interface ICopilotConflictsLoadingDialogProps {
   readonly repository: Repository
@@ -43,7 +44,14 @@ export class CopilotConflictsLoadingDialog extends React.Component<ICopilotConfl
     const { filesResolved, filesTotal } = progress
     return (
       <p className="copilot-conflicts-loading-progress">
-        {filesResolved} of {filesTotal} files resolved
+        {t(
+          'copilot-conflicts-loading-dialog.progress',
+          '{0} of {1} files resolved',
+          {
+            0: filesResolved,
+            1: filesTotal,
+          }
+        )}
       </p>
     )
   }
@@ -53,21 +61,26 @@ export class CopilotConflictsLoadingDialog extends React.Component<ICopilotConfl
       <Dialog
         dismissDisabled={true}
         id="copilot-conflicts-loading"
-        title="Copilot"
+        title={t('copilot-conflicts-loading-dialog.title', 'Copilot')}
       >
         <DialogContent>
           <div className="copilot-conflicts-loading-content">
             <Octicon symbol={octicons.copilot} />
-            <p>Resolving conflicts with Copilot…</p>
+            <p>
+              {t(
+                'copilot-conflicts-loading-dialog.resolving',
+                'Resolving conflicts with Copilot…'
+              )}
+            </p>
             {this.renderProgress()}
           </div>
         </DialogContent>
         <DialogFooter>
           <OkCancelButtonGroup
-            cancelButtonText="Cancel"
+            cancelButtonText={t('common.cancel', 'Cancel')}
             onCancelButtonClick={this.onCancel}
             okButtonDisabled={true}
-            okButtonText="Continue"
+            okButtonText={t('common.continue', 'Continue')}
           />
         </DialogFooter>
       </Dialog>

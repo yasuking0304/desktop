@@ -277,12 +277,18 @@ export class ConflictsDialog extends React.Component<
         disabled={this.state.isAborting}
         tooltip={
           this.state.isAborting
-            ? 'Cannot resolve while operation is being aborted'
-            : 'Use Copilot to suggest resolutions for conflicted files'
+            ? t(
+                'conflicts-dialog.cannot-resolve-while-aborting',
+                'Cannot resolve while operation is being aborted'
+              )
+            : t(
+                'conflicts-dialog.use-copilot-to-suggest-resolutions',
+                'Use Copilot to suggest resolutions for conflicted files'
+              )
         }
       >
         <Octicon symbol={octicons.copilot} />
-        {' Resolve with Copilot'}
+        {t('conflicts-dialog.resolve-with-copilot', ' Resolve with Copilot ')}
       </Button>
     )
   }

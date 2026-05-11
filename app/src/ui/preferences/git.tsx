@@ -344,6 +344,7 @@ export class Git extends React.Component<IGitProps> {
       return null
     }
     const chatQuotas = `${Math.round(this.props.chatQuotas * 100)}%`
+    const licenseType = `license-type-${this.props.copilotLicenseType.toLowerCase()}`
     const autoSuggestQuotas = `${Math.round(
       this.props.autoSuggestQuotas * 100
     )}%`
@@ -351,11 +352,9 @@ export class Git extends React.Component<IGitProps> {
       <div className="git-copilot-info-component">
         <div className="git-copilot-info-description">
           <h2 id="git-show-copilot-heading">
-            {t('git.show-copilot-information', 'Show Copilot Information', {
-              0: this.props.copilotLicenseType,
-            })}
+            {t('git.show-copilot-information', 'Show Copilot Information')}
           </h2>
-          <span className="git-copilot-license-type">
+          <span className={`git-copilot-license-type ${licenseType}`}>
             {this.props.copilotLicenseType}
           </span>
         </div>
@@ -372,9 +371,9 @@ export class Git extends React.Component<IGitProps> {
                 </span>
                 <span>{autoSuggestQuotas}</span>
               </div>
-              <span className="guage">
+              <span className="gauge">
                 <span
-                  className="guage-progress"
+                  className={`gauge-progress ${licenseType}`}
                   style={{ width: `${autoSuggestQuotas}` }}
                 ></span>
               </span>
@@ -384,9 +383,9 @@ export class Git extends React.Component<IGitProps> {
                 <span>{t('git.copilot-chat-messages', 'Chat messages')}</span>
                 <span>{chatQuotas}</span>
               </div>
-              <span className="guage">
+              <span className="gauge">
                 <span
-                  className="guage-progress"
+                  className={`gauge-progress ${licenseType}`}
                   style={{ width: `${chatQuotas}` }}
                 ></span>
               </span>

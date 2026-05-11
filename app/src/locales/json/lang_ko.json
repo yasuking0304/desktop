@@ -627,14 +627,29 @@
   "conflicts-dialog": {
     "all-conflicted-files-have-been-resolved": "경쟁하는 모든 파일이 해결되었습니다.",
     "all-resolutions-have-been-undone": "모든 해결이 취소되었습니다.",
+    "cannot-resolve-while-aborting": "작업이 중단되었으므로 해결할 수 없습니다",
     "file-has": "file has",
     "files-have": "files have",
     "many-conflicted-files-have-been-resolved": "{{0}} 파일 충돌이 해결되었습니다.",
-    "tooltip-resolve-all-changes-before-continuing": "계속하기 전에 모든 변경 내용 해결"
+    "resolve-with-copilot": " Copilot로 해결 ",
+    "tooltip-resolve-all-changes-before-continuing": "계속하기 전에 모든 변경 내용 해결",
+    "use-copilot-to-suggest-resolutions": "Copilot을 사용하여 충돌하는 파일에 대한 솔루션을 제안합니다"
   },
   "conflicts-found-banner": {
     "resolve-conflicts-to-continue-1": " ",
     "resolve-conflicts-to-continue-2": " 충돌을 해결하고 계속합니다."
+  },
+  "copilot-conflicts-dialog": {
+    "abort": "Abort {{0}}",
+    "back-to-manual": "Back to manual",
+    "continue": "Continue {{0}}",
+    "resolve-conflicts": "Resolve conflicts before {{0}}",
+    "resolved-by-copilot": "Copilot"
+  },
+  "copilot-conflicts-loading-dialog": {
+    "progress": "{0} of {1} files resolved",
+    "resolving": "Resolving conflicts with Copilot…",
+    "title": "Copilot"
   },
   "copilot-error": {
     "billing-issue": "GitHub Copilot에서 결제 오류가 발생했습니다.",

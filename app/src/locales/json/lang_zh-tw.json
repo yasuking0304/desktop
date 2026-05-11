@@ -627,14 +627,29 @@
   "conflicts-dialog": {
     "all-conflicted-files-have-been-resolved": "所有衝突檔案都已解決。 ",
     "all-resolutions-have-been-undone": "所有決議都已撤銷。",
+    "cannot-resolve-while-aborting": "操作中止時無法解析",
     "file-has": "file has",
     "files-have": "files have",
     "many-conflicted-files-have-been-resolved": "{{0}}個衝突檔案已解決。",
-    "tooltip-resolve-all-changes-before-continuing": "解決所有變更後再繼續"
+    "resolve-with-copilot": " 已使用 Copilot 解決 ",
+    "tooltip-resolve-all-changes-before-continuing": "解決所有變更後再繼續",
+    "use-copilot-to-suggest-resolutions": "使用 Copilot 來建議解決衝突檔案的方法"
   },
   "conflicts-found-banner": {
     "resolve-conflicts-to-continue-1": "解決衝突以繼續 ",
     "resolve-conflicts-to-continue-2": "。"
+  },
+  "copilot-conflicts-dialog": {
+    "abort": "Abort {{0}}",
+    "back-to-manual": "Back to manual",
+    "continue": "Continue {{0}}",
+    "resolve-conflicts": "Resolve conflicts before {{0}}",
+    "resolved-by-copilot": "Copilot"
+  },
+  "copilot-conflicts-loading-dialog": {
+    "progress": "{0} of {1} files resolved",
+    "resolving": "Resolving conflicts with Copilot…",
+    "title": "Copilot"
   },
   "copilot-error": {
     "billing-issue": "在 GitHub Copilot 上發生了付費錯誤。",
@@ -649,7 +664,6 @@
     "session-quota-exceeded": "您已達到 GitHub Copilot 的會話限制。",
     "session-quota-exceeded-title": "會話配額超出"
   },
-
   "copy-button": {
     "copied": "已複製"
   },

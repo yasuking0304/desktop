@@ -14,6 +14,7 @@ import { Button } from '../../lib/button'
 import { Octicon } from '../../octicons'
 import * as octicons from '../../octicons/octicons.generated'
 import { PathText } from '../../lib/path-text'
+import { t } from 'i18next'
 
 interface ICopilotConflictsDialogProps {
   readonly repository: Repository
@@ -81,10 +82,15 @@ export class CopilotConflictsDialog extends React.Component<
             <div className="copilot-file-details">
               <PathText path={file.path} />
               <span className="copilot-file-suggestion">
-                Resolved by Copilot
+                {t(
+                  'copilot-conflicts-dialog.resolved-by-copilot',
+                  'Resolved by Copilot'
+                )}
               </span>
             </div>
-            <span className="copilot-resolution-badge">Copilot</span>
+            <span className="copilot-resolution-badge">
+              {t('copilot-conflicts-dialog.resolved-by-copilot', 'Copilot')}
+            </span>
           </li>
         ))}
       </ul>
@@ -104,18 +110,30 @@ export class CopilotConflictsDialog extends React.Component<
         dismissDisabled={isContinuing}
         onDismissed={this.onBackToManual}
         onSubmit={this.onContinue}
-        title={`Resolve conflicts before ${operationKind}`}
+        title={t(
+          'copilot-conflicts-dialog.resolve-conflicts',
+          'Resolve conflicts before {{0}}',
+          { 0: operationKind }
+        )}
         loading={isContinuing}
         disabled={isContinuing}
       >
         <DialogContent>{this.renderFileList(unmergedFiles)}</DialogContent>
         <DialogFooter>
           <Button onClick={this.onBackToManual} disabled={isContinuing}>
-            Back to manual
+            {t('copilot-conflicts-dialog.back-to-manual', 'Back to manual')}
           </Button>
           <OkCancelButtonGroup
-            okButtonText={`Continue ${operation}`}
-            cancelButtonText={`Abort ${operation}`}
+            okButtonText={t(
+              'copilot-conflicts-dialog.continue',
+              'Continue {{0}}',
+              { 0: operation }
+            )}
+            cancelButtonText={t(
+              'copilot-conflicts-dialog.abort',
+              'Abort {{0}}',
+              { 0: operation }
+            )}
             onCancelButtonClick={this.onAbort}
             cancelButtonDisabled={isContinuing}
           />

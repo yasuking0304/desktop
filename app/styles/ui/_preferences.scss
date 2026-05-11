@@ -112,15 +112,15 @@
           justify-content: space-between;
           margin: 0px 0px 6px 0px;
         }
-        .guage {
+        .gauge {
           width: 100%;
           display: grid;
-          height: 8px;
+          height: 6px;
           background: var(--progress-bar-background-color);
           border-radius: 6px;
           overflow: hidden;
         }
-        .guage-progress {
+        .gauge-progress {
           background: var(--progress-bar-progress-color);
         }
       }

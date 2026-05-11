@@ -627,14 +627,29 @@
   "conflicts-dialog": {
     "all-conflicted-files-have-been-resolved": "競合するファイルはすべて解決されました。 ",
     "all-resolutions-have-been-undone": "すべての解決が取り消されました。",
+    "cannot-resolve-while-aborting": "操作が中断されているため、解決できません",
     "file-has": "file has",
     "files-have": "files have",
     "many-conflicted-files-have-been-resolved": "{{0}}ファイルの競合が解決されました。",
-    "tooltip-resolve-all-changes-before-continuing": "続行する前にすべての変更を解決する"
+    "resolve-with-copilot": " Copilotで解決 ",
+    "tooltip-resolve-all-changes-before-continuing": "続行する前にすべての変更を解決する",
+    "use-copilot-to-suggest-resolutions": "Copilotを使用して、競合するファイルの解決策を提案します"
   },
   "conflicts-found-banner": {
     "resolve-conflicts-to-continue-1": " ",
     "resolve-conflicts-to-continue-2": " の競合を解決して続行します。"
+  },
+  "copilot-conflicts-dialog": {
+    "abort": "Abort {{0}}",
+    "back-to-manual": "Back to manual",
+    "continue": "Continue {{0}}",
+    "resolve-conflicts": "Resolve conflicts before {{0}}",
+    "resolved-by-copilot": "Copilot"
+  },
+  "copilot-conflicts-loading-dialog": {
+    "progress": "{0} of {1} files resolved",
+    "resolving": "Resolving conflicts with Copilot…",
+    "title": "Copilot"
   },
   "copilot-error": {
     "billing-issue": "GitHub Copilotで課金エラーが発生しました。",

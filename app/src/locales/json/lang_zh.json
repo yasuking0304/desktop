@@ -627,14 +627,29 @@
   "conflicts-dialog": {
     "all-conflicted-files-have-been-resolved": "所有冲突文件均已解决。 ",
     "all-resolutions-have-been-undone": "所有决议均已撤销。",
+    "cannot-resolve-while-aborting": "操作中止时无法解析",
     "file-has": "file has",
     "files-have": "files have",
     "many-conflicted-files-have-been-resolved": "{{0}}个冲突文件已解决。",
-    "tooltip-resolve-all-changes-before-continuing": "解决所有更改后再继续"
+    "resolve-with-copilot": " 已使用 Copilot 解决 ",
+    "tooltip-resolve-all-changes-before-continuing": "解决所有更改后再继续",
+    "use-copilot-to-suggest-resolutions": "使用 Copilot 來建議解決衝突檔案的方法"
   },
   "conflicts-found-banner": {
     "resolve-conflicts-to-continue-1": "解决冲突以继续 ",
     "resolve-conflicts-to-continue-2": "。"
+  },
+  "copilot-conflicts-dialog": {
+    "abort": "Abort {{0}}",
+    "back-to-manual": "Back to manual",
+    "continue": "Continue {{0}}",
+    "resolve-conflicts": "Resolve conflicts before {{0}}",
+    "resolved-by-copilot": "Copilot"
+  },
+  "copilot-conflicts-loading-dialog": {
+    "progress": "{0} of {1} files resolved",
+    "resolving": "Resolving conflicts with Copilot…",
+    "title": "Copilot"
   },
   "copilot-error": {
     "billing-issue": "在 GitHub Copilot 上发生了付费错误。",
