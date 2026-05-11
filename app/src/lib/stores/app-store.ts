@@ -2930,7 +2930,10 @@ export class AppStore extends TypedBaseStore<IAppState> {
     }
 
     const { step, operationDetail } = multiCommitOperationState
-    if (step.kind !== MultiCommitOperationStepKind.ShowConflicts) {
+    if (
+      step.kind !== MultiCommitOperationStepKind.ShowConflicts &&
+      step.kind !== MultiCommitOperationStepKind.ShowCopilotConflicts
+    ) {
       return
     }
 
@@ -2939,7 +2942,10 @@ export class AppStore extends TypedBaseStore<IAppState> {
     this.repositoryStateCache.updateMultiCommitOperationState(
       repository,
       () => ({
-        step: { ...step, manualResolutions },
+        step: {
+          ...step,
+          conflictState: { ...step.conflictState, manualResolutions },
+        },
       })
     )
 
@@ -3015,20 +3021,32 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
     this.statsStore.increment('mergeConflictFromExplicitMergeCount')
 
+    const mcoConflictState = {
+      kind: 'multiCommitOperation' as const,
+      manualResolutions,
+      ourBranch,
+      theirBranch,
+    }
+
+    const useCopilot = multiCommitOperationState.useCopilotConflictResolution
+
     this._setMultiCommitOperationStep(repository, {
-      kind: MultiCommitOperationStepKind.ShowConflicts,
-      conflictState: {
-        kind: 'multiCommitOperation',
-        manualResolutions,
-        ourBranch,
-        theirBranch,
-      },
+      kind: useCopilot
+        ? MultiCommitOperationStepKind.ShowCopilotConflictsLoading
+        : MultiCommitOperationStepKind.ShowConflicts,
+      conflictState: mcoConflictState,
     })
 
     this._showPopup({
       type: PopupType.MultiCommitOperation,
       repository,
     })
+
+    if (useCopilot) {
+      // Auto-route to Copilot: the user previously opted into Copilot
+      // resolution during this operation, so skip the manual dialog.
+      await this._startCopilotConflictResolution(repository)
+    }
   }
 
   private async getMergeConflictsTheirBranch(
@@ -6101,14 +6119,24 @@ export class AppStore extends TypedBaseStore<IAppState> {
       return
     }
 
-    const { copilotResolutions } = multiCommitOperationState
+    const { copilotResolutions, step } = multiCommitOperationState
     if (copilotResolutions === null || copilotResolutions.length === 0) {
       return
     }
 
+    // Respect any manual overrides the user chose in the result dialog
+    const manualResolutions =
+      step.kind === MultiCommitOperationStepKind.ShowCopilotConflicts
+        ? step.conflictState.manualResolutions
+        : new Map<string, ManualConflictResolution>()
+
     const pathsToStage: string[] = []
 
     for (const resolution of copilotResolutions) {
+      if (manualResolutions.has(resolution.path)) {
+        continue
+      }
+
       const absolutePath = await resolveWithin(repository.path, resolution.path)
       if (absolutePath === null) {
         log.warn(
@@ -7663,8 +7691,10 @@ export class AppStore extends TypedBaseStore<IAppState> {
     if (
       changesState.conflictState === null ||
       multiCommitOperationState === null ||
-      multiCommitOperationState.step.kind !==
-        MultiCommitOperationStepKind.ShowConflicts
+      (multiCommitOperationState.step.kind !==
+        MultiCommitOperationStepKind.ShowConflicts &&
+        multiCommitOperationState.step.kind !==
+          MultiCommitOperationStepKind.ShowCopilotConflicts)
     ) {
       return
     }
