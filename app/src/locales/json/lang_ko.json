@@ -393,6 +393,8 @@
     "allow-empty-commit-darwin": "빈 커밋 허용",
     "amend": "마지막 커밋 수정",
     "amending": "마지막 커밋 수정 중",
+    "bypass-commit-hooks": "커밋 후크 우회",
+    "bypass-commit-hooks-darwin": "커밋 후크 우회",
     "commit": "커밋",
     "commit-count-files": "{{0}}{{1}}을",
     "commit-description": "커밋 개요 설명",
@@ -640,11 +642,7 @@
     "resolve-conflicts-to-continue-2": " 충돌을 해결하고 계속합니다."
   },
   "copilot-conflicts-dialog": {
-    "abort": "Abort {{0}}",
-    "back-to-manual": "Back to manual",
-    "continue": "Continue {{0}}",
-    "resolve-conflicts": "Resolve conflicts before {{0}}",
-    "resolved-by-copilot": "Copilot"
+    "resolve-conflicts": "Resolve conflicts before {{0}}"
   },
   "copilot-conflicts-loading-dialog": {
     "progress": "{0} of {1} files resolved",

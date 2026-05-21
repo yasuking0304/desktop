@@ -1111,7 +1111,12 @@ export class CommitMessage extends React.Component<
       items.push({
         type: 'checkbox',
         checked: this.props.skipCommitHooks,
-        label: __DARWIN__ ? 'Bypass Commit Hooks' : 'Bypass Commit hooks',
+        label: __DARWIN__
+          ? t(
+              'commit-message.bypass-commit-hooks-darwin',
+              'Bypass Commit Hooks'
+            )
+          : t('commit-message.bypass-commit-hooks', 'Bypass Commit hooks'),
         action: () => {
           this.props.onUpdateCommitOptions(this.props.repository, {
             skipCommitHooks: !this.props.skipCommitHooks,

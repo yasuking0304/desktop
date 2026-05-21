@@ -393,6 +393,8 @@
     "allow-empty-commit-darwin": "允許空提交",
     "amend": "修改之前的提交",
     "amending": "修改前一次提交",
+    "bypass-commit-hooks": "繞過提交鉤子",
+    "bypass-commit-hooks-darwin": "繞過提交鉤子",
     "commit": "提交",
     "commit-count-files": "{{0}} {{1}}",
     "commit-description": "提交摘要",
@@ -640,11 +642,7 @@
     "resolve-conflicts-to-continue-2": "。"
   },
   "copilot-conflicts-dialog": {
-    "abort": "Abort {{0}}",
-    "back-to-manual": "Back to manual",
-    "continue": "Continue {{0}}",
-    "resolve-conflicts": "Resolve conflicts before {{0}}",
-    "resolved-by-copilot": "Copilot"
+    "resolve-conflicts": "Resolve conflicts before {{0}}"
   },
   "copilot-conflicts-loading-dialog": {
     "progress": "{0} of {1} files resolved",
