@@ -393,6 +393,8 @@
     "allow-empty-commit-darwin": "空コミットを許可",
     "amend": "直前のコミットを修正",
     "amending": "直前のコミットを修正中",
+    "bypass-commit-hooks": "コミットフックのバイパス",
+    "bypass-commit-hooks-darwin": "コミットフックのバイパス",
     "commit": "コミット",
     "commit-count-files": "{{0}}{{1}}を",
     "commit-description": "コミットの概要説明",
@@ -640,11 +642,7 @@
     "resolve-conflicts-to-continue-2": " の競合を解決して続行します。"
   },
   "copilot-conflicts-dialog": {
-    "abort": "Abort {{0}}",
-    "back-to-manual": "Back to manual",
-    "continue": "Continue {{0}}",
-    "resolve-conflicts": "Resolve conflicts before {{0}}",
-    "resolved-by-copilot": "Copilot"
+    "resolve-conflicts": "Resolve conflicts before {{0}}"
   },
   "copilot-conflicts-loading-dialog": {
     "progress": "{0} of {1} files resolved",

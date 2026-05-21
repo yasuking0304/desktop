@@ -393,6 +393,8 @@
     "allow-empty-commit-darwin": "Allow Empty Commit",
     "amend": "Amend",
     "amending": "Amending",
+    "bypass-commit-hooks": "Bypass Commit hooks",
+    "bypass-commit-hooks-darwin": "Bypass Commit Hooks",
     "commit": "Commit",
     "commit-count-files": "{{0}} {{1}}",
     "commit-description": "Commit description",
@@ -640,11 +642,7 @@
     "resolve-conflicts-to-continue-2": "."
   },
   "copilot-conflicts-dialog": {
-    "abort": "Abort {{0}}",
-    "back-to-manual": "Back to manual",
-    "continue": "Continue {{0}}",
-    "resolve-conflicts": "Resolve conflicts before {{0}}",
-    "resolved-by-copilot": "Copilot"
+    "resolve-conflicts": "Resolve conflicts before {{0}}"
   },
   "copilot-conflicts-loading-dialog": {
     "progress": "{0} of {1} files resolved",
