@@ -373,7 +373,6 @@ function getInitialRepositoryState(): IRepositoryState {
     revertProgress: null,
     multiCommitOperationUndoState: null,
     multiCommitOperationState: null,
-    hasCommitHooks: false,
     skipCommitHooks: false,
     signOffCommits: false,
     allowEmptyCommit: false,

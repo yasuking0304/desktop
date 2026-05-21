@@ -1,5 +1,23 @@
 {
   "releases": {
+    "3.5.9": [
+      "[Fixed] Skip branches checked out in linked worktrees during pruning - #8043. Thanks @KRRT7!",
+      "[Fixed] Fix styling of buttons in the commit message area - #22075",
+      "[Fixed] Fix rendering long lists of changed files - #21630",
+      "[Fixed] Add syntax highlighting for .astro files - #21987. Thanks @JunDev76!",
+      "[Fixed] Fix Windows scrollbar sync with react-virtualized Grid - #21940",
+      "[Fixed] Improve spacing on release notes dialog - #21962. Thanks @DylanDevelops!",
+      "[Fixed] Fix a crash (Maximum update depth exceeded) that could occur while the conflicts dialog was open during a multi-commit operation - #21879",
+      "[Fixed] Remove discontinued GitHub AE references from the Enterprise sign-in screen - #21926. Thanks @toddmanion!",
+      "[Improved] Enable diff expansion and syntax highlighting for up to 1MB - #21876",
+      "[Improved] Update re2js regex engine to use optimized DFA path for improved performance - #21924. Thanks @le0pard!"
+    ],
+    "3.5.9-beta3": [
+      "[Fixed] Skip branches checked out in linked worktrees during pruning - #8043. Thanks @KRRT7!",
+      "[Fixed] Fix styling of buttons in the commit message area - #22075",
+      "[Fixed] Fix rendering long lists of changed files - #21630",
+      "[Improved] Update Electron to version 42.0.1 - #22104"
+    ],
     "3.5.9-beta2": [
       "[Fixed] Add syntax highlighting for .astro files - #21987. Thanks @JunDev76!",
       "[Fixed] Fix Windows scrollbar sync with react-virtualized Grid - #21940",
