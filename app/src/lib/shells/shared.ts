@@ -4,7 +4,7 @@ import * as Darwin from './darwin'
 import * as Win32 from './win32'
 import * as Linux from './linux'
 import { ShellError } from './error'
-import { pathExists } from '../../ui/lib/path-exists'
+import { pathExists } from '../path-exists'
 import { t } from 'i18next'
 import { ICustomIntegration } from '../custom-integration'
 

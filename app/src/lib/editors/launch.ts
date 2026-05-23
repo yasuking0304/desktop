@@ -1,6 +1,6 @@
 import { spawn, SpawnOptions } from 'child_process'
 import { t } from 'i18next'
-import { pathExists } from '../../ui/lib/path-exists'
+import { pathExists } from '../path-exists'
 import { ExternalEditorError, FoundEditor } from './shared'
 import {
   expandTargetPathArgument,

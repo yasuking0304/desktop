@@ -30,7 +30,7 @@ import { getCommitsBetweenCommits } from './rev-list'
 import { Branch } from '../../models/branch'
 import { join } from 'path'
 import { readFile } from 'fs/promises'
-import { pathExists } from '../../ui/lib/path-exists'
+import { pathExists } from '../path-exists'
 
 /** The app-specific results from attempting to rebase a repository */
 export enum RebaseResult {

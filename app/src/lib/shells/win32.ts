@@ -5,7 +5,7 @@ import { assertNever } from '../fatal-error'
 import { enableWSLDetection } from '../feature-flag'
 import { findGitOnPath } from '../is-git-on-path'
 import { parseEnumValue } from '../enum'
-import { pathExists } from '../../ui/lib/path-exists'
+import { pathExists } from '../path-exists'
 import { FoundShell } from './shared'
 import {
   expandTargetPathArgument,

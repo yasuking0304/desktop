@@ -2,7 +2,7 @@ import { join } from 'path'
 import { git, HookCallbackOptions } from './core'
 import { GitError } from 'dugite'
 import { Repository } from '../../models/repository'
-import { pathExists } from '../../ui/lib/path-exists'
+import { pathExists } from '../path-exists'
 import { createMultiOperationTerminalOutputCallback } from './multi-operation-terminal-output'
 
 export enum MergeResult {

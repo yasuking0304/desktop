@@ -1,7 +1,7 @@
 import { git, IGitStringExecutionOptions } from './core'
 import { Repository } from '../../models/repository'
 import { SubmoduleEntry } from '../../models/submodule'
-import { pathExists } from '../../ui/lib/path-exists'
+import { pathExists } from '../path-exists'
 import { executionOptionsWithProgress, IGitOutput } from '../progress'
 import {
   envForRemoteOperation,

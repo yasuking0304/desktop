@@ -1,5 +1,9 @@
 {
   "releases": {
+    "3.5.10": [
+      "[Fixed] Intermittent crash trying to load Copilot models",
+      "[Added] Add date, time, and number formatting preferences to the Appearance settings - #21836"
+    ],
     "3.5.9": [
       "[Fixed] Skip branches checked out in linked worktrees during pruning - #8043. Thanks @KRRT7!",
       "[Fixed] Fix styling of buttons in the commit message area - #22075",
