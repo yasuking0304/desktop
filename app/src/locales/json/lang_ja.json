@@ -121,9 +121,9 @@
     "tab_size_default": "{{0}} (デフォルト)",
     "tab-size": "タブサイズ",
     "tab-size-darwn": "タブサイズ",
-    "theme": "外観テーマ",
+    "theme": "テーマ",
     "time-format": "時間の形式",
-    "time-format-darwin": "Time Format"
+    "time-format-darwin": "時間の形式"
   },
   "attribute-mismatch": {
     "git-lfs-filters-are-configured-1": "Git LFS フィルターは ",
@@ -1565,7 +1565,7 @@
     "accessibility": "アクセシビリティ",
     "accounts": "アカウント",
     "advanced": "詳細設定",
-    "appearance": "外観テーマ",
+    "appearance": "外観",
     "git": "Git",
     "integrations": "アプリ連携",
     "notifications": "通知",
