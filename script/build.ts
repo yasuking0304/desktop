@@ -357,40 +357,79 @@ function copyDependencies() {
       recursive: true,
     })
 
-    const nonValidPlatforms = ['darwin', 'linux', 'win32'].filter(
-      p => p !== process.platform
-    )
-    const nonValidArchitectures = ['x64', 'arm64'].filter(
-      a => a !== getDistArchitecture()
+    const currentPlatform = process.platform
+    const currentArch = getDistArchitecture()
+
+    // Platforms and architectures to remove from prebuild directories. This is
+    // an exhaustive list of all non-current platforms rather than an allowlist,
+    // because some packages (clipboard, pvrecorder) have entries without
+    // standard platform identifiers that we must preserve.
+    const nonValidPlatforms = [
+      'darwin',
+      'linux',
+      'win32',
+      'freebsd',
+      'openbsd',
+      'musl',
+    ].filter(p => p !== currentPlatform)
+    const nonValidArchitectures = [
+      'x64',
+      'arm64',
+      'ia32',
+      'armhf',
+      'riscv64',
+      'loong64',
+    ].filter(a => a !== currentArch)
+
+    // Also map platform names for packages that use non-standard naming
+    // (e.g., pvrecorder uses "mac" and "windows" instead of "darwin"/"win32")
+    const platformAliases: Record<string, string> = {
+      darwin: 'mac',
+      win32: 'windows',
+    }
+    const currentPlatformAlias = platformAliases[currentPlatform]
+    const nonValidPlatformAliases = Object.values(platformAliases).filter(
+      a => a !== currentPlatformAlias
     )
 
     // Removing unnecessary prebuild binaries from the copilot package to reduce
-    // bundle size
+    // bundle size and prevent signing failures on Windows (signtool can't sign
+    // non-PE binaries from other platforms).
     const prebuildsDirs = [
       path.join(copilotDestination, 'prebuilds'),
       path.join(copilotDestination, 'ripgrep', 'bin'),
       path.join(copilotDestination, 'clipboard', 'node_modules', '@teddyzhu'),
+      path.join(
+        copilotDestination,
+        'foundry-local-sdk',
+        'node_modules',
+        'foundry-local-sdk',
+        'prebuilds'
+      ),
+      path.join(copilotDestination, 'koffi', 'build', 'koffi'),
+      path.join(
+        copilotDestination,
+        'pvrecorder',
+        'node_modules',
+        '@picovoice',
+        'pvrecorder-node',
+        'lib'
+      ),
     ]
 
     for (const prebuildsDir of prebuildsDirs) {
       const prebuilds = readdirSync(prebuildsDir)
       for (const prebuild of prebuilds) {
-        for (const platform of nonValidPlatforms) {
-          if (prebuild.includes(platform)) {
-            rmSync(path.join(prebuildsDir, prebuild), {
-              recursive: true,
-              force: true,
-            })
-          }
-        }
+        const shouldRemove =
+          nonValidPlatforms.some(p => prebuild.includes(p)) ||
+          nonValidArchitectures.some(a => prebuild.includes(a)) ||
+          nonValidPlatformAliases.some(a => prebuild === a)
 
-        for (const arch of nonValidArchitectures) {
-          if (prebuild.includes(arch)) {
-            rmSync(path.join(prebuildsDir, prebuild), {
-              recursive: true,
-              force: true,
-            })
-          }
+        if (shouldRemove) {
+          rmSync(path.join(prebuildsDir, prebuild), {
+            recursive: true,
+            force: true,
+          })
         }
       }
     }

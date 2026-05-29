@@ -1,5 +1,14 @@
 {
   "releases": {
+    "3.5.12-beta1": [
+      "[Fixed] Fix launching custom shells - #22186",
+      "[Fixed] Fix crash trying to run a non-existent script - #22167",
+      "[Fixed] Restore keyboard focus to the commit button after the commit progress dialog closes - #22192",
+      "[Added] Add model selection for Copilot - #21745",
+      "[Added] Add support for custom model providers for Copilot - #22000",
+      "[Added] Use repo rules to guide commit messages generation by Copilot - #22007"
+    ],
+    "3.5.11": ["[Fixed] Fix launching custom shells"],
     "3.5.10": [
       "[Fixed] Intermittent crash trying to load Copilot models",
       "[Added] Add date, time, and number formatting preferences to the Appearance settings - #21836"

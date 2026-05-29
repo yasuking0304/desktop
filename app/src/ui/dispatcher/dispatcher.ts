@@ -2226,6 +2226,8 @@ export class Dispatcher {
           retryAction.files,
           false
         )
+      case RetryActionType.PopStash:
+        return this.popStash(retryAction.repository, retryAction.stashEntry)
       default:
         return assertNever(retryAction, `Unknown retry action: ${retryAction}`)
     }

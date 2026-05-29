@@ -8,6 +8,7 @@ import {
   validateCustomIntegrationPath,
   parseCustomIntegrationArguments,
   TargetPathArgument,
+  WindowsExecutableExtensions,
 } from '../../lib/custom-integration'
 import { t } from 'i18next'
 
@@ -157,8 +158,19 @@ export class CustomIntegrationForm extends React.Component<
   private onChoosePath = async () => {
     // On macOS we also want to allow selecting directories, since apps on macOS
     // are usually directories (e.g. apps on /Applications).
+    // On Windows we restrict the picker to extensions that `spawn` can launch
+    // directly so users don't pick a `.bat`/`.cmd` wrapper that would fail at
+    // launch time.
     const path = await showOpenDialog({
       properties: __DARWIN__ ? ['openFile', 'openDirectory'] : ['openFile'],
+      filters: __WIN32__
+        ? [
+            {
+              name: 'Executables',
+              extensions: [...WindowsExecutableExtensions],
+            },
+          ]
+        : undefined,
     })
 
     if (path === null) {
