@@ -10,12 +10,12 @@ uses [React](https://reactjs.org/).
 - 여기에서는 비공식 멀티 랭귀지 플랫폼 버전의 바이너리 배포를 실시하고 있습니다. 현재의 대응 언어는 영어, 일본어, 간체 중국어, 번체 중국어, 한국어.
 
 ## Where can I get it Multilingal Platform?
- - [macOS(x64)](https://github.com/yasuking0304/desktop/releases/download/original-3.5.9/GitHub.Desktop-x64.zip)  
+ - [macOS(x64)](https://github.com/yasuking0304/desktop/releases/download/original-3.5.10/GitHub.Desktop-x64.zip)  
     For the MacOS version, please execute the included "setenv_lang_macos.sh" after installation.
 You only need to run it once.
 
- - [Windows(x64)](https://github.com/yasuking0304/desktop/releases/download/original-3.5.9/GitHubDesktopSetup-x64.exe)
- - [Linux(x64-AppImage)](https://github.com/yasuking0304/desktop/releases/download/original-3.5.9/GitHubDesktop-linux-x86_64-3.5.9.AppImage)
+ - [Windows(x64)](https://github.com/yasuking0304/desktop/releases/download/original-3.5.10/GitHubDesktopSetup-x64.exe)
+ - [Linux(x64-AppImage)](https://github.com/yasuking0304/desktop/releases/download/original-3.5.10/GitHubDesktop-linux-x86_64-3.5.10.AppImage)
 
 [Click here for details (This site is only available in Japanese)](https://github.com/yasuking0304/desktop/wiki)
 
