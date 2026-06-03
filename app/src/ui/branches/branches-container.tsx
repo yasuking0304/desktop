@@ -51,6 +51,10 @@ interface IBranchesContainerProps {
   readonly pullRequests: ReadonlyArray<PullRequest>
   readonly onRenameBranch: (branchName: string) => void
   readonly onDeleteBranch: (branchName: string) => void
+  readonly onCheckoutInNewWorktree?: (branch: Branch) => void
+
+  /** Optional callback to checkout a PR in a new worktree */
+  readonly onCheckoutPRInNewWorktree?: (pullRequest: PullRequest) => void
 
   /** The pull request associated with the current branch. */
   readonly currentPullRequest: PullRequest | null
@@ -303,6 +307,7 @@ export class BranchesContainer extends React.Component<
             renderPreList={this.renderPreList}
             onRenameBranch={this.props.onRenameBranch}
             onDeleteBranch={this.props.onDeleteBranch}
+            onCheckoutInNewWorktree={this.props.onCheckoutInNewWorktree}
           />
         )
       case BranchesTab.PullRequests: {
@@ -398,6 +403,7 @@ export class BranchesContainer extends React.Component<
         isLoadingPullRequests={this.props.isLoadingPullRequests}
         onMouseEnterPullRequest={this.onMouseEnterPullRequestListItem}
         onMouseLeavePullRequest={this.onMouseLeavePullRequestListItem}
+        onCheckoutInNewWorktree={this.props.onCheckoutPRInNewWorktree}
       />
     )
   }

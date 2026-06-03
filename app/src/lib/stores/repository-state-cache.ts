@@ -1,4 +1,4 @@
-import { Branch } from '../../models/branch'
+import { Branch, BranchType } from '../../models/branch'
 import { Commit } from '../../models/commit'
 import { PullRequest } from '../../models/pull-request'
 import { Repository } from '../../models/repository'
@@ -6,7 +6,7 @@ import {
   WorkingDirectoryFileChange,
   WorkingDirectoryStatus,
 } from '../../models/status'
-import { TipState } from '../../models/tip'
+import { Tip, TipState } from '../../models/tip'
 import {
   HistoryTabMode,
   IBranchesState,
@@ -25,6 +25,7 @@ import { DefaultCommitMessage } from '../../models/commit-message'
 import { sendNonFatalException } from '../helpers/non-fatal-exception'
 import { IStatsStore } from '../stats'
 import { RepoRulesInfo } from '../../models/repo-rules'
+import { WorktreeEntry } from '../../models/worktree'
 
 export class RepositoryStateCache {
   private readonly repositoryState = new Map<string, IRepositoryState>()
@@ -242,6 +243,48 @@ export class RepositoryStateCache {
     })
   }
 
+  /**
+   * Pre-seed the state for a target repository with shared data from a source
+   * repository. This is used when switching worktrees so that the UI has data
+   * to display immediately while the full refresh runs in the background.
+   *
+   * Only state that is shared across worktrees in the same git repository is
+   * copied. Worktree-specific state (working directory, checked-out branch,
+   * in-flight operations) is left at its initial values.
+   */
+  public seedFromWorktree(
+    target: Repository,
+    source: Repository,
+    worktree: WorktreeEntry
+  ) {
+    const sourceState = this.repositoryState.get(source.hash)
+    if (sourceState === undefined) {
+      return
+    }
+
+    const targetState = this.get(target)
+
+    this.repositoryState.set(target.hash, {
+      ...targetState,
+      branchesState: {
+        ...targetState.branchesState,
+        defaultBranch: sourceState.branchesState.defaultBranch,
+        upstreamDefaultBranch: sourceState.branchesState.upstreamDefaultBranch,
+        allBranches: sourceState.branchesState.allBranches,
+        recentBranches: sourceState.branchesState.recentBranches,
+        openPullRequests: sourceState.branchesState.openPullRequests,
+        forcePushBranches: sourceState.branchesState.forcePushBranches,
+        tip: tipFromWorkTreeEntry(worktree, sourceState.branchesState),
+      },
+      worktrees: sourceState.worktrees,
+      commitLookup: sourceState.commitLookup,
+      remote: sourceState.remote,
+      lastFetched: sourceState.lastFetched,
+      commitAuthor: sourceState.commitAuthor,
+      localTags: sourceState.localTags,
+    })
+  }
+
   private sendPullRequestStateNotExistsException() {
     sendNonFatalException(
       'PullRequestState',
@@ -339,6 +382,7 @@ function getInitialRepositoryState(): IRepositoryState {
       isLoadingPullRequests: false,
       forcePushBranches: new Map<string, string>(),
     },
+    worktrees: [],
     compareState: {
       formState: {
         kind: HistoryTabMode.History,
@@ -377,4 +421,32 @@ function getInitialRepositoryState(): IRepositoryState {
     signOffCommits: false,
     allowEmptyCommit: false,
   }
+}
+
+function tipFromWorkTreeEntry(
+  worktree: WorktreeEntry,
+  branchesState: IBranchesState
+): Tip {
+  if (worktree.branch && worktree.head) {
+    const branch =
+      branchesState.allBranches.find(b => b.ref === worktree.branch) ??
+      new Branch(
+        worktree.branch.replace(/^refs\/heads\//, ''),
+        null,
+        { sha: worktree.head },
+        BranchType.Local,
+        worktree.branch
+      )
+
+    return { kind: TipState.Valid, branch }
+  }
+
+  if (worktree.head) {
+    return {
+      kind: TipState.Detached,
+      currentSha: worktree.head,
+    }
+  }
+
+  return { kind: TipState.Unknown }
 }

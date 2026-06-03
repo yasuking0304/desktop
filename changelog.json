@@ -1,5 +1,10 @@
 {
   "releases": {
+    "3.5.12-beta2": [
+      "[Improved] Show \"No newline at end of file\" as visible text in the diff view instead of requiring a tooltip hover - #22204",
+      "[Improved] Show a descriptive error dialog when restoring stashed changes fails due to conflicting changes in the working directory - #22205",
+      "[Fixed] Screen reader now correctly announces added and removed line counts in the pull request preview dialog - #22202"
+    ],
     "3.5.12-beta1": [
       "[Fixed] Fix launching custom shells - #22186",
       "[Fixed] Fix crash trying to run a non-existent script - #22167",

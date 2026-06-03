@@ -261,6 +261,10 @@ const DefaultDailyMeasures: IDailyMeasures = {
   secretsDetectedOnPushBypassedAsWillFixLaterCount: 0,
   secretsDetectedOnPushDelegatedBypassLinkClickedCount: 0,
   secretRemediationInstructionsLinkClickedCount: 0,
+  worktreeSwitchCount: 0,
+  worktreeCreatedCount: 0,
+  worktreeDeletedCount: 0,
+  worktreeMaxCount: 0,
 }
 
 // A subtype of IDailyMeasures filtered to contain only its numeric properties
@@ -1146,6 +1150,13 @@ export class StatsStore implements IStatsStore {
       reviewType,
       'DialogSwitchToPullRequestCount'
     )
+  }
+
+  /** Mark the maximum number of worktrees observed in a repository */
+  public recordWorktreeCount(count: number): Promise<void> {
+    return this.updateDailyMeasures(m => ({
+      worktreeMaxCount: Math.max(m.worktreeMaxCount, count),
+    }))
   }
 
   public increment = (k: keyof NumericMeasures, n = 1) =>

@@ -660,6 +660,21 @@ export interface IDailyMeasures {
 
   /** The number of times the user clicked on the secret remediation instructions link */
   readonly secretRemediationInstructionsLinkClickedCount: number
+
+  /** The number of times the user switched between worktrees */
+  readonly worktreeSwitchCount: number
+
+  /** The number of times the user created a new worktree */
+  readonly worktreeCreatedCount: number
+
+  /** The number of times the user deleted a worktree */
+  readonly worktreeDeletedCount: number
+
+  /**
+   * The maximum number of worktrees seen in any single repository during the
+   * reporting period.
+   */
+  readonly worktreeMaxCount: number
 }
 
 export class StatsDatabase extends Dexie {

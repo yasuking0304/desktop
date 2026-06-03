@@ -6,6 +6,7 @@ import { Ref } from './ref'
 import { t } from 'i18next'
 import { InputWarning } from './input-description/input-warning'
 import { InputError } from './input-description/input-error'
+import { AutocompletingInput, IAutocompletionProvider } from '../autocompletion'
 
 interface IRefNameProps {
   /**
@@ -53,7 +54,14 @@ interface IRefNameProps {
   readonly onBlur?: (sanitizedValue: string) => void
 
   /**
-   * The placeholder of the text box.
+   * Optional autocompletion provider. When provided, the text input will use
+   * AutocompletingInput with alwaysAutocomplete enabled instead of a plain
+   * TextBox.
+   */
+  readonly autocompletionProvider?: IAutocompletionProvider<object>
+
+  /**
+   * Optional placeholder text shown when the input is empty.
    */
   readonly placeholder?: string
 }
@@ -68,6 +76,8 @@ export class RefNameTextBox extends React.Component<
   IRefNameState
 > {
   private textBoxRef = React.createRef<TextBox>()
+  private autocompletingInputRef =
+    React.createRef<AutocompletingInput<object>>()
 
   public constructor(props: IRefNameProps) {
     super(props)
@@ -103,23 +113,49 @@ export class RefNameTextBox extends React.Component<
   public render() {
     return (
       <div className="ref-name-text-box">
-        <TextBox
+        {this.renderTextInput()}
+        {this.renderRefValueWarningError()}
+      </div>
+    )
+  }
+
+  private renderTextInput() {
+    const ariaDescribedBy =
+      (this.props.ariaDescribedBy ?? '') +
+      ` branch-name-warning` +
+      ` branch-name-error`
+
+    if (this.props.autocompletionProvider !== undefined) {
+      return (
+        <AutocompletingInput
+          ref={this.autocompletingInputRef}
           label={this.props.label}
           placeholder={this.props.placeholder}
           value={this.state.proposedValue}
-          ref={this.textBoxRef}
           ariaLabelledBy={this.props.ariaLabelledBy}
-          ariaDescribedBy={
-            this.props.ariaDescribedBy +
-            ` branch-name-warning` +
-            ` branch-name-error`
-          }
+          ariaDescribedBy={ariaDescribedBy}
+          autocompletionProviders={[this.props.autocompletionProvider]}
+          alwaysAutocomplete={this.state.proposedValue.length === 0}
           onValueChanged={this.onValueChange}
           onBlur={this.onBlur}
+          completionSuffix=""
+          anchorToCaret={false}
+          anchorOffset={4}
         />
+      )
+    }
 
-        {this.renderRefValueWarningError()}
-      </div>
+    return (
+      <TextBox
+        label={this.props.label}
+        placeholder={this.props.placeholder}
+        value={this.state.proposedValue}
+        ref={this.textBoxRef}
+        ariaLabelledBy={this.props.ariaLabelledBy}
+        ariaDescribedBy={ariaDescribedBy}
+        onValueChanged={this.onValueChange}
+        onBlur={this.onBlur}
+      />
     )
   }
 
@@ -128,7 +164,9 @@ export class RefNameTextBox extends React.Component<
    * (i.e. if it's not disabled explicitly or implicitly through for example a fieldset).
    */
   public focus() {
-    if (this.textBoxRef.current !== null) {
+    if (this.autocompletingInputRef.current !== null) {
+      this.autocompletingInputRef.current.focus()
+    } else if (this.textBoxRef.current !== null) {
       this.textBoxRef.current.focus()
     }
   }

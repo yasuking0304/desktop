@@ -27,6 +27,7 @@
 @import 'dialogs/push-protection';
 @import 'dialogs/hook-failed';
 @import 'dialogs/commit_progress';
+@import 'dialogs/copilot-conflicts-loading';
 
 // The styles herein attempt to follow a flow where margins are only applied
 // to the bottom of elements (with the exception of the last child). This to
@@ -362,6 +363,14 @@ dialog {
       background: var(--dialog-banner-success-background);
       border-top: 1px solid var(--dialog-banner-success-border-color);
       border-bottom: 1px solid var(--dialog-banner-success-border-color);
+    }
+  }
+
+  &#delete-worktree-failed {
+    max-width: 750px;
+    .xterm {
+      padding: var(--spacing);
+      margin-bottom: var(--spacing);
     }
   }
 

@@ -140,6 +140,8 @@ const allMenuIds: ReadonlyArray<MenuIDs> = [
   'preview-pull-request',
   'squash-and-merge-branch',
   'toggle-stashed-changes',
+  'create-worktree',
+  'show-worktrees-list',
 ]
 
 function getAllMenusDisabledBuilder(): MenuStateBuilder {
@@ -244,10 +246,12 @@ function getRepositoryMenuBuilder(state: IAppState): MenuStateBuilder {
     'show-changes',
     'show-history',
     'show-branches-list',
+    'show-worktrees-list',
     'open-external-editor',
     'open-with-external-editor',
     'compare-to-branch',
     'toggle-changes-filter',
+    'create-worktree',
   ]
 
   const menuStateBuilder = new MenuStateBuilder()

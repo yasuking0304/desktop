@@ -13,6 +13,7 @@ import { Branch, IAheadBehind } from '../models/branch'
 import { Tip } from '../models/tip'
 import { Commit } from '../models/commit'
 import { CommittedFileChange, WorkingDirectoryStatus } from '../models/status'
+import { WorktreeEntry } from '../models/worktree'
 import { CloningRepository } from '../models/cloning-repository'
 import { IMenu } from '../models/app-menu'
 import { IRemote } from '../models/remote'
@@ -201,6 +202,9 @@ export interface IAppState {
 
   /** The width of the resizable branch drop down button in the toolbar. */
   readonly branchDropdownWidth: IConstrainedValue
+
+  /** The width of the resizable worktree drop down button in the toolbar. */
+  readonly worktreeDropdownWidth: IConstrainedValue
 
   /** The width of the resizable push/pull button in the toolbar. */
   readonly pushPullButtonWidth: IConstrainedValue
@@ -404,6 +408,10 @@ export interface IAppState {
 
   readonly commitMessageGenerationButtonClicked: boolean
 
+  readonly copilotConflictResolutionDisclaimerLastSeen: number | null
+
+  readonly copilotConflictResolutionButtonClicked: boolean
+
   /** Whether the changes filter is shown */
   readonly showChangesFilter: boolean
 
@@ -442,6 +450,7 @@ export enum FoldoutType {
   AppMenu,
   AddMenu,
   PushPull,
+  Worktree,
 }
 
 export type AppMenuFoldout = {
@@ -465,6 +474,7 @@ export type Foldout =
   | BranchFoldout
   | AppMenuFoldout
   | { type: FoldoutType.PushPull }
+  | { type: FoldoutType.Worktree }
 
 export enum RepositorySectionTab {
   Changes,
@@ -565,6 +575,9 @@ export interface IRepositoryState {
   readonly commitAuthor: CommitIdentity | null
 
   readonly branchesState: IBranchesState
+
+  /** The worktrees associated with this repository. */
+  readonly worktrees: ReadonlyArray<WorktreeEntry>
 
   /** The commits loaded, keyed by their full SHA. */
   readonly commitLookup: Map<string, Commit>

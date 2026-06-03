@@ -300,6 +300,8 @@ export class RepositoriesList extends React.Component<
       onChangeRepositoryAlias: this.onChangeRepositoryAlias,
       onRemoveRepositoryAlias: this.onRemoveRepositoryAlias,
       onViewOnGitHub: this.props.onViewOnGitHub,
+      onCreateWorktree: this.onCreateWorktree,
+      onShowWorktrees: this.onShowWorktrees,
       repository: item.repository,
       shellLabel: this.props.shellLabel,
     })
@@ -485,5 +487,17 @@ export class RepositoriesList extends React.Component<
 
   private onRemoveRepositoryAlias = (repository: Repository) => {
     this.props.dispatcher.changeRepositoryAlias(repository, null)
+  }
+
+  private onCreateWorktree = (repository: Repository) => {
+    this.props.dispatcher.showPopup({
+      type: PopupType.AddWorktree,
+      repository,
+    })
+  }
+
+  private onShowWorktrees = (repository: Repository) => {
+    this.props.dispatcher.selectRepository(repository)
+    this.props.dispatcher.showWorktreesFoldout()
   }
 }

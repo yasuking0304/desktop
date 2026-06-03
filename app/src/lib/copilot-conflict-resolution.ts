@@ -26,6 +26,12 @@ export interface ICopilotConflictResolutionResponse {
 export interface IConflictResolutionProgress {
   readonly filesResolved: number
   readonly filesTotal: number
+  /**
+   * A short snippet of the model's live reasoning, when streaming.
+   * Surfaced to the UI sentence-by-sentence so the user can see what
+   * Copilot is currently thinking about.
+   */
+  readonly reasoningSnippet?: string
 }
 
 // ---------------------------------------------------------------------------

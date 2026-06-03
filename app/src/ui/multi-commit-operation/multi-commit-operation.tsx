@@ -31,6 +31,9 @@ export class MultiCommitOperation extends React.Component<IMultiCommitOperationP
             }
             accounts={this.props.accounts}
             cachedRepoRulesets={this.props.cachedRepoRulesets}
+            shouldShowCopilotConflictResolutionCallOut={
+              this.props.shouldShowCopilotConflictResolutionCallOut
+            }
             openFileInExternalEditor={this.props.openFileInExternalEditor}
             resolvedExternalEditor={this.props.resolvedExternalEditor}
             openRepositoryInShell={this.props.openRepositoryInShell}
@@ -50,6 +53,9 @@ export class MultiCommitOperation extends React.Component<IMultiCommitOperationP
             }
             accounts={this.props.accounts}
             cachedRepoRulesets={this.props.cachedRepoRulesets}
+            shouldShowCopilotConflictResolutionCallOut={
+              this.props.shouldShowCopilotConflictResolutionCallOut
+            }
             openFileInExternalEditor={this.props.openFileInExternalEditor}
             resolvedExternalEditor={this.props.resolvedExternalEditor}
             openRepositoryInShell={this.props.openRepositoryInShell}
@@ -69,6 +75,9 @@ export class MultiCommitOperation extends React.Component<IMultiCommitOperationP
             }
             accounts={this.props.accounts}
             cachedRepoRulesets={this.props.cachedRepoRulesets}
+            shouldShowCopilotConflictResolutionCallOut={
+              this.props.shouldShowCopilotConflictResolutionCallOut
+            }
             openFileInExternalEditor={this.props.openFileInExternalEditor}
             resolvedExternalEditor={this.props.resolvedExternalEditor}
             openRepositoryInShell={this.props.openRepositoryInShell}

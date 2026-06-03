@@ -262,6 +262,12 @@ export function buildDefaultMenu({
         accelerator: 'CmdOrCtrl+B',
         click: emit('show-branches'),
       },
+      {
+        label: __DARWIN__ ? 'Show Worktrees List' : '&Worktrees list',
+        id: 'show-worktrees-list',
+        accelerator: 'CmdOrCtrl+Alt+W',
+        click: emit('show-worktrees'),
+      },
       separator,
       {
         label: __DARWIN__
@@ -472,6 +478,15 @@ export function buildDefaultMenu({
           : t('menu.create-issue-on-github', 'Create &issue on GitHub'),
         accelerator: 'CmdOrCtrl+I',
         click: emit('create-issue-in-repository-on-github'),
+      },
+      separator,
+      {
+        id: 'create-worktree',
+        label: __DARWIN__
+         ? t('menu.create-worktree-darwin', 'New Worktree…')
+         : t('menu.create-worktree', 'New work&tree…'),
+        click: emit('create-worktree'),
+        accelerator: 'CmdOrCtrl+Shift+W',
       },
       separator,
       {

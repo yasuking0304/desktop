@@ -114,6 +114,8 @@ export class BranchDropdown extends React.Component<IBranchDropdownProps> {
         emoji={this.props.emoji}
         onDeleteBranch={this.onDeleteBranch}
         onRenameBranch={this.onRenameBranch}
+        onCheckoutInNewWorktree={this.onCheckoutInNewWorktree}
+        onCheckoutPRInNewWorktree={this.onCheckoutPRInNewWorktree}
         underlineLinks={this.props.underlineLinks}
       />
     )
@@ -324,9 +326,10 @@ export class BranchDropdown extends React.Component<IBranchDropdownProps> {
       return
     }
 
+    const { branch } = tip
+
     const items = generateBranchContextMenuItems({
-      name: tip.branch.name,
-      isLocal: tip.branch.type === BranchType.Local,
+      branch,
       onRenameBranch: this.onRenameBranch,
       onViewBranchOnGitHub:
         isRepositoryWithGitHubRepository(this.props.repository) &&
@@ -421,6 +424,26 @@ export class BranchDropdown extends React.Component<IBranchDropdownProps> {
       repository,
       branch,
       existsOnRemote: aheadBehind !== null,
+    })
+  }
+
+  private onCheckoutInNewWorktree = (branch: Branch) => {
+    this.props.dispatcher.closeFoldout(FoldoutType.Branch)
+    this.props.dispatcher.showPopup({
+      type: PopupType.AddWorktree,
+      repository: this.props.repository,
+      initialBranchName: branch.name,
+      initialWorktreeName: `${this.props.repository.name}-${branch.nameWithoutRemote}`,
+    })
+  }
+
+  private onCheckoutPRInNewWorktree = (pullRequest: PullRequest) => {
+    this.props.dispatcher.closeFoldout(FoldoutType.Branch)
+    this.props.dispatcher.showPopup({
+      type: PopupType.AddWorktree,
+      repository: this.props.repository,
+      initialBranchName: pullRequest.head.ref,
+      initialWorktreeName: `${this.props.repository.name}-${pullRequest.pullRequestNumber}`,
     })
   }
 

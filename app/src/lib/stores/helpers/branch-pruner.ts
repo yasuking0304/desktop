@@ -12,7 +12,7 @@ import {
   formatAsLocalRef,
   getBranches,
   deleteLocalBranch,
-  getWorktreeCheckedOutBranches,
+  listWorktrees,
 } from '../../git'
 import { fatalError } from '../../fatal-error'
 import { RepositoryStateCache } from '../repository-state-cache'
@@ -200,8 +200,10 @@ export class BranchPruner {
     ).map(b => formatAsLocalRef(b.name))
 
     // get branches checked out in linked worktrees so we don't delete them
-    const worktreeBranches = await getWorktreeCheckedOutBranches(
-      this.repository
+    const worktreeBranches = new Set(
+      (await listWorktrees(this.repository))
+        .map(wt => wt.branch)
+        .filter(b => b !== null)
     )
 
     // create list of branches to be pruned
