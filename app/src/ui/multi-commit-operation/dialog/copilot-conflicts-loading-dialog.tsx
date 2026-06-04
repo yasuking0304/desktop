@@ -9,7 +9,6 @@ import { IConflictResolutionProgress } from '../../../lib/copilot-conflict-resol
 import { Button } from '../../lib/button'
 import { Octicon } from '../../octicons'
 import * as octicons from '../../octicons/octicons.generated'
-import { t } from 'i18next'
 import { MultiCommitOperationKind } from '../../../models/multi-commit-operation'
 import { AriaLiveContainer } from '../../accessibility/aria-live-container'
 
