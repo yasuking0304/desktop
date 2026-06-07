@@ -132,8 +132,9 @@ import { isAbsolute } from 'path'
 import { CLIAction } from '../../lib/cli-action'
 import { BypassReasonType } from '../secret-scanning/bypass-push-protection-dialog'
 import {
-  ICopilotConflictResolutionResponse,
   IConflictResolutionProgress,
+  IFileResolution,
+  ICopilotResolutionSummary,
 } from '../../lib/copilot-conflict-resolution'
 import { WorktreeEntry } from '../../models/worktree'
 
@@ -1039,6 +1040,17 @@ export class Dispatcher {
   }
 
   /**
+   * Request deletion of a worktree, showing a confirmation dialog if the
+   * user's preferences require it.
+   */
+  public requestDeleteWorktree(
+    repository: Repository,
+    worktreePath: string
+  ): void {
+    this.appStore._requestDeleteWorktree(repository, worktreePath)
+  }
+
+  /**
    * Set the width of the Push/Push toolbar button to the given value.
    * This affects the toolbar button and its dropdown element.
    *
@@ -1167,7 +1179,10 @@ export class Dispatcher {
   public resolveConflictsWithCopilot(
     repository: Repository,
     onProgress?: (progress: IConflictResolutionProgress) => void
-  ): Promise<ICopilotConflictResolutionResponse | null> {
+  ): Promise<{
+    readonly resolutions: ReadonlyArray<IFileResolution>
+    readonly summary: ICopilotResolutionSummary
+  } | null> {
     return this.appStore._resolveConflictsWithCopilot(repository, onProgress)
   }
 
@@ -2588,6 +2603,10 @@ export class Dispatcher {
 
   public setConfirmCommitMessageOverrideSetting(value: boolean) {
     return this.appStore._setConfirmCommitMessageOverrideSetting(value)
+  }
+
+  public setConfirmWorktreeRemovalSetting(value: boolean) {
+    return this.appStore._setConfirmWorktreeRemovalSetting(value)
   }
 
   /**

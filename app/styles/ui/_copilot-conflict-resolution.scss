@@ -29,12 +29,18 @@
 dialog#copilot-conflicts-dialog {
   width: 560px;
 
+  .dialog-content {
+    // Cap the body so the dialog header and footer remain visible on
+    // small windows; the summary card and file list scroll together as
+    // one region rather than each carrying their own scrollbar.
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+  }
+
   .copilot-conflicts-file-list {
     list-style: none;
     padding: 0 var(--spacing-double);
     margin: 0 calc(-1 * var(--spacing-double));
-    max-height: 350px;
-    overflow-y: auto;
 
     .copilot-conflicts-file-item {
       display: flex;
@@ -133,5 +139,122 @@ dialog#copilot-conflicts-dialog {
     align-items: center;
     justify-content: space-between;
     width: 100%;
+  }
+}
+
+// Resolution summary card rendered at the top of the Copilot conflicts dialog.
+.copilot-conflicts-summary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing);
+  margin-bottom: var(--spacing-double);
+  padding: var(--spacing);
+  border: var(--base-border);
+  border-radius: var(--border-radius);
+  background: var(--background-color);
+
+  .copilot-conflicts-summary-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-third);
+  }
+
+  .copilot-conflicts-summary-title {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-half);
+    margin: 0;
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-semibold);
+    line-height: 1.3;
+
+    .copilot-conflicts-summary-copilot-icon {
+      flex-shrink: 0;
+    }
+  }
+
+  .copilot-conflicts-summary-operation {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary-color);
+  }
+
+  .copilot-conflicts-summary-references {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-third);
+
+    .copilot-conflicts-summary-references-title {
+      margin: 0;
+      font-size: var(--font-size);
+      font-weight: var(--font-weight-semibold);
+    }
+
+    .copilot-conflicts-summary-reference-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-third);
+    }
+
+    .copilot-conflicts-summary-reference-item {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-half);
+      min-width: 0;
+
+      .copilot-conflicts-summary-reference-icon {
+        flex-shrink: 0;
+      }
+
+      .copilot-conflicts-summary-reference-title {
+        flex: 0 1 auto;
+        min-width: 0;
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .copilot-conflicts-summary-reference-id {
+        flex-shrink: 0;
+      }
+
+      .copilot-conflicts-summary-reference-commit-ref {
+        display: inline-flex;
+        align-items: center;
+        flex-shrink: 0;
+
+        .ref {
+          padding-left: var(--spacing-half);
+        }
+
+        .copy-button {
+          display: inline-flex;
+          align-items: center;
+          margin-left: var(--spacing-half);
+          background: transparent;
+          border: none;
+          padding: 0;
+          height: auto;
+          min-width: 16px;
+
+          :hover {
+            color: var(--text-secondary-color);
+          }
+        }
+      }
+
+      .copilot-conflicts-summary-reference-tag {
+        font-size: var(--font-size-sm);
+        color: var(--text-secondary-color);
+        padding: 0 var(--spacing-half);
+        border: var(--base-border);
+        border-radius: var(--border-radius);
+        flex-shrink: 0;
+      }
+    }
   }
 }

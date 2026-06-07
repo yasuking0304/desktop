@@ -4,6 +4,7 @@ import { MenuEvent } from './menu-event'
 import { truncateWithEllipsis } from '../../lib/truncate-with-ellipsis'
 import { getLogDirectoryPath } from '../../lib/logging/get-log-path'
 import { UNSAFE_openDirectory } from '../shell'
+import { enableWorktreeSupport } from '../../lib/feature-flag'
 import { MenuLabelsEvent } from '../../models/menu-labels'
 import * as ipcWebContents from '../ipc-webcontents'
 import { mkdir } from 'fs/promises'
@@ -42,7 +43,11 @@ export const separator: Electron.MenuItemConstructorOptions = {
   type: 'separator',
 }
 
-export function buildDefaultMenu({
+export function buildDefaultMenu(params: MenuLabelsEvent): Electron.Menu {
+  return Menu.buildFromTemplate(buildDefaultMenuTemplate(params))
+}
+
+export function buildDefaultMenuTemplate({
   selectedExternalEditor,
   selectedShell,
   askForConfirmationOnForcePush,
@@ -53,7 +58,7 @@ export function buildDefaultMenu({
   isStashedChangesVisible = false,
   askForConfirmationWhenStashingAllChanges = true,
   isChangesFilterVisible = true,
-}: MenuLabelsEvent): Electron.Menu {
+}: MenuLabelsEvent): Electron.MenuItemConstructorOptions[] {
   contributionTargetDefaultBranch = truncateWithEllipsis(
     contributionTargetDefaultBranch,
     25
@@ -263,10 +268,11 @@ export function buildDefaultMenu({
         click: emit('show-branches'),
       },
       {
-        label: __DARWIN__ ? 'Show Worktrees List' : '&Worktrees list',
+        label: __DARWIN__ ? 'Show Worktrees List' : 'Wor&ktrees list',
         id: 'show-worktrees-list',
         accelerator: 'CmdOrCtrl+Alt+W',
         click: emit('show-worktrees'),
+        visible: enableWorktreeSupport(),
       },
       separator,
       {
@@ -487,8 +493,9 @@ export function buildDefaultMenu({
          : t('menu.create-worktree', 'New work&tree…'),
         click: emit('create-worktree'),
         accelerator: 'CmdOrCtrl+Shift+W',
+        visible: enableWorktreeSupport(),
       },
-      separator,
+      ...(enableWorktreeSupport() ? [separator] : []),
       {
         label: __DARWIN__
           ? t('menu.repository-settings-darwin', 'Repository Settings…')
@@ -762,7 +769,7 @@ export function buildDefaultMenu({
 
   ensureItemIds(template)
 
-  return Menu.buildFromTemplate(template)
+  return template
 }
 
 function getPushLabel(

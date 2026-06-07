@@ -4,6 +4,7 @@ import type { IBYOKProvider } from './copilot/byok'
 import type {
   IFileResolution,
   IConflictResolutionProgress,
+  ICopilotResolutionSummary,
 } from './copilot-conflict-resolution'
 import { Account } from '../models/account'
 import { CommitIdentity } from '../models/commit-identity'
@@ -253,6 +254,9 @@ export interface IAppState {
 
   /** Should the app prompt the user to confirm commit message override? */
   readonly askForConfirmationOnCommitMessageOverride: boolean
+
+  /** Should the app prompt the user to confirm worktree removal? */
+  readonly askForConfirmationOnWorktreeRemoval: boolean
 
   /** How the app should handle uncommitted changes when switching branches */
   readonly uncommittedChangesStrategy: UncommittedChangesStrategy
@@ -1094,6 +1098,14 @@ export interface IMultiCommitOperationState {
    * no resolution is in progress.
    */
   readonly copilotResolutionProgress: IConflictResolutionProgress | null
+
+  /**
+   * Bundled context for rendering the Copilot resolution summary card —
+   * the markdown produced by the model plus the real metadata Desktop uses
+   * to render the branch-flow header and the "For more context" links.
+   * Null when Copilot hasn't been invoked or has not yet completed.
+   */
+  readonly copilotResolutionSummary: ICopilotResolutionSummary | null
 
   /**
    * Controller used to cancel the in-flight Copilot conflict resolution. Set

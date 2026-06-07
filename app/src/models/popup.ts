@@ -27,6 +27,7 @@ import { ISecretScanResult } from '../ui/secret-scanning/push-protection-error-d
 import { BypassReasonType } from '../ui/secret-scanning/bypass-push-protection-dialog'
 import { TerminalOutput, TerminalOutputListener } from '../lib/git'
 import type { IBYOKModel, IBYOKProvider } from '../lib/copilot/byok'
+import { WorktreeEntry } from './worktree'
 
 export enum PopupType {
   RenameBranch = 'RenameBranch',
@@ -527,5 +528,6 @@ export type PopupDetail =
       repository: Repository
       worktreePath: string
       error: Error
+      originalWorktree: WorktreeEntry | null
     }
 export type Popup = IBasePopup & PopupDetail

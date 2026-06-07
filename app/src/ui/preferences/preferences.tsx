@@ -102,6 +102,7 @@ interface IPreferencesProps {
   readonly confirmUndoCommit: boolean
   readonly askForConfirmationOnCommitFilteredChanges: boolean
   readonly confirmCommitMessageOverride: boolean
+  readonly confirmWorktreeRemoval: boolean
   readonly uncommittedChangesStrategy: UncommittedChangesStrategy
   readonly selectedExternalEditor: string | null
   readonly selectedShell: Shell
@@ -152,6 +153,7 @@ interface IPreferencesState {
   readonly confirmUndoCommit: boolean
   readonly askForConfirmationOnCommitFilteredChanges: boolean
   readonly confirmCommitMessageOverride: boolean
+  readonly confirmWorktreeRemoval: boolean
   readonly uncommittedChangesStrategy: UncommittedChangesStrategy
   readonly availableEditors: ReadonlyArray<string>
   readonly useCustomEditor: boolean
@@ -249,6 +251,7 @@ export class Preferences extends React.Component<
       confirmUndoCommit: false,
       askForConfirmationOnCommitFilteredChanges: false,
       confirmCommitMessageOverride: true,
+      confirmWorktreeRemoval: true,
       uncommittedChangesStrategy: defaultUncommittedChangesStrategy,
       selectedExternalEditor: this.props.selectedExternalEditor,
       availableShells: [],
@@ -344,6 +347,7 @@ export class Preferences extends React.Component<
       askForConfirmationOnCommitFilteredChanges:
         this.props.askForConfirmationOnCommitFilteredChanges,
       confirmCommitMessageOverride: this.props.confirmCommitMessageOverride,
+      confirmWorktreeRemoval: this.props.confirmWorktreeRemoval,
       uncommittedChangesStrategy: this.props.uncommittedChangesStrategy,
       availableShells,
       availableEditors,
@@ -684,6 +688,7 @@ export class Preferences extends React.Component<
             confirmCommitMessageOverride={
               this.state.confirmCommitMessageOverride
             }
+            confirmWorktreeRemoval={this.state.confirmWorktreeRemoval}
             onConfirmRepositoryRemovalChanged={
               this.onConfirmRepositoryRemovalChanged
             }
@@ -700,6 +705,9 @@ export class Preferences extends React.Component<
             }
             onConfirmCommitMessageOverrideChanged={
               this.onConfirmCommitMessageOverrideChanged
+            }
+            onConfirmWorktreeRemovalChanged={
+              this.onConfirmWorktreeRemovalChanged
             }
             uncommittedChangesStrategy={this.state.uncommittedChangesStrategy}
             onUncommittedChangesStrategyChanged={
@@ -827,6 +835,10 @@ export class Preferences extends React.Component<
 
   private onConfirmCommitMessageOverrideChanged = (value: boolean) => {
     this.setState({ confirmCommitMessageOverride: value })
+  }
+
+  private onConfirmWorktreeRemovalChanged = (value: boolean) => {
+    this.setState({ confirmWorktreeRemoval: value })
   }
 
   private onUncommittedChangesStrategyChanged = (
@@ -1112,6 +1124,9 @@ export class Preferences extends React.Component<
     )
     await dispatcher.setConfirmCommitMessageOverrideSetting(
       this.state.confirmCommitMessageOverride
+    )
+    await dispatcher.setConfirmWorktreeRemovalSetting(
+      this.state.confirmWorktreeRemoval
     )
 
     if (this.state.selectedExternalEditor) {

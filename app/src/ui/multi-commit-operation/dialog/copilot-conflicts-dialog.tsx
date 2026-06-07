@@ -2,6 +2,7 @@ import * as React from 'react'
 import { join } from 'path'
 import { Dialog, DialogContent, DialogFooter } from '../../dialog'
 import { Dispatcher } from '../../dispatcher'
+import { Emoji } from '../../../lib/emoji'
 import { Repository } from '../../../models/repository'
 import { MultiCommitOperationStepKind } from '../../../models/multi-commit-operation'
 import { MultiCommitOperationConflictState } from '../../../lib/app-state'
@@ -12,7 +13,10 @@ import {
 } from '../../../models/status'
 import { getUnmergedFiles, isConflictedFile } from '../../../lib/status'
 import { ManualConflictResolution } from '../../../models/manual-conflict-resolution'
-import { IFileResolution } from '../../../lib/copilot-conflict-resolution'
+import {
+  IFileResolution,
+  ICopilotResolutionSummary,
+} from '../../../lib/copilot-conflict-resolution'
 import { showContextualMenu, IMenuItem } from '../../../lib/menu-item'
 import { OkCancelButtonGroup } from '../../dialog/ok-cancel-button-group'
 import { Button } from '../../lib/button'
@@ -26,6 +30,8 @@ import {
 } from '../../lib/context-menu'
 import { openFile } from '../../lib/open-file'
 import { revealInFileManager } from '../../../lib/app-shell'
+import { CopilotConflictsResolutionSummary } from './copilot-conflicts-resolution-summary'
+import { MultiCommitOperationKind } from '../../../models/multi-commit-operation'
 
 /**
  * The resolution choice for a file in the Copilot conflicts dialog.
@@ -40,13 +46,15 @@ interface ICopilotConflictsDialogProps {
   readonly dispatcher: Dispatcher
   readonly conflictState: MultiCommitOperationConflictState
   readonly workingDirectory: WorkingDirectoryStatus
-  readonly operationKind: string
+  readonly operationKind: MultiCommitOperationKind
   readonly copilotResolutions: ReadonlyArray<IFileResolution> | null
+  readonly copilotResolutionSummary: ICopilotResolutionSummary | null
   readonly resolvedExternalEditor: string | null
   readonly openFileInExternalEditor: (path: string) => void
   readonly onContinueAfterConflicts: () => Promise<void>
   readonly onAbort: () => Promise<void>
   readonly onDismissed: () => void
+  readonly emoji: Map<string, Emoji>
 }
 
 interface ICopilotConflictsDialogState {
@@ -328,6 +336,27 @@ export class CopilotConflictsDialog extends React.Component<
     )
   }
 
+  private renderResolutionSummary(): JSX.Element | null {
+    const { copilotResolutionSummary, operationKind, repository, emoji } =
+      this.props
+    if (copilotResolutionSummary === null) {
+      return null
+    }
+    return (
+      <CopilotConflictsResolutionSummary
+        summary={copilotResolutionSummary}
+        operationKind={operationKind}
+        emoji={emoji}
+        gitHubRepository={repository.gitHubRepository}
+        onMarkdownLinkClicked={this.onMarkdownLinkClicked}
+      />
+    )
+  }
+
+  private onMarkdownLinkClicked = (url: string): void => {
+    this.props.dispatcher.openInBrowser(url)
+  }
+
   private renderFileList(
     files: ReadonlyArray<WorkingDirectoryFileChange>
   ): JSX.Element {
@@ -365,7 +394,10 @@ export class CopilotConflictsDialog extends React.Component<
         loading={isContinuing}
         disabled={isContinuing}
       >
-        <DialogContent>{this.renderFileList(unmergedFiles)}</DialogContent>
+        <DialogContent>
+          {this.renderResolutionSummary()}
+          {this.renderFileList(unmergedFiles)}
+        </DialogContent>
         <DialogFooter>
           <div className="copilot-conflicts-footer">
             <Button onClick={this.onBackToManual} disabled={isContinuing}>
