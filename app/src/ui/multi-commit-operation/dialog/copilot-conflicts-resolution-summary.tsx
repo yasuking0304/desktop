@@ -11,6 +11,7 @@ import { MultiCommitOperationKind } from '../../../models/multi-commit-operation
 import { CopyButton } from '../../copy-button'
 import { SandboxedMarkdown } from '../../lib/sandboxed-markdown'
 import { LinkButton } from '../../lib/link-button'
+import { Ref } from '../../lib/ref'
 import { Octicon } from '../../octicons'
 import * as octicons from '../../octicons/octicons.generated'
 
@@ -23,27 +24,46 @@ interface ICopilotConflictsResolutionSummaryProps {
 }
 
 /**
- * Builds the operation subheading sentence — e.g. "Merging Feature-A
- * into Feature-B" — using only words (no arrows). Anchored below the
- * main "Resolution summary" heading so the user can see what's being
- * resolved without the long phrase dominating the card.
+ * Builds the operation subheading — e.g. "Merging Feature-A into
+ * Feature-B" — with branch names wrapped in `<Ref>` for consistent
+ * styling across the app.
  */
 function getOperationPhrase(
   kind: MultiCommitOperationKind,
   ourLabel: string,
   theirLabel: string
-): string {
+): JSX.Element {
   switch (kind) {
     case MultiCommitOperationKind.Merge:
-      return `Merging ${theirLabel} into ${ourLabel}`
+      return (
+        <span>
+          Merging <Ref>{theirLabel}</Ref> into <Ref>{ourLabel}</Ref>
+        </span>
+      )
     case MultiCommitOperationKind.Rebase:
-      return `Rebasing ${ourLabel} onto ${theirLabel}`
+      return (
+        <span>
+          Rebasing <Ref>{ourLabel}</Ref> onto <Ref>{theirLabel}</Ref>
+        </span>
+      )
     case MultiCommitOperationKind.CherryPick:
-      return `Cherry-picking from ${theirLabel} into ${ourLabel}`
+      return (
+        <span>
+          Cherry-picking from <Ref>{theirLabel}</Ref> into <Ref>{ourLabel}</Ref>
+        </span>
+      )
     case MultiCommitOperationKind.Squash:
-      return `Squashing into ${ourLabel}`
+      return (
+        <span>
+          Squashing into <Ref>{ourLabel}</Ref>
+        </span>
+      )
     case MultiCommitOperationKind.Reorder:
-      return `Reordering ${ourLabel}`
+      return (
+        <span>
+          Reordering <Ref>{ourLabel}</Ref>
+        </span>
+      )
     default:
       return assertNever(kind, `Unknown operation kind: ${kind}`)
   }
@@ -98,18 +118,20 @@ export class CopilotConflictsResolutionSummary extends React.Component<ICopilotC
 
     return (
       <div className="copilot-conflicts-summary">
-        <div className="copilot-conflicts-summary-header">
-          <h2 className="copilot-conflicts-summary-title">
-            <Octicon
-              symbol={octicons.copilot}
-              className="copilot-conflicts-summary-copilot-icon"
-            />
-            <span>Resolution summary</span>
-          </h2>
+        <h2 className="copilot-conflicts-summary-theme">
+          <Octicon
+            symbol={octicons.copilot}
+            className="copilot-conflicts-summary-copilot-icon"
+          />
+          <span className="copilot-conflicts-summary-theme-label">
+            Resolution summary
+          </span>
+        </h2>
+        <div className="copilot-conflicts-summary-body">
           <p className="copilot-conflicts-summary-operation">{phrase}</p>
+          {this.renderMarkdownBody()}
+          {this.renderReferences()}
         </div>
-        {this.renderMarkdownBody()}
-        {this.renderReferences()}
       </div>
     )
   }

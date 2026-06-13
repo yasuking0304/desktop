@@ -32,6 +32,9 @@ export interface IFilterListGroup<
   /** The identifier for this group. */
   readonly identifier: Identifier
 
+  /** Whether to render this group's header. Defaults to true. */
+  readonly showHeader?: boolean
+
   /** The items in the group. */
   readonly items: ReadonlyArray<Item>
 }
@@ -620,7 +623,7 @@ function createStateUpdate<T extends IFilterListItem, GroupIdentifier>(
       continue
     }
 
-    if (props.renderGroupHeader) {
+    if (props.renderGroupHeader && group.showHeader !== false) {
       flattenedRows.push({ kind: 'group', identifier: group.identifier })
     }
 

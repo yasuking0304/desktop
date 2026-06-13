@@ -155,7 +155,6 @@ import {
   ICompareState,
   CommitOptions,
 } from '../app-state'
-import type { ModelInfo } from '@github/copilot-sdk'
 import {
   findEditorOrDefault,
   getAvailableEditors,
@@ -287,6 +286,7 @@ import {
   enableCopilotSdkCommitMessageGeneration,
   enableCustomIntegration,
 } from '../feature-flag'
+import { isGHES } from '../endpoint-capabilities'
 import { Banner, BannerType } from '../../models/banner'
 import { ComputedAction } from '../../models/computed-action'
 import {
@@ -409,6 +409,7 @@ import {
 } from '../pull-request-refs'
 import { resolveWithin } from '../path'
 import { WorktreeEntry } from '../../models/worktree'
+import type { Model } from '@github/copilot-sdk/dist/generated/rpc'
 
 const LastSelectedRepositoryIDKey = 'last-selected-repository-id'
 
@@ -721,7 +722,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
   private copilotResetDate: string = ''
   private copilotLicenseType: string = ''
   private selectedCopilotModels: CopilotModelSelections = {}
-  private copilotModels: ReadonlyArray<ModelInfo> | null = null
+  private copilotModels: ReadonlyArray<Model> | null = null
   private byokProviders: ReadonlyArray<IBYOKProvider> = []
 
   public constructor(
@@ -1008,6 +1009,8 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
     this.accountsStore.onDidUpdate(accounts => {
       this.accounts = accounts
+      this.syncCopilotModelsFromCache()
+      this.updateCopilotModelsForCurrentAccount()
       const endpointTokens = accounts.map<EndpointToken>(
         ({ endpoint, token }) => ({ endpoint, token })
       )
@@ -1046,10 +1049,46 @@ export class AppStore extends TypedBaseStore<IAppState> {
     updateStore.onDidChange(() => this.emitUpdate())
 
     this.copilotStore.onDidUpdate(() => {
-      this.copilotModels = this.copilotStore.isAvailable
-        ? this.copilotStore.cachedModelList ?? this.copilotModels
-        : null
+      this.syncCopilotModelsFromCache()
       this.emitUpdate()
+    })
+  }
+
+  private getCopilotModelsAccount(): Account | undefined {
+    return this.accounts.find(
+      account =>
+        !isGHES(account.endpoint) &&
+        enableCopilotSdkCommitMessageGeneration(account) &&
+        account.isCopilotDesktopEnabled
+    )
+  }
+
+  private syncCopilotModelsFromCache(): void {
+    const account = this.getCopilotModelsAccount()
+
+    if (account === undefined) {
+      this.copilotModels = null
+      return
+    }
+
+    this.copilotModels = this.copilotStore.getCachedModelList(account)
+  }
+
+  private updateCopilotModelsForCurrentAccount(): void {
+    const account = this.getCopilotModelsAccount()
+
+    if (
+      account === undefined ||
+      this.copilotStore.getCachedModelList(account) !== null
+    ) {
+      return
+    }
+
+    this.fetchCopilotModelsForCurrentAccount().catch(e => {
+      log.warn(
+        'AppStore: Failed to fetch Copilot models after account update',
+        e
+      )
     })
   }
 
@@ -1248,7 +1287,6 @@ export class AppStore extends TypedBaseStore<IAppState> {
       copilotLicenseType: this.copilotLicenseType,
       selectedCopilotModels: this.selectedCopilotModels,
       copilotModels: this.copilotModels,
-      copilotAvailable: this.copilotStore.isAvailable,
       byokProviders: this.byokProviders,
     }
   }
@@ -6088,6 +6126,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
       try {
         const response = enableCopilotSdkCommitMessageGeneration(account)
           ? await this.copilotStore.generateCommitMessage(
+              account,
               diffPrompt,
               repository.path,
               await this.resolveCopilotModelRequest(
@@ -6192,6 +6231,15 @@ export class AppStore extends TypedBaseStore<IAppState> {
       return null
     }
 
+    const account = getAccountForCopilotConflictResolution(
+      this.accounts,
+      repository
+    )
+
+    if (!account) {
+      return null
+    }
+
     const totalTimer = startTimer('resolve conflicts with Copilot', repository)
 
     try {
@@ -6245,6 +6293,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
       )
       try {
         const result = await this.copilotStore.resolveConflicts(
+          account,
           context,
           repository.path,
           modelRequest,
@@ -6576,6 +6625,9 @@ export class AppStore extends TypedBaseStore<IAppState> {
       this.repositoryStateCache.get(repository).multiCommitOperationState
         ?.copilotResolutionAbortController === abortController
 
+    this.statsStore.increment('initiateResolveConflictsWithCopilotCount')
+    const resolveStartTime = performance.now()
+
     try {
       const result = await this._resolveConflictsWithCopilot(
         repository,
@@ -6699,6 +6751,21 @@ export class AppStore extends TypedBaseStore<IAppState> {
       )
 
       this.emitUpdate()
+
+      // Record resolution timing buckets
+      const elapsedSeconds = (performance.now() - resolveStartTime) / 1000
+      if (elapsedSeconds > 15) {
+        this.statsStore.increment('copilotConflictResolutionOver15sCount')
+      }
+      if (elapsedSeconds > 30) {
+        this.statsStore.increment('copilotConflictResolutionOver30sCount')
+      }
+      if (elapsedSeconds > 60) {
+        this.statsStore.increment('copilotConflictResolutionOver60sCount')
+      }
+      if (elapsedSeconds > 120) {
+        this.statsStore.increment('copilotConflictResolutionOver120sCount')
+      }
     } catch (e) {
       log.warn('AppStore: Copilot conflict resolution flow failed', e)
 
@@ -6706,6 +6773,8 @@ export class AppStore extends TypedBaseStore<IAppState> {
       if (!ownsCurrentRun()) {
         return
       }
+
+      this.statsStore.increment('copilotConflictResolutionErrorCount')
 
       // Surface the error to the user so they understand why they were
       // routed back to manual conflict resolution. Mirrors the pattern
@@ -6747,6 +6816,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
     if (controller !== null) {
       controller.abort()
+      this.statsStore.increment('copilotConflictResolutionStoppedCount')
     }
   }
 
@@ -6776,6 +6846,11 @@ export class AppStore extends TypedBaseStore<IAppState> {
       step.kind === MultiCommitOperationStepKind.ShowCopilotConflicts
         ? step.conflictState.manualResolutions
         : new Map<string, ManualConflictResolution>()
+
+    this.statsStore.increment('copilotConflictResolutionAcceptedCount')
+    if (manualResolutions.size > 0) {
+      this.statsStore.increment('copilotConflictResolutionWithOverridesCount')
+    }
 
     const pathsToStage: string[] = []
 
@@ -9204,6 +9279,10 @@ export class AppStore extends TypedBaseStore<IAppState> {
     step: MultiCommitOperationStep,
     useCopilotConflictResolution: boolean
   ): void {
+    if (!useCopilotConflictResolution) {
+      this.statsStore.increment('copilotConflictResolutionSwitchToManualCount')
+    }
+
     this.repositoryStateCache.updateMultiCommitOperationState(
       repository,
       () => ({
@@ -10007,14 +10086,28 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
   /** This shouldn't be called directly. See 'Dispatcher'. */
   public async _fetchCopilotModels(): Promise<void> {
-    const models = await this.copilotStore.listModels()
+    return this.fetchCopilotModelsForCurrentAccount()
+  }
+
+  private async fetchCopilotModelsForCurrentAccount(): Promise<void> {
+    const account = this.getCopilotModelsAccount()
+    if (account === undefined) {
+      this.copilotModels = null
+      this.emitUpdate()
+      return
+    }
+
+    const models = await this.copilotStore.listModels(account)
     // Only overwrite the cached model list when we actually got a list back.
-    // listModels() returns null when the result is unknown (no signed-in
-    // account or an SDK failure with no prior cache); treating that as an
-    // empty list would scrub the user's Copilot model selections.
+    // listModels() returns null when the result is unknown (the selected
+    // account cannot use the SDK or an SDK failure has no prior cache);
+    // treating that as an empty list would scrub the user's Copilot model
+    // selections.
     if (models !== null) {
       this.copilotModels = [...models]
       this.scrubMissingCopilotModelSelections()
+    } else {
+      this.syncCopilotModelsFromCache()
     }
     this.emitUpdate()
   }
