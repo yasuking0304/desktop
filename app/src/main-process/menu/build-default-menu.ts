@@ -489,8 +489,8 @@ export function buildDefaultMenuTemplate({
       {
         id: 'create-worktree',
         label: __DARWIN__
-         ? t('menu.create-worktree-darwin', 'New Worktree…')
-         : t('menu.create-worktree', 'New work&tree…'),
+          ? t('menu.create-worktree-darwin', 'New Worktree…')
+          : t('menu.create-worktree', 'New work&tree…'),
         click: emit('create-worktree'),
         accelerator: 'CmdOrCtrl+Shift+W',
         visible: enableWorktreeSupport(),

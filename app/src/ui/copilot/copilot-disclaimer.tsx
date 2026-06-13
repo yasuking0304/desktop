@@ -6,6 +6,7 @@ import {
   OkCancelButtonGroup,
 } from '../dialog'
 import { LinkButton } from '../lib/link-button'
+import { t } from 'i18next'
 
 interface ICopilotDisclaimerProps {
   /**
@@ -37,7 +38,10 @@ export class CopilotDisclaimer extends React.Component<ICopilotDisclaimerProps> 
     const { children, onDismissed } = this.props
     return (
       <Dialog
-        title="GitHub Copilot"
+        title={t(
+          'generate-commit-message-disclaimer.github-copilot',
+          'GitHub Copilot'
+        )}
         type="warning"
         onDismissed={onDismissed}
         onSubmit={this.onSubmit}
@@ -46,15 +50,24 @@ export class CopilotDisclaimer extends React.Component<ICopilotDisclaimerProps> 
       >
         <DialogContent>
           <p id="copilot-disclaimer-body">
-            Copilot is powered by AI, so mistakes are possible.
+            {t(
+              'generate-commit-message-disclaimer.copilot-is-powered-by-ai-short',
+              'Copilot is powered by AI, so mistakes are possible.'
+            )}
             {children !== undefined && <> {children}</>}{' '}
             <LinkButton uri="https://gh.io/copilot-for-desktop-transparency">
-              Learn more about Copilot in GitHub Desktop.
+              {t(
+                'generate-commit-message-disclaimer.learn-more-about-copilot',
+                'Learn more about Copilot in GitHub Desktop.'
+              )}
             </LinkButton>
           </p>
         </DialogContent>
         <DialogFooter>
-          <OkCancelButtonGroup destructive={true} okButtonText="I understand" />
+          <OkCancelButtonGroup
+            destructive={true}
+            okButtonText={t('common.i-understand', 'I understand')}
+          />
         </DialogFooter>
       </Dialog>
     )

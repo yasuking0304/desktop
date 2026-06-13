@@ -379,7 +379,7 @@ export class RepositoriesList extends React.Component<
         ariaExpanded={this.state.newRepositoryMenuExpanded}
         onKeyDown={this.onNewRepositoryButtonKeyDown}
       >
-        {t('repositories-list.add', 'Add')}
+        {t('common.add', 'Add')}
         <Octicon symbol={octicons.triangleDown} />
       </Button>
     )

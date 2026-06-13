@@ -55,6 +55,26 @@
     "add-repository": "添加存储库",
     "add-repository-darwin": "添加存储库"
   },
+  "add-worktree-dialog": {
+    "branch-name-label": "Branch name",
+    "branch-name-label-darwin": "Branch Name",
+    "create-worktree": "Create worktree",
+    "create-worktree-darwin": "Create Worktree",
+    "title": "Add worktree",
+    "title-darwin": "Add Worktree",
+    "will-check-out-existing-branch-1": "Will check out existing branch ",
+    "will-check-out-existing-branch-2": ".",
+    "will-check-out-remote-branch-1": "Will check out remote branch ",
+    "will-check-out-remote-branch-2": ".",
+    "worktree-name-label": "Worktree name",
+    "worktree-name-label-darwin": "Worktree Name",
+    "worktree-name-placeholder": "Worktree name",
+    "worktree-name-placeholder-darwin": "Worktree name",
+    "worktree-path-message-1": "Worktree will be created at ",
+    "worktree-path-message-2": ".",
+    "worktree-path-placeholder": "Worktree path",
+    "worktree-path-placeholder-darwin": "Worktree path"
+  },
   "advanced": {
     "background-updates": "背景更新",
     "help-github-desktop-improve-by-submitting-1": "提交 ",
@@ -470,6 +490,7 @@
   },
   "common": {
     "about-github-desktop": "关于 GitHub Desktop",
+    "add": "添加",
     "added": "已添加",
     "branch-name": "分支名称(不允许使用汉字)",
     "branch-name-darwin": "分支名称(不允许使用汉字)",
@@ -527,6 +548,7 @@
     "override": "覆盖",
     "overwrite": "覆盖",
     "paste": "粘贴",
+    "path-placeholder": "path",
     "preferences": "设置",
     "pulling": "正在拉取 {{0}}",
     "recent": "最近",
@@ -641,13 +663,33 @@
     "resolve-conflicts-to-continue-1": "解决冲突以继续 ",
     "resolve-conflicts-to-continue-2": "。"
   },
+  "copilot": {
+    "add-custom-provider": "Add a custom provider to use your own API keys with OpenAI-compatible endpoints, Azure, Anthropic, or local providers like Ollama.",
+    "add-provider": "プロパイダーの追加…",
+    "add-provider-darwin": "プロパイダーの追加…",
+    "commit-message-generation": "Commit message generation",
+    "commit-message-generation-darwin": "Commit Message Generation",
+    "conflict-resolution": "Conflict resolution",
+    "conflict-resolution-darwin": "Conflict Resolution",
+    "custom-instructions": "custom instructions",
+    "default-model": "{{0}} (default)",
+    "learn-more-about-commit-messages": "Learn more about generating commit messages.",
+    "many-models": "{{0}} models",
+    "models": "Models",
+    "one-model": "1 model",
+    "providers": "Providers",
+    "sign-in-to-configure": "Sign in to a GitHub.com account in the Accounts tab to configure Copilot settings.",
+    "tailor-copilot-behavior-1": "Tailor how Copilot behaves by using ",
+    "tailor-copilot-behavior-2": "."
+  },
+  "copilot-byok-provider-dialog": {
+    "add-custom-provider": "Add Custom Provider",
+    "add-custom-provider-darwin": "Add custom provider",
+    "edit-custom-provider": "Edit custom provider",
+    "edit-custom-provider-darwin": "Edit Custom Provider"
+  },
   "copilot-conflicts-dialog": {
     "resolve-conflicts": "Resolve conflicts before {{0}}"
-  },
-  "copilot-conflicts-loading-dialog": {
-    "progress": "{0} of {1} files resolved",
-    "resolving": "Resolving conflicts with Copilot…",
-    "title": "Copilot"
   },
   "copilot-error": {
     "billing-issue": "在 GitHub Copilot 上发生了付费错误。",
@@ -757,10 +799,7 @@
     "render-git-repository-warning-2": " 吗?",
     "render-invalid-path-error": "无法在此路径创建目录。您可能没有权限在此创建目录。",
     "render-readme-overwrite-warning-1": "此目录已包含 ",
-    "render-readme-overwrite-warning-2": " 文件。选中此框将导致现有文件被覆盖。",
-    "repo-sanitized-name-warning": "将被创建为 {{0}}。",
-    "spaces-and-invalid-characters": "空白和无效字符已被连字符取代。",
-    "will-be-created-as": "将创建为 {{0}}"
+    "render-readme-overwrite-warning-2": " 文件。选中此框将导致现有文件被覆盖。"
   },
   "create-tag-dialog": {
     "create-a-tag": "创建标签",
@@ -882,6 +921,54 @@
     "you-re-done": "完成啦!",
     "you-ve-learned-the-basics": "您已了解 GitHub Desktop 的基础知识。以下是一些后续操作的建议。"
   },
+  "edit-byok-model-dialog": {
+    "add-model": "Add model",
+    "add-model-darwin": "Add Model",
+    "copilot-byok-model-hint-1": "The exact name your provider expects (e.g. ",
+    "copilot-byok-provider-hint-2": " ).",
+    "display-name": "Display name",
+    "display-name-darwin": "Display Name",
+    "edit-model": "Edit model",
+    "edit-model-darwin": "Edit Model",
+    "model-identifier": "Model identifier",
+    "model-identifier-darwin": "Model Identifier",
+    "model-identifier-error": "Please enter a model identifier.",
+    "model-identifier-exists": "Another model with the identifier '{{0}}' already exists.",
+    "reasoning-effort": "Reasoning effort",
+    "reasoning-effort-darwin": "Reasoning Effort",
+    "reasoning-effort-default": "Default",
+    "reasoning-effort-default-provider": "Default (provider's choice)",
+    "reasoning-effort-hint-1": "Reasoning models (o1, o3, GPT-5 reasoning variants, etc.) think before responding. Higher levels are slower but produce better answers on complex tasks. Leave on ",
+    "reasoning-effort-hint-2": " for non-reasoning models or to let the provider pick.",
+    "the-friendly-name-shown": "The friendly name shown in the Copilot model picker."
+  },
+  "edit-byok-provider-dialog": {
+    "add-model": "Add model…",
+    "add-model-darwin": "Add Model…",
+    "api-format": "API format",
+    "api-format-completions": "Chat completions (default)",
+    "api-format-darwin": "API Format",
+    "api-format-responses": "Responses (GPT-5 series)",
+    "auth-api-key": "API key",
+    "auth-bearer": "Bearer token",
+    "auth-none": "None",
+    "auth-none-hint": "No credentials will be sent with requests to this provider.",
+    "authentication": "Authentication",
+    "azure-api-version": "Azure API version",
+    "azure-api-version-darwin": "Azure API Version",
+    "base-url": "Base URL",
+    "models-empty": "No models yet. Add at least one to use this provider.",
+    "models-hint": "Tell Desktop which models this provider offers. Each one will appear in the model picker for Copilot features.",
+    "placeholder-unchanged": "(unchanged)",
+    "provider": "Provider",
+    "provider-name-placeholder": "My provider",
+    "provider-type": "Type",
+    "provider-type-anthropic": "Anthropic",
+    "provider-type-azure": "Azure",
+    "provider-type-openai": "OpenAI / OpenAI-compatible",
+    "request-timeout": "Request timeout (seconds)",
+    "request-timeout-darwin": "Request Timeout (seconds)"
+  },
   "editor-error": {
     "open-options": "打开选项",
     "open-settings-darwin": "打开设置",
@@ -983,6 +1070,7 @@
   },
   "generate-commit-message-disclaimer": {
     "copilot-is-powered-by-ai": "Copilot 由人工智能驱动, 因此可能会出现错误。使用前请仔细检查并编辑生成的消息。 ",
+    "copilot-is-powered-by-ai-short": "Copilot 由人工智能驱动, 因此可能会出现错误。",
     "github-copilot": "GitHub Copilot",
     "learn-more-about-copilot": "了解有关 GitHub Desktop 中 Copilot 的更多信息。"
   },
@@ -1009,7 +1097,7 @@
     "author": "账户",
     "cache-git-hook-env-variables": "缓存 Git 钩子环境变量",
     "cache-hook-env-description": "缓存钩子环境变量以提高性能。如果您的钩子依赖于经常变化的环境变量，请禁用此功能。",
-    "copilot-chat-messages": "Chat messages",
+    "copilot-chat-messages": "Credits",
     "copilot-code-completions": "Code completions",
     "default-branch": "默认分支",
     "default-branch-name-for-new-repositories": "新存储库的默认分支名称",
@@ -1018,7 +1106,7 @@
     "edit-your-global-git-config-2": " 编辑你的全局 Git 配置文件",
     "edit-your-global-git-config-3": "。",
     "enable-paths-lt-260-characters": "在 Windows 上使用超过 260 个字符的路径",
-    "generates-comments-using-copilot": "GitHub Desktop generates commit comments using Copilot's chat messages. Copilot quota will be reset on {{0}}.",
+    "generates-comments-using-copilot": "GitHub Desktop generates commit comments using Copilot's credits. Copilot quota will be reset on {{0}}.",
     "gitHub-default-branch-description-1": "GitHub 的默认分支名称是 ",
     "gitHub-default-branch-description-2": "。 ",
     "gitHub-default-branch-description-3": "您可能想要根据不同的工作流程来更改它, 或者因为您的集成仍然需要历史默认分支名称 ",
@@ -1175,6 +1263,8 @@
     "create-issue-on-github-darwin": "在 GitHub 上创建问题",
     "create-pull-request": "创建拉取请求 (&P)",
     "create-pull-request-darwin": "创建拉取请求",
+    "create-worktree": "New work&tree…",
+    "create-worktree-darwin": "New Worktree…",
     "cut": "剪切 (&T)",
     "cut-darwin": "剪切",
     "default-branch": "默认分支",
@@ -1754,7 +1844,6 @@
     "open-in-command-line-3": " 您选择的工具, 或者接近手动解决。"
   },
   "repositories-list": {
-    "add": "添加",
     "add-existing-repository": "添加现有存储库…",
     "add-existing-repository-darwin": "添加现有存储库…",
     "clone-repository": "克隆仓库…",
@@ -1777,6 +1866,11 @@
     "copy-repo-path-darwin": "复制存储库路径",
     "open-in-editor": "在 {{0}} 中打开",
     "open-in-shell": "在 {{0}} 中打开"
+  },
+  "repository-path": {
+    "name": "Name",
+    "name-placeholder": "name",
+    "sanitized-name-warning": "Invalid characters have been replaced by hyphens."
   },
   "repository-settings": {
     "fork-behavior": "行为",

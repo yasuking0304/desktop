@@ -20,6 +20,7 @@ import {
   parseModelKey,
 } from '../../lib/copilot/byok'
 import { enableCopilotConflictResolution } from '../../lib/feature-flag'
+import { t } from 'i18next'
 
 interface ICopilotPreferencesProps {
   readonly selectedCopilotModels: CopilotModelSelections
@@ -98,8 +99,8 @@ export class CopilotPreferences extends React.Component<
           selectedIndex={this.state.selectedTabIndex}
           onTabClicked={this.onTabClicked}
         >
-          <span>Models</span>
-          <span>Providers</span>
+          <span>{t('copilot.models', 'Models')}</span>
+          <span>{t('copilot.providers', 'Providers')}</span>
         </TabBar>
         <div className="copilot-tab-content">
           <div className="copilot-section">{this.renderCurrentTab()}</div>
@@ -119,8 +120,11 @@ export class CopilotPreferences extends React.Component<
     if (!this.props.copilotAvailable) {
       return (
         <p>
-          Sign in to a GitHub.com account in the Accounts tab to configure
-          Copilot settings.
+          {t(
+            'copilot.sign-in-to-configure',
+            `Sign in to a GitHub.com account in the Accounts tab to configure
+          Copilot settings.`
+          )}
         </p>
       )
     }
@@ -139,31 +143,45 @@ export class CopilotPreferences extends React.Component<
       <>
         <Row className="copilot-feature-hint">
           <p>
-            Tailor how Copilot behaves by using{' '}
+            {t(
+              'copilot.tailor-copilot-behavior-1',
+              `Tailor how Copilot behaves by using `
+            )}
             <LinkButton uri="https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-custom-instructions">
-              custom instructions
+              {t('copilot.custom-instructions', 'custom instructions')}
             </LinkButton>
-            .
+            {t('copilot.tailor-copilot-behavior-2', `.`)}
           </p>
         </Row>
         {this.renderFeatureModelPicker(
           copilotModels,
           'commit-message-generation',
           __DARWIN__
-            ? 'Commit Message Generation'
-            : 'Commit message generation',
+            ? t(
+                'copilot.commit-message-generation-darwin',
+                'Commit Message Generation'
+              )
+            : t(
+                'copilot.commit-message-generation',
+                'Commit message generation'
+              ),
           this.onCommitMessageModelChanged
         )}
         <p className="settings-description">
           <LinkButton uri="https://docs.github.com/en/desktop/making-changes-in-a-branch/committing-and-reviewing-changes-to-your-project-in-github-desktop#write-a-commit-message-and-push-your-changes">
-            Learn more about generating commit messages.
+            {t(
+              'copilot.learn-more-about-commit-messages',
+              'Learn more about generating commit messages.'
+            )}
           </LinkButton>
         </p>
         {enableCopilotConflictResolution() &&
           this.renderFeatureModelPicker(
             copilotModels,
             'conflict-resolution',
-            __DARWIN__ ? 'Conflict Resolution' : 'Conflict resolution',
+            __DARWIN__
+              ? t('copilot.conflict-resolution-darwin', 'Conflict Resolution')
+              : t('copilot.conflict-resolution', 'Conflict resolution'),
             this.onConflictResolutionModelChanged
           )}
       </>
@@ -194,7 +212,9 @@ export class CopilotPreferences extends React.Component<
                 key={m.id}
                 value={encodeModelKey({ kind: 'copilot', modelId: m.id })}
               >
-                {m.id === DefaultCopilotModel ? `${m.name} (default)` : m.name}
+                {m.id === DefaultCopilotModel
+                  ? t('copilot.default-model', `{{0}} (default)`, { 0: m.name })
+                  : m.name}
               </option>
             ))}
           </optgroup>
@@ -283,9 +303,12 @@ export class CopilotPreferences extends React.Component<
       <>
         {byokProviders.length === 0 ? (
           <p className="copilot-byok-empty">
-            Add a custom provider to use your own API keys with
-            OpenAI-compatible endpoints, Azure, Anthropic, or local providers
-            like Ollama.
+            {t(
+              'copilot.add-custom-provider',
+              `Add a custom provider to use your own API keys with
+               OpenAI-compatible endpoints, Azure, Anthropic, or local
+               providers like Ollama.`
+            )}
           </p>
         ) : (
           <ul className="copilot-byok-entry-list">
@@ -293,7 +316,9 @@ export class CopilotPreferences extends React.Component<
           </ul>
         )}
         <Button onClick={this.onAddBYOKProviderClick}>
-          {__DARWIN__ ? 'Add Provider…' : 'Add provider…'}
+          {__DARWIN__
+            ? t('copilot.add-provider-darwin', 'Add Provider…')
+            : t('copilot.add-provider', 'Add provider…')}
         </Button>
       </>
     )
@@ -301,7 +326,10 @@ export class CopilotPreferences extends React.Component<
 
   private renderBYOKProvider = (provider: IBYOKProvider) => {
     const modelCount = provider.models.length
-    const modelLabel = modelCount === 1 ? '1 model' : `${modelCount} models`
+    const modelLabel =
+      modelCount === 1
+        ? t('copilot.one-model', '1 model')
+        : t('copilot.many-models', `{{0}} models`, { 0: modelCount })
     const isLocal = isLocalBaseUrl(provider.baseUrl)
     return (
       <li key={provider.id} className="copilot-byok-entry">

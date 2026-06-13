@@ -10,6 +10,7 @@ import {
   ReasoningEffort,
   ReasoningEffortOrder,
 } from '../../lib/stores/copilot-store'
+import { t } from 'i18next'
 
 const NoReasoningEffort = '__none__'
 
@@ -55,11 +56,11 @@ export class EditCopilotBYOKModelDialog extends React.Component<
     const isEditing = this.props.model !== null
     const title = isEditing
       ? __DARWIN__
-        ? 'Edit Model'
-        : 'Edit model'
+        ? t('edit-byok-model-dialog.edit-model-darwin', 'Edit Model')
+        : t('edit-byok-model-dialog.edit-model', 'Edit model')
       : __DARWIN__
-      ? 'Add Model'
-      : 'Add model'
+      ? t('edit-byok-model-dialog.add-model-darwin', 'Add Model')
+      : t('edit-byok-model-dialog.add-model', 'Add model')
 
     return (
       <Dialog
@@ -74,37 +75,74 @@ export class EditCopilotBYOKModelDialog extends React.Component<
         <DialogContent>
           <Row className="copilot-byok-field">
             <TextBox
-              label={__DARWIN__ ? 'Display Name' : 'Display name'}
+              label={
+                __DARWIN__
+                  ? t(
+                      'edit-byok-model-dialog.display-name-darwin',
+                      'Display Name'
+                    )
+                  : t('edit-byok-model-dialog.display-name', 'Display name')
+              }
               value={this.state.name}
               onValueChanged={this.onNameChanged}
               placeholder="GPT-4o"
               autoFocus={true}
             />
             <p className="copilot-byok-field-hint">
-              The friendly name shown in the Copilot model picker.
+              {t(
+                'edit-byok-model-dialog.the-friendly-name-shown',
+                'The friendly name shown in the Copilot model picker.'
+              )}
             </p>
           </Row>
           <Row className="copilot-byok-field">
             <TextBox
-              label={__DARWIN__ ? 'Model Identifier' : 'Model identifier'}
+              label={
+                __DARWIN__
+                  ? t(
+                      'edit-byok-model-dialog.model-identifier-darwin',
+                      'Model Identifier'
+                    )
+                  : t(
+                      'edit-byok-model-dialog.model-identifier',
+                      'Model identifier'
+                    )
+              }
               value={this.state.id}
               onValueChanged={this.onIdChanged}
               placeholder="gpt-4o"
               required={true}
             />
             <p className="copilot-byok-field-hint">
-              The exact name your provider expects (e.g. <code>gpt-4o</code>,{' '}
-              <code>llama3</code>).
+              {t(
+                'edit-byok-model-dialog.copilot-byok-model-hint-1',
+                'The exact name your provider expects (e.g. '
+              )}
+              <code>gpt-4o</code>, <code>llama3</code>
+              {t('edit-byok-model-dialog.copilot-byok-provider-hint-2', ' ).')}
             </p>
           </Row>
           <Row className="copilot-byok-field">
             <Select
-              label={__DARWIN__ ? 'Reasoning Effort' : 'Reasoning effort'}
+              label={
+                __DARWIN__
+                  ? t(
+                      'edit-byok-model-dialog.reasoning-effort-darwin',
+                      'Reasoning Effort'
+                    )
+                  : t(
+                      'edit-byok-model-dialog.reasoning-effort',
+                      'Reasoning effort'
+                    )
+              }
               value={this.state.reasoningEffort}
               onChange={this.onReasoningEffortChanged}
             >
               <option value={NoReasoningEffort}>
-                Default (provider's choice)
+                {t(
+                  'edit-byok-model-dialog.reasoning-effort-default-provider',
+                  "Default (provider's choice)"
+                )}
               </option>
               {ReasoningEffortOrder.map(effort => (
                 <option key={effort} value={effort}>
@@ -113,15 +151,32 @@ export class EditCopilotBYOKModelDialog extends React.Component<
               ))}
             </Select>
             <p className="copilot-byok-field-hint">
-              Reasoning models (o1, o3, GPT-5 reasoning variants, etc.) think
-              before responding. Higher levels are slower but produce better
-              answers on complex tasks. Leave on <em>Default</em> for
-              non-reasoning models or to let the provider pick.
+              {t(
+                'edit-byok-model-dialog.reasoning-effort-hint-1',
+                `Reasoning models (o1, o3, GPT-5 reasoning variants, etc.)
+                 think before responding. Higher levels are slower but
+                 produce better answers on complex tasks.
+                 Leave on `
+              )}
+              <em>
+                {t(
+                  'edit-byok-model-dialog.reasoning-effort-default',
+                  'Default'
+                )}
+              </em>
+              {t(
+                'edit-byok-model-dialog.reasoning-effort-hint-2',
+                ` for non-reasoning models or to let the provider pick.`
+              )}
             </p>
           </Row>
         </DialogContent>
         <DialogFooter>
-          <OkCancelButtonGroup okButtonText={isEditing ? 'Save' : 'Add'} />
+          <OkCancelButtonGroup
+            okButtonText={
+              isEditing ? t('common.save', 'Save') : t('common.add', 'Add')
+            }
+          />
         </DialogFooter>
       </Dialog>
     )
@@ -167,10 +222,17 @@ export class EditCopilotBYOKModelDialog extends React.Component<
   private validate(): string | null {
     const id = this.state.id.trim()
     if (id === '') {
-      return 'Please enter a model identifier.'
+      return t(
+        'edit-byok-model-dialog.model-identifier-error',
+        'Please enter a model identifier.'
+      )
     }
     if (this.props.otherModelIds.includes(id)) {
-      return `Another model with the identifier '${id}' already exists.`
+      return t(
+        'edit-byok-model-dialog.model-identifier-exists',
+        `Another model with the identifier '{{0}}' already exists.`,
+        { 0: id }
+      )
     }
     return null
   }

@@ -71,10 +71,16 @@ export class Git extends React.Component<IGitProps> {
     this.props.onSelectedTabIndexChanged?.(index)
     if (index === 3) {
       this.props.dispatcher.getCopilotInformation().then(result => {
-        this.props.onChatQuotasChanged(result?.chatQuotas || -1)
-        this.props.onAutoSuggestQuotasChanged(result?.autoSuggestQuotas || -1)
-        this.props.onCopilotResetDateChanged(result?.copilotResetDate || '')
-        this.props.onCopilotLicenseTypeChanged(result?.copilotLicenseType || '')
+        this.props.onChatQuotasChanged(result ? result.chatQuotas : -1)
+        this.props.onAutoSuggestQuotasChanged(
+          result ? result.autoSuggestQuotas : -1
+        )
+        this.props.onCopilotResetDateChanged(
+          result ? result.copilotResetDate : ''
+        )
+        this.props.onCopilotLicenseTypeChanged(
+          result ? result.copilotLicenseType : ''
+        )
       })
     }
   }
@@ -340,6 +346,13 @@ export class Git extends React.Component<IGitProps> {
   }
 
   private renderCopilotInfo() {
+    console.error(
+      'chatQuotas',
+      this.props.chatQuotas,
+      'autoSuggestQuotas',
+      this.props.autoSuggestQuotas
+    )
+
     if (this.props.chatQuotas < 0 || this.props.autoSuggestQuotas < 0) {
       return null
     }

@@ -55,6 +55,26 @@
     "add-repository": "リポジトリ追加",
     "add-repository-darwin": "リポジトリ追加"
   },
+  "add-worktree-dialog": {
+    "branch-name-label": "ブランチ名",
+    "branch-name-label-darwin": "ブランチ名",
+    "create-worktree": "Worktreeの作成",
+    "create-worktree-darwin": "Worktreeの作成",
+    "title": "Worktreeの追加",
+    "title-darwin": "Worktreeの追加",
+    "will-check-out-existing-branch-1": "既存の ",
+    "will-check-out-existing-branch-2": " ブランチをチェックアウトします。",
+    "will-check-out-remote-branch-1": "リモートの ",
+    "will-check-out-remote-branch-2": " ブランチをチェックアウトします。",
+    "worktree-name-label": "Worktree名",
+    "worktree-name-label-darwin": "Worktree名",
+    "worktree-name-placeholder": "Worktree名",
+    "worktree-name-placeholder-darwin": "Worktree名",
+    "worktree-path-message-1": "Worktreeを ",
+    "worktree-path-message-2": " に作成します。",
+    "worktree-path-placeholder": "Worktreeのパス",
+    "worktree-path-placeholder-darwin": "Worktreeパス"
+  },
   "advanced": {
     "background-updates": "バックグラウンド更新",
     "help-github-desktop-improve-by-submitting-1": "GitHub Desktop の ",
@@ -470,6 +490,7 @@
   },
   "common": {
     "about-github-desktop": "GitHub Desktop について",
+    "add": "追加",
     "added": "追加",
     "branch-name": "ブランチ名(日本語は使用できません)",
     "branch-name-darwin": "ブランチ名(日本語は使用できません)",
@@ -527,6 +548,7 @@
     "override": "オーバーライド",
     "overwrite": "上書き",
     "paste": "貼り付け",
+    "path-placeholder": "パス",
     "preferences": "環境設定",
     "pulling": "{{0}} にプル中",
     "recent": "最近",
@@ -641,13 +663,33 @@
     "resolve-conflicts-to-continue-1": " ",
     "resolve-conflicts-to-continue-2": " の競合を解決して続行します。"
   },
+  "copilot": {
+    "add-custom-provider": "カスタムプロバイダーを追加すると、OpenAI互換エンドポイント、Azure、Anthropic、または Ollama などのローカルプロバイダーで独自のAPIキーを使用できます。",
+    "add-provider": "プロパイダーの追加…",
+    "add-provider-darwin": "プロパイダーの追加…",
+    "commit-message-generation": "コミットメッセージの生成",
+    "commit-message-generation-darwin": "コミットメッセージの生成",
+    "conflict-resolution": "競合の解決",
+    "conflict-resolution-darwin": "競合の解決",
+    "custom-instructions": "カスタム指示",
+    "default-model": "{{0}} (デフォルト)",
+    "learn-more-about-commit-messages": "コミットメッセージの生成について詳しく知る。",
+    "many-models": "{{0}}モデル",
+    "models": "モデル",
+    "one-model": "1モデル",
+    "providers": "プロパイダー",
+    "sign-in-to-configure": "Copilotの設定を行うには、「アカウント」タブでGitHub.comアカウントにサインインしてください。",
+    "tailor-copilot-behavior-1": " ",
+    "tailor-copilot-behavior-2": "を使用して、Copilotの動作をカスタマイズできます。"
+  },
+  "copilot-byok-provider-dialog": {
+    "add-custom-provider": "カスタムプロバイダーの追加",
+    "add-custom-provider-darwin": "カスタムプロバイダーの追加",
+    "edit-custom-provider": "カスタムプロバイダーの編集",
+    "edit-custom-provider-darwin": "カスタムプロバイダーの編集"
+  },
   "copilot-conflicts-dialog": {
     "resolve-conflicts": "Resolve conflicts before {{0}}"
-  },
-  "copilot-conflicts-loading-dialog": {
-    "progress": "{0} of {1} files resolved",
-    "resolving": "Resolving conflicts with Copilot…",
-    "title": "Copilot"
   },
   "copilot-error": {
     "billing-issue": "GitHub Copilotで課金エラーが発生しました。",
@@ -757,10 +799,7 @@
     "render-git-repository-warning-2": " しますか?",
     "render-invalid-path-error": "このパスにディレクトリを作成できませんでした。ここにディレクトリを作成する権限がない可能性があります。",
     "render-readme-overwrite-warning-1": "このディレクトリには、",
-    "render-readme-overwrite-warning-2": "ファイルが既に含まれています。このチェックボックスをオンにすると、既存のファイルが上書きされます。",
-    "repo-sanitized-name-warning": "{{0}} として作成されます。",
-    "spaces-and-invalid-characters": "半角スペースと無効な文字はハイフンに置き換えられます。",
-    "will-be-created-as": "{{0}} として作成されます"
+    "render-readme-overwrite-warning-2": "ファイルが既に含まれています。このチェックボックスをオンにすると、既存のファイルが上書きされます。"
   },
   "create-tag-dialog": {
     "create-a-tag": "タグを作成します",
@@ -882,6 +921,54 @@
     "you-re-done": "これで完了です!",
     "you-ve-learned-the-basics": "GitHub Desktop の使用方法に関する基本を学習しました。次に何をするべきか、提案をいくつか紹介します。"
   },
+  "edit-byok-model-dialog": {
+    "add-model": "モデルの追加",
+    "add-model-darwin": "モデルの追加",
+    "copilot-byok-model-hint-1": "プロバイダーが想定する正確な名前（例: ",
+    "copilot-byok-provider-hint-2": " など)。",
+    "display-name": "表示名",
+    "display-name-darwin": "表示名",
+    "edit-model": "モデルの編集",
+    "edit-model-darwin": "モデルの編集",
+    "model-identifier": "モデル識別子",
+    "model-identifier-darwin": "モデル識別子",
+    "model-identifier-error": "モデル識別子を入力してください。",
+    "model-identifier-exists": "識別子 '{{0}}' のモデルは既に存在します。",
+    "reasoning-effort": "推論の深さ調整",
+    "reasoning-effort-darwin": "推論の深さ調整",
+    "reasoning-effort-default": "デフォルト",
+    "reasoning-effort-default-provider": "デフォルト (プロバイダーのおすすめ)",
+    "reasoning-effort-hint-1": "推論モデル（o1、o3、GPT-5推論バリアントなど）は、応答する前に思考します。レベルが高いほど処理速度は遅くなりますが、複雑なタスクに対してより良い回答を生成します。推論を行わないモデルを使用する場合、またはプロバイダーに選択を任せる場合は、",
+    "reasoning-effort-hint-2": "のままにしてください。",
+    "the-friendly-name-shown": "Copilotのモデル選択に表示される分かりやすい名前。"
+  },
+  "edit-byok-provider-dialog": {
+    "add-model": "モデルの追加…",
+    "add-model-darwin": "モデルの追加…",
+    "api-format": "APIフォーマット",
+    "api-format-completions": "Chat completions (デフォルト)",
+    "api-format-darwin": "APIフォーマット",
+    "api-format-responses": "Responses (GPT-5シリーズ)",
+    "auth-api-key": "API キー",
+    "auth-bearer": "Bearer token",
+    "auth-none": "なし",
+    "auth-none-hint": "このプロバイダーへのアクセスに認証を必要としません。",
+    "authentication": "認証",
+    "azure-api-version": "Azure API バージョン",
+    "azure-api-version-darwin": "Azure API バージョン",
+    "base-url": "ベースURL",
+    "models-empty": "モデルがまだありません。このプロバイダーを使用するには少なくとも1つ追加してください。",
+    "models-hint": "Desktopにこのプロバイダーが提供するモデルを通知してください。各モデルはCopilot機能のモデルピッカーに表示されます。",
+    "placeholder-unchanged": "(unchanged)",
+    "provider": "プロパイダー",
+    "provider-name-placeholder": "My provider",
+    "provider-type": "型",
+    "provider-type-anthropic": "Anthropic",
+    "provider-type-azure": "Azure",
+    "provider-type-openai": "OpenAI / OpenAI互換製品",
+    "request-timeout": "リクエストタイムアウト(秒)",
+    "request-timeout-darwin": "リクエストタイムアウト(秒)"
+  },
   "editor-error": {
     "open-options": "オプションを開く",
     "open-settings-darwin": "設定を開く",
@@ -983,6 +1070,7 @@
   },
   "generate-commit-message-disclaimer": {
     "copilot-is-powered-by-ai": "CopilotはAIを搭載しているため、間違いが発生する可能性があります。生成されたメッセージをよく確認し、編集してからご使用ください。 ",
+    "copilot-is-powered-by-ai-short": "CopilotはAIを搭載しているため、間違いが発生する可能性があります。",
     "github-copilot": "GitHub Copilot",
     "learn-more-about-copilot": "詳しくは GitHub Desktop 上の Copilot についてをご覧ください。"
   },
@@ -1009,7 +1097,7 @@
     "author": "アカウント",
     "cache-git-hook-env-variables": "Gitフックの環境変数をキャッシュする",
     "cache-hook-env-description": "パフォーマンスを向上させるために、フックの環境変数をキャッシュします。フックが頻繁に変更される環境変数に依存している場合は無効にしてください。",
-    "copilot-chat-messages": "チャット メッセージ",
+    "copilot-chat-messages": "クレジット",
     "copilot-code-completions": "インライン候補",
     "default-branch": "デフォルトブランチ",
     "default-branch-name-for-new-repositories": "新しいリポジトリのデフォルトのブランチ名",
@@ -1018,7 +1106,7 @@
     "edit-your-global-git-config-2": "グローバル向け Git 構成ファイルを編集",
     "edit-your-global-git-config-3": "することになります。",
     "enable-paths-lt-260-characters": "Windowsで260文字を超えるパスを有効にする",
-    "generates-comments-using-copilot": "GitHub Desktopは、Copilotのチャットメッセージを使用してコミットコメントを生成します。Copilotのクォータは {{0}} にリセットされます。",
+    "generates-comments-using-copilot": "GitHub Desktopは、Copilotのクレジットを使用してコミットコメントを生成します。Copilotのクォータは {{0}} にリセットされます。",
     "gitHub-default-branch-description-1": "GitHub のデフォルトのブランチ名は ",
     "gitHub-default-branch-description-2": "です。 ",
     "gitHub-default-branch-description-3": " ワークフローが異なったり統合する過程で ",
@@ -1175,6 +1263,8 @@
     "create-issue-on-github-darwin": "GitHubで issue の作成",
     "create-pull-request": "プルリクエストの作成(&P)",
     "create-pull-request-darwin": "プルリクエストの作成",
+    "create-worktree": "新規worktree(&T)…",
+    "create-worktree-darwin": "新規Worktree…",
     "cut": "切り取り(&T)",
     "cut-darwin": "切り取り",
     "default-branch": "デフォルトブランチ",
@@ -1754,7 +1844,6 @@
     "open-in-command-line-3": "選択したツールで開くか、このダイアログを閉じて手動で解決します。"
   },
   "repositories-list": {
-    "add": "追加",
     "add-existing-repository": "既存のリポジトリを追加…",
     "add-existing-repository-darwin": "既存のリポジトリを追加…",
     "clone-repository": "リポジトリのクローン…",
@@ -1777,6 +1866,11 @@
     "copy-repo-path-darwin": "リポジトリパスのコピー",
     "open-in-editor": "{{0}} で開く",
     "open-in-shell": "{{0}} で開く"
+  },
+  "repository-path": {
+    "name": "Name",
+    "name-placeholder": "name",
+    "sanitized-name-warning": "リポジトリ名に無効な文字はハイフンに置き換えられます。"
   },
   "repository-settings": {
     "fork-behavior": "フォークの動作",

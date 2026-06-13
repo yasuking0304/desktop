@@ -22,11 +22,11 @@ export async function getCopilotPlanInfo({
   response: Response
 }): Promise<CopilotPlanInfo> {
   const userResponse = await response.json()
-  console.warn('userResponse', JSON.stringify(userResponse))
+  //console.warn('userResponse', JSON.stringify(userResponse))
   const isPlanFreeOrPro = userResponse['copilot_plan']?.match('individual')
   const typeSku = userResponse['access_type_sku']
   const plan = userResponse['copilot_plan']
-  return {
+  const returnValue = {
     copilotLicenseType: plan?.match('enterprise')
       ? 'Enterprise'
       : plan?.match('business')
@@ -37,22 +37,16 @@ export async function getCopilotPlanInfo({
       ? 'Free'
       : 'Unknown',
     copilotResetDate: isPlanFreeOrPro
-      ? userResponse['limited_user_reset_date']
+      ? userResponse['quota_reset_date']
       : userResponse['quota_snapshot'],
-    chatQuotas: isPlanFreeOrPro
-      ? 1 -
-        userResponse['limited_user_quotas']?.['chat'] /
-          userResponse['monthly_quotas']?.['chat']
-      : 1 -
-        userResponse['quota_snapshots']?.['chat']?.['percent_remaining'] / 100,
-    autoSuggestQuotas: isPlanFreeOrPro
-      ? 1 -
-        userResponse['limited_user_quotas']?.['completions'] /
-          userResponse['monthly_quotas']?.['completions']
-      : 1 -
-        userResponse['quota_snapshots']?.['completions']?.[
-          'percent_remaining'
-        ] /
-          100,
+    chatQuotas:
+      1 -
+      userResponse['quota_snapshots']?.['chat']?.['percent_remaining'] / 100,
+    autoSuggestQuotas:
+      1 -
+      userResponse['quota_snapshots']?.['completions']?.['percent_remaining'] /
+        100,
   } as CopilotPlanInfo
+  console.warn('userResponse', JSON.stringify(returnValue))
+  return returnValue
 }

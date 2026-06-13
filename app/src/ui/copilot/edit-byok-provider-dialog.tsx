@@ -19,6 +19,7 @@ import {
 import { formatReasoningEffort } from '../../lib/stores/copilot-store'
 import { Dispatcher } from '../dispatcher'
 import { PopupType } from '../../models/popup'
+import { t } from 'i18next'
 
 interface IEditCopilotBYOKProviderDialogProps {
   readonly dispatcher: Dispatcher
@@ -147,11 +148,23 @@ export class EditCopilotBYOKProviderDialog extends React.Component<
     const isEditing = this.props.provider !== null
     const title = isEditing
       ? __DARWIN__
-        ? 'Edit Custom Provider'
-        : 'Edit custom provider'
+        ? t(
+            'copilot-byok-provider-dialog.edit-custom-provider-darwin',
+            'Edit Custom Provider'
+          )
+        : t(
+            'copilot-byok-provider-dialog.edit-custom-provider',
+            'Edit custom provider'
+          )
       : __DARWIN__
-      ? 'Add Custom Provider'
-      : 'Add custom provider'
+      ? t(
+          'copilot-byok-provider-dialog.add-custom-provider',
+          'Add Custom Provider'
+        )
+      : t(
+          'copilot-byok-provider-dialog.add-custom-provider-darwin',
+          'Add custom provider'
+        )
 
     return (
       <Dialog
@@ -169,7 +182,11 @@ export class EditCopilotBYOKProviderDialog extends React.Component<
           {this.renderModelsSection()}
         </DialogContent>
         <DialogFooter>
-          <OkCancelButtonGroup okButtonText={isEditing ? 'Save' : 'Add'} />
+          <OkCancelButtonGroup
+            okButtonText={
+              isEditing ? t('common.save', 'Save') : t('common.add', 'Add')
+            }
+          />
         </DialogFooter>
       </Dialog>
     )
@@ -178,31 +195,46 @@ export class EditCopilotBYOKProviderDialog extends React.Component<
   private renderProviderSection() {
     return (
       <fieldset className="copilot-byok-fieldset">
-        <legend>Provider</legend>
+        <legend>{t('edit-byok-provider-dialog.provider', 'Provider')}</legend>
         <Row>
           <TextBox
-            label="Name"
+            label={t('common.name', 'Name')}
             value={this.state.name}
             onValueChanged={this.onNameChanged}
-            placeholder="My provider"
+            placeholder={t(
+              'edit-byok-provider-dialog.provider-name-placeholder',
+              'My provider'
+            )}
             required={true}
             autoFocus={true}
           />
         </Row>
         <Row>
           <Select
-            label="Type"
+            label={t('edit-byok-provider-dialog.provider-type', 'Type')}
             value={this.state.type}
             onChange={this.onTypeChanged}
           >
-            <option value="openai">OpenAI / OpenAI-compatible</option>
-            <option value="azure">Azure</option>
-            <option value="anthropic">Anthropic</option>
+            <option value="openai">
+              {t(
+                'edit-byok-provider-dialog.provider-type-openai',
+                'OpenAI / OpenAI-compatible'
+              )}
+            </option>
+            <option value="azure">
+              {t('edit-byok-provider-dialog.provider-type-azure', 'Azure')}
+            </option>
+            <option value="anthropic">
+              {t(
+                'edit-byok-provider-dialog.provider-type-anthropic',
+                'Anthropic'
+              )}
+            </option>
           </Select>
         </Row>
         <Row>
           <TextBox
-            label={__DARWIN__ ? 'Base URL' : 'Base URL'}
+            label={t('edit-byok-provider-dialog.base-url', 'Base URL')}
             value={this.state.baseUrl}
             onValueChanged={this.onBaseUrlChanged}
             placeholder={getBaseUrlPlaceholder(this.state.type)}
@@ -212,19 +244,46 @@ export class EditCopilotBYOKProviderDialog extends React.Component<
         {this.state.type === 'openai' && (
           <Row>
             <Select
-              label={__DARWIN__ ? 'API Format' : 'API format'}
+              label={
+                __DARWIN__
+                  ? t(
+                      'edit-byok-provider-dialog.api-format-darwin',
+                      'API Format'
+                    )
+                  : t('edit-byok-provider-dialog.api-format', 'API format')
+              }
               value={this.state.wireApi}
               onChange={this.onWireApiChanged}
             >
-              <option value="completions">Chat completions (default)</option>
-              <option value="responses">Responses (GPT-5 series)</option>
+              <option value="completions">
+                {t(
+                  'edit-byok-provider-dialog.api-format-completions',
+                  'Chat completions (default)'
+                )}
+              </option>
+              <option value="responses">
+                {t(
+                  'edit-byok-provider-dialog.api-format-responses',
+                  'Responses (GPT-5 series)'
+                )}
+              </option>
             </Select>
           </Row>
         )}
         {this.state.type === 'azure' && (
           <Row>
             <TextBox
-              label={__DARWIN__ ? 'Azure API Version' : 'Azure API version'}
+              label={
+                __DARWIN__
+                  ? t(
+                      'edit-byok-provider-dialog.azure-api-version-darwin',
+                      'Azure API Version'
+                    )
+                  : t(
+                      'edit-byok-provider-dialog.azure-api-version',
+                      'Azure API version'
+                    )
+              }
               value={this.state.azureApiVersion}
               onValueChanged={this.onAzureApiVersionChanged}
               placeholder="2024-10-21"
@@ -235,8 +294,14 @@ export class EditCopilotBYOKProviderDialog extends React.Component<
           <TextBox
             label={
               __DARWIN__
-                ? 'Request Timeout (seconds)'
-                : 'Request timeout (seconds)'
+                ? t(
+                    'edit-byok-provider-dialog.request-timeout-darwin',
+                    'Request Timeout (seconds)'
+                  )
+                : t(
+                    'edit-byok-provider-dialog.request-timeout',
+                    'Request timeout (seconds)'
+                  )
             }
             value={this.state.requestTimeoutSeconds}
             onValueChanged={this.onRequestTimeoutChanged}
@@ -252,31 +317,52 @@ export class EditCopilotBYOKProviderDialog extends React.Component<
       <fieldset className="copilot-byok-fieldset">
         <Row>
           <Select
-            label="Authentication"
+            label={t(
+              'edit-byok-provider-dialog.authentication',
+              'Authentication'
+            )}
             value={this.state.authKind}
             onChange={this.onAuthKindChanged}
           >
-            <option value="apiKey">API key</option>
-            <option value="bearer">Bearer token</option>
-            <option value="none">None</option>
+            <option value="apiKey">
+              {t('edit-byok-provider-dialog.auth-api-key', 'API key')}
+            </option>
+            <option value="bearer">
+              {t('edit-byok-provider-dialog.auth-bearer', 'Bearer token')}
+            </option>
+            <option value="none">
+              {t('edit-byok-provider-dialog.auth-none', 'None')}
+            </option>
           </Select>
         </Row>
         {this.state.authKind !== 'none' && (
           <Row>
             <TextBox
               label={
-                this.state.authKind === 'bearer' ? 'Bearer token' : 'API key'
+                this.state.authKind === 'bearer'
+                  ? t('edit-byok-provider-dialog.auth-bearer', 'Bearer token')
+                  : t('edit-byok-provider-dialog.auth-api-key', 'API key')
               }
               type="password"
               value={this.state.secret}
               onValueChanged={this.onSecretChanged}
-              placeholder={isEditing ? '(unchanged)' : ''}
+              placeholder={
+                isEditing
+                  ? t(
+                      'edit-byok-provider-dialog.placeholder-unchanged',
+                      '(unchanged)'
+                    )
+                  : ''
+              }
             />
           </Row>
         )}
         {this.state.authKind === 'none' && (
           <p className="copilot-byok-section-hint">
-            No credentials will be sent with requests to this provider.
+            {t(
+              'edit-byok-provider-dialog.auth-none-hint',
+              'No credentials will be sent with requests to this provider.'
+            )}
           </p>
         )}
       </fieldset>
@@ -288,12 +374,18 @@ export class EditCopilotBYOKProviderDialog extends React.Component<
       <fieldset className="copilot-byok-fieldset copilot-byok-models">
         <legend>Models</legend>
         <p className="copilot-byok-section-hint">
-          Tell Desktop which models this provider offers. Each one will appear
-          in the model picker for Copilot features.
+          {t(
+            'edit-byok-provider-dialog.models-hint',
+            `Tell Desktop which models this provider offers. Each one will appear
+            in the model picker for Copilot features.`
+          )}
         </p>
         {this.state.models.length === 0 ? (
           <p className="copilot-byok-empty">
-            No models yet. Add at least one to use this provider.
+            {t(
+              'edit-byok-provider-dialog.models-empty',
+              'No models yet. Add at least one to use this provider.'
+            )}
           </p>
         ) : (
           <ul className="copilot-byok-entry-list">
@@ -309,7 +401,9 @@ export class EditCopilotBYOKProviderDialog extends React.Component<
           </ul>
         )}
         <Button onClick={this.onAddModel}>
-          {__DARWIN__ ? 'Add Model…' : 'Add model…'}
+          {__DARWIN__
+            ? t('edit-byok-provider-dialog.add-model-darwin', 'Add Model…')
+            : t('edit-byok-provider-dialog.add-model', 'Add model…')}
         </Button>
       </fieldset>
     )

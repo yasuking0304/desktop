@@ -13,6 +13,7 @@ import memoizeOne from 'memoize-one'
 import { RepositoryPath } from '../lib/repository-path'
 import { Ref } from '../lib/ref'
 import { sanitizedRefName } from '../../lib/sanitize-ref-name'
+import { t } from 'i18next'
 
 interface IAddWorktreeDialogProps {
   readonly repository: Repository
@@ -151,11 +152,21 @@ export class AddWorktreeDialog extends React.Component<
         <p className="branch-status-hint">
           {branch.type === BranchType.Remote ? (
             <>
-              Will check out remote branch <Ref>{effectiveName}</Ref>.
+              {t(
+                'add-worktree-dialog.will-check-out-remote-branch-1',
+                'Will check out remote branch '
+              )}
+              <Ref>{effectiveName}</Ref>
+              {t('add-worktree-dialog.will-check-out-remote-branch-2', '.')}
             </>
           ) : (
             <>
-              Will check out existing branch <Ref>{effectiveName}</Ref>.
+              {t(
+                'add-worktree-dialog.will-check-out-existing-branch-1',
+                'Will check out existing branch '
+              )}
+              <Ref>{effectiveName}</Ref>
+              {t('add-worktree-dialog.will-check-out-existing-branch-2', '.')}
             </>
           )}
         </p>
@@ -171,7 +182,12 @@ export class AddWorktreeDialog extends React.Component<
 
     return (
       <div id="add-worktree-path-msg">
-        Worktree will be created at <Ref>{fullPath}</Ref>.
+        {t(
+          'add-worktree-dialog.worktree-path-message-1',
+          'Worktree will be created at '
+        )}
+        <Ref>{fullPath}</Ref>
+        {t('add-worktree-dialog.worktree-path-message-2', '.')}
       </div>
     )
   }
@@ -186,7 +202,11 @@ export class AddWorktreeDialog extends React.Component<
     return (
       <Dialog
         id="add-worktree"
-        title={__DARWIN__ ? 'Add Worktree' : 'Add worktree'}
+        title={
+          __DARWIN__
+            ? t('add-worktree-dialog.title-darwin', 'Add Worktree')
+            : t('add-worktree-dialog.title', 'Add worktree')
+        }
         loading={this.state.creating}
         onSubmit={this.onSubmit}
         onDismissed={this.props.onDismissed}
@@ -198,14 +218,48 @@ export class AddWorktreeDialog extends React.Component<
             }
             onFullPathChanged={this.onFullPathChanged}
             onNameChanged={this.onWorktreeNameChanged}
-            nameLabel={__DARWIN__ ? 'Worktree Name' : 'Worktree name'}
-            namePlaceholder="worktree name"
-            pathPlaceholder="worktree path"
+            nameLabel={
+              __DARWIN__
+                ? t(
+                    'add-worktree-dialog.worktree-name-label-darwin',
+                    'Worktree Name'
+                  )
+                : t('add-worktree-dialog.worktree-name-label', 'Worktree name')
+            }
+            namePlaceholder={
+              __DARWIN__
+                ? t(
+                    'add-worktree-dialog.worktree-name-placeholder-darwin',
+                    'Worktree name'
+                  )
+                : t(
+                    'add-worktree-dialog.worktree-name-placeholder',
+                    'Worktree name'
+                  )
+            }
+            pathPlaceholder={
+              __DARWIN__
+                ? t(
+                    'add-worktree-dialog.worktree-path-placeholder-darwin',
+                    'Worktree path'
+                  )
+                : t(
+                    'add-worktree-dialog.worktree-path-placeholder',
+                    'Worktree path'
+                  )
+            }
           />
 
           <Row>
             <RefNameTextBox
-              label={__DARWIN__ ? 'Branch Name' : 'Branch name'}
+              label={
+                __DARWIN__
+                  ? t(
+                      'add-worktree-dialog.branch-name-label-darwin',
+                      'Branch Name'
+                    )
+                  : t('add-worktree-dialog.branch-name-label', 'Branch name')
+              }
               placeholder={branchPlaceholder}
               initialValue={this.state.branchName}
               onValueChange={this.onBranchNameChanged}
@@ -220,7 +274,14 @@ export class AddWorktreeDialog extends React.Component<
         <DialogFooter>
           {this.renderPathMessage()}
           <OkCancelButtonGroup
-            okButtonText={__DARWIN__ ? 'Create Worktree' : 'Create worktree'}
+            okButtonText={
+              __DARWIN__
+                ? t(
+                    'add-worktree-dialog.create-worktree-darwin',
+                    'Create Worktree'
+                  )
+                : t('add-worktree-dialog.create-worktree', 'Create worktree')
+            }
             okButtonDisabled={disabled}
           />
         </DialogFooter>
