@@ -672,13 +672,11 @@
     "conflict-resolution": "Conflict resolution",
     "conflict-resolution-darwin": "Conflict Resolution",
     "custom-instructions": "custom instructions",
-    "default-model": "{{0}} (default)",
     "learn-more-about-commit-messages": "Learn more about generating commit messages.",
     "many-models": "{{0}} models",
     "models": "Models",
     "one-model": "1 model",
     "providers": "Providers",
-    "sign-in-to-configure": "Sign in to a GitHub.com account in the Accounts tab to configure Copilot settings.",
     "tailor-copilot-behavior-1": "Tailor how Copilot behaves by using ",
     "tailor-copilot-behavior-2": "."
   },
@@ -687,9 +685,6 @@
     "add-custom-provider-darwin": "Add custom provider",
     "edit-custom-provider": "Edit custom provider",
     "edit-custom-provider-darwin": "Edit Custom Provider"
-  },
-  "copilot-conflicts-dialog": {
-    "resolve-conflicts": "Resolve conflicts before {{0}}"
   },
   "copilot-error": {
     "billing-issue": "GitHub Copilot returned a billing error.",
@@ -703,6 +698,11 @@
     "retry-after-generic": "You can try again after {{0}}.",
     "session-quota-exceeded": "You have reached your GitHub Copilot session limit.",
     "session-quota-exceeded-title": "Session quota exceeded"
+  },
+  "copilot-model-picker": {
+    "default-model": "{{0}}{{1}} (default)",
+    "no-models-found": "No models found.",
+    "use-of-credits": "Use of credits: {{0}}"
   },
   "copy-button": {
     "copied": "Copied!"
@@ -859,6 +859,25 @@
     "do-you-still-want-to-delete-the-tag": "Do you still want to delete the tag?",
     "tag-named-is-present-on-the-remote-1": "There is a tag ",
     "tag-named-is-present-on-the-remote-2": " pushed to the remote.\nIf this tag is in use, removing it may cause problems.\nWe recommend that you consult with your system administrator\nbefore deleting it."
+  },
+  "delete-worktree": {
+    "delete-worktree-dialog": "Delete worktree",
+    "delete-worktree-dialog-darwin": "Delete Worktree"
+  },
+  "delete-worktree-dialog": {
+    "are-you-sure-1": "Are you sure you want to delete the worktree ",
+    "are-you-sure-2": "?"
+  },
+  "delete-worktree-failed-dialog": {
+    "deleting-the-worktree-1": "Deleting the worktree ",
+    "dialog": {
+      "deleting-the-worktree-2": " failed."
+    },
+    "force-delete": "Forcefully delete",
+    "title": "Delete worktree failed",
+    "title-darwin": "Delete Worktree Failed",
+    "would-you-like-to-forcefully-1": "Would you like to forcefully delete the worktree ",
+    "would-you-like-to-forcefully-2": "?"
   },
   "diff-contents-warning": {
     "learn-more-about-bidirectional-unicode": "Learn more about bidirectional Unicode characters",
@@ -1257,6 +1276,10 @@
     "copy-relative-file-path-darwin": "Copy Relative File Path",
     "copy-relative-paths": "Copy relative paths",
     "copy-relative-paths-darwin": "Copy Relative Paths",
+    "copy-worktree-name": "Copy worktree name",
+    "copy-worktree-name-darwin": "Copy worktree name",
+    "copy-worktree-path": "Copy worktree path",
+    "copy-worktree-path-darwin": "Copy worktree path",
     "crash-main-process": "Crash main process…",
     "crash-renderer-process": "Crash renderer process…",
     "create-issue-on-github": "Create &issue on GitHub",
@@ -1701,6 +1724,11 @@
     "pull-requests-in": "Pull requests in {{0}}",
     "refresh-the-list-of-pull-request": "Refresh the list of pull requests"
   },
+  "pull-request-list-item-context-menu": {
+    "checkout-in-new-worktree": "Checkout in new worktree…",
+    "checkout-in-new-worktree-darwin": "Checkout in New Worktree…",
+    "view-pull-request-on-github": "View Pull Request on GitHub"
+  },
   "pull-request-merge-status": {
     "able-to-merge": "Able to merge.",
     "can-be-automatically-merge": "These branches can be automatically merged.",
@@ -1864,8 +1892,12 @@
     "copy-repo-name-darwin": "Copy Repo Name",
     "copy-repo-path": "Copy repo path",
     "copy-repo-path-darwin": "Copy Repo Path",
+    "new-worktree": "New worktree…",
+    "new-worktree-darwin": "New Worktree…",
     "open-in-editor": "Open in {{0}}",
-    "open-in-shell": "Open in {{0}}"
+    "open-in-shell": "Open in {{0}}",
+    "show-worktrees": "Show worktrees",
+    "show-worktrees-darwin": "Show Worktrees"
   },
   "repository-path": {
     "name": "Name",
@@ -2237,5 +2269,21 @@
     "the-push-was-rejected-by-the-server-1": "The push was rejected by the server for containing a modification to the workflow file ",
     "the-push-was-rejected-by-the-server-2": ". In order to be able to push to workflow files GitHub Desktop needs to request additional permissions.",
     "would-you-like-to-open-a-browser": "Would you like to open a browser to grant GitHub Desktop permission to update workflow files?"
+  },
+  "worktree-dropdown": {
+    "current-worktree": "Current worktree",
+    "current-worktree-darwin": "Current Worktree",
+    "current-worktree-tooltip": "Current worktree is {{0}}",
+    "new-worktree": "New worktree…",
+    "new-worktree-darwin": "New Worktree…"
+  },
+  "worktree-list": {
+    "linked-worktrees": "Linked {{0}}s",
+    "main-worktree": "Main {{0}}",
+    "new-worktree": "New worktree",
+    "new-worktree-darwin": "New Worktree",
+    "no-worktrees": "No worktrees found",
+    "worktree": "worktree",
+    "worktree-darwin": "Worktree"
   }
 }

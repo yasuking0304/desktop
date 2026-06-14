@@ -8,6 +8,7 @@ import { Button } from '../lib/button'
 import { IMatches } from '../../lib/fuzzy-find'
 import { ClickSource } from '../lib/list'
 import memoizeOne from 'memoize-one'
+import { t } from 'i18next'
 
 const RowHeight = 30
 
@@ -87,9 +88,13 @@ export class WorktreeList extends React.Component<IWorktreeListProps> {
   }
 
   private renderGroupHeader = (identifier: WorktreeGroupIdentifier) => {
-    const worktree = __DARWIN__ ? 'Worktree' : 'worktree'
+    const worktree = __DARWIN__
+      ? t('worktree-list.worktree-darwin', 'Worktree')
+      : t('worktree-list.worktree', 'worktree')
     const label =
-      identifier === 'main' ? `Main ${worktree}` : `Linked ${worktree}s`
+      identifier === 'main'
+        ? t('worktree-list.main-worktree', `Main {{0}}`, { 0: worktree })
+        : t('worktree-list.linked-worktrees', `Linked {{0}}s`, { 0: worktree })
     return <div className="filter-list-group-header">{label}</div>
   }
 
@@ -102,13 +107,19 @@ export class WorktreeList extends React.Component<IWorktreeListProps> {
         className="new-worktree-button"
         onClick={this.props.onCreateNewWorktree}
       >
-        {__DARWIN__ ? 'New Worktree' : 'New worktree'}
+        {__DARWIN__
+          ? t('worktree-list.new-worktree-darwin', 'New Worktree')
+          : t('worktree-list.new-worktree', 'New worktree')}
       </Button>
     )
   }
 
   private onRenderNoItems = () => {
-    return <div className="no-items-found">No worktrees found</div>
+    return (
+      <div className="no-items-found">
+        {t('worktree-list.no-worktrees', 'No worktrees found')}
+      </div>
+    )
   }
 
   private onItemClick = (item: IWorktreeListItem, source: ClickSource) => {

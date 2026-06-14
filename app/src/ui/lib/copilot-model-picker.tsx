@@ -12,6 +12,7 @@ import type {
   Model,
   ModelBilling,
 } from '@github/copilot-sdk/dist/generated/rpc'
+import { t } from 'i18next'
 
 interface ICopilotModelPickerProps {
   readonly label: string
@@ -141,7 +142,9 @@ const getListItemSubtitle = (item: ICopilotModelListItem) => {
   const modelPickerPriceCategory = getModelPickerPriceCategory(item)
   return modelPickerPriceCategory === null
     ? null
-    : `Use of credits: ${modelPickerPriceCategory}`
+    : t('copilot-model-picker.use-of-credits', `Use of credits: {{0}}`, {
+        0: modelPickerPriceCategory,
+      })
 }
 
 export const getCopilotModelPickerSelectionInfo = (
@@ -166,9 +169,13 @@ export const getCopilotModelPickerSelectionInfo = (
   }
 
   const modelPickerCategory = selectedModel?.modelPickerCategory?.trim()
-  const useOfCredits = `Use of credits: ${formatModelPickerCategory(
-    modelPickerPriceCategory
-  )}`
+  const useOfCredits = t(
+    'copilot-model-picker.use-of-credits',
+    `Use of credits: {{0}}`,
+    {
+      0: formatModelPickerCategory(modelPickerPriceCategory),
+    }
+  )
 
   const summary =
     modelPickerCategory === undefined || modelPickerCategory.length === 0
@@ -203,7 +210,10 @@ export const getCopilotModelPickerSelectionInfo = (
 const getCopilotModelTitle = (item: ICopilotModelListItem) => {
   const billingLabel = getPremiumRequestsBillingLabel(item.billing)
   return item.isDefault
-    ? `${item.name}${billingLabel} (default)`
+    ? t('copilot-model-picker.default-model', `{{0}}{{1}} (default)`, {
+        0: item.name,
+        1: billingLabel,
+      })
     : `${item.name}${billingLabel}`
 }
 
@@ -419,7 +429,11 @@ export class CopilotModelPicker extends React.Component<
   }
 
   private renderNoItems = () => {
-    return <div className="copilot-model-list-empty">No models found.</div>
+    return (
+      <div className="copilot-model-list-empty">
+        {t('copilot-model-picker.no-models-found', 'No models found.')}
+      </div>
+    )
   }
 
   private getItemAriaLabel = (item: ICopilotModelListItem) => {

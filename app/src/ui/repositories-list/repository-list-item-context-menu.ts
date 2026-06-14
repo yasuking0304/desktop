@@ -154,14 +154,27 @@ const buildWorktreeMenuItems = (
 
   if (onShowWorktrees !== undefined) {
     items.push({
-      label: __DARWIN__ ? 'Show Worktrees' : 'Show worktrees',
+      label: __DARWIN__
+        ? t(
+            'repository-list-item-context-menu.show-worktrees-darwin',
+            'Show Worktrees'
+          )
+        : t(
+            'repository-list-item-context-menu.show-worktrees',
+            'Show worktrees'
+          ),
       action: () => onShowWorktrees(repository),
     })
   }
 
   if (onCreateWorktree !== undefined) {
     items.push({
-      label: __DARWIN__ ? 'New Worktree…' : 'New worktree…',
+      label: __DARWIN__
+        ? t(
+            'repository-list-item-context-menu.new-worktree-darwin',
+            'New Worktree…'
+          )
+        : t('repository-list-item-context-menu.new-worktree', 'New worktree…'),
       action: () => onCreateWorktree(repository),
     })
   }

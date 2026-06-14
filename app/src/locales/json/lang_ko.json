@@ -672,13 +672,11 @@
     "conflict-resolution": "Conflict resolution",
     "conflict-resolution-darwin": "Conflict Resolution",
     "custom-instructions": "custom instructions",
-    "default-model": "{{0}} (default)",
     "learn-more-about-commit-messages": "Learn more about generating commit messages.",
     "many-models": "{{0}} models",
     "models": "Models",
     "one-model": "1 model",
     "providers": "Providers",
-    "sign-in-to-configure": "Sign in to a GitHub.com account in the Accounts tab to configure Copilot settings.",
     "tailor-copilot-behavior-1": "Tailor how Copilot behaves by using ",
     "tailor-copilot-behavior-2": "."
   },
@@ -687,9 +685,6 @@
     "add-custom-provider-darwin": "Add custom provider",
     "edit-custom-provider": "Edit custom provider",
     "edit-custom-provider-darwin": "Edit Custom Provider"
-  },
-  "copilot-conflicts-dialog": {
-    "resolve-conflicts": "Resolve conflicts before {{0}}"
   },
   "copilot-error": {
     "billing-issue": "GitHub Copilot에서 결제 오류가 발생했습니다.",
@@ -703,6 +698,11 @@
     "retry-after-generic": "{{0}} 후에 다시 시도해 보세요.",
     "session-quota-exceeded": "GitHub Copilot의 세션 제한에 도달했습니다.",
     "session-quota-exceeded-title": "세션 할당량을 초과했습니다"
+  },
+  "copilot-model-picker": {
+    "default-model": "{{0}}{{1}} (default)",
+    "no-models-found": "No models found.",
+    "use-of-credits": "Use of credits: {{0}}"
   },
   "copy-button": {
     "copied": "복사했습니다"
@@ -859,6 +859,25 @@
     "do-you-still-want-to-delete-the-tag": "그래도 태그를 삭제하시겠습니까?",
     "tag-named-is-present-on-the-remote-1": "원격으로 ",
     "tag-named-is-present-on-the-remote-2": " 라는 푸시 태그가 있습니다.\n이 태그를 사용하는 경우 삭제할 때 문제가 발생할 수 있습니다.\n삭제하기 전에 시스템 관리자와 상의하는 것이 좋습니다."
+  },
+  "delete-worktree": {
+    "delete-worktree-dialog": "Delete worktree",
+    "delete-worktree-dialog-darwin": "Delete Worktree"
+  },
+  "delete-worktree-dialog": {
+    "are-you-sure-1": "Are you sure you want to delete the worktree ",
+    "are-you-sure-2": "?"
+  },
+  "delete-worktree-failed-dialog": {
+    "deleting-the-worktree-1": "Deleting the worktree ",
+    "dialog": {
+      "deleting-the-worktree-2": " failed."
+    },
+    "force-delete": "Forcefully delete",
+    "title": "Delete worktree failed",
+    "title-darwin": "Delete Worktree Failed",
+    "would-you-like-to-forcefully-1": "Would you like to forcefully delete the worktree ",
+    "would-you-like-to-forcefully-2": "?"
   },
   "diff-contents-warning": {
     "learn-more-about-bidirectional-unicode": "양방향 유니코드 문자에 대해 자세히 알아보기",
@@ -1257,6 +1276,10 @@
     "copy-relative-file-path-darwin": "상대 파일 경로 복사",
     "copy-relative-paths": "상대 경로 복사",
     "copy-relative-paths-darwin": "상대 경로 복사",
+    "copy-worktree-name": "Copy worktree name",
+    "copy-worktree-name-darwin": "Copy worktree name",
+    "copy-worktree-path": "Copy worktree path",
+    "copy-worktree-path-darwin": "Copy worktree path",
     "crash-main-process": "메인 프로세스 충돌…",
     "crash-renderer-process": "그리기 프로세스 충돌…",
     "create-issue-on-github": "GitHub에서 &issue 만들기",
@@ -1701,6 +1724,11 @@
     "pull-requests-in": "{{0}}의 끌어오기 요청",
     "refresh-the-list-of-pull-request": "끌어오기 요청 목록 업데이트"
   },
+  "pull-request-list-item-context-menu": {
+    "checkout-in-new-worktree": "Checkout in new worktree…",
+    "checkout-in-new-worktree-darwin": "Checkout in New Worktree…",
+    "view-pull-request-on-github": "View Pull Request on GitHub"
+  },
   "pull-request-merge-status": {
     "able-to-merge": "병합 가능합니다.",
     "can-be-automatically-merge": "이 브랜치는 자동으로 병합 가능합니다.",
@@ -1864,8 +1892,12 @@
     "copy-repo-name-darwin": "리포지토리 이름 복사",
     "copy-repo-path": "리포지토리 경로 복사",
     "copy-repo-path-darwin": "리포지토리 경로 복사",
+    "new-worktree": "New worktree…",
+    "new-worktree-darwin": "New Worktree…",
     "open-in-editor": "{{0}}에서 열기",
-    "open-in-shell": "{{0}}에서 열기"
+    "open-in-shell": "{{0}}에서 열기",
+    "show-worktrees": "Show worktrees",
+    "show-worktrees-darwin": "Show Worktrees"
   },
   "repository-path": {
     "name": "Name",
@@ -2237,5 +2269,21 @@
     "the-push-was-rejected-by-the-server-1": "워크플로 파일 ",
     "the-push-was-rejected-by-the-server-2": "에 대한 변경 사항이 포함되어 있기 때문에 서버가 푸시를 거부했습니다. 워크플로 파일에 푸시할 수 있도록 하려면 GitHub Desktop에서 추가 권한을 요청해야 합니다.",
     "would-you-like-to-open-a-browser": "브라우저를 열고 GitHub Desktop에 워크플로 파일을 업데이트할 수 있는 권한을 부여하시겠습니까?"
+  },
+  "worktree-dropdown": {
+    "current-worktree": "Current worktree",
+    "current-worktree-darwin": "Current Worktree",
+    "current-worktree-tooltip": "Current worktree is {{0}}",
+    "new-worktree": "New worktree…",
+    "new-worktree-darwin": "New Worktree…"
+  },
+  "worktree-list": {
+    "linked-worktrees": "Linked {{0}}s",
+    "main-worktree": "Main {{0}}",
+    "new-worktree": "New worktree",
+    "new-worktree-darwin": "New Worktree",
+    "no-worktrees": "No worktrees found",
+    "worktree": "worktree",
+    "worktree-darwin": "Worktree"
   }
 }

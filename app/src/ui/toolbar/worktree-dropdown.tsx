@@ -12,6 +12,7 @@ import { generateWorktreeContextMenuItems } from '../worktrees/worktree-list-ite
 import { PopupType } from '../../models/popup'
 import { Resizable } from '../resizable'
 import { enableResizingToolbarButtons } from '../../lib/feature-flag'
+import { t } from 'i18next'
 
 interface IWorktreeDropdownProps {
   readonly dispatcher: Dispatcher
@@ -102,7 +103,9 @@ export class WorktreeDropdown extends React.Component<
     })
 
     const newWorktreeItem: IMenuItem = {
-      label: __DARWIN__ ? 'New Worktree…' : 'New worktree…',
+      label: __DARWIN__
+        ? t('worktree-dropdown.new-worktree-darwin', 'New Worktree…')
+        : t('worktree-dropdown.new-worktree', 'New worktree…'),
       action: this.onCreateNewWorktree,
     }
 
@@ -150,7 +153,9 @@ export class WorktreeDropdown extends React.Component<
     const title = currentWorktree
       ? Path.basename(currentWorktree.path)
       : this.props.repository.name
-    const description = __DARWIN__ ? 'Current Worktree' : 'Current worktree'
+    const description = __DARWIN__
+      ? t('worktree-dropdown.current-worktree-darwin', 'Current Worktree')
+      : t('worktree-dropdown.current-worktree', 'Current worktree')
 
     const toolbarDropdown = (
       <ToolbarDropdown
@@ -158,7 +163,15 @@ export class WorktreeDropdown extends React.Component<
         icon={octicons.fileDirectory}
         title={title}
         description={description}
-        tooltip={isOpen ? undefined : `Current worktree is ${title}`}
+        tooltip={
+          isOpen
+            ? undefined
+            : t(
+                'worktree-dropdown.current-worktree-tooltip',
+                'Current worktree is {{0}}',
+                { 0: title }
+              )
+        }
         onDropdownStateChanged={this.props.onDropDownStateChanged}
         onContextMenu={this.onContextMenu}
         dropdownContentRenderer={this.renderWorktreeFoldout}

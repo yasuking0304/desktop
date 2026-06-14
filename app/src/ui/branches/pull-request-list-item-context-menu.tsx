@@ -1,4 +1,5 @@
 import { IMenuItem } from '../../lib/menu-item'
+import { t } from 'i18next'
 
 interface IPullRequestContextMenuConfig {
   onViewPullRequestOnGitHub?: () => void
@@ -13,7 +14,10 @@ export function generatePullRequestContextMenuItems(
 
   if (onViewPullRequestOnGitHub !== undefined) {
     items.push({
-      label: 'View Pull Request on GitHub',
+      label: t(
+        'pull-request-list-item-context-menu.view-pull-request-on-github',
+        'View Pull Request on GitHub'
+      ),
       action: () => onViewPullRequestOnGitHub(),
     })
   }
@@ -21,8 +25,14 @@ export function generatePullRequestContextMenuItems(
   if (onCheckoutInNewWorktree !== undefined) {
     items.push({
       label: __DARWIN__
-        ? 'Checkout in New Worktree…'
-        : 'Checkout in new worktree…',
+        ? t(
+            'pull-request-list-item-context-menu.checkout-in-new-worktree-darwin',
+            'Checkout in New Worktree…'
+          )
+        : t(
+            'pull-request-list-item-context-menu.checkout-in-new-worktree',
+            'Checkout in new worktree…'
+          ),
       action: () => onCheckoutInNewWorktree(),
     })
   }

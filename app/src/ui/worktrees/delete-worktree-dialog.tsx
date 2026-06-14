@@ -6,6 +6,7 @@ import { Ref } from '../lib/ref'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
 import { Repository } from '../../models/repository'
 import { Checkbox, CheckboxValue } from '../lib/checkbox'
+import { t } from 'i18next'
 
 interface IDeleteWorktreeDialogProps {
   readonly repository: Repository
@@ -43,7 +44,14 @@ export class DeleteWorktreeDialog extends React.Component<
     return (
       <Dialog
         id="delete-worktree"
-        title={__DARWIN__ ? 'Delete Worktree' : 'Delete worktree'}
+        title={
+          __DARWIN__
+            ? t(
+                'delete-worktree.delete-worktree-dialog-darwin',
+                'Delete Worktree'
+              )
+            : t('delete-worktree.delete-worktree-dialog', 'Delete worktree')
+        }
         type="warning"
         onSubmit={this.onSubmit}
         onDismissed={this.props.onDismissed}
@@ -54,10 +62,18 @@ export class DeleteWorktreeDialog extends React.Component<
       >
         <DialogContent>
           <p id="delete-worktree-confirmation">
-            Are you sure you want to delete the worktree <Ref>{name}</Ref>?
+            {t(
+              'delete-worktree-dialog.are-you-sure-1',
+              'Are you sure you want to delete the worktree '
+            )}
+            <Ref>{name}</Ref>
+            {t('delete-worktree-dialog.are-you-sure-2', '?')}
           </p>
           <Checkbox
-            label="Do not show this message again"
+            label={t(
+              'common.do-not-show-message-again',
+              'Do not show this message again'
+            )}
             value={
               this.state.confirmWorktreeRemoval
                 ? CheckboxValue.Off
@@ -67,7 +83,10 @@ export class DeleteWorktreeDialog extends React.Component<
           />
         </DialogContent>
         <DialogFooter>
-          <OkCancelButtonGroup destructive={true} okButtonText="Delete" />
+          <OkCancelButtonGroup
+            destructive={true}
+            okButtonText={t('common.delete', 'Delete')}
+          />
         </DialogFooter>
       </Dialog>
     )

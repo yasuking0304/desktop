@@ -8,6 +8,7 @@ import { Repository } from '../../models/repository'
 import { getUnderlyingError, isRawGitError } from '../app-error'
 import { Terminal } from '../terminal'
 import { WorktreeEntry } from '../../models/worktree'
+import { t } from 'i18next'
 
 interface IDeleteWorktreeFailedDialogProps {
   readonly repository: Repository
@@ -48,7 +49,14 @@ export class DeleteWorktreeFailedDialog extends React.Component<
     return (
       <Dialog
         id="delete-worktree-failed"
-        title={__DARWIN__ ? 'Delete Worktree Failed' : 'Delete worktree failed'}
+        title={
+          __DARWIN__
+            ? t(
+                'delete-worktree-failed-dialog.title-darwin',
+                'Delete Worktree Failed'
+              )
+            : t('delete-worktree-failed-dialog.title', 'Delete worktree failed')
+        }
         type="error"
         onSubmit={this.onSubmit}
         onDismissed={this.onDismissed}
@@ -60,19 +68,44 @@ export class DeleteWorktreeFailedDialog extends React.Component<
         <DialogContent>
           <div id="delete-worktree-failed-message">
             <p>
-              Deleting the worktree <Ref>{name}</Ref> failed.
+              {t(
+                'delete-worktree-failed-dialog.deleting-the-worktree-1',
+                'Deleting the worktree '
+              )}
+              <Ref>{name}</Ref>
+              {t(
+                'delete-worktree-failed-dialog.dialog.deleting-the-worktree-2',
+                ' failed.'
+              )}
             </p>
             {this.renderErrorMessage()}
             <p>
-              Would you like to forcefully delete the worktree <Ref>{name}</Ref>
-              ?
+              {t(
+                'delete-worktree-failed-dialog.would-you-like-to-forcefully-1',
+                'Would you like to forcefully delete the worktree '
+              )}
+              <Ref>{name}</Ref>
+              {t(
+                'delete-worktree-failed-dialog.would-you-like-to-forcefully-2',
+                '?'
+              )}
             </p>
           </div>
         </DialogContent>
         <DialogFooter>
           <OkCancelButtonGroup
             destructive={true}
-            okButtonText="Forcefully delete"
+            okButtonText={
+              __DARWIN__
+                ? t(
+                    'delete-worktree-failed-dialog.force-delete',
+                    'Forcefully delete'
+                  )
+                : t(
+                    'delete-worktree-failed-dialog.force-delete',
+                    'Forcefully delete'
+                  )
+            }
           />
         </DialogFooter>
       </Dialog>

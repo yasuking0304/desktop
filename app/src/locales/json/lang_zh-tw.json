@@ -672,13 +672,11 @@
     "conflict-resolution": "Conflict resolution",
     "conflict-resolution-darwin": "Conflict Resolution",
     "custom-instructions": "custom instructions",
-    "default-model": "{{0}} (default)",
     "learn-more-about-commit-messages": "Learn more about generating commit messages.",
     "many-models": "{{0}} models",
     "models": "Models",
     "one-model": "1 model",
     "providers": "Providers",
-    "sign-in-to-configure": "Sign in to a GitHub.com account in the Accounts tab to configure Copilot settings.",
     "tailor-copilot-behavior-1": "Tailor how Copilot behaves by using ",
     "tailor-copilot-behavior-2": "."
   },
@@ -687,9 +685,6 @@
     "add-custom-provider-darwin": "Add custom provider",
     "edit-custom-provider": "Edit custom provider",
     "edit-custom-provider-darwin": "Edit Custom Provider"
-  },
-  "copilot-conflicts-dialog": {
-    "resolve-conflicts": "Resolve conflicts before {{0}}"
   },
   "copilot-error": {
     "billing-issue": "在 GitHub Copilot 上發生了付費錯誤。",
@@ -703,6 +698,11 @@
     "retry-after-generic": "請 {{0}}後再試。",
     "session-quota-exceeded": "您已達到 GitHub Copilot 的會話限制。",
     "session-quota-exceeded-title": "會話配額超出"
+  },
+  "copilot-model-picker": {
+    "default-model": "{{0}}{{1}} (default)",
+    "no-models-found": "No models found.",
+    "use-of-credits": "Use of credits: {{0}}"
   },
   "copy-button": {
     "copied": "已複製"
@@ -859,6 +859,25 @@
     "do-you-still-want-to-delete-the-tag": "您仍要刪除該標籤嗎?",
     "tag-named-is-present-on-the-remote-1": "有一個標籤 ",
     "tag-named-is-present-on-the-remote-2": " 被推送到遠端。 \n如果此標籤正在使用中, 刪除它可能會導致問題。 \n我們建議您在刪除之前諮詢系統管理員。"
+  },
+  "delete-worktree": {
+    "delete-worktree-dialog": "Delete worktree",
+    "delete-worktree-dialog-darwin": "Delete Worktree"
+  },
+  "delete-worktree-dialog": {
+    "are-you-sure-1": "Are you sure you want to delete the worktree ",
+    "are-you-sure-2": "?"
+  },
+  "delete-worktree-failed-dialog": {
+    "deleting-the-worktree-1": "Deleting the worktree ",
+    "dialog": {
+      "deleting-the-worktree-2": " failed."
+    },
+    "force-delete": "Forcefully delete",
+    "title": "Delete worktree failed",
+    "title-darwin": "Delete Worktree Failed",
+    "would-you-like-to-forcefully-1": "Would you like to forcefully delete the worktree ",
+    "would-you-like-to-forcefully-2": "?"
   },
   "diff-contents-warning": {
     "learn-more-about-bidirectional-unicode": "了解有關雙向 Unicode 字元的更多資訊",
@@ -1257,6 +1276,10 @@
     "copy-relative-file-path-darwin": "複製相對檔案路徑",
     "copy-relative-paths": "複製相對路徑",
     "copy-relative-paths-darwin": "複製相對路徑",
+    "copy-worktree-name": "Copy worktree name",
+    "copy-worktree-name-darwin": "Copy worktree name",
+    "copy-worktree-path": "Copy worktree path",
+    "copy-worktree-path-darwin": "Copy worktree path",
     "crash-main-process": "主程序崩潰…",
     "crash-renderer-process": "渲染器進程崩潰…",
     "create-issue-on-github": "在 GitHub 上建立問題(&I)",
@@ -1701,6 +1724,11 @@
     "pull-requests-in": "{{0}} 中的拉取請求",
     "refresh-the-list-of-pull-request": "刷新拉取請求清單"
   },
+  "pull-request-list-item-context-menu": {
+    "checkout-in-new-worktree": "Checkout in new worktree…",
+    "checkout-in-new-worktree-darwin": "Checkout in New Worktree…",
+    "view-pull-request-on-github": "View Pull Request on GitHub"
+  },
   "pull-request-merge-status": {
     "able-to-merge": "Able to merge.",
     "can-be-automatically-merge": "These branches can be automatically merged.",
@@ -1864,8 +1892,12 @@
     "copy-repo-name-darwin": "複製儲存庫名稱",
     "copy-repo-path": "複製儲存庫路徑",
     "copy-repo-path-darwin": "複製儲存庫路徑",
+    "new-worktree": "New worktree…",
+    "new-worktree-darwin": "New Worktree…",
     "open-in-editor": "在 {{0}} 中開啟",
-    "open-in-shell": "在 {{0}} 中開啟"
+    "open-in-shell": "在 {{0}} 中開啟",
+    "show-worktrees": "Show worktrees",
+    "show-worktrees-darwin": "Show Worktrees"
   },
   "repository-path": {
     "name": "Name",
@@ -2237,5 +2269,21 @@
     "the-push-was-rejected-by-the-server-1": "由於推送包含對工作流程檔案 ",
     "the-push-was-rejected-by-the-server-2": " 的修改, 伺服器拒絕了該推送。為了能夠推送工作流程文件, GitHub Desktop 需要請求額外的權限。",
     "would-you-like-to-open-a-browser": "您是否要開啟瀏覽器授予 GitHub Desktop 更新工作流程檔案的權限?"
+  },
+  "worktree-dropdown": {
+    "current-worktree": "Current worktree",
+    "current-worktree-darwin": "Current Worktree",
+    "current-worktree-tooltip": "Current worktree is {{0}}",
+    "new-worktree": "New worktree…",
+    "new-worktree-darwin": "New Worktree…"
+  },
+  "worktree-list": {
+    "linked-worktrees": "Linked {{0}}s",
+    "main-worktree": "Main {{0}}",
+    "new-worktree": "New worktree",
+    "new-worktree-darwin": "New Worktree",
+    "no-worktrees": "No worktrees found",
+    "worktree": "worktree",
+    "worktree-darwin": "Worktree"
   }
 }

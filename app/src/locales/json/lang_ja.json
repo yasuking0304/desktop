@@ -672,13 +672,11 @@
     "conflict-resolution": "競合の解決",
     "conflict-resolution-darwin": "競合の解決",
     "custom-instructions": "カスタム指示",
-    "default-model": "{{0}} (デフォルト)",
     "learn-more-about-commit-messages": "コミットメッセージの生成について詳しく知る。",
     "many-models": "{{0}}モデル",
     "models": "モデル",
     "one-model": "1モデル",
     "providers": "プロパイダー",
-    "sign-in-to-configure": "Copilotの設定を行うには、「アカウント」タブでGitHub.comアカウントにサインインしてください。",
     "tailor-copilot-behavior-1": " ",
     "tailor-copilot-behavior-2": "を使用して、Copilotの動作をカスタマイズできます。"
   },
@@ -687,9 +685,6 @@
     "add-custom-provider-darwin": "カスタムプロバイダーの追加",
     "edit-custom-provider": "カスタムプロバイダーの編集",
     "edit-custom-provider-darwin": "カスタムプロバイダーの編集"
-  },
-  "copilot-conflicts-dialog": {
-    "resolve-conflicts": "Resolve conflicts before {{0}}"
   },
   "copilot-error": {
     "billing-issue": "GitHub Copilotで課金エラーが発生しました。",
@@ -703,6 +698,11 @@
     "retry-after-generic": "{{0}}後にもう一度お試しください。",
     "session-quota-exceeded": "GitHub Copilotのセッション制限に到達しました。",
     "session-quota-exceeded-title": "セッションの割り当て量を超過しました"
+  },
+  "copilot-model-picker": {
+    "default-model": "{{0}}{{1}} (デフォルト)",
+    "no-models-found": "モデルが見つかりません。",
+    "use-of-credits": "クレジット使用量: {{0}}"
   },
   "copy-button": {
     "copied": "コピーしました"
@@ -860,6 +860,25 @@
     "tag-named-is-present-on-the-remote-1": "リモートに ",
     "tag-named-is-present-on-the-remote-2": " というプッシュ済みのタグが存在します。\nこのタグが使用されている場合、削除すると問題が発生する可能性が\nあります。削除する前に、システム管理者に相談することをお勧めします。"
   },
+  "delete-worktree": {
+    "delete-worktree-dialog": "worktreeの削除",
+    "delete-worktree-dialog-darwin": "worktreeの削除"
+  },
+  "delete-worktree-dialog": {
+    "are-you-sure-1": "worktree ",
+    "are-you-sure-2": "を削除してもよろしいですか?"
+  },
+  "delete-worktree-failed-dialog": {
+    "deleting-the-worktree-1": "worktree の削除中",
+    "dialog": {
+      "deleting-the-worktree-2": " failed."
+    },
+    "force-delete": "Forcefully delete",
+    "title": "worktreeの削除に失敗しました",
+    "title-darwin": "worktreeの削除に失敗しました",
+    "would-you-like-to-forcefully-1": "Would you like to forcefully delete the worktree ",
+    "would-you-like-to-forcefully-2": "?"
+  },
   "diff-contents-warning": {
     "learn-more-about-bidirectional-unicode": "双方向Unicode文字についての詳細",
     "this-diff-contains-a-change": "この差分には、改行コードが '{{0}}' から '{{1}}' に変更されたものが含まれています。",
@@ -961,7 +980,7 @@
     "models-hint": "Desktopにこのプロバイダーが提供するモデルを通知してください。各モデルはCopilot機能のモデルピッカーに表示されます。",
     "placeholder-unchanged": "(unchanged)",
     "provider": "プロパイダー",
-    "provider-name-placeholder": "My provider",
+    "provider-name-placeholder": "プロバイダーの名前を入力",
     "provider-type": "型",
     "provider-type-anthropic": "Anthropic",
     "provider-type-azure": "Azure",
@@ -1155,7 +1174,7 @@
   },
   "initialize-lfs": {
     "git-lfs": "Git LFS",
-    "initialize-git-lfs": "Initialize Git LFS"
+    "initialize-git-lfs": "Git LFS の初期化"
   },
   "install": {
     "command-prompt": "コマンドプロンプト",
@@ -1257,14 +1276,18 @@
     "copy-relative-file-path-darwin": "相対ファイルパスのコピー",
     "copy-relative-paths": "相対パスのコピー",
     "copy-relative-paths-darwin": "相対パスのコピー",
+    "copy-worktree-name": "worktree 名のコピー",
+    "copy-worktree-name-darwin": "worktree 名のコピー",
+    "copy-worktree-path": "worktree パスのコピー",
+    "copy-worktree-path-darwin": "worktree パスのコピー",
     "crash-main-process": "メインプロセスのクラッシュ…",
     "crash-renderer-process": "描画プロセスのクラッシュ…",
     "create-issue-on-github": "GitHubで &issue の作成",
     "create-issue-on-github-darwin": "GitHubで issue の作成",
     "create-pull-request": "プルリクエストの作成(&P)",
     "create-pull-request-darwin": "プルリクエストの作成",
-    "create-worktree": "新規worktree(&T)…",
-    "create-worktree-darwin": "新規Worktree…",
+    "create-worktree": "新規 worktree(&T)…",
+    "create-worktree-darwin": "新規 Worktree…",
     "cut": "切り取り(&T)",
     "cut-darwin": "切り取り",
     "default-branch": "デフォルトブランチ",
@@ -1701,6 +1724,11 @@
     "pull-requests-in": "{{0}} 内のプルリクエスト",
     "refresh-the-list-of-pull-request": "プルリクエストのリストを更新する"
   },
+  "pull-request-list-item-context-menu": {
+    "checkout-in-new-worktree": "新しい worktree をチェックアウト…",
+    "checkout-in-new-worktree-darwin": "新しい worktree をチェックアウト…",
+    "view-pull-request-on-github": "GitHubでプルリクエストを表示"
+  },
   "pull-request-merge-status": {
     "able-to-merge": "マージ可能です。",
     "can-be-automatically-merge": "このブランチは自動的にマージ可能です。",
@@ -1864,8 +1892,12 @@
     "copy-repo-name-darwin": "リポジトリ名のコピー",
     "copy-repo-path": "リポジトリパスのコピー",
     "copy-repo-path-darwin": "リポジトリパスのコピー",
+    "new-worktree": "新しい worktree…",
+    "new-worktree-darwin": "新しい worktree…",
     "open-in-editor": "{{0}} で開く",
-    "open-in-shell": "{{0}} で開く"
+    "open-in-shell": "{{0}} で開く",
+    "show-worktrees": "Worktree を表示",
+    "show-worktrees-darwin": "Worktree を表示"
   },
   "repository-path": {
     "name": "Name",
@@ -2237,5 +2269,21 @@
     "the-push-was-rejected-by-the-server-1": "ワークフローファイル ",
     "the-push-was-rejected-by-the-server-2": "への変更が含まれているために、プッシュがサーバーによって拒否されました。ワークフローファイルにプッシュできるようにするには、GitHub Desktop が追加の権限を要求する必要があります。",
     "would-you-like-to-open-a-browser": "ブラウザーを開いて、GitHub Desktop にワークフローファイルを更新する権限を付与しますか?"
+  },
+  "worktree-dropdown": {
+    "current-worktree": "現在の worktree",
+    "current-worktree-darwin": "現在の worktree",
+    "current-worktree-tooltip": "現在の worktree は {{0}}",
+    "new-worktree": "新しい worktree…",
+    "new-worktree-darwin": "新しい worktree…"
+  },
+  "worktree-list": {
+    "linked-worktrees": "リンクされた{{0}}",
+    "main-worktree": "メイン{{0}}",
+    "new-worktree": "新しい worktree",
+    "new-worktree-darwin": "新しい worktree",
+    "no-worktrees": "worktree が見つかりません",
+    "worktree": "worktree",
+    "worktree-darwin": "worktree"
   }
 }
