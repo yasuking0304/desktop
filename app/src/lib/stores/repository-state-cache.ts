@@ -410,6 +410,7 @@ function getInitialRepositoryState(): IRepositoryState {
     hookProgress: null,
     subscribeToCommitOutput: null,
     isGeneratingCommitMessage: false,
+    commitMessageGenerationAbortController: null,
     commitToAmend: null,
     lastFetched: null,
     checkoutProgress: null,

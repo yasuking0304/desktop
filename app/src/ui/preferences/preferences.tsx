@@ -123,6 +123,7 @@ interface IPreferencesProps {
   readonly selectedCopilotModels: CopilotModelSelections
   readonly copilotModels: ReadonlyArray<Model> | null
   readonly byokProviders: ReadonlyArray<IBYOKProvider>
+  readonly alwaysUseCopilotForConflictResolution: boolean
 }
 
 interface IPreferencesState {
@@ -194,6 +195,7 @@ interface IPreferencesState {
   readonly hooksPreferencesDirty: boolean
 
   readonly selectedCopilotModels: CopilotModelSelections
+  readonly alwaysUseCopilotForConflictResolution: boolean
   readonly selectedDateFormat?: DateFormat
   readonly selectedTimeFormat?: TimeFormat
   readonly selectedNumberFormat?: INumberFormat
@@ -270,6 +272,8 @@ export class Preferences extends React.Component<
       copilotResetDate: this.props.copilotResetDate,
       copilotLicenseType: this.props.copilotLicenseType,
       selectedCopilotModels: this.props.selectedCopilotModels,
+      alwaysUseCopilotForConflictResolution:
+        this.props.alwaysUseCopilotForConflictResolution,
       selectedDateFormat: getDateFormatPreference(),
       selectedTimeFormat: getTimeFormatPreference(),
       selectedNumberFormat: getNumberFormatPreference(),
@@ -591,7 +595,13 @@ export class Preferences extends React.Component<
             onSignIn={this.onCopilotSignIn}
             onOpenCopilotPlans={this.onOpenCopilotPlans}
             onOpenCopilotFeatureSettings={this.onOpenCopilotFeatureSettings}
+            alwaysUseCopilotForConflictResolution={
+              this.state.alwaysUseCopilotForConflictResolution
+            }
             onSelectedCopilotModelChanged={this.onSelectedCopilotModelChanged}
+            onAlwaysUseCopilotForConflictResolutionChanged={
+              this.onAlwaysUseCopilotForConflictResolutionChanged
+            }
             onAddBYOKProvider={this.onAddBYOKProvider}
             onEditBYOKProvider={this.onEditBYOKProvider}
             onDeleteBYOKProvider={this.onDeleteBYOKProvider}
@@ -959,6 +969,12 @@ export class Preferences extends React.Component<
     })
   }
 
+  private onAlwaysUseCopilotForConflictResolutionChanged = (
+    checked: boolean
+  ) => {
+    this.setState({ alwaysUseCopilotForConflictResolution: checked })
+  }
+
   private shouldShowBYOKSettings(): boolean {
     return this.props.accounts.some(enableCopilotSdkCommitMessageGeneration)
   }
@@ -1166,6 +1182,10 @@ export class Preferences extends React.Component<
     dispatcher.setDiffCheckMarksSetting(this.state.showDiffCheckMarks)
 
     dispatcher.setSelectedCopilotModels(this.state.selectedCopilotModels)
+
+    dispatcher.setAlwaysUseCopilotForConflictResolution(
+      this.state.alwaysUseCopilotForConflictResolution
+    )
 
     if (enableFormattingPreferences()) {
       if (this.state.selectedDateFormat !== undefined) {

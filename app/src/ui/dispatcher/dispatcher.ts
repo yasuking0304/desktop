@@ -1172,6 +1172,10 @@ export class Dispatcher {
     return this.appStore._generateCommitMessage(repository, filesSelected)
   }
 
+  public cancelGenerateCommitMessage(repository: Repository) {
+    return this.appStore._cancelGenerateCommitMessage(repository)
+  }
+
   /**
    * Use Copilot to analyze and suggest resolutions for conflicts
    * from merge, rebase, or cherry-pick operations.
@@ -4243,6 +4247,10 @@ export class Dispatcher {
   /** Replace all per-feature Copilot model selections at once. */
   public setSelectedCopilotModels(models: CopilotModelSelections) {
     return this.appStore._setSelectedCopilotModels(models)
+  }
+
+  public setAlwaysUseCopilotForConflictResolution(value: boolean): void {
+    this.appStore._setAlwaysUseCopilotForConflictResolution(value)
   }
 
   /** Fetch the list of available Copilot models from the SDK. */

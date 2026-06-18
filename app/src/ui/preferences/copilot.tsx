@@ -22,6 +22,7 @@ import {
   hasCopilotModelPickerItems,
 } from '../lib/copilot-model-picker'
 import { LinkButton } from '../lib/link-button'
+import { Checkbox, CheckboxValue } from '../lib/checkbox'
 import { Row } from '../lib/row'
 import { Octicon } from '../octicons'
 import * as octicons from '../octicons/octicons.generated'
@@ -39,9 +40,13 @@ interface ICopilotPreferencesProps {
   readonly onSignIn: () => void
   readonly onOpenCopilotPlans: () => void
   readonly onOpenCopilotFeatureSettings: () => void
+  readonly alwaysUseCopilotForConflictResolution: boolean
   readonly onSelectedCopilotModelChanged: (
     feature: CopilotFeature,
     model: string | null
+  ) => void
+  readonly onAlwaysUseCopilotForConflictResolutionChanged: (
+    checked: boolean
   ) => void
   readonly onAddBYOKProvider: () => void
   readonly onEditBYOKProvider: (provider: IBYOKProvider) => void
@@ -79,6 +84,14 @@ export class CopilotPreferences extends React.Component<
 
   private onConflictResolutionModelChanged = (model: string) => {
     this.props.onSelectedCopilotModelChanged('conflict-resolution', model)
+  }
+
+  private onAlwaysUseCopilotForConflictResolutionChanged = (
+    event: React.FormEvent<HTMLInputElement>
+  ) => {
+    this.props.onAlwaysUseCopilotForConflictResolutionChanged(
+      event.currentTarget.checked
+    )
   }
 
   private onAddBYOKProviderClick = () => this.props.onAddBYOKProvider()
@@ -282,15 +295,34 @@ export class CopilotPreferences extends React.Component<
             )}
           </LinkButton>
         </p>
-        {enableCopilotConflictResolution() &&
-          this.renderFeatureModelPicker(
-            copilotModels,
-            'conflict-resolution',
-            __DARWIN__
-              ? t('copilot.conflict-resolution-darwin', 'Conflict Resolution')
-              : t('copilot.conflict-resolution', 'Conflict resolution'),
-            this.onConflictResolutionModelChanged
-          )}
+        {enableCopilotConflictResolution() && (
+          <>
+            {this.renderFeatureModelPicker(
+              copilotModels,
+              'conflict-resolution',
+              __DARWIN__
+                ? t('copilot.conflict-resolution-darwin', 'Conflict Resolution')
+                : t('copilot.conflict-resolution', 'Conflict resolution'),
+              this.onConflictResolutionModelChanged
+            )}
+            <p className="settings-description">
+              Model changes apply to future conflict resolutions.
+            </p>
+            <Checkbox
+              label={
+                __DARWIN__
+                  ? t('copilot.always-use-copilot-when-conflicts-darwin', 'Always Use Copilot When Conflicts Are Detected')
+                  : t('copilot.always-use-copilot-when-conflicts', 'Always use Copilot when conflicts are detected')
+              }
+              value={
+                this.props.alwaysUseCopilotForConflictResolution
+                  ? CheckboxValue.On
+                  : CheckboxValue.Off
+              }
+              onChange={this.onAlwaysUseCopilotForConflictResolutionChanged}
+            />
+          </>
+        )}
       </>
     )
   }

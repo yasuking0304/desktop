@@ -1,11 +1,13 @@
-import type { CopilotSession } from '@github/copilot-sdk'
+import type { CopilotClient, CopilotSession } from '@github/copilot-sdk'
 import type { Model } from '@github/copilot-sdk/dist/generated/rpc'
 import assert from 'node:assert'
 import { after, before, describe, it } from 'node:test'
 import { getDotComAPIEndpoint } from '../../../src/lib/api'
 import { AccountsStore } from '../../../src/lib/stores/accounts-store'
 import {
+  CommitMessageGenerationCancelledError,
   CopilotConflictResolutionAbortError,
+  type CopilotModelRequest,
   CopilotStore,
   DefaultCopilotModel,
   getCopilotGHHost,
@@ -37,6 +39,13 @@ interface ITestCopilotClient {
 
 interface ITestableCopilotStore {
   createClient(account: Account): Promise<ITestCopilotClient>
+}
+
+interface ITestableCommitMessageCopilotStore {
+  createClient(
+    account: Account,
+    repositoryPath?: string
+  ): Promise<CopilotClient>
 }
 
 function makeAccount(overrides: IAccountOverrides = {}): Account {
@@ -120,6 +129,22 @@ function makeModel(
     },
     ...overrides,
   }
+}
+
+function createBYOKRequest(): CopilotModelRequest {
+  return {
+    kind: 'byok',
+    modelId: 'test-model',
+    provider: {
+      type: 'openai',
+      baseUrl: 'https://example.com',
+    },
+  }
+}
+
+function assertCommitMessageGenerationCancelled(error: unknown): boolean {
+  assert.ok(error instanceof CommitMessageGenerationCancelledError)
+  return true
 }
 
 describe('getCopilotModelCacheKey', () => {
@@ -310,6 +335,185 @@ describe('CopilotStore model cache', () => {
     assert.strictEqual(store.getCachedModelList(account), null)
     assert.strictEqual(await store.listModels(account), freshModels)
     assert.strictEqual(store.getCachedModelList(account), freshModels)
+  })
+})
+
+describe('CopilotStore commit message generation cancellation', () => {
+  let previousPreviewFeatures: string | undefined
+
+  before(() => {
+    previousPreviewFeatures = process.env[PreviewFeaturesEnv]
+    process.env[PreviewFeaturesEnv] = '1'
+  })
+
+  after(() => {
+    if (previousPreviewFeatures === undefined) {
+      delete process.env[PreviewFeaturesEnv]
+    } else {
+      process.env[PreviewFeaturesEnv] = previousPreviewFeatures
+    }
+  })
+
+  it('does not create a commit-message client after cancellation during model resolution', async () => {
+    const account = makeAccount()
+    const models = [makeModel({ id: DefaultCopilotModel, name: 'Default' })]
+    const deferred = createDeferred<ReadonlyArray<Model>>()
+    const { accountsStore, store, createClientAccounts } =
+      createCopilotStoreWithModels(() => deferred.promise)
+
+    await accountsStore.addAccount(account)
+
+    const controller = new AbortController()
+    const generation = store.generateCommitMessage(
+      account,
+      'diff --git a/file b/file',
+      '/path/to/repository',
+      null,
+      [],
+      controller.signal
+    )
+
+    controller.abort()
+    deferred.resolve(models)
+
+    await assert.rejects(generation, assertCommitMessageGenerationCancelled)
+
+    assert.strictEqual(createClientAccounts.length, 1)
+  })
+
+  it('stops the client without creating a session after cancellation before session creation', async () => {
+    const account = makeAccount()
+    const accountsStore = createAccountsStore()
+    const store = new CopilotStore(accountsStore)
+    const controller = new AbortController()
+    let createSessionCount = 0
+    let stopCount = 0
+
+    const client = {
+      createSession: async () => {
+        createSessionCount++
+        throw new Error('Unexpected session creation')
+      },
+      stop: async () => {
+        stopCount++
+      },
+    } as unknown as CopilotClient
+    const testableStore = store as unknown as ITestableCommitMessageCopilotStore
+    testableStore.createClient = async () => {
+      controller.abort()
+      return client
+    }
+
+    const generation = store.generateCommitMessage(
+      account,
+      'diff --git a/file b/file',
+      '/path/to/repository',
+      createBYOKRequest(),
+      [],
+      controller.signal
+    )
+
+    await assert.rejects(generation, assertCommitMessageGenerationCancelled)
+
+    assert.strictEqual(createSessionCount, 0)
+    assert.strictEqual(stopCount, 1)
+  })
+
+  it('stops the client after cancellation during session creation', async () => {
+    const account = makeAccount()
+    const repositoryPath = '/path/to/repository'
+    const accountsStore = createAccountsStore()
+    const store = new CopilotStore(accountsStore)
+    const createSessionStarted = createDeferred<void>()
+    const sessionCreation = createDeferred<CopilotSession>()
+    const controller = new AbortController()
+    let disconnectCount = 0
+    let stopCount = 0
+
+    const session = {
+      disconnect: async () => {
+        disconnectCount++
+      },
+    } as unknown as CopilotSession
+    const client = {
+      createSession: () => {
+        createSessionStarted.resolve(undefined)
+        return sessionCreation.promise
+      },
+      stop: async () => {
+        stopCount++
+      },
+    } as unknown as CopilotClient
+    const testableStore = store as unknown as ITestableCommitMessageCopilotStore
+    testableStore.createClient = async () => client
+
+    const generation = store.generateCommitMessage(
+      account,
+      'diff --git a/file b/file',
+      repositoryPath,
+      createBYOKRequest(),
+      [],
+      controller.signal
+    )
+
+    await createSessionStarted.promise
+    controller.abort()
+
+    await assert.rejects(generation, assertCommitMessageGenerationCancelled)
+    assert.strictEqual(stopCount, 1)
+    assert.strictEqual(disconnectCount, 0)
+
+    sessionCreation.resolve(session)
+    await Promise.resolve()
+
+    assert.strictEqual(disconnectCount, 1)
+  })
+
+  it('disconnects the session and stops the client after cancellation during generation', async () => {
+    const account = makeAccount()
+    const repositoryPath = '/path/to/repository'
+    const accountsStore = createAccountsStore()
+    const store = new CopilotStore(accountsStore)
+    const sendStarted = createDeferred<void>()
+    const controller = new AbortController()
+    let disconnectCount = 0
+    let stopCount = 0
+
+    const session = {
+      on: () => () => {},
+      sendAndWait: () => {
+        sendStarted.resolve(undefined)
+        return new Promise<never>(() => {})
+      },
+      disconnect: async () => {
+        disconnectCount++
+      },
+    } as unknown as CopilotSession
+    const client = {
+      createSession: async () => session,
+      stop: async () => {
+        stopCount++
+      },
+    } as unknown as CopilotClient
+    const testableStore = store as unknown as ITestableCommitMessageCopilotStore
+    testableStore.createClient = async () => client
+
+    const generation = store.generateCommitMessage(
+      account,
+      'diff --git a/file b/file',
+      repositoryPath,
+      createBYOKRequest(),
+      [],
+      controller.signal
+    )
+
+    await sendStarted.promise
+    controller.abort()
+
+    await assert.rejects(generation, assertCommitMessageGenerationCancelled)
+
+    assert.strictEqual(disconnectCount, 1)
+    assert.strictEqual(stopCount, 1)
   })
 })
 

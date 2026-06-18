@@ -14,6 +14,7 @@ import {
   UpstreamRemoteName,
 } from '.'
 import type { CopilotFeature, CopilotModelSelections } from './copilot-store'
+import { CommitMessageGenerationCancelledError } from './copilot-store'
 import {
   IBYOKProvider,
   loadBYOKProviders,
@@ -23,6 +24,7 @@ import {
   getBYOKSecret,
   parseModelKey,
 } from '../copilot/byok'
+import { getConflictResolutionModelDisplay } from '../copilot/conflict-resolution-model'
 import type {
   CopilotModelRequest,
   CopilotProviderConfig,
@@ -541,8 +543,11 @@ const commitMessageGenerationButtonClickedKey =
 const copilotConflictResolutionDisclaimerLastSeenKey =
   'copilot-conflict-resolution-disclaimer-last-seen'
 
-const copilotConflictResolutionButtonClickedKey =
+const copilotConflictResolutionClickCountKey =
   'copilot-conflict-resolution-button-clicked'
+
+const alwaysUseCopilotForConflictResolutionKey =
+  'always-use-copilot-for-conflict-resolution'
 
 export const showChangesFilterKey = 'show-changes-filter'
 
@@ -713,7 +718,9 @@ export class AppStore extends TypedBaseStore<IAppState> {
   private commitMessageGenerationButtonClicked: boolean = false
 
   private copilotConflictResolutionDisclaimerLastSeen: number | null = null
-  private copilotConflictResolutionButtonClicked: boolean = false
+  private copilotConflictResolutionClickCount: number = 0
+
+  private alwaysUseCopilotForConflictResolution: boolean = false
 
   private showChangesFilter: boolean = false
 
@@ -1278,8 +1285,10 @@ export class AppStore extends TypedBaseStore<IAppState> {
         this.commitMessageGenerationButtonClicked,
       copilotConflictResolutionDisclaimerLastSeen:
         this.copilotConflictResolutionDisclaimerLastSeen,
-      copilotConflictResolutionButtonClicked:
-        this.copilotConflictResolutionButtonClicked,
+      copilotConflictResolutionClickCount:
+        this.copilotConflictResolutionClickCount,
+      alwaysUseCopilotForConflictResolution:
+        this.alwaysUseCopilotForConflictResolution,
       showChangesFilter: this.showChangesFilter,
       chatQuotas: this.chatQuotas,
       autoSuggestQuotas: this.autoSuggestQuotas,
@@ -2576,8 +2585,20 @@ export class AppStore extends TypedBaseStore<IAppState> {
     this.copilotConflictResolutionDisclaimerLastSeen =
       getNumber(copilotConflictResolutionDisclaimerLastSeenKey) ?? null
 
-    this.copilotConflictResolutionButtonClicked = getBoolean(
-      copilotConflictResolutionButtonClickedKey,
+    // The key was originally a boolean; migrate old `true` values to 1.
+    const rawClickCount = localStorage.getItem(
+      copilotConflictResolutionClickCountKey
+    )
+    if (rawClickCount === 'true' || rawClickCount === '1') {
+      this.copilotConflictResolutionClickCount = 1
+      setNumber(copilotConflictResolutionClickCountKey, 1)
+    } else {
+      this.copilotConflictResolutionClickCount =
+        getNumber(copilotConflictResolutionClickCountKey) ?? 0
+    }
+
+    this.alwaysUseCopilotForConflictResolution = getBoolean(
+      alwaysUseCopilotForConflictResolutionKey,
       false
     )
 
@@ -3137,23 +3158,56 @@ export class AppStore extends TypedBaseStore<IAppState> {
     }
 
     const useCopilot = multiCommitOperationState.useCopilotConflictResolution
+    const autoRoute =
+      !useCopilot && this.shouldAutoRouteToCopilotConflictResolution(repository)
 
-    this._setMultiCommitOperationStep(repository, {
-      kind: useCopilot
-        ? MultiCommitOperationStepKind.ShowCopilotConflictsLoading
-        : MultiCommitOperationStepKind.ShowConflicts,
-      conflictState: mcoConflictState,
-    })
+    if (autoRoute && this.isCopilotConflictDisclaimerFresh()) {
+      // Global pref is on and disclaimer is fresh — go straight to Copilot.
+      this._setMultiCommitOperationStepWithCopilotResolution(
+        repository,
+        {
+          kind: MultiCommitOperationStepKind.ShowCopilotConflictsLoading,
+          conflictState: mcoConflictState,
+        },
+        true
+      )
 
-    this._showPopup({
-      type: PopupType.MultiCommitOperation,
-      repository,
-    })
+      this._showPopup({
+        type: PopupType.MultiCommitOperation,
+        repository,
+      })
 
-    if (useCopilot) {
+      await this._startCopilotConflictResolution(repository)
+    } else if (useCopilot) {
+      this._setMultiCommitOperationStep(repository, {
+        kind: MultiCommitOperationStepKind.ShowCopilotConflictsLoading,
+        conflictState: mcoConflictState,
+      })
+
+      this._showPopup({
+        type: PopupType.MultiCommitOperation,
+        repository,
+      })
+
       // Auto-route to Copilot: the user previously opted into Copilot
       // resolution during this operation, so skip the manual dialog.
       await this._startCopilotConflictResolution(repository)
+    } else {
+      this._setMultiCommitOperationStep(repository, {
+        kind: MultiCommitOperationStepKind.ShowConflicts,
+        conflictState: mcoConflictState,
+      })
+
+      this._showPopup({
+        type: PopupType.MultiCommitOperation,
+        repository,
+      })
+
+      if (autoRoute) {
+        // Global pref is on but disclaimer is stale — show conflicts first
+        // and then trigger the attempt which will show the disclaimer popup.
+        await this._attemptCopilotConflictResolution(repository)
+      }
     }
   }
 
@@ -5183,7 +5237,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
   private async withIsGeneratingCommitMessage(
     repository: Repository,
-    fn: () => Promise<boolean>
+    fn: (signal: AbortSignal) => Promise<boolean>
   ): Promise<boolean> {
     const state = this.repositoryStateCache.get(repository)
     // ensure the user doesn't try and commit again
@@ -5191,18 +5245,27 @@ export class AppStore extends TypedBaseStore<IAppState> {
       return false
     }
 
+    const abortController = new AbortController()
+
     this.repositoryStateCache.update(repository, () => ({
       isGeneratingCommitMessage: true,
+      commitMessageGenerationAbortController: abortController,
     }))
     this.emitUpdate()
 
     try {
-      return await fn()
+      return await fn(abortController.signal)
     } finally {
-      this.repositoryStateCache.update(repository, () => ({
-        isGeneratingCommitMessage: false,
-      }))
-      this.emitUpdate()
+      const currentState = this.repositoryStateCache.get(repository)
+      if (
+        currentState.commitMessageGenerationAbortController === abortController
+      ) {
+        this.repositoryStateCache.update(repository, () => ({
+          isGeneratingCommitMessage: false,
+          commitMessageGenerationAbortController: null,
+        }))
+        this.emitUpdate()
+      }
     }
   }
 
@@ -6060,12 +6123,37 @@ export class AppStore extends TypedBaseStore<IAppState> {
     this.emitUpdate()
   }
 
-  public _setCopilotConflictResolutionButtonClicked(): void {
-    if (!this.copilotConflictResolutionButtonClicked) {
-      this.copilotConflictResolutionButtonClicked = true
-      setBoolean(copilotConflictResolutionButtonClickedKey, true)
-      this.emitUpdate()
-    }
+  public _incrementCopilotConflictResolutionClickCount(): void {
+    this.copilotConflictResolutionClickCount++
+    setNumber(
+      copilotConflictResolutionClickCountKey,
+      this.copilotConflictResolutionClickCount
+    )
+    this.emitUpdate()
+  }
+
+  public _setAlwaysUseCopilotForConflictResolution(value: boolean): void {
+    this.alwaysUseCopilotForConflictResolution = value
+    setBoolean(alwaysUseCopilotForConflictResolutionKey, value)
+    this.emitUpdate()
+  }
+
+  private shouldAutoRouteToCopilotConflictResolution(
+    repository: Repository
+  ): boolean {
+    return (
+      this.alwaysUseCopilotForConflictResolution &&
+      enableCopilotConflictResolution() &&
+      getAccountForCopilotConflictResolution(this.accounts, repository) !== null
+    )
+  }
+
+  private isCopilotConflictDisclaimerFresh(): boolean {
+    return (
+      this.copilotConflictResolutionDisclaimerLastSeen !== null &&
+      offsetFromNow(-30, 'days') <=
+        this.copilotConflictResolutionDisclaimerLastSeen
+    )
   }
 
   public async _generateCommitMessage(
@@ -6096,7 +6184,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
       return false
     }
 
-    return this.withIsGeneratingCommitMessage(repository, async () => {
+    return this.withIsGeneratingCommitMessage(repository, async signal => {
       // If user is amending a commit, we want to use the commit
       // to amend as the base for the commit message generation.
       const commitToAmend =
@@ -6135,7 +6223,8 @@ export class AppStore extends TypedBaseStore<IAppState> {
               this.repositoryStateCache
                 .get(repository)
                 ?.changesState.currentRepoRulesInfo?.commitMessagePatterns.getRules() ??
-                []
+                [],
+              signal
             )
           : await API.fromAccount(account).getDiffChangesCommitMessage(
               diffPrompt
@@ -6150,6 +6239,10 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
         this.statsStore.increment('generateCommitMessageCount')
       } catch (e) {
+        if (e instanceof CommitMessageGenerationCancelledError) {
+          return false
+        }
+
         this.emitError(
           new ErrorWithMetadata(e, {
             repository,
@@ -6160,6 +6253,19 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
       return true
     })
+  }
+
+  /** This shouldn't be called directly. See 'Dispatcher'. */
+  public async _cancelGenerateCommitMessage(
+    repository: Repository
+  ): Promise<void> {
+    const state = this.repositoryStateCache.get(repository)
+    const abortController = state.commitMessageGenerationAbortController
+    if (!state.isGeneratingCommitMessage || abortController === null) {
+      return
+    }
+
+    abortController.abort()
   }
 
   /**
@@ -6550,8 +6656,8 @@ export class AppStore extends TypedBaseStore<IAppState> {
     }
 
     // Track that the user has clicked the entry point so we can hide the
-    // "New" call-to-action bubble.
-    this._setCopilotConflictResolutionButtonClicked()
+    // "New" call-to-action bubble and nudge after 5 uses.
+    this._incrementCopilotConflictResolutionClickCount()
 
     // First-use disclaimer + periodic re-confirmation. Mirrors the
     // commit-message-generation pattern.
@@ -6562,6 +6668,18 @@ export class AppStore extends TypedBaseStore<IAppState> {
     ) {
       await this._showPopup({
         type: PopupType.CopilotConflictResolutionDisclaimer,
+        repository,
+      })
+      return
+    }
+
+    // Nudge the user to enable "always use Copilot" after 5 clicks.
+    if (
+      !this.alwaysUseCopilotForConflictResolution &&
+      this.copilotConflictResolutionClickCount === 5
+    ) {
+      await this._showPopup({
+        type: PopupType.CopilotConflictResolutionAlwaysNudge,
         repository,
       })
       return
@@ -6612,9 +6730,17 @@ export class AppStore extends TypedBaseStore<IAppState> {
     // Controller used to actually cancel the in-flight SDK turn when the user
     // clicks "Stop" (see _abortCopilotConflictResolution).
     const abortController = new AbortController()
+    const copilotResolutionModel = getConflictResolutionModelDisplay(
+      this.selectedCopilotModels['conflict-resolution'] ?? null,
+      this.copilotModels,
+      this.byokProviders
+    )
     this.repositoryStateCache.updateMultiCommitOperationState(
       repository,
-      () => ({ copilotResolutionAbortController: abortController })
+      () => ({
+        copilotResolutionAbortController: abortController,
+        copilotResolutionModel,
+      })
     )
 
     // Only the run that owns this controller may mutate Copilot resolution
@@ -9339,6 +9465,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
       copilotResolutionSummary: null,
       copilotResolutionProgress: null,
       copilotResolutionAbortController: null,
+      copilotResolutionModel: null,
       originalBranchTip,
       targetBranch,
     })
