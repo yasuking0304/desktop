@@ -3,6 +3,7 @@ import assert from 'node:assert'
 
 import {
   parseCopilotConflictResolution,
+  reassembleResolvedFile,
   extractSymbols,
   createDependencyAwareChunks,
   selectReferencedContext,
@@ -18,6 +19,18 @@ import {
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
+
+/** Build a resolution entry in the per-hunk format the parser expects. */
+function makeResolution(
+  path: string,
+  resolvedContent: string | ReadonlyArray<string>,
+  reasoning: string
+) {
+  const hunks = Array.isArray(resolvedContent)
+    ? resolvedContent.map(rc => ({ resolvedContent: rc }))
+    : [{ resolvedContent }]
+  return { path, hunks, reasoning }
+}
 
 function makeFile(
   path: string,
@@ -52,31 +65,29 @@ function paths(
 describe('parseCopilotConflictResolution', () => {
   it('parses a valid JSON response', () => {
     const json = JSON.stringify({
-      resolutions: [
-        {
-          path: 'src/index.ts',
-          resolvedContent: 'content',
-          reasoning: 'combined both',
-        },
-      ],
+      resolutions: [makeResolution('src/index.ts', 'content', 'combined both')],
     })
     const result = parseCopilotConflictResolution(json)
     assert.equal(result.resolutions.length, 1)
     assert.equal(result.resolutions[0].path, 'src/index.ts')
-    assert.equal(result.resolutions[0].resolvedContent, 'content')
+    assert.equal(result.resolutions[0].hunks[0].resolvedContent, 'content')
     assert.equal(result.resolutions[0].reasoning, 'combined both')
   })
 
   it('unwraps ```json code blocks', () => {
-    const wrapped =
-      '```json\n{"resolutions":[{"path":"a.ts","resolvedContent":"x","reasoning":"r"}]}\n```'
+    const json = JSON.stringify({
+      resolutions: [makeResolution('a.ts', 'x', 'r')],
+    })
+    const wrapped = '```json\n' + json + '\n```'
     const result = parseCopilotConflictResolution(wrapped)
     assert.equal(result.resolutions[0].path, 'a.ts')
   })
 
   it('unwraps ``` code blocks without json tag', () => {
-    const wrapped =
-      '```\n{"resolutions":[{"path":"a.ts","resolvedContent":"x","reasoning":"r"}]}\n```'
+    const json = JSON.stringify({
+      resolutions: [makeResolution('a.ts', 'x', 'r')],
+    })
+    const wrapped = '```\n' + json + '\n```'
     const result = parseCopilotConflictResolution(wrapped)
     assert.equal(result.resolutions[0].path, 'a.ts')
   })
@@ -84,8 +95,8 @@ describe('parseCopilotConflictResolution', () => {
   it('handles multiple resolutions', () => {
     const json = JSON.stringify({
       resolutions: [
-        { path: 'a.ts', resolvedContent: 'a', reasoning: 'ra' },
-        { path: 'b.ts', resolvedContent: 'b', reasoning: 'rb' },
+        makeResolution('a.ts', 'a', 'ra'),
+        makeResolution('b.ts', 'b', 'rb'),
       ],
     })
     const result = parseCopilotConflictResolution(json)
@@ -121,76 +132,84 @@ describe('parseCopilotConflictResolution', () => {
   })
 
   it('throws on missing path', () => {
+    const json = JSON.stringify({
+      resolutions: [{ hunks: [{ resolvedContent: 'c' }], reasoning: 'r' }],
+    })
     assert.throws(
-      () =>
-        parseCopilotConflictResolution(
-          '{"resolutions":[{"resolvedContent":"c","reasoning":"r"}]}'
-        ),
+      () => parseCopilotConflictResolution(json),
       /"path" at index 0/
     )
   })
 
   it('throws on empty path', () => {
+    const json = JSON.stringify({
+      resolutions: [
+        { path: '  ', hunks: [{ resolvedContent: 'c' }], reasoning: 'r' },
+      ],
+    })
     assert.throws(
-      () =>
-        parseCopilotConflictResolution(
-          '{"resolutions":[{"path":"  ","resolvedContent":"c","reasoning":"r"}]}'
-        ),
+      () => parseCopilotConflictResolution(json),
       /"path" at index 0/
     )
   })
 
-  it('throws on missing resolvedContent', () => {
+  it('throws on missing hunks', () => {
     assert.throws(
       () =>
         parseCopilotConflictResolution(
           '{"resolutions":[{"path":"a.ts","reasoning":"r"}]}'
         ),
-      /"resolvedContent" at index 0/
+      /"hunks" at index 0 must be an array/
+    )
+  })
+
+  it('throws on empty hunks array', () => {
+    const json = JSON.stringify({
+      resolutions: [{ path: 'a.ts', hunks: [], reasoning: 'r' }],
+    })
+    assert.throws(
+      () => parseCopilotConflictResolution(json),
+      /"hunks" at index 0 must not be empty/
     )
   })
 
   it('throws on missing reasoning', () => {
+    const json = JSON.stringify({
+      resolutions: [{ path: 'a.ts', hunks: [{ resolvedContent: 'c' }] }],
+    })
     assert.throws(
-      () =>
-        parseCopilotConflictResolution(
-          '{"resolutions":[{"path":"a.ts","resolvedContent":"c"}]}'
-        ),
+      () => parseCopilotConflictResolution(json),
       /"reasoning" at index 0/
     )
   })
 
-  it('allows empty resolvedContent (file emptied intentionally)', () => {
+  it('allows empty resolvedContent in a hunk (intentional deletion)', () => {
     const json = JSON.stringify({
-      resolutions: [
-        { path: 'a.ts', resolvedContent: '', reasoning: 'emptied' },
-      ],
+      resolutions: [makeResolution('a.ts', '', 'emptied')],
     })
     const result = parseCopilotConflictResolution(json)
-    assert.equal(result.resolutions[0].resolvedContent, '')
+    assert.equal(result.resolutions[0].hunks[0].resolvedContent, '')
   })
 
   it('handles resolvedContent containing triple backticks', () => {
     const json = JSON.stringify({
       resolutions: [
-        {
-          path: 'README.md',
-          resolvedContent: '# Hello\n```js\nconsole.log()\n```\n',
-          reasoning: 'kept code block',
-        },
+        makeResolution(
+          'README.md',
+          '# Hello\n```js\nconsole.log()\n```\n',
+          'kept code block'
+        ),
       ],
     })
     const wrapped = '```json\n' + json + '\n```'
     const result = parseCopilotConflictResolution(wrapped)
     assert.equal(result.resolutions[0].path, 'README.md')
-    assert.ok(result.resolutions[0].resolvedContent.includes('```js'))
+    assert.ok(result.resolutions[0].hunks[0].resolvedContent.includes('```js'))
   })
 
   it('parses when LLM adds preamble/postamble around code block', () => {
     const json = JSON.stringify({
-      resolutions: [
-        { path: 'a.ts', resolvedContent: 'fixed', reasoning: 'merged' },
-      ],
+      resolutions: [makeResolution('a.ts', 'fixed', 'merged')],
     })
     const content =
       'Here is my answer:\n```json\n' + json + '\n```\nHope this helps!'
@@ -201,12 +220,11 @@ describe('parseCopilotConflictResolution', () => {
   it('throws when resolvedContent still contains conflict markers', () => {
     const json = JSON.stringify({
       resolutions: [
-        {
-          path: 'a.ts',
-          resolvedContent:
-            '<<<<<<< HEAD\nours\n=======\ntheirs\n>>>>>>> feature',
-          reasoning: 'oops',
-        },
+        makeResolution(
+          'a.ts',
+          '<<<<<<< HEAD\nours\n=======\ntheirs\n>>>>>>> feature',
+          'oops'
+        ),
       ],
     })
     assert.throws(
@@ -218,11 +236,11 @@ describe('parseCopilotConflictResolution', () => {
   it('does not reject resolvedContent with only opening marker in a comment', () => {
     const json = JSON.stringify({
       resolutions: [
-        {
-          path: 'a.ts',
-          resolvedContent: '// <<<<<<< this is just a comment\nreal code',
-          reasoning: 'fine',
-        },
+        makeResolution(
+          'a.ts',
+          '// <<<<<<< this is just a comment\nreal code',
+          'fine'
+        ),
       ],
     })
     // Should NOT throw — only reject when both opening and separator markers present
@@ -233,11 +251,11 @@ describe('parseCopilotConflictResolution', () => {
   it('throws on truncated conflict markers (opening + separator without closing)', () => {
     const json = JSON.stringify({
       resolutions: [
-        {
-          path: 'a.ts',
-          resolvedContent: '<<<<<<< HEAD\nours\n=======\ntheirs but truncated',
-          reasoning: 'truncated',
-        },
+        makeResolution(
+          'a.ts',
+          '<<<<<<< HEAD\nours\n=======\ntheirs but truncated',
+          'truncated'
+        ),
       ],
     })
     assert.throws(
@@ -248,9 +266,7 @@ describe('parseCopilotConflictResolution', () => {
 
   it('parses JSON block followed by another code block', () => {
     const json = JSON.stringify({
-      resolutions: [
-        { path: 'a.ts', resolvedContent: 'fixed', reasoning: 'merged' },
-      ],
+      resolutions: [makeResolution('a.ts', 'fixed', 'merged')],
     })
     const content =
       '```json\n' +
@@ -262,13 +278,7 @@ describe('parseCopilotConflictResolution', () => {
 
   it('trims whitespace from path values', () => {
     const json = JSON.stringify({
-      resolutions: [
-        {
-          path: '  src/file.ts  ',
-          resolvedContent: 'content',
-          reasoning: 'reason',
-        },
-      ],
+      resolutions: [makeResolution('  src/file.ts  ', 'content', 'reason')],
     })
     const result = parseCopilotConflictResolution(json)
     assert.equal(result.resolutions[0].path, 'src/file.ts')
@@ -276,13 +286,7 @@ describe('parseCopilotConflictResolution', () => {
 
   it('normalizes Windows-style backslash separators', () => {
     const json = JSON.stringify({
-      resolutions: [
-        {
-          path: 'src\\lib\\file.ts',
-          resolvedContent: 'content',
-          reasoning: 'reason',
-        },
-      ],
+      resolutions: [makeResolution('src\\lib\\file.ts', 'content', 'reason')],
     })
     const result = parseCopilotConflictResolution(json)
     assert.equal(result.resolutions[0].path, 'src/lib/file.ts')
@@ -290,13 +294,7 @@ describe('parseCopilotConflictResolution', () => {
 
   it('strips leading ./ from paths', () => {
     const json = JSON.stringify({
-      resolutions: [
-        {
-          path: './src/file.ts',
-          resolvedContent: 'content',
-          reasoning: 'reason',
-        },
-      ],
+      resolutions: [makeResolution('./src/file.ts', 'content', 'reason')],
     })
     const result = parseCopilotConflictResolution(json)
     assert.equal(result.resolutions[0].path, 'src/file.ts')
@@ -304,20 +302,14 @@ describe('parseCopilotConflictResolution', () => {
 
   it('collapses redundant path separators', () => {
     const json = JSON.stringify({
-      resolutions: [
-        {
-          path: 'src//lib///file.ts',
-          resolvedContent: 'content',
-          reasoning: 'reason',
-        },
-      ],
+      resolutions: [makeResolution('src//lib///file.ts', 'content', 'reason')],
     })
     const result = parseCopilotConflictResolution(json)
     assert.equal(result.resolutions[0].path, 'src/lib/file.ts')
   })
 
   it('returns null summary when missing, mistyped, or blank', () => {
-    const base = [{ path: 'a.ts', resolvedContent: 'c', reasoning: 'r' }]
+    const base = [makeResolution('a.ts', 'c', 'r')]
     for (const summary of [undefined, 42, '   ']) {
       const json = JSON.stringify({ resolutions: base, summary })
       assert.equal(parseCopilotConflictResolution(json).summary, null)
@@ -327,7 +319,7 @@ describe('parseCopilotConflictResolution', () => {
   it('preserves a non-empty summary string', () => {
     const summary = '## What changed\nA.\n\n## Resolution decision\nB.'
     const json = JSON.stringify({
-      resolutions: [{ path: 'a.ts', resolvedContent: 'c', reasoning: 'r' }],
+      resolutions: [makeResolution('a.ts', 'c', 'r')],
       summary,
     })
     const result = parseCopilotConflictResolution(json)
@@ -336,7 +328,7 @@ describe('parseCopilotConflictResolution', () => {
 
   it('parses valid references and strips a leading # from PR ids', () => {
     const json = JSON.stringify({
-      resolutions: [{ path: 'a.ts', resolvedContent: 'c', reasoning: 'r' }],
+      resolutions: [makeResolution('a.ts', 'c', 'r')],
       references: [
         { type: 'pullRequest', id: '#42' },
         { type: 'commit', id: 'abc1234' },
@@ -351,12 +343,12 @@ describe('parseCopilotConflictResolution', () => {
 
   it('returns empty references when missing and drops invalid entries', () => {
     const missing = JSON.stringify({
-      resolutions: [{ path: 'a.ts', resolvedContent: 'c', reasoning: 'r' }],
+      resolutions: [makeResolution('a.ts', 'c', 'r')],
     })
     assert.deepEqual(parseCopilotConflictResolution(missing).references, [])
 
     const json = JSON.stringify({
-      resolutions: [{ path: 'a.ts', resolvedContent: 'c', reasoning: 'r' }],
+      resolutions: [makeResolution('a.ts', 'c', 'r')],
       references: [
         { type: 'wrong', id: '1' },
         { type: 'pullRequest', id: 'abc' },
@@ -368,6 +360,168 @@ describe('parseCopilotConflictResolution', () => {
     })
     const result = parseCopilotConflictResolution(json)
     assert.deepEqual(result.references, [{ type: 'commit', id: 'cafe1234' }])
+  })
+})
+
+// ---------------------------------------------------------------------------
+// reassembleResolvedFile
+// ---------------------------------------------------------------------------
+
+describe('reassembleResolvedFile', () => {
+  it('replaces a single conflict in the middle of a file', () => {
+    const raw = [
+      'line 1',
+      'line 2',
+      '<<<<<<< HEAD',
+      'our change',
+      '=======',
+      'their change',
+      '>>>>>>> feature',
+      'line 3',
+      'line 4',
+    ].join('\n')
+
+    const result = reassembleResolvedFile(raw, [
+      { resolvedContent: 'merged change' },
+    ])
+
+    assert.equal(
+      result,
+      ['line 1', 'line 2', 'merged change', 'line 3', 'line 4'].join('\n')
+    )
+  })
+
+  it('replaces multiple conflicts in order', () => {
+    const raw = [
+      'header',
+      '<<<<<<< HEAD',
+      'our-1',
+      '=======',
+      'their-1',
+      '>>>>>>> feature',
+      'middle',
+      '<<<<<<< HEAD',
+      'our-2',
+      '=======',
+      'their-2',
+      '>>>>>>> feature',
+      'footer',
+    ].join('\n')
+
+    const result = reassembleResolvedFile(raw, [
+      { resolvedContent: 'resolved-1' },
+      { resolvedContent: 'resolved-2' },
+    ])
+
+    assert.equal(
+      result,
+      ['header', 'resolved-1', 'middle', 'resolved-2', 'footer'].join('\n')
+    )
+  })
+
+  it('handles diff3 (three-way) markers', () => {
+    const raw = [
+      'before',
+      '<<<<<<< HEAD',
+      'ours',
+      '||||||| base',
+      'original',
+      '=======',
+      'theirs',
+      '>>>>>>> feature',
+      'after',
+    ].join('\n')
+
+    const result = reassembleResolvedFile(raw, [{ resolvedContent: 'merged' }])
+
+    assert.equal(result, ['before', 'merged', 'after'].join('\n'))
+  })
+
+  it('handles empty resolved content (intentional deletion)', () => {
+    const raw = [
+      'keep this',
+      '<<<<<<< HEAD',
+      'delete me',
+      '=======',
+      'also delete',
+      '>>>>>>> feature',
+      'keep this too',
+    ].join('\n')
+
+    const result = reassembleResolvedFile(raw, [{ resolvedContent: '' }])
+
+    assert.equal(result, ['keep this', 'keep this too'].join('\n'))
+  })
+
+  it('handles multi-line resolved content', () => {
+    const raw = [
+      'start',
+      '<<<<<<< HEAD',
+      'a',
+      '=======',
+      'b',
+      '>>>>>>> feature',
+      'end',
+    ].join('\n')
+
+    const result = reassembleResolvedFile(raw, [
+      { resolvedContent: 'line1\nline2\nline3' },
+    ])
+
+    assert.equal(result, ['start', 'line1', 'line2', 'line3', 'end'].join('\n'))
+  })
+
+  it('preserves CRLF line endings', () => {
+    const raw = [
+      'line 1',
+      '<<<<<<< HEAD',
+      'ours',
+      '=======',
+      'theirs',
+      '>>>>>>> feature',
+      'line 2',
+    ].join('\r\n')
+
+    const result = reassembleResolvedFile(raw, [{ resolvedContent: 'merged' }])
+
+    assert.equal(result, ['line 1', 'merged', 'line 2'].join('\r\n'))
+  })
+
+  it('preserves file with no conflicts unchanged', () => {
+    const raw = 'line 1\nline 2\nline 3'
+    const result = reassembleResolvedFile(raw, [])
+    assert.equal(result, raw)
+  })
+
+  it('treats malformed markers (missing separator) as regular content', () => {
+    const raw = [
+      'line 1',
+      '<<<<<<< HEAD',
+      'some content',
+      '>>>>>>> feature',
+      'line 2',
+    ].join('\n')
+
+    // No ======= separator → not a valid conflict block, copy through
+    const result = reassembleResolvedFile(raw, [])
+
+    assert.equal(result, raw)
+  })
+
+  it('treats unclosed markers (missing >>>>>>>) as regular content', () => {
+    const raw = [
+      'line 1',
+      '<<<<<<< HEAD',
+      'some content',
+      '=======',
+      'other content',
+      'line 2',
+    ].join('\n')
+
+    // No >>>>>>> closing → not a valid conflict block, copy through
+    const result = reassembleResolvedFile(raw, [])
+
+    assert.equal(result, raw)
   })
 })
 

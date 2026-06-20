@@ -836,5 +836,52 @@ describe('copilot-conflict-context', () => {
       // Their side heading should still appear but with no commits listed
       assert.ok(result.includes('(theirs)'))
     })
+
+    it('does not include rawContent in prompt (used only for reassembly)', () => {
+      const rawFile = [
+        'import { foo } from "bar"',
+        '',
+        'const a = 1',
+        '<<<<<<< HEAD',
+        'const b = 2',
+        '=======',
+        'const b = 3',
+        '>>>>>>> feature',
+        '',
+        'export default a + b',
+      ].join('\n')
+
+      const context: ICopilotConflictContext = {
+        ourLabel: 'main',
+        theirLabel: 'feature',
+        files: [
+          {
+            path: 'src/math.ts',
+            hunks: [
+              {
+                oursContent: 'const b = 2',
+                theirsContent: 'const b = 3',
+                baseContent: null,
+                contextBefore: 'const a = 1',
+                contextAfter: '',
+              },
+            ],
+            rawContent: rawFile,
+          },
+        ],
+      }
+
+      const result = formatConflictContextForPrompt(
+        toResolutionContext(context)
+      )
+
+      // rawContent should NOT appear in prompt — it's for reassembly only
+      assert.ok(!result.includes('Full file content'))
+      assert.ok(!result.includes('import { foo } from "bar"'))
+      assert.ok(!result.includes('export default a + b'))
+      // Should still include hunk breakdown
+      assert.ok(result.includes('Conflict 1 of 1'))
+      assert.ok(result.includes('const b = 2'))
+    })
   })
 })

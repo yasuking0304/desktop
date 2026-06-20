@@ -29,6 +29,12 @@ export interface IFileConflictContext {
   readonly hunks: ReadonlyArray<IConflictHunk>
   /** If the file was skipped, the reason why (shown in prompt so Copilot knows) */
   readonly skippedReason?: string
+  /**
+   * The full file content on disk (including conflict markers). Used after
+   * the model responds to reassemble the resolved file by splicing per-hunk
+   * resolutions into the original content. Omitted when the file is skipped.
+   */
+  readonly rawContent?: string
 }
 
 /**
@@ -349,7 +355,7 @@ export async function buildConflictContext(
         }
       }
 
-      return { path: file.path, hunks }
+      return { path: file.path, hunks, rawContent: content }
     })
   )
 
