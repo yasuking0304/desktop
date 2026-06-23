@@ -1,5 +1,15 @@
 {
   "releases": {
+    "3.5.13-beta4": [
+      "[Fixed] Worktree list is updated after after renaming or deleting worktrees - #22335 Thanks @pol-rivero!",
+      "[Fixed] The toolbar correctly calculates available space when worktree dropdown isn't visible - #22356. Thanks @pol-rivero!",
+      "[Fixed] Toolbar space allocation calculates available space based on order of toolbar buttons - #22364. Thanks @pol-rivero!",
+      "[Fixed] Resolve issue where error messages in the Preferences dialog were not displayed correctly - #22363"
+    ],
+    "3.5.13-beta3": [
+      "[Fixed] Recover conflict dialog from permanently frozen state when conflict state becomes invalid, preventing users from needing to restart the app - #22348",
+      "[Fixed] Resolve Copilot conflict resolution data loss where file content outside conflicted regions was overwritten when using AI-assisted conflict resolution - #22349"
+    ],
     "3.5.13-beta2": [
       "[Added] Add 'Always use Copilot when conflicts are detected' setting and a nudge dialog that appears after five manual uses to encourage enabling it - #22285",
       "[Added] Add the Copilot conflict resolution Changes tab, allowing users to see a diff of Copilot's suggested resolution - #22333",

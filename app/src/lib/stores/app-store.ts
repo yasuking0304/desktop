@@ -213,6 +213,7 @@ import {
   RepositoryType,
   listWorktrees,
   removeWorktree,
+  moveWorktree,
   getCommitRangeDiff,
   getCommitRangeChangedFiles,
   updateRemoteHEAD,
@@ -287,6 +288,7 @@ import {
   enableCopilotConflictResolution,
   enableCopilotSdkCommitMessageGeneration,
   enableCustomIntegration,
+  enableWorktreeSupport,
 } from '../feature-flag'
 import { isGHES } from '../endpoint-capabilities'
 import { Banner, BannerType } from '../../models/banner'
@@ -2618,17 +2620,46 @@ export class AppStore extends TypedBaseStore<IAppState> {
   }
 
   /**
+   * Determine whether the worktree dropdown is currently shown in the toolbar.
+   *
+   * This mirrors the render condition in `App.renderWorktreeToolbarButton`: the
+   * dropdown is shown when worktree support is enabled and either the selected
+   * repository has at least one linked worktree (i.e. more than just the main
+   * worktree) or the worktree foldout is currently open (which lets the user
+   * create their first worktree from the toolbar).
+   */
+  private isWorktreeDropdownVisible(): boolean {
+    if (!enableWorktreeSupport()) {
+      return false
+    }
+
+    if (this.currentFoldout?.type === FoldoutType.Worktree) {
+      return true
+    }
+
+    const repository = this.selectedRepository
+    const worktreeCount =
+      repository instanceof Repository
+        ? this.repositoryStateCache.get(repository).worktrees.length
+        : 0
+    return worktreeCount > 1
+  }
+
+  /**
    * Calculate the constraints of our resizable panes whenever the window
    * dimensions change.
    */
   private updateResizableConstraints() {
+    const showWorktreeDropdown = this.isWorktreeDropdownVisible()
+
     // The combined width of the toolbar buttons (worktree, branch, push/pull).
     // Since the repository list toolbar button width is tied to the width of
     // the sidebar we can't let it push these buttons off screen.
     const toolbarButtonsMinWidth =
       defaultPushPullButtonWidth +
       defaultBranchDropdownWidth +
-      defaultWorktreeDropdownWidth
+      (showWorktreeDropdown ? defaultWorktreeDropdownWidth : 0)
+    const numButtons = 2 + (showWorktreeDropdown ? 1 : 0)
 
     // Start with all the available width
     let available = window.innerWidth
@@ -2665,14 +2696,26 @@ export class AppStore extends TypedBaseStore<IAppState> {
     this.commitSummaryWidth = constrain(this.commitSummaryWidth, 100, filesMax)
     this.stashedFilesWidth = constrain(this.stashedFilesWidth, 100, filesMax)
 
-    // Allocate branch first (highest priority), then worktree, then
-    // push-pull. Each subsequent allocation uses the clamped value of the
-    // previous to prevent the total from exceeding the available space.
+    // Allocate worktree first (highest priority), then branch, then
+    // push-pull. The foldouts are laid out in this order, so the width
+    // constraints should follow the same order. Each subsequent allocation
+    // uses the clamped value of the previous to prevent the total from
+    // exceeding the available space.
+    const worktreeDropdownMax =
+      available - defaultBranchDropdownWidth - defaultPushPullButtonWidth
+    this.worktreeDropdownWidth = constrain(
+      this.worktreeDropdownWidth,
+      Math.min(available / numButtons - 10, 170),
+      worktreeDropdownMax
+    )
+
     const branchDropdownMax =
-      available - defaultWorktreeDropdownWidth - defaultPushPullButtonWidth
+      available -
+      (showWorktreeDropdown ? clamp(this.worktreeDropdownWidth) : 0) -
+      defaultPushPullButtonWidth
     const minimumBranchDropdownWidth =
-      defaultBranchDropdownWidth > available / 3
-        ? available / 3 - 10
+      defaultBranchDropdownWidth > available / numButtons
+        ? available / numButtons - 10
         : defaultBranchDropdownWidth
     this.branchDropdownWidth = constrain(
       this.branchDropdownWidth,
@@ -2680,21 +2723,13 @@ export class AppStore extends TypedBaseStore<IAppState> {
       branchDropdownMax
     )
 
-    const worktreeDropdownMax =
-      available - clamp(this.branchDropdownWidth) - defaultPushPullButtonWidth
-    this.worktreeDropdownWidth = constrain(
-      this.worktreeDropdownWidth,
-      Math.min(available / 3 - 10, 170),
-      worktreeDropdownMax
-    )
-
     const pushPullButtonMaxWidth =
       available -
       clamp(this.branchDropdownWidth) -
-      clamp(this.worktreeDropdownWidth)
+      (showWorktreeDropdown ? clamp(this.worktreeDropdownWidth) : 0)
     const minimumPushPullToolBarWidth =
-      defaultPushPullButtonWidth > available / 3
-        ? available / 3
+      defaultPushPullButtonWidth > available / numButtons
+        ? available / numButtons
         : defaultPushPullButtonWidth
     this.pushPullButtonWidth = constrain(
       this.pushPullButtonWidth,
@@ -4246,6 +4281,11 @@ export class AppStore extends TypedBaseStore<IAppState> {
       const worktrees = await listWorktrees(repository)
       this.repositoryStateCache.update(repository, () => ({ worktrees }))
       this.statsStore.recordWorktreeCount(worktrees.length)
+
+      // The presence of linked worktrees determines whether the worktree
+      // dropdown is shown, which changes how the toolbar width is allocated.
+      this.updateResizableConstraints()
+
       this.emitUpdate()
     } catch (e) {
       log.error('Failed to refresh worktrees', e)
@@ -4312,6 +4352,14 @@ export class AppStore extends TypedBaseStore<IAppState> {
   /** This shouldn't be called directly. See `Dispatcher`. */
   public async _showFoldout(foldout: Foldout): Promise<void> {
     this.currentFoldout = foldout
+
+    // Showing the worktree foldout makes the worktree dropdown visible even
+    // when there are no linked worktrees, so the toolbar width allocation has
+    // to be recalculated to reserve space for it.
+    if (foldout.type === FoldoutType.Worktree) {
+      this.updateResizableConstraints()
+    }
+
     this.emitUpdate()
 
     // If the user is opening the repository list and we haven't yet
@@ -4332,7 +4380,14 @@ export class AppStore extends TypedBaseStore<IAppState> {
       return
     }
 
+    const wasWorktreeFoldout = this.currentFoldout.type === FoldoutType.Worktree
+
     this.currentFoldout = null
+
+    if (wasWorktreeFoldout) {
+      this.updateResizableConstraints()
+    }
+
     this.emitUpdate()
   }
 
@@ -4346,7 +4401,14 @@ export class AppStore extends TypedBaseStore<IAppState> {
       return
     }
 
+    const wasWorktreeFoldout = this.currentFoldout.type === FoldoutType.Worktree
+
     this.currentFoldout = null
+
+    if (wasWorktreeFoldout) {
+      this.updateResizableConstraints()
+    }
+
     this.emitUpdate()
   }
 
@@ -5969,7 +6031,6 @@ export class AppStore extends TypedBaseStore<IAppState> {
     force?: boolean
   ): Promise<void> {
     const isDeletingCurrentWorktree = repository.path === worktreePath
-    let path = repository.path
     let originalWorktree: WorktreeEntry | null = null
 
     if (isDeletingCurrentWorktree) {
@@ -5982,14 +6043,15 @@ export class AppStore extends TypedBaseStore<IAppState> {
         throw new Error('Could not find main worktree')
       }
 
-      await this._switchWorktree(repository, main)
-      // Run the delete worktree action with the main worktree path since the current
-      // worktree path will be deleted after the switch.
-      path = main.path
+      // Switch to the main worktree before deleting the current one since the
+      // current worktree path will be deleted after the switch. Use the
+      // resulting repository (with the updated path) for the subsequent
+      // remove and refresh calls.
+      repository = await this._switchWorktree(repository, main)
     }
 
     try {
-      await removeWorktree(path, worktreePath, force)
+      await removeWorktree(repository.path, worktreePath, force)
     } catch (e) {
       this._closePopup(PopupType.DeleteWorktree)
       this._closePopup(PopupType.DeleteWorktreeFailed)
@@ -6000,10 +6062,41 @@ export class AppStore extends TypedBaseStore<IAppState> {
         error: e,
         originalWorktree,
       })
+      return
     }
 
     await this._refreshWorktrees(repository)
     this.statsStore.increment('worktreeDeletedCount')
+  }
+
+  /** This shouldn't be called directly. See 'Dispatcher'. */
+  public async _moveWorktree(
+    repository: Repository,
+    worktreePath: string,
+    newPath: string
+  ): Promise<void> {
+    await moveWorktree(repository, worktreePath, newPath)
+
+    // If the worktree being renamed is the currently selected one, switch to
+    // its new path so that the subsequent refresh (and any further git calls)
+    // operate on the renamed directory rather than the now non-existing one.
+    if (repository.path === worktreePath) {
+      const result = await this.repositoriesStore.switchWorktree(
+        repository,
+        newPath
+      )
+
+      // Renaming changes the repository's path and therefore its hash, which
+      // is the key used by the state cache. Carry the existing state over to
+      // the new identity so we don't reset the UI (e.g. a typed commit
+      // message) just because the worktree was renamed.
+      this.repositoryStateCache.transferState(repository, result.repository)
+
+      await this._selectRepository(result.repository)
+      await this._refreshWorktrees(result.repository)
+    } else {
+      await this._refreshWorktrees(repository)
+    }
   }
 
   public _setWorktreeDropdownWidth(width: number): Promise<void> {

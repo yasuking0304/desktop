@@ -385,8 +385,8 @@ export class Preferences extends React.Component<
         onDismissed={this.onCancel}
         onSubmit={this.onSave}
       >
+        {this.renderDisallowedCharactersError()}
         <div className="preferences-container">
-          {this.renderDisallowedCharactersError()}
           <TabBar
             onTabClicked={this.onTabClicked}
             selectedIndex={this.tabToVisualIndex(this.state.selectedIndex)}
