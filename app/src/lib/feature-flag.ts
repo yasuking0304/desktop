@@ -111,9 +111,7 @@ export const enableCopilotSdkCommitMessageGeneration = (account: Account) => {
 }
 
 /** Should we enable Copilot-powered merge conflict resolution? */
-export function enableCopilotConflictResolution(): boolean {
-  return enableBetaFeatures()
-}
+export const enableCopilotConflictResolution = () => true
 
 export function enableAccessibleListToolTips(): boolean {
   return enableBetaFeatures()
@@ -126,6 +124,4 @@ export const enableHooksByDefault = enableBetaFeatures
 export const enableFormattingPreferences = () => true
 
 /** Should the app enable worktree support? */
-export function enableWorktreeSupport(): boolean {
-  return enableBetaFeatures()
-}
+export const enableWorktreeSupport = () => true

@@ -285,7 +285,8 @@ export class CopilotPreferences extends React.Component<
                 'copilot.commit-message-generation',
                 'Commit message generation'
               ),
-          this.onCommitMessageModelChanged
+          this.onCommitMessageModelChanged,
+          350
         )}
         <p className="settings-description">
           <LinkButton uri="https://docs.github.com/en/desktop/making-changes-in-a-branch/committing-and-reviewing-changes-to-your-project-in-github-desktop#write-a-commit-message-and-push-your-changes">
@@ -303,7 +304,8 @@ export class CopilotPreferences extends React.Component<
               __DARWIN__
                 ? t('copilot.conflict-resolution-darwin', 'Conflict Resolution')
                 : t('copilot.conflict-resolution', 'Conflict resolution'),
-              this.onConflictResolutionModelChanged
+              this.onConflictResolutionModelChanged,
+              280
             )}
             <p className="settings-description">
               Model changes apply to future conflict resolutions.
@@ -331,7 +333,8 @@ export class CopilotPreferences extends React.Component<
     copilotModels: ReadonlyArray<Model>,
     feature: CopilotFeature,
     label: string,
-    onChange: (model: string) => void
+    onChange: (model: string) => void,
+    maxHeight?: number
   ): JSX.Element {
     const { byokProviders, selectedCopilotModels } = this.props
 
@@ -354,6 +357,7 @@ export class CopilotPreferences extends React.Component<
           byokProviders={byokProviders}
           value={value}
           onChange={onChange}
+          maxHeight={maxHeight}
         />
         {selectionInfo === null ? null : (
           <CopilotModelSelectionInfo
