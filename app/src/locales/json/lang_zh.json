@@ -56,24 +56,24 @@
     "add-repository-darwin": "添加存储库"
   },
   "add-worktree-dialog": {
-    "branch-name-label": "Branch name",
-    "branch-name-label-darwin": "Branch Name",
-    "create-worktree": "Create worktree",
-    "create-worktree-darwin": "Create Worktree",
-    "title": "Add worktree",
-    "title-darwin": "Add Worktree",
-    "will-check-out-existing-branch-1": "Will check out existing branch ",
+    "branch-name-label": "分支名称",
+    "branch-name-label-darwin": "分支名称",
+    "create-worktree": "创建worktree",
+    "create-worktree-darwin": "创建Worktree",
+    "title": "添加worktree",
+    "title-darwin": "添加Worktree",
+    "will-check-out-existing-branch-1": "将检出现有分支 ",
     "will-check-out-existing-branch-2": ".",
-    "will-check-out-remote-branch-1": "Will check out remote branch ",
-    "will-check-out-remote-branch-2": ".",
-    "worktree-name-label": "Worktree name",
-    "worktree-name-label-darwin": "Worktree Name",
-    "worktree-name-placeholder": "Worktree name",
-    "worktree-name-placeholder-darwin": "Worktree name",
-    "worktree-path-message-1": "Worktree will be created at ",
-    "worktree-path-message-2": ".",
-    "worktree-path-placeholder": "Worktree path",
-    "worktree-path-placeholder-darwin": "Worktree path"
+    "will-check-out-remote-branch-1": "将检出远程分支 ",
+    "will-check-out-remote-branch-2": "。",
+    "worktree-name-label": "Worktree名称",
+    "worktree-name-label-darwin": "Worktree名称",
+    "worktree-name-placeholder": "Worktree名称",
+    "worktree-name-placeholder-darwin": "Worktree名称",
+    "worktree-path-message-1": "Worktree将在 ",
+    "worktree-path-message-2": " 处创建。",
+    "worktree-path-placeholder": "Worktree路径",
+    "worktree-path-placeholder-darwin": "Worktree路径"
   },
   "advanced": {
     "background-updates": "背景更新",
@@ -415,6 +415,7 @@
     "amending": "修改前一次提交",
     "bypass-commit-hooks": "绕过提交钩子",
     "bypass-commit-hooks-darwin": "绕过提交钩子",
+    "cancel-generate-commit-details": "Cancel generating commit details",
     "commit": "提交",
     "commit-count-files": "{{0}} {{1}}",
     "commit-description": "提交摘要",
@@ -663,28 +664,40 @@
     "resolve-conflicts-to-continue-1": "解决冲突以继续 ",
     "resolve-conflicts-to-continue-2": "。"
   },
+  "continue-rebase": {
+    "continue-rebase": "继续 rebase",
+    "continue-rebase-tooltip": "继续 rebase",
+    "rebasing": "正在 rebase",
+    "resolve-conflicts-tooltip": "继续前解决所有冲突",
+    "warn-about-untracked-files": "未跟踪的文件将被排除"
+  },
   "copilot": {
-    "add-custom-provider": "Add a custom provider to use your own API keys with OpenAI-compatible endpoints, Azure, Anthropic, or local providers like Ollama.",
-    "add-provider": "プロパイダーの追加…",
-    "add-provider-darwin": "プロパイダーの追加…",
-    "commit-message-generation": "Commit message generation",
-    "commit-message-generation-darwin": "Commit Message Generation",
-    "conflict-resolution": "Conflict resolution",
-    "conflict-resolution-darwin": "Conflict Resolution",
-    "custom-instructions": "custom instructions",
-    "learn-more-about-commit-messages": "Learn more about generating commit messages.",
-    "many-models": "{{0}} models",
-    "models": "Models",
-    "one-model": "1 model",
-    "providers": "Providers",
-    "tailor-copilot-behavior-1": "Tailor how Copilot behaves by using ",
-    "tailor-copilot-behavior-2": "."
+    "add-custom-provider": "添加自定义提供商，以便在兼容 OpenAI 的端点、Azure、Anthropic 或 Ollama 等本地提供商上使用您自己的 API 密钥。",
+    "add-provider": "添加提供商…",
+    "add-provider-darwin": "添加提供商…",
+    "always-use-copilot-when-conflicts": "检测到冲突时，始终使用 Copilot",
+    "always-use-copilot-when-conflicts-darwin": "检测到冲突时，始终使用 Copilot",
+    "commit-message-generation": "提交信息生成",
+    "commit-message-generation-darwin": "提交信息生成",
+    "conflict-resolution": "冲突解决",
+    "conflict-resolution-darwin": "冲突解决",
+    "custom-instructions": "自定义指令",
+    "learn-more-about-commit-messages": "了解更多关于生成提交信息的内容。",
+    "loading-models": "正在加载可用模型…",
+    "many-models": "{{0}} 个模型",
+    "model-changes-apply-to-future-conflict": "模型变更适用于未来的冲突解决。",
+    "models": "模型",
+    "no-models-available": "没有可用的 Copilot 模型。",
+    "one-model": "1 个模型",
+    "providers": "提供方",
+    "tailor-copilot-behavior-1": "利用 ",
+    "tailor-copilot-behavior-2": " 来定制 Copilot 的行为方式。"
   },
   "copilot-byok-provider-dialog": {
-    "add-custom-provider": "Add Custom Provider",
-    "add-custom-provider-darwin": "Add custom provider",
-    "edit-custom-provider": "Edit custom provider",
-    "edit-custom-provider-darwin": "Edit Custom Provider"
+    "add-custom-provider": "添加自定义提供程序",
+    "add-custom-provider-darwin": "添加自定义提供程序",
+    "edit-custom-provider": "编辑自定义提供程序",
+    "edit-custom-provider-darwin": "编辑自定义提供程序"
   },
   "copilot-error": {
     "billing-issue": "在 GitHub Copilot 上发生了付费错误。",
@@ -700,9 +713,11 @@
     "session-quota-exceeded-title": "会话配额超出"
   },
   "copilot-model-picker": {
-    "default-model": "{{0}}{{1}} (default)",
-    "no-models-found": "No models found.",
-    "use-of-credits": "Use of credits: {{0}}"
+    "choose-a-model": "选择一个模型",
+    "default-model": "{{0}}(默认)",
+    "filter-models": "过滤模型",
+    "no-models-found": "未找到模型。",
+    "use-of-credits": "额度使用: {{0}}"
   },
   "copy-button": {
     "copied": "已复制"
@@ -861,23 +876,23 @@
     "tag-named-is-present-on-the-remote-2": " 已被推送到远程。\n如果此标签正在使用中, 删除它可能会导致问题。\n我们建议您在删除之前咨询系统管理员。"
   },
   "delete-worktree": {
-    "delete-worktree-dialog": "Delete worktree",
-    "delete-worktree-dialog-darwin": "Delete Worktree"
+    "delete-worktree-dialog": "删除 Worktree",
+    "delete-worktree-dialog-darwin": "删除 Worktree"
   },
   "delete-worktree-dialog": {
-    "are-you-sure-1": "Are you sure you want to delete the worktree ",
-    "are-you-sure-2": "?"
+    "are-you-sure-1": "您确定要删除worktree ",
+    "are-you-sure-2": "吗?"
   },
   "delete-worktree-failed-dialog": {
-    "deleting-the-worktree-1": "Deleting the worktree ",
+    "deleting-the-worktree-1": "正在删除 worktree ",
     "dialog": {
       "deleting-the-worktree-2": " failed."
     },
-    "force-delete": "Forcefully delete",
-    "title": "Delete worktree failed",
-    "title-darwin": "Delete Worktree Failed",
-    "would-you-like-to-forcefully-1": "Would you like to forcefully delete the worktree ",
-    "would-you-like-to-forcefully-2": "?"
+    "force-delete": "强制删除",
+    "title": "删除worktree失败",
+    "title-darwin": "删除worktree失败",
+    "would-you-like-to-forcefully-1": "您想要强制删除 worktree ",
+    "would-you-like-to-forcefully-2": " 吗?"
   },
   "diff-contents-warning": {
     "learn-more-about-bidirectional-unicode": "了解有关双向 Unicode 字符的更多信息",
@@ -941,52 +956,53 @@
     "you-ve-learned-the-basics": "您已了解 GitHub Desktop 的基础知识。以下是一些后续操作的建议。"
   },
   "edit-byok-model-dialog": {
-    "add-model": "Add model",
-    "add-model-darwin": "Add Model",
-    "copilot-byok-model-hint-1": "The exact name your provider expects (e.g. ",
-    "copilot-byok-provider-hint-2": " ).",
-    "display-name": "Display name",
-    "display-name-darwin": "Display Name",
-    "edit-model": "Edit model",
-    "edit-model-darwin": "Edit Model",
-    "model-identifier": "Model identifier",
-    "model-identifier-darwin": "Model Identifier",
-    "model-identifier-error": "Please enter a model identifier.",
-    "model-identifier-exists": "Another model with the identifier '{{0}}' already exists.",
-    "reasoning-effort": "Reasoning effort",
-    "reasoning-effort-darwin": "Reasoning Effort",
-    "reasoning-effort-default": "Default",
-    "reasoning-effort-default-provider": "Default (provider's choice)",
-    "reasoning-effort-hint-1": "Reasoning models (o1, o3, GPT-5 reasoning variants, etc.) think before responding. Higher levels are slower but produce better answers on complex tasks. Leave on ",
-    "reasoning-effort-hint-2": " for non-reasoning models or to let the provider pick.",
-    "the-friendly-name-shown": "The friendly name shown in the Copilot model picker."
+    "add-model": "添加模型",
+    "add-model-darwin": "添加模型",
+    "copilot-byok-model-hint-1": "您的服务提供商所要求的确切名称（例如 ",
+    "copilot-byok-provider-hint-2": " )。",
+    "display-name": "显示名称",
+    "display-name-darwin": "显示名称",
+    "edit-model": "编辑模型",
+    "edit-model-darwin": "编辑模型",
+    "model-identifier": "机型标识符",
+    "model-identifier-darwin": "机型标识符",
+    "model-identifier-error": "请输入模型标识符。",
+    "model-identifier-exists": "已存在另一个标识符为「{{0}}」的模型。",
+    "reasoning-effort": "推理投入",
+    "reasoning-effort-darwin": "推理投入",
+    "reasoning-effort-default": "默认",
+    "reasoning-effort-default-provider": "默认（由提供商选择）",
+    "reasoning-effort-hint-1": "推理模型（如 o1、o3、GPT-5 推理变体等）会在响应前进行思考。级别越高，响应速度越慢，但在处理复杂任务时能提供更优质的答案。对于非推理模型，或希望由服务提供商自动选择时，请选择 ",
+    "reasoning-effort-hint-2": " 选项。",
+    "the-friendly-name-shown": "Copilot 模型选择器中显示的友好名称。"
   },
   "edit-byok-provider-dialog": {
-    "add-model": "Add model…",
-    "add-model-darwin": "Add Model…",
-    "api-format": "API format",
-    "api-format-completions": "Chat completions (default)",
-    "api-format-darwin": "API Format",
-    "api-format-responses": "Responses (GPT-5 series)",
-    "auth-api-key": "API key",
+    "add-model": "添加模型…",
+    "add-model-darwin": "添加模型…",
+    "api-format": "API格式",
+    "api-format-completions": "对话补全 (默认)",
+    "api-format-darwin": "API格式",
+    "api-format-responses": "Responses (GPT-5系列)",
+    "auth-api-key": "API密钥",
     "auth-bearer": "Bearer token",
-    "auth-none": "None",
-    "auth-none-hint": "No credentials will be sent with requests to this provider.",
-    "authentication": "Authentication",
-    "azure-api-version": "Azure API version",
-    "azure-api-version-darwin": "Azure API Version",
-    "base-url": "Base URL",
-    "models-empty": "No models yet. Add at least one to use this provider.",
-    "models-hint": "Tell Desktop which models this provider offers. Each one will appear in the model picker for Copilot features.",
-    "placeholder-unchanged": "(unchanged)",
-    "provider": "Provider",
-    "provider-name-placeholder": "My provider",
-    "provider-type": "Type",
+    "auth-none": "没有任何",
+    "auth-none-hint": "向该提供程序发送请求时，不会发送任何凭据。",
+    "authentication": "验证",
+    "azure-api-version": "Azure API 版本",
+    "azure-api-version-darwin": "Azure API 版本",
+    "base-url": "基础 URL",
+    "models": "模型",
+    "models-empty": "目前还没有模型。请至少添加一个模型才能使用此服务提供商。",
+    "models-hint": "请将此提供商提供的模型告知桌面系统。每个模型都会出现在副驾驶功能的模型选择器中。",
+    "placeholder-unchanged": "(未改变)",
+    "provider": "提供方",
+    "provider-name-placeholder": "我的服务提供商",
+    "provider-type": "类型",
     "provider-type-anthropic": "Anthropic",
     "provider-type-azure": "Azure",
-    "provider-type-openai": "OpenAI / OpenAI-compatible",
-    "request-timeout": "Request timeout (seconds)",
-    "request-timeout-darwin": "Request Timeout (seconds)"
+    "provider-type-openai": "OpenAI / 兼容 OpenAI",
+    "request-timeout": "请求超时时间(秒)",
+    "request-timeout-darwin": "请求超时时间(秒)"
   },
   "editor-error": {
     "open-options": "打开选项",
@@ -1125,7 +1141,7 @@
     "edit-your-global-git-config-2": " 编辑你的全局 Git 配置文件",
     "edit-your-global-git-config-3": "。",
     "enable-paths-lt-260-characters": "在 Windows 上使用超过 260 个字符的路径",
-    "generates-comments-using-copilot": "GitHub Desktop generates commit comments using Copilot's credits. Copilot quota will be reset on {{0}}.",
+    "generates-comments-using-copilot": "GitHub Desktop 使用 Copilot 积分生成提交注释。Copilot 配额将重置为 {{0}}。",
     "gitHub-default-branch-description-1": "GitHub 的默认分支名称是 ",
     "gitHub-default-branch-description-2": "。 ",
     "gitHub-default-branch-description-3": "您可能想要根据不同的工作流程来更改它, 或者因为您的集成仍然需要历史默认分支名称 ",
@@ -1136,7 +1152,7 @@
     "settings-related-to-the-path": "与路径相关的设置",
     "shell-to-use-when-loading-env": "加载环境时使用的 Shell",
     "show-copilot-information": "Copilot使用狀態",
-    "when-enabled-attempt-to-load-env-variables": "When enabled, GitHub Desktop will attempt to load environment variables from your shell when executing Git hooks. This is useful if your Git hooks depend on environment variables set in your shell configuration files, a common practive for version managers such as nvm, rbenv, asdf, etc."
+    "when-enabled-attempt-to-load-env-variables": "启用此功能后，GitHub Desktop 会在执行 Git 钩子时从 shell 读取环境变量。当 Git 钩子依赖于 shell 配置文件中设置的环境变量时，此功能非常有用，而 nvm、rbenv 和 asdf 等版本控制工具通常使用这种方法。"
   },
   "git-config": {
     "for-this-repository": "您要用于此存储库的名称和电子邮件地址",
@@ -1276,18 +1292,18 @@
     "copy-relative-file-path-darwin": "复制相对文件路径",
     "copy-relative-paths": "复制相对路径",
     "copy-relative-paths-darwin": "复制相对路径",
-    "copy-worktree-name": "Copy worktree name",
-    "copy-worktree-name-darwin": "Copy worktree name",
-    "copy-worktree-path": "Copy worktree path",
-    "copy-worktree-path-darwin": "Copy worktree path",
+    "copy-worktree-name": "复制worktree名称",
+    "copy-worktree-name-darwin": "复制worktree名称",
+    "copy-worktree-path": "复制worktree路径",
+    "copy-worktree-path-darwin": "复制worktree路径",
     "crash-main-process": "主进程崩溃…",
     "crash-renderer-process": "渲染器进程崩溃…",
     "create-issue-on-github": "在 GitHub 上创建问题 (&I)",
     "create-issue-on-github-darwin": "在 GitHub 上创建问题",
     "create-pull-request": "创建拉取请求 (&P)",
     "create-pull-request-darwin": "创建拉取请求",
-    "create-worktree": "New work&tree…",
-    "create-worktree-darwin": "New Worktree…",
+    "create-worktree": "新worktree(&T)…",
+    "create-worktree-darwin": "新Worktree…",
     "cut": "剪切 (&T)",
     "cut-darwin": "剪切",
     "default-branch": "默认分支",
@@ -1725,9 +1741,9 @@
     "refresh-the-list-of-pull-request": "刷新拉取请求列表"
   },
   "pull-request-list-item-context-menu": {
-    "checkout-in-new-worktree": "Checkout in new worktree…",
-    "checkout-in-new-worktree-darwin": "Checkout in New Worktree…",
-    "view-pull-request-on-github": "View Pull Request on GitHub"
+    "checkout-in-new-worktree": "在新的worktree中检出…",
+    "checkout-in-new-worktree-darwin": "在新的worktree中检出…",
+    "view-pull-request-on-github": "在 GitHub 上查看 Pull Request"
   },
   "pull-request-merge-status": {
     "able-to-merge": "可以合并。",
@@ -1892,17 +1908,17 @@
     "copy-repo-name-darwin": "复制存储库名称",
     "copy-repo-path": "复制存储库路径",
     "copy-repo-path-darwin": "复制存储库路径",
-    "new-worktree": "New worktree…",
-    "new-worktree-darwin": "New Worktree…",
+    "new-worktree": "新建 Worktree…",
+    "new-worktree-darwin": "新建 Worktree…",
     "open-in-editor": "在 {{0}} 中打开",
     "open-in-shell": "在 {{0}} 中打开",
-    "show-worktrees": "Show worktrees",
-    "show-worktrees-darwin": "Show Worktrees"
+    "show-worktrees": "显示worktrees",
+    "show-worktrees-darwin": "显示Worktrees"
   },
   "repository-path": {
-    "name": "Name",
-    "name-placeholder": "name",
-    "sanitized-name-warning": "Invalid characters have been replaced by hyphens."
+    "name": "名称",
+    "name-placeholder": "名称",
+    "sanitized-name-warning": "无效字符已被替换为连字符。"
   },
   "repository-settings": {
     "fork-behavior": "行为",
@@ -2271,18 +2287,18 @@
     "would-you-like-to-open-a-browser": "您是否要打开浏览器授予 GitHub Desktop 更新工作流文件的权限?"
   },
   "worktree-dropdown": {
-    "current-worktree": "Current worktree",
-    "current-worktree-darwin": "Current Worktree",
-    "current-worktree-tooltip": "Current worktree is {{0}}",
-    "new-worktree": "New worktree…",
-    "new-worktree-darwin": "New Worktree…"
+    "current-worktree": "当前worktree",
+    "current-worktree-darwin": "当前Worktree",
+    "current-worktree-tooltip": "当前worktree is {{0}}",
+    "new-worktree": "新worktree…",
+    "new-worktree-darwin": "新Worktree…"
   },
   "worktree-list": {
-    "linked-worktrees": "Linked {{0}}s",
-    "main-worktree": "Main {{0}}",
-    "new-worktree": "New worktree",
-    "new-worktree-darwin": "New Worktree",
-    "no-worktrees": "No worktrees found",
+    "linked-worktrees": "链接的 {{0}}",
+    "main-worktree": "主 {{0}}",
+    "new-worktree": "新worktree",
+    "new-worktree-darwin": "新Worktree",
+    "no-worktrees": "未找到 worktrees",
     "worktree": "worktree",
     "worktree-darwin": "Worktree"
   }

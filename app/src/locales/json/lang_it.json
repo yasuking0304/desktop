@@ -415,6 +415,7 @@
     "amending": "Amending",
     "bypass-commit-hooks": "Bypass Commit hooks",
     "bypass-commit-hooks-darwin": "Bypass Commit Hooks",
+    "cancel-generate-commit-details": "Cancel generating commit details",
     "commit": "Commit",
     "commit-count-files": "{{0}} {{1}}",
     "commit-description": "Commit description",
@@ -663,18 +664,30 @@
     "resolve-conflicts-to-continue-1": "Resolve conflicts to continue",
     "resolve-conflicts-to-continue-2": "."
   },
+  "continue-rebase": {
+    "continue-rebase": "Continue rebase",
+    "continue-rebase-tooltip": "Continue rebase",
+    "rebasing": "Rebasing",
+    "resolve-conflicts-tooltip": "Resolve all conflicts before continuing",
+    "warn-about-untracked-files": "Untracked files will be excluded"
+  },
   "copilot": {
     "add-custom-provider": "Add a custom provider to use your own API keys with OpenAI-compatible endpoints, Azure, Anthropic, or local providers like Ollama.",
     "add-provider": "Add provider…",
     "add-provider-darwin": "Add Provider…",
+    "always-use-copilot-when-conflicts": "Always use Copilot when conflicts are detected",
+    "always-use-copilot-when-conflicts-darwin": "Always Use Copilot When Conflicts Are Detected",
     "commit-message-generation": "Commit message generation",
     "commit-message-generation-darwin": "Commit Message Generation",
     "conflict-resolution": "Conflict resolution",
     "conflict-resolution-darwin": "Conflict Resolution",
     "custom-instructions": "custom instructions",
     "learn-more-about-commit-messages": "Learn more about generating commit messages.",
+    "loading-models": "Loading available models…",
     "many-models": "{{0}} models",
+    "model-changes-apply-to-future-conflict": "Model changes apply to future conflict resolutions.",
     "models": "Models",
+    "no-models-available": "No Copilot models available.",
     "one-model": "1 model",
     "providers": "Providers",
     "tailor-copilot-behavior-1": "Tailor how Copilot behaves by using ",
@@ -700,7 +713,9 @@
     "session-quota-exceeded-title": "Session quota exceeded"
   },
   "copilot-model-picker": {
-    "default-model": "{{0}}{{1}} (default)",
+    "choose-a-model": "Choose a model",
+    "default-model": "{{0}}(default)",
+    "filter-models": "Filter models",
     "no-models-found": "No models found.",
     "use-of-credits": "Use of credits: {{0}}"
   },
@@ -976,6 +991,7 @@
     "azure-api-version": "Azure API version",
     "azure-api-version-darwin": "Azure API Version",
     "base-url": "Base URL",
+    "models": "Models",
     "models-empty": "No models yet. Add at least one to use this provider.",
     "models-hint": "Tell Desktop which models this provider offers. Each one will appear in the model picker for Copilot features.",
     "placeholder-unchanged": "(unchanged)",

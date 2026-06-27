@@ -415,6 +415,7 @@
     "amending": "直前のコミットを修正中",
     "bypass-commit-hooks": "コミットフックのバイパス",
     "bypass-commit-hooks-darwin": "コミットフックのバイパス",
+    "cancel-generate-commit-details": "Cancel generating commit details",
     "commit": "コミット",
     "commit-count-files": "{{0}}{{1}}を",
     "commit-description": "コミットの概要説明",
@@ -663,18 +664,30 @@
     "resolve-conflicts-to-continue-1": " ",
     "resolve-conflicts-to-continue-2": " の競合を解決して続行します。"
   },
+  "continue-rebase": {
+    "continue-rebase": "リベースを続行",
+    "continue-rebase-tooltip": "リベースを続行",
+    "rebasing": "リベース中",
+    "resolve-conflicts-tooltip": "続行する前にすべての競合を解決する",
+    "warn-about-untracked-files": "追跡されていないファイルは除外されます"
+  },
   "copilot": {
     "add-custom-provider": "カスタムプロバイダーを追加すると、OpenAI互換エンドポイント、Azure、Anthropic、または Ollama などのローカルプロバイダーで独自のAPIキーを使用できます。",
     "add-provider": "プロパイダーの追加…",
     "add-provider-darwin": "プロパイダーの追加…",
+    "always-use-copilot-when-conflicts": "競合が検出された場合は、常に Copilot を使用する",
+    "always-use-copilot-when-conflicts-darwin": "競合が検出された場合は、常に Copilot を使用する。",
     "commit-message-generation": "コミットメッセージの生成",
     "commit-message-generation-darwin": "コミットメッセージの生成",
     "conflict-resolution": "競合の解決",
     "conflict-resolution-darwin": "競合の解決",
     "custom-instructions": "カスタム指示",
     "learn-more-about-commit-messages": "コミットメッセージの生成について詳しく知る。",
+    "loading-models": "利用可能なモデルの読み込み中…",
     "many-models": "{{0}}モデル",
+    "model-changes-apply-to-future-conflict": "モデルの変更は、将来の競合解決に適用されます。",
     "models": "モデル",
+    "no-models-available": "利用可能な Copilot モデルがありません。",
     "one-model": "1モデル",
     "providers": "プロパイダー",
     "tailor-copilot-behavior-1": " ",
@@ -700,7 +713,9 @@
     "session-quota-exceeded-title": "セッションの割り当て量を超過しました"
   },
   "copilot-model-picker": {
-    "default-model": "{{0}}{{1}} (デフォルト)",
+    "choose-a-model": "モデルの選択",
+    "default-model": "{{0}}(デフォルト)",
+    "filter-models": "モデルのフィルター",
     "no-models-found": "モデルが見つかりません。",
     "use-of-credits": "クレジット使用量: {{0}}"
   },
@@ -861,8 +876,8 @@
     "tag-named-is-present-on-the-remote-2": " というプッシュ済みのタグが存在します。\nこのタグが使用されている場合、削除すると問題が発生する可能性が\nあります。削除する前に、システム管理者に相談することをお勧めします。"
   },
   "delete-worktree": {
-    "delete-worktree-dialog": "worktreeの削除",
-    "delete-worktree-dialog-darwin": "worktreeの削除"
+    "delete-worktree-dialog": "Worktreeの削除",
+    "delete-worktree-dialog-darwin": "Worktreeの削除"
   },
   "delete-worktree-dialog": {
     "are-you-sure-1": "worktree ",
@@ -873,7 +888,7 @@
     "dialog": {
       "deleting-the-worktree-2": " failed."
     },
-    "force-delete": "Forcefully delete",
+    "force-delete": "強制的に削除",
     "title": "worktreeの削除に失敗しました",
     "title-darwin": "worktreeの削除に失敗しました",
     "would-you-like-to-forcefully-1": "Would you like to forcefully delete the worktree ",
@@ -965,7 +980,7 @@
     "add-model": "モデルの追加…",
     "add-model-darwin": "モデルの追加…",
     "api-format": "APIフォーマット",
-    "api-format-completions": "Chat completions (デフォルト)",
+    "api-format-completions": "チャット補完 (デフォルト)",
     "api-format-darwin": "APIフォーマット",
     "api-format-responses": "Responses (GPT-5シリーズ)",
     "auth-api-key": "API キー",
@@ -976,9 +991,10 @@
     "azure-api-version": "Azure API バージョン",
     "azure-api-version-darwin": "Azure API バージョン",
     "base-url": "ベースURL",
+    "models": "モデル",
     "models-empty": "モデルがまだありません。このプロバイダーを使用するには少なくとも1つ追加してください。",
     "models-hint": "Desktopにこのプロバイダーが提供するモデルを通知してください。各モデルはCopilot機能のモデルピッカーに表示されます。",
-    "placeholder-unchanged": "(unchanged)",
+    "placeholder-unchanged": "(変更なし)",
     "provider": "プロパイダー",
     "provider-name-placeholder": "プロバイダーの名前を入力",
     "provider-type": "型",
@@ -1892,16 +1908,16 @@
     "copy-repo-name-darwin": "リポジトリ名のコピー",
     "copy-repo-path": "リポジトリパスのコピー",
     "copy-repo-path-darwin": "リポジトリパスのコピー",
-    "new-worktree": "新しい worktree…",
-    "new-worktree-darwin": "新しい worktree…",
+    "new-worktree": "新しい Worktree…",
+    "new-worktree-darwin": "新しい Worktree…",
     "open-in-editor": "{{0}} で開く",
     "open-in-shell": "{{0}} で開く",
     "show-worktrees": "Worktree を表示",
     "show-worktrees-darwin": "Worktree を表示"
   },
   "repository-path": {
-    "name": "Name",
-    "name-placeholder": "name",
+    "name": "名称",
+    "name-placeholder": "名称",
     "sanitized-name-warning": "リポジトリ名に無効な文字はハイフンに置き換えられます。"
   },
   "repository-settings": {

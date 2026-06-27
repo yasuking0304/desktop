@@ -252,11 +252,15 @@ export class CopilotPreferences extends React.Component<
     const { copilotModels, byokProviders } = this.props
 
     if (copilotModels === null) {
-      return <p>Loading available models…</p>
+      return <p>{t('copilot.loading-models', 'Loading available models…')}</p>
     }
 
     if (!hasCopilotModelPickerItems(copilotModels, byokProviders)) {
-      return <p>No Copilot models available.</p>
+      return (
+        <p>
+          {t('copilot.no-models-available', 'No Copilot models available.')}
+        </p>
+      )
     }
 
     return (
@@ -308,13 +312,22 @@ export class CopilotPreferences extends React.Component<
               280
             )}
             <p className="settings-description">
-              Model changes apply to future conflict resolutions.
+              {t(
+                'copilot.model-changes-apply-to-future-conflict',
+                'Model changes apply to future conflict resolutions.'
+              )}
             </p>
             <Checkbox
               label={
                 __DARWIN__
-                  ? t('copilot.always-use-copilot-when-conflicts-darwin', 'Always Use Copilot When Conflicts Are Detected')
-                  : t('copilot.always-use-copilot-when-conflicts', 'Always use Copilot when conflicts are detected')
+                  ? t(
+                      'copilot.always-use-copilot-when-conflicts-darwin',
+                      'Always Use Copilot When Conflicts Are Detected'
+                    )
+                  : t(
+                      'copilot.always-use-copilot-when-conflicts',
+                      'Always use Copilot when conflicts are detected'
+                    )
               }
               value={
                 this.props.alwaysUseCopilotForConflictResolution

@@ -216,7 +216,7 @@ const getCopilotModelTitle = (item: ICopilotModelListItem) => {
     : getPremiumRequestsBillingLabel(item.billing)
   return item.isDefault
     ? t('copilot-model-picker.default-model', `{{0}}(default)`, {
-        0: item.name
+        0: item.name,
       })
     : `${item.name}${billingLabel}`
 }
@@ -473,7 +473,10 @@ export class CopilotModelPicker extends React.Component<
     return (
       <PopoverDropdown
         className="copilot-model-picker"
-        contentTitle="Choose a model"
+        contentTitle={t(
+          'copilot-model-picker.choose-a-model',
+          'Choose a model'
+        )}
         buttonContent={this.renderButtonContent(buttonItem)}
         buttonAriaLabel={buttonAriaLabel}
         decoration={PopoverDecoration.Bordered}
@@ -495,7 +498,10 @@ export class CopilotModelPicker extends React.Component<
           onSelectionChanged={this.onSelectionChanged}
           getItemAriaLabel={this.getItemAriaLabel}
           getGroupAriaLabel={this.getGroupAriaLabel}
-          placeholderText="Filter models"
+          placeholderText={t(
+            'copilot-model-picker.filter-models',
+            'Filter models'
+          )}
           renderNoItems={this.renderNoItems}
         />
       </PopoverDropdown>

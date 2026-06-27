@@ -56,24 +56,24 @@
     "add-repository-darwin": "리포지토리 추가"
   },
   "add-worktree-dialog": {
-    "branch-name-label": "Branch name",
-    "branch-name-label-darwin": "Branch Name",
-    "create-worktree": "Create worktree",
-    "create-worktree-darwin": "Create Worktree",
-    "title": "Add worktree",
-    "title-darwin": "Add Worktree",
-    "will-check-out-existing-branch-1": "Will check out existing branch ",
-    "will-check-out-existing-branch-2": ".",
-    "will-check-out-remote-branch-1": "Will check out remote branch ",
-    "will-check-out-remote-branch-2": ".",
-    "worktree-name-label": "Worktree name",
-    "worktree-name-label-darwin": "Worktree Name",
-    "worktree-name-placeholder": "Worktree name",
-    "worktree-name-placeholder-darwin": "Worktree name",
-    "worktree-path-message-1": "Worktree will be created at ",
-    "worktree-path-message-2": ".",
-    "worktree-path-placeholder": "Worktree path",
-    "worktree-path-placeholder-darwin": "Worktree path"
+    "branch-name-label": "브랜치 이름",
+    "branch-name-label-darwin": "브랜치 이름",
+    "create-worktree": "Worktree만들기",
+    "create-worktree-darwin": "Worktree만들기",
+    "title": "Worktree추가",
+    "title-darwin": "Worktree추가",
+    "will-check-out-existing-branch-1": "기존 ",
+    "will-check-out-existing-branch-2": " 브랜치를 체크아웃합니다.",
+    "will-check-out-remote-branch-1": "원격 ",
+    "will-check-out-remote-branch-2": " 브랜치를 체크아웃합니다.",
+    "worktree-name-label": "Worktree이름",
+    "worktree-name-label-darwin": "Worktree이름",
+    "worktree-name-placeholder": "Worktree이름",
+    "worktree-name-placeholder-darwin": "Worktree이름",
+    "worktree-path-message-1": "Worktree를 ",
+    "worktree-path-message-2": " 에 만듭니다.",
+    "worktree-path-placeholder": "Worktree경로",
+    "worktree-path-placeholder-darwin": "Worktree경로"
   },
   "advanced": {
     "background-updates": "백그라운드 업데이트",
@@ -230,11 +230,11 @@
     "why-are-you-bypassing": "Why are you bypassing this {{0}}?"
   },
   "bytes": {
-    "b": "B",
+    "b": "바이트",
     "eib": "EiB",
-    "gib": "GiB",
-    "kib": "KiB",
-    "mib": "MiB",
+    "gib": "GB",
+    "kib": "KB",
+    "mib": "MB",
     "pib": "PiB",
     "tib": "TiB",
     "yib": "YiB",
@@ -415,6 +415,7 @@
     "amending": "마지막 커밋 수정 중",
     "bypass-commit-hooks": "커밋 후크 우회",
     "bypass-commit-hooks-darwin": "커밋 후크 우회",
+    "cancel-generate-commit-details": "Cancel generating commit details",
     "commit": "커밋",
     "commit-count-files": "{{0}}{{1}}을",
     "commit-description": "커밋 개요 설명",
@@ -663,28 +664,40 @@
     "resolve-conflicts-to-continue-1": " ",
     "resolve-conflicts-to-continue-2": " 충돌을 해결하고 계속합니다."
   },
+  "continue-rebase": {
+    "continue-rebase": "리베이스 계속",
+    "continue-rebase-tooltip": "리베이스 계속",
+    "rebasing": "리베이스 중",
+    "resolve-conflicts-tooltip": "계속하기 전에 모든 충돌 해결",
+    "warn-about-untracked-files": "추적되지 않은 파일은 제외됩니다"
+  },
   "copilot": {
-    "add-custom-provider": "Add a custom provider to use your own API keys with OpenAI-compatible endpoints, Azure, Anthropic, or local providers like Ollama.",
-    "add-provider": "Add provider…",
-    "add-provider-darwin": "Add Provider…",
-    "commit-message-generation": "Commit message generation",
-    "commit-message-generation-darwin": "Commit Message Generation",
-    "conflict-resolution": "Conflict resolution",
-    "conflict-resolution-darwin": "Conflict Resolution",
-    "custom-instructions": "custom instructions",
-    "learn-more-about-commit-messages": "Learn more about generating commit messages.",
-    "many-models": "{{0}} models",
+    "add-custom-provider": "사용자 지정 공급자를 추가하면 OpenAI 호환 엔드포인트, Azure, Anthropic 또는 Ollama와 같은 로컬 공급자에서 자체 API 키를 사용할 수 있습니다.",
+    "add-provider": "공급자 추가…",
+    "add-provider-darwin": "공급자 추가…",
+    "always-use-copilot-when-conflicts": "경쟁이 감지되면 항상 Copilot을 사용하세요",
+    "always-use-copilot-when-conflicts-darwin": "경쟁이 감지되면 항상 Copilot을 사용하세요",
+    "commit-message-generation": "커밋 메시지 생성",
+    "commit-message-generation-darwin": "커밋 메시지 생성",
+    "conflict-resolution": "충돌 해결",
+    "conflict-resolution-darwin": "충돌 해결",
+    "custom-instructions": "맞춤 지침",
+    "learn-more-about-commit-messages": "커밋 메시지 생성에 대해 자세히 알아보십시오.",
+    "loading-models": "사용 가능한 모델 로딩 중…",
+    "many-models": "{{0}} 모델",
+    "model-changes-apply-to-future-conflict": "모델 변경은 향후 충돌 해결에 적용됩니다.",
     "models": "Models",
+    "no-models-available": "사용 가능한 Copilot 모델이 없습니다.",
     "one-model": "1 model",
     "providers": "Providers",
-    "tailor-copilot-behavior-1": "Tailor how Copilot behaves by using ",
-    "tailor-copilot-behavior-2": "."
+    "tailor-copilot-behavior-1": " ",
+    "tailor-copilot-behavior-2": "를 사용하여 Copilot의 동작을 사용자 정의할 수 있습니다."
   },
   "copilot-byok-provider-dialog": {
-    "add-custom-provider": "Add Custom Provider",
-    "add-custom-provider-darwin": "Add custom provider",
-    "edit-custom-provider": "Edit custom provider",
-    "edit-custom-provider-darwin": "Edit Custom Provider"
+    "add-custom-provider": "맞춤 제공자 추가",
+    "add-custom-provider-darwin": "맞춤 제공자 추가",
+    "edit-custom-provider": "맞춤 제공업체 편집",
+    "edit-custom-provider-darwin": "맞춤 제공업체 편집"
   },
   "copilot-error": {
     "billing-issue": "GitHub Copilot에서 결제 오류가 발생했습니다.",
@@ -700,9 +713,11 @@
     "session-quota-exceeded-title": "세션 할당량을 초과했습니다"
   },
   "copilot-model-picker": {
-    "default-model": "{{0}}{{1}} (default)",
-    "no-models-found": "No models found.",
-    "use-of-credits": "Use of credits: {{0}}"
+    "choose-a-model": "모델 선택",
+    "default-model": "{{0}} (기본값)",
+    "filter-models": "모델 필터",
+    "no-models-found": "모델을 찾을 수 없습니다.",
+    "use-of-credits": "크레딧 사용량: {{0}}"
   },
   "copy-button": {
     "copied": "복사했습니다"
@@ -861,8 +876,8 @@
     "tag-named-is-present-on-the-remote-2": " 라는 푸시 태그가 있습니다.\n이 태그를 사용하는 경우 삭제할 때 문제가 발생할 수 있습니다.\n삭제하기 전에 시스템 관리자와 상의하는 것이 좋습니다."
   },
   "delete-worktree": {
-    "delete-worktree-dialog": "Delete worktree",
-    "delete-worktree-dialog-darwin": "Delete Worktree"
+    "delete-worktree-dialog": "Worktree 삭제",
+    "delete-worktree-dialog-darwin": "Worktree 삭제"
   },
   "delete-worktree-dialog": {
     "are-you-sure-1": "Are you sure you want to delete the worktree ",
@@ -873,9 +888,9 @@
     "dialog": {
       "deleting-the-worktree-2": " failed."
     },
-    "force-delete": "Forcefully delete",
-    "title": "Delete worktree failed",
-    "title-darwin": "Delete Worktree Failed",
+    "force-delete": "강제로 삭제",
+    "title": "worktree를 삭제하지 못했습니다.",
+    "title-darwin": "worktree를 삭제하지 못했습니다.",
     "would-you-like-to-forcefully-1": "Would you like to forcefully delete the worktree ",
     "would-you-like-to-forcefully-2": "?"
   },
@@ -941,52 +956,53 @@
     "you-ve-learned-the-basics": "GitHub Desktop을 사용하는 방법에 대한 기본 사항을 배웠습니다. 다음에 무엇을 해야 할지 몇 가지 제안을 소개합니다."
   },
   "edit-byok-model-dialog": {
-    "add-model": "Add model",
-    "add-model-darwin": "Add Model",
-    "copilot-byok-model-hint-1": "The exact name your provider expects (e.g. ",
-    "copilot-byok-provider-hint-2": " ).",
-    "display-name": "Display name",
-    "display-name-darwin": "Display Name",
-    "edit-model": "Edit model",
-    "edit-model-darwin": "Edit Model",
-    "model-identifier": "Model identifier",
-    "model-identifier-darwin": "Model Identifier",
-    "model-identifier-error": "Please enter a model identifier.",
-    "model-identifier-exists": "Another model with the identifier '{{0}}' already exists.",
-    "reasoning-effort": "Reasoning effort",
-    "reasoning-effort-darwin": "Reasoning Effort",
-    "reasoning-effort-default": "Default",
-    "reasoning-effort-default-provider": "Default (provider's choice)",
-    "reasoning-effort-hint-1": "Reasoning models (o1, o3, GPT-5 reasoning variants, etc.) think before responding. Higher levels are slower but produce better answers on complex tasks. Leave on ",
-    "reasoning-effort-hint-2": " for non-reasoning models or to let the provider pick.",
-    "the-friendly-name-shown": "The friendly name shown in the Copilot model picker."
+    "add-model": "모델 추가",
+    "add-model-darwin": "모델 추가",
+    "copilot-byok-model-hint-1": "공급자가 예상한 정확한 이름(예: ",
+    "copilot-byok-provider-hint-2": " 등).",
+    "display-name": "표시 이름",
+    "display-name-darwin": "표시 이름",
+    "edit-model": "모델 편집",
+    "edit-model-darwin": "모델 편집",
+    "model-identifier": "모델 식별자",
+    "model-identifier-darwin": "모델 식별자",
+    "model-identifier-error": "모델 식별자를 입력하세요.",
+    "model-identifier-exists": "식별자 '{{0}}'의 모델이 이미 있습니다.",
+    "reasoning-effort": "추론 깊이 조정",
+    "reasoning-effort-darwin": "추론의 깊이 조정",
+    "reasoning-effort-default": "기본값",
+    "reasoning-effort-default-provider": "기본값(공급자 추천)",
+    "reasoning-effort-hint-1": "추론 모델(o1, o3, GPT-5 추론 변형 등)은 응답하기 전에 생각합니다. 수준이 높을수록 처리 속도가 느려지지만 복잡한 작업에 더 나은 답변을 생성합니다. ",
+    "reasoning-effort-hint-2": "그대로 두십시오.",
+    "the-friendly-name-shown": "Copilot의 모델 선택에 표시되는 알기 쉬운 이름입니다."
   },
   "edit-byok-provider-dialog": {
-    "add-model": "Add model…",
-    "add-model-darwin": "Add Model…",
-    "api-format": "API format",
-    "api-format-completions": "Chat completions (default)",
-    "api-format-darwin": "API Format",
-    "api-format-responses": "Responses (GPT-5 series)",
-    "auth-api-key": "API key",
+    "add-model": "모델 추가…",
+    "add-model-darwin": "모델 추가…",
+    "api-format": "API 형식",
+    "api-format-completions": "Chat completions(기본값)",
+    "api-format-darwin": "API 형식",
+    "api-format-responses": "Responses (GPT-5 시리즈)",
+    "auth-api-key": "API 키",
     "auth-bearer": "Bearer token",
-    "auth-none": "None",
-    "auth-none-hint": "No credentials will be sent with requests to this provider.",
-    "authentication": "Authentication",
-    "azure-api-version": "Azure API version",
-    "azure-api-version-darwin": "Azure API Version",
-    "base-url": "Base URL",
-    "models-empty": "No models yet. Add at least one to use this provider.",
-    "models-hint": "Tell Desktop which models this provider offers. Each one will appear in the model picker for Copilot features.",
-    "placeholder-unchanged": "(unchanged)",
-    "provider": "Provider",
-    "provider-name-placeholder": "My provider",
-    "provider-type": "Type",
+    "auth-none": "없음",
+    "auth-none-hint": "이 공급자에 액세스하는 데 인증이 필요하지 않습니다.",
+    "authentication": "인증",
+    "azure-api-version": "Azure API 버전",
+    "azure-api-version-darwin": "Azure API 버전",
+    "base-url": "기본 URL",
+    "models": "모델",
+    "models-empty": "모델이 아직 없습니다. 이 공급자를 사용하려면 적어도 하나를 추가하세요.",
+    "models-hint": "이 공급자가 제공하는 모델을 Desktop에 알립니다. 각 모델은 Copilot 기능의 모델 선택기에 표시됩니다.",
+    "placeholder-unchanged": "(변경 없음)",
+    "provider": "프로파이더",
+    "provider-name-placeholder": "공급자 이름 입력",
+    "provider-type": "유형",
     "provider-type-anthropic": "Anthropic",
     "provider-type-azure": "Azure",
-    "provider-type-openai": "OpenAI / OpenAI-compatible",
-    "request-timeout": "Request timeout (seconds)",
-    "request-timeout-darwin": "Request Timeout (seconds)"
+    "provider-type-openai": "OpenAI / OpenAI 호환 제품",
+    "request-timeout": "요청 시간 초과(초)",
+    "request-timeout-darwin": "요청 시간 초과(초)"
   },
   "editor-error": {
     "open-options": "옵션 열기",
@@ -1125,7 +1141,7 @@
     "edit-your-global-git-config-2": "글로벌용 Git 구성 파일 편집",
     "edit-your-global-git-config-3": "할 수 있습니다.",
     "enable-paths-lt-260-characters": "Windows에서 260자 이상의 경로 사용",
-    "generates-comments-using-copilot": "GitHub Desktop는 Copilot의 채팅 메시지를 사용하여 커밋 코멘트를 생성합니다. Copilot의 할당은 {{0}}로 재설정됩니다.",
+    "generates-comments-using-copilot": "GitHub Desktop은 Copilot 크레딧을 사용하여 커밋 주석을 생성합니다. Copilot의 할당량은 {{0}}으로 재설정됩니다.",
     "gitHub-default-branch-description-1": "GitHub의 기본 지점 이름은 ",
     "gitHub-default-branch-description-2": "입니다.",
     "gitHub-default-branch-description-3": "워크플로가 다르거나 통합되는 과정에서 ",
@@ -1427,14 +1443,14 @@
     "zoom-out-darwin": "줌(축소)"
   },
   "merge": {
-    "checking-ability": "Checking for ability to {0} automatically…",
-    "conflicted-message-1": "There will be",
-    "conflicted-message-2": " {{0}} conflicted {{1}}",
-    "conflicted-message-3": " when merging ",
-    "conflicted-message-4": " into ",
-    "conflicted-message-5": " ",
-    "invalid-merge": "Unable to merge unrelated histories in this repository",
-    "invalid-rebase": "Unable to start rebase. Check you have chosen a valid branch.",
+    "checking-ability": "자동으로 {0}할 수 있는지 확인 중…",
+    "conflicted-message-1": " ",
+    "conflicted-message-2": " ",
+    "conflicted-message-3": " ",
+    "conflicted-message-4": " 에서 ",
+    "conflicted-message-5": "에 병합하면 {{0}}개의 {{1}}이(가) 충돌합니다.",
+    "invalid-merge": "이 리포지토리와 관련이 없는 기록을 병합할 수 없습니다",
+    "invalid-rebase": "리베이스를 시작할 수 없습니다. 유효한 지점을 선택했는지 확인하세요.",
     "will-merge-1": "This will merge",
     "will-merge-2": " from ",
     "will-merge-3": " into ",
@@ -1725,9 +1741,9 @@
     "refresh-the-list-of-pull-request": "끌어오기 요청 목록 업데이트"
   },
   "pull-request-list-item-context-menu": {
-    "checkout-in-new-worktree": "Checkout in new worktree…",
-    "checkout-in-new-worktree-darwin": "Checkout in New Worktree…",
-    "view-pull-request-on-github": "View Pull Request on GitHub"
+    "checkout-in-new-worktree": "새 worktree 체크아웃…",
+    "checkout-in-new-worktree-darwin": "새 worktree 체크아웃…",
+    "view-pull-request-on-github": "GitHub에서 끌어오기 요청 보기"
   },
   "pull-request-merge-status": {
     "able-to-merge": "병합 가능합니다.",
@@ -1892,12 +1908,12 @@
     "copy-repo-name-darwin": "리포지토리 이름 복사",
     "copy-repo-path": "리포지토리 경로 복사",
     "copy-repo-path-darwin": "리포지토리 경로 복사",
-    "new-worktree": "New worktree…",
-    "new-worktree-darwin": "New Worktree…",
+    "new-worktree": "새로운 worktree…",
+    "new-worktree-darwin": "새로운 Worktree…",
     "open-in-editor": "{{0}}에서 열기",
     "open-in-shell": "{{0}}에서 열기",
-    "show-worktrees": "Show worktrees",
-    "show-worktrees-darwin": "Show Worktrees"
+    "show-worktrees": "Worktrees 보기",
+    "show-worktrees-darwin": "Worktrees 보기"
   },
   "repository-path": {
     "name": "Name",
@@ -2271,19 +2287,19 @@
     "would-you-like-to-open-a-browser": "브라우저를 열고 GitHub Desktop에 워크플로 파일을 업데이트할 수 있는 권한을 부여하시겠습니까?"
   },
   "worktree-dropdown": {
-    "current-worktree": "Current worktree",
-    "current-worktree-darwin": "Current Worktree",
-    "current-worktree-tooltip": "Current worktree is {{0}}",
-    "new-worktree": "New worktree…",
-    "new-worktree-darwin": "New Worktree…"
+    "current-worktree": "현재 worktree",
+    "current-worktree-darwin": "현재 worktree",
+    "current-worktree-tooltip": "현재 worktree는 {{0}}",
+    "new-worktree": "새로운 worktree…",
+    "new-worktree-darwin": "새로운 worktree…"
   },
   "worktree-list": {
-    "linked-worktrees": "Linked {{0}}s",
-    "main-worktree": "Main {{0}}",
-    "new-worktree": "New worktree",
-    "new-worktree-darwin": "New Worktree",
-    "no-worktrees": "No worktrees found",
+    "linked-worktrees": "연결된 {{0}}",
+    "main-worktree": "기본 {{0}}",
+    "new-worktree": "새로운 worktree",
+    "new-worktree-darwin": "새로운 worktree",
+    "no-worktrees": "worktree를 찾을 수 없습니다",
     "worktree": "worktree",
-    "worktree-darwin": "Worktree"
+    "worktree-darwin": "worktree"
   }
 }

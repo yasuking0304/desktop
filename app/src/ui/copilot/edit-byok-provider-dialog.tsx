@@ -372,7 +372,7 @@ export class EditCopilotBYOKProviderDialog extends React.Component<
   private renderModelsSection() {
     return (
       <fieldset className="copilot-byok-fieldset copilot-byok-models">
-        <legend>Models</legend>
+        <legend>{t('edit-byok-provider-dialog.models', 'Models')}</legend>
         <p className="copilot-byok-section-hint">
           {t(
             'edit-byok-provider-dialog.models-hint',

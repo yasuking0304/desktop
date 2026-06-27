@@ -56,24 +56,24 @@
     "add-repository-darwin": "新增儲存庫"
   },
   "add-worktree-dialog": {
-    "branch-name-label": "Branch name",
-    "branch-name-label-darwin": "Branch Name",
-    "create-worktree": "Create worktree",
-    "create-worktree-darwin": "Create Worktree",
-    "title": "Add worktree",
-    "title-darwin": "Add Worktree",
-    "will-check-out-existing-branch-1": "Will check out existing branch ",
-    "will-check-out-existing-branch-2": ".",
-    "will-check-out-remote-branch-1": "Will check out remote branch ",
-    "will-check-out-remote-branch-2": ".",
-    "worktree-name-label": "Worktree name",
-    "worktree-name-label-darwin": "Worktree Name",
-    "worktree-name-placeholder": "Worktree name",
-    "worktree-name-placeholder-darwin": "Worktree name",
-    "worktree-path-message-1": "Worktree will be created at ",
-    "worktree-path-message-2": ".",
-    "worktree-path-placeholder": "Worktree path",
-    "worktree-path-placeholder-darwin": "Worktree path"
+    "branch-name-label": "分支名稱",
+    "branch-name-label-darwin": "分支名稱",
+    "create-worktree": "建立worktree",
+    "create-worktree-darwin": "建立Worktree",
+    "title": "添加worktree",
+    "title-darwin": "添加Worktree",
+    "will-check-out-existing-branch-1": "將檢出現有分支 ",
+    "will-check-out-existing-branch-2": "。",
+    "will-check-out-remote-branch-1": "將檢出遠端分支 ",
+    "will-check-out-remote-branch-2": "。",
+    "worktree-name-label": "Worktree名稱",
+    "worktree-name-label-darwin": "Worktree名稱",
+    "worktree-name-placeholder": "Worktree名稱",
+    "worktree-name-placeholder-darwin": "Worktree名稱",
+    "worktree-path-message-1": "Worktree將在 ",
+    "worktree-path-message-2": " 時建立。",
+    "worktree-path-placeholder": "Worktree路徑",
+    "worktree-path-placeholder-darwin": "Worktree路徑"
   },
   "advanced": {
     "background-updates": "背景更新",
@@ -181,9 +181,9 @@
     "current-branch": "目前分支",
     "current-branch-darwin": "目前分支",
     "current-branch-is": "目前分支是 {{0}}",
-    "currently-on-a-detached-head": "Currently on a detached HEAD",
-    "detached-head": "Detached HEAD",
-    "on-sha": "On {{0}}",
+    "currently-on-a-detached-head": "目前已分離 HEAD 指標",
+    "detached-head": "已分離 HEAD 指標",
+    "on-sha": "位於 {{0}}",
     "rebasing-branch": "重新定基分支",
     "rebasing-target-branch": "重新定基 {{0}}"
   },
@@ -219,15 +219,15 @@
     "pull-requests-darwin": "拉取請求"
   },
   "bypass-push-protection-dialog": {
-    "allow-me-to-expose": "Allow me to expose this secret",
-    "bypass-push-detection": "Bypass push detection",
-    "bypass-push-detection-darwin": "Bypass Push Detection",
-    "i-will-fix-it-later": "I'll fix it later",
-    "its-a-false-positive": "It's a false positive",
-    "its-used-in-tests": "It's used in tests",
-    "the-detected-string": "The detected string is not a secret",
-    "the-secret-is-real": "The secret is real, I understand the risk, and I will need to revoke it. This will open a security alert and notify admins of this repository.",
-    "why-are-you-bypassing": "Why are you bypassing this {{0}}?"
+    "allow-me-to-expose": "允許我暴露這個密鑰",
+    "bypass-push-detection": "繞過推播偵測",
+    "bypass-push-detection-darwin": "繞過推播偵測",
+    "i-will-fix-it-later": "我一會兒去修復",
+    "its-a-false-positive": "這是一個誤報",
+    "its-used-in-tests": "它已被用來測試",
+    "the-detected-string": "偵測的字串不是一個金鑰",
+    "the-secret-is-real": "這個金鑰是真的，我了解風險，我需要撤銷它。這將會開啟一個安全警報，並通知該儲存庫的管理員。",
+    "why-are-you-bypassing": "為什麼你要繞過這個 {{0}}?"
   },
   "bytes": {
     "b": "B",
@@ -415,6 +415,7 @@
     "amending": "修改前一次提交",
     "bypass-commit-hooks": "繞過提交鉤子",
     "bypass-commit-hooks-darwin": "繞過提交鉤子",
+    "cancel-generate-commit-details": "Cancel generating commit details",
     "commit": "提交",
     "commit-count-files": "{{0}} {{1}}",
     "commit-description": "提交摘要",
@@ -663,28 +664,40 @@
     "resolve-conflicts-to-continue-1": "解決衝突以繼續 ",
     "resolve-conflicts-to-continue-2": "。"
   },
+  "continue-rebase": {
+    "continue-rebase": "繼續 rebase",
+    "continue-rebase-tooltip": "繼續 rebase",
+    "rebasing": "正在 rebase",
+    "resolve-conflicts-tooltip": "繼續前解決所有衝突",
+    "warn-about-untracked-files": "未跟踪的文件將被排除"
+  },
   "copilot": {
-    "add-custom-provider": "Add a custom provider to use your own API keys with OpenAI-compatible endpoints, Azure, Anthropic, or local providers like Ollama.",
-    "add-provider": "Add provider…",
-    "add-provider-darwin": "Add Provider…",
-    "commit-message-generation": "Commit message generation",
-    "commit-message-generation-darwin": "Commit Message Generation",
-    "conflict-resolution": "Conflict resolution",
-    "conflict-resolution-darwin": "Conflict Resolution",
-    "custom-instructions": "custom instructions",
-    "learn-more-about-commit-messages": "Learn more about generating commit messages.",
-    "many-models": "{{0}} models",
-    "models": "Models",
-    "one-model": "1 model",
-    "providers": "Providers",
-    "tailor-copilot-behavior-1": "Tailor how Copilot behaves by using ",
-    "tailor-copilot-behavior-2": "."
+    "add-custom-provider": "新增自訂供應商，以便在相容 OpenAI 的端點、Azure、Anthropic 或 Ollama 等本機提供者上使用您自己的 API 金鑰。",
+    "add-provider": "新增提供者…",
+    "add-provider-darwin": "新增提供者…",
+    "always-use-copilot-when-conflicts": "偵測到衝突時，請務必使用 Copilot",
+    "always-use-copilot-when-conflicts-darwin": "偵測到衝突時，請務必使用 Copilot",
+    "commit-message-generation": "提交資訊產生",
+    "commit-message-generation-darwin": "提交資訊生成",
+    "conflict-resolution": "衝突解決",
+    "conflict-resolution-darwin": "衝突解決",
+    "custom-instructions": "自訂指令",
+    "learn-more-about-commit-messages": "了解更多關於產生提交資訊的內容。",
+    "loading-models": "正在載入可用模型…",
+    "many-models": "{{0}} 個模型",
+    "model-changes-apply-to-future-conflict": "模型變更適用於未來的衝突解決。",
+    "models": "模型",
+    "no-models-available": "沒有可用的 Copilot 模型。",
+    "one-model": "1 個模型",
+    "providers": "提供者",
+    "tailor-copilot-behavior-1": "利用 ",
+    "tailor-copilot-behavior-2": " 來客製化 Copilot 的行為。"
   },
   "copilot-byok-provider-dialog": {
-    "add-custom-provider": "Add Custom Provider",
-    "add-custom-provider-darwin": "Add custom provider",
-    "edit-custom-provider": "Edit custom provider",
-    "edit-custom-provider-darwin": "Edit Custom Provider"
+    "add-custom-provider": "新增自訂提供者",
+    "add-custom-provider-darwin": "新增自訂提供者",
+    "edit-custom-provider": "編輯自訂提供者",
+    "edit-custom-provider-darwin": "編輯自訂提供者"
   },
   "copilot-error": {
     "billing-issue": "在 GitHub Copilot 上發生了付費錯誤。",
@@ -700,9 +713,11 @@
     "session-quota-exceeded-title": "會話配額超出"
   },
   "copilot-model-picker": {
-    "default-model": "{{0}}{{1}} (default)",
-    "no-models-found": "No models found.",
-    "use-of-credits": "Use of credits: {{0}}"
+    "choose-a-model": "選擇一個模型",
+    "default-model": "{{0}}(預設)",
+    "filter-models": "過濾模型",
+    "no-models-found": "未找到模型。",
+    "use-of-credits": "額度使用: {{0}}"
   },
   "copy-button": {
     "copied": "已複製"
@@ -861,23 +876,23 @@
     "tag-named-is-present-on-the-remote-2": " 被推送到遠端。 \n如果此標籤正在使用中, 刪除它可能會導致問題。 \n我們建議您在刪除之前諮詢系統管理員。"
   },
   "delete-worktree": {
-    "delete-worktree-dialog": "Delete worktree",
-    "delete-worktree-dialog-darwin": "Delete Worktree"
+    "delete-worktree-dialog": "刪除 Worktree",
+    "delete-worktree-dialog-darwin": "刪除 Worktree"
   },
   "delete-worktree-dialog": {
-    "are-you-sure-1": "Are you sure you want to delete the worktree ",
-    "are-you-sure-2": "?"
+    "are-you-sure-1": "您確定要刪除worktree ",
+    "are-you-sure-2": "嗎?"
   },
   "delete-worktree-failed-dialog": {
-    "deleting-the-worktree-1": "Deleting the worktree ",
+    "deleting-the-worktree-1": "正在刪除 worktree ",
     "dialog": {
       "deleting-the-worktree-2": " failed."
     },
-    "force-delete": "Forcefully delete",
-    "title": "Delete worktree failed",
-    "title-darwin": "Delete Worktree Failed",
-    "would-you-like-to-forcefully-1": "Would you like to forcefully delete the worktree ",
-    "would-you-like-to-forcefully-2": "?"
+    "force-delete": "強制刪除",
+    "title": "刪除worktree失敗",
+    "title-darwin": "刪除worktree失敗",
+    "would-you-like-to-forcefully-1": "您想要強制刪除 worktree ",
+    "would-you-like-to-forcefully-2": " 嗎?"
   },
   "diff-contents-warning": {
     "learn-more-about-bidirectional-unicode": "了解有關雙向 Unicode 字元的更多資訊",
@@ -941,52 +956,53 @@
     "you-ve-learned-the-basics": "您已了解 GitHub Desktop 的基礎知識。以下是一些後續操作的建議。"
   },
   "edit-byok-model-dialog": {
-    "add-model": "Add model",
-    "add-model-darwin": "Add Model",
-    "copilot-byok-model-hint-1": "The exact name your provider expects (e.g. ",
-    "copilot-byok-provider-hint-2": " ).",
-    "display-name": "Display name",
-    "display-name-darwin": "Display Name",
-    "edit-model": "Edit model",
-    "edit-model-darwin": "Edit Model",
-    "model-identifier": "Model identifier",
-    "model-identifier-darwin": "Model Identifier",
-    "model-identifier-error": "Please enter a model identifier.",
-    "model-identifier-exists": "Another model with the identifier '{{0}}' already exists.",
-    "reasoning-effort": "Reasoning effort",
-    "reasoning-effort-darwin": "Reasoning Effort",
-    "reasoning-effort-default": "Default",
-    "reasoning-effort-default-provider": "Default (provider's choice)",
-    "reasoning-effort-hint-1": "Reasoning models (o1, o3, GPT-5 reasoning variants, etc.) think before responding. Higher levels are slower but produce better answers on complex tasks. Leave on ",
-    "reasoning-effort-hint-2": " for non-reasoning models or to let the provider pick.",
-    "the-friendly-name-shown": "The friendly name shown in the Copilot model picker."
+    "add-model": "新增模型",
+    "add-model-darwin": "新增模型",
+    "copilot-byok-model-hint-1": "您的服務提供者所要求的確切名稱（例如 ",
+    "copilot-byok-provider-hint-2": " )。",
+    "display-name": "顯示名稱",
+    "display-name-darwin": "顯示名稱",
+    "edit-model": "編輯模型",
+    "edit-model-darwin": "編輯模型",
+    "model-identifier": "機型識別碼",
+    "model-identifier-darwin": "機型識別碼",
+    "model-identifier-error": "請輸入模型識別碼。",
+    "model-identifier-exists": "已存在另一個標識符為“{{0}}”的模型。 ",
+    "reasoning-effort": "推理投入",
+    "reasoning-effort-darwin": "推理投入",
+    "reasoning-effort-default": "預設",
+    "reasoning-effort-default-provider": "預設（由提供者選擇）",
+    "reasoning-effort-hint-1": "推理模型（如 o1、o3、GPT-5 推理變體等）會在回應前思考。等級越高，反應速度越慢，但在處理複雜任務時能提供更優質的答案。對於非推理模型，或希望由服務提供者自動選擇時，請選擇 ",
+    "reasoning-effort-hint-2": " 選項。",
+    "the-friendly-name-shown": "Copilot 模型選擇器中顯示的友善名稱。"
   },
   "edit-byok-provider-dialog": {
-    "add-model": "Add model…",
-    "add-model-darwin": "Add Model…",
-    "api-format": "API format",
-    "api-format-completions": "Chat completions (default)",
-    "api-format-darwin": "API Format",
-    "api-format-responses": "Responses (GPT-5 series)",
-    "auth-api-key": "API key",
+    "add-model": "新增模型…",
+    "add-model-darwin": "新增模型…",
+    "api-format": "API格式",
+    "api-format-completions": "對話補全 (預設)",
+    "api-format-darwin": "API格式",
+    "api-format-responses": "Responses (GPT-5系列)",
+    "auth-api-key": "API金鑰",
     "auth-bearer": "Bearer token",
-    "auth-none": "None",
-    "auth-none-hint": "No credentials will be sent with requests to this provider.",
-    "authentication": "Authentication",
-    "azure-api-version": "Azure API version",
-    "azure-api-version-darwin": "Azure API Version",
-    "base-url": "Base URL",
-    "models-empty": "No models yet. Add at least one to use this provider.",
-    "models-hint": "Tell Desktop which models this provider offers. Each one will appear in the model picker for Copilot features.",
-    "placeholder-unchanged": "(unchanged)",
-    "provider": "Provider",
-    "provider-name-placeholder": "My provider",
-    "provider-type": "Type",
+    "auth-none": "沒有任何",
+    "auth-none-hint": "向該提供者發送請求時，不會發送任何憑證。",
+    "authentication": "驗證",
+    "azure-api-version": "Azure API 版本",
+    "azure-api-version-darwin": "Azure API 版本",
+    "base-url": "基礎 URL",
+    "models": "模型",
+    "models-empty": "目前還沒有模型。請至少新增一個模型才能使用此服務提供者。",
+    "models-hint": "請將此提供者提供的模型告知桌上型系統。每個模型都會出現在副駕駛功能的模型選擇器中。",
+    "placeholder-unchanged": "(未改變)",
+    "provider": "提供者",
+    "provider-name-placeholder": "我的服務提供者",
+    "provider-type": "型別",
     "provider-type-anthropic": "Anthropic",
     "provider-type-azure": "Azure",
-    "provider-type-openai": "OpenAI / OpenAI-compatible",
-    "request-timeout": "Request timeout (seconds)",
-    "request-timeout-darwin": "Request Timeout (seconds)"
+    "provider-type-openai": "OpenAI / 相容 OpenAI",
+    "request-timeout": "請求逾時時間(秒)",
+    "request-timeout-darwin": "請求超時時間(秒)"
   },
   "editor-error": {
     "open-options": "開啟選項",
@@ -1125,7 +1141,7 @@
     "edit-your-global-git-config-2": " 編輯你的全域 Git 設定檔",
     "edit-your-global-git-config-3": "。",
     "enable-paths-lt-260-characters": "在 Windows 系統中啟用長度超過 260 個字元的路徑",
-    "generates-comments-using-copilot": "GitHub Desktop generates commit comments using Copilot's credits. Copilot quota will be reset on {{0}}.",
+    "generates-comments-using-copilot": "GitHub Desktop 使用 Copilot 積分產生提交註解。您的 Copilot 積分將會重設為 {{0}}。",
     "gitHub-default-branch-description-1": "GitHub 的預設分支名稱是 ",
     "gitHub-default-branch-description-2": ". ",
     "gitHub-default-branch-description-3": "您可能想要根據不同的工作流程來更改它, 或者因為您的整合仍然需要歷史預設分支名稱 ",
@@ -1174,7 +1190,7 @@
   },
   "initialize-lfs": {
     "git-lfs": "Git LFS",
-    "initialize-git-lfs": "Initialize Git LFS"
+    "initialize-git-lfs": "初始化 Git LFS"
   },
   "install": {
     "command-prompt": "command prompt",
@@ -1276,18 +1292,18 @@
     "copy-relative-file-path-darwin": "複製相對檔案路徑",
     "copy-relative-paths": "複製相對路徑",
     "copy-relative-paths-darwin": "複製相對路徑",
-    "copy-worktree-name": "Copy worktree name",
-    "copy-worktree-name-darwin": "Copy worktree name",
-    "copy-worktree-path": "Copy worktree path",
-    "copy-worktree-path-darwin": "Copy worktree path",
+    "copy-worktree-name": "複製worktree名稱",
+    "copy-worktree-name-darwin": "複製worktree名稱",
+    "copy-worktree-path": "複製worktree路徑",
+    "copy-worktree-path-darwin": "複製worktree路徑",
     "crash-main-process": "主程序崩潰…",
     "crash-renderer-process": "渲染器進程崩潰…",
     "create-issue-on-github": "在 GitHub 上建立問題(&I)",
     "create-issue-on-github-darwin": "在 GitHub 上建立問題",
     "create-pull-request": "建立拉取請求(&P)",
     "create-pull-request-darwin": "建立拉取請求",
-    "create-worktree": "New work&tree…",
-    "create-worktree-darwin": "New Worktree…",
+    "create-worktree": "新worktree(&T)…",
+    "create-worktree-darwin": "新Worktree…",
     "cut": "剪下(&T)",
     "cut-darwin": "剪下",
     "default-branch": "預設分支",
@@ -1447,18 +1463,18 @@
   "merge-call-to-action": {
     "merge-into-1": "This will merge ",
     "merge-into-2": " from ",
-    "this-will-merge-into-1": "This will merge ",
-    "this-will-merge-into-2": " from ",
-    "this-will-merge-into-3": " into ",
-    "this-will-merge-into-4": " "
+    "this-will-merge-into-1": "這將會合併 ",
+    "this-will-merge-into-2": " 從 ",
+    "this-will-merge-into-3": " 合併到 ",
+    "this-will-merge-into-4": "。 "
   },
   "merge-choose-branch-dialog": {
     "checking-for-ability": "檢查自動合併的能力…",
     "file": "檔案",
     "files": "檔案",
     "is-already-up-to-date-with-1": " ",
-    "is-already-up-to-date-with-2": " This branch is up to date with ",
-    "is-already-up-to-date-with-3": " ",
+    "is-already-up-to-date-with-2": " 這個分支 ",
+    "is-already-up-to-date-with-3": "已是最新。 ",
     "merge-into-1": "{{0}}Merge into ",
     "merge-into-2": " ",
     "number-commit": "{{0}} {{1}}",
@@ -1730,12 +1746,12 @@
     "view-pull-request-on-github": "View Pull Request on GitHub"
   },
   "pull-request-merge-status": {
-    "able-to-merge": "Able to merge.",
-    "can-be-automatically-merge": "These branches can be automatically merged.",
-    "cannot-automatically-merge": "Can't automatically merge.",
-    "donot-worry": "Don’t worry, you can still create the pull request.",
-    "error-checking-merge-status": "Error checking merge status.",
-    "unable-to-merge-unrelated-histories": "Unable to merge unrelated histories in this repository"
+    "able-to-merge": "可以合併。",
+    "can-be-automatically-merge": "這些分支可以自動合併。",
+    "cannot-automatically-merge": "無法自動合併。",
+    "donot-worry": "別擔心, 您仍然可以建立拉取請求。",
+    "error-checking-merge-status": "檢查合併狀態時發生錯誤。",
+    "unable-to-merge-unrelated-histories": "無法合併此儲存庫中不相關的歷史記錄"
   },
   "push-branch-commits": {
     "create-without-pushing": "無需推動即可創建",
@@ -1750,12 +1766,12 @@
     "push-commits-darwin": "推播提交",
     "push-local-changes-q": "推動本地變更?",
     "push-local-changes-q-darwin": "推動本地變更?",
-    "would-you-like-to-publish-1": "Would you like to publish ",
-    "would-you-like-to-publish-2": " now and open a pull request?",
-    "would-you-like-to-push-1": "Would you like to push your changes to ",
-    "would-you-like-to-push-2": " before creating your pull request?",
-    "you-have-local-commits-that": "You have {{0}} that haven't been pushed to the remote yet.",
-    "your-branch-must-be-published": "Your branch must be published before opening a pull request."
+    "would-you-like-to-publish-1": "你想要現在就發布 ",
+    "would-you-like-to-publish-2": " 並打開一個拉取請求嗎?",
+    "would-you-like-to-push-1": "你想要在創建你的拉取請求，推送你的變更到 ",
+    "would-you-like-to-push-2": " 嗎?",
+    "you-have-local-commits-that": "你有 {{0}} 還沒有推送到遠端。",
+    "your-branch-must-be-published": "在打開一個拉取請求之前，你的分支必須已發布。"
   },
   "push-needs-pull-warning": {
     "desktop-is-unable-to-push-commits": "桌面無法將提交推送到此分支, 因為遠端分支上存在本地分支中不存在的提交。請在推送之前獲取這些新的提交, 以便與本地提交進行協調。",
@@ -1780,9 +1796,9 @@
     "verify-the-identity": "Verify the identity of the secret(s)"
   },
   "push-protection-error-location": {
-    "at-line": "at line {{0}}",
-    "show-less-location": "Show Less Locations",
-    "show-more-location": "Show More locations"
+    "at-line": "在 {{0}} 行",
+    "show-less-location": "顯示更少位置",
+    "show-more-location": "顯示更多位置"
   },
   "push-pull-button": {
     "cannot-publish-detached-head": "無法發佈 detached HEAD",
@@ -1892,17 +1908,17 @@
     "copy-repo-name-darwin": "複製儲存庫名稱",
     "copy-repo-path": "複製儲存庫路徑",
     "copy-repo-path-darwin": "複製儲存庫路徑",
-    "new-worktree": "New worktree…",
-    "new-worktree-darwin": "New Worktree…",
+    "new-worktree": "新建 Worktree…",
+    "new-worktree-darwin": "新建 Worktree…",
     "open-in-editor": "在 {{0}} 中開啟",
     "open-in-shell": "在 {{0}} 中開啟",
-    "show-worktrees": "Show worktrees",
-    "show-worktrees-darwin": "Show Worktrees"
+    "show-worktrees": "顯示worktrees",
+    "show-worktrees-darwin": "顯示Worktrees"
   },
   "repository-path": {
-    "name": "Name",
-    "name-placeholder": "name",
-    "sanitized-name-warning": "Invalid characters have been replaced by hyphens."
+    "name": "名稱",
+    "name-placeholder": "姓名",
+    "sanitized-name-warning": "無效字元已被替換為連字符。"
   },
   "repository-settings": {
     "fork-behavior": "行為",
@@ -1917,7 +1933,7 @@
   },
   "revert-progress": {
     "hang-on": "不掛…",
-    "revert-progress-button": "Revert progress button",
+    "revert-progress-button": "回退進度按鈕",
     "reverting": "正在恢復…"
   },
   "saml-reauth-required": {
@@ -1929,8 +1945,8 @@
     "would-you-like-to-open-a-browser": "您是否要開啟瀏覽器授予 GitHub Desktop 存取儲存庫的權限?"
   },
   "selected-commits": {
-    "drag-the-commits-1": "Drag the commits to the branch menu to cherry-pick them.",
-    "drag-the-commits-2": "Drag the commits to squash or reorder them.",
+    "drag-the-commits-1": "拖曳提交到分支選單以揀選提交。",
+    "drag-the-commits-2": "拖曳提交以壓縮或重新排序提交。",
     "drag-the-commits-3": "右鍵點擊多個提交以結帳選項。",
     "file-does-not-exist": "磁碟上不存在檔案",
     "file-does-not-exist-darwin": "磁碟上不存在檔案",
@@ -1942,7 +1958,7 @@
     "unable-to-display-diff": "選擇多個不連續時無法顯示差異。",
     "view-on-github": "在 GitHub 上結帳",
     "view-on-github-enteprise": "在 GitHub Enterprise 上結帳",
-    "you-can": "You can:"
+    "you-can": "你也可以前往:"
   },
   "shared": {
     "error": {
@@ -2271,18 +2287,18 @@
     "would-you-like-to-open-a-browser": "您是否要開啟瀏覽器授予 GitHub Desktop 更新工作流程檔案的權限?"
   },
   "worktree-dropdown": {
-    "current-worktree": "Current worktree",
-    "current-worktree-darwin": "Current Worktree",
-    "current-worktree-tooltip": "Current worktree is {{0}}",
-    "new-worktree": "New worktree…",
-    "new-worktree-darwin": "New Worktree…"
+    "current-worktree": "目前worktree",
+    "current-worktree-darwin": "目前Worktree",
+    "current-worktree-tooltip": "目前worktree is {{0}}",
+    "new-worktree": "新worktree…",
+    "new-worktree-darwin": "新Worktree…"
   },
   "worktree-list": {
-    "linked-worktrees": "Linked {{0}}s",
-    "main-worktree": "Main {{0}}",
-    "new-worktree": "New worktree",
-    "new-worktree-darwin": "New Worktree",
-    "no-worktrees": "No worktrees found",
+    "linked-worktrees": "連結的 {{0}}",
+    "main-worktree": "主 {{0}}",
+    "new-worktree": "新worktree",
+    "new-worktree-darwin": "新Worktree",
+    "no-worktrees": "未找到 worktrees",
     "worktree": "worktree",
     "worktree-darwin": "Worktree"
   }
