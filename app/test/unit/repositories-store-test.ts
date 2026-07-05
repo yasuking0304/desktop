@@ -1,4 +1,4 @@
-import { describe, it, beforeEach } from 'node:test'
+import { describe, it, beforeEach, afterEach } from 'node:test'
 import assert from 'node:assert'
 import { join } from 'path'
 import { RepositoriesStore } from '../../src/lib/stores/repositories-store'
@@ -14,6 +14,10 @@ describe('RepositoriesStore', () => {
     repoDb = new TestRepositoriesDatabase()
     await repoDb.reset()
     repositoriesStore = new RepositoriesStore(repoDb)
+  })
+
+  afterEach(() => {
+    repoDb.close()
   })
 
   describe('adding a new repository', () => {

@@ -53,11 +53,13 @@ export function parseWorktreePorcelainOutput(
 }
 
 export async function listWorktrees(
-  repository: Repository
+  repositoryOrPath: Repository | string
 ): Promise<ReadonlyArray<WorktreeEntry>> {
   const result = await git(
     ['worktree', 'list', '--porcelain', '-z'],
-    repository.path,
+    typeof repositoryOrPath === 'string'
+      ? repositoryOrPath
+      : repositoryOrPath.path,
     'listWorktrees'
   )
 

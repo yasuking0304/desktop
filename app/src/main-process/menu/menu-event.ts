@@ -89,6 +89,7 @@ const TestMenuEvents = [
   'test-update-existing-git-lfs-filters',
   'test-upstream-already-exists',
   'test-about-dialog',
+  'test-cli-action',
 ] as const
 
 export type TestMenuEvent = typeof TestMenuEvents[number]

@@ -1390,7 +1390,19 @@ export class SectionList extends React.Component<
           )}
           scrollTop={relativeScrollTop}
           overscanRowCount={4}
-          style={{ ...params.style, width: '100%' }}
+          // The per-section grids are passive windows whose scroll position is
+          // driven entirely by the parent grid via the scrollTop prop above.
+          // They must never scroll on their own; react-virtualized would
+          // otherwise give a section taller than its allotted height an
+          // overflow-y of 'auto', letting it capture the mouse wheel and snap
+          // back to the controlled scrollTop instead of scrolling the list.
+          // See https://github.com/desktop/desktop/issues/22387.
+          style={{
+            ...params.style,
+            width: '100%',
+            overflowX: 'hidden',
+            overflowY: 'hidden',
+          }}
           tabIndex={-1}
           aria-label={this.props.getSectionAriaLabel?.(section)}
         />

@@ -103,6 +103,7 @@ export enum PopupType {
   TestIcons = 'TestIcons',
   ConfirmCommitFilteredChanges = 'ConfirmCommitFilteredChanges',
   TestAbout = 'TestAbout',
+  TestCLIAction = 'TestCLIAction',
   PushProtectionError = 'PushProtectionError',
   BypassPushProtection = 'BypassPushProtection',
   GenerateCommitMessageOverrideWarning = 'GenerateCommitMessageOverrideWarning',
@@ -468,6 +469,9 @@ export type PopupDetail =
     }
   | {
       type: PopupType.TestAbout
+    }
+  | {
+      type: PopupType.TestCLIAction
     }
   | {
       type: PopupType.PushProtectionError

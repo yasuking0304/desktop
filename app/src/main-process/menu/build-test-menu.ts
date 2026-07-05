@@ -120,6 +120,10 @@ export function buildTestMenu() {
       click: emit('test-notification'),
     },
     {
+      label: 'Dispatch CLI action',
+      click: emit('test-cli-action'),
+    },
+    {
       label: t('menu.show-popup', 'Show popup'),
       submenu: [
         {

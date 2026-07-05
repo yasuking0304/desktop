@@ -1,5 +1,19 @@
 {
   "releases": {
+    "3.6.3-beta1": [
+      "[Fixed] Repository list scrolling no longer gets stuck or jitters when scrolling over tall groups (e.g. large organizations) - #22438. Thanks @peteski22!",
+      "[Improved] Clarify the line-ending conversion warning to explain that Git will automatically convert the file's line endings on next checkout, with a link to learn more - #21446. Thanks @Whitebrim!"
+    ],
+    "3.6.2": [
+      "[Fixed] Invoking Desktop from the command line inside a worktree now opens the existing repository with the worktree selected instead of prompting to add a new repository - #22378",
+      "[Fixed] Scrolling no longer gets stuck when the pointer is over a tall group in the repository list - #22387. Thanks @peteski22!"
+    ],
+    "3.6.2-beta1": [
+      "[Fixed] Middle-clicking a diff hunk gutter does not select or deselect lines - #22432",
+      "[Fixed] Invoking Desktop from the command line inside a worktree now opens the existing repository with the worktree selected instead of prompting to add a new repository - #22416",
+      "[Fixed] Copilot sessions from generating commit messages or resolving conflicts do not show up in VS Code - #22410",
+      "[Fixed] Resolve issue where git hooks that shell out to git could break due to an incorrect GIT_EXEC_PATH on macOS - #22411"
+    ],
     "3.6.1": [
       "[Fixed] Copilot Max plan users are recognized correctly - #22400",
       "[Fixed] The default Copilot model is Auto",
@@ -17,12 +31,13 @@
     "3.6.0": [
       "[New] Git worktree support for managing multiple working directories of the same repository - #22102. Thanks @devxoul!",
       "[New] Resolve merge conflicts with Copilot - #22265",
-      "[Fixed] Recover conflict dialog from permanently frozen state when conflict state becomes invalid, preventing users from needing to restart the app - #22348",
       "[Added] Allow users to stop an ongoing request to generate a commit message with Copilot - #22324. Thanks @say25!",
+      "[Fixed] Recover conflict dialog from permanently frozen state when conflict state becomes invalid, preventing users from needing to restart the app - #22348",
       "[Fixed] Fix Warp terminal detection on Windows to support the new Warp registry path with fallback to the legacy path - #22264. Thanks @Cocodrulo!",
       "[Fixed] Items in lists such as branches and changed files are properly announced by screen readers on Windows - #22219",
       "[Fixed] No longer prompts to initialize Git LFS for repositories that use non-LFS Git filters - #22180. Thanks @RonanLB!",
-      "[Fixed] Remove misleading pointer cursor from the example link preview in Accessibility preferences - #22244"
+      "[Fixed] Remove misleading pointer cursor from the example link preview in Accessibility preferences - #22244",
+      "[Improved] Update Electron to version 42.0.1 - #22104"
     ],
     "3.5.13-beta4": [
       "[Fixed] Worktree list is updated after after renaming or deleting worktrees - #22335 Thanks @pol-rivero!",

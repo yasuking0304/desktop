@@ -194,6 +194,7 @@ import { webUtils } from 'electron'
 import { showTestUI } from './lib/test-ui-components/test-ui-components'
 import { ConfirmCommitFilteredChanges } from './changes/confirm-commit-filtered-changes-dialog'
 import { AboutTestDialog } from './about/about-test-dialog'
+import { TestCLIActionDialog } from './cli-action/test-cli-action-dialog'
 import {
   enableCopilotSdkCommitMessageGeneration,
   enableWorktreeSupport,
@@ -2688,6 +2689,14 @@ export class App extends React.Component<IAppProps, IAppState> {
             onDismissed={onPopupDismissedFn}
             onShowAcknowledgements={this.showAcknowledgements}
             onShowTermsAndConditions={this.showTermsAndConditions}
+          />
+        )
+      case PopupType.TestCLIAction:
+        return (
+          <TestCLIActionDialog
+            key="test-cli-action"
+            dispatcher={this.props.dispatcher}
+            onDismissed={onPopupDismissedFn}
           />
         )
       case PopupType.PushProtectionError:
