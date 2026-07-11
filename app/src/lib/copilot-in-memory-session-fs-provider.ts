@@ -3,14 +3,21 @@ import type {
   SessionFsFileInfo,
   SessionFsProvider,
 } from '@github/copilot-sdk'
-import { posix } from 'path'
+import { posix, win32 } from 'path'
 
 const InMemorySessionFsStatePath = 'state'
 type CopilotInMemorySessionFsReaddirWithTypesEntry = Awaited<
   ReturnType<SessionFsProvider['readdirWithTypes']>
 >[number]
 
-function normalizeCopilotInMemorySessionFsInitialCwd(path: string) {
+function normalizeCopilotInMemorySessionFsInitialCwd(
+  path: string,
+  conventions: SessionFsConfig['conventions']
+) {
+  if (conventions === 'windows') {
+    return win32.normalize(path)
+  }
+
   const pathWithPosixSeparators = path.replace(/\\/g, '/')
   const windowsDrivePath = /^([A-Za-z]):(?:\/(.*))?$/.exec(
     pathWithPosixSeparators
@@ -25,17 +32,16 @@ function normalizeCopilotInMemorySessionFsInitialCwd(path: string) {
 }
 
 export function getCopilotInMemorySessionFsConfig(
-  repositoryPath?: string
+  repositoryPath: string | undefined,
+  conventions: SessionFsConfig['conventions']
 ): SessionFsConfig {
   return {
     initialCwd: normalizeCopilotInMemorySessionFsInitialCwd(
-      repositoryPath ?? process.cwd()
+      repositoryPath ?? process.cwd(),
+      conventions
     ),
     sessionStatePath: InMemorySessionFsStatePath,
-    // The runtime uses this only to construct virtual SessionFs paths before
-    // sending them to the provider, so POSIX keeps the in-memory implementation
-    // much simpler.
-    conventions: 'posix',
+    conventions,
   }
 }
 
@@ -75,7 +81,7 @@ export function createCopilotInMemorySessionFsProvider(): SessionFsProvider {
   ])
 
   const normalizePath = (path: string) => {
-    const normalized = posix.normalize(path)
+    const normalized = posix.normalize(path.replace(/\\/g, '/'))
     return normalized === '/' ? normalized : normalized.replace(/\/$/, '')
   }
 

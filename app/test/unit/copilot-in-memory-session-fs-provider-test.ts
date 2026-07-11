@@ -8,20 +8,34 @@ import {
 
 describe('getCopilotInMemorySessionFsConfig', () => {
   it('uses a POSIX session filesystem rooted in the in-memory state directory', () => {
-    assert.deepStrictEqual(getCopilotInMemorySessionFsConfig('/repo'), {
-      initialCwd: '/repo',
-      sessionStatePath: 'state',
-      conventions: 'posix',
-    })
+    assert.deepStrictEqual(
+      getCopilotInMemorySessionFsConfig('/repo', 'posix'),
+      {
+        initialCwd: '/repo',
+        sessionStatePath: 'state',
+        conventions: 'posix',
+      }
+    )
   })
 
-  it('normalizes Windows repository paths for POSIX session filesystem conventions', () => {
+  it('normalizes Windows repository paths for POSIX session filesystem conventions on non-Windows platforms', () => {
     assert.deepStrictEqual(
-      getCopilotInMemorySessionFsConfig('C:\\repo\\project'),
+      getCopilotInMemorySessionFsConfig('C:\\repo\\project', 'posix'),
       {
         initialCwd: '/c/repo/project',
         sessionStatePath: 'state',
         conventions: 'posix',
+      }
+    )
+  })
+
+  it('uses Windows session filesystem conventions', () => {
+    assert.deepStrictEqual(
+      getCopilotInMemorySessionFsConfig('C:\\repo\\project', 'windows'),
+      {
+        initialCwd: 'C:\\repo\\project',
+        sessionStatePath: 'state',
+        conventions: 'windows',
       }
     )
   })
@@ -31,11 +45,32 @@ describe('getCopilotInMemorySessionFsConfig', () => {
 
     process.cwd = () => 'D:\\a\\desktop\\desktop'
     try {
-      assert.deepStrictEqual(getCopilotInMemorySessionFsConfig(), {
-        initialCwd: '/d/a/desktop/desktop',
-        sessionStatePath: 'state',
-        conventions: 'posix',
-      })
+      assert.deepStrictEqual(
+        getCopilotInMemorySessionFsConfig(undefined, 'posix'),
+        {
+          initialCwd: '/d/a/desktop/desktop',
+          sessionStatePath: 'state',
+          conventions: 'posix',
+        }
+      )
+    } finally {
+      process.cwd = originalCwd
+    }
+  })
+
+  it('falls back to a Windows process cwd on Windows', () => {
+    const originalCwd = process.cwd
+
+    process.cwd = () => 'D:\\a\\desktop\\desktop'
+    try {
+      assert.deepStrictEqual(
+        getCopilotInMemorySessionFsConfig(undefined, 'windows'),
+        {
+          initialCwd: 'D:\\a\\desktop\\desktop',
+          sessionStatePath: 'state',
+          conventions: 'windows',
+        }
+      )
     } finally {
       process.cwd = originalCwd
     }
@@ -89,6 +124,21 @@ describe('createCopilotInMemorySessionFsProvider', () => {
     assert.strictEqual(await provider.readFile('/state/events.jsonl'), 'event')
     assert.deepStrictEqual(await provider.readdir('/'), ['state'])
     assert.deepStrictEqual(await provider.readdir('/state'), ['events.jsonl'])
+  })
+
+  it('normalizes Windows paths consistently', async () => {
+    const provider = createCopilotInMemorySessionFsProvider()
+
+    await provider.writeFile('state\\events\\one.jsonl', 'event')
+
+    assert.strictEqual(
+      await provider.readFile('state/events/one.jsonl'),
+      'event'
+    )
+    assert.deepStrictEqual(await provider.readdir('state\\'), ['events'])
+    assert.deepStrictEqual(await provider.readdir('state\\events'), [
+      'one.jsonl',
+    ])
   })
 
   it('lists root-level files with the correct type', async () => {

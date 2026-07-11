@@ -1080,11 +1080,18 @@ export class SectionList extends React.Component<
         this.state.width !== prevState.width ||
         this.state.height !== prevState.height
 
-      // If the number of groups doesn't change, but the size of them does, we
-      // need to recompute the grid size to ensure that the rows are laid out
-      // correctly.
+      // When rowCount changes (sections added/removed or rows within sections
+      // change), recompute the root grid layout and force section grids to
+      // re-render. The section grids' PureComponent optimization may skip
+      // re-rendering cell content when the render cascade from the root grid
+      // doesn't fully propagate (e.g. when files change while the app is
+      // backgrounded and Chromium throttles rendering).
+      // See https://github.com/desktop/desktop/issues/20566
       if (!hasEqualRowCount) {
         this.rootGrid?.recomputeGridSize()
+        for (const grid of this.grids.values()) {
+          grid.forceUpdate()
+        }
       }
 
       if (!gridHasUpdatedAlready) {

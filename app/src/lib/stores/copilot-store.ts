@@ -766,7 +766,10 @@ export class CopilotStore extends BaseStore {
         }`,
       },
       workingDirectory: repositoryPath,
-      sessionFs: getCopilotInMemorySessionFsConfig(repositoryPath),
+      sessionFs: getCopilotInMemorySessionFsConfig(
+        repositoryPath,
+        __WIN32__ ? 'windows' : 'posix'
+      ),
       gitHubToken: account.token,
     })
   }
