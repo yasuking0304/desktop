@@ -96,6 +96,8 @@
     "current-repository-darwin": "当前存储库",
     "no-repositories": "没有存储库",
     "no-repositories-darwin": "没有存储库",
+    "review-and-edit": "请在使用前仔细查看并编辑生成的消息。",
+    "review-suggested-resolutions": "请在将建议的解决方案应用于您的文件之前仔细查看这些解决方案。",
     "select-a-repository": "选择一个存储库",
     "select-a-repository-darwin": "选择一个存储库"
   },
@@ -896,8 +898,10 @@
   },
   "diff-contents-warning": {
     "learn-more-about-bidirectional-unicode": "了解有关双向 Unicode 字符的更多信息",
-    "this-diff-contains-a-change": "此差异包含行尾从“{{0}}”到“{{1}}”的变化。",
-    "this-diff-contains-bidirectional-unicode": "此 diff 包含双向 Unicode 文本, 其解释或编译方式可能与下方显示的内容不同。如需审查, 请使用可显示隐藏 Unicode 字符的编辑器打开该文件。"
+    "this-diff-contains-bidirectional-unicode": "此 diff 包含双向 Unicode 文本, 其解释或编译方式可能与下方显示的内容不同。如需审查, 请使用可显示隐藏 Unicode 字符的编辑器打开该文件。",
+    "this-file-uses-a-to-b-checjked-out-1": "该文件使用 {{0}} 换行符，但 ",
+    "this-file-uses-a-to-b-checjked-out-2": "Git 已配置为将其转换",
+    "this-file-uses-a-to-b-checjked-out-3": " 为 {{0}}（在下次检出该文件时）。"
   },
   "diff-options": {
     "caption-diff": "查看 {{0}} 的差异",
@@ -1111,7 +1115,10 @@
   },
   "generate-commit-message-override-warning": {
     "commit-message-override": "提交消息覆盖",
-    "the-commit-message": "您输入的提交消息将被生成的提交消息覆盖。"
+    "copilot-instructions": "Copilot 说明",
+    "the-commit-message": "您输入的提交消息将被生成的提交消息覆盖。",
+    "tip-1": "提示：您可以使用 ",
+    "tip-2": " 来自定义提交信息的生成方式。"
   },
   "generic-git-auth": {
     "authentication-failed": "身份验证失败",

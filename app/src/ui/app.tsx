@@ -2757,7 +2757,10 @@ export class App extends React.Component<IAppProps, IAppState> {
             onAccepted={onAccepted}
             onDismissed={onPopupDismissedFn}
           >
-            Review and edit the generated message carefully before use.
+            {t(
+              'app.review-and-edit',
+              'Review and edit the generated message carefully before use.'
+            )}
           </CopilotDisclaimer>
         )
       }
@@ -2774,8 +2777,10 @@ export class App extends React.Component<IAppProps, IAppState> {
             onAccepted={onAccepted}
             onDismissed={onPopupDismissedFn}
           >
-            Review the suggested resolutions carefully before applying them to
-            your files.
+            {t(
+              'app.review-suggested-resolutions',
+              'Review the suggested resolutions carefully before applying them to your files.'
+            )}
           </CopilotDisclaimer>
         )
       }

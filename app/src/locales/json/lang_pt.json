@@ -96,6 +96,8 @@
     "current-repository-darwin": "Current Repository",
     "no-repositories": "No repositories",
     "no-repositories-darwin": "No Repositories",
+    "review-and-edit": "Review and edit the generated message carefully before use.",
+    "review-suggested-resolutions": "Review the suggested resolutions carefully before applying them to your files.",
     "select-a-repository": "Select a repository",
     "select-a-repository-darwin": "Select a Repository"
   },
@@ -896,8 +898,10 @@
   },
   "diff-contents-warning": {
     "learn-more-about-bidirectional-unicode": "Learn more about bidirectional Unicode characters",
-    "this-diff-contains-a-change": "This diff contains a change in line endings from '{{0}}' to '{{1}}.",
-    "this-diff-contains-bidirectional-unicode": "This diff contains bidirectional Unicode text that may be interpreted or compiled differently than what appears below. To review, open the file in an editor that reveals hidden Unicode characters. "
+    "this-diff-contains-bidirectional-unicode": "This diff contains bidirectional Unicode text that may be interpreted or compiled differently than what appears below. To review, open the file in an editor that reveals hidden Unicode characters. ",
+    "this-file-uses-a-to-b-checjked-out-1": "This file uses {{0}} line endings, but ",
+    "this-file-uses-a-to-b-checjked-out-2": "Git is configured to convert them",
+    "this-file-uses-a-to-b-checjked-out-3": " to {{0}} the next time the file is checked out."
   },
   "diff-options": {
     "caption-diff": "Diff {{0}}",
@@ -1111,7 +1115,10 @@
   },
   "generate-commit-message-override-warning": {
     "commit-message-override": "Commit message override",
-    "the-commit-message": "The commit message you have entered will be overridden by the generated commit message."
+    "copilot-instructions": "Copilot Instructions",
+    "the-commit-message": "The commit message you have entered will be overridden by the generated commit message.",
+    "tip-1": "Tip: You can use ",
+    "tip-2": " to customize how commit messages are generated."
   },
   "generic-git-auth": {
     "authentication-failed": "Authentication failed",

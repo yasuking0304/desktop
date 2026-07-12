@@ -70,11 +70,20 @@ export class GenerateCommitMessageOverrideWarning extends React.Component<
           {this.props.showCopilotInstructionsTip ? (
             <Row>
               <p id="generate-commit-message-override-warning-tip">
-                Tip: You can use{' '}
+                {t(
+                  'generate-commit-message-override-warning.tip-1',
+                  'Tip: You can use '
+                )}
                 <LinkButton uri="https://gh.io/desktop-copilot-custom-instructions">
-                  Copilot Instructions
-                </LinkButton>{' '}
-                to customize how commit messages are generated.
+                  {t(
+                    'generate-commit-message-override-warning.copilot-instructions',
+                    'Copilot Instructions'
+                  )}
+                </LinkButton>
+                {t(
+                  'generate-commit-message-override-warning.tip-2',
+                  ' to customize how commit messages are generated.'
+                )}
               </p>
             </Row>
           ) : null}

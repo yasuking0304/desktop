@@ -89,15 +89,21 @@ export class DiffContentsWarning extends React.Component<IDiffContentsWarningPro
         return (
           <>
             {t(
-              'diff-contents-warning.this-file-uses-line-endings',
-              'This file uses {{0}} line endings, but ', {0: lineEndingsChange.from})
-            }
+              'diff-contents-warning.this-file-uses-a-to-b-checjked-out-1',
+              'This file uses {{0}} line endings, but ',
+              { 0: lineEndingsChange.from }
+            )}
             <LinkButton uri="https://docs.github.com/get-started/git-basics/configuring-git-to-handle-line-endings">
-              {t('diff-contents-warning.git-is-configured-to-convert-them', 'Git is configured to convert them')}
+              {t(
+                'diff-contents-warning.this-file-uses-a-to-b-checjked-out-2',
+                'Git is configured to convert them',
+                { 0: lineEndingsChange.to }
+              )}
             </LinkButton>
             {t(
-              'diff-contents-warning.to-line-endings-next-time-file-checked-out',
-              'to {{0}} the next time the file is checked out.', {0: lineEndingsChange.to}
+              'diff-contents-warning.this-file-uses-a-to-b-checjked-out-3',
+              'to {{0}} the next time the file is checked out.',
+              { 0: lineEndingsChange.to }
             )}
           </>
         )

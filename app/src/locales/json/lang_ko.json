@@ -96,6 +96,8 @@
     "current-repository-darwin": "현재 리포지토리",
     "no-repositories": "리포지토리 없음",
     "no-repositories-darwin": "리포지토리 없음",
+    "review-and-edit": "생성된 메시지를 사용하기 전에 신중하게 확인하고 편집하십시오.",
+    "review-suggested-resolutions": "생성된 솔루션을 파일에 적용하기 전에 신중하게 확인하십시오.",
     "select-a-repository": "리포지토리 선택",
     "select-a-repository-darwin": "리포지토리 선택"
   },
@@ -415,7 +417,7 @@
     "amending": "마지막 커밋 수정 중",
     "bypass-commit-hooks": "커밋 후크 우회",
     "bypass-commit-hooks-darwin": "커밋 후크 우회",
-    "cancel-generate-commit-details": "Cancel generating commit details",
+    "cancel-generate-commit-details": "커밋 메시지 생성 취소",
     "commit": "커밋",
     "commit-count-files": "{{0}}{{1}}을",
     "commit-description": "커밋 개요 설명",
@@ -891,13 +893,15 @@
     "force-delete": "강제로 삭제",
     "title": "worktree를 삭제하지 못했습니다.",
     "title-darwin": "worktree를 삭제하지 못했습니다.",
-    "would-you-like-to-forcefully-1": "Would you like to forcefully delete the worktree ",
-    "would-you-like-to-forcefully-2": "?"
+    "would-you-like-to-forcefully-1": "worktree ",
+    "would-you-like-to-forcefully-2": " 를 강제로 삭제하시겠습니까?"
   },
   "diff-contents-warning": {
     "learn-more-about-bidirectional-unicode": "양방향 유니코드 문자에 대해 자세히 알아보기",
-    "this-diff-contains-a-change": "이 차이에는 개행 코드가 '{{0}}'에서 '{{1}}'(으)로 변경된 내용이 포함되어 있습니다.",
-    "this-diff-contains-bidirectional-unicode": "이 차이에는 양방향 유니코드 텍스트가 포함되어 있으며 아래에 표시되는 것과 다르게 해석되거나 컴파일될 수 있습니다. 확인하려면 숨겨진 유니코드 문자를 표시할 수 있는 편집기에서 파일을 엽니다."
+    "this-diff-contains-bidirectional-unicode": "이 차이에는 양방향 유니코드 텍스트가 포함되어 있으며 아래에 표시되는 것과 다르게 해석되거나 컴파일될 수 있습니다. 확인하려면 숨겨진 유니코드 문자를 표시할 수 있는 편집기에서 파일을 엽니다.",
+    "this-file-uses-a-to-b-checjked-out-1": "이 파일은 {{0}}의 줄 바꿈 코드를 사용하지만",
+    "this-file-uses-a-to-b-checjked-out-2": "Git은 다음 체크아웃 시 {{0}}로 변환하도록 설정",
+    "this-file-uses-a-to-b-checjked-out-3": "입니다."
   },
   "diff-options": {
     "caption-diff": "차이 감지 {{0}}",
@@ -1111,7 +1115,10 @@
   },
   "generate-commit-message-override-warning": {
     "commit-message-override": "커밋 메시지 덮어쓰기",
-    "the-commit-message": "당신이 입력한 커밋 메시지는 생성된 커밋 메시지로 덮어씁니다."
+    "copilot-instructions": "Copilot 지침",
+    "the-commit-message": "당신이 입력한 커밋 메시지는 생성된 커밋 메시지로 덮어씁니다.",
+    "tip-1": "팁: ",
+    "tip-2": " 를 사용하여 커밋 메시지를 생성하는 방법을 사용자 지정할 수 있습니다."
   },
   "generic-git-auth": {
     "authentication-failed": "인증 실패",

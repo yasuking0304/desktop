@@ -96,6 +96,8 @@
     "current-repository-darwin": "現在のリポジトリ",
     "no-repositories": "リポジトリなし",
     "no-repositories-darwin": "リポジトリなし",
+    "review-and-edit": "生成されたメッセージを使用する前に、入念に確認・編集を行ってください。",
+    "review-suggested-resolutions": "生成された解決策をファイルに適用する前に、入念に確認を行ってください。",
     "select-a-repository": "リポジトリの選択",
     "select-a-repository-darwin": "リポジトリの選択"
   },
@@ -415,7 +417,7 @@
     "amending": "直前のコミットを修正中",
     "bypass-commit-hooks": "コミットフックのバイパス",
     "bypass-commit-hooks-darwin": "コミットフックのバイパス",
-    "cancel-generate-commit-details": "Cancel generating commit details",
+    "cancel-generate-commit-details": "コミットメッセージの生成をキャンセルする",
     "commit": "コミット",
     "commit-count-files": "{{0}}{{1}}を",
     "commit-description": "コミットの概要説明",
@@ -886,18 +888,20 @@
   "delete-worktree-failed-dialog": {
     "deleting-the-worktree-1": "worktree の削除中",
     "dialog": {
-      "deleting-the-worktree-2": " failed."
+      "deleting-the-worktree-2": " 失敗しました。"
     },
     "force-delete": "強制的に削除",
     "title": "worktreeの削除に失敗しました",
     "title-darwin": "worktreeの削除に失敗しました",
-    "would-you-like-to-forcefully-1": "Would you like to forcefully delete the worktree ",
-    "would-you-like-to-forcefully-2": "?"
+    "would-you-like-to-forcefully-1": "worktree ",
+    "would-you-like-to-forcefully-2": " を強制的に削除しますか?"
   },
   "diff-contents-warning": {
     "learn-more-about-bidirectional-unicode": "双方向Unicode文字についての詳細",
-    "this-diff-contains-a-change": "この差分には、改行コードが '{{0}}' から '{{1}}' に変更されたものが含まれています。",
-    "this-diff-contains-bidirectional-unicode": "この差分には双方向のUnicodeテキストが含まれており、以下に表示されるものとは異なって解釈またはコンパイルされる可能性があります。確認するには、非表示対象のUnicode文字を表示可能なエディターでファイルを開いてください。"
+    "this-diff-contains-bidirectional-unicode": "この差分には双方向のUnicodeテキストが含まれており、以下に表示されるものとは異なって解釈またはコンパイルされる可能性があります。確認するには、非表示対象のUnicode文字を表示可能なエディターでファイルを開いてください。",
+    "this-file-uses-a-to-b-checjked-out-1": "このファイルは {{0}} の改行コードを使用していますが、",
+    "this-file-uses-a-to-b-checjked-out-2": "Git は次回チェックアウト時にそれを {{0}} に変換するように設定",
+    "this-file-uses-a-to-b-checjked-out-3": "されています。"
   },
   "diff-options": {
     "caption-diff": "差異検出の{{0}}",
@@ -1111,7 +1115,10 @@
   },
   "generate-commit-message-override-warning": {
     "commit-message-override": "コミットメッセージの上書き",
-    "the-commit-message": "あなたが入力したコミットメッセージは、生成されたコミットメッセージによって上書きされます。"
+    "copilot-instructions": "Copilot の指示",
+    "the-commit-message": "あなたが入力したコミットメッセージは、生成されたコミットメッセージによって上書きされます。",
+    "tip-1": "ヒント: ",
+    "tip-2": "を使用して、コミットメッセージの生成方法をカスタマイズできます。"
   },
   "generic-git-auth": {
     "authentication-failed": "認証に失敗しました",
