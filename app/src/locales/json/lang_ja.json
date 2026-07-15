@@ -437,7 +437,7 @@
     "do-not-have-write-access-to-3": "をしますか?",
     "enable-commit-spellcheck": "コミットスペルチェックを有効にする",
     "enable-commit-spellcheck-darwin": "コミットスペルチェックを有効にする",
-    "generate-commit-message": "Copilotでコミットメッセージを生成{{0}}",
+    "generate-commit-message": "Copilotでコミットメッセージを生成",
     "generate-commit-message-with-copilot": "Copilotでコミットメッセージを生成",
     "generate-commit-message-with-copilot-darwin": "Copilotでコミットメッセージを生成",
     "generating-commit-details": "コミットの詳細を生成中…",
