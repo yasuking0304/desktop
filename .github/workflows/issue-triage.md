@@ -3,9 +3,9 @@ description: |
   Agentic issue-triage for GitHub Desktop. On newly opened issues it follows the
   team's shared triage skills (hosted in desktop/gh-cli-and-desktop-shared-workflows)
   and suggests the minimal correct end-state labels (with issue-intents rationale and
-  confidence) so a maintainer can approve them, plus one short rationale comment. The
-  objective is to drive the issue to a state where the needs-triage label is
-  automatically removed.
+  confidence) so a maintainer can approve them, plus one short evidence-based
+  rationale comment. The objective is to drive the issue to a state where the
+  needs-triage label is automatically removed.
 
 on:
   issues:
@@ -106,9 +106,18 @@ approval — never apply them directly.** Attach a clear rationale to each sugge
 
 After deciding, post **one** comment on issue
 #${{ github.event.issue.number || inputs.issue_number }} with a single short paragraph
-explaining which label(s) you are suggesting (if any) and why, in plain language. For a
-duplicate, name the likely original. If you are suggesting no label, say so and state what
-information would help a first responder finish triage.
+explaining which label(s) you are suggesting (if any) and why, in plain language.
+
+Keep this comment factual and specific:
+- Cite concrete evidence from the issue (for example: error text, reproducible steps,
+  expected vs actual behavior, or explicit "feature request" wording).
+- If you mention a related issue, state exactly how it overlaps or differs.
+- Avoid hedging and fluff (for example: "clear", "well-described", "distinct enough",
+  "stands on its own").
+- Keep it to 2-3 sentences maximum.
+
+For a duplicate, name the likely original. If you are suggesting no label, say so and
+state what information would help a first responder finish triage.
 
 When calling `add-comment`, explicitly set `item_number` to
 `${{ github.event.issue.number || inputs.issue_number }}`.
