@@ -72,6 +72,8 @@ import { Welcome } from './welcome'
 import { AppMenuBar } from './app-menu'
 import { UpdateAvailable, renderBanner } from './banners'
 import { Preferences } from './preferences'
+import { CopilotSettingsDialog } from './preferences/copilot-settings-dialog'
+import { CopilotCustomProvidersDialog } from './preferences/copilot-custom-providers-dialog'
 import { EditCopilotBYOKProviderDialog } from './copilot/edit-byok-provider-dialog'
 import { EditCopilotBYOKModelDialog } from './copilot/edit-byok-model-dialog'
 import { ConfirmDeleteCopilotBYOKProviderDialog } from './copilot/confirm-delete-byok-provider-dialog'
@@ -135,6 +137,7 @@ import memoizeOne from 'memoize-one'
 import { AheadBehindStore } from '../lib/stores/ahead-behind-store'
 import {
   getAccountForCommitMessageGeneration,
+  getAccountForCopilotConflictResolution,
   getAccountForRepository,
 } from '../lib/get-account-for-repository'
 import { CommitOneLine } from '../models/commit'
@@ -195,10 +198,15 @@ import { showTestUI } from './lib/test-ui-components/test-ui-components'
 import { ConfirmCommitFilteredChanges } from './changes/confirm-commit-filtered-changes-dialog'
 import { AboutTestDialog } from './about/about-test-dialog'
 import { TestCLIActionDialog } from './cli-action/test-cli-action-dialog'
+import { TestCopilotSnapshotCardDialog } from './preferences/test-copilot-snapshot-card-dialog'
 import {
   enableCopilotSdkCommitMessageGeneration,
   enableWorktreeSupport,
 } from '../lib/feature-flag'
+import {
+  getCopilotAccountCacheKey,
+  type CopilotFeature,
+} from '../lib/stores/copilot-store'
 import {
   ISecretScanResult,
   PushProtectionErrorDialog,
@@ -1551,6 +1559,71 @@ export class App extends React.Component<IAppProps, IAppState> {
     )
   }
 
+  private getCopilotModelsForAccount(account: Account) {
+    return (
+      this.state.copilotModelsByAccount.get(
+        getCopilotAccountCacheKey(account)
+      ) ?? null
+    )
+  }
+
+  private getCopilotQuotaSnapshotsForAccount(account: Account) {
+    return (
+      this.state.copilotQuotaSnapshotsByAccount.get(
+        getCopilotAccountCacheKey(account)
+      ) ?? null
+    )
+  }
+
+  private getSelectedCopilotModelsForAccount(account: Account) {
+    return (
+      this.state.selectedCopilotModelsByAccount.get(
+        getCopilotAccountCacheKey(account)
+      ) ?? {}
+    )
+  }
+
+  private onSelectedCopilotModelChanged = (
+    account: Account,
+    feature: CopilotFeature,
+    model: string | null
+  ) => {
+    this.props.dispatcher.setSelectedCopilotModel(account, feature, model)
+  }
+
+  private onAlwaysUseCopilotForConflictResolutionChanged = (
+    checked: boolean
+  ) => {
+    this.props.dispatcher.setAlwaysUseCopilotForConflictResolution(checked)
+  }
+
+  private onAddCopilotBYOKProvider = () => {
+    this.props.dispatcher.showPopup({
+      type: PopupType.EditCopilotBYOKProvider,
+      provider: null,
+    })
+  }
+
+  private onEditCopilotBYOKProvider = (provider: IBYOKProvider) => {
+    this.props.dispatcher.showPopup({
+      type: PopupType.EditCopilotBYOKProvider,
+      provider,
+    })
+  }
+
+  private onDeleteCopilotBYOKProvider = (provider: IBYOKProvider) => {
+    this.props.dispatcher.showPopup({
+      type: PopupType.ConfirmDeleteCopilotBYOKProvider,
+      provider,
+    })
+  }
+
+  private onConfigureCopilotCustomProviders = () => {
+    this.props.dispatcher.showPopup({
+      type: PopupType.CopilotCustomProviders,
+    })
+  }
+
   private popupContent(popup: Popup, isTopMost: boolean): JSX.Element | null {
     if (popup.id === undefined) {
       // Should not be possible... but if it does we want to know about it.
@@ -1701,10 +1774,55 @@ export class App extends React.Component<IAppProps, IAppState> {
             copilotLicenseType={this.state.copilotLicenseType}
             selectedCopilotModels={this.state.selectedCopilotModels}
             copilotModels={this.state.copilotModels}
+            selectedCopilotModelsByAccount={
+              this.state.selectedCopilotModelsByAccount
+            }
+            copilotModelsByAccount={this.state.copilotModelsByAccount}
+            copilotQuotaSnapshotsByAccount={
+              this.state.copilotQuotaSnapshotsByAccount
+            }
             byokProviders={this.state.byokProviders}
             alwaysUseCopilotForConflictResolution={
               this.state.alwaysUseCopilotForConflictResolution
             }
+          />
+        )
+      case PopupType.CopilotUserSettings:
+        return (
+          <CopilotSettingsDialog
+            key={`copilot-settings-${getCopilotAccountCacheKey(popup.account)}`}
+            account={popup.account}
+            selectedCopilotModels={this.getSelectedCopilotModelsForAccount(
+              popup.account
+            )}
+            copilotModels={this.getCopilotModelsForAccount(popup.account)}
+            copilotQuotaSnapshots={this.getCopilotQuotaSnapshotsForAccount(
+              popup.account
+            )}
+            byokProviders={this.state.byokProviders}
+            showBYOKSettings={enableCopilotSdkCommitMessageGeneration(
+              popup.account
+            )}
+            alwaysUseCopilotForConflictResolution={
+              this.state.alwaysUseCopilotForConflictResolution
+            }
+            onSelectedCopilotModelChanged={this.onSelectedCopilotModelChanged}
+            onAlwaysUseCopilotForConflictResolutionChanged={
+              this.onAlwaysUseCopilotForConflictResolutionChanged
+            }
+            onConfigureCustomProviders={this.onConfigureCopilotCustomProviders}
+            onDismissed={onPopupDismissedFn}
+          />
+        )
+      case PopupType.CopilotCustomProviders:
+        return (
+          <CopilotCustomProvidersDialog
+            key="copilot-custom-providers"
+            providers={this.state.byokProviders}
+            onAddProvider={this.onAddCopilotBYOKProvider}
+            onEditProvider={this.onEditCopilotBYOKProvider}
+            onDeleteProvider={this.onDeleteCopilotBYOKProvider}
+            onDismissed={onPopupDismissedFn}
           />
         )
       case PopupType.RepositorySettings: {
@@ -2351,6 +2469,19 @@ export class App extends React.Component<IAppProps, IAppState> {
           return null
         }
 
+        const account = getAccountForCopilotConflictResolution(
+          this.state.accounts,
+          popup.repository
+        )
+        const selectedCopilotModels =
+          account === undefined
+            ? {}
+            : this.getSelectedCopilotModelsForAccount(account)
+        const copilotModels =
+          account === undefined
+            ? null
+            : this.getCopilotModelsForAccount(account)
+
         return (
           <MultiCommitOperation
             key="multi-commit-operation"
@@ -2369,8 +2500,8 @@ export class App extends React.Component<IAppProps, IAppState> {
               this.state.copilotConflictResolutionClickCount === 0
             }
             copilotConflictResolutionModel={getConflictResolutionModelDisplay(
-              this.state.selectedCopilotModels['conflict-resolution'] ?? null,
-              this.state.copilotModels,
+              selectedCopilotModels['conflict-resolution'] ?? null,
+              copilotModels,
               this.state.byokProviders
             )}
             openFileInExternalEditor={this.openFileInExternalEditor}
@@ -2696,6 +2827,14 @@ export class App extends React.Component<IAppProps, IAppState> {
           <TestCLIActionDialog
             key="test-cli-action"
             dispatcher={this.props.dispatcher}
+            onDismissed={onPopupDismissedFn}
+          />
+        )
+      case PopupType.TestCopilotSnapshotCard:
+        return (
+          <TestCopilotSnapshotCardDialog
+            key="test-copilot-snapshot-card"
+            accounts={this.state.accounts}
             onDismissed={onPopupDismissedFn}
           />
         )

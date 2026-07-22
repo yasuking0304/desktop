@@ -7,6 +7,7 @@ import { type IBYOKProvider, encodeModelKey } from '../../lib/copilot/byok'
 import { IFilterListGroup, IFilterListItem } from './filter-list'
 import { PopoverDecoration } from './popover'
 import { PopoverDropdown } from './popover-dropdown'
+import { LinkButton } from './link-button'
 import { SectionFilterList } from './section-filter-list'
 import type {
   Model,
@@ -20,6 +21,7 @@ interface ICopilotModelPickerProps {
   readonly byokProviders: ReadonlyArray<IBYOKProvider>
   readonly value: string
   readonly onChange: (value: string) => void
+  readonly onConfigureCustomProviders?: () => void
   readonly maxHeight?: number
 }
 
@@ -390,6 +392,11 @@ export class CopilotModelPicker extends React.Component<
     this.setState({ selectedItemId: selectedItem?.id })
   }
 
+  private onConfigureCustomProviders = () => {
+    this.popoverRef.current?.closePopover()
+    this.props.onConfigureCustomProviders?.()
+  }
+
   private getRowHeight = ({
     item,
   }: {
@@ -477,6 +484,13 @@ export class CopilotModelPicker extends React.Component<
           'copilot-model-picker.choose-a-model',
           'Choose a model'
         )}
+        contentHeaderAccessory={
+          this.props.onConfigureCustomProviders === undefined ? undefined : (
+            <LinkButton onClick={this.onConfigureCustomProviders}>
+              Configure custom providers…
+            </LinkButton>
+          )
+        }
         buttonContent={this.renderButtonContent(buttonItem)}
         buttonAriaLabel={buttonAriaLabel}
         decoration={PopoverDecoration.Bordered}
