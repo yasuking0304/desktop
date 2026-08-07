@@ -109,6 +109,7 @@
     "webpack-merge": "^6.0.1"
   },
   "devDependencies": {
+    "@electron/packager": "^18.4.4",
     "@github/markdownlint-github": "^0.1.0",
     "@playwright/test": "^1.58.2",
     "@types/byline": "^4.2.31",
@@ -160,7 +161,7 @@
     "@types/webpack-merge": "^5.0.0",
     "@types/xml2js": "^0.4.11",
     "diff": "^8.0.3",
-    "electron": "37.10.3",
+    "electron": "42.0.1",
     "electron-builder": "^26.8.1",
     "electron-packager": "^17.1.1",
     "electron-winstaller": "^5.0.0",
