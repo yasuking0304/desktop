@@ -515,6 +515,7 @@
     "description": "概要",
     "discard": "破棄",
     "do-not-show-message-again": "このメッセージを今後表示しない",
+    "done": "完了",
     "download": "{{0}}のダウンロード",
     "email": "メールアドレス",
     "enterprise-address": "Enterpriseアドレス",
@@ -673,33 +674,23 @@
     "resolve-conflicts-tooltip": "続行する前にすべての競合を解決する",
     "warn-about-untracked-files": "追跡されていないファイルは除外されます"
   },
-  "copilot": {
-    "add-custom-provider": "カスタムプロバイダーを追加すると、OpenAI互換エンドポイント、Azure、Anthropic、または Ollama などのローカルプロバイダーで独自のAPIキーを使用できます。",
-    "add-provider": "プロパイダーの追加…",
-    "add-provider-darwin": "プロパイダーの追加…",
-    "always-use-copilot-when-conflicts": "競合が検出された場合は、常に Copilot を使用する",
-    "always-use-copilot-when-conflicts-darwin": "競合が検出された場合は、常に Copilot を使用する。",
-    "commit-message-generation": "コミットメッセージの生成",
-    "commit-message-generation-darwin": "コミットメッセージの生成",
-    "conflict-resolution": "競合の解決",
-    "conflict-resolution-darwin": "競合の解決",
-    "custom-instructions": "カスタム指示",
-    "learn-more-about-commit-messages": "コミットメッセージの生成について詳しく知る。",
-    "loading-models": "利用可能なモデルの読み込み中…",
-    "many-models": "{{0}}モデル",
-    "model-changes-apply-to-future-conflict": "モデルの変更は、将来の競合解決に適用されます。",
-    "models": "モデル",
-    "no-models-available": "利用可能な Copilot モデルがありません。",
-    "one-model": "1モデル",
-    "providers": "プロパイダー",
-    "tailor-copilot-behavior-1": " ",
-    "tailor-copilot-behavior-2": "を使用して、Copilotの動作をカスタマイズできます。"
-  },
   "copilot-byok-provider-dialog": {
     "add-custom-provider": "カスタムプロバイダーの追加",
     "add-custom-provider-darwin": "カスタムプロバイダーの追加",
     "edit-custom-provider": "カスタムプロバイダーの編集",
     "edit-custom-provider-darwin": "カスタムプロバイダーの編集"
+  },
+  "copilot-custom-providers-dialog": {
+    "add-a-custom-provider": "カスタムプロバイダーを追加すると、OpenAI互換エンドポイント、Azure、Anthropic、または Ollama などのローカルプロバイダーで独自のAPIキーを使用できます。",
+    "add-provider": "プロパイダーの追加…",
+    "add-provider-darwin": "プロパイダーの追加…",
+    "custom-providers": "カスタムプロバイダー",
+    "custom-providers-darwin": "カスタムプロバイダー",
+    "many-models": "{{0}}モデル",
+    "one-model": "1モデル",
+    "provider-type-anthropic": "Anthropic",
+    "provider-type-azure": "Azure",
+    "provider-type-openai": "OpenAI互換"
   },
   "copilot-error": {
     "billing-issue": "GitHub Copilotで課金エラーが発生しました。",
@@ -716,10 +707,26 @@
   },
   "copilot-model-picker": {
     "choose-a-model": "モデルの選択",
+    "configure-custom-providers": "カスタムプロバイダーを設定…",
     "default-model": "{{0}}(デフォルト)",
     "filter-models": "モデルのフィルター",
     "no-models-found": "モデルが見つかりません。",
     "use-of-credits": "クレジット使用量: {{0}}"
+  },
+  "copilot-user-settings": {
+    "always-use-copilot-when-conflicts": "競合が検出された場合は、常に Copilot を使用する",
+    "always-use-copilot-when-conflicts-darwin": "競合が検出された場合は、常に Copilot を使用する",
+    "commit-message-generation": "コミットメッセージの生成",
+    "commit-message-generation-darwin": "コミットメッセージの生成",
+    "conflict-resolution": "競合の解決",
+    "conflict-resolution-darwin": "競合の解決",
+    "custom-instructions": "カスタム指示",
+    "learn-more-about-commit-messages": "コミットメッセージの生成について詳しく知る。",
+    "loading-models": "利用可能なモデルを読み込んでいます…",
+    "model-changes-apply-to-future-conflict": "モデルの変更は、将来の競合解決に適用されます。",
+    "no-models-available": "利用可能な Copilot モデルがありません。",
+    "tailor-copilot-behavior-1": " ",
+    "tailor-copilot-behavior-2": "を使用して、Copilotの動作をカスタマイズできます。"
   },
   "copy-button": {
     "copied": "コピーしました"
@@ -1265,6 +1272,8 @@
     "add-local-repository-darwin": "ローカルリポジトリの追加…",
     "branch": "ブランチ(&B)",
     "branch-darwin": "ブランチ",
+    "checkout-in-new-worktree": "新規worktreeでチェックアウト…",
+    "checkout-in-new-worktree-darwin": "新規worktreeでチェックアウト…",
     "clone-repository": "リポジトリのクローン(&N)…",
     "clone-repository-darwin": "リポジトリのクローン…",
     "close-darwin": "ウィンドウを閉じる",
@@ -1748,8 +1757,8 @@
     "refresh-the-list-of-pull-request": "プルリクエストのリストを更新する"
   },
   "pull-request-list-item-context-menu": {
-    "checkout-in-new-worktree": "新しい worktree をチェックアウト…",
-    "checkout-in-new-worktree-darwin": "新しい worktree をチェックアウト…",
+    "checkout-in-new-worktree": "新規worktreeでチェックアウト…",
+    "checkout-in-new-worktree-darwin": "新規worktreeでチェックアウト…",
     "view-pull-request-on-github": "GitHubでプルリクエストを表示"
   },
   "pull-request-merge-status": {
@@ -2020,6 +2029,17 @@
   },
   "sign-in-enterprise": {
     "sign-in": "GitHub Enterprise にサインイン"
+  },
+  "snapshot": {
+    "ai-credits": "AI クレジット",
+    "chat-messages": "クレジット",
+    "code-completions": "インライン候補",
+    "premium-requests": "Premium requests",
+    "session-limits": "Session limits",
+    "weekly-limits": "Weekly limits"
+  },
+  "snapshot-card": {
+    "loading-copilot-usage": "Copilot使用状況を読み込んでいます…"
   },
   "start": {
     "by-creating-an-account-1": "アカウントを作成することにより ",

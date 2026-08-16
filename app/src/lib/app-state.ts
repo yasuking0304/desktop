@@ -433,11 +433,7 @@ export interface IAppState {
   readonly copilotResetDate: string
 
   readonly copilotLicenseType: string
-  /**
-   * Per-feature Copilot model selections. An absent key means the default
-   * model will be used for that feature.
-   */
-  readonly selectedCopilotModels: CopilotModelSelections
+
   /** Account-scoped Copilot model selections. */
   readonly selectedCopilotModelsByAccount: CopilotModelSelectionsByAccount
 

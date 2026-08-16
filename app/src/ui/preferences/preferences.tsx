@@ -122,8 +122,6 @@ interface IPreferencesProps {
   readonly autoSuggestQuotas: number
   readonly copilotResetDate: string
   readonly copilotLicenseType: string
-  readonly selectedCopilotModels: CopilotModelSelections
-  readonly copilotModels: ReadonlyArray<Model> | null
   readonly selectedCopilotModelsByAccount: CopilotModelSelectionsByAccount
   readonly copilotModelsByAccount: CopilotModelsByAccount
   readonly copilotQuotaSnapshotsByAccount: CopilotQuotaSnapshotsByAccount
@@ -276,7 +274,6 @@ export class Preferences extends React.Component<
       autoSuggestQuotas: this.props.autoSuggestQuotas,
       copilotResetDate: this.props.copilotResetDate,
       copilotLicenseType: this.props.copilotLicenseType,
-      selectedCopilotModels: this.props.selectedCopilotModels,
       selectedCopilotModelsByAccount: this.props.selectedCopilotModelsByAccount,
       alwaysUseCopilotForConflictResolution:
         this.props.alwaysUseCopilotForConflictResolution,

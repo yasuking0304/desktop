@@ -515,6 +515,7 @@
     "description": "描述",
     "discard": "丟棄",
     "do-not-show-message-again": "不再顯示此訊息",
+    "done": "結束",
     "download": "下載 {{0}}",
     "email": "電子郵件",
     "enterprise-address": "Enterprise 位址",
@@ -673,33 +674,23 @@
     "resolve-conflicts-tooltip": "繼續前解決所有衝突",
     "warn-about-untracked-files": "未跟踪的文件將被排除"
   },
-  "copilot": {
-    "add-custom-provider": "新增自訂供應商，以便在相容 OpenAI 的端點、Azure、Anthropic 或 Ollama 等本機提供者上使用您自己的 API 金鑰。",
-    "add-provider": "新增提供者…",
-    "add-provider-darwin": "新增提供者…",
-    "always-use-copilot-when-conflicts": "偵測到衝突時，請務必使用 Copilot",
-    "always-use-copilot-when-conflicts-darwin": "偵測到衝突時，請務必使用 Copilot",
-    "commit-message-generation": "提交資訊產生",
-    "commit-message-generation-darwin": "提交資訊生成",
-    "conflict-resolution": "衝突解決",
-    "conflict-resolution-darwin": "衝突解決",
-    "custom-instructions": "自訂指令",
-    "learn-more-about-commit-messages": "了解更多關於產生提交資訊的內容。",
-    "loading-models": "正在載入可用模型…",
-    "many-models": "{{0}} 個模型",
-    "model-changes-apply-to-future-conflict": "模型變更適用於未來的衝突解決。",
-    "models": "模型",
-    "no-models-available": "沒有可用的 Copilot 模型。",
-    "one-model": "1 個模型",
-    "providers": "提供者",
-    "tailor-copilot-behavior-1": "利用 ",
-    "tailor-copilot-behavior-2": " 來客製化 Copilot 的行為。"
-  },
   "copilot-byok-provider-dialog": {
     "add-custom-provider": "新增自訂提供者",
     "add-custom-provider-darwin": "新增自訂提供者",
     "edit-custom-provider": "編輯自訂提供者",
     "edit-custom-provider-darwin": "編輯自訂提供者"
+  },
+  "copilot-custom-providers-dialog": {
+    "add-a-custom-provider": "新增自訂供應商，以便在相容 OpenAI 的端點、Azure、Anthropic 或 Ollama 等本機提供者上使用您自己的 API 金鑰。",
+    "add-provider": "新增提供者…",
+    "add-provider-darwin": "新增提供者…",
+    "custom-providers": "自訂提供者",
+    "custom-providers-darwin": "自訂提供者",
+    "many-models": "{{0}} 個模型",
+    "one-model": "1 個模型",
+    "provider-type-anthropic": "Anthropic",
+    "provider-type-azure": "Azure",
+    "provider-type-openai": "OpenAI 兼容"
   },
   "copilot-error": {
     "billing-issue": "在 GitHub Copilot 上發生了付費錯誤。",
@@ -716,10 +707,26 @@
   },
   "copilot-model-picker": {
     "choose-a-model": "選擇一個模型",
+    "configure-custom-providers": "設定自訂提供者…",
     "default-model": "{{0}}(預設)",
     "filter-models": "過濾模型",
     "no-models-found": "未找到模型。",
     "use-of-credits": "額度使用: {{0}}"
+  },
+  "copilot-user-settings": {
+    "always-use-copilot-when-conflicts": "偵測到衝突時，請務必使用 Copilot",
+    "always-use-copilot-when-conflicts-darwin": "偵測到衝突時，請務必使用 Copilot",
+    "commit-message-generation": "提交資訊產生",
+    "commit-message-generation-darwin": "提交資訊產生",
+    "conflict-resolution": "衝突解決",
+    "conflict-resolution-darwin": "衝突解決",
+    "custom-instructions": "自訂指示",
+    "learn-more-about-commit-messages": "了解更多關於產生提交資訊的信息。",
+    "loading-models": "Loading available models…",
+    "model-changes-apply-to-future-conflict": "模型變更適用於未來的衝突解決。",
+    "no-models-available": "沒有可用的 Copilot 模型。",
+    "tailor-copilot-behavior-1": "利用 ",
+    "tailor-copilot-behavior-2": " 來客製化 Copilot 的行為。"
   },
   "copy-button": {
     "copied": "已複製"
@@ -1265,6 +1272,8 @@
     "add-local-repository-darwin": "新增本機儲存庫…",
     "branch": "分支(&B)",
     "branch-darwin": "分支",
+    "checkout-in-new-worktree": "在新的worktree中檢出…",
+    "checkout-in-new-worktree-darwin": "在新的worktree中檢出…",
     "clone-repository": "複製倉庫(&N)…",
     "clone-repository-darwin": "複製倉庫…",
     "close-darwin": "關閉視窗",
@@ -1748,9 +1757,9 @@
     "refresh-the-list-of-pull-request": "刷新拉取請求清單"
   },
   "pull-request-list-item-context-menu": {
-    "checkout-in-new-worktree": "Checkout in new worktree…",
-    "checkout-in-new-worktree-darwin": "Checkout in New Worktree…",
-    "view-pull-request-on-github": "View Pull Request on GitHub"
+    "checkout-in-new-worktree": "在新的worktree中檢出…",
+    "checkout-in-new-worktree-darwin": "在新的worktree中檢出…",
+    "view-pull-request-on-github": "在GitHub上查看拉取請求"
   },
   "pull-request-merge-status": {
     "able-to-merge": "可以合併。",
@@ -2020,6 +2029,17 @@
   },
   "sign-in-enterprise": {
     "sign-in": "登入您的 GitHub Enterprise"
+  },
+  "snapshot": {
+    "ai-credits": "AI credits",
+    "chat-messages": "Credit",
+    "code-completions": "Code completions",
+    "premium-requests": "Premium requests",
+    "session-limits": "Session limits",
+    "weekly-limits": "Weekly limits"
+  },
+  "snapshot-card": {
+    "loading-copilot-usage": "Loading Copilot usage…"
   },
   "start": {
     "by-creating-an-account-1": "透過建立帳戶, 您同意 ",

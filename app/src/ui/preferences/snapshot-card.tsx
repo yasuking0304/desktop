@@ -13,17 +13,18 @@ import { TooltippedContent } from '../lib/tooltipped-content'
 import { TooltipDirection } from '../lib/tooltip'
 import { formatNumber } from '../../lib/format-number'
 import { getNumberFormatPreference } from '../../models/formatting-preferences'
+import { t } from 'i18next'
 
 const snapshotDisplayNames: Record<string, string> = {
-  chat: 'Chat messages',
-  completions: 'Code completions',
-  premium_interactions: 'Premium requests',
-  session: 'Session limits',
-  weekly: 'Weekly limits',
+  chat: t('snapshot.chat-messages', 'Credit'),
+  completions: t('snapshot.code-completions', 'Code completions'),
+  premium_interactions: t('snapshot.premium-requests', 'Premium requests'),
+  session: t('snapshot.session-limits', 'Session limits'),
+  weekly: t('snapshot.weekly-limits', 'Weekly limits'),
 }
 
 const tokenBasedSnapshotDisplayNames: Record<string, string> = {
-  premium_interactions: 'AI credits',
+  premium_interactions: t('snapshot.ai-credits', 'AI credits'),
 }
 
 const quotaKeys = ['chat', 'completions', 'premium_interactions']
@@ -352,7 +353,11 @@ export class SnapshotCard extends React.Component<ISnapshotCardProps> {
 }
 
 function renderLoadingSnapshots(): JSX.Element {
-  return <p className="copilot-usage-empty">Loading Copilot usage…</p>
+  return (
+    <p className="copilot-usage-empty">
+      {t('snapshot-card.loading-copilot-usage', 'Loading Copilot usage…')}
+    </p>
+  )
 }
 
 function renderSnapshots(snapshots: CopilotQuotaSnapshots): JSX.Element {

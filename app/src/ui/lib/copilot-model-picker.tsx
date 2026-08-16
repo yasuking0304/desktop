@@ -487,7 +487,10 @@ export class CopilotModelPicker extends React.Component<
         contentHeaderAccessory={
           this.props.onConfigureCustomProviders === undefined ? undefined : (
             <LinkButton onClick={this.onConfigureCustomProviders}>
-              Configure custom providers…
+              {t(
+                'copilot-model-picker.configure-custom-providers',
+                'Configure custom providers…'
+              )}
             </LinkButton>
           )
         }

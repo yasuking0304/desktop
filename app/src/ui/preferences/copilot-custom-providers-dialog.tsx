@@ -4,6 +4,7 @@ import { Button } from '../lib/button'
 import { Dialog, DialogContent, DialogFooter } from '../dialog'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
 import { Octicon } from '../octicons'
+import { t } from 'i18next'
 import * as octicons from '../octicons/octicons.generated'
 
 interface ICopilotCustomProvidersDialogProps {
@@ -29,7 +30,17 @@ export class CopilotCustomProvidersDialog extends React.Component<ICopilotCustom
       <Dialog
         id="copilot-custom-providers-dialog"
         className="copilot-settings-dialog"
-        title={__DARWIN__ ? 'Custom Providers' : 'Custom providers'}
+        title={
+          __DARWIN__
+            ? t(
+                'copilot-custom-providers-dialog.custom-providers-darwin',
+                'Custom Providers'
+              )
+            : t(
+                'copilot-custom-providers-dialog.custom-providers',
+                'Custom providers'
+              )
+        }
         onSubmit={this.props.onDismissed}
         onDismissed={this.props.onDismissed}
       >
@@ -37,13 +48,21 @@ export class CopilotCustomProvidersDialog extends React.Component<ICopilotCustom
           <div className="copilot-section">
             {this.renderProviders()}
             <Button onClick={this.onAddProviderClick}>
-              {__DARWIN__ ? 'Add Provider…' : 'Add provider…'}
+              {__DARWIN__
+                ? t(
+                    'copilot-custom-providers-dialog.add-provider-darwin',
+                    'Add Provider…'
+                  )
+                : t(
+                    'copilot-custom-providers-dialog.add-provider',
+                    'Add provider…'
+                  )}
             </Button>
           </div>
         </DialogContent>
         <DialogFooter>
           <OkCancelButtonGroup
-            okButtonText="Done"
+            okButtonText={t('common.done', 'Done')}
             cancelButtonVisible={false}
           />
         </DialogFooter>
@@ -55,8 +74,10 @@ export class CopilotCustomProvidersDialog extends React.Component<ICopilotCustom
     if (this.props.providers.length === 0) {
       return (
         <p className="copilot-byok-empty">
-          Add a custom provider to use your own API keys with OpenAI-compatible
-          endpoints, Azure, Anthropic, or local providers like Ollama.
+          {t(
+            'copilot-custom-providers-dialog.add-a-custom-provider',
+            'Add a custom provider to use your own API keys with OpenAI-compatible endpoints, Azure, Anthropic, or local providers like Ollama.'
+          )}
         </p>
       )
     }
@@ -70,7 +91,12 @@ export class CopilotCustomProvidersDialog extends React.Component<ICopilotCustom
 
   private renderProvider = (provider: IBYOKProvider) => {
     const modelCount = provider.models.length
-    const modelLabel = modelCount === 1 ? '1 model' : `${modelCount} models`
+    const modelLabel =
+      modelCount === 1
+        ? t('copilot-custom-providers-dialog.one-model', '1 model')
+        : t('copilot-custom-providers-dialog.many-models', `{{0}} models`, {
+            0: modelCount,
+          })
     const isLocal = isLocalBaseUrl(provider.baseUrl)
 
     return (
@@ -107,11 +133,17 @@ export class CopilotCustomProvidersDialog extends React.Component<ICopilotCustom
   private formatProviderType(provider: IBYOKProvider): string {
     switch (provider.type) {
       case 'openai':
-        return 'OpenAI-compatible'
+        return t(
+          'copilot-custom-providers-dialog.provider-type-openai',
+          'OpenAI-compatible'
+        )
       case 'azure':
-        return 'Azure'
+        return t('copilot-custom-providers-dialog.provider-type-azure', 'Azure')
       case 'anthropic':
-        return 'Anthropic'
+        return t(
+          'copilot-custom-providers-dialog.provider-type-anthropic',
+          'Anthropic'
+        )
     }
   }
 }

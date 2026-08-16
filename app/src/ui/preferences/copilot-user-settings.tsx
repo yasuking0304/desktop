@@ -23,6 +23,7 @@ import { Row } from '../lib/row'
 import { CopilotModelSelectionInfo } from './copilot-model-selection-info'
 import { SnapshotCard } from './snapshot-card'
 import type { Model } from '@github/copilot-sdk/dist/generated/rpc'
+import { t } from 'i18next'
 
 interface ICopilotUserSettingsProps {
   readonly account: Account
@@ -88,36 +89,65 @@ export class CopilotUserSettings extends React.Component<ICopilotUserSettingsPro
     const { copilotModels, byokProviders } = this.props
 
     if (copilotModels === null) {
-      return <p>Loading available models…</p>
+      return (
+        <p>
+          {t(
+            'copilot-user-settings.loading-models',
+            'Loading available models…'
+          )}
+        </p>
+      )
     }
 
     if (!hasCopilotModelPickerItems(copilotModels, byokProviders)) {
-      return <p>No Copilot models available.</p>
+      return (
+        <p>
+          {t(
+            'copilot-user-settings.no-models-available',
+            'No Copilot models available.'
+          )}
+        </p>
+      )
     }
 
     return (
       <>
         <Row className="copilot-feature-hint">
           <p>
-            Tailor how Copilot behaves by using{' '}
+            {t(
+              'copilot-user-settings.tailor-copilot-behavior-1',
+              'Tailor how Copilot behaves by using '
+            )}
             <LinkButton uri="https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-custom-instructions">
-              custom instructions
+              {t(
+                'copilot-user-settings.custom-instructions',
+                'custom instructions'
+              )}
             </LinkButton>
-            .
+            {t('copilot-user-settings.tailor-copilot-behavior-2', '.')}
           </p>
         </Row>
         {this.renderFeatureModelPicker(
           copilotModels,
           'commit-message-generation',
           __DARWIN__
-            ? 'Commit Message Generation'
-            : 'Commit message generation',
+            ? t(
+                'copilot-user-settings.commit-message-generation-darwin',
+                'Commit Message Generation'
+              )
+            : t(
+                'copilot-user-settings.commit-message-generation',
+                'Commit message Generation'
+              ),
           this.onCommitMessageModelChanged,
           350
         )}
         <p className="settings-description">
           <LinkButton uri="https://docs.github.com/en/desktop/making-changes-in-a-branch/committing-and-reviewing-changes-to-your-project-in-github-desktop#write-a-commit-message-and-push-your-changes">
-            Learn more about generating commit messages.
+            {t(
+              'copilot-user-settings.learn-more-about-commit-messages',
+              'Learn more about generating commit messages.'
+            )}
           </LinkButton>
         </p>
         {enableCopilotConflictResolution() && (
@@ -125,18 +155,35 @@ export class CopilotUserSettings extends React.Component<ICopilotUserSettingsPro
             {this.renderFeatureModelPicker(
               copilotModels,
               'conflict-resolution',
-              __DARWIN__ ? 'Conflict Resolution' : 'Conflict resolution',
+              __DARWIN__
+                ? t(
+                    'copilot-user-settings.conflict-resolution-darwin',
+                    'Conflict Resolution'
+                  )
+                : t(
+                    'copilot-user-settings.conflict-resolution',
+                    'Conflict resolution'
+                  ),
               this.onConflictResolutionModelChanged,
               280
             )}
             <p className="settings-description">
-              Model changes apply to future conflict resolutions.
+              {t(
+                'copilot-user-settings.model-changes-apply-to-future-conflict',
+                'Model changes apply to future conflict resolutions.'
+              )}
             </p>
             <Checkbox
               label={
                 __DARWIN__
-                  ? 'Always Use Copilot When Conflicts Are Detected'
-                  : 'Always use Copilot when conflicts are detected'
+                  ? t(
+                      'copilot-user-settings.always-use-copilot-when-conflicts-darwin',
+                      'Always Use Copilot When Conflicts Are Detected'
+                    )
+                  : t(
+                      'copilot-user-settings.always-use-copilot-when-conflicts',
+                      'Always use Copilot when conflicts are detected'
+                    )
               }
               value={
                 this.props.alwaysUseCopilotForConflictResolution

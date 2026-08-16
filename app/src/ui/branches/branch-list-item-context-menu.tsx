@@ -62,8 +62,8 @@ export function generateBranchContextMenuItems(
   if (onCheckoutInNewWorktree !== undefined) {
     items.push({
       label: __DARWIN__
-        ? 'Checkout in New Worktree…'
-        : 'Checkout in new worktree…',
+        ? t('menu.checkout-in-new-worktree-darwin', 'Checkout in New Worktree…')
+        : t('menu.checkout-in-new-worktree', 'Checkout in new worktree…'),
       action: () => onCheckoutInNewWorktree(branch),
     })
   }

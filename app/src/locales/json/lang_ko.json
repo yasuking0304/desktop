@@ -515,6 +515,7 @@
     "description": "개요",
     "discard": "파기",
     "do-not-show-message-again": "이 메시지를 향후 표시하지 않음",
+    "done": "완료",
     "download": "{{0}} 다운로드",
     "email": "이메일 주소",
     "enterprise-address": "Enterprise 주소",
@@ -673,33 +674,23 @@
     "resolve-conflicts-tooltip": "계속하기 전에 모든 충돌 해결",
     "warn-about-untracked-files": "추적되지 않은 파일은 제외됩니다"
   },
-  "copilot": {
-    "add-custom-provider": "사용자 지정 공급자를 추가하면 OpenAI 호환 엔드포인트, Azure, Anthropic 또는 Ollama와 같은 로컬 공급자에서 자체 API 키를 사용할 수 있습니다.",
-    "add-provider": "공급자 추가…",
-    "add-provider-darwin": "공급자 추가…",
-    "always-use-copilot-when-conflicts": "경쟁이 감지되면 항상 Copilot을 사용하세요",
-    "always-use-copilot-when-conflicts-darwin": "경쟁이 감지되면 항상 Copilot을 사용하세요",
-    "commit-message-generation": "커밋 메시지 생성",
-    "commit-message-generation-darwin": "커밋 메시지 생성",
-    "conflict-resolution": "충돌 해결",
-    "conflict-resolution-darwin": "충돌 해결",
-    "custom-instructions": "맞춤 지침",
-    "learn-more-about-commit-messages": "커밋 메시지 생성에 대해 자세히 알아보십시오.",
-    "loading-models": "사용 가능한 모델 로딩 중…",
-    "many-models": "{{0}} 모델",
-    "model-changes-apply-to-future-conflict": "모델 변경은 향후 충돌 해결에 적용됩니다.",
-    "models": "Models",
-    "no-models-available": "사용 가능한 Copilot 모델이 없습니다.",
-    "one-model": "1 model",
-    "providers": "Providers",
-    "tailor-copilot-behavior-1": " ",
-    "tailor-copilot-behavior-2": "를 사용하여 Copilot의 동작을 사용자 정의할 수 있습니다."
-  },
   "copilot-byok-provider-dialog": {
     "add-custom-provider": "맞춤 제공자 추가",
     "add-custom-provider-darwin": "맞춤 제공자 추가",
     "edit-custom-provider": "맞춤 제공업체 편집",
     "edit-custom-provider-darwin": "맞춤 제공업체 편집"
+  },
+  "copilot-custom-providers-dialog": {
+    "add-a-custom-provider": "사용자 지정 공급자를 추가하면 OpenAI 호환 엔드포인트, Azure, Anthropic 또는 Ollama와 같은 로컬 공급자에서 자체 API 키를 사용할 수 있습니다.",
+    "add-provider": "공급자 추가…",
+    "add-provider-darwin": "공급자 추가…",
+    "custom-providers": "사용자 지정 공급자",
+    "custom-providers-darwin": "사용자 지정 공급자",
+    "many-models": "{{0}} 모델",
+    "one-model": "1 모델",
+    "provider-type-anthropic": "Anthropic",
+    "provider-type-azure": "Azure",
+    "provider-type-openai": "OpenAI 호환"
   },
   "copilot-error": {
     "billing-issue": "GitHub Copilot에서 결제 오류가 발생했습니다.",
@@ -716,10 +707,26 @@
   },
   "copilot-model-picker": {
     "choose-a-model": "모델 선택",
+    "configure-custom-providers": "사용자 지정 공급자 설정…",
     "default-model": "{{0}} (기본값)",
     "filter-models": "모델 필터",
     "no-models-found": "모델을 찾을 수 없습니다.",
     "use-of-credits": "크레딧 사용량: {{0}}"
+  },
+  "copilot-user-settings": {
+    "always-use-copilot-when-conflicts": "경쟁이 감지되면 항상 Copilot을 사용하세요",
+    "always-use-copilot-when-conflicts-darwin": "경쟁이 감지되면 항상 Copilot을 사용하세요",
+    "commit-message-generation": "커밋 메시지 생성",
+    "commit-message-generation-darwin": "커밋 메시지 생성",
+    "conflict-resolution": "경쟁 해결",
+    "conflict-resolution-darwin": "경쟁 해결",
+    "custom-instructions": "맞춤 지침",
+    "learn-more-about-commit-messages": "커밋 메시지 생성에 대해 더 알아보기.",
+    "loading-models": "Loading available models…",
+    "model-changes-apply-to-future-conflict": "모델 변경은 향후 충돌 해결에 적용됩니다.",
+    "no-models-available": "사용 가능한 Copilot 모델이 없습니다.",
+    "tailor-copilot-behavior-1": " ",
+    "tailor-copilot-behavior-2": "를 사용하여 Copilot의 동작을 사용자 정의할 수 있습니다."
   },
   "copy-button": {
     "copied": "복사했습니다"
@@ -1265,6 +1272,8 @@
     "add-local-repository-darwin": "로컬 리포지토리 추가…",
     "branch": "브랜치(&B)",
     "branch-darwin": "브랜치",
+    "checkout-in-new-worktree": "새 worktree 체크아웃…",
+    "checkout-in-new-worktree-darwin": "새 worktree 체크아웃…",
     "clone-repository": "리포지토리 복제(&N)…",
     "clone-repository-darwin": "리포지토리 복제...",
     "close-darwin": "창 닫기",
@@ -2020,6 +2029,17 @@
   },
   "sign-in-enterprise": {
     "sign-in": "Sign in to your GitHub Enterprise"
+  },
+  "snapshot": {
+    "ai-credits": "AI credits",
+    "chat-messages": "Credit",
+    "code-completions": "Code completions",
+    "premium-requests": "Premium requests",
+    "session-limits": "Session limits",
+    "weekly-limits": "Weekly limits"
+  },
+  "snapshot-card": {
+    "loading-copilot-usage": "Loading Copilot usage…"
   },
   "start": {
     "by-creating-an-account-1": "계정을 만들면",

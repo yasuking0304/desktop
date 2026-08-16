@@ -515,6 +515,7 @@
     "description": "Description",
     "discard": "Discard",
     "do-not-show-message-again": "Do not show this message again",
+    "done": "Done",
     "download": "Download {{0}}",
     "email": "Email",
     "enterprise-address": "Enterprise address",
@@ -673,33 +674,23 @@
     "resolve-conflicts-tooltip": "Resolve all conflicts before continuing",
     "warn-about-untracked-files": "Untracked files will be excluded"
   },
-  "copilot": {
-    "add-custom-provider": "Add a custom provider to use your own API keys with OpenAI-compatible endpoints, Azure, Anthropic, or local providers like Ollama.",
-    "add-provider": "Add provider…",
-    "add-provider-darwin": "Add Provider…",
-    "always-use-copilot-when-conflicts": "Always use Copilot when conflicts are detected",
-    "always-use-copilot-when-conflicts-darwin": "Always Use Copilot When Conflicts Are Detected",
-    "commit-message-generation": "Commit message generation",
-    "commit-message-generation-darwin": "Commit Message Generation",
-    "conflict-resolution": "Conflict resolution",
-    "conflict-resolution-darwin": "Conflict Resolution",
-    "custom-instructions": "custom instructions",
-    "learn-more-about-commit-messages": "Learn more about generating commit messages.",
-    "loading-models": "Loading available models…",
-    "many-models": "{{0}} models",
-    "model-changes-apply-to-future-conflict": "Model changes apply to future conflict resolutions.",
-    "models": "Models",
-    "no-models-available": "No Copilot models available.",
-    "one-model": "1 model",
-    "providers": "Providers",
-    "tailor-copilot-behavior-1": "Tailor how Copilot behaves by using ",
-    "tailor-copilot-behavior-2": "."
-  },
   "copilot-byok-provider-dialog": {
     "add-custom-provider": "Add Custom Provider",
     "add-custom-provider-darwin": "Add custom provider",
     "edit-custom-provider": "Edit custom provider",
     "edit-custom-provider-darwin": "Edit Custom Provider"
+  },
+  "copilot-custom-providers-dialog": {
+    "add-a-custom-provider": "Add a custom provider to use your own API keys with OpenAI-compatible endpoints, Azure, Anthropic, or local providers like Ollama.",
+    "add-provider": "Add provider…",
+    "add-provider-darwin": "Add Provider…",
+    "custom-providers": "Custom providers",
+    "custom-providers-darwin": "Custom Providers",
+    "many-models": "{{0}} models",
+    "one-model": "1 model",
+    "provider-type-anthropic": "Anthropic",
+    "provider-type-azure": "Azure",
+    "provider-type-openai": "OpenAI-compatible"
   },
   "copilot-error": {
     "billing-issue": "GitHub Copilot returned a billing error.",
@@ -716,10 +707,26 @@
   },
   "copilot-model-picker": {
     "choose-a-model": "Choose a model",
+    "configure-custom-providers": "Configure custom providers…",
     "default-model": "{{0}}(default)",
     "filter-models": "Filter models",
     "no-models-found": "No models found.",
     "use-of-credits": "Use of credits: {{0}}"
+  },
+  "copilot-user-settings": {
+    "always-use-copilot-when-conflicts": "Always use Copilot when conflicts are detected",
+    "always-use-copilot-when-conflicts-darwin": "Always Use Copilot When Conflicts Are Detected",
+    "commit-message-generation": "Commit message Generation",
+    "commit-message-generation-darwin": "Commit Message Generation",
+    "conflict-resolution": "Conflict resolution",
+    "conflict-resolution-darwin": "Conflict Resolution",
+    "custom-instructions": "custom instructions",
+    "learn-more-about-commit-messages": "Learn more about generating commit messages.",
+    "loading-models": "Loading available models…",
+    "model-changes-apply-to-future-conflict": "Model changes apply to future conflict resolutions.",
+    "no-models-available": "No Copilot models available.",
+    "tailor-copilot-behavior-1": "Tailor how Copilot behaves by using ",
+    "tailor-copilot-behavior-2": "."
   },
   "copy-button": {
     "copied": "Copied!"
@@ -1265,6 +1272,8 @@
     "add-local-repository-darwin": "Add Local Repository…",
     "branch": "&Branch",
     "branch-darwin": "Branch",
+    "checkout-in-new-worktree": "Checkout in new worktree…",
+    "checkout-in-new-worktree-darwin": "Checkout in New Worktree…",
     "clone-repository": "Clo&ne repository…",
     "clone-repository-darwin": "Clone Repository…",
     "close-darwin": "close Window",
@@ -2020,6 +2029,17 @@
   },
   "sign-in-enterprise": {
     "sign-in": "Sign in to your GitHub Enterprise"
+  },
+  "snapshot": {
+    "ai-credits": "AI credits",
+    "chat-messages": "Credit",
+    "code-completions": "Code completions",
+    "premium-requests": "Premium requests",
+    "session-limits": "Session limits",
+    "weekly-limits": "Weekly limits"
+  },
+  "snapshot-card": {
+    "loading-copilot-usage": "Loading Copilot usage…"
   },
   "start": {
     "by-creating-an-account-1": "By creating an account, you agree to the ",

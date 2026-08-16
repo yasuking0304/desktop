@@ -756,8 +756,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
   private autoSuggestQuotas: number = 0
   private copilotResetDate: string = ''
   private copilotLicenseType: string = ''
-  private selectedCopilotModels: CopilotModelSelections = {}
-  private copilotModels: ReadonlyArray<Model> | null = null
+
   private selectedCopilotModelsByAccount: CopilotModelSelectionsByAccount =
     new Map()
   private copilotModelsByAccount: CopilotModelsByAccount = new Map()
@@ -1377,8 +1376,6 @@ export class AppStore extends TypedBaseStore<IAppState> {
       autoSuggestQuotas: this.autoSuggestQuotas,
       copilotResetDate: this.copilotResetDate,
       copilotLicenseType: this.copilotLicenseType,
-      selectedCopilotModels: this.selectedCopilotModels,
-      copilotModels: this.copilotModels,
       selectedCopilotModelsByAccount: this.selectedCopilotModelsByAccount,
       copilotModelsByAccount: this.copilotModelsByAccount,
       copilotQuotaSnapshotsByAccount: this.copilotQuotaSnapshotsByAccount,
@@ -6478,19 +6475,19 @@ export class AppStore extends TypedBaseStore<IAppState> {
         if (!diff) {
           return false
         }
-      const diffPrompt =
-        (this.supportCopilotMultiLingual
-          ? t(
-              'app-store.copilot-multilingual-prompt',
-              'Please output in English. '
-            )
-          : '') +
-        (this.copilotConventionalCommitsFormat
-          ? ' Format the commit message according to Conventional Commits specification. However, please exclude the following from translation: fix:, feat: BREAKING CHANGE:, build:, chore:, ci:, docs:, style:, refactor:, perf:, and test:.'
-          : '') +
-        ' ' +
-        diff
-        
+        const diffPrompt =
+          (this.supportCopilotMultiLingual
+            ? t(
+                'app-store.copilot-multilingual-prompt',
+                'Please output in English. '
+              )
+            : '') +
+          (this.copilotConventionalCommitsFormat
+            ? ' Format the commit message according to Conventional Commits specification. However, please exclude the following from translation: fix:, feat: BREAKING CHANGE:, build:, chore:, ci:, docs:, style:, refactor:, perf:, and test:.'
+            : '') +
+          ' ' +
+          diff
+
         const response = enableCopilotSdkCommitMessageGeneration(account)
           ? await this.copilotStore.generateCommitMessage(
               account,
