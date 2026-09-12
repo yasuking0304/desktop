@@ -1146,8 +1146,8 @@
     "author": "帳戶",
     "cache-git-hook-env-variables": "緩存 Git 鉤子環境變量",
     "cache-hook-env-description": "緩存鉤子環境變量以提高性能。如果您的鉤子依賴於經常變化的環境變量，請禁用此功能。",
-    "copilot-chat-messages": "Credits",
-    "copilot-code-completions": "Code completions",
+    "copilot-chat-messages": "信用",
+    "copilot-code-completions": "程式碼補全",
     "default-branch": "預設分支",
     "default-branch-name-for-new-repositories": "新儲存庫的預設分支名稱",
     "display-escaped-non-ascii-characters": "顯示路徑名中的轉義非 ASCII 字元\n（建議中國用戶停用此功能）",
@@ -1166,7 +1166,7 @@
     "settings-related-to-the-path": "與路徑相關的設定",
     "shell-to-use-when-loading-env": "載入環境時使用的 Shell",
     "show-copilot-information": "Copilot使用状态",
-    "when-enabled-attempt-to-load-env-variables": "When enabled, GitHub Desktop will attempt to load environment variables from your shell when executing Git hooks. This is useful if your Git hooks depend on environment variables set in your shell configuration files, a common practive for version managers such as nvm, rbenv, asdf, etc."
+    "when-enabled-attempt-to-load-env-variables": "啟用此功能後，GitHub Desktop 會在執行 Git 鉤子時從 shell 讀取環境變量。當 Git 鉤子依賴於 shell 配置文件中設定的環境變量時，此功能非常有用，而 nvm、rbenv 和 asdf 等版本控制工具通常使用這種方法。"
   },
   "git-config": {
     "for-this-repository": "您要用於此儲存庫的名稱和電子郵件地址",
@@ -2031,17 +2031,17 @@
     "sign-in": "登入您的 GitHub Enterprise"
   },
   "snapshot": {
-    "ai-credits": "AI credits",
-    "chat-messages": "Credit",
-    "code-completions": "Code completions",
+    "ai-credits": "AI 信用",
+    "chat-messages": "信用",
+    "code-completions": "程式碼補全",
     "premium-requests": "Premium requests",
     "session-limits": "Session limits",
     "weekly-limits": "Weekly limits"
   },
   "snapshot-card": {
-    "loading-copilot-usage": "Loading Copilot usage…",
-    "no-copilot-usage": "No Copilot usage data available yet.",
-    "used": " 用过的"
+    "loading-copilot-usage": "正在載入 Copilot 使用情況…",
+    "no-copilot-usage": "暫時還沒有 Copilot 使用資料。",
+    "used": " 用過的"
   },
   "start": {
     "by-creating-an-account-1": "透過建立帳戶, 您同意 ",

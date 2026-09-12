@@ -1146,8 +1146,8 @@
     "author": "账户",
     "cache-git-hook-env-variables": "缓存 Git 钩子环境变量",
     "cache-hook-env-description": "缓存钩子环境变量以提高性能。如果您的钩子依赖于经常变化的环境变量，请禁用此功能。",
-    "copilot-chat-messages": "Credits",
-    "copilot-code-completions": "Code completions",
+    "copilot-chat-messages": "信用",
+    "copilot-code-completions": "代码补全",
     "default-branch": "默认分支",
     "default-branch-name-for-new-repositories": "新存储库的默认分支名称",
     "display-escaped-non-ascii-characters": "显示路径名中的转义非 ASCII 字符\n（建议中国用户禁用此功能）",
@@ -2031,17 +2031,17 @@
     "sign-in": "登录您的 GitHub Enterprise"
   },
   "snapshot": {
-    "ai-credits": "AI credits",
-    "chat-messages": "Credit",
-    "code-completions": "Code completions",
+    "ai-credits": "AI 信用",
+    "chat-messages": "信用",
+    "code-completions": "代码补全",
     "premium-requests": "Premium requests",
     "session-limits": "Session limits",
     "weekly-limits": "Weekly limits"
   },
   "snapshot-card": {
-    "loading-copilot-usage": "Loading Copilot usage…",
-    "no-copilot-usage": "No Copilot usage data available yet.",
-    "used": " "
+    "loading-copilot-usage": "正在加载 Copilot 使用情况…",
+    "no-copilot-usage": "还没有可用的 Copilot 使用数据。",
+    "used": " 用过的"
   },
   "start": {
     "by-creating-an-account-1": "通过创建帐户, 您同意 ",
