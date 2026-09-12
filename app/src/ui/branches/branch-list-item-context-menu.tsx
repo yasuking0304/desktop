@@ -1,6 +1,6 @@
 import { IMenuItem } from '../../lib/menu-item'
-import { clipboard } from 'electron'
 import { t } from 'i18next'
+import { writeClipboardText } from '../main-process-proxy'
 import { Branch, BranchType } from '../../models/branch'
 
 interface IBranchContextMenuConfig {
@@ -37,7 +37,7 @@ export function generateBranchContextMenuItems(
     label: __DARWIN__
       ? t('menu.copy-branch-name-darwin', 'Copy Branch Name')
       : t('menu.copy-branch-name', 'Copy branch name'),
-    action: () => clipboard.writeText(branch.name),
+    action: () => writeClipboardText(branch.name),
   })
 
   if (onViewBranchOnGitHub !== undefined) {

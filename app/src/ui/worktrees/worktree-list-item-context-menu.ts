@@ -1,8 +1,8 @@
 import * as Path from 'path'
 
 import { IMenuItem } from '../../lib/menu-item'
-import { clipboard } from 'electron'
 import { t } from 'i18next'
+import { writeClipboardText } from '../main-process-proxy'
 
 interface IWorktreeContextMenuConfig {
   readonly path: string
@@ -32,14 +32,14 @@ export function generateWorktreeContextMenuItems(
     label: __DARWIN__
       ? t('menu.copy-worktree-name-darwin', 'Copy worktree name')
       : t('menu.copy-worktree-name', 'Copy worktree name'),
-    action: () => clipboard.writeText(name),
+    action: () => writeClipboardText(name),
   })
 
   items.push({
     label: __DARWIN__
       ? t('menu.copy-worktree-path-darwin', 'Copy worktree path')
       : t('menu.copy-worktree-path', 'Copy worktree path'),
-    action: () => clipboard.writeText(path),
+    action: () => writeClipboardText(path),
   })
 
   items.push({ type: 'separator' })

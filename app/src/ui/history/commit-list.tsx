@@ -11,7 +11,7 @@ import { t } from 'i18next'
 import memoizeOne from 'memoize-one'
 import { IMenuItem, showContextualMenu } from '../../lib/menu-item'
 import { getDotComAPIEndpoint } from '../../lib/api'
-import { clipboard } from 'electron'
+import { writeClipboardText } from '../main-process-proxy'
 import { RowIndexPath } from '../lib/list/list-row-index-path'
 import { assertNever } from '../../lib/fatal-error'
 import { CommitDragElement } from '../drag-elements/commit-drag-element'
@@ -900,11 +900,11 @@ export class CommitList extends React.Component<
       { type: 'separator' },
       {
         label: t('commit-list-item.copy-sha', 'Copy SHA'),
-        action: () => clipboard.writeText(commit.sha),
+        action: () => writeClipboardText(commit.sha),
       },
       {
         label: __DARWIN__ ? darwinTagsLabel : windowTagsLabel,
-        action: () => clipboard.writeText(commit.tags.join(' ')),
+        action: () => writeClipboardText(commit.tags.join(' ')),
         enabled: commit.tags.length > 0,
       },
       {

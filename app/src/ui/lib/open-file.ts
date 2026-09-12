@@ -1,4 +1,5 @@
 import { shell } from '../../lib/app-shell'
+import { encodePathAsUrl } from '../../lib/path'
 import { Dispatcher } from '../dispatcher'
 import { t } from 'i18next'
 
@@ -6,7 +7,7 @@ export async function openFile(
   fullPath: string,
   dispatcher: Dispatcher
 ): Promise<void> {
-  const result = await shell.openExternal(`file://${fullPath}`)
+  const result = await shell.openExternal(encodePathAsUrl(fullPath))
 
   if (!result) {
     const error = {
