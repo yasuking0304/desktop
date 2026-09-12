@@ -2039,7 +2039,9 @@
     "weekly-limits": "Weekly limits"
   },
   "snapshot-card": {
-    "loading-copilot-usage": "Copilot使用状況を読み込んでいます…"
+    "loading-copilot-usage": "Copilot使用状況を読み込んでいます…",
+    "no-copilot-usage": "No Copilot usage data available yet.",
+    "used": " 使用済み"
   },
   "start": {
     "by-creating-an-account-1": "アカウントを作成することにより ",

@@ -153,9 +153,10 @@
 
   .copilot-snapshot-card-list {
     display: flex;
-    flex-wrap: wrap;
-    gap: var(--spacing);
     min-width: 0;
+    flex-wrap: nowrap;
+    flex-direction: row-reverse;
+    gap: var(--spacing);
 
     &:not(:last-child) {
       margin-bottom: var(--spacing-half);
@@ -165,7 +166,8 @@
   .copilot-account-snapshot-card-list {
     display: flex;
     min-width: 0;
-    flex-direction: column;
+    flex-wrap: nowrap;
+    flex-direction: row-reverse;
     gap: var(--spacing);
   }
 

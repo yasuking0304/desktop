@@ -118,8 +118,6 @@ interface IPreferencesProps {
   readonly onEditGlobalGitConfig: () => void
   readonly underlineLinks: boolean
   readonly showDiffCheckMarks: boolean
-  readonly chatQuotas: number
-  readonly autoSuggestQuotas: number
   readonly copilotResetDate: string
   readonly copilotLicenseType: string
   readonly selectedCopilotModelsByAccount: CopilotModelSelectionsByAccount
@@ -186,8 +184,6 @@ interface IPreferencesState {
 
   readonly showDiffCheckMarks: boolean
 
-  readonly chatQuotas: number
-  readonly autoSuggestQuotas: number
   readonly copilotResetDate: string
   readonly copilotLicenseType: string
   readonly selectedGitTabIndex?: number
@@ -270,8 +266,6 @@ export class Preferences extends React.Component<
       cacheGitHookEnv: getCacheHooksEnv(),
       selectedGitHookEnvShell: getGitHookEnvShell(),
       hooksPreferencesDirty: false,
-      chatQuotas: this.props.chatQuotas,
-      autoSuggestQuotas: this.props.autoSuggestQuotas,
       copilotResetDate: this.props.copilotResetDate,
       copilotLicenseType: this.props.copilotLicenseType,
       selectedCopilotModelsByAccount: this.props.selectedCopilotModelsByAccount,
@@ -560,14 +554,6 @@ export class Preferences extends React.Component<
     })
   }
 
-  private onChatQuotasChanged = (chatQuotas: number) => {
-    this.setState({ chatQuotas })
-  }
-
-  private onAutoSuggestQuotasChanged = (autoSuggestQuotas: number) => {
-    this.setState({ autoSuggestQuotas })
-  }
-
   private onCopilotResetDateChanged = (copilotResetDate: string) => {
     this.setState({ copilotResetDate })
   }
@@ -674,8 +660,6 @@ export class Preferences extends React.Component<
               onEnableGitHookEnvChanged={this.onEnableGitHookEnvChanged}
               onCacheGitHookEnvChanged={this.onCacheGitHookEnvChanged}
               onSelectedShellChanged={this.onSelectedGitHookEnvShellChanged}
-              onChatQuotasChanged={this.onChatQuotasChanged}
-              onAutoSuggestQuotasChanged={this.onAutoSuggestQuotasChanged}
               onCopilotResetDateChanged={this.onCopilotResetDateChanged}
               onCopilotLicenseTypeChanged={this.onCopilotLicenseTypeChanged}
               enableGitHookEnv={
@@ -685,8 +669,6 @@ export class Preferences extends React.Component<
               selectedShell={
                 this.state.selectedGitHookEnvShell ?? defaultGitHookEnvShell
               }
-              chatQuotas={this.state.chatQuotas}
-              autoSuggestQuotas={this.state.autoSuggestQuotas}
               copilotResetDate={this.state.copilotResetDate}
               copilotLicenseType={this.state.copilotLicenseType}
             />

@@ -2039,7 +2039,9 @@
     "weekly-limits": "Weekly limits"
   },
   "snapshot-card": {
-    "loading-copilot-usage": "Loading Copilot usage…"
+    "loading-copilot-usage": "Loading Copilot usage…",
+    "no-copilot-usage": "No Copilot usage data available yet.",
+    "used": " used"
   },
   "start": {
     "by-creating-an-account-1": "By creating an account, you agree to the ",

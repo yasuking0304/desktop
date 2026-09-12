@@ -41,16 +41,12 @@ interface IGitProps {
   readonly onEnableGitHookEnvChanged: (enableGitHookEnv: boolean) => void
   readonly onCacheGitHookEnvChanged: (cacheGitHookEnv: boolean) => void
   readonly onSelectedShellChanged: (selectedShell: string) => void
-  readonly onChatQuotasChanged: (chatQuotas: number) => void
-  readonly onAutoSuggestQuotasChanged: (autoSuggestQuotas: number) => void
   readonly onCopilotResetDateChanged: (copilotResetDate: string) => void
   readonly onCopilotLicenseTypeChanged: (copilotLicenseType: string) => void
 
   readonly enableGitHookEnv: boolean
   readonly cacheGitHookEnv: boolean
   readonly selectedShell: string
-  readonly chatQuotas: number
-  readonly autoSuggestQuotas: number
   readonly copilotResetDate: string
   readonly copilotLicenseType: string
 }
@@ -71,10 +67,6 @@ export class Git extends React.Component<IGitProps> {
     this.props.onSelectedTabIndexChanged?.(index)
     if (index === 3) {
       this.props.dispatcher.getCopilotInformation().then(result => {
-        this.props.onChatQuotasChanged(result ? result.chatQuotas : -1)
-        this.props.onAutoSuggestQuotasChanged(
-          result ? result.autoSuggestQuotas : -1
-        )
         this.props.onCopilotResetDateChanged(
           result ? result.copilotResetDate : ''
         )
@@ -346,21 +338,7 @@ export class Git extends React.Component<IGitProps> {
   }
 
   private renderCopilotInfo() {
-    console.error(
-      'chatQuotas',
-      this.props.chatQuotas,
-      'autoSuggestQuotas',
-      this.props.autoSuggestQuotas
-    )
-
-    if (this.props.chatQuotas < 0 || this.props.autoSuggestQuotas < 0) {
-      return null
-    }
-    const chatQuotas = `${Math.round(this.props.chatQuotas * 100)}%`
     const licenseType = `license-type-${this.props.copilotLicenseType.toLowerCase()}`
-    const autoSuggestQuotas = `${Math.round(
-      this.props.autoSuggestQuotas * 100
-    )}%`
     return (
       <div className="git-copilot-info-component">
         <div className="git-copilot-info-description">
@@ -370,40 +348,6 @@ export class Git extends React.Component<IGitProps> {
           <span className={`git-copilot-license-type ${licenseType}`}>
             {this.props.copilotLicenseType}
           </span>
-        </div>
-        <div className="git-show-copilot-section">
-          <div
-            role="group"
-            className="git-show-copilot-component"
-            aria-labelledby="git-show-copilot-heading"
-          >
-            <div className="git-copilot-info">
-              <div className="git-copilot-info-usage">
-                <span>
-                  {t('git.copilot-code-completions', 'Code completions')}
-                </span>
-                <span>{autoSuggestQuotas}</span>
-              </div>
-              <span className="gauge">
-                <span
-                  className={`gauge-progress ${licenseType}`}
-                  style={{ width: `${autoSuggestQuotas}` }}
-                ></span>
-              </span>
-            </div>
-            <div className="git-copilot-info">
-              <div className="git-copilot-info-usage">
-                <span>{t('git.copilot-chat-messages', 'Chat messages')}</span>
-                <span>{chatQuotas}</span>
-              </div>
-              <span className="gauge">
-                <span
-                  className={`gauge-progress ${licenseType}`}
-                  style={{ width: `${chatQuotas}` }}
-                ></span>
-              </span>
-            </div>
-          </div>
         </div>
         <div className="git-copilot-generates-comments-info">
           {t(

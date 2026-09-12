@@ -124,10 +124,12 @@ function formatUsageTooltip(
     return undefined
   }
 
+  const aiCreditUsed = t('snapshot-card.ai-credit-used', ' AI credits used')
+
   if (displayName === 'AI credits') {
     return `${formatAiCreditValue(
       snapshot.usedRequests
-    )} / ${formatAiCreditValue(snapshot.entitlementRequests)} AI credits used`
+    )} / ${formatAiCreditValue(snapshot.entitlementRequests)}${aiCreditUsed}`
   }
 
   const formatRequests = (value: number) =>
@@ -136,9 +138,11 @@ function formatUsageTooltip(
       maximumFractionDigits: 2,
     })
 
+  const used = t('snapshot-card.used', ' used')
+
   return `${formatRequests(snapshot.usedRequests)} / ${formatRequests(
     snapshot.entitlementRequests
-  )} ${displayName.toLowerCase()} used`
+  )} ${displayName.toLowerCase()}${used}`
 }
 
 function isFutureResetDate(resetDate: string | undefined): boolean {
@@ -368,7 +372,10 @@ function renderSnapshots(snapshots: CopilotQuotaSnapshots): JSX.Element {
   if (rateLimits.length === 0 && quotas.length === 0) {
     return (
       <p className="copilot-usage-empty">
-        No Copilot usage data available yet.
+        {t(
+          'snapshot-card.no-copilot-usage',
+          'No Copilot usage data available yet.'
+        )}
       </p>
     )
   }
