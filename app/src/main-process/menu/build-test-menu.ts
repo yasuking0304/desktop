@@ -112,7 +112,7 @@ export function buildTestMenu() {
       click: emit('boomtown'),
     },
     {
-      label: 'Prune branches',
+      label: t('menu.prune-branches', 'Prune branches'),
       click: emit('test-prune-branches'),
     },
     {
@@ -120,8 +120,12 @@ export function buildTestMenu() {
       click: emit('test-notification'),
     },
     {
-      label: 'Dispatch CLI action',
+      label: t('menu.dispatch-cli-action', 'Dispatch CLI action'),
       click: emit('test-cli-action'),
+    },
+    {
+      label: t('menu.send-stats', 'Send stats'),
+      click: emit('test-send-stats'),
     },
     {
       label: t('menu.show-popup', 'Show popup'),
