@@ -1146,8 +1146,6 @@
     "author": "Author",
     "cache-git-hook-env-variables": "Cache Git hook environment variables",
     "cache-hook-env-description": "Cache hook environment variables to improve performance. Disable if your hooks rely on frequently changing environment variables.",
-    "copilot-chat-messages": "Credits",
-    "copilot-code-completions": "Code completions",
     "default-branch": "Default branch",
     "default-branch-name-for-new-repositories": "Default branch name for new repositories",
     "display-escaped-non-ascii-characters": "Display escaped non-ASCII characters in path names\n(recommended to turn off for users in the Asian region)",
@@ -1328,6 +1326,7 @@
     "delete-branch-darwin": "Delete…",
     "discard-all-changes": "Discard all changes…",
     "discard-all-changes-darwin": "Discard All Changes…",
+    "dispatch-cli-action": "Dispatch CLI action",
     "edit": "&Edit",
     "edit-darwin": "Edit",
     "exit": "E&xit",
@@ -1376,6 +1375,7 @@
     "preferences": "Settings…",
     "preview-pull-request": "Preview pull request",
     "preview-pull-request-darwin": "Preview Pull Request",
+    "prune-branches": "Prune branches",
     "pull": "Pu&ll",
     "pull-darwin": "Pull",
     "pull-request-check-run-failed": "Show App Error",
@@ -1403,6 +1403,7 @@
     "reset-zoom-darwin": "Reset Zoom",
     "select-all": "Select &all",
     "select-all-darwin": "Select All",
+    "send-stats": "Send stats",
     "services": "services",
     "show-all": "Show All",
     "show-banner": "Show banner",
@@ -1427,6 +1428,8 @@
     "show-repository-list-darwin": "Show Repository List",
     "show-toggle-changes-filter": "Show Toggle Chan&ges Filter",
     "show-user-guides": "Show User Guides",
+    "show-worktrees-list": "Wor&ktrees list",
+    "show-worktrees-list-darwin": "Show Worktrees List",
     "squash-and-merge-into-branch": "Squas&h and merge into current branch…",
     "squash-and-merge-into-branch-darwin": "Squash and Merge into Current Branch…",
     "stash-all-changes": "&Stash all changes",
@@ -1734,6 +1737,7 @@
     "if-i-have-changes-and-i-switch-branches": "If I have changes and I switch branches...",
     "overriding-commit-message": "Overriding commit message with generated message",
     "removing-repositories": "Removing repositories",
+    "removing-worktrees": "Removing worktrees",
     "show-a-confirmation": "Show a confirmation dialog before...",
     "show-commit-length-warning": "Show commit length warning",
     "undo-commit": "Undo commit"
@@ -2039,6 +2043,7 @@
     "weekly-limits": "Weekly limits"
   },
   "snapshot-card": {
+    "ai-credit-used": " AI credits used",
     "loading-copilot-usage": "Loading Copilot usage…",
     "no-copilot-usage": "No Copilot usage data available yet.",
     "used": " used"

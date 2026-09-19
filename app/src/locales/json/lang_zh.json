@@ -1146,8 +1146,6 @@
     "author": "账户",
     "cache-git-hook-env-variables": "缓存 Git 钩子环境变量",
     "cache-hook-env-description": "缓存钩子环境变量以提高性能。如果您的钩子依赖于经常变化的环境变量，请禁用此功能。",
-    "copilot-chat-messages": "信用",
-    "copilot-code-completions": "代码补全",
     "default-branch": "默认分支",
     "default-branch-name-for-new-repositories": "新存储库的默认分支名称",
     "display-escaped-non-ascii-characters": "显示路径名中的转义非 ASCII 字符\n（建议中国用户禁用此功能）",
@@ -1328,6 +1326,7 @@
     "delete-branch-darwin": "删除…",
     "discard-all-changes": "放弃所有更改…",
     "discard-all-changes-darwin": "放弃所有更改…",
+    "dispatch-cli-action": "Dispatch CLI action",
     "edit": "编辑 (&E)",
     "edit-darwin": "编辑",
     "exit": "退出 (&X)",
@@ -1376,6 +1375,7 @@
     "preferences": "设置…",
     "preview-pull-request": "预览拉取请求",
     "preview-pull-request-darwin": "预览拉取请求",
+    "prune-branches": "Prune branches",
     "pull": "拉取 (&L)",
     "pull-darwin": "拉取",
     "pull-request-check-run-failed": "拉取请求检查运行失败",
@@ -1403,6 +1403,7 @@
     "reset-zoom-darwin": "缩放 (100%)",
     "select-all": "全选 (&A)",
     "select-all-darwin": "全选",
+    "send-stats": "Send stats",
     "services": "服务",
     "show-all": "显示全部",
     "show-banner": "显示横幅",
@@ -1427,6 +1428,8 @@
     "show-repository-list-darwin": "显示仓库列表",
     "show-toggle-changes-filter": "显示过滤器 (&G)",
     "show-user-guides": "显示用户指南",
+    "show-worktrees-list": "显示 Worktree 列表(&K)",
+    "show-worktrees-list-darwin": "显示 Worktree 列表",
     "squash-and-merge-into-branch": "压缩并合并到当前分支… (&H)",
     "squash-and-merge-into-branch-darwin": "压缩并合并到当前分支…",
     "stash-all-changes": "暂存当前更改 (&S)",
@@ -1734,6 +1737,7 @@
     "if-i-have-changes-and-i-switch-branches": "如果我有变化并且我切换分支…",
     "overriding-commit-message": "使用 Copilot 生成的消息覆盖提交消息",
     "removing-repositories": "正在移除存储库",
+    "removing-worktrees": "正在移除 worktree",
     "show-a-confirmation": "之前显示确认对话框…",
     "show-commit-length-warning": "显示提交摘要长度警告",
     "undo-commit": "撤消提交"
@@ -2039,6 +2043,7 @@
     "weekly-limits": "Weekly limits"
   },
   "snapshot-card": {
+    "ai-credit-used": " AI credits used",
     "loading-copilot-usage": "正在加载 Copilot 使用情况…",
     "no-copilot-usage": "还没有可用的 Copilot 使用数据。",
     "used": " 用过的"

@@ -1146,8 +1146,6 @@
     "author": "帳戶",
     "cache-git-hook-env-variables": "緩存 Git 鉤子環境變量",
     "cache-hook-env-description": "緩存鉤子環境變量以提高性能。如果您的鉤子依賴於經常變化的環境變量，請禁用此功能。",
-    "copilot-chat-messages": "信用",
-    "copilot-code-completions": "程式碼補全",
     "default-branch": "預設分支",
     "default-branch-name-for-new-repositories": "新儲存庫的預設分支名稱",
     "display-escaped-non-ascii-characters": "顯示路徑名中的轉義非 ASCII 字元\n（建議中國用戶停用此功能）",
@@ -1328,6 +1326,7 @@
     "delete-branch-darwin": "刪除…",
     "discard-all-changes": "放棄所有更改…",
     "discard-all-changes-darwin": "放棄所有更改…",
+    "dispatch-cli-action": "Dispatch CLI action",
     "edit": "編輯(&E)",
     "edit-darwin": "編輯",
     "exit": "退出(&X)",
@@ -1376,6 +1375,7 @@
     "preferences": "設定…",
     "preview-pull-request": "預覽拉取請求",
     "preview-pull-request-darwin": "預覽拉取請求",
+    "prune-branches": "Prune branches",
     "pull": "拉取(&L)",
     "pull-darwin": "拉取",
     "pull-request-check-run-failed": "拉取請求檢查運行失敗",
@@ -1403,6 +1403,7 @@
     "reset-zoom-darwin": "縮放(100%)",
     "select-all": "全選(&A)",
     "select-all-darwin": "全選",
+    "send-stats": "Send stats",
     "services": "服務",
     "show-all": "顯示全部",
     "show-banner": "顯示橫幅",
@@ -1427,6 +1428,8 @@
     "show-repository-list-darwin": "顯示倉庫清單",
     "show-toggle-changes-filter": "顯示過濾器(&G)",
     "show-user-guides": "顯示使用者指南",
+    "show-worktrees-list": "顯示 Worktree 清單(&K)",
+    "show-worktrees-list-darwin": "顯示 Worktree 清單",
     "squash-and-merge-into-branch": "壓縮並合併到目前分支…(&H)",
     "squash-and-merge-into-branch-darwin": "壓縮並合併到目前分支…",
     "stash-all-changes": "儲存目前變更(&S)",
@@ -1734,6 +1737,7 @@
     "if-i-have-changes-and-i-switch-branches": "如果我有變化並且我切換分支…",
     "overriding-commit-message": "使用 Copilot 生成的訊息覆寫提交訊息",
     "removing-repositories": "刪除儲存庫",
+    "removing-worktrees": "刪除 worktree",
     "show-a-confirmation": "之前顯示確認對話框…",
     "show-commit-length-warning": "顯示提交摘要長度警告",
     "undo-commit": "撤銷提交"
@@ -2039,6 +2043,7 @@
     "weekly-limits": "Weekly limits"
   },
   "snapshot-card": {
+    "ai-credit-used": " AI credits used",
     "loading-copilot-usage": "正在載入 Copilot 使用情況…",
     "no-copilot-usage": "暫時還沒有 Copilot 使用資料。",
     "used": " 用過的"

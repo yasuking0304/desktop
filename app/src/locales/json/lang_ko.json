@@ -1146,8 +1146,6 @@
     "author": "계정",
     "cache-git-hook-env-variables": "Git 후크의 환경 변수 캐싱",
     "cache-hook-env-description": "성능을 향상시키기 위해 후크 환경 변수를 캐시합니다. 후크가 자주 변경되는 환경 변수에 의존하는 경우 비활성화하십시오.",
-    "copilot-chat-messages": "크레딧",
-    "copilot-code-completions": "코드 완성",
     "default-branch": "기본 브랜치",
     "default-branch-name-for-new-repositories": "새 리포지토리의 기본 지점 이름",
     "display-escaped-non-ascii-characters": "경로 이름에 이스케이프 된 비 ASCII 문자를 표시합니다 \n(한국 사용자는 끄는 것이 좋습니다)",
@@ -1328,6 +1326,7 @@
     "delete-branch-darwin": "삭제…",
     "discard-all-changes": "모든 변경사항 삭제...",
     "discard-all-changes-darwin": "모든 변경사항 삭제...",
+    "dispatch-cli-action": "Dispatch CLI action",
     "edit": "편집(&E)",
     "edit-darwin": "편집",
     "exit": "종료(&X)",
@@ -1376,6 +1375,7 @@
     "preferences": "설정…",
     "preview-pull-request": "풀 요청 미리보기",
     "preview-pull-request-darwin": "풀 요청 미리보기",
+    "prune-branches": "Prune branches",
     "pull": "풀(&L)",
     "pull-darwin": "풀",
     "pull-request-check-run-failed": "풀 요청 확인을 실행하지 못했습니다",
@@ -1403,6 +1403,7 @@
     "reset-zoom-darwin": "줌(100%)",
     "select-all": "모두 선택(&A)",
     "select-all-darwin": "모두 선택",
+    "send-stats": "Send stats",
     "services": "서비스",
     "show-all": "모두 보기",
     "show-banner": "배너 표시",
@@ -1427,6 +1428,8 @@
     "show-repository-list-darwin": "리포지토리 목록 보기",
     "show-toggle-changes-filter": "필터 표시(&G)",
     "show-user-guides": "사용자 가이드 찾아보기",
+    "show-worktrees-list": "Worktree 목록 표시(&K)",
+    "show-worktrees-list-darwin": "Worktree 목록 표시",
     "squash-and-merge-into-branch": "커밋을 모아 현재 브랜치에 병합(&H)…",
     "squash-and-merge-into-branch-darwin": "커밋을 모아 현재 브랜치에 병합…",
     "stash-all-changes": "모든 변경 사항을 일시 저장(&S)",
@@ -1734,6 +1737,7 @@
     "if-i-have-changes-and-i-switch-branches": "수정 중인 분기를 전환하려는 경우…",
     "overriding-commit-message": "Copilot 에서 생성된 메시지로 커밋 메시지 덮어쓰기",
     "removing-repositories": "리포지토리 삭제",
+    "removing-worktrees": "worktree 삭제",
     "show-a-confirmation": "사전 확인 대화 상자 표시…",
     "show-commit-length-warning": "커밋 요약 길이 경고 표시",
     "undo-commit": "커밋 취소"
@@ -2039,6 +2043,7 @@
     "weekly-limits": "주간 제한"
   },
   "snapshot-card": {
+    "ai-credit-used": " AI credits used",
     "loading-copilot-usage": "Copilot 사용 로딩 중…",
     "no-copilot-usage": "아직 Copilot 사용 데이터가 없습니다.",
     "used": " 사용함"

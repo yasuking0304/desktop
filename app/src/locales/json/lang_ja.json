@@ -1146,8 +1146,6 @@
     "author": "アカウント",
     "cache-git-hook-env-variables": "Gitフックの環境変数をキャッシュする",
     "cache-hook-env-description": "パフォーマンスを向上させるために、フックの環境変数をキャッシュします。フックが頻繁に変更される環境変数に依存している場合は無効にしてください。",
-    "copilot-chat-messages": "クレジット",
-    "copilot-code-completions": "インライン候補",
     "default-branch": "デフォルトブランチ",
     "default-branch-name-for-new-repositories": "新しいリポジトリのデフォルトのブランチ名",
     "display-escaped-non-ascii-characters": "非ASCII文字をエスケープして表示する\n(日本語環境ではOFFでの使用を推奨します)",
@@ -1328,6 +1326,7 @@
     "delete-branch-darwin": "削除…",
     "discard-all-changes": "全ての変更を破棄…",
     "discard-all-changes-darwin": "全ての変更を破棄…",
+    "dispatch-cli-action": "Dispatch CLI action",
     "edit": "編集(&E)",
     "edit-darwin": "編集",
     "exit": "終了(&X)",
@@ -1376,6 +1375,7 @@
     "preferences": "設定…",
     "preview-pull-request": "プルリクエストのプレビュー",
     "preview-pull-request-darwin": "プルリクエストのプレビュー",
+    "prune-branches": "Prune branches",
     "pull": "プル(&L)",
     "pull-darwin": "プル",
     "pull-request-check-run-failed": "プルリクエスト チェックの実行に失敗しました",
@@ -1403,6 +1403,7 @@
     "reset-zoom-darwin": "ズーム(100%)",
     "select-all": "全てを選択(&A)",
     "select-all-darwin": "全てを選択",
+    "send-stats": "Send stats",
     "services": "サービス",
     "show-all": "すべて表示",
     "show-banner": "バナー表示",
@@ -1427,6 +1428,8 @@
     "show-repository-list-darwin": "リポジトリリストの表示",
     "show-toggle-changes-filter": "フィルターを表示する(&G)",
     "show-user-guides": "ユーザーガイドの参照",
+    "show-worktrees-list": "Worktreeリストの表示(&K)",
+    "show-worktrees-list-darwin": "Worktreeリストの表示",
     "squash-and-merge-into-branch": "コミットをまとめて現在のブランチにマージ(&H)…",
     "squash-and-merge-into-branch-darwin": "コミットをまとめて現在のブランチにマージ…",
     "stash-all-changes": "すべての変更を一時退避する(&S)",
@@ -1734,6 +1737,7 @@
     "if-i-have-changes-and-i-switch-branches": "修正中のブランチを切り替える場合…",
     "overriding-commit-message": "Copilotで生成されたメッセージでコミットメッセージを上書き",
     "removing-repositories": "リポジトリを削除する",
+    "removing-worktrees": "worktrees の削除",
     "show-a-confirmation": "事前に確認ダイアログを表示…",
     "show-commit-length-warning": "コミット概要の長さの警告を表示",
     "undo-commit": "コミットの取り消し"
@@ -2039,6 +2043,7 @@
     "weekly-limits": "Weekly limits"
   },
   "snapshot-card": {
+    "ai-credit-used": " AI credits used",
     "loading-copilot-usage": "Copilot使用状況を読み込んでいます…",
     "no-copilot-usage": "No Copilot usage data available yet.",
     "used": " 使用済み"
