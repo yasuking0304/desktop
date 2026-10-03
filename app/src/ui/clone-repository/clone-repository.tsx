@@ -599,7 +599,7 @@ export class CloneRepository extends React.Component<
         this.setSelectedTabState({ error: null })
       }
     } else {
-      const pathValidation = await this.validateEmptyFolder(path)
+      const pathValidation = await this.validateClonePath(path)
 
       // We only care about the result if the path hasn't
       // changed since we went async
@@ -703,15 +703,23 @@ export class CloneRepository extends React.Component<
     )
   }
 
-  private async validateEmptyFolder(
-    path: string | null
-  ): Promise<null | Error> {
+  /** Validate the destination before cloning can create files in it. */
+  private async validateClonePath(path: string | null): Promise<null | Error> {
     if (path === null) {
       return new Error(
         t(
           'clone-repository.error.unable-to-read-path-on-disk',
           'Unable to read path on disk. Please check the path and try again.'
         )
+      )
+    }
+
+    if (
+      __DARWIN__ &&
+      Path.basename(Path.resolve(path)).toLowerCase().endsWith('.app')
+    ) {
+      return new Error(
+        'The local path cannot end in .app on macOS. Choose a different folder name to avoid creating an application bundle.'
       )
     }
 
@@ -796,7 +804,6 @@ export class CloneRepository extends React.Component<
   private clone = async () => {
     this.setState({ loading: true })
 
-    const cloneInfo = await this.resolveCloneInfo()
     const { path } = this.getSelectedTabState()
 
     if (path == null) {
@@ -811,6 +818,14 @@ export class CloneRepository extends React.Component<
       return
     }
 
+    const pathError = await this.validateClonePath(path)
+    if (pathError !== null) {
+      this.setState({ loading: false })
+      this.setSelectedTabState({ error: pathError })
+      return
+    }
+
+    const cloneInfo = await this.resolveCloneInfo()
     if (!cloneInfo) {
       const error = new Error(
         t(

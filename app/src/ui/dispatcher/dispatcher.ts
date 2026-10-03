@@ -1636,6 +1636,22 @@ export class Dispatcher {
     return this.appStore._openInExternalEditor(fullPath)
   }
 
+  /** Open the selected checkout in the GitHub Copilot app. */
+  public async openInCopilotApp(repositoryPath: string): Promise<void> {
+    this.statsStore.increment('openInCopilotAppCount')
+
+    try {
+      await this.appStore._openInCopilotApp(repositoryPath)
+    } catch (error) {
+      await this.postError(error)
+    }
+  }
+
+  /** Set the configured GitHub Copilot app path used for repository handoff. */
+  public setCopilotAppPath(path: string | null): Promise<void> {
+    return this.appStore._setCopilotAppPath(path)
+  }
+
   /**
    * Opens a path in a selected external editor without changing preferences.
    */
@@ -4205,6 +4221,11 @@ export class Dispatcher {
 
   public setDiffCheckMarksSetting(diffCheckMarks: boolean) {
     return this.appStore._updateShowDiffCheckMarks(diffCheckMarks)
+  }
+
+  /** Set whether the worktree list is shown even without linked worktrees. */
+  public setAlwaysShowWorktreeList(alwaysShowWorktreeList: boolean) {
+    return this.appStore._setAlwaysShowWorktreeList(alwaysShowWorktreeList)
   }
 
   public setPreferAbsoluteDates(value: boolean) {

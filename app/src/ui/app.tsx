@@ -89,6 +89,7 @@ import { CreateBranch } from './create-branch'
 import { SignIn } from './sign-in'
 import { InstallGit } from './install-git'
 import { EditorError } from './editor'
+import { CopilotAppNotFoundDialog } from './copilot-app/copilot-app-not-found-dialog'
 import { About } from './about'
 import { Publish } from './publish-repository'
 import { Acknowledgements } from './acknowledgements'
@@ -201,6 +202,7 @@ import { TestCLIActionDialog } from './cli-action/test-cli-action-dialog'
 import { TestCopilotSnapshotCardDialog } from './preferences/test-copilot-snapshot-card-dialog'
 import {
   enableCopilotSdkCommitMessageGeneration,
+  enableCopilotAppHandoff,
   enableWorktreeSupport,
 } from '../lib/feature-flag'
 import {
@@ -227,6 +229,7 @@ import { RenameWorktreeDialog } from './worktrees/rename-worktree-dialog'
 import { DeleteWorktreeDialog } from './worktrees/delete-worktree-dialog'
 import { DeleteWorktreeFailedDialog } from './worktrees/delete-worktree-failed-dialog'
 import { WorktreeEntry } from '../models/worktree'
+import { shouldShowWorktreeDropdown } from '../lib/worktree-dropdown'
 
 const MinuteInMilliseconds = 1000 * 60
 const HourInMilliseconds = MinuteInMilliseconds * 60
@@ -540,6 +543,16 @@ export class App extends React.Component<IAppProps, IAppState> {
         return uninstallWindowsCLI()
       case 'open-external-editor':
         return this.openCurrentRepositoryInExternalEditor()
+      case 'open-in-copilot-app':
+        if (
+          enableCopilotAppHandoff() &&
+          this.state.selectedState?.type === SelectionType.Repository
+        ) {
+          return this.props.dispatcher.openInCopilotApp(
+            this.state.selectedState.repository.path
+          )
+        }
+        return
       case 'open-with-external-editor':
         return this.showOpenWithExternalEditor()
       case 'select-all':
@@ -1764,12 +1777,14 @@ export class App extends React.Component<IAppProps, IAppState> {
             customEditor={this.state.customEditor}
             useCustomShell={this.state.useCustomShell}
             customShell={this.state.customShell}
+            copilotAppPath={this.state.copilotAppPath}
             repositoryIndicatorsEnabled={this.state.repositoryIndicatorsEnabled}
             onEditGlobalGitConfig={this.editGlobalGitConfig}
             underlineLinks={this.state.underlineLinks}
             showDiffCheckMarks={this.state.showDiffCheckMarks}
             copilotResetDate={this.state.copilotResetDate}
             copilotLicenseType={this.state.copilotLicenseType}
+            alwaysShowWorktreeList={this.state.alwaysShowWorktreeList}
             selectedCopilotModelsByAccount={
               this.state.selectedCopilotModelsByAccount
             }
@@ -2073,6 +2088,14 @@ export class App extends React.Component<IAppProps, IAppState> {
           <OpenWithExternalEditor
             onDismissed={onPopupDismissedFn}
             onOpenWithEditor={this.openRepositoryInSelectedEditor}
+          />
+        )
+      case PopupType.CopilotAppNotFound:
+        return (
+          <CopilotAppNotFoundDialog
+            key="copilot-app"
+            onDismissed={onPopupDismissedFn}
+            showPreferencesDialog={this.onShowIntegrationsPreferences}
           />
         )
       case PopupType.OpenShellFailed:
@@ -3826,10 +3849,13 @@ export class App extends React.Component<IAppProps, IAppState> {
     const isOpen =
       currentFoldout !== null && currentFoldout.type === FoldoutType.Worktree
 
-    // Only show the worktree dropdown when there are linked worktrees or if the
-    // foldout is open. This allows the user to create a worktree from the app
-    // menu even when there are no worktrees.
-    if (worktrees.length <= 1 && !isOpen) {
+    if (
+      !shouldShowWorktreeDropdown(
+        worktrees.length,
+        isOpen,
+        this.state.alwaysShowWorktreeList
+      )
+    ) {
       return null
     }
 

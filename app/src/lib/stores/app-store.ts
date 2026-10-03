@@ -294,6 +294,11 @@ import {
   getFloatNumber,
 } from '../local-storage'
 import { ExternalEditorError, suggestedExternalEditor } from '../editors/shared'
+import {
+  CopilotAppError,
+  findCopilotApp,
+  openInCopilotApp,
+} from '../copilot-app'
 import { ApiRepositoriesStore } from './api-repositories-store'
 import {
   updateChangedFiles,
@@ -304,6 +309,7 @@ import { ManualConflictResolution } from '../../models/manual-conflict-resolutio
 import { BranchPruner } from './helpers/branch-pruner'
 import {
   enableCopilotConflictResolution,
+  enableCopilotAppHandoff,
   enableCopilotSdkCommitMessageGeneration,
   enableCustomIntegration,
   enableWorktreeSupport,
@@ -440,6 +446,7 @@ import {
 } from '../pull-request-refs'
 import { resolveWithin } from '../path'
 import { WorktreeEntry } from '../../models/worktree'
+import { shouldShowWorktreeDropdown } from '../worktree-dropdown'
 import type { Model } from '@github/copilot-sdk/dist/generated/rpc'
 
 const LastSelectedRepositoryIDKey = 'last-selected-repository-id'
@@ -553,6 +560,7 @@ const pullRequestSuggestedNextActionKey =
 
 export const useCustomEditorKey = 'use-custom-editor'
 const customEditorKey = 'custom-editor'
+const copilotAppPathKey = 'copilot-app-path'
 
 export const useCustomShellKey = 'use-custom-shell'
 const customShellKey = 'custom-shell'
@@ -562,6 +570,8 @@ export const underlineLinksDefault = true
 
 export const showDiffCheckMarksDefault = true
 export const showDiffCheckMarksKey = 'diff-check-marks-visible'
+
+const alwaysShowWorktreeListKey = 'always-show-worktree-list'
 
 const commitMessageGenerationDisclaimerLastSeenKey =
   'commit-message-generation-disclaimer-last-seen'
@@ -725,6 +735,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
   private useCustomEditor: boolean = false
   private customEditor: ICustomIntegration | null = null
+  private copilotAppPath: string | null = null
 
   private useCustomShell: boolean = false
   private customShell: ICustomIntegration | null = null
@@ -739,6 +750,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
     | undefined = undefined
 
   private showDiffCheckMarks: boolean = showDiffCheckMarksDefault
+  private alwaysShowWorktreeList: boolean = false
 
   private preferAbsoluteDates: boolean = false
 
@@ -1356,6 +1368,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
       customEditor: this.customEditor,
       useCustomShell: this.useCustomShell,
       customShell: this.customShell,
+      copilotAppPath: this.copilotAppPath,
       showCIStatusPopover: this.showCIStatusPopover,
       notificationsEnabled: getNotificationsEnabled(),
       pullRequestSuggestedNextAction: this.pullRequestSuggestedNextAction,
@@ -1363,6 +1376,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
       cachedRepoRulesets: this.cachedRepoRulesets,
       underlineLinks: this.underlineLinks,
       showDiffCheckMarks: this.showDiffCheckMarks,
+      alwaysShowWorktreeList: this.alwaysShowWorktreeList,
       preferAbsoluteDates: this.preferAbsoluteDates,
       updateState: updateStore.state,
       commitMessageGenerationDisclaimerLastSeen:
@@ -2465,6 +2479,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
     this.accounts = accounts
     this.repositories = repositories
+    this.alwaysShowWorktreeList = getBoolean(alwaysShowWorktreeListKey, false)
 
     this.updateRepositorySelectionAfterRepositoriesChanged()
 
@@ -2628,6 +2643,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
     this.useCustomEditor =
       enableCustomIntegration() && getBoolean(useCustomEditorKey, false)
     this.customEditor = getObject<ICustomIntegration>(customEditorKey) ?? null
+    this.copilotAppPath = localStorage.getItem(copilotAppPathKey)
 
     this.useCustomShell =
       enableCustomIntegration() && getBoolean(useCustomShellKey, false)
@@ -2709,27 +2725,24 @@ export class AppStore extends TypedBaseStore<IAppState> {
   /**
    * Determine whether the worktree dropdown is currently shown in the toolbar.
    *
-   * This mirrors the render condition in `App.renderWorktreeToolbarButton`: the
-   * dropdown is shown when worktree support is enabled and either the selected
-   * repository has at least one linked worktree (i.e. more than just the main
-   * worktree) or the worktree foldout is currently open (which lets the user
-   * create their first worktree from the toolbar).
+   * Shares the render condition in `App.renderWorktreeToolbarButton` so that
+   * the toolbar reserves space for the dropdown whenever it is visible.
    */
   private isWorktreeDropdownVisible(): boolean {
     if (!enableWorktreeSupport()) {
       return false
     }
 
-    if (this.currentFoldout?.type === FoldoutType.Worktree) {
-      return true
+    const repository = this.selectedRepository
+    if (!(repository instanceof Repository)) {
+      return false
     }
 
-    const repository = this.selectedRepository
-    const worktreeCount =
-      repository instanceof Repository
-        ? this.repositoryStateCache.get(repository).worktrees.length
-        : 0
-    return worktreeCount > 1
+    return shouldShowWorktreeDropdown(
+      this.repositoryStateCache.get(repository).worktrees.length,
+      this.currentFoldout?.type === FoldoutType.Worktree,
+      this.alwaysShowWorktreeList
+    )
   }
 
   /**
@@ -4284,10 +4297,18 @@ export class AppStore extends TypedBaseStore<IAppState> {
     // focus event. No point in having the RepositoryIndicatorUpdater do
     // it as well.
     //
+    // Repository-list reloads can create a different object for the selected
+    // database row, so compare IDs rather than references. Cloning selections
+    // aren't local repositories and must not exclude an entry with the same ID.
+    //
     // Note that this method should never leak the actual repositories
     // instance since that's a mutable array. We should always return
     // a copy.
-    return this.repositories.filter(x => x !== this.selectedRepository)
+    const selectedRepositoryID =
+      this.selectedRepository instanceof Repository
+        ? this.selectedRepository.id
+        : null
+    return this.repositories.filter(x => x.id !== selectedRepositoryID)
   }
 
   /**
@@ -7776,6 +7797,49 @@ export class AppStore extends TypedBaseStore<IAppState> {
     }
   }
 
+  /** This shouldn't be called directly. See `Dispatcher`. */
+  public async _openInCopilotApp(repositoryPath: string): Promise<void> {
+    if (!enableCopilotAppHandoff()) {
+      log.debug('Ignoring unavailable Copilot app handoff')
+      return
+    }
+
+    try {
+      const appPath =
+        this.copilotAppPath !== null
+          ? this.copilotAppPath
+          : (await findCopilotApp()) ?? undefined
+      if (appPath === undefined) {
+        throw new CopilotAppError(
+          'not-found',
+          'GitHub Copilot could not be found.'
+        )
+      }
+
+      await openInCopilotApp(appPath, repositoryPath)
+    } catch (error) {
+      log.error('Could not hand off to GitHub Copilot', error)
+      if (error instanceof CopilotAppError && error.kind === 'not-found') {
+        this._showPopup({
+          type: PopupType.CopilotAppNotFound,
+        })
+      } else {
+        throw error
+      }
+    }
+  }
+
+  /** This shouldn't be called directly. See `Dispatcher`. */
+  public async _setCopilotAppPath(path: string | null): Promise<void> {
+    if (path === null) {
+      localStorage.removeItem(copilotAppPathKey)
+    } else {
+      localStorage.setItem(copilotAppPathKey, path)
+    }
+    this.copilotAppPath = path
+    this.emitUpdate()
+  }
+
   /** Open a path using a selected editor without changing preferences. */
   public async _openInSelectedExternalEditor(
     fullPath: string,
@@ -10366,6 +10430,16 @@ export class AppStore extends TypedBaseStore<IAppState> {
     if (showDiffCheckMarks !== this.showDiffCheckMarks) {
       this.showDiffCheckMarks = showDiffCheckMarks
       setBoolean(showDiffCheckMarksKey, showDiffCheckMarks)
+      this.emitUpdate()
+    }
+  }
+
+  /** This shouldn't be called directly. See 'Dispatcher'. */
+  public _setAlwaysShowWorktreeList(alwaysShowWorktreeList: boolean) {
+    if (alwaysShowWorktreeList !== this.alwaysShowWorktreeList) {
+      this.alwaysShowWorktreeList = alwaysShowWorktreeList
+      setBoolean(alwaysShowWorktreeListKey, alwaysShowWorktreeList)
+      this.updateResizableConstraints()
       this.emitUpdate()
     }
   }
