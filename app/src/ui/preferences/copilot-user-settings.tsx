@@ -22,8 +22,8 @@ import { LinkButton } from '../lib/link-button'
 import { Row } from '../lib/row'
 import { CopilotModelSelectionInfo } from './copilot-model-selection-info'
 import { SnapshotCard } from './snapshot-card'
-import type { Model } from '@github/copilot-sdk/dist/generated/rpc'
 import { t } from 'i18next'
+import type { Model } from '../../lib/copilot/types'
 
 interface ICopilotUserSettingsProps {
   readonly account: Account

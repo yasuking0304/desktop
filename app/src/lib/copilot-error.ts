@@ -1,5 +1,6 @@
 import { HttpStatusCode } from './http-status-code'
 import { t } from 'i18next'
+import { isRecord } from './is-record'
 
 export type CopilotPaymentRequiredErrorCode =
   | 'quota_exceeded'
@@ -54,10 +55,6 @@ export class CopilotError extends Error {
 
 const knownPaymentRequiredErrorCodes: ReadonlyArray<CopilotPaymentRequiredErrorCode> =
   ['quota_exceeded', 'session_quota_exceeded', 'billing_not_configured']
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null
-}
 
 function getStringProperty(
   record: Record<string, unknown>,

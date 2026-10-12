@@ -447,7 +447,7 @@ import {
 import { resolveWithin } from '../path'
 import { WorktreeEntry } from '../../models/worktree'
 import { shouldShowWorktreeDropdown } from '../worktree-dropdown'
-import type { Model } from '@github/copilot-sdk/dist/generated/rpc'
+import type { Model } from '../copilot/types'
 
 const LastSelectedRepositoryIDKey = 'last-selected-repository-id'
 
@@ -854,8 +854,6 @@ export class AppStore extends TypedBaseStore<IAppState> {
       }
     }, InitialRepositoryIndicatorTimeout)
 
-    API.onTokenInvalidated(this.onTokenInvalidated)
-
     this.notificationsStore.onChecksFailedNotification(
       this.onChecksFailedNotification
     )
@@ -914,31 +912,6 @@ export class AppStore extends TypedBaseStore<IAppState> {
     }
 
     return zoomFactor
-  }
-
-  private onTokenInvalidated = (endpoint: string, token: string) => {
-    const account = getAccountForEndpoint(this.accounts, endpoint)
-
-    if (account === null) {
-      return
-    }
-
-    // If we have a token for the account but it doesn't match the token that
-    // was invalidated that likely means that someone held onto an account for
-    // longer than they should have which is bad but what's even worse is if we
-    // invalidate an active account.
-    if (account.token && account.token !== token) {
-      log.error(`Token for ${endpoint} invalidated but token mismatch`)
-      return
-    }
-
-    // If the token was invalidated for an account, sign out from that account
-    this._removeAccount(account)
-
-    this._showPopup({
-      type: PopupType.InvalidatedToken,
-      account,
-    })
   }
 
   private onShowInstallingUpdate = () => {
@@ -1058,7 +1031,9 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
     this.cloningRepositoriesStore.onDidError(e => this.emitError(e))
 
-    this.signInStore.onDidAuthenticate(account => this._addAccount(account))
+    this.signInStore.onDidAuthenticate(account =>
+      this.onDidAuthenticate(account)
+    )
     this.signInStore.onDidUpdate(() => this.emitUpdate())
     this.signInStore.onDidError(error => this.emitError(error))
 
@@ -1079,6 +1054,9 @@ export class AppStore extends TypedBaseStore<IAppState> {
       this.emitUpdate()
     })
     this.accountsStore.onDidError(error => this.emitError(error))
+    this.accountsStore.onTokenInvalidated(account => {
+      this._showPopup({ type: PopupType.InvalidatedToken, account })
+    })
 
     this.repositoriesStore.onDidUpdate(updateRepositories => {
       this.repositories = updateRepositories
@@ -8244,22 +8222,20 @@ export class AppStore extends TypedBaseStore<IAppState> {
     log.info(
       `[AppStore] removing account ${account.login} (${account.name}) from store`
     )
-    await this.accountsStore.removeAccount(account)
-    await deleteToken(account)
+    const current = await this.accountsStore.removeAccount(account)
+    if (current?.token) {
+      await deleteToken(current)
+    }
   }
 
-  private async _addAccount(account: Account): Promise<void> {
-    log.info(
-      `[AppStore] adding account ${account.login} (${account.name}) to store`
-    )
-    const storedAccount = await this.accountsStore.addAccount(account)
-
+  private onDidAuthenticate(account: Account): void {
+    log.info(`[AppStore] signed in as ${account.login} (${account.name})`)
     // If we're in the welcome flow and a user signs in we want to trigger
     // a refresh of the repositories available for cloning straight away
     // in order to have the list of repositories ready for them when they
     // get to the blankslate.
-    if (this.showWelcomeFlow && storedAccount !== null) {
-      this.apiRepositoriesStore.loadRepositories(storedAccount)
+    if (this.showWelcomeFlow) {
+      this.apiRepositoriesStore.loadRepositories(account)
     }
   }
 
@@ -8566,7 +8542,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
   private async isUsingLFS(repository: Repository): Promise<boolean> {
     try {
       return await isUsingLFS(repository)
-    } catch (error) {
+    } catch {
       return false
     }
   }

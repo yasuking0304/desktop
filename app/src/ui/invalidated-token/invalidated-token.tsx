@@ -8,7 +8,10 @@ import { getHTMLURL } from '../../lib/api'
 import { Ref } from '../lib/ref'
 
 interface IInvalidatedTokenProps {
-  readonly dispatcher: Dispatcher
+  readonly dispatcher: Pick<
+    Dispatcher,
+    'showEnterpriseSignInDialog' | 'showDotComSignInDialog'
+  >
   readonly account: Account
   readonly onDismissed: () => void
 }
