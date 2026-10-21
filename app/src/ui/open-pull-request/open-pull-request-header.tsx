@@ -124,9 +124,19 @@ export class OpenPullRequestDialogHeader extends React.Component<IOpenPullReques
         </div>
         <div className="lines-added-deleted">
           <span className="sr-only">Lines changed:</span>
-          <span className="lines-added">{linesAdded} added lines</span>
+          <span className="lines-added">
+            {t('open-pull-request-header.added-lines', '{{0}} added lines', {
+              0: linesAdded,
+            })}
+          </span>
           <span>, </span>
-          <span className="lines-deleted">{linesDeleted} removed lines</span>
+          <span className="lines-deleted">
+            {t(
+              'open-pull-request-header.removed-lines',
+              '{{0}} removed lines',
+              { 0: linesDeleted }
+            )}
+          </span>
         </div>
       </DialogHeader>
     )

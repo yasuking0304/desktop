@@ -129,20 +129,21 @@
     "unable-to-initialize-cherry-pick": "Unable to initialize cherry-pick progress. No commits provided."
   },
   "appearance": {
+    "always-show-worktree-list": "Always show worktree list",
     "dark": "Dark",
     "date-format": "Date format",
     "date-format-darwin": "Date Format",
-    "diff": "Diff",
+    "diff-tab-size": "Diff tab size",
+    "diff-tab-size-darwin": "Diff Tab Size",
     "formatting": "Formatting",
     "light": "Light",
     "loading-system-theme": "Loading system theme",
+    "miscellaneous": "Miscellaneous",
     "number-format": "Number format",
     "number-format-darwin": "Number Format",
     "prefer-absolute-dates": "Prefer absolute dates over relative",
     "system": "System",
     "tab_size_default": "{{0}} (default)",
-    "tab-size": "Tab size",
-    "tab-size-darwn": "Tab Size",
     "theme": "Theme",
     "time-format": "Time format",
     "time-format-darwin": "Time Format"
@@ -1222,13 +1223,21 @@
     "update-is-in-progress": "Do not close GitHub Desktop while the update is in progress. Closing now may break your installation."
   },
   "integrations": {
+    "app-location": "App location",
     "configure-custom-editor": "Configure custom editor…",
     "configure-custom-editor-darwin": "Configure Custom Editor…",
     "configure-custom-shell": "Configure custom shell…",
     "configure-custom-shell-darwin": "Configure Custom Shell…",
+    "copilot": "GitHub Copilot",
+    "copilot-app-path": "path to github.exe",
+    "copilot-app-path-darwin": "path to GitHub Copilot.app",
+    "copilot-app-path-linux": "path to github.appimage",
+    "copilot-description": "Experience agent-driven development built natively on GitHub. ",
     "external-editor": "External editor",
     "external-editor-darwin": "External Editor",
     "install-editor-name": "Install {{0}}?",
+    "learn-more-about-copilot-1": "Learn more about GitHub Copilot",
+    "learn-more-about-copilot-2": ".",
     "no-editors-found": "No editors found. ",
     "no-other-editors-found": "No other editors found. ",
     "shell": "Shell"
@@ -1672,13 +1681,15 @@
     "view": "View"
   },
   "open-pull-request-header": {
+    "added-lines": "{{0}} added lines",
     "merge-into-1": "Merge {{0}} into",
     "merge-into-2": "from",
     "merge-into-3": ".",
     "multiple-commits": "{{0}} commits",
     "one-or-less-commit": "{{0}} commit",
     "open-a-pull-request": "Open a pull request",
-    "open-a-pull-request-darwin": "Open a Pull Request"
+    "open-a-pull-request-darwin": "Open a Pull Request",
+    "removed-lines": "{{0}} removed lines"
   },
   "open-thank-you-card": {
     "open-thank-you-1": "The Desktop team would like to thank you for your contributions.",

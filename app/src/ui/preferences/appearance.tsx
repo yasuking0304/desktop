@@ -302,11 +302,17 @@ export class Appearance extends React.Component<
 
     return (
       <div className="appearance-section">
-        <h2 id="miscellaneous-heading">{t('appearance.miscellaneous', 'Miscellaneous')}</h2>
+        <h2 id="miscellaneous-heading">
+          {t('appearance.miscellaneous', 'Miscellaneous')}
+        </h2>
 
         <Select
           value={this.state.selectedTabSize.toString()}
-          label={__DARWIN__ ? t('appearance.diff-tab-size', 'Diff Tab Size') : t('appearance.diff-tab-size', 'Diff tab size')}
+          label={
+            __DARWIN__
+              ? t('appearance.diff-tab-size-darwin', 'Diff Tab Size')
+              : t('appearance.diff-tab-size', 'Diff tab size')
+          }
           onChange={this.onSelectedTabSizeChanged}
         >
           {availableTabSizes.map(n => (
@@ -320,7 +326,10 @@ export class Appearance extends React.Component<
 
         <Checkbox
           className="always-show-worktree-list"
-          label={t('appearance.always-show-worktree-list', 'Always show worktree list')}
+          label={t(
+            'appearance.always-show-worktree-list',
+            'Always show worktree list'
+          )}
           value={
             this.props.alwaysShowWorktreeList
               ? CheckboxValue.On

@@ -420,25 +420,39 @@ export class Integrations extends React.Component<
     return (
       <fieldset>
         <legend>
-          <h2>GitHub Copilot</h2>
+          <h2>{t('integrations.copilot', 'GitHub Copilot')}</h2>
         </legend>
         <p>
-          Experience agent-driven development built natively on GitHub.{' '}
+          {t(
+            'integrations.copilot-description',
+            `Experience agent-driven development built natively on GitHub. `
+          )}
           <LinkButton uri={copilotAppMarketingUrl}>
-            Learn more about GitHub Copilot
+            {t(
+              'integrations.learn-more-about-copilot-1',
+              'Learn more about GitHub Copilot'
+            )}
           </LinkButton>
-          .
+          {t('integrations.learn-more-about-copilot-2', '.')}
         </p>
         <Row>
           <div className="custom-integration-form-container">
             <div className="custom-integration-form-path-container">
               <TextBox
-                label="App location"
+                label={t('integrations.app-location', 'App location')}
                 value={this.state.copilotAppPath}
                 placeholder={
                   __DARWIN__
-                    ? 'path to GitHub Copilot.app'
-                    : 'path to github.exe'
+                    ? t(
+                        'integrations.copilot-app-path-darwin',
+                        'path to GitHub Copilot.app'
+                      )
+                    : __LINUX__
+                    ? t(
+                        'integrations.copilot-app-path-linux',
+                        'path to github.appimage'
+                      )
+                    : t('integrations.copilot-app-path', 'path to github.exe')
                 }
                 onValueChanged={this.onCopilotAppPathChanged}
                 ariaDescribedBy={
@@ -447,7 +461,9 @@ export class Integrations extends React.Component<
                     : 'copilot-app-path-error'
                 }
               />
-              <Button onClick={this.onChooseCopilotAppPath}>Choose…</Button>
+              <Button onClick={this.onChooseCopilotAppPath}>
+                {t('common.choose', 'Choose…')}
+              </Button>
             </div>
             {this.props.copilotAppPathError !== undefined && (
               <div className="custom-integration-form-error">

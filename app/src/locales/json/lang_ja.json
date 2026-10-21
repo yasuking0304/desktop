@@ -129,20 +129,21 @@
     "unable-to-initialize-cherry-pick": "チェリーピックの変更状況を初期化できません。コミットが指定されていません。"
   },
   "appearance": {
+    "always-show-worktree-list": "常にworktreeリストを表示",
     "dark": "Dark",
     "date-format": "日付の形式",
-    "date-format-darwin": "Date Format",
-    "diff": "差分",
+    "date-format-darwin": "日付の形式",
+    "diff-tab-size": "タブサイズ",
+    "diff-tab-size-darwin": "タブサイズ",
     "formatting": "表示フォーマット",
     "light": "Light",
     "loading-system-theme": "システムテーマのロード中",
+    "miscellaneous": "その他",
     "number-format": "数字の形式",
     "number-format-darwin": "数字の形式",
     "prefer-absolute-dates": "相対日付よりも絶対日付を優先する",
     "system": "システムの規定",
     "tab_size_default": "{{0}} (デフォルト)",
-    "tab-size": "タブサイズ",
-    "tab-size-darwn": "タブサイズ",
     "theme": "テーマ",
     "time-format": "時間の形式",
     "time-format-darwin": "時間の形式"
@@ -1222,13 +1223,21 @@
     "update-is-in-progress": "更新中です。GitHub Desktop を終了させないでください。今、終了させるとインストールが中断される可能性があります。"
   },
   "integrations": {
+    "app-location": "GitHub Copilot app のパス",
     "configure-custom-editor": "エディターのカスタマイズ…",
     "configure-custom-editor-darwin": "エディターのカスタマイズ…",
     "configure-custom-shell": "シェルのカスタマイズ…",
     "configure-custom-shell-darwin": "シェルのカスタマイズ…",
+    "copilot": "GitHub Copilot",
+    "copilot-app-path": "github.exe のパス",
+    "copilot-app-path-darwin": "GitHub Copilot.app のパス",
+    "copilot-app-path-linux": "github.appimage のパス",
+    "copilot-description": "GitHub上にネイティブ構築された、エージェント駆動を使った開発を体験しましょう。",
     "external-editor": "外部エディター",
     "external-editor-darwin": "外部エディター",
     "install-editor-name": "{{0}} をインストールしますか?",
+    "learn-more-about-copilot-1": "GitHub Copilot についての詳細はこちら",
+    "learn-more-about-copilot-2": "。",
     "no-editors-found": "エディターが見つかりませんでした。 ",
     "no-other-editors-found": "他のエディターは見つかりませんでした。 ",
     "shell": "シェル"
@@ -1672,13 +1681,15 @@
     "view": "閲覧"
   },
   "open-pull-request-header": {
+    "added-lines": "{{0}}行追加",
     "merge-into-1": "{{0}}をマージします。マージ先:",
     "merge-into-2": "マージ元:",
     "merge-into-3": " ",
     "multiple-commits": "{{0}}個のコミット",
     "one-or-less-commit": "{{0}}個のコミット",
     "open-a-pull-request": "プルリクエストを開く",
-    "open-a-pull-request-darwin": "プルリクエストを開く"
+    "open-a-pull-request-darwin": "プルリクエストを開く",
+    "removed-lines": "{{0}}行削除"
   },
   "open-thank-you-card": {
     "open-thank-you-1": "Desktop チームは、皆様のご貢献に感謝いたします。",

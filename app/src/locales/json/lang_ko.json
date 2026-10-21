@@ -129,20 +129,21 @@
     "unable-to-initialize-cherry-pick": "체리 픽의 변경 상태를 초기화할 수 없습니다. 커밋이 지정되지 않았습니다."
   },
   "appearance": {
+    "always-show-worktree-list": "항상 worktree 목록 표시",
     "dark": "Dark",
     "date-format": "날짜 형식",
     "date-format-darwin": "날짜 형식",
-    "diff": "차등",
-    "formatting": "포맷ting",
+    "diff-tab-size": "탭 크기",
+    "diff-tab-size-darwin": "탭 크기",
+    "formatting": "서식 지정",
     "light": "Light",
     "loading-system-theme": "시스템 테마를 로드하는 동안",
+    "miscellaneous": "여러 가지 잡다한",
     "number-format": "숫자 형식",
     "number-format-darwin": "숫자 형식",
     "prefer-absolute-dates": "상대 날짜보다 절대 날짜를 우선",
     "system": "시스템 규정",
     "tab_size_default": "{{0}}(기본값)",
-    "tab-size": "탭 크기",
-    "tab-size-darwn": "탭 크기",
     "theme": "테마",
     "time-format": "시간 형식",
     "time-format-darwin": "시간 형식"
@@ -1222,13 +1223,21 @@
     "update-is-in-progress": "업데이트 중입니다. GitHub Desktop을 종료하지 마십시오. 이제 종료하면 설치가 중단될 수 있습니다."
   },
   "integrations": {
+    "app-location": "App location",
     "configure-custom-editor": "에디터 사용자 지정…",
     "configure-custom-editor-darwin": "에디터 사용자 지정…",
     "configure-custom-shell": "셸 사용자 지정…",
     "configure-custom-shell-darwin": "셸 사용자 지정…",
+    "copilot": "GitHub Copilot",
+    "copilot-app-path": "path to github.exe",
+    "copilot-app-path-darwin": "path to GitHub Copilot.app",
+    "copilot-app-path-linux": "path to github.appimage",
+    "copilot-description": "Experience agent-driven development built natively on GitHub. ",
     "external-editor": "외부 편집기",
     "external-editor-darwin": "외부 편집기",
     "install-editor-name": "{{0}}을(를) 설치하시겠습니까?",
+    "learn-more-about-copilot-1": "Learn more about GitHub Copilot",
+    "learn-more-about-copilot-2": ".",
     "no-editors-found": "편집기를 찾을 수 없습니다.",
     "no-other-editors-found": "다른 편집기를 찾을 수 없습니다.",
     "shell": "Shell"
@@ -1672,13 +1681,15 @@
     "view": "브라우징"
   },
   "open-pull-request-header": {
+    "added-lines": "{{0}}행 추가",
     "merge-into-1": "{{0}}을 병합합니다. 병합 대상:",
     "merge-into-2": "병합 원본:",
     "merge-into-3": " ",
     "multiple-commits": "{{0}}개의 커밋",
     "one-or-less-commit": "{{0}}개의 커밋",
     "open-a-pull-request": "풀 요청 열기",
-    "open-a-pull-request-darwin": "풀 요청 열기"
+    "open-a-pull-request-darwin": "풀 요청 열기",
+    "removed-lines": "{{0}}행 삭제"
   },
   "open-thank-you-card": {
     "open-thank-you-1": "Desktop 팀은 여러분의 기부에 감사드립니다.",

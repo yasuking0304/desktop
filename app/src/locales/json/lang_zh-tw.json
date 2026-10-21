@@ -129,20 +129,21 @@
     "unable-to-initialize-cherry-pick": "無法初始化 Cherry-Pick 進度。未提供任何提交。"
   },
   "appearance": {
+    "always-show-worktree-list": "始終顯示 Worktree 列表",
     "dark": "Dark",
     "date-format": "日期格式",
     "date-format-darwin": "日期格式",
-    "diff": "差異",
+    "diff-tab-size": "選項卡大小",
+    "diff-tab-size-darwin": "選項卡大小",
     "formatting": "格式化",
     "light": "Light",
     "loading-system-theme": "載入系統主題",
+    "miscellaneous": "各種各樣的",
     "number-format": "數字格式",
     "number-format-darwin": "數字格式",
     "prefer-absolute-dates": "優先考慮絕對日期，而不是相對日期",
     "system": "System",
     "tab_size_default": "{{0}} (預設)",
-    "tab-size": "選項卡大小",
-    "tab-size-darwn": "選項卡大小",
     "theme": "主題",
     "time-format": "時間格式",
     "time-format-darwin": "時間格式"
@@ -1222,13 +1223,21 @@
     "update-is-in-progress": "更新過程中請勿關閉 GitHub Desktop。立即關閉可能會破壞您的安裝。"
   },
   "integrations": {
+    "app-location": "App location",
     "configure-custom-editor": "設定自訂編輯器…",
     "configure-custom-editor-darwin": "設定自訂編輯器…",
     "configure-custom-shell": "設定自訂 shell…",
     "configure-custom-shell-darwin": "設定自訂 Shell…",
+    "copilot": "GitHub Copilot",
+    "copilot-app-path": "path to github.exe",
+    "copilot-app-path-darwin": "path to GitHub Copilot.app",
+    "copilot-app-path-linux": "path to github.appimage",
+    "copilot-description": "Experience agent-driven development built natively on GitHub. ",
     "external-editor": "預設編輯器",
     "external-editor-darwin": "預設編輯器",
     "install-editor-name": "安裝 {{0}}?",
+    "learn-more-about-copilot-1": "Learn more about GitHub Copilot",
+    "learn-more-about-copilot-2": ".",
     "no-editors-found": "未找到編輯器。 ",
     "no-other-editors-found": "未找到編輯器。 ",
     "shell": "Shell"
@@ -1672,13 +1681,15 @@
     "view": "結帳"
   },
   "open-pull-request-header": {
+    "added-lines": "{{0}}新增了行",
     "merge-into-1": "合併 {{0}} 到 ",
     "merge-into-2": ", 來自",
     "merge-into-3": "。",
     "multiple-commits": "{{0}} 提交",
     "one-or-less-commit": "{{0}} 提交",
     "open-a-pull-request": "開啟拉取請求",
-    "open-a-pull-request-darwin": "開啟拉取請求"
+    "open-a-pull-request-darwin": "開啟拉取請求",
+    "removed-lines": "{{0}}刪除了行"
   },
   "open-thank-you-card": {
     "open-thank-you-1": "桌面團隊感謝您的貢獻。",
