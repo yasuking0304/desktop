@@ -12,6 +12,7 @@ import {
   AccountCredential,
   serializeAccountCredential,
 } from './account-credential'
+import { enableTestMenuItems } from './feature-flag'
 
 /** Renew credentials that expire within this window before handing them out. */
 export const refreshMargin = 10 * 60 * 1000
@@ -31,6 +32,7 @@ interface ICredentialSession {
   credential: AccountCredential
   retired: boolean
   refreshing?: Promise<string>
+  expirationOverride?: { readonly originalExpiresAt: number | undefined }
   /** Leases on access tokens that are in use, such as by running Git processes. */
   readonly leases: Set<ILease>
   /** Callers waiting for a leased token to be released or the session to retire. */
@@ -49,8 +51,32 @@ export interface ITokenLease {
   readonly release: () => void
 }
 
+/** Token expiration metadata for the test dialog, without credential values. */
+export interface IAccountTokenExpiration {
+  /** Whether the current credential has a refresh token. */
+  readonly isRefreshable: boolean
+  /** Current local expiration, in milliseconds since the Unix epoch. */
+  readonly expiresAt: number | undefined
+  /** Expiration before overriding; undefined means the expiry was unknown. */
+  readonly originalExpiresAt: number | undefined
+  /** Whether the current session has a local expiration override. */
+  readonly isOverridden: boolean
+}
+
+/** Credential-free lifecycle events for actual token refresh exchanges. */
+export type TokenRefreshEvent =
+  | 'attempt'
+  | 'success'
+  | 'transient-failure'
+  | 'non-transient-failure'
+  | 'abandoned'
+  | 'required-sign-in'
+
 /** Account-list changes that credential sessions ask their owner to perform. */
 export interface ICredentialSessionsDelegate {
+  /** A renewal lifecycle event; excludes expiry-override testing. */
+  readonly onTokenRefreshEvent?: (event: TokenRefreshEvent) => void
+
   /**
    * Sign the account out because its credential can no longer be used.
    *
@@ -401,6 +427,84 @@ export class CredentialSessions {
     )
   }
 
+  /** Read local expiry metadata without refreshing or exposing either token. */
+  public getTokenExpirationForTesting(
+    account: Account
+  ): IAccountTokenExpiration {
+    const session = this.getSessionForTesting(account)
+    return {
+      isRefreshable: session.credential?.refreshToken !== undefined,
+      expiresAt: session.credential?.expiresAt,
+      originalExpiresAt:
+        session.expirationOverride === undefined
+          ? session.credential?.expiresAt
+          : session.expirationOverride.originalExpiresAt,
+      isOverridden: session.expirationOverride !== undefined,
+    }
+  }
+
+  /**
+   * Override local access-token expiry until renewal or session retirement.
+   *
+   * Passing undefined restores the original expiry. Never writes secure storage.
+   */
+  public setTokenExpirationForTesting(
+    account: Account,
+    expiresAt: number | undefined
+  ): IAccountTokenExpiration {
+    const session = this.getSessionForTesting(account)
+    const credential = session.credential
+    if (credential === null || credential.refreshToken === undefined) {
+      throw new Error('This account does not have a refreshable token.')
+    }
+    if (session.refreshing !== undefined) {
+      throw new Error(
+        'Token renewal is in progress. Try again when it finishes.'
+      )
+    }
+    if (
+      expiresAt !== undefined &&
+      (!Number.isSafeInteger(expiresAt) ||
+        expiresAt < 0 ||
+        !Number.isFinite(new Date(expiresAt).getTime()))
+    ) {
+      throw new Error('Choose a valid token expiration date and time.')
+    }
+
+    if (expiresAt === undefined) {
+      if (session.expirationOverride !== undefined) {
+        session.credential = {
+          ...credential,
+          expiresAt: session.expirationOverride.originalExpiresAt,
+        }
+        session.expirationOverride = undefined
+      }
+    } else {
+      session.expirationOverride ??= { originalExpiresAt: credential.expiresAt }
+      session.credential = { ...credential, expiresAt }
+    }
+    this.notifyLeaseWaiters(session)
+    log.info('Test access-token expiration override updated.')
+    return this.getTokenExpirationForTesting(account)
+  }
+
+  private getSessionForTesting(account: Account): ICredentialSession {
+    if (!enableTestMenuItems()) {
+      throw new Error(
+        'Token expiration controls are only available when the test menu is enabled.'
+      )
+    }
+    const session = this.sessionsByAccount.get(account)
+    if (
+      session === undefined ||
+      session.retired ||
+      !accountEquals(session.account, account)
+    ) {
+      throw new AccountRequiresSignInError()
+    }
+    return session
+  }
+
   /** Ignore obsolete 401s; sign out when the current token is rejected. */
   public async invalidateToken(endpoint: string, token: string): Promise<void> {
     const session = this.sessionsByEndpoint.get(endpoint)
@@ -553,6 +657,22 @@ export class CredentialSessions {
     if (refreshToken === undefined) {
       throw new Error('Cannot renew a credential without a refresh token.')
     }
+    const reportEvents = session.expirationOverride === undefined
+    const notifyRefreshEvent = (event: TokenRefreshEvent) => {
+      if (reportEvents) {
+        this.delegate.onTokenRefreshEvent?.(event)
+      }
+    }
+    const requireSignInAfterRefreshFailure = async () => {
+      const wasRetired = session.retired
+      const signOut = this.requireSignIn(session)
+      // The delegate retires the session synchronously, before deleting storage.
+      if (!wasRetired && session.retired) {
+        notifyRefreshEvent('required-sign-in')
+      }
+      await signOut
+    }
+    notifyRefreshEvent('attempt')
     let renewed: IOAuthToken
     try {
       renewed = await this.renewToken(
@@ -565,8 +685,10 @@ export class CredentialSessions {
           e instanceof OAuthRefreshRejectedError ||
           e instanceof OAuthTokenResponseError
         ) {
-          await this.requireSignIn(session)
+          notifyRefreshEvent('non-transient-failure')
+          await requireSignInAfterRefreshFailure()
         } else {
+          notifyRefreshEvent('transient-failure')
           log.warn(
             'OAuth renewal failed; retaining credentials for a later retry.'
           )
@@ -574,11 +696,14 @@ export class CredentialSessions {
             'Unable to renew your GitHub session. Check your connection and try again shortly.'
           )
         }
+      } else {
+        notifyRefreshEvent('abandoned')
       }
       throw e
     }
 
     if (session.retired) {
+      notifyRefreshEvent('abandoned')
       void this.revokeUnusedToken(account.withToken(renewed.accessToken))
       throw new AccountRequiresSignInError()
     }
@@ -595,7 +720,9 @@ export class CredentialSessions {
       })
     } catch {
       if (!session.retired) {
-        await this.requireSignIn(session)
+        await requireSignInAfterRefreshFailure()
+      } else {
+        notifyRefreshEvent('abandoned')
       }
       void this.revokeUnusedToken(account.withToken(renewed.accessToken))
       throw new Error(
@@ -603,15 +730,18 @@ export class CredentialSessions {
       )
     }
     if (session.retired) {
+      notifyRefreshEvent('abandoned')
       void this.revokeUnusedToken(account.withToken(renewed.accessToken))
       throw new AccountRequiresSignInError()
     }
     session.credential = renewed
+    session.expirationOverride = undefined
     this.sessionsByToken.set(
       this.tokenKey(account.endpoint, renewed.accessToken),
       session
     )
     this.delegate.onTokenRenewed(account.endpoint, renewed.accessToken)
+    notifyRefreshEvent('success')
     log.info('OAuth credentials renewed and saved.')
     return renewed.accessToken
   }

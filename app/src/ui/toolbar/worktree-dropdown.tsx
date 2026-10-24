@@ -43,6 +43,12 @@ export class WorktreeDropdown extends React.Component<
     const { dispatcher, repository } = this.props
 
     dispatcher.closeFoldout(FoldoutType.Worktree)
+
+    if (worktree.isPrunable) {
+      dispatcher.requestDeleteWorktree(repository, worktree.path)
+      return
+    }
+
     await dispatcher.switchWorktree(repository, worktree)
   }
 
