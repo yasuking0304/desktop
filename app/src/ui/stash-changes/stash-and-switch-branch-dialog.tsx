@@ -90,6 +90,7 @@ export class StashAndSwitchBranch extends React.Component<
                     'Switch branch'
                   )
             }
+            okButtonDisabled={isStashingChanges}
           />
         </DialogFooter>
       </Dialog>
