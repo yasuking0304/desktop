@@ -886,12 +886,16 @@
     "tag-named-is-present-on-the-remote-2": " というプッシュ済みのタグが存在します。\nこのタグが使用されている場合、削除すると問題が発生する可能性が\nあります。削除する前に、システム管理者に相談することをお勧めします。"
   },
   "delete-worktree": {
+    "delete-missing-worktree-dialog": "Remove missing worktree",
+    "delete-missing-worktree-dialog-darwin": "Remove Missing Worktree",
     "delete-worktree-dialog": "Worktreeの削除",
     "delete-worktree-dialog-darwin": "Worktreeの削除"
   },
   "delete-worktree-dialog": {
     "are-you-sure-1": "worktree ",
-    "are-you-sure-2": "を削除してもよろしいですか?"
+    "are-you-sure-2": "を削除してもよろしいですか?",
+    "missing-worktree-confirmation-1": "The folder for the worktree ",
+    "missing-worktree-confirmation-2": " no longer exists.\nRemove it from this repository?"
   },
   "delete-worktree-failed-dialog": {
     "deleting-the-worktree-1": "worktree の削除中",

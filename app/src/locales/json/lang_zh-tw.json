@@ -886,12 +886,16 @@
     "tag-named-is-present-on-the-remote-2": " 被推送到遠端。 \n如果此標籤正在使用中, 刪除它可能會導致問題。 \n我們建議您在刪除之前諮詢系統管理員。"
   },
   "delete-worktree": {
+    "delete-missing-worktree-dialog": "Remove missing worktree",
+    "delete-missing-worktree-dialog-darwin": "Remove Missing Worktree",
     "delete-worktree-dialog": "刪除 Worktree",
     "delete-worktree-dialog-darwin": "刪除 Worktree"
   },
   "delete-worktree-dialog": {
     "are-you-sure-1": "您確定要刪除worktree ",
-    "are-you-sure-2": "嗎?"
+    "are-you-sure-2": "嗎?",
+    "missing-worktree-confirmation-1": "The folder for the worktree ",
+    "missing-worktree-confirmation-2": " no longer exists.\nRemove it from this repository?"
   },
   "delete-worktree-failed-dialog": {
     "deleting-the-worktree-1": "正在刪除 worktree ",

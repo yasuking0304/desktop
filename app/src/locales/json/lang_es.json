@@ -886,12 +886,16 @@
     "tag-named-is-present-on-the-remote-2": " pushed to the remote.\nIf this tag is in use, removing it may cause problems.\nWe recommend that you consult with your system administrator\nbefore deleting it."
   },
   "delete-worktree": {
+    "delete-missing-worktree-dialog": "Remove missing worktree",
+    "delete-missing-worktree-dialog-darwin": "Remove Missing Worktree",
     "delete-worktree-dialog": "Delete worktree",
     "delete-worktree-dialog-darwin": "Delete Worktree"
   },
   "delete-worktree-dialog": {
     "are-you-sure-1": "Are you sure you want to delete the worktree ",
-    "are-you-sure-2": "?"
+    "are-you-sure-2": "?",
+    "missing-worktree-confirmation-1": "The folder for the worktree ",
+    "missing-worktree-confirmation-2": " no longer exists.\nRemove it from this repository?"
   },
   "delete-worktree-failed-dialog": {
     "deleting-the-worktree-1": "Deleting the worktree ",
