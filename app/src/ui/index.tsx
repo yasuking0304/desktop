@@ -47,6 +47,7 @@ import {
   PullRequestDatabase,
 } from '../lib/databases'
 import { shellNeedsPatching, updateEnvironmentForProcess } from '../lib/shell'
+import { isLikeMacGnomeButtonLayout } from '../lib/gnome-button-layout'
 import { installDevGlobals } from './install-globals'
 import { reportUncaughtException, sendErrorReport } from './main-process-proxy'
 import { getOS } from '../lib/get-os'
@@ -89,6 +90,7 @@ migrateRendererGUID()
 if (shellNeedsPatching(process)) {
   updateEnvironmentForProcess()
 }
+process.env['IS_MAC_LIKE_BUTTON'] = isLikeMacGnomeButtonLayout().toString()
 
 enableSourceMaps()
 

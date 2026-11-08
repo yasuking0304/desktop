@@ -3,7 +3,6 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 
 import { CrashApp } from './crash-app'
-import { isLikeMacGnomeButtonLayout } from '../lib/gnome-button-layout'
 
 if (!process.env.TEST_ENV) {
   /* This is the magic trigger for webpack to go compile
@@ -12,8 +11,8 @@ if (!process.env.TEST_ENV) {
 }
 
 document.body.classList.add(`platform-${process.platform}`)
-if (await isLikeMacGnomeButtonLayout()) {
-  document.body.classList.add('like-mac-button-layout')
+if (process.env['IS_MAC_LIKE_BUTTON']) {
+  document.body.classList.add('is-mac-like-button')
 }
 
 const container = document.createElement('div')

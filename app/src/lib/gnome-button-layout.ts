@@ -12,10 +12,7 @@ export async function isLikeMacGnomeButtonLayout(): Promise<boolean> {
 
   try {
     const { stdout } = await execFile(shell, [
-      'gsettings',
-      'get',
-      'org.gnome.desktop.wm.preferences',
-      'button-layout',
+      'gsettings get org.gnome.desktop.wm.preferences button-layout',
     ])
 
     if (stdout.endsWith(':')) {

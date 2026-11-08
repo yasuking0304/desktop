@@ -167,6 +167,9 @@ dialog {
 
     display: flex;
     flex-direction: row;
+    @include darwin {
+      flex-direction: row-reverse;
+    }
     align-items: center;
     padding: var(--spacing-double);
 
@@ -185,7 +188,9 @@ dialog {
       margin: 0;
       padding: 0;
       width: 100%;
-
+      @include darwin {
+        margin-right: 20px;
+      }
       @include ellipsis;
     }
     @include close-button;
@@ -695,16 +700,5 @@ dialog {
 dialog#invalidated-token {
   .dialog-content .ref-component {
     white-space: nowrap;
-  }
-}
-
-@include darwin {
-  dialog {
-    .dialog-header {
-      flex-direction: row-reverse;
-      h1 {
-        margin-right: 20px;
-      }
-    }
   }
 }
