@@ -697,3 +697,14 @@ dialog#invalidated-token {
     white-space: nowrap;
   }
 }
+
+@include darwin {
+  dialog {
+    .dialog-header {
+      flex-direction: row-reverse;
+      h1 {
+        margin-right: 20px;
+      }
+    }
+  }
+}
