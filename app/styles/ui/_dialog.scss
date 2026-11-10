@@ -170,6 +170,9 @@ dialog {
     @include darwin {
       flex-direction: row-reverse;
     }
+    @include maclike {
+      flex-direction: row-reverse;
+    }
     align-items: center;
     padding: var(--spacing-double);
 
@@ -189,7 +192,10 @@ dialog {
       padding: 0;
       width: 100%;
       @include darwin {
-        margin-right: 20px;
+        margin-left: 20px;
+      }
+      @include maclike {
+        margin-left: 20px;
       }
       @include ellipsis;
     }

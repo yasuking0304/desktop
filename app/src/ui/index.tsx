@@ -90,7 +90,7 @@ migrateRendererGUID()
 if (shellNeedsPatching(process)) {
   updateEnvironmentForProcess()
 }
-process.env['IS_MAC_LIKE_BUTTON'] = isLikeMacGnomeButtonLayout().toString()
+process.env['IS_MAC_LIKE_BUTTON_LAYOUT'] = await isLikeMacGnomeButtonLayout() ? 'true' : 'false'
 
 enableSourceMaps()
 
@@ -359,6 +359,9 @@ dispatcher.registerErrorHandler(discardChangesHandler)
 dispatcher.registerErrorHandler(secretScanningPushProtectionErrorHandler)
 
 document.body.classList.add(`platform-${process.platform}`)
+if (__LINUX__ && process.env.IS_MAC_LIKE_BUTTON_LAYOUT === 'true') {
+  document.body.classList.add('mac-like-layout')
+}
 
 dispatcher.initializeAppFocusState()
 

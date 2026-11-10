@@ -55,6 +55,11 @@
     @content;
   }
 }
+@mixin maclike {
+  body.mac-like-layout & {
+    @content;
+  }
+}
 
 // An exact copy of the linux mixin except that it allows for
 // writing base-level rules

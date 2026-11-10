@@ -11,9 +11,6 @@ if (!process.env.TEST_ENV) {
 }
 
 document.body.classList.add(`platform-${process.platform}`)
-if (process.env['IS_MAC_LIKE_BUTTON']) {
-  document.body.classList.add('is-mac-like-button')
-}
 
 const container = document.createElement('div')
 container.id = 'desktop-crash-container'

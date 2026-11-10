@@ -1,4 +1,4 @@
-import { execFile } from './exec-file'
+import { execFile } from './exec-file';
 
 /**
  * Check if the GNOME button layout is similar to the macOS layout.
@@ -8,19 +8,16 @@ export async function isLikeMacGnomeButtonLayout(): Promise<boolean> {
     return false
   }
 
-  const shell = process.env.SHELL || '/bin/bash'
-
   try {
-    const { stdout } = await execFile(shell, [
-      'gsettings get org.gnome.desktop.wm.preferences button-layout',
+    const { stdout } = await execFile('gsettings', [
+       'get', 'org.gnome.desktop.wm.preferences', 'button-layout',
     ])
-
-    if (stdout.endsWith(':')) {
+    if (stdout.trim().replaceAll("'", '').endsWith(':')) {
       return true
     }
   } catch (err) {
     log.error('Failed Checking if the GNOME button layout', err)
-  } finally {
     return false
   }
+  return false
 }
