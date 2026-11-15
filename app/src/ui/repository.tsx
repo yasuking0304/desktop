@@ -37,6 +37,8 @@ import { PullRequestSuggestedNextAction } from '../models/pull-request'
 import { clamp } from '../lib/clamp'
 import { Emoji } from '../lib/emoji'
 import { PopupType } from '../models/popup'
+import { isAssistedCommitRepositoryLocked } from '../models/assisted-commit-run'
+import { isRepositoryAffectedByAssistedCommit } from '../lib/git/repository-operation'
 
 interface IRepositoryViewProps {
   readonly repository: Repository
@@ -294,7 +296,13 @@ export class RepositoryView extends React.Component<
         issuesStore={this.props.issuesStore}
         availableWidth={availableWidth}
         gitHubUserStore={this.props.gitHubUserStore}
-        isCommitting={this.props.state.isCommitting}
+        isCommitting={
+          this.props.state.isCommitting ||
+          isRepositoryAffectedByAssistedCommit(this.props.repository.path) ||
+          isAssistedCommitRepositoryLocked(
+            this.props.state.changesState.assistedCommit
+          )
+        }
         hookProgress={this.props.state.hookProgress}
         onShowCommitProgress={
           this.props.state.subscribeToCommitOutput
@@ -386,6 +394,12 @@ export class RepositoryView extends React.Component<
         tagsToPush={tagsToPush}
         aheadBehindStore={aheadBehindStore}
         isMultiCommitOperationInProgress={mcos !== null}
+        isAssistedCommitRepositoryLocked={
+          isRepositoryAffectedByAssistedCommit(repository.path) ||
+          isAssistedCommitRepositoryLocked(
+            this.props.state.changesState.assistedCommit
+          )
+        }
         askForConfirmationOnCheckoutCommit={
           this.props.askForConfirmationOnCheckoutCommit
         }
@@ -612,7 +626,13 @@ export class RepositoryView extends React.Component<
           dispatcher={this.props.dispatcher}
           file={selectedFile}
           diff={diff}
-          isCommitting={this.props.state.isCommitting}
+          isCommitting={
+            this.props.state.isCommitting ||
+            isRepositoryAffectedByAssistedCommit(this.props.repository.path) ||
+            isAssistedCommitRepositoryLocked(
+              this.props.state.changesState.assistedCommit
+            )
+          }
           imageDiffType={this.props.imageDiffType}
           hideWhitespaceInDiff={this.props.hideWhitespaceInChangesDiff}
           showSideBySideDiff={this.props.showSideBySideDiff}

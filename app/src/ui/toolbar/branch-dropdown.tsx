@@ -1,4 +1,6 @@
 import * as React from 'react'
+import { isAssistedCommitRepositoryLocked } from '../../models/assisted-commit-run'
+import { isRepositoryAffectedByAssistedCommit } from '../../lib/git/repository-operation'
 import { Dispatcher } from '../dispatcher'
 import * as octicons from '../octicons/octicons.generated'
 import { OcticonSymbol, syncClockwise } from '../octicons'
@@ -95,6 +97,14 @@ export class BranchDropdown extends React.Component<IBranchDropdownProps> {
 
   private renderBranchFoldout = (): JSX.Element | null => {
     const repositoryState = this.props.repositoryState
+    if (
+      isAssistedCommitRepositoryLocked(
+        repositoryState.changesState.assistedCommit
+      ) ||
+      isRepositoryAffectedByAssistedCommit(this.props.repository.path)
+    ) {
+      return null
+    }
     const branchesState = repositoryState.branchesState
 
     const tip = repositoryState.branchesState.tip
@@ -123,7 +133,13 @@ export class BranchDropdown extends React.Component<IBranchDropdownProps> {
 
   private onDropDownStateChanged = (state: DropdownState) => {
     // Don't allow opening the drop down when checkout is in progress
-    if (state === 'open' && this.props.repositoryState.checkoutProgress) {
+    if (
+      state === 'open' &&
+      (this.props.repositoryState.checkoutProgress ||
+        isAssistedCommitRepositoryLocked(
+          this.props.repositoryState.changesState.assistedCommit
+        ))
+    ) {
       return
     }
 
@@ -145,7 +161,9 @@ export class BranchDropdown extends React.Component<IBranchDropdownProps> {
       ? t('branch-dropdown.current-branch-darwin', 'Current Branch')
       : t('branch-dropdown.current-branch', 'Current branch')
     let canOpen = true
-    let disabled = false
+    let disabled =
+      isAssistedCommitRepositoryLocked(changesState.assistedCommit) ||
+      isRepositoryAffectedByAssistedCommit(this.props.repository.path)
     let tooltip: string
 
     if (this.props.currentPullRequest) {
@@ -505,6 +523,7 @@ export class BranchDropdown extends React.Component<IBranchDropdownProps> {
         prNumber={pr.pullRequestNumber}
         dispatcher={this.props.dispatcher}
         repository={pr.base.gitHubRepository}
+        localRepository={this.props.repository}
         branchName={currentBranchName}
         anchor={this.badgeRef}
         closePopover={this.closePopover}
@@ -528,6 +547,7 @@ export class BranchDropdown extends React.Component<IBranchDropdownProps> {
         number={pr.pullRequestNumber}
         dispatcher={this.props.dispatcher}
         repository={pr.base.gitHubRepository}
+        localRepository={this.props.repository}
         onBadgeRef={this.onBadgeRef}
         onBadgeClick={this.onBadgeClick}
         showCIStatusPopover={this.props.showCIStatusPopover}

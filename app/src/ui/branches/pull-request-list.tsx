@@ -206,6 +206,7 @@ export class PullRequestList extends React.Component<
         matches={matches}
         dispatcher={this.props.dispatcher}
         repository={pr.base.gitHubRepository}
+        localRepository={this.props.repository}
         onDropOntoPullRequest={this.onDropOntoPullRequest}
         onMouseEnter={this.onMouseEnterPullRequest}
         onMouseLeave={this.onMouseLeavePullRequest}
