@@ -18,6 +18,7 @@ import { lookupPreferredEmail } from '../lib/email'
 import { IAvatarUser } from '../models/avatar'
 import memoizeOne from 'memoize-one'
 import { groupAccountsByHost } from '../lib/group-accounts-by-host'
+import { t } from 'i18next'
 
 interface IAccountPickerProps {
   readonly accounts: ReadonlyArray<Account>
@@ -193,7 +194,9 @@ export class AccountPicker extends React.Component<
     if (account === null) {
       return (
         <div className="account placeholder">
-          {__DARWIN__ ? 'Choose an Account…' : 'Choose an account…'}
+          {__DARWIN__
+            ? t('account-picker.choose-account-darwin', 'Choose an Account…')
+            : t('account-picker.choose-account', 'Choose an account…')}
         </div>
       )
     }
@@ -212,9 +215,9 @@ export class AccountPicker extends React.Component<
     return (
       <PopoverDropdown
         className="account-picker"
-        contentTitle="Choose an account"
+        contentTitle={t('account-picker.content-title', 'Choose an account')}
         buttonContent={this.renderButtonContent()}
-        label="Account"
+        label={t('account-picker.account', 'Account')}
         ref={this.popoverRef}
         openButtonClassName={this.props.openButtonClassName}
       >

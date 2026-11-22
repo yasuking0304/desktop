@@ -328,11 +328,13 @@ export class RepositorySettings extends React.Component<
     return (
       <div className="repository-account">
         <Select
-          label="Account"
+          label={t('repository-settings.account', 'Account')}
           value={this.selectedAccount?.login ?? login ?? ''}
           onChange={this.onAccountChanged}
         >
-          <option value="">None (unassigned)</option>
+          <option value="">
+            {t('repository-settings.account-none', 'None (unassigned)')}
+          </option>
           {signedOut && (
             <option value={login ?? ''} disabled={true}>
               @{login} (signed out)
@@ -345,8 +347,10 @@ export class RepositorySettings extends React.Component<
           ))}
         </Select>
         <p className="repository-account-description">
-          The account used for GitHub API requests and HTTPS authentication.
-          This does not change your Git author name or email.
+          {t(
+            'repository-settings.account-description',
+            'The account used for GitHub API requests and HTTPS authentication. This does not change your Git author name or email.'
+          )}
         </p>
       </div>
     )

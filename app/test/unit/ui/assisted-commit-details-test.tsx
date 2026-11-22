@@ -97,6 +97,8 @@ describe('assisted commit error details', () => {
           skipCommitHooks={false}
           signOffCommits={false}
           allowEmptyCommit={false}
+          supportCopilotMultiLingual={false}
+          copilotConventionalCommitsFormat={false}
           onUpdateCommitOptions={() => {}}
         />
       )

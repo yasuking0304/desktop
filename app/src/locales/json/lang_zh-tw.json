@@ -40,6 +40,19 @@
     "check-out-1": "結帳新的",
     "check-out-2": "來控制連結下劃線和差異複選標記的可見性。"
   },
+  "account": {
+    "render-sign-in": "登入到您的 GitHub.com 帳號以存取您的儲存庫。",
+    "render-sign-in-enterprise": "如果您在工作中使用 GitHub Enterprise，請登入以取得對您的儲存庫的存取權限。"
+  },
+  "account-picker": {
+    "account": "帳號",
+    "choose-account": "選擇帳號…",
+    "choose-account-darwin": "選擇帳號…",
+    "content-title": "選擇帳號"
+  },
+  "accounts": {
+    "add-dotcom-account": "新增 GitHub.com 帳號"
+  },
   "acknowledgements": {
     "about-license-1": " ",
     "about-license-2": " 是一個依據 MIT 許可證發佈的開源專案。您可以在 ",
@@ -112,6 +125,7 @@
     "open-settings-darwin": "開啟設定",
     "retry-clone": "重試克隆",
     "retry-clone-darwin": "重試複製",
+    "retry-push": "重試推送",
     "would-you-like-1": "您想重試複製 ",
     "would-you-like-2": "嗎?"
   },
@@ -123,7 +137,6 @@
       "should-only-have-on-background-fetcher-active": "We should only have on background fetcher active at once, but we're trying to start background fetching on {{0}} while another background fetcher is still !"
     },
     "fast-forwarding branches": "快速轉送分支",
-    "pushing-to": "推入 {{0}}",
     "refreshing-repository": "刷新儲存庫",
     "refreshing-repository-darwin": "刷新儲存庫",
     "unable-to-initialize-cherry-pick": "無法初始化 Cherry-Pick 進度。未提供任何提交。"
@@ -323,8 +336,9 @@
       "we-could-not-find-that-repository": "我們找不到該儲存庫。請檢查您是否已登入、網路是否可存取以及 URL 或儲存庫別名拼字是否正確。"
     },
     "render-sign-in": "登入您的 GitHub.com 帳戶以存取您的儲存庫。",
-    "render-sign-in-enterprise": "如果您在工作中使用 GitHub Enterprise, 請登入以存取您的儲存庫。",
-    "select": "選擇"
+    "select": "選擇",
+    "sign-in-enterprise": "Sign in to GitHub Enterprise",
+    "sign-in-enterprise-darwin": "Sign In to GitHub Enterprise"
   },
   "cloneable-repository-filter-list": {
     "created-a-repository-1": "如果您最近建立了儲存庫, 請按 ",
@@ -419,10 +433,13 @@
     "bypass-commit-hooks": "繞過提交鉤子",
     "bypass-commit-hooks-darwin": "繞過提交鉤子",
     "cancel-generate-commit-details": "Cancel generating commit details",
+    "choose-commit-mode": "Choose how to commit",
     "commit": "提交",
+    "commit-author-email-failure": "Your commit author email does not meet this repository's rules.",
     "commit-count-files": "{{0}} {{1}}",
     "commit-description": "提交摘要",
     "commit-summaries-length-over": "優秀的提交摘要包含少於 50個字元",
+    "commit-summary": "Commit summary",
     "commit-title-1": "{{0}} {{1}}到 ",
     "commit-title-2": " ",
     "committing": "提交",
@@ -430,7 +447,7 @@
     "configure-commit-options": "提交選項的設定",
     "conventional-commits-support": "使用 Copilot 以 慣例式提交 格式輸出",
     "conventional-commits-support-darwin": "使用 Copilot 以 慣例式提交 格式輸出",
-    "description-field": "描述欄位",
+    "copilot": "Copilot",
     "disable-commit-spellcheck": "停用提交拼字檢查",
     "disable-commit-spellcheck-darwin": "停用提交拼字檢查",
     "do-not-have-write-access-to-1": "您沒有 ",
@@ -444,6 +461,7 @@
     "generating-commit-details": "正在產生提交詳細資料…",
     "link-create-a-fork": "建立一個分叉",
     "link-switch-branches": "切換分支",
+    "manual": "Manual",
     "multilingual-support": "Copilot台灣語言支持",
     "multilingual-support-darwin": "Copilot台灣語言支持",
     "must-be-selected": "。必須選擇檔案才能產生提交訊息。",
@@ -453,6 +471,7 @@
     "protected-branch-3": "嗎?",
     "remove-co-authors": "刪除共同作者",
     "remove-co-authors-darwin": "刪除共同作者",
+    "select-files-to-commit": "Select one or more files to commit",
     "select-one-or-more-files-to-commit": "選擇要提交的一個或多個檔案",
     "stop-amending": "停止修改",
     "summary-is-required-to-commit": "需要提交摘要",
@@ -523,6 +542,7 @@
     "error": "錯誤",
     "file": "檔案",
     "files": "檔案",
+    "filter": "篩選",
     "finish": "結束",
     "github-desktop": "GitHub Desktop",
     "global": "global",
@@ -717,6 +737,8 @@
   "copilot-user-settings": {
     "always-use-copilot-when-conflicts": "偵測到衝突時，請務必使用 Copilot",
     "always-use-copilot-when-conflicts-darwin": "偵測到衝突時，請務必使用 Copilot",
+    "assisted-commit": "Assisted commits",
+    "assisted-commit-darwin": "Assisted Commits",
     "commit-message-generation": "提交資訊產生",
     "commit-message-generation-darwin": "提交資訊產生",
     "conflict-resolution": "衝突解決",
@@ -1061,7 +1083,6 @@
     "file": "檔案",
     "files": "檔案",
     "files-description": "{{1}}個已更改{{2}}{{0}}",
-    "filter": "篩選",
     "hidden-changes-will-be-commited": "隱藏的更改將被提交。",
     "ignore-all-file-add-to-gitignore": "忽略所有 {{0}}檔案 (新增至 .gitignore)",
     "ignore-all-file-add-to-gitignore-darwin": "忽略所有 {{0}}檔 (新增至 .gitignore)",
@@ -1091,9 +1112,6 @@
     "one-and-another": "{{0}}、{{1}}",
     "other-filters-and-last": "{{0}}、{{1}}",
     "sorry-i-cannot-find-any-changed-files": "抱歉, 我找不到任何符合以下過濾器的已更改檔案: {{0}}"
-  },
-  "filter-list": {
-    "filter": "篩選"
   },
   "fork-contribution-target-description": {
     "autocompletion-of-user-1": "使用者和問題的自動完成將基於 ",
@@ -1250,7 +1268,8 @@
     "invalidated-account-token": "帳戶令牌無效",
     "invalidated-account-token-darwin": "帳戶令牌無效",
     "token-has-been-invalidated-1": "您的帳戶代幣已失效, 您已登出 ",
-    "token-has-been-invalidated-2": " 帳戶。是否要重新登入?"
+    "token-has-been-invalidated-2-1": "account on ",
+    "token-has-been-invalidated-3": ". Do you want to sign in again?"
   },
   "label": {
     "about-github-desktop": "關於 GitHub Desktop(&A)",
@@ -1759,7 +1778,10 @@
   },
   "publish": {
     "publish-repository": "發布儲存庫",
-    "publish-repository-darwin": "發布儲存庫"
+    "publish-repository-darwin": "發布儲存庫",
+    "sign-in-to-github-com": "Sign in to your GitHub.com account to publish your repository.",
+    "sign-in-to-github-enterprise": "Sign in to GitHub Enterprise",
+    "sign-in-to-github-enterprise-darwin": "Sign In to GitHub Enterprise"
   },
   "publish-repository": {
     "keep-this-code-private": "將此程式碼保密",
@@ -1934,6 +1956,13 @@
     "pro-tip-3": " 可從應用程式內的任何位置複製",
     "sorry-i-can-not-find-that-repository": "抱歉, 我找不到該儲存庫"
   },
+  "repository-account-dialog": {
+    "choose-account": "Choose the account to use for GitHub API requests and HTTPS authentication for {{0}} on {{1}}. This does not change your Git author name or email.",
+    "choose-another-account": "Choose another account",
+    "sign-in": "Sign in",
+    "title": "Repository account",
+    "use-account": "Use account"
+  },
   "repository-list": {
     "full-name": "正式名称: ",
     "path": "路徑: "
@@ -1956,6 +1985,9 @@
     "sanitized-name-warning": "無效字元已被替換為連字符。"
   },
   "repository-settings": {
+    "account": "帳號",
+    "account-description": "此帳號用於 GitHub API 請求及 HTTPS 驗證。這不會變更您的 Git 作者名稱或電子郵件地址。",
+    "account-none": "無（未分配）",
     "fork-behavior": "行為",
     "fork-behavior-darwin": "分叉行為",
     "git-config": "Git 設定",
@@ -2037,13 +2069,8 @@
   "sign-in": {
     "continue-with-browser": "使用瀏覽器繼續",
     "continue-with-browser-darwin": "使用瀏覽器繼續",
-    "git-requesting-credentials-1": "Git 請求憑證來存取 ",
-    "git-requesting-credentials-2": ".",
     "sign-in-browser": "使用瀏覽器登入",
     "sign-in-browser-darwin": "使用瀏覽器登入",
-    "you-are-already-signed-1": "您已登入 ",
-    "you-are-already-signed-2": "(帳號: ",
-    "you-are-already-signed-3": ")。如果您繼續, 您將首先被註銷。",
     "your-browser-will-redirect-you-back": "登入後, 瀏覽器會將您重新導向回 GitHub Desktop。如果您的瀏覽器要求您允許啟動 GitHub Desktop, 請允許。"
   },
   "sign-in-enterprise": {

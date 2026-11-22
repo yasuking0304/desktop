@@ -40,6 +40,19 @@
     "check-out-1": "Check out the new",
     "check-out-2": "to control the visibility of the link underlines and diff check marks."
   },
+  "account": {
+    "render-sign-in": "Sign in to your GitHub.com account to access your repositories.",
+    "render-sign-in-enterprise": "If you are using GitHub Enterprise at work. sign in to it to get access to your repositories."
+  },
+  "account-picker": {
+    "account": "Account",
+    "choose-account": "Choose an account…",
+    "choose-account-darwin": "Choose an Account…",
+    "content-title": "Choose an account"
+  },
+  "accounts": {
+    "add-dotcom-account": "Add GitHub.com account"
+  },
   "acknowledgements": {
     "about-license-1": " ",
     "about-license-2": " is an open source project published under the MIT License. You can view the source code and contribute to this project on ",
@@ -112,6 +125,7 @@
     "open-settings-darwin": "Open Settings",
     "retry-clone": "Retry clone",
     "retry-clone-darwin": "Retry Clone",
+    "retry-push": "Retry push",
     "would-you-like-1": "Would you like to retry cloning ",
     "would-you-like-2": "?"
   },
@@ -123,7 +137,6 @@
       "should-only-have-on-background-fetcher-active": "We should only have on background fetcher active at once, but we're trying to start background fetching on {{0}} while another background fetcher is still active!"
     },
     "fast-forwarding branches": "Fast-forwarding branches",
-    "pushing-to": "Pushing to {{0}}",
     "refreshing-repository": "Refreshing repository",
     "refreshing-repository-darwin": "Refreshing Repository",
     "unable-to-initialize-cherry-pick": "Unable to initialize cherry-pick progress. No commits provided."
@@ -323,8 +336,9 @@
       "we-could-not-find-that-repository": "We couldn't find that repository. Check that you are logged in, the network is accessible, and the URL or repository alias are spelled correctly."
     },
     "render-sign-in": "Sign in to your GitHub.com account to access your repositories.",
-    "render-sign-in-enterprise": "If you are using GitHub Enterprise at work. sign in to it to get access to your repositories.",
-    "select": "Select"
+    "select": "Select",
+    "sign-in-enterprise": "Sign in to GitHub Enterprise",
+    "sign-in-enterprise-darwin": "Sign In to GitHub Enterprise"
   },
   "cloneable-repository-filter-list": {
     "created-a-repository-1": " ",
@@ -419,10 +433,13 @@
     "bypass-commit-hooks": "Bypass Commit hooks",
     "bypass-commit-hooks-darwin": "Bypass Commit Hooks",
     "cancel-generate-commit-details": "Cancel generating commit details",
+    "choose-commit-mode": "Choose how to commit",
     "commit": "Commit",
+    "commit-author-email-failure": "Your commit author email does not meet this repository's rules.",
     "commit-count-files": "{{0}} {{1}}",
     "commit-description": "Commit description",
     "commit-summaries-length-over": "Great commit summaries contain fewer than 50 characters",
+    "commit-summary": "Commit summary",
     "commit-title-1": "{{0}} {{1}} to ",
     "commit-title-2": " ",
     "committing": "Committing",
@@ -430,7 +447,7 @@
     "configure-commit-options": "Configure commit options",
     "conventional-commits-support": "Copilot generated in Konventionelle Commits format",
     "conventional-commits-support-darwin": "Copilot generated in Konventionelle Commits format",
-    "description-field": "Description",
+    "copilot": "Copilot",
     "disable-commit-spellcheck": "Disable commit spellcheck",
     "disable-commit-spellcheck-darwin": "Disable Commit Spellcheck",
     "do-not-have-write-access-to-1": "You don't have write access to ",
@@ -444,6 +461,7 @@
     "generating-commit-details": "Generating commit details…",
     "link-create-a-fork": "create a fork",
     "link-switch-branches": "switch branches",
+    "manual": "Manual",
     "multilingual-support": "Copilot's multilingual support",
     "multilingual-support-darwin": "Copilot's multilingual support",
     "must-be-selected": ". Files must be selected to generate a commit message.",
@@ -453,6 +471,7 @@
     "protected-branch-3": "?",
     "remove-co-authors": "Remove co-authors",
     "remove-co-authors-darwin": "Remove Co-Authors",
+    "select-files-to-commit": "Select one or more files to commit",
     "select-one-or-more-files-to-commit": "Select one or more files to commit",
     "stop-amending": "Stop amending",
     "summary-is-required-to-commit": "A commit summary is required to commit",
@@ -523,6 +542,7 @@
     "error": "Error",
     "file": "file",
     "files": "files",
+    "filter": "Filter",
     "finish": "Finish",
     "github-desktop": "GitHub Desktop",
     "global": "global",
@@ -717,6 +737,8 @@
   "copilot-user-settings": {
     "always-use-copilot-when-conflicts": "Always use Copilot when conflicts are detected",
     "always-use-copilot-when-conflicts-darwin": "Always Use Copilot When Conflicts Are Detected",
+    "assisted-commit": "Assisted commits",
+    "assisted-commit-darwin": "Assisted Commits",
     "commit-message-generation": "Commit message Generation",
     "commit-message-generation-darwin": "Commit Message Generation",
     "conflict-resolution": "Conflict resolution",
@@ -1061,7 +1083,6 @@
     "file": "file",
     "files": "files",
     "files-description": "{{0}}{{1}} changed {{2}}",
-    "filter": "Filter",
     "hidden-changes-will-be-commited": "Hidden changes will be committed.",
     "ignore-all-file-add-to-gitignore": "Ignore all {{0}} files (add to .gitignore)",
     "ignore-all-file-add-to-gitignore-darwin": "Ignore All {{0}} Files (Add to .gitignore)",
@@ -1091,9 +1112,6 @@
     "one-and-another": "{{0}} and {{1}}",
     "other-filters-and-last": "{{0}}, and {{1}}",
     "sorry-i-cannot-find-any-changed-files": "Sorry, I can't find any changed files matching the following filters: {{0}}"
-  },
-  "filter-list": {
-    "filter": "Filter"
   },
   "fork-contribution-target-description": {
     "autocompletion-of-user-1": "Autocompletion of user and issues will be based on ",
@@ -1250,7 +1268,8 @@
     "invalidated-account-token": "Invalidated account token",
     "invalidated-account-token-darwin": "Invalidated Account Token",
     "token-has-been-invalidated-1": "Your account token has been invalidated and you have been signed out from your ",
-    "token-has-been-invalidated-2": "account. Do you want to sign in again?"
+    "token-has-been-invalidated-2-1": "account on ",
+    "token-has-been-invalidated-3": ". Do you want to sign in again?"
   },
   "label": {
     "about-github-desktop": "&About GitHub Desktop",
@@ -1759,7 +1778,10 @@
   },
   "publish": {
     "publish-repository": "Publish repository",
-    "publish-repository-darwin": "Publish Repository"
+    "publish-repository-darwin": "Publish Repository",
+    "sign-in-to-github-com": "Sign in to your GitHub.com account to publish your repository.",
+    "sign-in-to-github-enterprise": "Sign in to GitHub Enterprise",
+    "sign-in-to-github-enterprise-darwin": "Sign In to GitHub Enterprise"
   },
   "publish-repository": {
     "keep-this-code-private": "Keep this code private",
@@ -1934,6 +1956,13 @@
     "pro-tip-3": " to clone from anywhere within the app",
     "sorry-i-can-not-find-that-repository": "Sorry, I can't find that repository"
   },
+  "repository-account-dialog": {
+    "choose-account": "Choose the account to use for GitHub API requests and HTTPS authentication for {{0}} on {{1}}. This does not change your Git author name or email.",
+    "choose-another-account": "Choose another account",
+    "sign-in": "Sign in",
+    "title": "Repository account",
+    "use-account": "Use account"
+  },
   "repository-list": {
     "full-name": "Full Name: ",
     "path": "Path: "
@@ -1956,6 +1985,9 @@
     "sanitized-name-warning": "Invalid characters have been replaced by hyphens."
   },
   "repository-settings": {
+    "account": "Account",
+    "account-description": "The account used for GitHub API requests and HTTPS authentication. This does not change your Git author name or email.",
+    "account-none": "None (unassigned)",
     "fork-behavior": "Fork behavior",
     "fork-behavior-darwin": "Fork Behavior",
     "git-config": "Git config",
@@ -2037,13 +2069,8 @@
   "sign-in": {
     "continue-with-browser": "Continue with browser",
     "continue-with-browser-darwin": "Continue With Browser",
-    "git-requesting-credentials-1": "Git requesting credentials to access ",
-    "git-requesting-credentials-2": ".",
     "sign-in-browser": "Sign in using your browser",
     "sign-in-browser-darwin": "Sign in Using Your Browser",
-    "you-are-already-signed-1": "You're already signed in to ",
-    "you-are-already-signed-2": " with the account ",
-    "you-are-already-signed-3": ". If you continue, you will first be signed out.",
     "your-browser-will-redirect-you-back": "Your browser will redirect you back to GitHub Desktop once you've signed in. If your browser asks for your permission to launch GitHub Desktop please allow it to."
   },
   "sign-in-enterprise": {

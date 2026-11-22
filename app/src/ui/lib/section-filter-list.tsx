@@ -22,6 +22,7 @@ import {
   SelectionSource,
 } from './filter-list'
 import * as octicons from '../octicons/octicons.generated'
+import { t } from 'i18next'
 
 interface IFlattenedGroup<T> {
   readonly kind: 'group'
@@ -281,7 +282,7 @@ export class SectionFilterList<
         displayClearButton={true}
         prefixedIcon={octicons.search}
         autoFocus={true}
-        placeholder={this.props.placeholderText || 'Filter'}
+        placeholder={this.props.placeholderText || t('common.filter', 'Filter')}
         className="filter-list-filter-field"
         onValueChanged={this.onFilterValueChanged}
         onEnterPressed={this.onEnterPressed}

@@ -212,19 +212,30 @@ export class Publish extends React.Component<IPublishProps, IPublishState> {
   }
 
   private renderSignIn() {
-    const signInTitle = __DARWIN__ ? t('common.sign-in-darwin', 'Sign In') : t('common.sign-in', 'Sign in')
+    const signInTitle = __DARWIN__
+      ? t('common.sign-in-darwin', 'Sign In')
+      : t('common.sign-in', 'Sign in')
     return (
       <>
         <CallToAction actionTitle={signInTitle} onAction={this.signInDotCom}>
           <div>
-            {t('publish.sign-in-to-github-com', 'Sign in to your GitHub.com account to publish your repository.')}
+            {t(
+              'publish.sign-in-to-github-com',
+              'Sign in to your GitHub.com account to publish your repository.'
+            )}
           </div>
         </CallToAction>
         <Row className="sign-in-enterprise">
           <LinkButton onClick={this.signInEnterprise}>
             {__DARWIN__
-              ? t('publish.sign-in-to-github-enterprise-darwin', 'Sign In to GitHub Enterprise')
-              : t('publish.sign-in-to-github-enterprise', 'Sign in to GitHub Enterprise')}
+              ? t(
+                  'publish.sign-in-to-github-enterprise-darwin',
+                  'Sign In to GitHub Enterprise'
+                )
+              : t(
+                  'publish.sign-in-to-github-enterprise',
+                  'Sign in to GitHub Enterprise'
+                )}
           </LinkButton>
         </Row>
       </>
@@ -243,7 +254,9 @@ export class Publish extends React.Component<IPublishProps, IPublishState> {
       <DialogFooter>
         <OkCancelButtonGroup
           okButtonText={
-            __DARWIN__ ? t('publish-repository.publish-repository', 'Publish Repository') : t('publish-repository.publish-repository', 'Publish repository')
+            __DARWIN__
+              ? t('publish.publish-repository-darwin', 'Publish Repository')
+              : t('publish.publish-repository', 'Publish repository')
           }
           okButtonDisabled={disabled}
         />

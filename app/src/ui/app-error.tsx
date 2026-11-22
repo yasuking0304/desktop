@@ -274,9 +274,9 @@ export class AppError extends React.Component<IAppErrorProps, IAppErrorState> {
       return (
         <DialogFooter>
           <OkCancelButtonGroup
-            okButtonText="Retry push"
+            okButtonText={t('app-error.retry-push', 'Retry push')}
             onOkButtonClick={this.onRetryAction}
-            cancelButtonText="Close"
+            cancelButtonText={t('common.close', 'Close')}
             onCancelButtonClick={this.onCloseButtonClick}
           />
         </DialogFooter>

@@ -73,6 +73,8 @@ describe('real assisted Changes sidebar wiring', () => {
           skipCommitHooks={state.skipCommitHooks}
           signOffCommits={state.signOffCommits}
           allowEmptyCommit={state.allowEmptyCommit}
+          supportCopilotMultiLingual={false}
+          copilotConventionalCommitsFormat={false}
           onUpdateCommitOptions={(repo, options) =>
             h.dispatcher.updateCommitOptions(repo, options)
           }

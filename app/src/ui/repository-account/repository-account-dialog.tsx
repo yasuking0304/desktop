@@ -16,6 +16,7 @@ import { Dialog, DialogContent, DialogFooter } from '../dialog'
 import { OkCancelButtonGroup } from '../dialog/ok-cancel-button-group'
 import { Dispatcher } from '../dispatcher'
 import { Button } from '../lib/button'
+import { t } from 'i18next'
 
 interface IRepositoryAccountDialogProps {
   readonly repository: RepositoryWithGitHubRepository
@@ -121,7 +122,10 @@ export class RepositoryAccountDialog extends React.Component<
         </p>
         {this.accounts.length > 0 && (
           <Button onClick={this.onChooseAnotherAccount}>
-            Choose another account
+            {t(
+              'repository-account-dialog.choose-another-account',
+              'Choose another account'
+            )}
           </Button>
         )}
       </>
@@ -132,9 +136,12 @@ export class RepositoryAccountDialog extends React.Component<
     return (
       <>
         <p>
-          Choose the account to use for GitHub API requests and HTTPS
-          authentication for {this.props.repository.name} on {friendlyEndpoint}.
-          This does not change your Git author name or email.
+          {t(
+            'repository-account-dialog.choose-account',
+            `Choose the account to use for GitHub API requests and HTTPS authentication
+             for {{0}} on {{1}}. This does not change your Git author name or email.`,
+            { 0: this.props.repository.name, 1: friendlyEndpoint }
+          )}
         </p>
         <AccountPicker
           accounts={this.accounts}
@@ -152,7 +159,7 @@ export class RepositoryAccountDialog extends React.Component<
     return (
       <Dialog
         id="repository-account"
-        title="Repository account"
+        title={t('repository-account-dialog.title', 'Repository account')}
         onDismissed={this.onDismissed}
         onSubmit={this.onSubmit}
       >
@@ -163,7 +170,11 @@ export class RepositoryAccountDialog extends React.Component<
         </DialogContent>
         <DialogFooter>
           <OkCancelButtonGroup
-            okButtonText={requiresSignIn ? 'Sign in' : 'Use account'}
+            okButtonText={
+              requiresSignIn
+                ? t('repository-account-dialog.sign-in', 'Sign in')
+                : t('repository-account-dialog.use-account', 'Use account')
+            }
             okButtonDisabled={
               !requiresSignIn && this.state.selectedAccount === null
             }
