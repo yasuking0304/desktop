@@ -44,7 +44,7 @@ export class Accounts extends React.Component<IAccountsProps, {}> {
             this.renderSignIn(SignInType.DotCom)
           ) : (
             <Button onClick={this.props.onDotComSignIn}>
-              Add GitHub.com account
+              {t('accounts.add-dotcom-account', 'Add GitHub.com account')}
             </Button>
           )}
         </div>
@@ -152,7 +152,7 @@ export class Accounts extends React.Component<IAccountsProps, {}> {
           >
             <div>
               {t(
-                'clone-repository.render-sign-in',
+                'account.render-sign-in',
                 `Sign in to your GitHub.com account to
                  access your repositories.`
               )}
@@ -168,7 +168,7 @@ export class Accounts extends React.Component<IAccountsProps, {}> {
           >
             <div>
               {t(
-                'clone-repository.render-sign-in-enterprise',
+                'account.render-sign-in-enterprise',
                 `If you are using GitHub Enterprise at work.
                  sign in to it to get access to your repositories.`
               )}

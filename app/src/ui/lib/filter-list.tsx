@@ -279,9 +279,7 @@ export class FilterList<
         ref={this.onTextBoxRef}
         displayClearButton={true}
         autoFocus={true}
-        placeholder={
-          this.props.placeholderText || t('filter-list.filter', 'Filter')
-        }
+        placeholder={this.props.placeholderText || t('common.filter', 'Filter')}
         className="filter-list-filter-field"
         onValueChanged={this.onFilterValueChanged}
         onEnterPressed={this.onEnterPressed}

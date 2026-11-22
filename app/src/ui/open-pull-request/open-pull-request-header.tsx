@@ -98,7 +98,6 @@ export class OpenPullRequestDialogHeader extends React.Component<IOpenPullReques
         titleId={OpenPullRequestDialogId}
         onCloseButtonClick={onDismissed}
       >
-        <div className="break"></div>
         <div className="base-branch-details">
           {t('open-pull-request-header.merge-into-1', 'Merge {{0}} into', {
             0: commits,

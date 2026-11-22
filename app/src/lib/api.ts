@@ -2433,6 +2433,14 @@ export function getDotComAPIEndpoint(): string {
   return 'https://api.github.com'
 }
 
+/** Get the account for the endpoint. */
+export function getAccountForEndpoint(
+  accounts: ReadonlyArray<Account>,
+  endpoint: string
+): Account | null {
+  return accounts.find(a => a.endpoint === endpoint) || null
+}
+
 /**
  * Build an OAuth authorization URL.
  *

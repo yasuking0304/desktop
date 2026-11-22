@@ -303,6 +303,7 @@ interface ICommitMessageProps {
    *  support in Copilot features
    */
   readonly copilotConventionalCommitsFormat: boolean
+  /**
    * Dispatch a real Desktop-owned assisted commit operation.
    *
    * Only provide this callback when the planning/execution integration and
@@ -2230,10 +2231,16 @@ export class CommitMessage extends React.Component<
       ? buttonEnabled
         ? `${this.getButtonTitle()} with Copilot`
         : this.hasCommitAuthorRuleFailure
-        ? t('commit-message.commit-author-email-failure', "Your commit author email does not meet this repository's rules.")
+        ? t(
+            'commit-message.commit-author-email-failure',
+            "Your commit author email does not meet this repository's rules."
+          )
         : anyFilesSelected || allowEmptyCommit
         ? undefined
-        : t('commit-message.select-files-to-commit', 'Select one or more files to commit')
+        : t(
+            'commit-message.select-files-to-commit',
+            'Select one or more files to commit'
+          )
       : isGeneratingCommitMessage
       ? t(
           'commit-message.generating-commit-details',
@@ -2253,14 +2260,21 @@ export class CommitMessage extends React.Component<
         ref={this.commitModeButtonRef}
         className="commit-button-dropdown"
         options={commitModeOptions}
-        checkedOption={isCopilotCommitMode ? t('commit-message.copilot') : t('commit-message.manual')}
+        checkedOption={
+          isCopilotCommitMode
+            ? t('commit-message.copilot', 'Copilot')
+            : t('commit-message.manual', 'Manual')
+        }
         disabled={!buttonEnabled}
         dropdownDisabled={this.isBusy}
         tooltip={tooltip}
         tooltipDismissable={false}
         onlyShowTooltipWhenOverflowed={buttonEnabled}
         ariaDescribedBy={ariaDescribedBy}
-        dropdownAriaLabel={t('commit-message.choose-commit-mode', 'Choose how to commit')}
+        dropdownAriaLabel={t(
+          'commit-message.choose-commit-mode',
+          'Choose how to commit'
+        )}
         onCheckedOptionChange={this.onCommitModeChanged}
         onDropdownOpened={this.onCommitModeDropdownOpened}
         onSubmit={this.onSubmit}
@@ -2291,7 +2305,10 @@ export class CommitMessage extends React.Component<
     const { isGeneratingCommitMessage } = this.props
     const buttonEnabled = this.isManualCommitButtonEnabled()
     const tooltip = isGeneratingCommitMessage
-      ? t('commit-message.generating-commit-details', 'Generating commit details…')
+      ? t(
+          'commit-message.generating-commit-details',
+          'Generating commit details…'
+        )
       : this.getButtonTooltip(buttonEnabled)
 
     return (
@@ -2511,9 +2528,14 @@ export class CommitMessage extends React.Component<
               <AutocompletingInput
                 required={true}
                 label={
-                  this.props.showInputLabels === true ? t('common.summary', 'Summary') : undefined
+                  this.props.showInputLabels === true
+                    ? t('common.summary', 'Summary')
+                    : undefined
                 }
-                screenReaderLabel={t('commit-message.commit-summary', 'Commit summary')}
+                screenReaderLabel={t(
+                  'commit-message.commit-summary',
+                  'Commit summary'
+                )}
                 className={summaryInputClassName}
                 placeholder={placeholder}
                 value={this.state.commitMessage.summary}
@@ -2537,7 +2559,9 @@ export class CommitMessage extends React.Component<
               this.renderRuleFailurePopover()}
 
             {this.props.showInputLabels === true && (
-              <label htmlFor="commit-message-description">{t('common.description', 'Description')}</label>
+              <label htmlFor="commit-message-description">
+                {t('common.description', 'Description')}
+              </label>
             )}
             <FocusContainer
               className="description-focus-container"
@@ -2548,7 +2572,10 @@ export class CommitMessage extends React.Component<
                 className={descriptionClassName}
                 screenReaderLabel={
                   this.props.showInputLabels !== true
-                    ? t('commit-message.commit-description', 'Commit description')
+                    ? t(
+                        'commit-message.commit-description',
+                        'Commit description'
+                      )
                     : undefined
                 }
                 placeholder={t('common.description', 'Description')}

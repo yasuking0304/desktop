@@ -167,12 +167,33 @@ dialog {
     border-bottom: var(--base-border);
 
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-double);
+
+    .header-top-lines {
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+    .header-bottom-line {
+      margin-top: var(--spacing-half);
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
     @include darwin {
-      flex-direction: row-reverse;
+      .header-top-lines {
+        flex-direction: row-reverse;
+        margin-left: auto;
+      }
     }
     @include maclike {
-      flex-direction: row-reverse;
+      .header-top-lines {
+        flex-direction: row-reverse;
+        margin-left: auto;
+      }
     }
     align-items: center;
     padding: var(--spacing-double);
@@ -180,10 +201,27 @@ dialog {
     svg.icon {
       flex-shrink: 0;
       margin-right: var(--spacing);
+      margin-left: 0;
+      @include darwin {
+        margin-right: 0;
+        margin-left: var(--spacing);
+      }
+      @include maclike {
+        margin-right: 0;
+        margin-left: var(--spacing);
+      }
     }
-
-    .spin {
+    svg.icon.spin {
       margin-left: var(--spacing);
+      margin-right: var(--spacing);
+      @include darwin {
+        margin-left: var(--spacing-double);
+        margin-right: 0;
+      }
+      @include maclike {
+        margin-left: var(--spacing-double);
+        margin-right: 0;
+      }
     }
 
     h1 {
@@ -193,12 +231,22 @@ dialog {
       padding: 0;
       width: 100%;
       @include darwin {
-        margin-left: 20px;
+        text-align: center;
+        width: inherit;
       }
       @include maclike {
-        margin-left: 20px;
+        text-align: center;
+        width: inherit;
       }
       @include ellipsis;
+    }
+    h1:has(+ svg.icon.spin) {
+      @include darwin {
+        padding-right: var(--spacing-maclike);
+      }
+      @include maclike {
+        padding-right: var(--spacing-maclike);
+      }
     }
     @include close-button;
   }

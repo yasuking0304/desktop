@@ -107,6 +107,8 @@ async function renderHistory(t: TestContext) {
       skipCommitHooks={false}
       signOffCommits={false}
       allowEmptyCommit={false}
+      supportCopilotMultiLingual={false}
+      copilotConventionalCommitsFormat={false}
       onUpdateCommitOptions={() => {}}
     />
   )

@@ -1504,7 +1504,7 @@ export class FilterChangesList extends React.Component<
         <TextBox
           ref={this.onTextBoxRef}
           displayClearButton={true}
-          placeholder={t('filter-changes-list.filter', 'Filter')}
+          placeholder={t('common.filter', 'Filter')}
           className="filter-list-filter-field"
           onValueChanged={this.onFilterTextChanged}
           onKeyDown={this.onFilterKeyDown}

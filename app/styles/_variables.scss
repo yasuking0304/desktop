@@ -253,6 +253,7 @@ $overlay-background-color: rgba(0, 0, 0, 0.4);
   --spacing-quint: calc(var(--spacing) * 5);
   --spacing-half: calc(var(--spacing) / 2);
   --spacing-third: calc(var(--spacing) / 3);
+  --spacing-maclike: calc(var(--spacing) * 3 + 7px);
 
   --border-radius: 6px;
   // When we use the regular border radius (6px) the outline

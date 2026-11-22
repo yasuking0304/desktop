@@ -40,6 +40,19 @@
     "check-out-1": "リンクの下線と差分チェックマークの表示を制御するため新しい",
     "check-out-2": "を確認してください。"
   },
+  "account": {
+    "render-sign-in": "GitHub.comアカウントにサインインしてリポジトリにアクセスしてください。",
+    "render-sign-in-enterprise": "GitHub Enterprise を使用している場合は、サインインしてリポジトリにアクセスしてください。"
+  },
+  "account-picker": {
+    "account": "アカウント",
+    "choose-account": "アカウントを選択…",
+    "choose-account-darwin": "アカウントを選択…",
+    "content-title": "アカウントを選択"
+  },
+  "accounts": {
+    "add-dotcom-account": "GitHub.comアカウントを追加"
+  },
   "acknowledgements": {
     "about-license-1": " ",
     "about-license-2": " は MIT ライセンスの下で公開されているオープンソースプロジェクトです。あなたは ",
@@ -112,6 +125,7 @@
     "open-settings-darwin": "オプションを開く",
     "retry-clone": "クローンの再試行",
     "retry-clone-darwin": "クローンの再試行",
+    "retry-push": "プッシュの再試行",
     "would-you-like-1": " ",
     "would-you-like-2": " のクローンを再試行しますか?"
   },
@@ -123,7 +137,6 @@
       "should-only-have-on-background-fetcher-active": "We should only have on background fetcher active at once, but we're trying to start background fetching on {{0}} while another background fetcher is still active!"
     },
     "fast-forwarding branches": "ブランチの高速転送中",
-    "pushing-to": "{{0}} にプッシュ",
     "refreshing-repository": "リポジトリのリフレッシュ",
     "refreshing-repository-darwin": "リポジトリのリフレッシュ",
     "unable-to-initialize-cherry-pick": "チェリーピックの変更状況を初期化できません。コミットが指定されていません。"
@@ -323,8 +336,9 @@
       "we-could-not-find-that-repository": "そのリポジトリが見つかりませんでした。ログインしていること、ネットワークにアクセスできること、URL またはリポジトリのエイリアスの綴りが正しいことを確認してください。"
     },
     "render-sign-in": "GitHub.com アカウントにサインインして、リポジトリにアクセスします。",
-    "render-sign-in-enterprise": "職場にGitHub Enterpriseアカウントがある場合は、そちらでサインインしてリポジトリにアクセスしてください。",
-    "select": "選択"
+    "select": "選択",
+    "sign-in-enterprise": "Sign in to GitHub Enterprise",
+    "sign-in-enterprise-darwin": "Sign In to GitHub Enterprise"
   },
   "cloneable-repository-filter-list": {
     "created-a-repository-1": "もし、最近リポジトリを作成した場合 ",
@@ -419,10 +433,13 @@
     "bypass-commit-hooks": "コミットフックのバイパス",
     "bypass-commit-hooks-darwin": "コミットフックのバイパス",
     "cancel-generate-commit-details": "コミットメッセージの生成をキャンセルする",
+    "choose-commit-mode": "Choose how to commit",
     "commit": "コミット",
+    "commit-author-email-failure": "Your commit author email does not meet this repository's rules.",
     "commit-count-files": "{{0}}{{1}}を",
     "commit-description": "コミットの概要説明",
     "commit-summaries-length-over": "概要入力は50文字未満でお願いします",
+    "commit-summary": "Commit summary",
     "commit-title-1": "{{1}} ",
     "commit-title-2": " に{{0}}",
     "committing": "コミット中",
@@ -430,7 +447,7 @@
     "configure-commit-options": "コミットオプションの設定",
     "conventional-commits-support": "CopilotでConventional Commits形式出力",
     "conventional-commits-support-darwin": "CopilotでConventional Commits形式出力",
-    "description-field": "説明フィールド",
+    "copilot": "Copilot",
     "disable-commit-spellcheck": "コミットスペルチェックを無効にする",
     "disable-commit-spellcheck-darwin": "コミットスペルチェックを無効にする",
     "do-not-have-write-access-to-1": " ",
@@ -444,6 +461,7 @@
     "generating-commit-details": "コミットの詳細を生成中…",
     "link-create-a-fork": "フォークの作成",
     "link-switch-branches": "ブランチの切り替え",
+    "manual": "Manual",
     "multilingual-support": "Copilotの日本語サポート",
     "multilingual-support-darwin": "Copilotの日本語サポート",
     "must-be-selected": "。コミットメッセージを生成するにはファイルを選択する必要があります。",
@@ -453,6 +471,7 @@
     "protected-branch-3": "をしますか?",
     "remove-co-authors": "コラボレーターの削除",
     "remove-co-authors-darwin": "コラボレーターの削除",
+    "select-files-to-commit": "Select one or more files to commit",
     "select-one-or-more-files-to-commit": "コミットするファイルを 1つ以上選択してください",
     "stop-amending": "修正を中止",
     "summary-is-required-to-commit": "コミットするには概要入力が必要です",
@@ -523,6 +542,7 @@
     "error": "エラー",
     "file": "ファイル",
     "files": "ファイル",
+    "filter": "フィルター",
     "finish": "完了",
     "github-desktop": "GitHub Desktop",
     "global": "グローバル",
@@ -717,6 +737,8 @@
   "copilot-user-settings": {
     "always-use-copilot-when-conflicts": "競合が検出された場合は、常に Copilot を使用する",
     "always-use-copilot-when-conflicts-darwin": "競合が検出された場合は、常に Copilot を使用する",
+    "assisted-commit": "Assisted commits",
+    "assisted-commit-darwin": "Assisted Commits",
     "commit-message-generation": "コミットメッセージの生成",
     "commit-message-generation-darwin": "コミットメッセージの生成",
     "conflict-resolution": "競合の解決",
@@ -1061,7 +1083,6 @@
     "file": "ファイル",
     "files": "ファイル",
     "files-description": "{{0}}{{1}}個の変更された{{2}}",
-    "filter": "フィルター",
     "hidden-changes-will-be-commited": "非表示の変更ファイルはコミットされます。",
     "ignore-all-file-add-to-gitignore": "すべての {{0}} ファイルを除外する (.gitignore に追加)",
     "ignore-all-file-add-to-gitignore-darwin": "すべての {{0}} ファイルを除外する (.gitignore に追加)",
@@ -1091,9 +1112,6 @@
     "one-and-another": "{{0}}、{{1}}",
     "other-filters-and-last": "{{0}}、{{1}}",
     "sorry-i-cannot-find-any-changed-files": "申し訳ありませんが、フィルター条件に一致する変更ファイルは見つかりません: {{0}}"
-  },
-  "filter-list": {
-    "filter": "フィルター"
   },
   "fork-contribution-target-description": {
     "autocompletion-of-user-1": "ユーザー と issue の自動投入先は",
@@ -1250,7 +1268,8 @@
     "invalidated-account-token": "アカウント トークンが無効になりました",
     "invalidated-account-token-darwin": "アカウント トークンが無効になりました",
     "token-has-been-invalidated-1": "アカウント トークンが無効になり、",
-    "token-has-been-invalidated-2": " アカウントからサインアウトされました。再度サインインしますか?"
+    "token-has-been-invalidated-2-1": "account on ",
+    "token-has-been-invalidated-3": ". Do you want to sign in again?"
   },
   "label": {
     "about-github-desktop": "GitHub Desktop について(&A)",
@@ -1759,7 +1778,10 @@
   },
   "publish": {
     "publish-repository": "リポジトリの公開",
-    "publish-repository-darwin": "リポジトリの公開"
+    "publish-repository-darwin": "リポジトリの公開",
+    "sign-in-to-github-com": "GitHub.comアカウントにサインインして、リポジトリを公開します。",
+    "sign-in-to-github-enterprise": "GitHub Enterpriseにサインイン",
+    "sign-in-to-github-enterprise-darwin": "GitHub Enterpriseにサインイン"
   },
   "publish-repository": {
     "keep-this-code-private": "リポジトリをプライベートにする",
@@ -1934,6 +1956,13 @@
     "pro-tip-3": " で、アプリ内のどこからでもクローンすることが可能です",
     "sorry-i-can-not-find-that-repository": "申し訳ありません。そのリポジトリを見つけることができません"
   },
+  "repository-account-dialog": {
+    "choose-account": "{{1}} 上の {{0}} に関する GitHub API リクエストおよび HTTPS 認証に使用するアカウントを選択してください。なお、この設定を変更しても、Git の作成者名やメールアドレスは変更されません。",
+    "choose-another-account": "別のアカウントを選択",
+    "sign-in": "サインイン",
+    "title": "リポジトリ アカウントの選択",
+    "use-account": "アカウントを使用"
+  },
   "repository-list": {
     "full-name": "正式名称: ",
     "path": "パス: "
@@ -1956,6 +1985,9 @@
     "sanitized-name-warning": "リポジトリ名に無効な文字はハイフンに置き換えられます。"
   },
   "repository-settings": {
+    "account": "アカウント",
+    "account-description": "GitHub APIリクエストおよびHTTPS認証に使用されるアカウントです。これによってGitの作成者名やメールアドレスが変更されることはありません。",
+    "account-none": "なし（未割り当て）",
     "fork-behavior": "フォークの動作",
     "fork-behavior-darwin": "フォークの動作",
     "git-config": "Git の設定",
@@ -2037,13 +2069,8 @@
   "sign-in": {
     "continue-with-browser": "ブラウザーで続行",
     "continue-with-browser-darwin": "ブラウザーで続行",
-    "git-requesting-credentials-1": "Gitがアクセスするための資格情報を要求しています ",
-    "git-requesting-credentials-2": "。",
     "sign-in-browser": "ブラウザーを使用してサインインする",
     "sign-in-browser-darwin": "ブラウザーを使用してサインインする",
-    "you-are-already-signed-1": "すでに ",
-    "you-are-already-signed-2": " にサインインしています(アカウント: ",
-    "you-are-already-signed-3": " )。続行すると、まずサインアウトされます。",
     "your-browser-will-redirect-you-back": "サインインすると、ブラウザーは GitHub Desktop にリダイレクトします。ブラウザーから GitHub Desktop の起動許可を求められた場合は、許可を選択してください。"
   },
   "sign-in-enterprise": {

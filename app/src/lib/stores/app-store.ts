@@ -162,6 +162,7 @@ import {
 } from '../../ui/main-process-proxy'
 import {
   API,
+  getAccountForEndpoint,
   getDotComAPIEndpoint,
   getHTMLURL,
   IAPIOrganization,
@@ -7731,7 +7732,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
         const response = await this.copilotStore.generateCommitMessage(
           account,
-          diff,
+          diffPrompt,
           repository.path,
           await this.resolveCopilotModelRequest(
             this.getSelectedCopilotModels(account)[
