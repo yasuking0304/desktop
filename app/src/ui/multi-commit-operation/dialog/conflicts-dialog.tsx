@@ -23,8 +23,7 @@ import { ManualConflictResolution } from '../../../models/manual-conflict-resolu
 import { OkCancelButtonGroup } from '../../dialog/ok-cancel-button-group'
 import { DialogSuccess } from '../../dialog/success'
 import { t } from 'i18next'
-import { enableCopilotConflictResolution } from '../../../lib/feature-flag'
-import { getAccountForCopilotConflictResolution } from '../../../lib/get-account-for-repository'
+import { getAccountForCopilot } from '../../../lib/get-account-for-repository'
 import { Account } from '../../../models/account'
 import { Octicon } from '../../octicons'
 import * as octicons from '../../octicons/octicons.generated'
@@ -283,7 +282,6 @@ export class ConflictsDialog extends React.Component<
    * Renders the "Resolve with Copilot" button when the feature is available.
    * Only shown when:
    * - The onResolveWithCopilot callback is provided (operation supports it)
-   * - The feature flag is enabled
    * - There is at least one signed-in account with Copilot for Desktop
    *   enabled (covers "no Copilot subscription" and "disabled by org policy")
    * - There are still conflicted files to resolve
@@ -297,9 +295,8 @@ export class ConflictsDialog extends React.Component<
 
     if (
       onResolveWithCopilot === undefined ||
-      !enableCopilotConflictResolution() ||
       conflictedFilesCount === 0 ||
-      getAccountForCopilotConflictResolution(accounts, repository) === undefined
+      getAccountForCopilot(accounts, repository) === undefined
     ) {
       return null
     }

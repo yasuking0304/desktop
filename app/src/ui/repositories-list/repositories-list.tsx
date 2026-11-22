@@ -128,22 +128,23 @@ export class RepositoriesList extends React.Component<
 > {
   /**
    * A memoized function for grouping repositories for display
-   * in the FilterList. The group will not be recomputed as long
-   * as the provided list of repositories is equal to the last
-   * time the method was called (reference equality).
+   * in the FilterList. The groups will not be recomputed while the repositories,
+   * local state, recent repositories, and accounts have the same references.
    */
   private getRepositoryGroups = memoizeOne(
     (
       repositories: ReadonlyArray<Repositoryish> | null,
       localRepositoryStateLookup: ReadonlyMap<number, ILocalRepositoryState>,
-      recentRepositories: ReadonlyArray<number>
+      recentRepositories: ReadonlyArray<number>,
+      accounts: ReadonlyArray<Account>
     ) =>
       repositories === null
         ? []
         : groupRepositories(
             repositories,
             localRepositoryStateLookup,
-            recentRepositories
+            recentRepositories,
+            accounts
           )
   )
 
@@ -258,12 +259,20 @@ export class RepositoriesList extends React.Component<
 
   private getGroupLabel(group: RepositoryListGroup) {
     const { kind } = group
+    const qualifier =
+      kind === 'recent' || group.accountLogin === undefined
+        ? ''
+        : ` \u2014 ${
+            group.accountLogin === null
+              ? 'Unassociated'
+              : `@${group.accountLogin}`
+          }`
     if (kind === 'enterprise') {
-      return group.host
+      return group.host + qualifier
     } else if (kind === 'other') {
-      return t('common.other', 'Other')
+      return t('common.other', 'Other') + qualifier
     } else if (kind === 'dotcom') {
-      return group.owner.login
+      return group.owner.login + qualifier
     } else if (kind === 'recent') {
       return t('common.recent', 'Recent')
     } else {
@@ -344,7 +353,8 @@ export class RepositoriesList extends React.Component<
     const groups = this.getRepositoryGroups(
       this.props.repositories,
       this.props.localRepositoryStateLookup,
-      this.props.recentRepositories
+      this.props.recentRepositories,
+      this.props.accounts
     )
 
     // So there's two types of selection at play here. There's the repository
@@ -373,6 +383,7 @@ export class RepositoriesList extends React.Component<
           invalidationProps={{
             repositories: this.props.repositories,
             filterText: this.props.filterText,
+            accounts: this.props.accounts,
           }}
           onItemContextMenu={this.onItemContextMenu}
           getGroupAriaLabel={this.getGroupAriaLabelGetter(groups)}

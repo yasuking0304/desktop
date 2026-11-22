@@ -1,6 +1,7 @@
 import { storePushAfterCommit } from './helpers/commit-push-storage'
 import { verifyRepositoryGitSpawnFence } from '../git/repository-operation'
 import { AssistedCommitCoordinator } from '../assisted-commit/coordinator'
+import { recordAssistedCommitMetric } from '../assisted-commit/metrics'
 import { getStatus } from '../git/status'
 import * as Path from 'path'
 import { writeFile } from 'fs/promises'
@@ -208,9 +209,9 @@ import { assertNever, fatalError, forceUnwrap } from '../fatal-error'
 
 import { formatCommitMessage } from '../format-commit-message'
 import {
-  getAccountForCommitMessageGeneration,
-  getAccountForCopilotConflictResolution,
+  getAccountForCopilot,
   getAccountForRepository,
+  getAccountForStatsAttribution,
 } from '../get-account-for-repository'
 import {
   abortMerge,
@@ -247,6 +248,8 @@ import {
   reset,
   getBranchAheadBehind,
   getRebaseInternalState,
+  isMergeHeadSet,
+  isSquashMsgSet,
   getCommit,
   appendIgnoreFile,
   getRepositoryType,
@@ -301,6 +304,12 @@ import {
   Shell,
 } from '../shells'
 import { ILaunchStats, StatsStore } from '../stats'
+import {
+  AssignmentOutcome,
+  countAdditionalAccountSignIns,
+  getAssignmentOutcome,
+  isMultiAccountEndpoint,
+} from '../stats/multi-account-stats'
 import { hasShownWelcomeFlow, markWelcomeFlowComplete } from '../welcome'
 import { WindowState } from '../window-state'
 import { TypedBaseStore } from './base-store'
@@ -337,13 +346,7 @@ import {
 } from './updates/changes-state'
 import { ManualConflictResolution } from '../../models/manual-conflict-resolution'
 import { BranchPruner } from './helpers/branch-pruner'
-import {
-  enableCopilotConflictResolution,
-  enableCopilotAppHandoff,
-  enableCopilotSdkCommitMessageGeneration,
-  enableCustomIntegration,
-  enableWorktreeSupport,
-} from '../feature-flag'
+import { enableCustomIntegration, enableWorktreeSupport } from '../feature-flag'
 import { isDotCom, isGHE, isGHES } from '../endpoint-capabilities'
 import { Banner, BannerType } from '../../models/banner'
 import { ComputedAction } from '../../models/computed-action'
@@ -898,6 +901,8 @@ export class AppStore extends TypedBaseStore<IAppState> {
       {
         changed: () => this.emitUpdate(),
         error: error => this.emitError(error),
+        recordMetric: (measure, count) =>
+          this.statsStore.increment(measure, count),
       }
     )
 
@@ -1143,6 +1148,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
     this.signInStore.onDidError(error => this.emitError(error))
 
     this.accountsStore.onDidUpdate(accounts => {
+      this.recordAdditionalAccountSignIns(this.accounts, accounts)
       this.accounts = accounts
       this.cachedRepoRulesets = new Map()
       this.statsStore.setUsesShortLivedToken(
@@ -1212,7 +1218,6 @@ export class AppStore extends TypedBaseStore<IAppState> {
     return this.accounts.filter(
       account =>
         !isGHES(account.endpoint) &&
-        enableCopilotSdkCommitMessageGeneration(account) &&
         account.isCopilotDesktopEnabled === true &&
         account.copilotLicenseType !== undefined &&
         account.copilotLicenseType !== CopilotLicenseTypeNoAccess
@@ -3978,14 +3983,17 @@ export class AppStore extends TypedBaseStore<IAppState> {
       repository,
       selectedFiles,
       async () => {
-        if (
-          state.changesState.pushAfterCommit &&
+        const ordinaryAction =
           context.amend !== true &&
           state.commitToAmend === null &&
           state.changesState.conflictState === null &&
-          state.multiCommitOperationState === null &&
+          state.multiCommitOperationState === null
+        const pushRequested =
+          ordinaryAction &&
+          state.changesState.pushAfterCommit &&
           !repository.isTutorialRepository
-        ) {
+        let manualWorkflow = false
+        if (pushRequested) {
           const status = await getStatus(repository, false, true)
           if (
             !status.mergeHeadFound &&
@@ -3993,10 +4001,35 @@ export class AppStore extends TypedBaseStore<IAppState> {
             status.rebaseInternalState === null &&
             !status.isCherryPickingHeadFound
           ) {
+            manualWorkflow = selectedFiles.length > 0
             branchToPush =
               status.currentBranch === undefined
                 ? null
                 : `refs/heads/${status.currentBranch}`
+          }
+        } else if (ordinaryAction && selectedFiles.length > 0) {
+          try {
+            const [
+              mergeHeadFound,
+              squashMsgFound,
+              rebaseInternalState,
+              isCherryPickingHeadFound,
+            ] = await Promise.all([
+              isMergeHeadSet(repository),
+              isSquashMsgSet(repository),
+              getRebaseInternalState(repository),
+              isCherryPickHeadFound(repository),
+            ])
+            manualWorkflow =
+              !mergeHeadFound &&
+              !squashMsgFound &&
+              rebaseInternalState === null &&
+              !isCherryPickingHeadFound
+          } catch (error) {
+            log.error(
+              'Could not classify manual commit usage statistics',
+              error
+            )
           }
         }
         const result = await gitStore.performFailableOperation(
@@ -4032,6 +4065,12 @@ export class AppStore extends TypedBaseStore<IAppState> {
         }
         this.assistedCommits.readers.finishManual(repository)
         if (result !== undefined) {
+          if (manualWorkflow) {
+            await recordAssistedCommitMetric(
+              (measure, count) => this.statsStore.increment(measure, count),
+              'manualCommitWorkflowCount'
+            )
+          }
           try {
             await this._recordCommitStats(
               gitStore,
@@ -4142,20 +4181,26 @@ export class AppStore extends TypedBaseStore<IAppState> {
       this.statsStore.increment('coAuthoredCommits')
     }
 
-    const account = getAccountForRepository(this.accounts, repository)
     if (repository.gitHubRepository !== null) {
-      if (account !== null) {
-        if (isDotComAccount(account)) {
+      const endpointAccount = getAccountForStatsAttribution(
+        this.accounts,
+        repository
+      )
+      if (endpointAccount !== null) {
+        if (isDotComAccount(endpointAccount)) {
           this.statsStore.increment('dotcomCommits')
         } else {
           this.statsStore.increment('enterpriseCommits')
         }
+      }
 
-        const { commitAuthor } = repositoryState
-        if (commitAuthor !== null) {
-          if (!isAttributableEmailFor(account, commitAuthor.email)) {
-            this.statsStore.increment('unattributedCommits')
-          }
+      // The endpoint fallback doesn't identify the commit author, so only
+      // check attribution against the repository's own account.
+      const account = getAccountForRepository(this.accounts, repository)
+      const { commitAuthor } = repositoryState
+      if (account !== null && commitAuthor !== null) {
+        if (!isAttributableEmailFor(account, commitAuthor.email)) {
+          this.statsStore.increment('unattributedCommits')
         }
       }
 
@@ -5658,6 +5703,26 @@ export class AppStore extends TypedBaseStore<IAppState> {
     )
   }
 
+  private recordAddRepositoryAssignment(outcome: AssignmentOutcome | null) {
+    if (outcome === 'auto') {
+      this.statsStore.increment('addRepositoryAccountAutoAssignedCount')
+    } else if (outcome === 'chosen') {
+      this.statsStore.increment('addRepositoryAccountChosenCount')
+    } else if (outcome === 'unassigned') {
+      this.statsStore.increment('addRepositoryAccountUnassignedCount')
+    }
+  }
+
+  private recordAdditionalAccountSignIns(
+    previous: ReadonlyArray<Account>,
+    next: ReadonlyArray<Account>
+  ) {
+    const count = countAdditionalAccountSignIns(previous, next)
+    if (count > 0) {
+      this.statsStore.increment('additionalAccountSignInCount', count)
+    }
+  }
+
   /**
    * Refreshes the GitHub repository information for the currently selected
    * repository when the active account changes. This ensures that permission
@@ -6149,8 +6214,11 @@ export class AppStore extends TypedBaseStore<IAppState> {
     if (aborted) {
       return
     }
+    // Attribute the push to the repository's assigned account, or another
+    // signed-in account on its endpoint, so that GitHub and GHES pushes can be
+    // told apart from pushes to generic remotes.
     this.statsStore.recordPush(
-      getAccountForRepository(this.accounts, repository),
+      getAccountForStatsAttribution(this.accounts, repository),
       options
     )
     gitStore.clearTagsToPush()
@@ -6529,6 +6597,10 @@ export class AppStore extends TypedBaseStore<IAppState> {
     // The account is assigned before pushing so Git uses its credentials.
     this.adoptRepository(repository)
 
+    if (isMultiAccountEndpoint(this.accounts, account.endpoint)) {
+      this.statsStore.increment('publishOnMultiAccountEndpointCount')
+    }
+
     // skip pushing if the current branch is a detached HEAD or the repository
     // is unborn
     if (gitStore.tip.kind === TipState.Valid) {
@@ -6595,6 +6667,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
     promise: Promise<boolean>
     repository: CloningRepository
   } {
+    let recordAssignmentStats = () => {}
     const promise = this.cloningRepositoriesStore.clone(
       url,
       path,
@@ -6603,6 +6676,15 @@ export class AppStore extends TypedBaseStore<IAppState> {
         const accounts = await this.accountsStore.getAll()
         const { account } = options
         if (account !== undefined) {
+          if (
+            options.fromCloneDialog === true &&
+            isMultiAccountEndpoint(accounts, account.endpoint)
+          ) {
+            recordAssignmentStats = () =>
+              this.statsStore.increment(
+                'cloneFromAccountPickerOnMultiAccountEndpointCount'
+              )
+          }
           // The user picked this repository from the list of repositories
           // visible to this account, so there's no need to probe for access.
           // If access has since been lost the clone fails and nothing is
@@ -6610,13 +6692,28 @@ export class AppStore extends TypedBaseStore<IAppState> {
           const selected = accounts.filter(a => isSameAccount(a, account))
           return matchGitHubRepository(selected, url)
         }
-        return chooseAccountForRemoteRepository(
+        let chose = false
+        const assignment = await chooseAccountForRemoteRepository(
           accounts,
           url,
           path,
-          (repository, accounts) =>
-            this._chooseRepositoryAccount(repository, accounts)
+          (repository, accounts) => {
+            chose = true
+            return this._chooseRepositoryAccount(repository, accounts)
+          }
         )
+        const outcome = getAssignmentOutcome(assignment, chose, accounts, url)
+        if (options.fromCloneDialog === true && outcome !== null) {
+          recordAssignmentStats = () =>
+            this.statsStore.increment(
+              outcome === 'auto'
+                ? 'cloneAccountAutoAssignedCount'
+                : outcome === 'chosen'
+                ? 'cloneAccountChosenCount'
+                : 'cloneAccountUnassignedCount'
+            )
+        }
+        return assignment
       }
     )
     const repository = this.cloningRepositoriesStore.repositories.find(
@@ -6626,6 +6723,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
     promise.then(success => {
       if (success) {
         this.statsStore.recordCloneRepository()
+        recordAssignmentStats()
       }
     })
 
@@ -7566,8 +7664,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
   ): boolean {
     return (
       this.alwaysUseCopilotForConflictResolution &&
-      enableCopilotConflictResolution() &&
-      getAccountForCopilotConflictResolution(this.accounts, repository) !== null
+      getAccountForCopilot(this.accounts, repository) !== undefined
     )
   }
 
@@ -7583,10 +7680,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
     repository: Repository,
     filesSelected: ReadonlyArray<WorkingDirectoryFileChange>
   ): Promise<boolean> {
-    const account = getAccountForCommitMessageGeneration(
-      this.accounts,
-      repository
-    )
+    const account = getAccountForCopilot(this.accounts, repository)
 
     if (!account) {
       return false
@@ -7635,25 +7729,21 @@ export class AppStore extends TypedBaseStore<IAppState> {
           ' ' +
           diff
 
-        const response = enableCopilotSdkCommitMessageGeneration(account)
-          ? await this.copilotStore.generateCommitMessage(
-              account,
-              diffPrompt,
-              repository.path,
-              await this.resolveCopilotModelRequest(
-                this.getSelectedCopilotModels(account)[
-                  'commit-message-generation'
-                ] ?? null
-              ),
-              this.repositoryStateCache
-                .get(repository)
-                ?.changesState.currentRepoRulesInfo?.commitMessagePatterns.getRules() ??
-                [],
-              signal
-            )
-          : await API.fromAccount(account).getDiffChangesCommitMessage(
-              diffPrompt
-            )
+        const response = await this.copilotStore.generateCommitMessage(
+          account,
+          diff,
+          repository.path,
+          await this.resolveCopilotModelRequest(
+            this.getSelectedCopilotModels(account)[
+              'commit-message-generation'
+            ] ?? null
+          ),
+          this.repositoryStateCache
+            .get(repository)
+            ?.changesState.currentRepoRulesInfo?.commitMessagePatterns.getRules() ??
+            [],
+          signal
+        )
 
         this._setCommitMessage(repository, {
           summary: response.title,
@@ -7759,14 +7849,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
     readonly summary: ICopilotResolutionSummary
     readonly skippedFiles: ReadonlyArray<ICopilotSkippedFile>
   } | null> {
-    if (!enableCopilotConflictResolution()) {
-      return null
-    }
-
-    const account = getAccountForCopilotConflictResolution(
-      this.accounts,
-      repository
-    )
+    const account = getAccountForCopilot(this.accounts, repository)
     if (!account) {
       return null
     }
@@ -8112,10 +8195,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
       return
     }
 
-    const account = getAccountForCopilotConflictResolution(
-      this.accounts,
-      repository
-    )
+    const account = getAccountForCopilot(this.accounts, repository)
 
     if (!account) {
       return
@@ -8192,10 +8272,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
     }
 
     const { conflictState } = step
-    const account = getAccountForCopilotConflictResolution(
-      this.accounts,
-      repository
-    )
+    const account = getAccountForCopilot(this.accounts, repository)
     if (!account) {
       return
     }
@@ -9011,11 +9088,6 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
   /** This shouldn't be called directly. See `Dispatcher`. */
   public async _openInCopilotApp(repositoryPath: string): Promise<void> {
-    if (!enableCopilotAppHandoff()) {
-      log.debug('Ignoring unavailable Copilot app handoff')
-      return
-    }
-
     try {
       const appPath =
         this.copilotAppPath !== null
@@ -9516,9 +9588,12 @@ export class AppStore extends TypedBaseStore<IAppState> {
         }
       )
       if (clearAssignments === undefined) {
+        this.statsStore.increment('accountSignOutCancelledCount')
         return
       }
+      this.statsStore.increment('accountSignOutWithAssignmentsCount')
       if (clearAssignments) {
+        this.statsStore.increment('accountSignOutClearedAssignmentsCount')
         await this.repositoriesStore.clearAccountAssignments(account)
         for (const repository of await this.repositoriesStore.getAll()) {
           this.adoptRepository(repository)
@@ -9853,6 +9928,7 @@ export class AppStore extends TypedBaseStore<IAppState> {
 
         const remote = gitStore.defaultRemote
         const accounts = await this.accountsStore.getAll()
+        let chose = false
         const assignment =
           clonedAssignment !== undefined
             ? clonedAssignment
@@ -9862,14 +9938,27 @@ export class AppStore extends TypedBaseStore<IAppState> {
                 accounts,
                 remote.url,
                 validatedPath,
-                (repository, candidates) =>
-                  this._chooseRepositoryAccount(repository, candidates)
+                (repository, candidates) => {
+                  chose = true
+                  return this._chooseRepositoryAccount(repository, candidates)
+                }
               ).catch(e => {
                 // Add the repository unassigned rather than leaving it
                 // half-added.
                 this.emitError(e)
                 return null
               })
+        if (clonedAssignment === undefined && remote !== null) {
+          // Cancelling the picker still adds the repository, unassigned.
+          this.recordAddRepositoryAssignment(
+            getAssignmentOutcome(
+              assignment ?? null,
+              chose,
+              accounts,
+              remote.url
+            )
+          )
+        }
         let refreshedRepo = addedRepo
         if (assignment != null) {
           const gitHubRepository = isAccessibleRepository(assignment)

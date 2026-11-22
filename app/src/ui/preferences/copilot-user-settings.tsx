@@ -4,7 +4,7 @@ import {
   parseModelKey,
   type IBYOKProvider,
 } from '../../lib/copilot/byok'
-import { enableCopilotConflictResolution } from '../../lib/feature-flag'
+import { enableCopilotAssistedCommit } from '../../lib/feature-flag'
 import {
   DefaultCopilotModel,
   type CopilotFeature,
@@ -58,6 +58,14 @@ export class CopilotUserSettings extends React.Component<ICopilotUserSettingsPro
     this.props.onSelectedCopilotModelChanged(
       this.props.account,
       'conflict-resolution',
+      model
+    )
+  }
+
+  private onAssistedCommitModelChanged = (model: string) => {
+    this.props.onSelectedCopilotModelChanged(
+      this.props.account,
+      'assisted-commit',
       model
     )
   }
@@ -127,9 +135,10 @@ export class CopilotUserSettings extends React.Component<ICopilotUserSettingsPro
             {t('copilot-user-settings.tailor-copilot-behavior-2', '.')}
           </p>
         </Row>
-        {this.renderFeatureModelPicker(
-          copilotModels,
-          'commit-message-generation',
+        <div className="copilot-section">
+          {this.renderFeatureModelPicker(
+            copilotModels,
+            'commit-message-generation',
           __DARWIN__
             ? t(
                 'copilot-user-settings.commit-message-generation-darwin',
@@ -139,61 +148,79 @@ export class CopilotUserSettings extends React.Component<ICopilotUserSettingsPro
                 'copilot-user-settings.commit-message-generation',
                 'Commit message Generation'
               ),
-          this.onCommitMessageModelChanged,
-          350
-        )}
-        <p className="settings-description">
-          <LinkButton uri="https://docs.github.com/en/desktop/making-changes-in-a-branch/committing-and-reviewing-changes-to-your-project-in-github-desktop#write-a-commit-message-and-push-your-changes">
+            this.onCommitMessageModelChanged,
+            350
+          )}
+          <p className="settings-description">
+            <LinkButton uri="https://docs.github.com/en/desktop/making-changes-in-a-branch/committing-and-reviewing-changes-to-your-project-in-github-desktop#write-a-commit-message-and-push-your-changes">
             {t(
               'copilot-user-settings.learn-more-about-commit-messages',
               'Learn more about generating commit messages.'
             )}
-          </LinkButton>
-        </p>
-        {enableCopilotConflictResolution() && (
-          <>
+            </LinkButton>
+          </p>
+        </div>
+        {enableCopilotAssistedCommit(this.props.account) && (
+          <div className="copilot-section">
             {this.renderFeatureModelPicker(
               copilotModels,
-              'conflict-resolution',
+              'assisted-commit',
               __DARWIN__
                 ? t(
-                    'copilot-user-settings.conflict-resolution-darwin',
-                    'Conflict Resolution'
+                    'copilot-user-settings.assisted-commit-darwin',
+                    'Assisted Commits'
                   )
                 : t(
-                    'copilot-user-settings.conflict-resolution',
-                    'Conflict resolution'
+                    'copilot-user-settings.assisted-commit',
+                    'Assisted commits'
                   ),
-              this.onConflictResolutionModelChanged,
+              this.onAssistedCommitModelChanged,
               280
             )}
-            <p className="settings-description">
+          </div>
+        )}
+        <div className="copilot-section">
+          {this.renderFeatureModelPicker(
+            copilotModels,
+            'conflict-resolution',
+            __DARWIN__
+              ? t(
+                  'copilot-user-settings.conflict-resolution-darwin',
+                  'Conflict Resolution'
+                )
+              : t(
+                  'copilot-user-settings.conflict-resolution',
+                  'Conflict resolution'
+                ),
+            this.onConflictResolutionModelChanged,
+            280
+          )}
+          <p className="settings-description">
               {t(
                 'copilot-user-settings.model-changes-apply-to-future-conflict',
                 'Model changes apply to future conflict resolutions.'
               )}
-            </p>
-            <Checkbox
-              label={
-                __DARWIN__
-                  ? t(
-                      'copilot-user-settings.always-use-copilot-when-conflicts-darwin',
-                      'Always Use Copilot When Conflicts Are Detected'
-                    )
-                  : t(
-                      'copilot-user-settings.always-use-copilot-when-conflicts',
-                      'Always use Copilot when conflicts are detected'
-                    )
-              }
-              value={
-                this.props.alwaysUseCopilotForConflictResolution
-                  ? CheckboxValue.On
-                  : CheckboxValue.Off
-              }
-              onChange={this.onAlwaysUseCopilotForConflictResolutionChanged}
-            />
-          </>
-        )}
+          </p>
+          <Checkbox
+            label={
+              __DARWIN__
+                ? t(
+                    'copilot-user-settings.always-use-copilot-when-conflicts-darwin',
+                    'Always Use Copilot When Conflicts Are Detected'
+                  )
+                : t(
+                    'copilot-user-settings.always-use-copilot-when-conflicts',
+                    'Always use Copilot when conflicts are detected'
+                  )
+            }
+            value={
+              this.props.alwaysUseCopilotForConflictResolution
+                ? CheckboxValue.On
+                : CheckboxValue.Off
+            }
+            onChange={this.onAlwaysUseCopilotForConflictResolutionChanged}
+          />
+        </div>
       </>
     )
   }

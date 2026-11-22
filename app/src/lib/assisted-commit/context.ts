@@ -18,11 +18,7 @@ import { isAssistedCommitCancellation } from '../assisted-commit-run'
 import { parseModelKey } from '../copilot/byok'
 import { AccountRequiresSignInError } from '../credential-sessions'
 import { arrayEquals } from '../equality'
-import {
-  enableCopilotAssistedCommit,
-  enableCopilotSdkCommitMessageGeneration,
-} from '../feature-flag'
-import { getAccountForCommitMessageGeneration } from '../get-account-for-repository'
+import { getAccountForCopilotAssistedCommits } from '../get-account-for-repository'
 import {
   AssistedCommitError,
   AssistedCommitProgress,
@@ -57,13 +53,13 @@ export class AssistedCommitContext {
     ) => Repository
   ) {}
 
-  /** Capture the current account and its existing ordinary-generation model choice. */
+  /** Capture the current account and its assisted-commit model choice. */
   public getIntent(repository: Repository): {
     readonly account: Account | undefined
     readonly modelSelection: string | null
   } {
     const settings = this.configuration()
-    const account = getAccountForCommitMessageGeneration(
+    const account = getAccountForCopilotAssistedCommits(
       settings.accounts,
       this.getCurrentRepository(repository)
     )
@@ -73,7 +69,7 @@ export class AssistedCommitContext {
         account === undefined
           ? null
           : settings.models.get(getCopilotAccountCacheKey(account))?.[
-              'commit-message-generation'
+              'assisted-commit'
             ] ?? null,
     }
   }
@@ -82,11 +78,9 @@ export class AssistedCommitContext {
   public async isAvailable(repository: Repository): Promise<boolean> {
     const { account } = this.getIntent(repository)
     return (
-      enableCopilotAssistedCommit() &&
       account !== undefined &&
       account.token.length > 0 &&
       account.copilotLicenseType !== CopilotLicenseTypeNoAccess &&
-      enableCopilotSdkCommitMessageGeneration(account) &&
       (await this.copilot.isAssistedCommitRuntimeAvailable())
     )
   }
@@ -106,18 +100,16 @@ export class AssistedCommitContext {
       originalIdentity === null
         ? currentIdentity === null
         : isSameAccount(originalIdentity, currentIdentity)
-    const account = getAccountForCommitMessageGeneration(
+    const account = getAccountForCopilotAssistedCommits(
       this.configuration().accounts,
       repository
     )
     let authorizationError: Error | undefined
     if (
-      !enableCopilotAssistedCommit() ||
       !assignmentMatches ||
       account === undefined ||
       run.account === undefined ||
       account.token.length === 0 ||
-      !enableCopilotSdkCommitMessageGeneration(account) ||
       account.copilotLicenseType === CopilotLicenseTypeNoAccess ||
       account.id !== run.account.id ||
       !isSameAccount(account, run.account)
@@ -200,6 +192,12 @@ export class AssistedCommitContext {
       signOffCommits: state.signOffCommits,
       allowEmptyCommit: state.allowEmptyCommit,
     }
+    const headChanged =
+      !tipEquals(state.branchesState.tip, run.initialState.branchesState.tip) ||
+      !assistedCommitHeadMatches(
+        run.initialState.branchesState.tip,
+        state.branchesState.tip
+      )
     if (
       state.changesState.commitMode !== 'copilot' ||
       run.repository.isTutorialRepository ||
@@ -212,15 +210,12 @@ export class AssistedCommitContext {
         JSON.stringify(run.initialState.changesState.coAuthors) ||
       state.changesState.showCoAuthoredBy !==
         run.initialState.changesState.showCoAuthoredBy ||
-      !tipEquals(state.branchesState.tip, run.initialState.branchesState.tip) ||
-      !assistedCommitHeadMatches(
-        run.initialState.branchesState.tip,
-        state.branchesState.tip
-      )
+      headChanged
     ) {
       throw new AssistedCommitError(
         'selection-changed',
-        'The selected changes or commit options changed. Review your selection and try again.'
+        'The selected changes or commit options changed. Review your selection and try again.',
+        { diagnostic: headChanged ? 'repository-changed' : undefined }
       )
     }
     if (run.request.files.length === 0 && !run.request.allowEmptyCommit) {
